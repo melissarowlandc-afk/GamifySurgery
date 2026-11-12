@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import {beforeProgramBatch4AcceptanceRelease} from "../../clinical-content/src/question-program-batch4-acceptance-test-support";
 
 import { PROTOTYPE_DOMAIN_CONTEXT } from "../src/context";
 import { validateDoorPlacement, validateFacilityAccess } from "../src/doors";
@@ -221,7 +222,7 @@ describe("approved Recovery geometry migration", () => {
       caseId: "case.thyroid-nodule.palpable-referral",
       patientDisplayName: "Migration Patient",
       arrivalClass: "routine",
-    });
+    },{...context,clinicalRelease:beforeProgramBatch4AcceptanceRelease(context.clinicalRelease)});
     const encounter = state.encounters["encounter.migration"]!;
     encounter.patientLocation = { x: 35, y: 25 };
     encounter.patientMovement = {

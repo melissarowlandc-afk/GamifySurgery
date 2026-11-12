@@ -1,9 +1,10 @@
+import {beforeProgramBatch4AcceptanceRelease,beforeProgramBatch4AcceptanceManifest,beforeProgramBatch4AcceptanceTimings} from "./question-program-batch4-acceptance-test-support";
 import {describe,expect,it} from "vitest";
 import {readFileSync} from "node:fs";
 import {createHash} from "node:crypto";
-import {SYNTHETIC_CLINICAL_RELEASE as live,QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
-import {QUESTION_SHIP_MANIFEST as manifest} from "./question-ship-manifest";
-import {ANSWER_CHOICE_TIMING_REGISTRY as timing} from "./answer-choice-timing";
+import {SYNTHETIC_CLINICAL_RELEASE as currentLive,QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
+import {QUESTION_SHIP_MANIFEST as currentManifest} from "./question-ship-manifest";
+import {ANSWER_CHOICE_TIMING_REGISTRY as currentTiming} from "./answer-choice-timing";
 import {QUESTION_PROGRAM_BATCH3_ACCEPTED_CASES as cases,QUESTION_PROGRAM_BATCH3_ACCEPTED_ROWS as rows,
   QUESTION_PROGRAM_BATCH3_ACCEPTED_QUESTIONS as questions,QUESTION_PROGRAM_BATCH3_ACCEPTED_SOURCE_VIEWS as views,
   QUESTION_PROGRAM_BATCH3_RETAINED_CASES as retired,QUESTION_PROGRAM_BATCH3_REPLACEMENTS as replacements,
@@ -12,6 +13,9 @@ import {QUESTION_PROGRAM_BATCH3_ACCEPTED_CASES as cases,QUESTION_PROGRAM_BATCH3_
 import {beforeProgramBatch3AcceptanceRelease as previous,beforeProgramBatch3AcceptanceManifest as previousManifest,
   beforeProgramBatch3AcceptanceTimings as previousTimings,beforeProgramBatch3AcceptanceSource as previousSource,
   withProgramBatch3PresentationCorrections as correctPresentation} from "./question-program-batch3-acceptance-test-support";
+const live=beforeProgramBatch4AcceptanceRelease(currentLive);
+const manifest=beforeProgramBatch4AcceptanceManifest(currentManifest);
+const timing=beforeProgramBatch4AcceptanceTimings(currentTiming);
 const read=(path:string)=>JSON.parse(readFileSync(new URL("../../../"+path,import.meta.url),"utf8"));
 const before=read("tools/question-quality/fixtures/question-topic-acceptance-batch3-before-20261111.json");
 const decisions=read("docs/research/question-topic-acceptance-batch3-dispositions-20261111.json");
@@ -163,7 +167,7 @@ describe("topic batch3 complete exact PASS acceptance",()=>{
     const migration=read("tools/question-quality/fixtures/question-topic-acceptance-batch3-source-migration-20261111.json");
     expect(migration.files.length).toBeGreaterThanOrEqual(9);
     const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch3-release-source-pins-20261111.json",import.meta.url));
-    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("a1c150d6006726f316c95918b82fd937ecb1b24577b3abf15c21cc66915df917");
+    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("12114f123e309fae37d22eb2639570d9fbc01738f8ad185e219f54920a350677");
     const releasePins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;testSupportSha256:string;paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string}>};
     expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-topic-acceptance-batch3-source-migration-20261111.json",import.meta.url))).digest("hex")).toBe(releasePins.capturedFixtureSha256);
     expect(createHash("sha256").update(readFileSync(new URL("./question-program-batch3-acceptance-test-support.ts",import.meta.url))).digest("hex")).toBe(releasePins.testSupportSha256);

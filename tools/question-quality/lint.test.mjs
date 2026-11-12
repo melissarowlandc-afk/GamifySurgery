@@ -107,7 +107,7 @@ test("owner's actual flagged records trigger each new targeted rule and reconstr
   }
 });
 
-test("round-one draft contexts remove owner-rule giveaways; the live held FNA remains explicit",async()=>{
+test("round-one draft contexts remove owner-rule giveaways; the retained held FNA keeps its original cue",async()=>{
   await import("../economy-audit/source-loader.mjs");
   const c=await import("../../packages/clinical-content/src/index.ts");
   const ownerRules=new Set(["option-alone","option-generic-individualization","availability-permission-cue","supplied-clinical-conclusion","unexplained-negative-imaging","ambiguous-cervical-term","nerve-competitor-plausibility"]);
@@ -118,7 +118,11 @@ test("round-one draft contexts remove owner-rule giveaways; the live held FNA re
       assert.deepEqual(result.findings.filter(f=>ownerRules.has(f.rule)),[],r.auditId+" / "+(profile?.id??"canonical"));
     }
   }
-  const cs=c.SYNTHETIC_CLINICAL_RELEASE.cases.find(cs=>cs.id==="case.thyroid-nodule.incidental-imaging"),n=cs.decisionNodes[0];
+  const cs=c.QUESTION_PROGRAM_BATCH4_RETAINED_CASES.find(cs=>cs.id==="case.thyroid-nodule.incidental-imaging");
+  assert(cs);
+  assert(!c.SYNTHETIC_CLINICAL_RELEASE.cases.some(current=>current.id===cs.id));
+  assert(c.QUESTION_PROGRAM_BATCH4_CONSOLIDATIONS.some(row=>row.replaces.includes(cs.id)));
+  const n=cs.decisionNodes[0];
   assert.equal(n.questionVariantId,"question.thyroid-nodule.fna-selection.v2");
   assert(has(lintQuestion({variantId:n.questionVariantId,choices:n.answerChoices,fields:preAnswerFields(cs,0)}),"supplied-clinical-conclusion"));
 });

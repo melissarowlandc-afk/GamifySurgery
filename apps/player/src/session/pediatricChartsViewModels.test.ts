@@ -1,15 +1,18 @@
+import { beforeProgramBatch4AcceptanceRelease } from "../../../../packages/clinical-content/src/question-program-batch4-acceptance-test-support";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { PEDIATRIC_CLINIC_CASES, PEDIATRIC_CLINIC_FAMILY_CONTEXTS, SYNTHETIC_CLINICAL_RELEASE } from "@gamify-surgery/clinical-content";
+import { PEDIATRIC_CLINIC_CASES, PEDIATRIC_CLINIC_FAMILY_CONTEXTS } from "@gamify-surgery/clinical-content";
 import { gameReducer, getAnswerChoiceServicePreview, pediatricFamilyForActor, pediatricPairAtReservation,
   PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
 import { createLevelFourRoomsQaContext } from "../../../../tests/fixtures/level-four-rooms";
 import { createPediatricChartsQaState, PEDIATRIC_CHARTS_QA_ENCOUNTER_ID as encounterId } from "../../../../tests/fixtures/pediatric-charts";
 import { createPrototypePlayerView } from "./viewModels";
 
-const context = createLevelFourRoomsQaContext();
-// Stable case identities now resolve to the intentional pilot wording. The
-// historical authored export remains available for frozen/pre-pilot checks.
-const cases = PEDIATRIC_CLINIC_CASES.map(original => SYNTHETIC_CLINICAL_RELEASE.cases.find(c => c.id === original.id)!);
+const currentContext = createLevelFourRoomsQaContext();
+const context = { ...currentContext,
+  clinicalRelease: beforeProgramBatch4AcceptanceRelease(currentContext.clinicalRelease) };
+// Frozen M7 chart fixtures use the complete hash-verified pre-batch4 bank.
+// Current reducer, presentation and every named-family assertion remain.
+const cases = PEDIATRIC_CLINIC_CASES.map(original => context.clinicalRelease.cases.find(c => c.id === original.id)!);
 const originalBalance = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease;
 beforeAll(() => { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = context.balanceRelease; });
 afterAll(() => { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = originalBalance; });

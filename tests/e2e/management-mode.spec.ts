@@ -53,6 +53,47 @@ async function expectNoHorizontalOverflow(page: Page) {
   ).toBe(true);
 }
 
+async function expectChartAnchoredToDesk(page: Page) {
+  const chart = page.locator(".chart-sheet");
+  await expect(chart).toHaveAttribute("data-placed", "true");
+  // Patient charts float at content height (unlike the old full-desk drawer).
+  // Check their real geometry after ResizeObserver settles, including the
+  // preferred width, horizontal clamping, short/tall pin, and usable height.
+  await expect.poll(() => chart.evaluate(sheet => {
+    const element = sheet as HTMLElement;
+    const desk = document.querySelector<HTMLElement>(".desk-workspace");
+    const area = desk?.closest("main");
+    const header = sheet.querySelector<HTMLElement>(".cs-head");
+    const scroll = sheet.querySelector<HTMLElement>(".cs-scroll");
+    if (!desk || !area || !header || !scroll) return ["Missing chart placement surface"];
+    const bounds = sheet.getBoundingClientRect(), deskBounds = desk.getBoundingClientRect(), areaBounds = area.getBoundingClientRect();
+    // Sum every sheet child (header, clinical-content notice, scroll body);
+    // the scroll body contributes its full content height.
+    const contentHeight = Array.from(element.children).reduce((total, child) =>
+      total + (child === scroll ? scroll.scrollHeight : child.getBoundingClientRect().height),
+    element.offsetHeight - element.clientHeight);
+    const minLeft = areaBounds.left + 8, maxRight = areaBounds.right - 8;
+    const width = Math.round(Math.min(1040, maxRight - minLeft));
+    const short = contentHeight < deskBounds.height;
+    const preferredLeft = short || deskBounds.width >= width ? deskBounds.left + (deskBounds.width - width) / 2 : deskBounds.left;
+    const left = Math.round(Math.max(minLeft, Math.min(preferredLeft, maxRight - width)));
+    const maxHeight = Math.round(Math.max(160, deskBounds.bottom - areaBounds.top - 8));
+    const checks = [
+      { name: "preferred width", actual: bounds.width, expected: width, tolerance: 1 },
+      { name: "centered/clamped left", actual: bounds.left, expected: left, tolerance: 1 },
+      { name: short ? "short chart top pin" : "tall chart bottom pin", actual: short ? bounds.top : bounds.bottom,
+        expected: short ? deskBounds.top : deskBounds.bottom, tolerance: 1 },
+      { name: "content height / play-area cap", actual: bounds.height, expected: Math.min(contentHeight, maxHeight), tolerance: 2 },
+    ];
+    const violations = checks.filter(check => Math.abs(check.actual - check.expected) > check.tolerance)
+      .map(check => `${check.name}: ${check.actual} instead of ${check.expected}`);
+    if (bounds.left < minLeft - 1 || bounds.right > maxRight + 1 || bounds.top < areaBounds.top + 7 || bounds.bottom > deskBounds.bottom + 1) {
+      violations.push("Chart exceeds its play-area / desk-bottom bounds");
+    }
+    return violations;
+  }), { message: "The content-sized patient chart follows the yielded desk" }).toEqual([]);
+}
+
 test("Management Mode keeps its desk controls, lifecycle, and containment across responsive layouts", async ({
   page,
 }, testInfo) => {
@@ -259,23 +300,15 @@ test("Management Mode yields its desk to charts and tracks the splitter", async 
   await expect(panel).toHaveCount(0);
   await expect(managementTrigger).toHaveCount(0);
   await expect(buildTrigger).toHaveCount(0);
-  const [chartBox, chartDeskBox] = await Promise.all([chart.boundingBox(), desk.boundingBox()]);
-  expect(chartBox).not.toBeNull();
-  expect(chartDeskBox).not.toBeNull();
-  const edgeDeltas = {
-    left: Math.abs(chartBox!.x - chartDeskBox!.x),
-    top: Math.abs(chartBox!.y - chartDeskBox!.y),
-    right: Math.abs(
-      chartDeskBox!.x + chartDeskBox!.width - (chartBox!.x + chartBox!.width),
-    ),
-    bottom: Math.abs(
-      chartDeskBox!.y + chartDeskBox!.height - (chartBox!.y + chartBox!.height),
-    ),
-  };
-  expect(edgeDeltas.left).toBeLessThanOrEqual(4);
-  expect(edgeDeltas.top).toBeLessThanOrEqual(4);
-  expect(edgeDeltas.right).toBeLessThanOrEqual(4);
-  expect(edgeDeltas.bottom).toBeLessThanOrEqual(4);
+  await expectChartAnchoredToDesk(page);
+  // Resize with the chart open too: yielding Management must not leave the
+  // floating chart pinned to stale desk geometry. Keyboard and pointer use the
+  // same splitter share; camera shade/zoom behavior has its own dedicated spec.
+  const chartDeskHeight = await desk.evaluate(element => element.getBoundingClientRect().height);
+  await splitter.focus(); await splitter.press("ArrowDown");
+  await expect.poll(() => desk.evaluate(element => element.getBoundingClientRect().height)).toBeLessThan(chartDeskHeight - 5);
+  await expectChartAnchoredToDesk(page);
+  await expectNoHorizontalOverflow(page);
   if (testInfo.project.name === "laptop-chrome") {
     await page.screenshot({
       path: `${SCREENSHOT_DIRECTORY}/management-mode-laptop-chart-priority.png`,

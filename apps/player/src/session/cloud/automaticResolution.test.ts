@@ -99,7 +99,8 @@ describe("automatic verified clinic progress selection", () => {
         const other = await syncFixture("unrelated.paused-slot");
         const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: other.prepared.checkpoint,
           campaign: { ...other.prepared.envelope.campaign, name: "Unrelated archived clinic", status: "archived" },
-          source: other.prepared.sourceRecovery, expectedRevision: "1", operationId: "unrelated.paused.fixture" });
+          source: { sha256: other.prepared.sourceRecovery.sha256, utf8Bytes: other.prepared.sourceRecovery.utf8Bytes,
+            schemaVersion: other.prepared.sourceRecovery.schemaVersion }, expectedRevision: "1", operationId: "unrelated.paused.fixture" });
         h.server.seed(h.scope.accountId, { ...other.confirmed, snapshot: encoded.snapshot });
       }
       const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);
@@ -188,7 +189,8 @@ describe("automatic verified clinic progress selection", () => {
     const h = await rig(); await divergent(h, 3, 1);
     const unrelated = await syncFixture("unrelated.clinic");
     const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: unrelated.prepared.checkpoint, campaign: { ...unrelated.prepared.envelope.campaign, name: "Other clinic" },
-      source: unrelated.prepared.sourceRecovery, expectedRevision: "1", operationId: "other.name" });
+      source: { sha256: unrelated.prepared.sourceRecovery.sha256, utf8Bytes: unrelated.prepared.sourceRecovery.utf8Bytes,
+        schemaVersion: unrelated.prepared.sourceRecovery.schemaVersion }, expectedRevision: "1", operationId: "other.name" });
     unrelated.confirmed = { ...unrelated.confirmed, snapshot: encoded.snapshot };
     h.server.seed(h.scope.accountId, unrelated.confirmed);
     const previous = await h.runtime.transport.load(h.scope.campaignId);
@@ -298,7 +300,9 @@ describe("automatic verified clinic progress selection", () => {
     const h = await rig(); await divergent(h, 3, 1);
     const unrelated = await syncFixture("unrelated.kill");
     const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: unrelated.prepared.checkpoint,
-      campaign: { ...unrelated.prepared.envelope.campaign, name: "Unrelated clinic" }, source: unrelated.prepared.sourceRecovery,
+      campaign: { ...unrelated.prepared.envelope.campaign, name: "Unrelated clinic" },
+      source: { sha256: unrelated.prepared.sourceRecovery.sha256, utf8Bytes: unrelated.prepared.sourceRecovery.utf8Bytes,
+        schemaVersion: unrelated.prepared.sourceRecovery.schemaVersion },
       expectedRevision: "1", operationId: "other.kill" });
     h.server.seed(h.scope.accountId, { ...unrelated.confirmed, snapshot: encoded.snapshot });
     h.server.faults.push({ method: "deleteCampaign", at: "after", error: new CloudSyncError("network") });
@@ -412,7 +416,9 @@ describe("automatic verified clinic progress selection", () => {
     const h = await rig(); await divergent(h, 3, 1);
     const unrelated = await syncFixture("unrelated.moved");
     const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: unrelated.prepared.checkpoint,
-      campaign: { ...unrelated.prepared.envelope.campaign, name: "Unrelated clinic" }, source: unrelated.prepared.sourceRecovery,
+      campaign: { ...unrelated.prepared.envelope.campaign, name: "Unrelated clinic" },
+      source: { sha256: unrelated.prepared.sourceRecovery.sha256, utf8Bytes: unrelated.prepared.sourceRecovery.utf8Bytes,
+        schemaVersion: unrelated.prepared.sourceRecovery.schemaVersion },
       operationId: "other.moved", expectedRevision: "1" });
     h.server.seed(h.scope.accountId, { ...unrelated.confirmed, snapshot: encoded.snapshot });
     const observer = new CloudSyncCoordinator({ ...h.runtime, cache: new MemoryCloudCache(), entryStore: new MemoryCloudEntryStore(), scope: h.scope, enabled: true, clock: h.clock });

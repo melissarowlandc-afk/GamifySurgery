@@ -1,3 +1,4 @@
+import {beforeProgramBatch4AcceptanceRelease} from "../../clinical-content/src/question-program-batch4-acceptance-test-support";
 import { QUESTION_NEW_N2_ROUND3_PRE_RELEASE } from "@gamify-surgery/clinical-content";
 import type { SyntheticClinicalCase } from "@gamify-surgery/clinical-content";
 import {
@@ -7,7 +8,7 @@ import {
 } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
 import {
-  PROTOTYPE_DOMAIN_CONTEXT,
+  PROTOTYPE_DOMAIN_CONTEXT as currentContext,
   createInitialGameState,
   gameReducer,
   getCurrentEmployeeDiscussionQuestion,
@@ -15,11 +16,13 @@ import {
   type GameState,
 } from "../src";
 
+const retainedContext={...currentContext,clinicalRelease:beforeProgramBatch4AcceptanceRelease(currentContext.clinicalRelease)};
+
 const REVIEWED_AT_MS = 1_800_000_000_000;
-// Admission uses today's stable-case binding, including explicitly versioned
-// scored objectives. Keep the original cohort/manifest assertions below.
+// Preserve this historical cohort through its verified pre-batch4 bindings.
+// Current reducer, scheduling and scoring commands exercise the retained cases.
 const runtimeCases = GS028_STATS_ETHICS_20260929_CASES.map((authored) => {
-  const current = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find((item) => item.id === authored.id);
+  const current = retainedContext.clinicalRelease.cases.find((item) => item.id === authored.id);
   if (!current) throw new Error(`Missing current statistics/ethics case ${authored.id}.`);
   return current;
 });
@@ -31,7 +34,7 @@ const employeeCases = runtimeCases.filter(
 );
 
 function ordinaryFixture(seed: string): GameState {
-  const state = createInitialGameState(undefined, {
+  const state = createInitialGameState(retainedContext, {
     campaignId: `campaign.gs028se.${seed}`,
     campaignSeed: seed,
     createdAtRealMs: REVIEWED_AT_MS,
@@ -68,12 +71,12 @@ function readyForPatientQuestion(
 ): GameState {
   let next = state;
   for (let attempt = 0; attempt < 1_500; attempt += 1) {
-    if (getCurrentQuestion(next, encounterId)) return next;
+    if (getCurrentQuestion(next, encounterId, retainedContext)) return next;
     const encounter = next.encounters[encounterId];
     if (!encounter) throw new Error(`${encounterId} disappeared before it was ready.`);
     next = encounter.lifecycle === "waiting_unopened" && encounter.patientMovement === null
-      ? gameReducer(next, { type: "OPEN_CHART", operationId: `${prefix}.open.${attempt}`, encounterId })
-      : gameReducer(next, { type: "ADVANCE_TICK", operationId: `${prefix}.tick.${attempt}`, advancedAtRealMs: REVIEWED_AT_MS });
+      ? gameReducer(next, { type: "OPEN_CHART", operationId: `${prefix}.open.${attempt}`, encounterId }, retainedContext)
+      : gameReducer(next, { type: "ADVANCE_TICK", operationId: `${prefix}.tick.${attempt}`, advancedAtRealMs: REVIEWED_AT_MS }, retainedContext);
   }
   throw new Error(`${encounterId} did not become answer-ready.`);
 }
@@ -99,11 +102,11 @@ function runOrdinaryCase(
       patientDisplayName: `Statistics Patient ${index}`,
       arrivalClass: "routine",
     },
-  );
+   retainedContext,);
   expect(state.operationReceipts[`${prefix}.admit`]?.status).toBe("applied");
   state = readyForPatientQuestion(state, encounterId, prefix);
   for (const [nodeIndex, authoredNode] of clinicalCase.decisionNodes.entries()) {
-    const question = getCurrentQuestion(state, encounterId)!;
+    const question = getCurrentQuestion(state, encounterId, retainedContext)!;
     expect(question.node.id).toBe(authoredNode.id);
     const choice = question.node.answerChoices.find((item) => item.isCorrect === correct)!;
     state = gameReducer(state, {
@@ -113,7 +116,7 @@ function runOrdinaryCase(
       decisionNodeId: question.node.id,
       answerChoiceId: choice.id,
       reviewedAtMs: REVIEWED_AT_MS + index,
-    });
+    }, retainedContext);
     expect(state.operationReceipts[`${prefix}.answer.${nodeIndex}`]?.status).toBe("applied");
     expect(state.learningHistories[question.node.primaryConceptId]?.reviews).toHaveLength(1);
     const nonfinal = nodeIndex < clinicalCase.decisionNodes.length - 1;
@@ -128,7 +131,7 @@ function runOrdinaryCase(
         operationId: `${prefix}.continue.${nodeIndex}`,
         encounterId,
         decisionNodeId: question.node.id,
-      });
+      }, retainedContext);
       expect(state.operationReceipts[`${prefix}.continue.${nodeIndex}`]?.status).toBe("applied");
       expect(state.encounters[encounterId]?.currentNodeIndex).toBe(nodeIndex + 1);
     }
@@ -137,14 +140,14 @@ function runOrdinaryCase(
     type: "ACKNOWLEDGE_TERMINAL_FEEDBACK",
     operationId: `${prefix}.acknowledge`,
     encounterId,
-  });
+  }, retainedContext);
   expect(state.operationReceipts[`${prefix}.acknowledge`]?.status).toBe("applied");
   expect(state.encounters[encounterId]?.lifecycle).toBe("resolved_summary_available");
   state = gameReducer(state, {
     type: "CLOSE_CHART",
     operationId: `${prefix}.close`,
     encounterId,
-  });
+  }, retainedContext);
   expect(state.operationReceipts[`${prefix}.close`]?.status).toBe("applied");
   expect(state.encounters[encounterId]?.lifecycle).toBe("resolved");
   for (const node of clinicalCase.decisionNodes) {
@@ -213,10 +216,10 @@ describe("GS-028 statistics and ethics runtime admission", () => {
     expect(QUESTION_NEW_N2_ROUND3_PRE_RELEASE.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3."))).toHaveLength(1048 + 39);
     expect(QUESTION_NEW_N2_ROUND3_PRE_RELEASE.cases.filter(c => !c.id.startsWith("case.gs028g.") && !c.id.startsWith("case.pediatric-clinic.") && !c.id.startsWith("case.variety3.")).flatMap((item) => item.decisionNodes)).toHaveLength(1343 + 39);
     for (const concept of GS028_STATS_ETHICS_20260929_TESTED_CONCEPTS) {
-      expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.filter((item) => item.id === concept.id)).toHaveLength(1);
+      expect(retainedContext.clinicalRelease.concepts.filter((item) => item.id === concept.id)).toHaveLength(1);
     }
     for (const clinicalCase of GS028_STATS_ETHICS_20260929_CASES) {
-      expect(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter((item) => item.id === clinicalCase.id)).toHaveLength(1);
+      expect(retainedContext.clinicalRelease.cases.filter((item) => item.id === clinicalCase.id)).toHaveLength(1);
     }
   });
 
@@ -239,16 +242,16 @@ describe("GS-028 statistics and ethics runtime admission", () => {
     const cashBefore = state.cashCents;
     const settlementsBefore = state.settlements.length;
     const incomeBefore = state.serviceIncomeReceipts.length;
-    state = gameReducer(state, { type: "ADVANCE_TICK", operationId: "gs028se.employee.schedule", advancedAtRealMs: REVIEWED_AT_MS });
+    state = gameReducer(state, { type: "ADVANCE_TICK", operationId: "gs028se.employee.schedule", advancedAtRealMs: REVIEWED_AT_MS }, retainedContext);
     const discussion = Object.values(state.employeeDiscussions ?? {})[0]!;
     expect(discussion).toBeDefined();
     expect(employeeCases.some((clinicalCase) => clinicalCase.id === discussion.frozenCase.id)).toBe(true);
     expect(Object.keys(state.encounters)).toEqual([]);
-    state = gameReducer(state, { type: "OPEN_EMPLOYEE_DISCUSSION", operationId: "gs028se.employee.open", discussionId: discussion.id });
-    for (let attempt = 0; attempt < 30 && !getCurrentEmployeeDiscussionQuestion(state, discussion.id, PROTOTYPE_DOMAIN_CONTEXT); attempt += 1) {
-      state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `gs028se.employee.travel.${attempt}`, advancedAtRealMs: REVIEWED_AT_MS });
+    state = gameReducer(state, { type: "OPEN_EMPLOYEE_DISCUSSION", operationId: "gs028se.employee.open", discussionId: discussion.id }, retainedContext);
+    for (let attempt = 0; attempt < 30 && !getCurrentEmployeeDiscussionQuestion(state, discussion.id, retainedContext); attempt += 1) {
+      state = gameReducer(state, { type: "ADVANCE_TICK", operationId: `gs028se.employee.travel.${attempt}`, advancedAtRealMs: REVIEWED_AT_MS }, retainedContext);
     }
-    const question = getCurrentEmployeeDiscussionQuestion(state, discussion.id, PROTOTYPE_DOMAIN_CONTEXT)!;
+    const question = getCurrentEmployeeDiscussionQuestion(state, discussion.id, retainedContext)!;
     const correct = question.node.answerChoices.find((choice) => choice.isCorrect)!;
     state = gameReducer(state, {
       type: "SUBMIT_EMPLOYEE_DISCUSSION_ANSWER",
@@ -257,7 +260,7 @@ describe("GS-028 statistics and ethics runtime admission", () => {
       decisionNodeId: question.node.id,
       answerChoiceId: correct.id,
       reviewedAtMs: REVIEWED_AT_MS,
-    });
+    }, retainedContext);
     expect(state.learningHistories[question.node.primaryConceptId]?.reviews).toHaveLength(1);
     expect(state.cashCents).toBe(cashBefore);
     expect(state.settlements).toHaveLength(settlementsBefore);

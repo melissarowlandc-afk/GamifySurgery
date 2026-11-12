@@ -1,0 +1,147 @@
+{
+  "on": "2026-11-12",
+  "milestone": "release-port34",
+  "capturePath": "tools/question-quality/fixtures/question-topic-acceptance-batch4-source-migration-20261111.json",
+  "capturedFixtureSha256": "20e1bcc968ece681983bddbe3c41676cfad545141963e7932d6dda7503638114",
+  "testSupportSha256": "bc1b4ba757b0110e8154905dfc2137ae8309a31973e89c5aa6644f4c66b2f15e",
+  "paths": [
+    {
+      "path": "packages/clinical-content/src/question-program-batch3-acceptance-test-support.ts",
+      "mainBeforeSha256": "11ef2cfa21b2b386a85cc79093216c762b84e93e7a3478173c2e3c7770115c00",
+      "mainAfterSha256": "3b3bd2c697c495966c8404c83531528b6a3dfc236dfaa08bc72eb78373f8b46e",
+      "releaseBeforeSha256": "0580d2b8a1db317d27fb2f404a45656b29b65b8c94c8f4dcef66bd179ddd431e",
+      "requiredReleaseSha256": "c81cd196af8d4c4dddd28b8bf98dbd8bf659bec839c64feb60b5c9c4bee681fb",
+      "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+      "mainBeforeSha256": "f9e621ce2b0937ff147dfb072a7f93fe94033c4744c4af534a3409fb9756064e",
+      "mainAfterSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+      "releaseBeforeSha256": "15db60305e031085c1718ff46d7da0844d2052fa074d13987bb83073ac206e39",
+      "requiredReleaseSha256": "dc12df9f47c435073acb000e9f3dbbec05c9425ca12acb20cbfaa7546ad1cf52",
+      "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+    }
+  ],
+  "authorizationHistory": [
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port34-port",
+      "priorFixtureSha256": "2cd138c6455a00cca671d2e22734505cf65001045a568aaaaf97ff2815c502dd",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-test-support.ts",
+          "mainBeforeSha256": "11ef2cfa21b2b386a85cc79093216c762b84e93e7a3478173c2e3c7770115c00",
+          "mainAfterSha256": "3b3bd2c697c495966c8404c83531528b6a3dfc236dfaa08bc72eb78373f8b46e",
+          "releaseBeforeSha256": "0580d2b8a1db317d27fb2f404a45656b29b65b8c94c8f4dcef66bd179ddd431e",
+          "requiredReleaseSha256": "c81cd196af8d4c4dddd28b8bf98dbd8bf659bec839c64feb60b5c9c4bee681fb",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "f9e621ce2b0937ff147dfb072a7f93fe94033c4744c4af534a3409fb9756064e",
+          "mainAfterSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "releaseBeforeSha256": "15db60305e031085c1718ff46d7da0844d2052fa074d13987bb83073ac206e39",
+          "requiredReleaseSha256": "f10400d35c1b6ce9b5f5c4b8c169608cf15c112519bf3cfd808ed8201f59a0dd",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "beforeSha256": "f10400d35c1b6ce9b5f5c4b8c169608cf15c112519bf3cfd808ed8201f59a0dd",
+          "afterSha256": "446e9bd32bbd733194f0416ce5139c611f3cb0abf2dc567d1aeebe5040a1ad06"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port34-expectations",
+      "priorFixtureSha256": "0c431dfcf6df7bb922816c6cebd8a53716e819df6cfc1560d8660e5a1fde2e43",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-test-support.ts",
+          "mainBeforeSha256": "11ef2cfa21b2b386a85cc79093216c762b84e93e7a3478173c2e3c7770115c00",
+          "mainAfterSha256": "3b3bd2c697c495966c8404c83531528b6a3dfc236dfaa08bc72eb78373f8b46e",
+          "releaseBeforeSha256": "0580d2b8a1db317d27fb2f404a45656b29b65b8c94c8f4dcef66bd179ddd431e",
+          "requiredReleaseSha256": "c81cd196af8d4c4dddd28b8bf98dbd8bf659bec839c64feb60b5c9c4bee681fb",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "f9e621ce2b0937ff147dfb072a7f93fe94033c4744c4af534a3409fb9756064e",
+          "mainAfterSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "releaseBeforeSha256": "15db60305e031085c1718ff46d7da0844d2052fa074d13987bb83073ac206e39",
+          "requiredReleaseSha256": "446e9bd32bbd733194f0416ce5139c611f3cb0abf2dc567d1aeebe5040a1ad06",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "beforeSha256": "446e9bd32bbd733194f0416ce5139c611f3cb0abf2dc567d1aeebe5040a1ad06",
+          "afterSha256": "38ee59b904a0bd934c3a84c05c6ce7607b05e012acf651659944d3aa75b01768"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port34-evidence",
+      "priorFixtureSha256": "6586341f4bf06578716ac38e057d5d6df5861dd242e289e0b1117278d3d9157e",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-test-support.ts",
+          "mainBeforeSha256": "11ef2cfa21b2b386a85cc79093216c762b84e93e7a3478173c2e3c7770115c00",
+          "mainAfterSha256": "3b3bd2c697c495966c8404c83531528b6a3dfc236dfaa08bc72eb78373f8b46e",
+          "releaseBeforeSha256": "0580d2b8a1db317d27fb2f404a45656b29b65b8c94c8f4dcef66bd179ddd431e",
+          "requiredReleaseSha256": "c81cd196af8d4c4dddd28b8bf98dbd8bf659bec839c64feb60b5c9c4bee681fb",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "f9e621ce2b0937ff147dfb072a7f93fe94033c4744c4af534a3409fb9756064e",
+          "mainAfterSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "releaseBeforeSha256": "15db60305e031085c1718ff46d7da0844d2052fa074d13987bb83073ac206e39",
+          "requiredReleaseSha256": "38ee59b904a0bd934c3a84c05c6ce7607b05e012acf651659944d3aa75b01768",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "beforeSha256": "38ee59b904a0bd934c3a84c05c6ce7607b05e012acf651659944d3aa75b01768",
+          "afterSha256": "fd0db9f4e2ce992cdaa0efe2713eafb143d32e542b8036280d752be3bd8ffe4d"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port34-entry-size",
+      "priorFixtureSha256": "96157e5bd5d647e95a7625e7c94532010274555f357027b155e851b9393987fc",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-test-support.ts",
+          "mainBeforeSha256": "11ef2cfa21b2b386a85cc79093216c762b84e93e7a3478173c2e3c7770115c00",
+          "mainAfterSha256": "3b3bd2c697c495966c8404c83531528b6a3dfc236dfaa08bc72eb78373f8b46e",
+          "releaseBeforeSha256": "0580d2b8a1db317d27fb2f404a45656b29b65b8c94c8f4dcef66bd179ddd431e",
+          "requiredReleaseSha256": "c81cd196af8d4c4dddd28b8bf98dbd8bf659bec839c64feb60b5c9c4bee681fb",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "f9e621ce2b0937ff147dfb072a7f93fe94033c4744c4af534a3409fb9756064e",
+          "mainAfterSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "releaseBeforeSha256": "15db60305e031085c1718ff46d7da0844d2052fa074d13987bb83073ac206e39",
+          "requiredReleaseSha256": "fd0db9f4e2ce992cdaa0efe2713eafb143d32e542b8036280d752be3bd8ffe4d",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "beforeSha256": "fd0db9f4e2ce992cdaa0efe2713eafb143d32e542b8036280d752be3bd8ffe4d",
+          "afterSha256": "dc12df9f47c435073acb000e9f3dbbec05c9425ca12acb20cbfaa7546ad1cf52"
+        }
+      ]
+    }
+  ]
+}

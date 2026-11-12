@@ -1,0 +1,1430 @@
+{
+  "checkedOn": "2026-11-11",
+  "authority": "Manager batch4 acceptance and literal-name correction rule",
+  "records": [
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.hernia-ventral-abdominal-wall.epigastric-pain-attribution.v1",
+      "caseId": "case.topic.hernia-ventral-abdominal-wall.epigastric-pain-attribution.v1",
+      "literalName": "Luis Carter",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "60be55969aa7a4a834ca53410a4fdd6b7f89bfdf62fbf85400f6032599fc23d9",
+      "beforeQuestionSha256": {
+        "question.topic.hernia-ventral-abdominal-wall.epigastric-referral.v1": "bcfcd562fedc43597715638aaed8b9149908e533185cc133a8caa1d54f33fb28"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Luis Carter, a 54-year-old man, returns to clinic after core rehabilitation for a broad midline ridge. His balance has improved, but lifting still produces focal pain above the navel. Standing examination shows fat protruding through a small gap there; pressure returning the fat through the gap stops the pain. The broad ridge itself is painless.",
+          "after": "{patientName}, a 54-year-old man, returns to clinic after core rehabilitation for a broad midline ridge. His balance has improved, but lifting still produces focal pain above the navel. Standing examination shows fat protruding through a small gap there; pressure returning the fat through the gap stops the pain. The broad ridge itself is painless."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which next plan best addresses Luis Carter's persistent lifting pain?",
+          "after": "Which next plan best addresses {patientName}'s persistent lifting pain?"
+        },
+        {
+          "target": "question.topic.hernia-ventral-abdominal-wall.epigastric-referral.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which next plan best addresses Luis Carter's persistent lifting pain?",
+          "after": "Which next plan best addresses {patientName}'s persistent lifting pain?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.hernia-ventral-abdominal-wall.mesh-failed-salvage-standalone.v1",
+      "caseId": "case.topic.hernia-ventral-abdominal-wall.mesh-failed-salvage-standalone.v1",
+      "literalName": "Daniel Brooks",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "21f25910335472a15734f69709b6edd4833701cd2b1497a7df557092b80b99d3",
+      "beforeQuestionSha256": {
+        "question.topic.hernia-ventral-abdominal-wall.mesh-failed-salvage.v1": "f5406b64c5cc192fe7b30c5a7a644d6ace69d90a321b91b52e2046a77e57e6c2"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Daniel Brooks, a 58-year-old man, attends clinic while the founder reviews his hospital records after his first incisional mesh repair. Drainage had begun recently. At the recorded assessment he was alert, eating and haemodynamically stable. The operative record placed macroporous monofilament polypropylene outside the peritoneal cavity. CT showed a localized fluid cavity around part of that mesh. A deep sample grew bacteria; the skin opening communicated with the cavity. No bowel communication was demonstrated on the completed evaluation.",
+          "after": "{patientName}, a 58-year-old man, attends clinic while the founder reviews his hospital records after his first incisional mesh repair. Drainage had begun recently. At the recorded assessment he was alert, eating and haemodynamically stable. The operative record placed macroporous monofilament polypropylene outside the peritoneal cavity. CT showed a localized fluid cavity around part of that mesh. A deep sample grew bacteria; the skin opening communicated with the cavity. No bowel communication was demonstrated on the completed evaluation."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which source-control recommendation now best fits Daniel Brooks's persistent infection?",
+          "after": "Which source-control recommendation now best fits {patientName}'s persistent infection?"
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "currentUpdate"
+          ],
+          "before": "The drain reached the cavity, the antibiotic course matched the deep culture, and repeat imaging showed that the fluid cavity had collapsed. Purulent drainage nevertheless returned through a tract to the retained mesh. Repeat deep culture grew the same organism. Daniel remained stable.",
+          "after": "The drain reached the cavity, the antibiotic course matched the deep culture, and repeat imaging showed that the fluid cavity had collapsed. Purulent drainage nevertheless returned through a tract to the retained mesh. Repeat deep culture grew the same organism. {patientName} remained stable."
+        },
+        {
+          "target": "question.topic.hernia-ventral-abdominal-wall.mesh-failed-salvage.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which source-control recommendation now best fits Daniel Brooks's persistent infection?",
+          "after": "Which source-control recommendation now best fits {patientName}'s persistent infection?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.hernia-ventral-abdominal-wall.primary-observation-round2.v2",
+      "caseId": "case.topic.hernia-ventral-abdominal-wall.primary-observation-round2.v2",
+      "literalName": "Maya Bennett",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "2745bffd0e98286ef446cc2fb5b4bbfefde3d79cddb2c31082030e82403da89c",
+      "beforeQuestionSha256": {
+        "question.topic.hernia-ventral-abdominal-wall.primary-observation.v2": "a0ccf9db82013b59477cbf1b11ce565e2725ddc9587c0240fc3c1d9017fce731"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Maya Bennett, a 47-year-old woman, attends clinic because her middle abdomen domes and feels weak when she rises from a chair. Ultrasound during the movement shows the rectus muscles separating across a broad segment while tissue remains continuous between them. A separate small opening at the navel admits fat during straining and empties when she lies down. Pressing the navel and reducing that protrusion do not reproduce or relieve the weakness; supporting the broad midline does. She has not tried supervised rehabilitation.",
+          "after": "{patientName}, a 47-year-old woman, attends clinic because her middle abdomen domes and feels weak when she rises from a chair. Ultrasound during the movement shows the rectus muscles separating across a broad segment while tissue remains continuous between them. A separate small opening at the navel admits fat during straining and empties when she lies down. Pressing the navel and reducing that protrusion do not reproduce or relieve the weakness; supporting the broad midline does. She has not tried supervised rehabilitation."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which initial treatment sequence best fits Maya Bennett's abdominal-wall findings and functional complaint?",
+          "after": "Which initial treatment sequence best fits {patientName}'s abdominal-wall findings and functional complaint?"
+        },
+        {
+          "target": "question.topic.hernia-ventral-abdominal-wall.primary-observation.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which initial treatment sequence best fits Maya Bennett's abdominal-wall findings and functional complaint?",
+          "after": "Which initial treatment sequence best fits {patientName}'s abdominal-wall findings and functional complaint?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.hernia-ventral-abdominal-wall.controlled-emergency-material-round2.v2",
+      "caseId": "case.topic.hernia-ventral-abdominal-wall.controlled-emergency-material-round2.v2",
+      "literalName": "Thomas Avery",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "beeda768bf7fe47a30bcf645855fd69eee32432804b63cb8265c781141213853",
+      "beforeQuestionSha256": {
+        "question.topic.hernia-ventral-abdominal-wall.controlled-emergency-material.v2": "032c39187efd5400c49946cc7ec444bcc0983f90f82e46855ed92f4d82fa9496"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Thomas Avery, a 60-year-old man, attends clinic after discharge while the founder reviews an outside emergency ventral-hernia operation. The trapped bowel regained perfusion after release. During adhesiolysis a full-thickness small-bowel enterotomy was recognized immediately and securely repaired. A limited local spill was removed; repeated inspection found no continuing leak, residual contamination or bowel segment needing reassessment. He was off vasoactive support before and after this event, with maintained perfusion and no ongoing resuscitation requirement. The fascia met with gentle approximation and a closed tissue layer separated bowel from the available reinforcement plane.",
+          "after": "{patientName}, a 60-year-old man, attends clinic after discharge while the founder reviews an outside emergency ventral-hernia operation. The trapped bowel regained perfusion after release. During adhesiolysis a full-thickness small-bowel enterotomy was recognized immediately and securely repaired. A limited local spill was removed; repeated inspection found no continuing leak, residual contamination or bowel segment needing reassessment. He was off vasoactive support before and after this event, with maintained perfusion and no ongoing resuscitation requirement. The fascia met with gentle approximation and a closed tissue layer separated bowel from the available reinforcement plane."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which reinforcement strategy best fits Thomas Avery's recorded end-of-operation findings?",
+          "after": "Which reinforcement strategy best fits {patientName}'s recorded end-of-operation findings?"
+        },
+        {
+          "target": "question.topic.hernia-ventral-abdominal-wall.controlled-emergency-material.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which reinforcement strategy best fits Thomas Avery's recorded end-of-operation findings?",
+          "after": "Which reinforcement strategy best fits {patientName}'s recorded end-of-operation findings?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.hernia-ventral-abdominal-wall.asymptomatic-seroma-observation-round2.v2",
+      "caseId": "case.topic.hernia-ventral-abdominal-wall.asymptomatic-seroma-observation-round2.v2",
+      "literalName": "Erin Walsh",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "420ef0a8dab556b6c7017d23020cbf181d135696abe058e2fe6aa539060bebf9",
+      "beforeQuestionSha256": {
+        "question.topic.hernia-ventral-abdominal-wall.asymptomatic-seroma-observation.v2": "7f98875661c1e92ef33a237ada73ab88f6f38927fca6d2d6ab62d27f7967649f"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Erin Walsh, a 56-year-old woman, attends clinic three weeks after laparoscopic ventral mesh repair. A painless soft fullness at the old sac is smaller than at the prior visit and does not limit movement. Ultrasound shows simple fluid, an intact repair and no tract to the skin. The incision is now closed without redness, tenderness or drainage; she has no fever. A result posted today reports methicillin-susceptible Staphylococcus aureus from a swab rubbed over a shallow skin separation at the earlier visit. The fluid pocket was never sampled.",
+          "after": "{patientName}, a 56-year-old woman, attends clinic three weeks after laparoscopic ventral mesh repair. A painless soft fullness at the old sac is smaller than at the prior visit and does not limit movement. Ultrasound shows simple fluid, an intact repair and no tract to the skin. The incision is now closed without redness, tenderness or drainage; she has no fever. A result posted today reports methicillin-susceptible Staphylococcus aureus from a swab rubbed over a shallow skin separation at the earlier visit. The fluid pocket was never sampled."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which management plan best fits Erin Walsh's current fluid-pocket course and the newly posted culture result?",
+          "after": "Which management plan best fits {patientName}'s current fluid-pocket course and the newly posted culture result?"
+        },
+        {
+          "target": "question.topic.hernia-ventral-abdominal-wall.asymptomatic-seroma-observation.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which management plan best fits Erin Walsh's current fluid-pocket course and the newly posted culture result?",
+          "after": "Which management plan best fits {patientName}'s current fluid-pocket course and the newly posted culture result?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.perioperative-risk-recovery.beta-exposure.v2",
+      "caseId": "case.topic.perioperative-risk-recovery.beta-exposure.v2",
+      "literalName": "Marcus Reed",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "98723a5e3c851e3dda9e0d7dfd364eb39856266b93ce2fce9ea21b0903ed74b5",
+      "beforeQuestionSha256": {
+        "question.topic.perioperative-risk-recovery.beta-new-exposure.v2": "f39fd9077c1cb3f4cb8ced0d5e8377273c72336c9f5ebf399556a5158a153a0b"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "learningSummary"
+          ],
+          "before": "First reconcile what Marcus has actually taken: an unused bottle and his account contradict ongoing metoprolol exposure. Then use the indication and decision time. This is controlled hypertension without another represented beta-blocker indication, so tomorrow’s copied order would be an operative-day introduction, not continuation.",
+          "after": "First reconcile what {patientName} has actually taken: an unused bottle and his account contradict ongoing metoprolol exposure. Then use the indication and decision time. This is controlled hypertension without another represented beta-blocker indication, so tomorrow’s copied order would be an operative-day introduction, not continuation."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "explanation"
+          ],
+          "before": "First reconcile what Marcus has actually taken: an unused bottle and his account contradict ongoing metoprolol exposure. Then use the indication and decision time. This is controlled hypertension without another represented beta-blocker indication, so tomorrow’s copied order would be an operative-day introduction, not continuation.",
+          "after": "First reconcile what {patientName} has actually taken: an unused bottle and his account contradict ongoing metoprolol exposure. Then use the indication and decision time. This is controlled hypertension without another represented beta-blocker indication, so tomorrow’s copied order would be an operative-day introduction, not continuation."
+        },
+        {
+          "target": "question.topic.perioperative-risk-recovery.beta-new-exposure.v2",
+          "path": [
+            "explanation"
+          ],
+          "before": "First reconcile what Marcus has actually taken: an unused bottle and his account contradict ongoing metoprolol exposure. Then use the indication and decision time. This is controlled hypertension without another represented beta-blocker indication, so tomorrow’s copied order would be an operative-day introduction, not continuation.",
+          "after": "First reconcile what {patientName} has actually taken: an unused bottle and his account contradict ongoing metoprolol exposure. Then use the indication and decision time. This is controlled hypertension without another represented beta-blocker indication, so tomorrow’s copied order would be an operative-day introduction, not continuation."
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.perioperative-risk-recovery.delirium-medication-course-delirium-anticholinergic-order.v2",
+      "caseId": "case.topic.perioperative-risk-recovery.delirium-medication-course-delirium-anticholinergic-order.v2",
+      "literalName": "Helen Grant",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "2ce45c229a0b2f2359bf23ac42be68559e6ffcee5ed8884ae45583246d7e96ef",
+      "beforeQuestionSha256": {
+        "question.topic.perioperative-risk-recovery.delirium-anticholinergic-order.v2": "4b6b710d9cfff27714c8a5af514d4f8e61a059573af6bec06b3708abe4c783d6"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "learningSummary"
+          ],
+          "before": "Interpret why each medicine is present and what Helen has actually been receiving. The admission-added anticholinergic sleep order can be removed without abruptly withdrawing a longstanding benzodiazepine or abandoning treatment of substantial pain. This does not approve indefinite clonazepam use or prescribe a taper; it identifies the best immediate order change.",
+          "after": "Interpret why each medicine is present and what {patientName} has actually been receiving. The admission-added anticholinergic sleep order can be removed without abruptly withdrawing a longstanding benzodiazepine or abandoning treatment of substantial pain. This does not approve indefinite clonazepam use or prescribe a taper; it identifies the best immediate order change."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "explanation"
+          ],
+          "before": "Interpret why each medicine is present and what Helen has actually been receiving. The admission-added anticholinergic sleep order can be removed without abruptly withdrawing a longstanding benzodiazepine or abandoning treatment of substantial pain. This does not approve indefinite clonazepam use or prescribe a taper; it identifies the best immediate order change.",
+          "after": "Interpret why each medicine is present and what {patientName} has actually been receiving. The admission-added anticholinergic sleep order can be removed without abruptly withdrawing a longstanding benzodiazepine or abandoning treatment of substantial pain. This does not approve indefinite clonazepam use or prescribe a taper; it identifies the best immediate order change."
+        },
+        {
+          "target": "question.topic.perioperative-risk-recovery.delirium-anticholinergic-order.v2",
+          "path": [
+            "explanation"
+          ],
+          "before": "Interpret why each medicine is present and what Helen has actually been receiving. The admission-added anticholinergic sleep order can be removed without abruptly withdrawing a longstanding benzodiazepine or abandoning treatment of substantial pain. This does not approve indefinite clonazepam use or prescribe a taper; it identifies the best immediate order change.",
+          "after": "Interpret why each medicine is present and what {patientName} has actually been receiving. The admission-added anticholinergic sleep order can be removed without abruptly withdrawing a longstanding benzodiazepine or abandoning treatment of substantial pain. This does not approve indefinite clonazepam use or prescribe a taper; it identifies the best immediate order change."
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.oncology-genetics-principles.true-negative-plus-vus.standalone.v2",
+      "caseId": "case.topic.oncology-genetics-principles.true-negative-plus-vus.standalone.v2",
+      "literalName": "Elena Moss",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "8be229c513905e10a8007fbfa4e8cb68479ffc8646499748409e3305a4f49bcb",
+      "beforeQuestionSha256": {
+        "question.topic.oncology-genetics-principles.true-negative-plus-vus.v1": "05aaf200fd56ba4d4c72febeba40485e622aa0cacaa447b04592aec43c3da283"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "currentUpdate"
+          ],
+          "before": "Elena's deletion-specific assay returns negative with satisfactory quality controls. Her mother and maternal aunts have reached their late sixties without breast or ovarian cancer. Elena has no prior atypical breast biopsy or therapeutic chest irradiation. Her BRCA1 VUS remains uncertain.",
+          "after": "{patientName}'s deletion-specific assay returns negative with satisfactory quality controls. Her mother and maternal aunts have reached their late sixties without breast or ovarian cancer. {patientName} has no prior atypical breast biopsy or therapeutic chest irradiation. Her BRCA1 VUS remains uncertain."
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.skin-soft-tissue-benign-infection.deep-foot-chart.20261111.v1",
+      "caseId": "case.skin-soft-tissue-benign-infection.deep-foot-chart.20261111.v1",
+      "literalName": "Marcus Reed",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "e99da327ed7c779495f1ca1722ebf62790f38b2ff5158ac9f86cd0146dca9518",
+      "beforeQuestionSha256": {
+        "question.skin-soft-tissue-benign-infection.foot-deep-setting.20261111.v1": "2ea37e1030735ecceb6f8df00ee35e564fa7a42d76b53f8815a7a9483e94474d"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Marcus Reed, a 62-year-old man, attends clinic after a foot-infection admission. The founder reviews the referring hospital's initial records. Oral treatment had reduced the visible redness around a plantar ulcer, but drainage and difficulty bearing weight increased. Imaging described a cavity beneath the plantar fascia extending between flexor tendons; the surface swab was susceptible to the oral drug. He was afebrile with palpable pedal pulses.",
+          "after": "{patientName}, a 62-year-old man, attends clinic after a foot-infection admission. The founder reviews the referring hospital's initial records. Oral treatment had reduced the visible redness around a plantar ulcer, but drainage and difficulty bearing weight increased. Imaging described a cavity beneath the plantar fascia extending between flexor tendons; the surface swab was susceptible to the oral drug. He was afebrile with palpable pedal pulses."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Marcus Reed, a 62-year-old man, attends clinic after a foot-infection admission. The founder reviews the referring hospital's initial records. Oral treatment had reduced the visible redness around a plantar ulcer, but drainage and difficulty bearing weight increased. Imaging described a cavity beneath the plantar fascia extending between flexor tendons; the surface swab was susceptible to the oral drug. He was afebrile with palpable pedal pulses.",
+          "after": "{patientName}, a 62-year-old man, attends clinic after a foot-infection admission. The founder reviews the referring hospital's initial records. Oral treatment had reduced the visible redness around a plantar ulcer, but drainage and difficulty bearing weight increased. Imaging described a cavity beneath the plantar fascia extending between flexor tendons; the surface swab was susceptible to the oral drug. He was afebrile with palpable pedal pulses."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "At the recorded presentation, which initial care plan should Marcus Reed's team have selected for the foot findings?",
+          "after": "At the recorded presentation, which initial care plan should {patientName}'s team have selected for the foot findings?"
+        },
+        {
+          "target": "question.skin-soft-tissue-benign-infection.foot-deep-setting.20261111.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "At the recorded presentation, which initial care plan should Marcus Reed's team have selected for the foot findings?",
+          "after": "At the recorded presentation, which initial care plan should {patientName}'s team have selected for the foot findings?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.skin-soft-tissue-benign-infection.progressive-thigh-chart.20261111.v1",
+      "caseId": "case.skin-soft-tissue-benign-infection.progressive-thigh-chart.20261111.v1",
+      "literalName": "Caleb Stone",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "15660f283e7d5eecd41044c78a6df7b9dd41318c1db2882b94c21ab83ed87977",
+      "beforeQuestionSha256": {
+        "question.skin-soft-tissue-benign-infection.necrotizing-exploration.20261111.v1": "b18380c51ba774a34930794f451e0756c6df958c6b5fbeb55355fee5da9208f5"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Caleb Stone, a 52-year-old man, attends clinic after a thigh-infection admission. The founder reviews the outside hospital's initial record: pain and firm swelling extended beyond a modest area of redness and progressed during antibiotic treatment. CT showed fascial fluid but no gas. The recorded laboratory risk score was low, and his blood pressure was maintained.",
+          "after": "{patientName}, a 52-year-old man, attends clinic after a thigh-infection admission. The founder reviews the outside hospital's initial record: pain and firm swelling extended beyond a modest area of redness and progressed during antibiotic treatment. CT showed fascial fluid but no gas. The recorded laboratory risk score was low, and his blood pressure was maintained."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Caleb Stone, a 52-year-old man, attends clinic after a thigh-infection admission. The founder reviews the outside hospital's initial record: pain and firm swelling extended beyond a modest area of redness and progressed during antibiotic treatment. CT showed fascial fluid but no gas. The recorded laboratory risk score was low, and his blood pressure was maintained.",
+          "after": "{patientName}, a 52-year-old man, attends clinic after a thigh-infection admission. The founder reviews the outside hospital's initial record: pain and firm swelling extended beyond a modest area of redness and progressed during antibiotic treatment. CT showed fascial fluid but no gas. The recorded laboratory risk score was low, and his blood pressure was maintained."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which next intervention should Caleb Stone's hospital team have selected at the recorded presentation?",
+          "after": "Which next intervention should {patientName}'s hospital team have selected at the recorded presentation?"
+        },
+        {
+          "target": "question.skin-soft-tissue-benign-infection.necrotizing-exploration.20261111.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which next intervention should Caleb Stone's hospital team have selected at the recorded presentation?",
+          "after": "Which next intervention should {patientName}'s hospital team have selected at the recorded presentation?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.skin-soft-tissue-benign-infection.recurrence-workup.review2.20261111.v2",
+      "caseId": "case.skin-soft-tissue-benign-infection.recurrence-workup.review2.20261111.v2",
+      "literalName": "Daniel Price",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "4cc92bac3f9e9fb74bf0032099f644d90fdfc6cec26846820d449b9667a904a6",
+      "beforeQuestionSha256": {
+        "question.skin-soft-tissue-benign-infection.recurrence-workup.20261111.v2": "18e213908c25a9c54a6b28aa6bed5d7179b8d16541e0fa57a85dd3a908ace985"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Daniel Price, a 48-year-old man, returns to clinic with recurrent upper-back tenderness and intermittent staining after a wooden splinter puncture and two drainage procedures. The first procedure note describes evacuation of fluid but no recovered solid material. Plain films covered the marked symptomatic area and reported no radiopaque object. A firm focus remains beneath the skin while the surrounding redness has diminished.",
+          "after": "{patientName}, a 48-year-old man, returns to clinic with recurrent upper-back tenderness and intermittent staining after a wooden splinter puncture and two drainage procedures. The first procedure note describes evacuation of fluid but no recovered solid material. Plain films covered the marked symptomatic area and reported no radiopaque object. A firm focus remains beneath the skin while the surrounding redness has diminished."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Daniel Price, a 48-year-old man, returns to clinic with recurrent upper-back tenderness and intermittent staining after a wooden splinter puncture and two drainage procedures. The first procedure note describes evacuation of fluid but no recovered solid material. Plain films covered the marked symptomatic area and reported no radiopaque object. A firm focus remains beneath the skin while the surrounding redness has diminished.",
+          "after": "{patientName}, a 48-year-old man, returns to clinic with recurrent upper-back tenderness and intermittent staining after a wooden splinter puncture and two drainage procedures. The first procedure note describes evacuation of fluid but no recovered solid material. Plain films covered the marked symptomatic area and reported no radiopaque object. A firm focus remains beneath the skin while the surrounding redness has diminished."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which investigation should be selected next for Daniel Price's recurrent upper-back finding?",
+          "after": "Which investigation should be selected next for {patientName}'s recurrent upper-back finding?"
+        },
+        {
+          "target": "question.skin-soft-tissue-benign-infection.recurrence-workup.20261111.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which investigation should be selected next for Daniel Price's recurrent upper-back finding?",
+          "after": "Which investigation should be selected next for {patientName}'s recurrent upper-back finding?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.skin-soft-tissue-benign-infection.hs-deroof.review2.20261111.v2",
+      "caseId": "case.skin-soft-tissue-benign-infection.hs-deroof.review2.20261111.v2",
+      "literalName": "Priya Ellis",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "e9a394cb3f639e606ddf0986f4b938487b3d646b098363ce8bda36f525f77d84",
+      "beforeQuestionSha256": {
+        "question.skin-soft-tissue-benign-infection.hs-deroof.20261111.v2": "d57e774f46eadb78abbe8dd86b1ae9b958c805fc041d58b79ca015eb9bcd7d08"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Priya Ellis, a 34-year-old woman with hidradenitis suppurativa, returns to clinic after medical treatment reduced the formation of new tender nodules. Drainage repeatedly returns from the same two axillary openings. Between them, a narrow band is palpable beneath mobile skin. During procedural mapping a probe passed between the openings in the superficial plane, with scant fluid released. The rest of the axillary skin moves freely during arm elevation.",
+          "after": "{patientName}, a 34-year-old woman with hidradenitis suppurativa, returns to clinic after medical treatment reduced the formation of new tender nodules. Drainage repeatedly returns from the same two axillary openings. Between them, a narrow band is palpable beneath mobile skin. During procedural mapping a probe passed between the openings in the superficial plane, with scant fluid released. The rest of the axillary skin moves freely during arm elevation."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Priya Ellis, a 34-year-old woman with hidradenitis suppurativa, returns to clinic after medical treatment reduced the formation of new tender nodules. Drainage repeatedly returns from the same two axillary openings. Between them, a narrow band is palpable beneath mobile skin. During procedural mapping a probe passed between the openings in the superficial plane, with scant fluid released. The rest of the axillary skin moves freely during arm elevation.",
+          "after": "{patientName}, a 34-year-old woman with hidradenitis suppurativa, returns to clinic after medical treatment reduced the formation of new tender nodules. Drainage repeatedly returns from the same two axillary openings. Between them, a narrow band is palpable beneath mobile skin. During procedural mapping a probe passed between the openings in the superficial plane, with scant fluid released. The rest of the axillary skin moves freely during arm elevation."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which procedure is the best next option for Priya Ellis's persistent axillary problem?",
+          "after": "Which procedure is the best next option for {patientName}'s persistent axillary problem?"
+        },
+        {
+          "target": "question.skin-soft-tissue-benign-infection.hs-deroof.20261111.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which procedure is the best next option for Priya Ellis's persistent axillary problem?",
+          "after": "Which procedure is the best next option for {patientName}'s persistent axillary problem?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.skin-soft-tissue-benign-infection.pilonidal-closure.review2.20261111.v2",
+      "caseId": "case.skin-soft-tissue-benign-infection.pilonidal-closure.review2.20261111.v2",
+      "literalName": "Jordan Hale",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "b915c36f5d3d848b3c3dd7f098caef5a5b8c7f3c537a9cf7546bb4761a0c2156",
+      "beforeQuestionSha256": {
+        "question.skin-soft-tissue-benign-infection.pilonidal-closure.20261111.v2": "f1537b4663a4049313055cf15c563671eba40878cdb1d1cbfc80ff4cb4f1c997"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Jordan Hale, a 25-year-old man, attends an elective clinic consultation after drainage of an upper-cleft abscess. The tense swelling, warmth and acute pain have resolved. His earlier operations included pit excision followed by excision with a primary midline closure; drainage subsequently reopened along that scar. Current mapping shows connected lateral tracts and the scarred midline. Excision is planned. He can manage the expected care of a closed wound but lacks help for prolonged daily deep open-cavity dressing care; wound complications could still change that burden.",
+          "after": "{patientName}, a 25-year-old man, attends an elective clinic consultation after drainage of an upper-cleft abscess. The tense swelling, warmth and acute pain have resolved. His earlier operations included pit excision followed by excision with a primary midline closure; drainage subsequently reopened along that scar. Current mapping shows connected lateral tracts and the scarred midline. Excision is planned. He can manage the expected care of a closed wound but lacks help for prolonged daily deep open-cavity dressing care; wound complications could still change that burden."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Jordan Hale, a 25-year-old man, attends an elective clinic consultation after drainage of an upper-cleft abscess. The tense swelling, warmth and acute pain have resolved. His earlier operations included pit excision followed by excision with a primary midline closure; drainage subsequently reopened along that scar. Current mapping shows connected lateral tracts and the scarred midline. Excision is planned. He can manage the expected care of a closed wound but lacks help for prolonged daily deep open-cavity dressing care; wound complications could still change that burden.",
+          "after": "{patientName}, a 25-year-old man, attends an elective clinic consultation after drainage of an upper-cleft abscess. The tense swelling, warmth and acute pain have resolved. His earlier operations included pit excision followed by excision with a primary midline closure; drainage subsequently reopened along that scar. Current mapping shows connected lateral tracts and the scarred midline. Excision is planned. He can manage the expected care of a closed wound but lacks help for prolonged daily deep open-cavity dressing care; wound complications could still change that burden."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which wound strategy best fits Jordan Hale's recurrent cleft disease and current care constraints?",
+          "after": "Which wound strategy best fits {patientName}'s recurrent cleft disease and current care constraints?"
+        },
+        {
+          "target": "question.skin-soft-tissue-benign-infection.pilonidal-closure.20261111.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which wound strategy best fits Jordan Hale's recurrent cleft disease and current care constraints?",
+          "after": "Which wound strategy best fits {patientName}'s recurrent cleft disease and current care constraints?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.skin-soft-tissue-benign-infection.cyst-acute.review2.20261111.v2",
+      "caseId": "case.skin-soft-tissue-benign-infection.cyst-acute.review2.20261111.v2",
+      "literalName": "Robert Lewis",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "a3418b1d6ef0957aae60ec24b646a08523822daadda4b3db66bf2b1edf3e5799",
+      "beforeQuestionSha256": {
+        "question.skin-soft-tissue-benign-infection.cyst-acute.20261111.v2": "5432f7dec914a8a5634a68125b8eb7fb013319bb83e05e88a81098d9abf30684"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Robert Lewis, a 42-year-old man, attends clinic with a longstanding upper-back skin lump that intermittently released thick material through a central pore. Before this episode he had booked removal because it caught on his work harness. The lump is now newly warm and erythematous, with a tense tender fluctuant center. Ultrasound describes a superficial debris-containing cavity separate from deeper structures.",
+          "after": "{patientName}, a 42-year-old man, attends clinic with a longstanding upper-back skin lump that intermittently released thick material through a central pore. Before this episode he had booked removal because it caught on his work harness. The lump is now newly warm and erythematous, with a tense tender fluctuant center. Ultrasound describes a superficial debris-containing cavity separate from deeper structures."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Robert Lewis, a 42-year-old man, attends clinic with a longstanding upper-back skin lump that intermittently released thick material through a central pore. Before this episode he had booked removal because it caught on his work harness. The lump is now newly warm and erythematous, with a tense tender fluctuant center. Ultrasound describes a superficial debris-containing cavity separate from deeper structures.",
+          "after": "{patientName}, a 42-year-old man, attends clinic with a longstanding upper-back skin lump that intermittently released thick material through a central pore. Before this episode he had booked removal because it caught on his work harness. The lump is now newly warm and erythematous, with a tense tender fluctuant center. Ultrasound describes a superficial debris-containing cavity separate from deeper structures."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which procedural plan should be selected for Robert Lewis's current back lesion?",
+          "after": "Which procedural plan should be selected for {patientName}'s current back lesion?"
+        },
+        {
+          "target": "question.skin-soft-tissue-benign-infection.cyst-acute.20261111.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which procedural plan should be selected for Robert Lewis's current back lesion?",
+          "after": "Which procedural plan should be selected for {patientName}'s current back lesion?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
+      "caseId": "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
+      "literalName": "Nora Bennett",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "8ed45ddc5b27c76938c1bdf4e8341fb276259ac5052ed2a042b064c68f291ee6",
+      "beforeQuestionSha256": {
+        "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1": "da52be7264e74f8161241feec55283e2bce381f12a119881fbd5637a21a5bb53"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "learningSummary"
+          ],
+          "before": "The uneventful exposure and uninformative negative panel do not clear Nora's family risk. The proposed pathway avoids triggers and documents actual preparedness. Proceed with that pathway while arranging specialist assessment rather than require testing completion or routine dantrolene prophylaxis.",
+          "after": "The uneventful exposure and uninformative negative panel do not clear {patientName}'s family risk. The proposed pathway avoids triggers and documents actual preparedness. Proceed with that pathway while arranging specialist assessment rather than require testing completion or routine dantrolene prophylaxis."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "explanation"
+          ],
+          "before": "The uneventful exposure and uninformative negative panel do not clear Nora's family risk. The proposed pathway avoids triggers and documents actual preparedness. Proceed with that pathway while arranging specialist assessment rather than require testing completion or routine dantrolene prophylaxis.",
+          "after": "The uneventful exposure and uninformative negative panel do not clear {patientName}'s family risk. The proposed pathway avoids triggers and documents actual preparedness. Proceed with that pathway while arranging specialist assessment rather than require testing completion or routine dantrolene prophylaxis."
+        },
+        {
+          "target": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+          "path": [
+            "explanation"
+          ],
+          "before": "The uneventful exposure and uninformative negative panel do not clear Nora's family risk. The proposed pathway avoids triggers and documents actual preparedness. Proceed with that pathway while arranging specialist assessment rather than require testing completion or routine dantrolene prophylaxis.",
+          "after": "The uneventful exposure and uninformative negative panel do not clear {patientName}'s family risk. The proposed pathway avoids triggers and documents actual preparedness. Proceed with that pathway while arranging specialist assessment rather than require testing completion or routine dantrolene prophylaxis."
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.adult-urology-gynecology.r2-08.v1",
+      "caseId": "case.topic.adult-urology-gynecology.r2-08.v1",
+      "literalName": "Elena Ward",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "897a884881a4293b6ab07e33e5aed56ea41b34f50760c5af8a196a73dcf93559",
+      "beforeQuestionSha256": {
+        "question.nephrolithiasis.noncontrast-ct-evaluation.v1.topic20261111.v2": "8dd83471b4db60d07c801b22b2d15c84fce12209eefce981a639184e73048cad"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Elena Ward, a 34-year-old woman, reviews an outside flank-pain record with the founder in clinic.",
+          "after": "{patientName}, a 34-year-old woman, reviews an outside flank-pain record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Elena Ward, a 34-year-old woman, reviews an outside flank-pain record with the founder in clinic.",
+          "after": "{patientName}, a 34-year-old woman, reviews an outside flank-pain record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which plan should the team choose for Elena Ward before the proposed ureteroscopy?",
+          "after": "Which plan should the team choose for {patientName} before the proposed ureteroscopy?"
+        },
+        {
+          "target": "question.nephrolithiasis.noncontrast-ct-evaluation.v1.topic20261111.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which plan should the team choose for Elena Ward before the proposed ureteroscopy?",
+          "after": "Which plan should the team choose for {patientName} before the proposed ureteroscopy?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.adult-urology-gynecology.r2-10.v1",
+      "caseId": "case.topic.adult-urology-gynecology.r2-10.v1",
+      "literalName": "Caleb Hayes",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "8894201d91dfe234370738aadbe68e177735e7413c519fdb4ea2bea7a0b57db2",
+      "beforeQuestionSha256": {
+        "question.nephrolithiasis.noncontrast-ct-evaluation.v2.topic20261111.v2": "a977531ce089e407eb8b90dd5e1fe75da2456cdd5eb7adab9d99abd7437a5721"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Caleb Hayes, a 47-year-old man, reviews an outside flank-pain record with the founder in clinic.",
+          "after": "{patientName}, a 47-year-old man, reviews an outside flank-pain record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Caleb Hayes, a 47-year-old man, reviews an outside flank-pain record with the founder in clinic.",
+          "after": "{patientName}, a 47-year-old man, reviews an outside flank-pain record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which plan should the team choose for Caleb Hayes before the proposed ureteroscopy?",
+          "after": "Which plan should the team choose for {patientName} before the proposed ureteroscopy?"
+        },
+        {
+          "target": "question.nephrolithiasis.noncontrast-ct-evaluation.v2.topic20261111.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which plan should the team choose for Caleb Hayes before the proposed ureteroscopy?",
+          "after": "Which plan should the team choose for {patientName} before the proposed ureteroscopy?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.adult-urology-gynecology.r2-14.v1",
+      "caseId": "case.topic.adult-urology-gynecology.r2-14.v1",
+      "literalName": "Marcus Lane",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "05d791aeadb724375f32386a65eb55d4ef40d0e20035d2e7d876497b337526b9",
+      "beforeQuestionSha256": {
+        "question.nephrolithiasis.noncontrast-ct-evaluation.v4.topic20261111.v2": "5414741d85c48e0b29ca85c0ecacbce35e815ee3ab4cb20177b9419366a2f99e"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Marcus Lane, a 41-year-old man, reviews an outside flank-pain record with the founder in clinic.",
+          "after": "{patientName}, a 41-year-old man, reviews an outside flank-pain record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Marcus Lane, a 41-year-old man, reviews an outside flank-pain record with the founder in clinic.",
+          "after": "{patientName}, a 41-year-old man, reviews an outside flank-pain record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which plan should the team choose for Marcus Lane before the proposed ureteroscopy?",
+          "after": "Which plan should the team choose for {patientName} before the proposed ureteroscopy?"
+        },
+        {
+          "target": "question.nephrolithiasis.noncontrast-ct-evaluation.v4.topic20261111.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which plan should the team choose for Marcus Lane before the proposed ureteroscopy?",
+          "after": "Which plan should the team choose for {patientName} before the proposed ureteroscopy?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.adult-urology-gynecology.pass-single-23.v1",
+      "caseId": "case.topic.adult-urology-gynecology.pass-single-23.v1",
+      "literalName": "Tessa Morgan",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "d936d59d9fa93e6a8d9039abca3b9d5f911251357e2d3f52a19fdfdb927534cf",
+      "beforeQuestionSha256": {
+        "question.topic.adult-urology-gynecology.ectopic-active-liver.v1": "3cac9d1e6c356ecaf6f122a6e2868117f1dddc78369925610334c7bf18fd9936"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Tessa Morgan, a 31-year-old woman, reviews an outside early-pregnancy record with the founder in clinic.",
+          "after": "{patientName}, a 31-year-old woman, reviews an outside early-pregnancy record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Tessa Morgan, a 31-year-old woman, reviews an outside early-pregnancy record with the founder in clinic.",
+          "after": "{patientName}, a 31-year-old woman, reviews an outside early-pregnancy record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which treatment pathway should the team choose for Tessa Morgan at this stage?",
+          "after": "Which treatment pathway should the team choose for {patientName} at this stage?"
+        },
+        {
+          "target": "question.topic.adult-urology-gynecology.ectopic-active-liver.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which treatment pathway should the team choose for Tessa Morgan at this stage?",
+          "after": "Which treatment pathway should the team choose for {patientName} at this stage?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.adult-urology-gynecology.r2-24.v1",
+      "caseId": "case.topic.adult-urology-gynecology.r2-24.v1",
+      "literalName": "Claire Foster",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "f7b4e130689bab68cbeced1f498fda0e025e75729b084e3740099f80c5ca0c33",
+      "beforeQuestionSha256": {
+        "question.topic.adult-urology-gynecology.heterotopic-assess.v2": "c6b7e2c3ad65fbcd6ef886ef62e8b4b8b104f86f203a00abd517a810d521a2b4"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Claire Foster, a 33-year-old woman, reviews an outside assisted-conception assessment with the founder in clinic.",
+          "after": "{patientName}, a 33-year-old woman, reviews an outside assisted-conception assessment with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Claire Foster, a 33-year-old woman, reviews an outside assisted-conception assessment with the founder in clinic.",
+          "after": "{patientName}, a 33-year-old woman, reviews an outside assisted-conception assessment with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which current assessment pathway should the team choose for Claire Foster?",
+          "after": "Which current assessment pathway should the team choose for {patientName}?"
+        },
+        {
+          "target": "question.topic.adult-urology-gynecology.heterotopic-assess.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which current assessment pathway should the team choose for Claire Foster?",
+          "after": "Which current assessment pathway should the team choose for {patientName}?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.adult-urology-gynecology.pass-single-25.v1",
+      "caseId": "case.topic.adult-urology-gynecology.pass-single-25.v1",
+      "literalName": "Evan Collins",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "b5ee7565d0f13a773a8cc858b9e166354682f1d2d78fa35be141fc182572f9ba",
+      "beforeQuestionSha256": {
+        "question.topic.adult-urology-gynecology.infected-stone-drain.v1": "e0b201cd6ae855e336b46f178873a47ccfe85169302238836e2b24d8daf82d02"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Evan Collins, a 54-year-old man, reviews an outside flank-pain admission record with the founder in clinic.",
+          "after": "{patientName}, a 54-year-old man, reviews an outside flank-pain admission record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Evan Collins, a 54-year-old man, reviews an outside flank-pain admission record with the founder in clinic.",
+          "after": "{patientName}, a 54-year-old man, reviews an outside flank-pain admission record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which urologic strategy should the hospital team choose next for Evan Collins?",
+          "after": "Which urologic strategy should the hospital team choose next for {patientName}?"
+        },
+        {
+          "target": "question.topic.adult-urology-gynecology.infected-stone-drain.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which urologic strategy should the hospital team choose next for Evan Collins?",
+          "after": "Which urologic strategy should the hospital team choose next for {patientName}?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.adult-urology-gynecology.r2-26.v1",
+      "caseId": "case.topic.adult-urology-gynecology.r2-26.v1",
+      "literalName": "Evan Collins",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "afc27a096dbb9129fe1f9d357d0d8fed826a440f02c8c40f85d9b926dba99d1e",
+      "beforeQuestionSha256": {
+        "question.topic.adult-urology-gynecology.infected-stone-definitive.v2": "e4089a457698eee2e8e91bc3ca7ce5615ed81d2035f9e4258e0d3d179f1942a2"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Evan Collins, a 54-year-old man, reviews an outside flank-pain admission record with the founder in clinic.",
+          "after": "{patientName}, a 54-year-old man, reviews an outside flank-pain admission record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Evan Collins, a 54-year-old man, reviews an outside flank-pain admission record with the founder in clinic.",
+          "after": "{patientName}, a 54-year-old man, reviews an outside flank-pain admission record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which stone-clearance procedure should the team choose for Evan Collins under this treatment plan?",
+          "after": "Which stone-clearance procedure should the team choose for {patientName} under this treatment plan?"
+        },
+        {
+          "target": "question.topic.adult-urology-gynecology.infected-stone-definitive.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which stone-clearance procedure should the team choose for Evan Collins under this treatment plan?",
+          "after": "Which stone-clearance procedure should the team choose for {patientName} under this treatment plan?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.adult-urology-gynecology.r2-27.v1",
+      "caseId": "case.topic.adult-urology-gynecology.r2-27.v1",
+      "literalName": "Mason Burke",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "867fc2488b35f460dfb94e789fa642eda7fc3f976380d13a9aec94178c83eef7",
+      "beforeQuestionSha256": {
+        "question.topic.adult-urology-gynecology.stone-passage-confirm.v2": "57293868f6453465c99ac7d0c89b7fc3f4f391ff45844599c9640523eb14d803"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Mason Burke, a 43-year-old man, reviews an outside conservatively managed ureteral-stone record with the founder in clinic.",
+          "after": "{patientName}, a 43-year-old man, reviews an outside conservatively managed ureteral-stone record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Mason Burke, a 43-year-old man, reviews an outside conservatively managed ureteral-stone record with the founder in clinic.",
+          "after": "{patientName}, a 43-year-old man, reviews an outside conservatively managed ureteral-stone record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which follow-up plan should the team choose for Mason Burke at this review?",
+          "after": "Which follow-up plan should the team choose for {patientName} at this review?"
+        },
+        {
+          "target": "question.topic.adult-urology-gynecology.stone-passage-confirm.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which follow-up plan should the team choose for Mason Burke at this review?",
+          "after": "Which follow-up plan should the team choose for {patientName} at this review?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.adult-urology-gynecology.r2-28.v1",
+      "caseId": "case.topic.adult-urology-gynecology.r2-28.v1",
+      "literalName": "Vivian Shaw",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "4f5835f6bfe4d8c966c5cb69d31259f1188031f168539cdce062f72154941163",
+      "beforeQuestionSha256": {
+        "question.topic.adult-urology-gynecology.ureter-leak-protocol.v2": "4f3acf24664a9e066365cec7e073794deb5487d9e290137368204ad80a6d256e"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Vivian Shaw, a 61-year-old woman, reviews an outside sigmoid-resection complication record with the founder in clinic.",
+          "after": "{patientName}, a 61-year-old woman, reviews an outside sigmoid-resection complication record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Vivian Shaw, a 61-year-old woman, reviews an outside sigmoid-resection complication record with the founder in clinic.",
+          "after": "{patientName}, a 61-year-old woman, reviews an outside sigmoid-resection complication record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which CT protocol should the team request next for Vivian Shaw?",
+          "after": "Which CT protocol should the team request next for {patientName}?"
+        },
+        {
+          "target": "question.topic.adult-urology-gynecology.ureter-leak-protocol.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which CT protocol should the team request next for Vivian Shaw?",
+          "after": "Which CT protocol should the team request next for {patientName}?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.adult-urology-gynecology.r2-31.v1",
+      "caseId": "case.topic.adult-urology-gynecology.r2-31.v1",
+      "literalName": "Helen Park",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "b3600c1d94e4991d30a3cb6c56d2fa7213780f58ca658577ffb18b71f1b8df2f",
+      "beforeQuestionSha256": {
+        "question.topic.adult-urology-gynecology.bladder-leak-protocol.v2": "565e5c4d2b971d29dc2cfe996c487fbd86cdf31d74ddba0305876dbe8bcbb139"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Helen Park, a 64-year-old woman, reviews an outside pelvic-surgery complication record with the founder in clinic.",
+          "after": "{patientName}, a 64-year-old woman, reviews an outside pelvic-surgery complication record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Helen Park, a 64-year-old woman, reviews an outside pelvic-surgery complication record with the founder in clinic.",
+          "after": "{patientName}, a 64-year-old woman, reviews an outside pelvic-surgery complication record with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which imaging study should the team obtain next for Helen Park?",
+          "after": "Which imaging study should the team obtain next for {patientName}?"
+        },
+        {
+          "target": "question.topic.adult-urology-gynecology.bladder-leak-protocol.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which imaging study should the team obtain next for Helen Park?",
+          "after": "Which imaging study should the team obtain next for {patientName}?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.topic.adult-urology-gynecology.adnexal-torsion.v1",
+      "caseId": "case.topic.adult-urology-gynecology.adnexal-torsion.v1",
+      "literalName": "Julia Avery",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "e44384074dec1d28a5df185aea0d203aa45444079835b577f4490a6a3d2fd09c",
+      "beforeQuestionSha256": {
+        "question.topic.adult-urology-gynecology.torsion-preserved-flow.v1": "28d8eac5a082f20450d9a4d507f3659ed408118167cdbb85054ef1c59ab25514"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Julia Avery, a 29-year-old woman, reviews an outside unilateral-pain assessment with the founder in clinic.",
+          "after": "{patientName}, a 29-year-old woman, reviews an outside unilateral-pain assessment with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Julia Avery, a 29-year-old woman, reviews an outside unilateral-pain assessment with the founder in clinic.",
+          "after": "{patientName}, a 29-year-old woman, reviews an outside unilateral-pain assessment with the founder in clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which next plan should the team choose for Julia Avery?",
+          "after": "Which next plan should the team choose for {patientName}?"
+        },
+        {
+          "target": "question.topic.adult-urology-gynecology.torsion-preserved-flow.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which next plan should the team choose for Julia Avery?",
+          "after": "Which next plan should the team choose for {patientName}?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.vascular-carotid.discordant-measurements.20261111.v1",
+      "caseId": "case.vascular-carotid.discordant-measurements.20261111.v1",
+      "literalName": "Jonah Price",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "0b2152abcc3cd23915cdb1cb97d8038ad83d99730a32862d3f1daf59e6dbb654",
+      "beforeQuestionSha256": {
+        "question.vascular-carotid.nascet-plan.20261111.v1": "9fadb54aa16a41af86297594809dfa8c70078131b25dae4c6bde8f065a17c553"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Jonah Price, a 68-year-old man, attends clinic after resolved right arm weakness six days ago. Outside brain imaging shows no infarct or hemorrhage. Two expert reviews leave a left ICA duplex report below 50% and a CTA report above 70% in disagreement; calcific blooming obscures the CTA lumen. Renal function is at baseline. Aspirin, statin therapy and risk-factor treatment have begun.",
+          "after": "{patientName}, a 68-year-old man, attends clinic after resolved right arm weakness six days ago. Outside brain imaging shows no infarct or hemorrhage. Two expert reviews leave a left ICA duplex report below 50% and a CTA report above 70% in disagreement; calcific blooming obscures the CTA lumen. Renal function is at baseline. Aspirin, statin therapy and risk-factor treatment have begun."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Jonah Price, a 68-year-old man, attends clinic after resolved right arm weakness six days ago. Outside brain imaging shows no infarct or hemorrhage. Two expert reviews leave a left ICA duplex report below 50% and a CTA report above 70% in disagreement; calcific blooming obscures the CTA lumen. Renal function is at baseline. Aspirin, statin therapy and risk-factor treatment have begun.",
+          "after": "{patientName}, a 68-year-old man, attends clinic after resolved right arm weakness six days ago. Outside brain imaging shows no infarct or hemorrhage. Two expert reviews leave a left ICA duplex report below 50% and a CTA report above 70% in disagreement; calcific blooming obscures the CTA lumen. Renal function is at baseline. Aspirin, statin therapy and risk-factor treatment have begun."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which left carotid treatment plan follows from Jonah Price's completed measurements?",
+          "after": "Which left carotid treatment plan follows from {patientName}'s completed measurements?"
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "currentUpdate"
+          ],
+          "before": "Angiography is complete. The original outside report called the left lesion '70%'. The right ICA has only a small plaque. Jonah has had no recurrent symptoms; medical prevention continues.",
+          "after": "Angiography is complete. The original outside report called the left lesion '70%'. The right ICA has only a small plaque. {patientName} has had no recurrent symptoms; medical prevention continues."
+        },
+        {
+          "target": "question.vascular-carotid.nascet-plan.20261111.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which left carotid treatment plan follows from Jonah Price's completed measurements?",
+          "after": "Which left carotid treatment plan follows from {patientName}'s completed measurements?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.vascular-carotid.stroke-burden.20261111.v1",
+      "caseId": "case.vascular-carotid.stroke-burden.20261111.v1",
+      "literalName": "Nora Lewis",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "f1f4aaabd86b4cbda5d5a26ec0cf60c300281993ef649177d854728e05344ab0",
+      "beforeQuestionSha256": {
+        "question.vascular-carotid.chronic-occlusion.20261111.v1": "88fdcd1012ceb9abb73b2a7ad44dd37442bfc9e424feef81435bd52341f0b461"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "The founder reviews Nora Lewis's outside hospital records in clinic. Nora is a 71-year-old woman admitted yesterday with persistent right arm and leg weakness and difficulty speaking. She needs help dressing and cannot walk independently. CTA shows left ICA stenosis of 84% with a patent distal lumen. CT shows infarction and edema involving about half the left MCA territory, without hemorrhage. The hospital stroke team is providing medical treatment.",
+          "after": "The founder reviews {patientName}'s outside hospital records in clinic. {patientName} is a 71-year-old woman admitted yesterday with persistent right arm and leg weakness and difficulty speaking. She needs help dressing and cannot walk independently. CTA shows left ICA stenosis of 84% with a patent distal lumen. CT shows infarction and edema involving about half the left MCA territory, without hemorrhage. The hospital stroke team is providing medical treatment."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "The founder reviews Nora Lewis's outside hospital records in clinic. Nora is a 71-year-old woman admitted yesterday with persistent right arm and leg weakness and difficulty speaking. She needs help dressing and cannot walk independently. CTA shows left ICA stenosis of 84% with a patent distal lumen. CT shows infarction and edema involving about half the left MCA territory, without hemorrhage. The hospital stroke team is providing medical treatment.",
+          "after": "The founder reviews {patientName}'s outside hospital records in clinic. {patientName} is a 71-year-old woman admitted yesterday with persistent right arm and leg weakness and difficulty speaking. She needs help dressing and cannot walk independently. CTA shows left ICA stenosis of 84% with a patent distal lumen. CT shows infarction and edema involving about half the left MCA territory, without hemorrhage. The hospital stroke team is providing medical treatment."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which long-term left carotid plan best fits Nora Lewis's current vascular findings?",
+          "after": "Which long-term left carotid plan best fits {patientName}'s current vascular findings?"
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "currentUpdate"
+          ],
+          "before": "Eight weeks later, Nora attends clinic independently after rehabilitation. Interval brain imaging shows the established infarct without edema or hemorrhage. CTA and expert duplex show no cervical left ICA lumen from its origin to the skull base on arterial or delayed imaging. The intracranial left ICA fills through communicating arteries. This appearance was also present on imaging four weeks earlier; she has had no new events.",
+          "after": "Eight weeks later, {patientName} attends clinic independently after rehabilitation. Interval brain imaging shows the established infarct without edema or hemorrhage. CTA and expert duplex show no cervical left ICA lumen from its origin to the skull base on arterial or delayed imaging. The intracranial left ICA fills through communicating arteries. This appearance was also present on imaging four weeks earlier; she has had no new events."
+        },
+        {
+          "target": "question.vascular-carotid.chronic-occlusion.20261111.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which long-term left carotid plan best fits Nora Lewis's current vascular findings?",
+          "after": "Which long-term left carotid plan best fits {patientName}'s current vascular findings?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.vascular-carotid.distal-collapse.20261111.v1",
+      "caseId": "case.vascular-carotid.distal-collapse.20261111.v1",
+      "literalName": "Ruth Carter",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "e7abb1ae088d3732ce9008688b454e885be6115ade4a3138cb3938466ce4d2af",
+      "beforeQuestionSha256": {
+        "question.vascular-carotid.near-occlusion.20261111.v1": "6dccfc8a5f9299f28e154e205b67c9370e09cf340d33a1abe396d618dfc45d2d"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Ruth Carter, a 70-year-old woman, attends clinic after outside assessment for a brief right-eye visual loss eight days ago. CTA shows a very tight right bulb lumen, a threadlike distal right cervical ICA, and delayed intracranial filling. The distal right ICA is smaller than both the opposite ICA and the right external carotid artery. Brain imaging shows no infarct. She has had no recurrence since starting medical prevention.",
+          "after": "{patientName}, a 70-year-old woman, attends clinic after outside assessment for a brief right-eye visual loss eight days ago. CTA shows a very tight right bulb lumen, a threadlike distal right cervical ICA, and delayed intracranial filling. The distal right ICA is smaller than both the opposite ICA and the right external carotid artery. Brain imaging shows no infarct. She has had no recurrence since starting medical prevention."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Ruth Carter, a 70-year-old woman, attends clinic after outside assessment for a brief right-eye visual loss eight days ago. CTA shows a very tight right bulb lumen, a threadlike distal right cervical ICA, and delayed intracranial filling. The distal right ICA is smaller than both the opposite ICA and the right external carotid artery. Brain imaging shows no infarct. She has had no recurrence since starting medical prevention.",
+          "after": "{patientName}, a 70-year-old woman, attends clinic after outside assessment for a brief right-eye visual loss eight days ago. CTA shows a very tight right bulb lumen, a threadlike distal right cervical ICA, and delayed intracranial filling. The distal right ICA is smaller than both the opposite ICA and the right external carotid artery. Brain imaging shows no infarct. She has had no recurrence since starting medical prevention."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which right carotid plan best fits Ruth Carter's current evaluation?",
+          "after": "Which right carotid plan best fits {patientName}'s current evaluation?"
+        },
+        {
+          "target": "question.vascular-carotid.near-occlusion.20261111.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which right carotid plan best fits Ruth Carter's current evaluation?",
+          "after": "Which right carotid plan best fits {patientName}'s current evaluation?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch4.20261111.case.vascular-carotid.recurrent-anticoagulated-events.20261111.v2",
+      "caseId": "case.vascular-carotid.recurrent-anticoagulated-events.20261111.v2",
+      "literalName": "Martin Bell",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "21be6f268cc1ed46f2c247ef76a60b02960941de0ad445702ea71257e6a81034",
+      "beforeQuestionSha256": {
+        "question.vascular-carotid.older-cea.20261111.v2": "648332789779d2ec00e2c763cac6336ba4ffe3e6b1c20ee9cce52604acb526d3"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Martin Bell, a 74-year-old man, attends clinic after another resolved episode of left-arm weakness yesterday. Four weeks earlier, a similar event led to detection of atrial fibrillation. The initial team favored cardiac embolism and started warfarin. Recorded INRs since then are 2.4, 2.6 and 2.5, with the latest drawn during yesterday's assessment. Brain MRI shows two small recent right cortical infarcts without hemorrhage or edema. CTA shows ordinary 81% right ICA stenosis with a patent normal-caliber distal vessel and a low cervical lesion. He lives independently, walks without angina or dyspnea, and has no prior neck surgery or radiation. The procedural teams meet audited guideline risk criteria. Lipid treatment and the indicated AF prevention continue under the treating teams' perioperative protocol.",
+          "after": "{patientName}, a 74-year-old man, attends clinic after another resolved episode of left-arm weakness yesterday. Four weeks earlier, a similar event led to detection of atrial fibrillation. The initial team favored cardiac embolism and started warfarin. Recorded INRs since then are 2.4, 2.6 and 2.5, with the latest drawn during yesterday's assessment. Brain MRI shows two small recent right cortical infarcts without hemorrhage or edema. CTA shows ordinary 81% right ICA stenosis with a patent normal-caliber distal vessel and a low cervical lesion. He lives independently, walks without angina or dyspnea, and has no prior neck surgery or radiation. The procedural teams meet audited guideline risk criteria. Lipid treatment and the indicated AF prevention continue under the treating teams' perioperative protocol."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Martin Bell, a 74-year-old man, attends clinic after another resolved episode of left-arm weakness yesterday. Four weeks earlier, a similar event led to detection of atrial fibrillation. The initial team favored cardiac embolism and started warfarin. Recorded INRs since then are 2.4, 2.6 and 2.5, with the latest drawn during yesterday's assessment. Brain MRI shows two small recent right cortical infarcts without hemorrhage or edema. CTA shows ordinary 81% right ICA stenosis with a patent normal-caliber distal vessel and a low cervical lesion. He lives independently, walks without angina or dyspnea, and has no prior neck surgery or radiation. The procedural teams meet audited guideline risk criteria. Lipid treatment and the indicated AF prevention continue under the treating teams' perioperative protocol.",
+          "after": "{patientName}, a 74-year-old man, attends clinic after another resolved episode of left-arm weakness yesterday. Four weeks earlier, a similar event led to detection of atrial fibrillation. The initial team favored cardiac embolism and started warfarin. Recorded INRs since then are 2.4, 2.6 and 2.5, with the latest drawn during yesterday's assessment. Brain MRI shows two small recent right cortical infarcts without hemorrhage or edema. CTA shows ordinary 81% right ICA stenosis with a patent normal-caliber distal vessel and a low cervical lesion. He lives independently, walks without angina or dyspnea, and has no prior neck surgery or radiation. The procedural teams meet audited guideline risk criteria. Lipid treatment and the indicated AF prevention continue under the treating teams' perioperative protocol."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which right carotid plan best fits Martin Bell's recurrent event and completed current assessment?",
+          "after": "Which right carotid plan best fits {patientName}'s recurrent event and completed current assessment?"
+        },
+        {
+          "target": "question.vascular-carotid.older-cea.20261111.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which right carotid plan best fits Martin Bell's recurrent event and completed current assessment?",
+          "after": "Which right carotid plan best fits {patientName}'s recurrent event and completed current assessment?"
+        }
+      ]
+    }
+  ]
+}

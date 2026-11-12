@@ -137,7 +137,9 @@ describe.each(["phone", "desktop"] as const)("%s account campaign reopen", layou
     if (!freeSlot) {
       const unrelated = await syncFixture("app.other-slot");
       const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: unrelated.prepared.checkpoint,
-        campaign: { ...unrelated.prepared.envelope.campaign, name: "Other clinic" }, source: unrelated.prepared.sourceRecovery,
+      campaign: { ...unrelated.prepared.envelope.campaign, name: "Other clinic" },
+      source: { sha256: unrelated.prepared.sourceRecovery.sha256, utf8Bytes: unrelated.prepared.sourceRecovery.utf8Bytes,
+        schemaVersion: unrelated.prepared.sourceRecovery.schemaVersion },
         operationId: "unrelated.name", expectedRevision: "1" });
       h.server.seed(h.scope.accountId, { ...unrelated.confirmed, snapshot: encoded.snapshot });
     }

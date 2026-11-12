@@ -1,3 +1,5 @@
+import {QUESTION_PROGRAM_BATCH5_LENGTH_RESIDUALS,QUESTION_PROGRAM_BATCH5_FROZEN_PRESERVATION} from "./question-program-batch5-accepted-20261111";
+import {QUESTION_PROGRAM_BATCH4_LENGTH_RESIDUALS,QUESTION_PROGRAM_BATCH4_FROZEN_PRESERVATION} from "./question-program-batch4-accepted-20261111";
 import {QUESTION_PROGRAM_BATCH3_LENGTH_RESIDUALS,QUESTION_PROGRAM_BATCH3_FROZEN_PRESERVATION} from "./question-program-batch3-accepted-20261111";
 import {QUESTION_PROGRAM_BATCH2_LENGTH_RESIDUALS,QUESTION_PROGRAM_BATCH2_FROZEN_PRESERVATION} from "./question-program-batch2-accepted-20261111";
 import {QUESTION_PROGRAM_BATCH1_LENGTH_RESIDUALS,QUESTION_PROGRAM_BATCH1_FROZEN_PRESERVATION} from "./question-program-batch1-accepted-20261111";
@@ -61,6 +63,8 @@ const N4_EXACT_LENGTH_EXCEPTIONS=new Map([
 const PROGRAM_EXACT_LENGTH_EXCEPTIONS=new Map<string,typeof QUESTION_PROGRAM_BATCH1_LENGTH_RESIDUALS[number]>(QUESTION_PROGRAM_BATCH1_LENGTH_RESIDUALS.map(r=>[r.questionVariantId,r]));
 const PROGRAM_BATCH2_LENGTH_EXCEPTIONS = new Map<string,typeof QUESTION_PROGRAM_BATCH2_LENGTH_RESIDUALS[number]>(
   QUESTION_PROGRAM_BATCH2_LENGTH_RESIDUALS.map(row => [row.questionVariantId,row]));
+const PROGRAM_BATCH5_LENGTH_EXCEPTIONS = new Map<string,typeof QUESTION_PROGRAM_BATCH5_LENGTH_RESIDUALS[number]>(QUESTION_PROGRAM_BATCH5_LENGTH_RESIDUALS.map(row => [row.questionVariantId,row]));
+const PROGRAM_BATCH4_LENGTH_EXCEPTIONS = new Map<string,typeof QUESTION_PROGRAM_BATCH4_LENGTH_RESIDUALS[number]>(QUESTION_PROGRAM_BATCH4_LENGTH_RESIDUALS.map(row => [row.questionVariantId,row]));
 const PROGRAM_BATCH3_LENGTH_EXCEPTIONS = new Map<string,typeof QUESTION_PROGRAM_BATCH3_LENGTH_RESIDUALS[number]>(QUESTION_PROGRAM_BATCH3_LENGTH_RESIDUALS.map(row => [row.questionVariantId,row]));
 const stats1Packet=JSON.parse(readFileSync(new URL("../../../docs/research/question-stats1-accepted-20261108.json",import.meta.url),"utf8")) as Array<{
  questionVariantId:string;frozenPreservation:{acceptedCaseSha256:string};
@@ -101,9 +105,27 @@ describe("five-diagnosis pilot registry", () => {
     );
 
     expect(
-      violations.filter(v => !PROGRAM_BATCH3_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_BATCH2_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !N4_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId) && v.questionVariantId !== "question.n3.venous-ulcer-with-competing-arterial-findings.v4" && v.questionVariantId !== "question.n3.gastric-lymphoma-new-large-cell-process.v2"&&!STATS1_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId))
+      violations.filter(v => !PROGRAM_BATCH5_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_BATCH4_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_BATCH3_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_BATCH2_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !N4_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId) && v.questionVariantId !== "question.n3.venous-ulcer-with-competing-arterial-findings.v4" && v.questionVariantId !== "question.n3.gastric-lymphoma-new-large-cell-process.v2"&&!STATS1_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId))
         .map((violation) => violation.questionVariantId).sort(),
     ).toEqual([...IMMUTABLE_APPROVED_LENGTH_EXCEPTIONS].sort());
+    for (const [id,row] of PROGRAM_BATCH5_LENGTH_EXCEPTIONS) {
+      expect(violations.filter(violation => violation.questionVariantId === id))
+        .toEqual([{questionVariantId:id,correctLength:row.correctLength,longestDistractor:row.longestDistractor}]);
+      const clinicalCase = PILOT_CLINICAL_RELEASE.cases.find(cs => cs.id === row.caseId)!;
+      expect(QUESTION_SHIP_MANIFEST.accepted.find(accepted => accepted.questionVariantId === id))
+        .toMatchObject({decision:"docs/research/question-topic-acceptance-batch5-20261111.md"});
+      expect(createHash("sha256").update(JSON.stringify(clinicalCase)).digest("hex"))
+        .toBe(QUESTION_PROGRAM_BATCH5_FROZEN_PRESERVATION.find(frozen => frozen.caseId === row.caseId)!.retainedCaseSha256);
+    }
+    for (const [id,row] of PROGRAM_BATCH4_LENGTH_EXCEPTIONS) {
+      expect(violations.filter(violation => violation.questionVariantId === id))
+        .toEqual([{questionVariantId:id,correctLength:row.correctLength,longestDistractor:row.longestDistractor}]);
+      const clinicalCase = PILOT_CLINICAL_RELEASE.cases.find(cs => cs.id === row.caseId)!;
+      expect(QUESTION_SHIP_MANIFEST.accepted.find(accepted => accepted.questionVariantId === id))
+        .toMatchObject({decision:"docs/research/question-topic-acceptance-batch4-20261111.md"});
+      expect(createHash("sha256").update(JSON.stringify(clinicalCase)).digest("hex"))
+        .toBe(QUESTION_PROGRAM_BATCH4_FROZEN_PRESERVATION.find(frozen => frozen.caseId === row.caseId)!.retainedCaseSha256);
+    }
     for (const [id,row] of PROGRAM_BATCH3_LENGTH_EXCEPTIONS) {
       expect(violations.filter(violation => violation.questionVariantId === id))
         .toEqual([{questionVariantId:id,correctLength:row.correctLength,longestDistractor:row.longestDistractor}]);

@@ -201,7 +201,8 @@ for (const layout of ["desktop", "phone"] as const) {
           unrelated = await syncFixture("qa.archived-slot");
           const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: unrelated.prepared.checkpoint,
             campaign: { ...unrelated.prepared.envelope.campaign, name: "Archived slot", status: "archived" },
-            source: unrelated.prepared.sourceRecovery, expectedRevision: "1", operationId: "archive.fixture" });
+            source: { sha256: unrelated.prepared.sourceRecovery.sha256, utf8Bytes: unrelated.prepared.sourceRecovery.utf8Bytes,
+              schemaVersion: unrelated.prepared.sourceRecovery.schemaVersion }, expectedRevision: "1", operationId: "archive.fixture" });
           unrelated.confirmed = { ...unrelated.confirmed, snapshot: encoded.snapshot };
           f.server.seed("qa-account-a", unrelated.confirmed);
         }

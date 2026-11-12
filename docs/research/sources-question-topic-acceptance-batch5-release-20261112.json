@@ -1,0 +1,2447 @@
+{
+  "checkedOn": "2026-11-12",
+  "immutableArchive": "tools/question-quality/fixtures/question-topic-acceptance-batch5-before-20261111.json",
+  "sha256": "7819b9208de299972dea6ccb7bd25efba0b3b30c8e210857406b35b4246fbb38",
+  "acceptedDataPath": "packages/clinical-content/src/question-program-batch5-accepted-data-20261111.ts",
+  "acceptedDataSha256": "6f85d109511e79a639249d2558a026752b3c920e91bd7c4591dade6eeec089a0",
+  "policy": "Exact accepted builder claim/source exports; current topic-worker ledgers and unaccepted metadata excluded; no approval conferred.",
+  "claims": [
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.dvt-proximal-treatment",
+      "statement": "An established symptomatic proximal DVT generally requires therapeutic anticoagulation when bleeding risk permits.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ash-treatment-2020",
+        "source.vascular-venous-lymphatic-access.thrombosis-canada-2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": null,
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.dvt-prophylaxis-not-treatment",
+      "statement": "A postoperative prevention prescription does not establish that a proximal DVT has received therapeutic anticoagulation.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ash-treatment-2020"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "moderate",
+      "limitation": "Application of treatment versus prevention purpose; no dose inferred.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.filter-not-routine",
+      "statement": "An IVC filter is not routinely added to therapeutic anticoagulation in a patient who can receive anticoagulation.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ash-treatment-2020"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "Conditional guideline recommendation; no independent second management publication retrieved.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.dvt-three-month-resolved",
+      "statement": "VTE associated with a resolved major transient provoking factor can receive a three-month anticoagulation course.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.thrombosis-canada-2026",
+        "source.vascular-venous-lymphatic-access.ash-treatment-2020"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Canadian 2026 guide directly supports three months; ASH supports a broader three-to-six-month phase. No identical exact-duration rule across both is asserted.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.dvt-extended-context",
+      "statement": "Recurrent unprovoked VTE or a persistent provoking context requires a different secondary-prevention assessment from a first event provoked by resolved major surgery.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ash-treatment-2020"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "No universal extension is asserted for a first weakly provoked/unprovoked event; cancer-specific management is outside this rule.",
+      "applicablePopulation": "Eligible adults in the represented scenario; no pregnancy/pediatric extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.dvt-heterozygous-fvl-duration",
+      "statement": "Isolated heterozygous factor V Leiden does not ordinarily change treatment duration for a first VTE after a resolved major transient trigger.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.thrombosis-canada-2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "limited",
+      "limitation": "One adequate targeted source for this exact genetic-duration distinction. No recommendation to order a thrombophilia panel, no universal rule for combined/homozygous defects, recurrent unprovoked VTE or persistent risks.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11",
+      "targetedVerification": "Thrombosis Canada Duration of Treatment, April 2026, page 8: low-risk hereditary thrombophilia paragraph, cross-checked with resolved-major-transient section on page 5.",
+      "reviewRound": "round2"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.dvt-residual-not-filter",
+      "statement": "Residual noncompressibility without a new involved segment or a worsening course does not by itself establish recurrent thrombosis requiring an IVC filter.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ash-diagnosis-2018",
+        "source.vascular-venous-lymphatic-access.ash-treatment-2020"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "low",
+      "limitation": "Inference from recurrence criteria and filter guidance; no universal clot-resolution time.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.dvt-recurrent-comparison",
+      "statement": "Prior and current compression studies should be compared when recurrence is suspected; a newly involved venous segment supports a new event.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ash-diagnosis-2018"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "low",
+      "limitation": "Limited recurrence evidence; no diameter-change threshold is authored.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.lymphatic-pattern",
+      "statement": "Lymphatic injury after nodal treatment can cause gradually evolving limb swelling, with pitting early and tissue thickening later.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.nci-lymphedema-2024",
+        "source.vascular-venous-lymphatic-access.isl-lymphedema-2023"
+      ],
+      "evidenceCategory": "presentation",
+      "certainty": "moderate",
+      "limitation": null,
+      "applicablePopulation": "Adults in the stated scenario; no universal dose or procedure ranking.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.lymphatic-new-change",
+      "statement": "A rapid change in a previously swollen limb requires assessment for another cause, including thrombosis, infection or proximal malignant obstruction.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.nci-lymphedema-2024",
+        "source.vascular-venous-lymphatic-access.isl-lymphedema-2023"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": null,
+      "applicablePopulation": "Adults in the stated scenario; no universal dose or procedure ranking.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.dvt-postoperative-imaging",
+      "statement": "New unilateral postoperative limb symptoms warrant an ultrasound-based DVT evaluation rather than a positive D-dimer being treated as diagnostic.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ash-diagnosis-2018"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": null,
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.venous-proximal-obstruction",
+      "statement": "A continuous common-femoral waveform with reduced respiratory variation and whole-limb findings warrants proximal venous outflow investigation.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.svs-varicose-2023"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "low",
+      "limitation": "An indirect signal prompts investigation; it does not establish an iliac clot or one universal protocol.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.venous-reflux-protocol",
+      "statement": "Compression testing for thrombus does not replace duplex mapping of reflux and connected superficial and deep venous anatomy before treatment.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.svs-varicose-2023"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "One multisociety publication; multiple copies are not independent corroboration.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.access-maturation",
+      "statement": "Inspection, palpation and auscultation guide fistula maturation assessment, with ultrasound when the clinical question remains unresolved.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ukka-access-2025",
+        "source.vascular-venous-lymphatic-access.kdoqi-access-2019"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": null,
+      "applicablePopulation": "Adults in the stated scenario; no universal dose or procedure ranking.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.access-maturation-timing",
+      "statement": "UK Kidney Association guidance recommends investigating persisting adult fistula non-maturity beyond six weeks after formation.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ukka-access-2025"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "low",
+      "limitation": "A graded guideline assessment interval, not an irreversible-failure deadline or a universal cannulation cutoff. Clinical evolution and pediatric pathways differ.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11",
+      "targetedVerification": "UKKA 2025 statement 3.9, targeted publisher check 2026-11-11.",
+      "reviewRound": "round2"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.access-exam-interpretation",
+      "statement": "An abnormal systolic-only thrill, resistant pulsatility or failure to collapse with arm elevation can prompt investigation of an access circuit rather than establish cannulation readiness from patency alone.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.kdoqi-access-2019",
+        "source.vascular-venous-lymphatic-access.ukka-access-2025"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "limited",
+      "limitation": "Physical findings suggest a lesion but do not prove its exact site or that an operation is indicated. KDOQI is the exact examination-finding source; UKKA corroborates examination/ultrasound assessment.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11",
+      "targetedVerification": "KDOQI Guideline 10 discussion page S66 and clinical-indicator section page S82; UKKA section 3.",
+      "reviewRound": "round2"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.ulcer-noncompressible",
+      "statement": "Failure to occlude ankle arterial signals prevents a high cuff-derived ABI from proving adequate perfusion; toe pressure and digital waveforms can address the limitation.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.aha-pad-2024"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "No new ABI cutoff or compression strength is authored.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.ulcer-perfusion-first",
+      "statement": "Venous-appearing ulcer findings do not remove the need to assess ipsilateral arterial perfusion before compression selection.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.aha-pad-2024",
+        "source.vascular-venous-lymphatic-access.evra-nihr-2019",
+        "source.vlu.esvs-cvd.2022"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "EVRA eligibility is not a universal compression threshold.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.arterial-exercise-testing",
+      "statement": "Exercise ABI is used for exertional symptoms when resting ankle measurements are interpretable rather than to correct a nonocclusive cuff acquisition.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.aha-pad-2024"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "low",
+      "limitation": "Targeted diagnostic physiology fact; no exercise protocol or cutoff authored.",
+      "applicablePopulation": "Adults in the exact stated scenario; no universal dose or procedure ranking.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.ulcer-severe-ischemia",
+      "statement": "ESVS advises against sustained ulcer compression when ankle pressure is below 60 mm Hg, toe pressure below 30 mm Hg, or ABI below 0.6.",
+      "sourceIds": [
+        "source.vlu.esvs-cvd.2022"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "Consensus-level recommendation 72; thresholds are source-specific rather than claimed universal. Draft values are clearly beyond these boundaries.",
+      "applicablePopulation": "Adults with the explicitly stated ulcer and ipsilateral arterial findings.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.ulcer-compression",
+      "statement": "Compression supports healing in an assessed venous ulcer with adequate arterial perfusion.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.evra-nihr-2019",
+        "source.vlu.esvs-cvd.2022"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "ESVS guideline plus the EVRA government trial report; no pressure/device ranking beyond separately mapped exact ESVS pressure claims.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.ulcer-modified-compression",
+      "statement": "ESVS allows consideration of closely supervised modified compression below 40 mm Hg in selected mixed ulcers when ankle pressure exceeds 60 mm Hg; its discussion also uses toe pressure above 30 mm Hg and ABI above 0.6.",
+      "sourceIds": [
+        "source.vlu.esvs-cvd.2022"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Lower-strength recommendation 74 and section 6.3.3; one directly retrieved guideline for this exact boundary. Borderline/disputed ranges withheld.",
+      "applicablePopulation": "Adults with the explicitly stated ulcer and ipsilateral arterial findings.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.ulcer-standard-pressure",
+      "statement": "For an appropriately assessed active venous ulcer, ESVS recommends multilayer/inelastic compression or adjustable garments targeting at least 40 mm Hg at the ankle.",
+      "sourceIds": [
+        "source.vlu.esvs-cvd.2022"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Exact value directly supported by recommendation 70; no brand or device superiority implied. Not extended to severe ischemia.",
+      "applicablePopulation": "Adults with the explicitly stated ulcer and ipsilateral arterial findings.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.ulcer-current-record",
+      "statement": "Compression eligibility must use current affected-limb perfusion rather than another limb or an unreconciled old measurement.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.aha-pad-2024",
+        "source.vascular-venous-lymphatic-access.evra-nihr-2019",
+        "source.vlu.esvs-cvd.2022"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "Application of physiology and eligible compression populations, not a performance estimate.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.dvt-negative-proximal",
+      "statement": "A negative initial proximal ultrasound with continuing intermediate or high suspicion and no alternative diagnosis can require serial proximal ultrasound.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ash-diagnosis-2018"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "No exact repeat interval is taught in these drafts.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.dvt-acquisition-adequacy",
+      "statement": "A technically limited or wrong-territory venous examination cannot establish absence of thrombosis in unexamined proximal segments.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ash-diagnosis-2018"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": null,
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.access-ischemia-assessment",
+      "statement": "Hand symptoms related to dialysis access require arterial perfusion assessment and evaluation of the access contribution rather than assuming outflow obstruction.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ukka-access-2025",
+        "source.vascular-venous-lymphatic-access.kdoqi-access-2019"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": null,
+      "applicablePopulation": "Adults in the stated scenario; no universal dose or procedure ranking.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.access-compression-response",
+      "statement": "Access-related distal ischemic features may change during transient access compression; perfusion testing can corroborate the clinical assessment.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ukka-access-2025",
+        "source.vascular-venous-lymphatic-access.kdoqi-access-2019"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "low",
+      "limitation": "No numeric digital-pressure ratio or diagnostic certainty is claimed; clinical context and reversible arterial causes require specialist assessment.",
+      "applicablePopulation": "Adults in the exact stated scenario; no universal dose or procedure ranking.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.access-clinical-indicators",
+      "statement": "New cannulation difficulty, reduced dialysis delivery, prolonged post-needle bleeding or arm swelling warrant access evaluation.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ukka-access-2025",
+        "source.vascular-venous-lymphatic-access.kdoqi-access-2019"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": null,
+      "applicablePopulation": "Adults in the stated scenario; no universal dose or procedure ranking.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.access-neuropathic-differential",
+      "statement": "A prior neuropathic hand diagnosis does not remove the need to assess a new dialysis-access-related perfusion presentation; carpal tunnel and other nonvascular causes remain competing explanations.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ukka-access-2025"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "limited",
+      "limitation": "Guideline supports vascular and nonvascular differentials, not a validated digit-pattern decision rule. The case uses constructed temporal observations and an actual-described prior study; no exact nerve-conduction threshold is invented.",
+      "applicablePopulation": "Adults in the stated scenario; no pediatric, pregnancy or universal prescribing extrapolation.",
+      "lastCheckedOn": "2026-11-11",
+      "targetedVerification": "UKKA 2025 steal-syndrome rationale: characteristic clinical features, compression response and nonvascular differential including carpal tunnel.",
+      "reviewRound": "round2"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.access-neuropathy",
+      "statement": "Acute severe multinerve sensorimotor dysfunction after access creation can reflect ischemic monomelic neuropathy despite a warm hand and preserved pulse.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.kdoqi-access-2019"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "low",
+      "limitation": "One adequate guideline; rare complication and overlapping causes require urgent vascular examination.",
+      "applicablePopulation": "Adults in the stated scenario; no universal dose or procedure ranking.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.access-neuropathy-urgent",
+      "statement": "Suspected ischemic monomelic neuropathy after access formation requires urgent surgical assessment for access closure rather than delayed electrodiagnostic confirmation.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.kdoqi-access-2019"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "Guideline describes immediate ligation; not every postoperative neuropathy requires ligation.",
+      "applicablePopulation": "Adults in the stated scenario; no universal dose or procedure ranking.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.catheter-thrombolytic-lock",
+      "statement": "A thrombolytic lock is an initial treatment for established dialysis-catheter intraluminal dysfunction after mechanical causes have been assessed.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ukka-access-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "No dose or dwell duration; trained dialysis staff, not clinic manipulation. One current guideline.",
+      "applicablePopulation": "Adults in the stated scenario; no universal dose or procedure ranking.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.vascular-venous-lymphatic-access.catheter-site",
+      "statement": "The right internal jugular route is generally favored for a tunneled dialysis catheter, avoiding subclavian access when suitable alternatives exist.",
+      "sourceIds": [
+        "source.vascular-venous-lymphatic-access.ukka-access-2025",
+        "source.vascular-venous-lymphatic-access.kdoqi-access-2019"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Vessel patency, future access and individual anatomy can modify the default.",
+      "applicablePopulation": "Adults in the stated scenario; no universal dose or procedure ranking.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "question-topic-esophagus-motility-achalasia.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.esophagus-motility-achalasia.post-treatment-tbe",
+      "statement": "Timed barium esophagography is the ACG first-line objective assessment for persistent or recurrent symptoms after definitive achalasia treatment.",
+      "sourceIds": [
+        "source.esophagus-motility-achalasia.acg-achalasia-2020",
+        "source.esophagus-motility-achalasia.seoul-achalasia-2020"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "ACG names the first-line role. Seoul independently supports outcome assessment. Other findings remain complementary.",
+      "applicablePopulation": "Adults in outpatient foregut assessment or clinic review of outside treatment records.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "verificationLocator": "ACG recommendation 17 and Seoul statement 7"
+    },
+    {
+      "contentVersion": "question-topic-esophagus-motility-achalasia.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.esophagus-motility-achalasia.barium-clearance",
+      "statement": "A standardized upright timed barium examination assesses esophageal clearance.",
+      "sourceIds": [
+        "source.esophagus-motility-achalasia.acg-physiology-2020",
+        "source.esophagus-motility-achalasia.seoul-achalasia-2020"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Individual series are constructed and interpreted with symptoms and anatomy.",
+      "applicablePopulation": "Adults in outpatient foregut assessment or clinic review of outside treatment records.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "verificationLocator": "ACG physiology key concepts and Seoul statement 7"
+    },
+    {
+      "contentVersion": "question-topic-esophagus-motility-achalasia.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.esophagus-motility-achalasia.tablet-obstruction",
+      "statement": "A barium tablet can add evidence about junction-level obstruction during esophagography.",
+      "sourceIds": [
+        "source.esophagus-motility-achalasia.acg-physiology-2020"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "low",
+      "limitation": "One directly checked guideline. No tablet-size or treatment cutoff authored.",
+      "applicablePopulation": "Adults in outpatient foregut assessment or clinic review of outside treatment records.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "verificationLocator": "ACG physiology barium recommendation 4"
+    },
+    {
+      "contentVersion": "question-topic-esophagus-motility-achalasia.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.esophagus-motility-achalasia.hrm-acquisition",
+      "statement": "Reliable manometric interpretation depends on junction-crossing acquisition and an adequate separated-swallow protocol.",
+      "sourceIds": [
+        "source.esophagus-motility-achalasia.chicago-v4-2021",
+        "source.esophagus-motility-achalasia.acg-physiology-2020"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Failed studies have several completion or complementary options.",
+      "applicablePopulation": "Adults in outpatient foregut assessment or clinic review of outside treatment records.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "verificationLocator": "CCv4 standard protocol and ACG obstructive-symptom evaluation"
+    },
+    {
+      "contentVersion": "question-topic-esophagus-motility-achalasia.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.esophagus-motility-achalasia.myotomy-limit",
+      "statement": "Achalasia treatment reduces junction resistance while loss of normal motor function can persist.",
+      "sourceIds": [
+        "source.esophagus-motility-achalasia.acg-achalasia-2020",
+        "source.esophagus-motility-achalasia.seoul-achalasia-2020"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "moderate",
+      "limitation": "Improved relaxation does not establish normal bolus emptying.",
+      "applicablePopulation": "Adults in outpatient foregut assessment or clinic review of outside treatment records.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "verificationLocator": "ACG treatment goals and Seoul disease definition"
+    },
+    {
+      "contentVersion": "question-topic-esophagus-motility-achalasia.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.esophagus-motility-achalasia.recurrence-mechanisms",
+      "statement": "Recurrent symptoms after myotomy can arise from residual obstruction, altered anatomy, reflux injury or persistent motor dysfunction.",
+      "sourceIds": [
+        "source.esophagus-motility-achalasia.acg-achalasia-2020"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "One directly checked guideline. Symptoms do not establish which mechanism is active.",
+      "applicablePopulation": "Adults in outpatient foregut assessment or clinic review of outside treatment records.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "verificationLocator": "ACG post-therapy/failed-therapy sections"
+    },
+    {
+      "contentVersion": "question-topic-esophagus-motility-achalasia.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.esophagus-motility-achalasia.objective-postpoem-reflux",
+      "statement": "Post-POEM symptoms require objective assessment because reflux and impaired-clearance symptoms can overlap.",
+      "sourceIds": [
+        "source.esophagus-motility-achalasia.sages-poem-update-2025",
+        "source.esophagus-motility-achalasia.acg-achalasia-2020"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "low",
+      "limitation": "Endoscopy and clearance findings answer complementary questions.",
+      "applicablePopulation": "Adults in outpatient foregut assessment or clinic review of outside treatment records.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "verificationLocator": "SAGES KQ1 and ACG post-therapy assessment"
+    },
+    {
+      "contentVersion": "question-topic-esophagus-motility-achalasia.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.esophagus-motility-achalasia.posttherapy-endoscopic-targets",
+      "statement": "Endoscopy can evaluate reflux injury and luminal narrowing when symptoms recur after achalasia treatment.",
+      "sourceIds": [
+        "source.esophagus-motility-achalasia.acg-achalasia-2020"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "One directly checked guideline supports this complementary role. The current comparison uses its first-line timed-barium recommendation for recurrent retention-like symptoms.",
+      "applicablePopulation": "Adults undergoing assessment of post-myotomy symptoms or appropriate esophageal testing.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "verificationLocator": "ACG diagnostic testing and post-therapy assessment"
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bariatric-metabolic.pbh-confirm",
+      "statement": "Symptomatic spontaneous venous glucose below 54 mg/dL with symptom relief after correction supports PBH after alternative causes are evaluated.",
+      "sourceIds": [
+        "source.bariatric-metabolic.sfe-2024"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "The threshold is the guideline's pragmatic criterion; postmeal timing and surgical history do not exclude all other causes.",
+      "applicablePopulation": "Adults in the explicitly constructed bariatric clinic or outside-record-review context; each question supplies procedure and care phase.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "supportLocator": "Relevant named clinical section; independently synthesized atomic fact"
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bariatric-metabolic.pbh-cgm",
+      "statement": "CGM readings do not by themselves establish the diagnosis of PBH.",
+      "sourceIds": [
+        "source.bariatric-metabolic.sfe-2024"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Does not deny a role for CGM in education or ongoing management.",
+      "applicablePopulation": "Adults in the explicitly constructed bariatric clinic or outside-record-review context; each question supplies procedure and care phase.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "supportLocator": "Relevant named clinical section; independently synthesized atomic fact"
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bariatric-metabolic.pbh-no-provocation",
+      "statement": "The 2024 Society for Endocrinology guideline advises against OGTT or mixed-meal provocation for PBH diagnosis.",
+      "sourceIds": [
+        "source.bariatric-metabolic.sfe-2024"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Older ESPEN/UEG and dumping guidance differ on provocation. This packet does not make a general claim for all dumping syndromes.",
+      "applicablePopulation": "Adults in the explicitly constructed bariatric clinic or outside-record-review context; each question supplies procedure and care phase.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "supportLocator": "SfE recommendations 1.4–1.5"
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bariatric-metabolic.hypoglycemia-sampling-context",
+      "statement": "Supervised fasting evaluation can be used to recreate a suspected fasting hypoglycemic syndrome when a spontaneous episode cannot be characterized.",
+      "sourceIds": [
+        "source.bariatric-metabolic.labmed-hypoglycemia-summary-2019"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "low",
+      "limitation": "Older professional summary is a limited cross-check of a real competing test. It does not establish that unconfirmed overnight CGM readings warrant a fast or that mixed-meal testing is recommended for PBH. No duration/protocol cutoff is authored.",
+      "applicablePopulation": "Adults in the explicitly constructed post-bariatric clinic or outside-record review; the individual vignette supplies procedure and current care phase.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "supportLocator": "Professional summary, investigation and assay timing sections"
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bariatric-metabolic.pbh-acarbose",
+      "statement": "Acarbose is a first pharmacological option when PBH needs drug treatment.",
+      "sourceIds": [
+        "source.bariatric-metabolic.sfe-2024"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "One directly read guideline; no universal dose, efficacy probability or mandatory time-to-failure is asserted.",
+      "applicablePopulation": "Adults in the explicitly constructed bariatric clinic or outside-record-review context; each question supplies procedure and care phase.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "supportLocator": "SfE recommendation 3.1"
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bariatric-metabolic.pbh-acarbose-gi-effects",
+      "statement": "Acarbose can cause abdominal pain, bloating, flatulence and diarrhea that limit continued use.",
+      "sourceIds": [
+        "source.bariatric-metabolic.sfe-2024"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "No adverse-event frequency, mandatory trial duration or maximum-tolerated dose is invented; the case supplies its own withdrawal/rechallenge observations.",
+      "applicablePopulation": "Adults in the explicitly constructed post-bariatric clinic or outside-record review; the individual vignette supplies procedure and current care phase.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "supportLocator": "SfE acarbose discussion, page 13"
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bariatric-metabolic.pbh-second-line",
+      "statement": "Short-acting subcutaneous octreotide or pasireotide are options when acarbose is ineffective or not tolerated.",
+      "sourceIds": [
+        "source.bariatric-metabolic.sfe-2024"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Named alternatives are not ranked against each other. No off-label prescribing approval or regimen is conferred.",
+      "applicablePopulation": "Adults in the explicitly constructed bariatric clinic or outside-record-review context; each question supplies procedure and care phase.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "supportLocator": "SfE recommendation 3.2"
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bariatric-metabolic.pbh-diazoxide",
+      "statement": "The 2024 PBH guideline places diazoxide as a possible third-line option when somatostatin analogues are not tolerated.",
+      "sourceIds": [
+        "source.bariatric-metabolic.sfe-2024"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "Single guideline, recommendation 3.3; no dose or eligibility protocol authored.",
+      "applicablePopulation": "Adults in the explicitly constructed bariatric clinic or outside-record-review context; each question supplies procedure and care phase.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "supportLocator": "SfE recommendation 3.3"
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bariatric-metabolic.ppi-meal-timing",
+      "statement": "Conventional delayed-release PPI administration should be checked relative to meals; ACG recommends dosing 30-60 minutes before a meal rather than at bedtime.",
+      "sourceIds": [
+        "source.bariatric-metabolic.acg-gerd-2022"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Applies to conventional delayed-release preparations such as the named omeprazole, not every formulation. This medication interval is directly sourced and is not a gameplay wait.",
+      "applicablePopulation": "Adults in the explicitly constructed post-bariatric clinic or outside-record review; the individual vignette supplies procedure and current care phase.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "supportLocator": "ACG PPI administration and optimization sections"
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bariatric-metabolic.ppi-before-escalation",
+      "statement": "PPI adherence and administration should be assessed and optimized before labeling persistent symptoms treatment-refractory.",
+      "sourceIds": [
+        "source.bariatric-metabolic.acg-gerd-2022",
+        "source.bariatric-metabolic.sages-comorbidities-2024"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "SAGES supplies the post-sleeve medical-first setting; ACG provides the administration check. No universal dose, maximum regimen or mandatory treatment duration is invented.",
+      "applicablePopulation": "Adults in the explicitly constructed post-bariatric clinic or outside-record review; the individual vignette supplies procedure and current care phase.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "supportLocator": "ACG refractory GERD recommendations and optimization; SAGES KQ2"
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bariatric-metabolic.gerd-established-on-therapy-testing",
+      "statement": "For established GERD with persistent symptoms on twice-daily PPI, ACG recommends impedance-pH monitoring on therapy to evaluate the ongoing symptoms.",
+      "sourceIds": [
+        "source.bariatric-metabolic.acg-gerd-2022"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "low",
+      "limitation": "The question supplies prior LA grade C esophagitis and a recorded twice-daily regimen. This does not diagnose recurrent reflux from symptoms or claim every symptom is reflux-mediated.",
+      "applicablePopulation": "Adults in the explicitly constructed post-bariatric clinic or outside-record review; the individual vignette supplies procedure and current care phase.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "supportLocator": "ACG refractory GERD recommendations and reflux monitoring section"
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bariatric-metabolic.gerd-unproven-off-therapy-testing",
+      "statement": "Off-therapy reflux monitoring is used to establish GERD when prior objective evidence has not established the diagnosis.",
+      "sourceIds": [
+        "source.bariatric-metabolic.acg-gerd-2022"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "low",
+      "limitation": "Contrasts diagnostic confirmation with investigation of symptoms in already established disease. Severe LA C/D esophagitis is prior objective evidence; no new acid-exposure cutoff is authored.",
+      "applicablePopulation": "Adults in the explicitly constructed post-bariatric clinic or outside-record review; the individual vignette supplies procedure and current care phase.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "supportLocator": "ACG refractory GERD recommendations"
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.bariatric-metabolic.gerd-impedance-scope",
+      "statement": "Impedance-pH monitoring can relate symptoms to nonacid as well as acid reflux, whereas pH-only monitoring does not capture the full nonacid question during PPI therapy.",
+      "sourceIds": [
+        "source.bariatric-metabolic.acg-gerd-2022"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "One society guideline; no diagnostic yield, sensitivity, prevalence or symptom-association cutoff is authored.",
+      "applicablePopulation": "Adults in the explicitly constructed post-bariatric clinic or outside-record review; the individual vignette supplies procedure and current care phase.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11",
+      "supportLocator": "ACG on-therapy reflux monitoring discussion"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.intussusception-risk",
+      "statement": "Unfavorable ultrasound findings such as trapped fluid can predict more difficult reduction without independently prohibiting enema reduction in a stable child without peritonitis or perforation.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.bspr-intussusception-2017",
+        "source.pediatric-gi-abdominal-wall.kps-intussusception-2023"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "No pressure, success probability or fixed number of attempts authored.",
+      "applicablePopulation": "Stable children with ileocolic intussusception.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.intussusception-repeat",
+      "statement": "A delayed repeat image-guided enema is a reasonable option after partial reduction when the child remains stable and lacks peritoneal signs.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.bspr-intussusception-2017",
+        "source.pediatric-gi-abdominal-wall.kps-intussusception-2023"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Conditional and locally determined; no mandatory waiting interval.",
+      "applicablePopulation": "Children with partial progress during initial reduction.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.intussusception-operation",
+      "statement": "Persistently symptomatic intussusception that remains unreduced after reasonable enema attempts requires operative assessment; a documented lead point strengthens that need.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.bspr-intussusception-2017",
+        "source.pediatric-gi-abdominal-wall.kps-intussusception-2023"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Recurrence alone is not a contraindication to another enema. Operation is keyed for persistent failed reduction plus a structural lesion, not age alone.",
+      "applicablePopulation": "Persistent or recurrent ileocolic intussusception.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.intussusception-transient",
+      "statement": "Transient small-bowel intussusception that resolves clinically and on reassessment differs from persistent symptomatic ileocolic intussusception.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.kps-intussusception-2023"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "The authored case has residual ileocolic disease; no length cutoff or automatic observation rule.",
+      "applicablePopulation": "Children with transient small-bowel invagination.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.nec-fixed-loop",
+      "statement": "A fixed bowel loop should be interpreted with the infant's overall course rather than treated as an independent absolute indication for NEC surgery.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.ernica-nec-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Conditional recommendation, very-low certainty. No reassuring inference from absence of free air alone.",
+      "applicablePopulation": "Premature infants with NEC.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.nec-drain",
+      "statement": "Peritoneal drainage can serve as a bridge when early NEC operation is not possible, and deterioration after drainage may still require laparotomy.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.ernica-nec-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Many require later laparotomy; exact rescue thresholds are not defined.",
+      "applicablePopulation": "Premature infants with suspected or confirmed perforated NEC.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.nec-procedure-uncertainty",
+      "statement": "Initial laparotomy and initial drainage are both reasonable approaches to perforated NEC depending on patient and center factors.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.ernica-nec-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "No universal superiority claim; the authored later deterioration is distinct from initial procedural choice.",
+      "applicablePopulation": "Premature neonates with perforated NEC.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.meconium-obstruction",
+      "statement": "Inspissated meconium in the distal ileum can cause neonatal bowel obstruction and warrants cystic-fibrosis evaluation.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.donos-meconium-2024"
+      ],
+      "evidenceCategory": "presentation",
+      "certainty": "moderate",
+      "limitation": "Meconium ileus is not itself proof of cystic fibrosis.",
+      "applicablePopulation": "Neonates with meconium ileus.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.meconium-enema",
+      "statement": "Selected stable infants with uncomplicated meconium ileus can undergo image-guided water-soluble contrast enema after resuscitation.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.donos-meconium-2024"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Single adequate systematic review; nonstandard practice. No contrast product, concentration, dose or attempt count keyed.",
+      "applicablePopulation": "Resuscitated stable infants without perforation or other operative complications.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.meconium-repeat",
+      "statement": "Repeat image-guided contrast enemas can decompress selected uncomplicated meconium ileus; persistent obstruction after a first attempt does not by itself define failure of the whole nonoperative course.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.donos-meconium-2024"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "Single adequate licensed systematic review with heterogeneous protocols; it does not establish a universal attempt count, interval, contrast preparation or obligatory repeat instead of surgery.",
+      "applicablePopulation": "Neonates or children in the exact constructed vignette; no universal protocol.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.meconium-complicated",
+      "statement": "Perforation, volvulus or failed nonoperative decompression changes the operative boundary in meconium ileus.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.donos-meconium-2024"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Specific operative reconstruction depends on anatomy and clinical condition.",
+      "applicablePopulation": "Infants with complicated or non-resolving meconium ileus.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.wilms-caval-biopsy-first",
+      "statement": "For presumed Wilms tumor with caval tumor extension at or above the hepatic veins, a biopsy and preoperative chemotherapy pathway is suggested before resection.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.nci-wilms-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "NCI professional evidence summary, not a formal COG protocol document. Exact multidisciplinary plan and biopsy technique require clinician review; no regimen or response threshold is specified.",
+      "applicablePopulation": "Children with presumed Wilms tumor in the stated COG/North American treatment context.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.wilms-preop-exceptions",
+      "statement": "Bilateral disease or tumor thrombus reaching the hepatic-vein level can alter the up-front nephrectomy pathway.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.nci-wilms-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Counterfactual only; no drug regimen or automatic transplant/nephron-sparing technique.",
+      "applicablePopulation": "Wilms tumor operative planning.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.wilms-biopsy-stage",
+      "statement": "Preoperative biopsy of an otherwise resectable Wilms tumor can assign local stage III under COG staging.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.nci-wilms-2025"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "Does not imply biopsy is forbidden for inoperable or atypical masses.",
+      "applicablePopulation": "COG-treated Wilms tumor.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.wilms-no-biopsy",
+      "statement": "Under the COG/North American pathway, a typical resectable unilateral Wilms tumor is generally managed with up-front nephrectomy rather than preoperative biopsy.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.nci-wilms-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Do not generalize to SIOP, bilateral tumors, atypical appearance, high caval extension or unsafe resection. One government evidence summary checked.",
+      "applicablePopulation": "Typical unilateral resectable renal tumors in a COG-aligned center.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.preterm-hernia-tradeoff",
+      "statement": "Preterm inguinal-hernia timing balances incarceration during delay against respiratory and recurrence complications associated with earlier repair.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.hashmi-preterm-hernia-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "Predominantly retrospective synthesis; not an absolute repair-age rule. Other 2025 syntheses differ on the incarceration estimate.",
+      "applicablePopulation": "Preterm infants with inguinal hernia during initial hospitalization.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-gi-abdominal-wall.preterm-hernia-respiratory",
+      "statement": "For a reducible hernia in a very preterm infant with ongoing respiratory disease, planning repair after the initial neonatal hospitalization can be reasonable with surgical follow-up and incarceration precautions.",
+      "sourceIds": [
+        "source.pediatric-gi-abdominal-wall.hashmi-preterm-hernia-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "One adequately licensed directly read synthesis. Clinical timing needs named review; no fixed postmenstrual age, weight or deadline is taught.",
+      "applicablePopulation": "Reducible inguinal hernia with neonatal respiratory comorbidity.",
+      "lastCheckedOn": "2026-11-11"
+    }
+  ],
+  "sources": [
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.vascular-venous-lymphatic-access.ash-treatment-2020",
+      "title": "ASH 2020 DVT and PE treatment guideline",
+      "completeCitation": "Ortel TL, Neumann I, Ageno W, Beyth R, Clark NP, Cuker A, Hutten BA, Jaff MR, Manja V, Schulman S, Thurston C, Vedantham S, Verhamme P, Witt DM, Florez ID, Izcovich A, Nieuwlaat R, Ross S, Schunemann HJ, Wiercioch W, Zhang Y, Zhang Y. American Society of Hematology 2020 guidelines for management of venous thromboembolism: treatment of deep vein thrombosis and pulmonary embolism. Blood Adv. 2020;4(19):4693-4738. doi:10.1182/bloodadvances.2020001830.",
+      "organizationOrJournal": "American Society of Hematology / Blood Advances",
+      "authors": [
+        "Thomas L Ortel",
+        "Ignacio Neumann",
+        "Walter Ageno",
+        "Rebecca Beyth",
+        "Nathan P Clark",
+        "Adam Cuker",
+        "Barbara A Hutten",
+        "Michael R Jaff",
+        "Veena Manja",
+        "Sam Schulman",
+        "Caitlin Thurston",
+        "Suresh Vedantham",
+        "Peter Verhamme",
+        "Daniel M Witt",
+        "Ivan D Florez",
+        "Ariel Izcovich",
+        "Robby Nieuwlaat",
+        "Stephanie Ross",
+        "Holger J Schunemann",
+        "Wojtek Wiercioch",
+        "Yuan Zhang",
+        "Yuqing Zhang"
+      ],
+      "publicationYear": 2020,
+      "doi": "10.1182/bloodadvances.2020001830",
+      "pmid": null,
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7556153/",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained; targeted factual verification",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted society factual verification and citation only. No source prose, tables, figures, algorithms or full text stored. No general AI/reproduction licence inferred from public access. No article-level CC licence located; standard copyright retained. PMC policy inspected. Recommendations 1, 3, 5, 7, 10-14 and 17-25 targeted; new 2026 PE summary separately cross-checked.",
+      "authorityAssessment": "GRADE treatment guideline; many conditional recommendations. Three-to-six-month primary treatment is broader than the direct three-month statement in the 2026 Canadian guide.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.vascular-venous-lymphatic-access.dvt-proximal-treatment",
+        "claim.vascular-venous-lymphatic-access.dvt-prophylaxis-not-treatment",
+        "claim.vascular-venous-lymphatic-access.dvt-three-month-resolved",
+        "claim.vascular-venous-lymphatic-access.dvt-residual-not-filter",
+        "claim.vascular-venous-lymphatic-access.filter-not-routine",
+        "claim.vascular-venous-lymphatic-access.filter-contraindication",
+        "claim.vascular-venous-lymphatic-access.filter-retrieval",
+        "claim.vascular-venous-lymphatic-access.pe-admit-rv-biomarker",
+        "claim.vascular-venous-lymphatic-access.pe-no-routine-thrombolysis",
+        "claim.vascular-venous-lymphatic-access.dvt-lysis-selective",
+        "claim.vascular-venous-lymphatic-access.dvt-extended-context",
+        "claim.vascular-venous-lymphatic-access.therapeutic-rivaroxaban-example"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.vascular-venous-lymphatic-access.thrombosis-canada-2026",
+      "title": "Venous Thromboembolism: Duration of Treatment",
+      "completeCitation": "Thrombosis Canada. Venous Thromboembolism: Duration of Treatment. Clinical Guide. Version April 9, 2026. 12 pp. Accessed November 11, 2026.",
+      "organizationOrJournal": "Thrombosis Canada",
+      "authors": [
+        "Thrombosis Canada clinical guides committee"
+      ],
+      "publicationYear": 2026,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://thrombosiscanada.ca/clinical_guides/pdfs/DURATIONOFANTICOAGULANTTHERAPY_101.pdf",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained; targeted factual verification",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted society factual verification and citation only. No source prose, tables, figures, algorithms or full text stored. No general AI/reproduction licence inferred from public access. Version date read in official PDF. HTML is JavaScript-only. Terms/disclaimer URL attempts unavailable; no affirmative reuse licence or AI permission asserted. No key relies on snippets.",
+      "authorityAssessment": "Current specialty clinical guide directly supports three months for major transient-risk VTE after the risk resolves. First weakly provoked/unprovoked extension is preference sensitive; no universal extension key authored.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.vascular-venous-lymphatic-access.dvt-proximal-treatment",
+        "claim.vascular-venous-lymphatic-access.dvt-three-month-resolved",
+        "claim.vascular-venous-lymphatic-access.dvt-heterozygous-fvl-duration"
+      ],
+      "round2TargetedCheck": {
+        "checkedOn": "2026-11-11",
+        "newEvidenceClaimIds": [
+          "claim.vascular-venous-lymphatic-access.dvt-heterozygous-fvl-duration"
+        ],
+        "scope": "Targeted factual verification only; original access date retained, no source prose/tables/figures stored."
+      }
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.vascular-venous-lymphatic-access.ash-diagnosis-2018",
+      "title": "ASH 2018 VTE diagnosis guideline",
+      "completeCitation": "Lim W, Le Gal G, Bates SM, Righini M, Haramati LB, Lang E, Kline JA, Chasteen S, Snyder M, Patel P, Bhatt M, Patel P, Braun C, Begum H, Wiercioch W, Schunemann HJ, Mustafa RA. American Society of Hematology 2018 guidelines for management of venous thromboembolism: diagnosis of venous thromboembolism. Blood Adv. 2018;2(22):3226-3256. doi:10.1182/bloodadvances.2018024828.",
+      "organizationOrJournal": "American Society of Hematology / Blood Advances",
+      "authors": [
+        "Wendy Lim",
+        "Gregoire Le Gal",
+        "Shannon M Bates",
+        "Marc Righini",
+        "Linda B Haramati",
+        "Eddy Lang",
+        "Jeffrey A Kline",
+        "Sonja Chasteen",
+        "Marcia Snyder",
+        "Payal Patel",
+        "Meha Bhatt",
+        "Parth Patel",
+        "Cody Braun",
+        "Housne Begum",
+        "Wojtek Wiercioch",
+        "Holger J Schunemann",
+        "Reem A Mustafa"
+      ],
+      "publicationYear": 2018,
+      "doi": "10.1182/bloodadvances.2018024828",
+      "pmid": null,
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6258916/",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained; targeted factual verification",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted society factual verification and citation only. No source prose, tables, figures, algorithms or full text stored. No general AI/reproduction licence inferred from public access. Copyright ASH 2018; no CC grant assumed. PMC Copyright Notice inspected: individual targeted reading, no systematic downloading. Directory routes unavailable; article was read without login or access bypass.",
+      "authorityAssessment": "GRADE diagnostic guideline. Pretest probability and acquisition assumptions matter. Search through October 2017; no claim to supersede detailed 2026 PE guidance.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.vascular-venous-lymphatic-access.dvt-postoperative-imaging",
+        "claim.vascular-venous-lymphatic-access.dvt-acquisition-adequacy",
+        "claim.vascular-venous-lymphatic-access.dvt-negative-proximal",
+        "claim.vascular-venous-lymphatic-access.dvt-recurrent-comparison",
+        "claim.vascular-venous-lymphatic-access.dvt-residual-not-filter",
+        "claim.vascular-venous-lymphatic-access.pe-vq-contrast",
+        "claim.vascular-venous-lymphatic-access.pe-inadequate-imaging"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.vascular-venous-lymphatic-access.nci-lymphedema-2024",
+      "title": "Lymphedema (PDQ) Health Professional Version",
+      "completeCitation": "PDQ Supportive and Palliative Care Editorial Board. Lymphedema (PDQ): Health Professional Version. Bethesda, MD: National Cancer Institute. Last summary update December 18, 2024. Accessed November 11, 2026.",
+      "organizationOrJournal": "National Cancer Institute",
+      "authors": [
+        "PDQ Supportive and Palliative Care Editorial Board"
+      ],
+      "publicationYear": 2024,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.cancer.gov/about-cancer/treatment/side-effects/lymphedema/lymphedema-hp-pdq",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "NCI public-domain text conditions; third-party material excluded",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "NCI policy inspected: https://www.cancer.gov/policies/copyright-reuse. Text generally copyright-free with NCI credit; images and branding have separate restrictions. NCI credited; original synthesis only. No source text, images, logos or branded summary reproduced.",
+      "authorityAssessment": "Peer-reviewed government synthesis, not a formal management guideline; cancer-related lymphedema scope.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.vascular-venous-lymphatic-access.lymphatic-pattern",
+        "claim.vascular-venous-lymphatic-access.lymphatic-new-change",
+        "claim.vascular-venous-lymphatic-access.lymphatic-cdt",
+        "claim.vascular-venous-lymphatic-access.lymphatic-maintenance",
+        "claim.vascular-venous-lymphatic-access.lymphatic-garment",
+        "claim.vascular-venous-lymphatic-access.lymphatic-exercise"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.vascular-venous-lymphatic-access.isl-lymphedema-2023",
+      "title": "ISL 2023 peripheral lymphedema consensus",
+      "completeCitation": "Executive Committee of the International Society of Lymphology. The Diagnosis and Treatment of Peripheral Lymphedema: 2023 Consensus Document of the International Society of Lymphology. Lymphology. 2023;56(4):133-151. PMID:39207406.",
+      "organizationOrJournal": "International Society of Lymphology / Lymphology",
+      "authors": [
+        "Executive Committee of the International Society of Lymphology"
+      ],
+      "publicationYear": 2023,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://isl.arizona.edu/sites/default/files/2024-11/THE-DIAGNOSIS-AND-TREATMENT-OF-PERIPHERAL-LYMPHEDEMA-2023-CONSENSUS-DOCUMENT-OF-THE-INTERNATIONAL-SOCIETY-OF-LYMPHOLOGY.pdf",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained; targeted factual verification",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted professional-society factual verification only; no source prose, tables, figures, algorithms or full text stored. No general AI/reproduction licence inferred. Official society PDF. No CC licence found; copyright retained. Privacy/policy routes unavailable. Targeted differential, CDT phases, exercise, fit, diuretic and antimicrobial facts, without reproduced algorithms.",
+      "authorityAssessment": "International expert consensus, explicitly limited trial evidence. Does not establish a universal garment pressure, antibiotic regimen or lymphatic operation.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.vascular-venous-lymphatic-access.lymphatic-pattern",
+        "claim.vascular-venous-lymphatic-access.lymphatic-new-change",
+        "claim.vascular-venous-lymphatic-access.lymphatic-cdt",
+        "claim.vascular-venous-lymphatic-access.lymphatic-maintenance",
+        "claim.vascular-venous-lymphatic-access.lymphatic-garment",
+        "claim.vascular-venous-lymphatic-access.lymphatic-exercise",
+        "claim.vascular-venous-lymphatic-access.lymphatic-diuretic"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.vascular-venous-lymphatic-access.svs-varicose-2023",
+      "title": "SVS/AVF/AVLS varicose veins guideline Part II",
+      "completeCitation": "Gloviczki P, Lawrence PF, Wasan SM, Meissner MH, Almeida J, Brown KR, Bush RL, Di Iorio M, Fish J, Fukaya E, Gloviczki ML, Hingorani A, Jayaraj A, Kolluri R, Murad MH, Obi AT, Ozsvath KJ, Singh MJ, Vayuvegula S, Welch HJ. The 2023 Society for Vascular Surgery, American Venous Forum, and American Vein and Lymphatic Society clinical practice guidelines for the management of varicose veins of the lower extremities. Part II. J Vasc Surg Venous Lymphat Disord. 2024;12(1):101670. Published online August 29, 2023. doi:10.1016/j.jvsv.2023.08.011.",
+      "organizationOrJournal": "SVS / AVF / AVLS / Journal of Vascular Surgery: Venous and Lymphatic Disorders",
+      "authors": [
+        "Peter Gloviczki",
+        "Peter F Lawrence",
+        "Suman M Wasan",
+        "Mark H Meissner",
+        "Jose Almeida",
+        "Kellie R Brown",
+        "Ruth L Bush",
+        "Michael Di Iorio",
+        "John Fish",
+        "Eri Fukaya",
+        "Monika L Gloviczki",
+        "Anil Hingorani",
+        "Arjun Jayaraj",
+        "Raghu Kolluri",
+        "M Hassan Murad",
+        "Andrea T Obi",
+        "Kathleen J Ozsvath",
+        "Michael J Singh",
+        "Satish Vayuvegula",
+        "Harold J Welch"
+      ],
+      "publicationYear": 2024,
+      "doi": "10.1016/j.jvsv.2023.08.011",
+      "pmid": null,
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11523430/",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained; targeted factual verification",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted professional-society factual verification only; no source prose, tables, figures, algorithms or full text stored. No general AI/reproduction licence inferred. Article CC BY-NC-ND 4.0 identified; not used as permission to adapt protected expression in a product. SFMV pre-proof supplied targeted sections 1.2, 1.5, 2.1, 9, 11, 12 and 13 after PMC challenges. Final/pre-proof distinction retained. Legal-page attempts unavailable. Public society-copy cross-check: https://ex.sfmv.fr/sites/default/files/docs/2023_svs_avf_avls_varices_membres_inferieurs_part2_jvsvld.pdf",
+      "authorityAssessment": "Graded multisociety guidance with separately identified consensus statements. Junction-adjacent SVT has different evidence strength from distant long-segment SVT.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.vascular-venous-lymphatic-access.venous-reflux-protocol",
+        "claim.vascular-venous-lymphatic-access.venous-recurrence-mapping",
+        "claim.vascular-venous-lymphatic-access.venous-proximal-obstruction",
+        "claim.vascular-venous-lymphatic-access.venous-intervention-choice",
+        "claim.vascular-venous-lymphatic-access.venous-conservative-choice",
+        "claim.vascular-venous-lymphatic-access.venous-tributary-care",
+        "claim.vascular-venous-lymphatic-access.svt-distant-long",
+        "claim.vascular-venous-lymphatic-access.svt-near-junction",
+        "claim.vascular-venous-lymphatic-access.varix-bleeding-care",
+        "claim.vascular-venous-lymphatic-access.postablation-symptoms",
+        "claim.vascular-venous-lymphatic-access.varix-sclerotherapy-before-ligation",
+        "claim.vascular-venous-lymphatic-access.venous-reflux-durations",
+        "claim.vascular-venous-lymphatic-access.venous-isolated-junction",
+        "claim.vascular-venous-lymphatic-access.venous-recurrent-groin-procedure",
+        "claim.vascular-venous-lymphatic-access.venous-recurrent-ssv-procedure",
+        "claim.vascular-venous-lymphatic-access.svt-distal-symptom-boundary"
+      ],
+      "round2TargetedCheck": {
+        "checkedOn": "2026-11-11",
+        "newEvidenceClaimIds": [
+          "claim.vascular-venous-lymphatic-access.venous-reflux-durations",
+          "claim.vascular-venous-lymphatic-access.venous-isolated-junction",
+          "claim.vascular-venous-lymphatic-access.venous-recurrent-groin-procedure",
+          "claim.vascular-venous-lymphatic-access.venous-recurrent-ssv-procedure",
+          "claim.vascular-venous-lymphatic-access.svt-distal-symptom-boundary"
+        ],
+        "scope": "Targeted factual verification only; original access date retained, no source prose/tables/figures stored."
+      }
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.vascular-venous-lymphatic-access.ukka-access-2025",
+      "title": "UK Kidney Association vascular access guideline",
+      "completeCitation": "Aitken E, Anijeet H, Ashby D, Barrow W, Calder F, Dowds B, Fielding C, Gilbert J, Jones R, Karunanithy N, Khawaja Z, Roberts E, Robson M, Shroff R, Stacey H, Thomson P, Waters D. UK Kidney Association Clinical Practice Guideline on vascular access for haemodialysis. BMC Nephrol. 2025;26:461. doi:10.1186/s12882-025-04374-y.",
+      "organizationOrJournal": "UK Kidney Association / BMC Nephrology",
+      "authors": [
+        "Emma Aitken",
+        "Hameed Anijeet",
+        "Damien Ashby",
+        "Wayne Barrow",
+        "Francis Calder",
+        "Brett Dowds",
+        "Catherine Fielding",
+        "James Gilbert",
+        "Rob Jones",
+        "Narayan Karunanithy",
+        "Zaib Khawaja",
+        "Emma Roberts",
+        "Mike Robson",
+        "Rukshana Shroff",
+        "Hannah Stacey",
+        "Peter Thomson",
+        "Dan Waters"
+      ],
+      "publicationYear": 2025,
+      "doi": "10.1186/s12882-025-04374-y",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s12882-025-04374-y",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "CC BY 4.0",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level CC BY 4.0 verified in publisher Rights and permissions and PMC panel: https://creativecommons.org/licenses/by/4.0/. Crown 2025 and authors credited. Original short factual synthesis and constructed applications change presentation and application; no source text, art or third-party material reproduced.",
+      "authorityAssessment": "Current graded access guidance, many low-certainty recommendations. UK pathway context. Separate committee from KDOQI, but underlying evidence overlaps.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.vascular-venous-lymphatic-access.access-maturation",
+        "claim.vascular-venous-lymphatic-access.access-deep-basilic",
+        "claim.vascular-venous-lymphatic-access.access-clinical-indicators",
+        "claim.vascular-venous-lymphatic-access.access-stenosis-action",
+        "claim.vascular-venous-lymphatic-access.access-no-prophylactic-angioplasty",
+        "claim.vascular-venous-lymphatic-access.access-central-outflow",
+        "claim.vascular-venous-lymphatic-access.access-central-conservative",
+        "claim.vascular-venous-lymphatic-access.access-ischemia-assessment",
+        "claim.vascular-venous-lymphatic-access.access-severe-ischemia",
+        "claim.vascular-venous-lymphatic-access.access-aneurysm-skin",
+        "claim.vascular-venous-lymphatic-access.access-thrombosis",
+        "claim.vascular-venous-lymphatic-access.access-vein-preservation",
+        "claim.vascular-venous-lymphatic-access.catheter-site",
+        "claim.vascular-venous-lymphatic-access.catheter-thrombolytic-lock",
+        "claim.vascular-venous-lymphatic-access.catheter-s-aureus",
+        "claim.vascular-venous-lymphatic-access.access-compression-response",
+        "claim.vascular-venous-lymphatic-access.access-maturation-timing",
+        "claim.vascular-venous-lymphatic-access.access-exam-interpretation",
+        "claim.vascular-venous-lymphatic-access.access-primary-angioplasty",
+        "claim.vascular-venous-lymphatic-access.access-neuropathic-differential",
+        "claim.vascular-venous-lymphatic-access.catheter-persistent-bacteremia-removal"
+      ],
+      "round2TargetedCheck": {
+        "checkedOn": "2026-11-11",
+        "newEvidenceClaimIds": [
+          "claim.vascular-venous-lymphatic-access.access-maturation-timing",
+          "claim.vascular-venous-lymphatic-access.access-exam-interpretation",
+          "claim.vascular-venous-lymphatic-access.access-primary-angioplasty",
+          "claim.vascular-venous-lymphatic-access.access-neuropathic-differential",
+          "claim.vascular-venous-lymphatic-access.catheter-persistent-bacteremia-removal"
+        ],
+        "scope": "Targeted factual verification only; original access date retained, no source prose/tables/figures stored."
+      }
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.vascular-venous-lymphatic-access.kdoqi-access-2019",
+      "title": "KDOQI vascular access 2019 update",
+      "completeCitation": "Lok CE, Huber TS, Lee T, Shenoy S, Yevzlin AS, Abreo K, Allon M, Asif A, Astor BC, Glickman MH, Graham J, Moist LM, Rajan DK, Roberts C, Vachharajani TJ, Valentini RP; KDOQI Vascular Access Guideline Work Group. KDOQI Clinical Practice Guideline for Vascular Access: 2019 Update. Am J Kidney Dis. 2020;75(4 Suppl 2):S1-S164. doi:10.1053/j.ajkd.2019.12.001.",
+      "organizationOrJournal": "National Kidney Foundation / American Journal of Kidney Diseases",
+      "authors": [
+        "Charmaine E Lok",
+        "Thomas S Huber",
+        "Timmy Lee",
+        "Surendra Shenoy",
+        "Alexander S Yevzlin",
+        "Kenneth Abreo",
+        "Michael Allon",
+        "Arif Asif",
+        "Brad C Astor",
+        "Marc H Glickman",
+        "Janet Graham",
+        "Louise M Moist",
+        "Dheeraj K Rajan",
+        "Cynthia Roberts",
+        "Tushar J Vachharajani",
+        "Rudolph P Valentini"
+      ],
+      "publicationYear": 2020,
+      "doi": "10.1053/j.ajkd.2019.12.001",
+      "pmid": null,
+      "officialUrl": "https://www.kidney.org/sites/default/files/2026-07/2019-kdoqi-guideline-vascular-access.pdf",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained; targeted factual verification",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted professional-society factual verification only; no source prose, tables, figures, algorithms or full text stored. No general AI/reproduction licence inferred. Official NKF PDF with appended erratum. Statements 13.6-13.9, 15, 17, 18 and 26 targeted. Terms routes unavailable. Copyrighted non-guideline commentary PMC8856770 excluded from evidence because an open licence was not verified.",
+      "authorityAssessment": "US specialty guideline: clinical indicators, life-plan, ischemic complications. Some repair recommendations rely on expert opinion and older evidence.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.vascular-venous-lymphatic-access.access-maturation",
+        "claim.vascular-venous-lymphatic-access.access-clinical-indicators",
+        "claim.vascular-venous-lymphatic-access.access-stenosis-action",
+        "claim.vascular-venous-lymphatic-access.access-no-prophylactic-angioplasty",
+        "claim.vascular-venous-lymphatic-access.access-central-outflow",
+        "claim.vascular-venous-lymphatic-access.access-central-conservative",
+        "claim.vascular-venous-lymphatic-access.access-ischemia-assessment",
+        "claim.vascular-venous-lymphatic-access.access-severe-ischemia",
+        "claim.vascular-venous-lymphatic-access.access-neuropathy",
+        "claim.vascular-venous-lymphatic-access.access-neuropathy-urgent",
+        "claim.vascular-venous-lymphatic-access.access-aneurysm-skin",
+        "claim.vascular-venous-lymphatic-access.access-thrombosis",
+        "claim.vascular-venous-lymphatic-access.access-vein-preservation",
+        "claim.vascular-venous-lymphatic-access.catheter-site",
+        "claim.vascular-venous-lymphatic-access.access-flow-reduction",
+        "claim.vascular-venous-lymphatic-access.access-compression-response",
+        "claim.vascular-venous-lymphatic-access.access-exam-interpretation",
+        "claim.vascular-venous-lymphatic-access.access-primary-angioplasty",
+        "claim.vascular-venous-lymphatic-access.access-stent-boundaries",
+        "claim.vascular-venous-lymphatic-access.access-emergency-dialysis-before-salvage",
+        "claim.vascular-venous-lymphatic-access.catheter-persistent-bacteremia-removal"
+      ],
+      "round2TargetedCheck": {
+        "checkedOn": "2026-11-11",
+        "newEvidenceClaimIds": [
+          "claim.vascular-venous-lymphatic-access.access-exam-interpretation",
+          "claim.vascular-venous-lymphatic-access.access-primary-angioplasty",
+          "claim.vascular-venous-lymphatic-access.access-stent-boundaries",
+          "claim.vascular-venous-lymphatic-access.access-emergency-dialysis-before-salvage",
+          "claim.vascular-venous-lymphatic-access.catheter-persistent-bacteremia-removal"
+        ],
+        "scope": "Targeted factual verification only; original access date retained, no source prose/tables/figures stored."
+      }
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.vascular-venous-lymphatic-access.aha-pad-2024",
+      "title": "2024 multisociety PAD guideline: diagnostic physiology",
+      "completeCitation": "Gornik HL, Aronow HD, Goodney PP, et al. 2024 ACC/AHA/AACVPR/APMA/ABC/SCAI/SVM/SVN/SVS/SIR/VESS Guideline for the Management of Lower Extremity Peripheral Artery Disease. Circulation. 2024;149:e1313-e1410. doi:10.1161/CIR.0000000000001251.",
+      "organizationOrJournal": "AHA / ACC / multisociety PAD writing committee",
+      "authors": [
+        "Heather L Gornik",
+        "Herbert D Aronow",
+        "Philip P Goodney",
+        "Multisociety PAD writing committee"
+      ],
+      "publicationYear": 2024,
+      "doi": "10.1161/CIR.0000000000001251",
+      "pmid": null,
+      "officialUrl": "https://professional.heart.org/-/media/PHD-Files-2/Science-News/2/2024/2024-PAD-guideline-slide-set.pdf",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained; targeted factual verification",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted professional-society factual verification only. No source prose, slides, tables, figures, algorithms or full text reproduced. Official slide set read for the underlying diagnostic fact; AHA copyright applies. No numerical compression threshold or pressure strength is inferred.",
+      "authorityAssessment": "Current physiology guidance for noncompressible ankle measurements and toe/digital assessment. Arterial revascularization decisions remain in their owning topic.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.vascular-venous-lymphatic-access.ulcer-perfusion-first",
+        "claim.vascular-venous-lymphatic-access.ulcer-noncompressible",
+        "claim.vascular-venous-lymphatic-access.ulcer-current-record",
+        "claim.vascular-venous-lymphatic-access.arterial-exercise-testing"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.vascular-venous-lymphatic-access.evra-nihr-2019",
+      "title": "EVRA early versus deferred ablation trial report",
+      "completeCitation": "Gohel MS, Heatley F, Liu X, Bradbury A, Bulbulia R, Cullum N, Epstein DM, Nyamekye I, Poskitt KR, Renton S, Warwick J, Davies AH. Early versus deferred endovenous ablation of superficial venous reflux in patients with venous ulceration: the EVRA RCT. Health Technol Assess. 2019;23(24):1-96. doi:10.3310/hta23240.",
+      "organizationOrJournal": "NIHR Journals Library / Health Technology Assessment",
+      "authors": [
+        "Manjit S Gohel",
+        "Francine Heatley",
+        "Xinxue Liu",
+        "Andrew Bradbury",
+        "Richard Bulbulia",
+        "Nicky Cullum",
+        "David M Epstein",
+        "Isaac Nyamekye",
+        "Keith R Poskitt",
+        "Sophie Renton",
+        "Jane Warwick",
+        "Alun H Davies"
+      ],
+      "publicationYear": 2019,
+      "doi": "10.3310/hta23240",
+      "pmid": null,
+      "officialUrl": "https://www.journalslibrary.nihr.ac.uk/hta/HTA23240",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "randomized_trial",
+      "licenseLabel": "Copyright retained; targeted factual verification",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Article Permissions checked: Crown 2019 commissioning terms allow private research/study and specified journal reproduction; commercial reproduction requires permission. Targeted factual verification and original synthesis only, without source expression or third-party NEJM figures. No general open/AI licence asserted.",
+      "authorityAssessment": "Primary randomized evidence for early superficial reflux ablation plus compression in eligible active ulcers. Other EVRA publications describe the same trial, not independent corroboration.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.vascular-venous-lymphatic-access.ulcer-perfusion-first",
+        "claim.vascular-venous-lymphatic-access.ulcer-compression",
+        "claim.vascular-venous-lymphatic-access.ulcer-current-record",
+        "claim.vascular-venous-lymphatic-access.ulcer-early-ablation"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-vascular-venous-lymphatic-access.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.vlu.esvs-cvd.2022",
+      "title": "ESVS 2022 Clinical Practice Guidelines on Chronic Venous Disease of the Lower Limbs",
+      "completeCitation": "De Maeseneer MG, Kakkos SK, Aherne T, Baekgaard N, Black S, Blomgren L, Giannoukas A, Gohel M, de Graaf R, Hamel-Desnos C, Jawien A, Jaworucka-Kaczorowska A, Lattimer CR, Mosti G, Noppeney T, van Rijn MJ, Stansby G; ESVS Guidelines Committee and Document Reviewers. Editor's Choice: European Society for Vascular Surgery (ESVS) 2022 Clinical Practice Guidelines on the Management of Chronic Venous Disease of the Lower Limbs. Eur J Vasc Endovasc Surg. 2022;63(2):184-267. doi:10.1016/j.ejvs.2021.12.024.",
+      "organizationOrJournal": "European Society for Vascular Surgery / European Journal of Vascular and Endovascular Surgery",
+      "authors": [
+        "Marianne G De Maeseneer",
+        "Stavros K Kakkos",
+        "Thomas Aherne",
+        "Niels Baekgaard",
+        "Stephen Black",
+        "Lena Blomgren",
+        "Athanasios Giannoukas",
+        "Manjit Gohel",
+        "Rick de Graaf",
+        "Claudine Hamel-Desnos",
+        "Arkadiusz Jawien",
+        "Aleksandra Jaworucka-Kaczorowska",
+        "Christopher R Lattimer",
+        "Giovanni Mosti",
+        "Thomas Noppeney",
+        "Marie Josee van Rijn",
+        "Gerry Stansby",
+        "ESVS Guidelines Committee and Document Reviewers"
+      ],
+      "publicationYear": 2022,
+      "doi": "10.1016/j.ejvs.2021.12.024",
+      "pmid": "35027279",
+      "officialUrl": "https://esvs.org/guideline/chronic-venous-disease-of-lower-limbs/",
+      "accessedOn": "2026-09-13",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted society guideline; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Stable existing source ID and original access date retained from development-batch/2026-09-13/venous-leg-ulcer.ts. Fresh targeted check on 2026-11-11 through the French Society of Phlebology PDF https://www.sf-phlebologie.org/wp-content/uploads/2022/04/ESVS-2022-CVD-guidelines.pdf, recommendations 69-77 and section 6.3.3. Copyright retained; no source prose, tables, figures or algorithms reproduced. No reusable AI licence inferred from public society access.",
+      "authorityAssessment": "Graded vascular guideline. High-level support for venous-ulcer compression, lower-level consensus for severe ischemia/mixed compression. EVRA is the underlying trial also separately cited; guideline and trial are not independent trials.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.vascular-venous-lymphatic-access.ulcer-perfusion-first",
+        "claim.vascular-venous-lymphatic-access.ulcer-compression",
+        "claim.vascular-venous-lymphatic-access.ulcer-current-record",
+        "claim.vascular-venous-lymphatic-access.ulcer-early-ablation",
+        "claim.vascular-venous-lymphatic-access.ulcer-standard-pressure",
+        "claim.vascular-venous-lymphatic-access.ulcer-severe-ischemia",
+        "claim.vascular-venous-lymphatic-access.ulcer-modified-compression"
+      ],
+      "originalLedger": "packages/clinical-content/src/development-batch/2026-09-13/venous-leg-ulcer.ts",
+      "targetedCheckDate": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "question-topic-esophagus-motility-achalasia.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.esophagus-motility-achalasia.acg-achalasia-2020",
+      "title": "ACG Clinical Guidelines: Diagnosis and Management of Achalasia",
+      "completeCitation": "Vaezi MF, Pandolfino JE, Yadlapati RH, Greer KB, Kavitt RT. ACG Clinical Guidelines: Diagnosis and Management of Achalasia. Am J Gastroenterol. 2020;115(9):1393-1411. doi:10.14309/ajg.0000000000000731.",
+      "organizationOrJournal": "American College of Gastroenterology / American Journal of Gastroenterology",
+      "authors": [
+        "Vaezi MF",
+        "Pandolfino JE",
+        "Yadlapati RH",
+        "Greer KB",
+        "Kavitt RT"
+      ],
+      "publicationYear": 2020,
+      "doi": "10.14309/ajg.0000000000000731",
+      "pmid": "32773454",
+      "officialUrl": "https://gi.org/guideline/diagnosis-and-management-of-achalasia/",
+      "verifiedUrl": "https://www.spg.pt/wp-content/uploads/2023/03/ACG-Clinical-Guidelines-Diagnosis-and-Management-of-Achalasia.pdf",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained by the society or publisher. Reproduction license unestablished.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted verification of underlying facts. Repository outputs contain original synthesis, bibliographic metadata and external links.",
+      "authorityAssessment": "Primary adult guideline. Treatment, diagnostic and failure sections directly checked. Newer SAGES guidance cross-checks procedure comparisons.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.esophagus-motility-achalasia.failed-manometry-flip",
+        "claim.esophagus-motility-achalasia.secondary-junction-assessment",
+        "claim.esophagus-motility-achalasia.type-three-poem",
+        "claim.esophagus-motility-achalasia.type-three-length",
+        "claim.esophagus-motility-achalasia.type-one-two-options",
+        "claim.esophagus-motility-achalasia.myotomy-partial-wrap",
+        "claim.esophagus-motility-achalasia.botulinum-unfit",
+        "claim.esophagus-motility-achalasia.dilation-rescue-risk",
+        "claim.esophagus-motility-achalasia.post-treatment-tbe",
+        "claim.esophagus-motility-achalasia.recurrence-mechanisms",
+        "claim.esophagus-motility-achalasia.objective-postpoem-reflux",
+        "claim.esophagus-motility-achalasia.confirmed-reflux-treatment",
+        "claim.esophagus-motility-achalasia.salvage-heller",
+        "claim.esophagus-motility-achalasia.end-stage-referral",
+        "claim.esophagus-motility-achalasia.myotomy-limit",
+        "claim.esophagus-motility-achalasia.posttherapy-endoscopic-targets",
+        "claim.esophagus-motility-achalasia.eus-wall-target"
+      ],
+      "accessAndTermsAssessment": {
+        "checkedOn": "2026-11-11",
+        "retrieval": "Public journal or society-hosted guideline.",
+        "observedTerms": "Society/publisher copyright retained.",
+        "aiAccessFinding": "No express automated/AI-use prohibition identified on the accessed society-hosted page or document. Assessment is limited to this retrieval route.",
+        "storedMaterial": "Bibliographic metadata, links and original atomic claims."
+      }
+    },
+    {
+      "contentVersion": "question-topic-esophagus-motility-achalasia.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.esophagus-motility-achalasia.seoul-achalasia-2020",
+      "title": "2019 Seoul Consensus on Esophageal Achalasia Guidelines",
+      "completeCitation": "Jung HK, Hong SJ, Lee OY, Pandolfino J, Park H, Miwa H, Ghoshal UC, Mahadeva S, et al. 2019 Seoul Consensus on Esophageal Achalasia Guidelines. J Neurogastroenterol Motil. 2020;26(2):180-203. doi:10.5056/jnm20014.",
+      "organizationOrJournal": "Korean Society of Neurogastroenterology and Motility / Journal of Neurogastroenterology and Motility",
+      "authors": [
+        "Jung HK",
+        "Hong SJ",
+        "Lee OY",
+        "Pandolfino J",
+        "Park H",
+        "Miwa H",
+        "Ghoshal UC",
+        "Mahadeva S",
+        "et al."
+      ],
+      "publicationYear": 2020,
+      "doi": "10.5056/jnm20014",
+      "pmid": "32235027",
+      "officialUrl": "https://www.jnmjournal.org/journal/view.html?doi=10.5056/jnm20014",
+      "verifiedUrl": "https://www.jnmjournal.org/journal/view.html?doi=10.5056/jnm20014",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Creative Commons Attribution-NonCommercial 4.0 International",
+      "reuseStatus": "cc_by_nc_4_0_restricted",
+      "reuseNotes": "Underlying facts synthesized with attribution under https://creativecommons.org/licenses/by-nc/4.0/. Source article remains external.",
+      "authorityAssessment": "Independent guideline cross-check for botulinum toxin, partial fundoplication, salvage and end-stage referral. Predates SAGES update. Linked corrigendum retrieval failed.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.esophagus-motility-achalasia.barium-clearance",
+        "claim.esophagus-motility-achalasia.secondary-junction-assessment",
+        "claim.esophagus-motility-achalasia.type-three-length",
+        "claim.esophagus-motility-achalasia.myotomy-partial-wrap",
+        "claim.esophagus-motility-achalasia.complete-wrap-dysphagia",
+        "claim.esophagus-motility-achalasia.botulinum-unfit",
+        "claim.esophagus-motility-achalasia.post-treatment-tbe",
+        "claim.esophagus-motility-achalasia.salvage-heller",
+        "claim.esophagus-motility-achalasia.end-stage-referral",
+        "claim.esophagus-motility-achalasia.myotomy-limit"
+      ],
+      "accessAndTermsAssessment": {
+        "checkedOn": "2026-11-11",
+        "retrieval": "Public journal or society-hosted guideline.",
+        "observedTerms": "Article displays CC BY-NC 4.0.",
+        "aiAccessFinding": "No express automated/AI-use prohibition identified on the accessed society-hosted page or document. Assessment is limited to this retrieval route.",
+        "storedMaterial": "Bibliographic metadata, links and original atomic claims."
+      }
+    },
+    {
+      "contentVersion": "question-topic-esophagus-motility-achalasia.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.esophagus-motility-achalasia.acg-physiology-2020",
+      "title": "ACG Clinical Guidelines: Clinical Use of Esophageal Physiologic Testing",
+      "completeCitation": "Gyawali CP, Carlson DA, Chen JW, Patel A, Wong RJ, Yadlapati RH. ACG Clinical Guidelines: Clinical Use of Esophageal Physiologic Testing. Am J Gastroenterol. 2020;115(9):1412-1428. doi:10.14309/ajg.0000000000000734.",
+      "organizationOrJournal": "American College of Gastroenterology / American Journal of Gastroenterology",
+      "authors": [
+        "Gyawali CP",
+        "Carlson DA",
+        "Chen JW",
+        "Patel A",
+        "Wong RJ",
+        "Yadlapati RH"
+      ],
+      "publicationYear": 2020,
+      "doi": "10.14309/ajg.0000000000000734",
+      "pmid": "32769426",
+      "officialUrl": "https://doi.org/10.14309/ajg.0000000000000734",
+      "verifiedUrl": "https://www.spg.pt/wp-content/uploads/2023/03/ACG-Clinical-Guidelines-Clinical-Use-of-Esophageal-Physiologic-Testing-1.pdf",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained by the society or publisher. Reproduction license unestablished.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted verification of underlying facts. Repository outputs contain original synthesis, bibliographic metadata and external links.",
+      "authorityAssessment": "Primary physiology guidance. Targeted checks cover failed assisted placement, FLIP, clearance and test purposes.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.esophagus-motility-achalasia.egjoo-corroboration",
+        "claim.esophagus-motility-achalasia.borderline-aperistalsis",
+        "claim.esophagus-motility-achalasia.failed-manometry-flip",
+        "claim.esophagus-motility-achalasia.barium-clearance",
+        "claim.esophagus-motility-achalasia.tablet-obstruction",
+        "claim.esophagus-motility-achalasia.hrm-acquisition",
+        "claim.esophagus-motility-achalasia.provocation-purpose",
+        "claim.esophagus-motility-achalasia.reflux-testing-purpose"
+      ],
+      "accessAndTermsAssessment": {
+        "checkedOn": "2026-11-11",
+        "retrieval": "Public journal or society-hosted guideline.",
+        "observedTerms": "Society/publisher copyright retained.",
+        "aiAccessFinding": "No express automated/AI-use prohibition identified on the accessed society-hosted page or document. Assessment is limited to this retrieval route.",
+        "storedMaterial": "Bibliographic metadata, links and original atomic claims."
+      }
+    },
+    {
+      "contentVersion": "question-topic-esophagus-motility-achalasia.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.esophagus-motility-achalasia.chicago-v4-2021",
+      "title": "Esophageal motility disorders on high-resolution manometry: Chicago classification version 4.0",
+      "completeCitation": "Yadlapati R, Kahrilas PJ, Fox MR, Bredenoord AJ, Gyawali CP, Roman S, et al. Esophageal motility disorders on high-resolution manometry: Chicago classification version 4.0. Neurogastroenterol Motil. 2021;33(1):e14058. doi:10.1111/nmo.14058.",
+      "organizationOrJournal": "International High-Resolution Manometry Working Group / Neurogastroenterology and Motility",
+      "authors": [
+        "Yadlapati R",
+        "Kahrilas PJ",
+        "Fox MR",
+        "Bredenoord AJ",
+        "Gyawali CP",
+        "Roman S",
+        "et al."
+      ],
+      "publicationYear": 2021,
+      "doi": "10.1111/nmo.14058",
+      "pmid": "33373111",
+      "officialUrl": "https://doi.org/10.1111/nmo.14058",
+      "verifiedUrl": "https://www.spg.pt/wp-content/uploads/2023/03/Esophageal-motility-disorders-on-high-resolution-manometry-Chicago-classification-version-4.0.pdf",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained by the society or publisher. Reproduction license unestablished.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted verification of underlying facts. Repository outputs contain original synthesis, bibliographic metadata and external links.",
+      "authorityAssessment": "Primary international consensus from a working group selected by six motility societies. Classification, inconclusive findings and opioids directly checked. Online copyright 2020, journal issue 2021.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.esophagus-motility-achalasia.spastic-achalasia-pattern",
+        "claim.esophagus-motility-achalasia.opioid-reassessment",
+        "claim.esophagus-motility-achalasia.egjoo-corroboration",
+        "claim.esophagus-motility-achalasia.borderline-aperistalsis",
+        "claim.esophagus-motility-achalasia.hrm-acquisition",
+        "claim.esophagus-motility-achalasia.provocation-purpose"
+      ],
+      "accessAndTermsAssessment": {
+        "checkedOn": "2026-11-11",
+        "retrieval": "Public journal or society-hosted guideline.",
+        "observedTerms": "Society/publisher copyright retained.",
+        "aiAccessFinding": "No express automated/AI-use prohibition identified on the accessed society-hosted page or document. Assessment is limited to this retrieval route.",
+        "storedMaterial": "Bibliographic metadata, links and original atomic claims."
+      }
+    },
+    {
+      "contentVersion": "question-topic-esophagus-motility-achalasia.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.esophagus-motility-achalasia.sages-poem-update-2025",
+      "title": "2024 Update to SAGES Guidelines for the Use of Peroral Endoscopic Myotomy (POEM) in the Treatment of Achalasia",
+      "completeCitation": "Calabrese EC, Kindel T, Slater BJ, Marks J, Swanstrom L, Saxena P, Docimo S, Athanasiadis DI, Hanna NM, Stefanidis D, Rooker C, Maddern G, Kohn GP. 2024 Update to SAGES Guidelines for the Use of Peroral Endoscopic Myotomy (POEM) in the Treatment of Achalasia. SAGES guideline publication, May 2025.",
+      "organizationOrJournal": "Society of American Gastrointestinal and Endoscopic Surgeons",
+      "authors": [
+        "Calabrese EC",
+        "Kindel T",
+        "Slater BJ",
+        "Marks J",
+        "Swanstrom L",
+        "Saxena P",
+        "Docimo S",
+        "Athanasiadis DI",
+        "Hanna NM",
+        "Stefanidis D",
+        "Rooker C",
+        "Maddern G",
+        "Kohn GP"
+      ],
+      "publicationYear": 2025,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.sages.org/publications/guidelines/update-to-guidelines-for-the-use-of-poem-for-achalasia/",
+      "verifiedUrl": "https://www.sages.org/publications/guidelines/update-to-guidelines-for-the-use-of-poem-for-achalasia/",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained by the society or publisher. Reproduction license unestablished.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted verification of underlying facts. Repository outputs contain original synthesis, bibliographic metadata and external links.",
+      "authorityAssessment": "Current retrieved SAGES update. Type III preference is expert opinion. Type I/II comparisons are conditional. Title carries 2024 and archive lists May 2025.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.esophagus-motility-achalasia.type-three-poem",
+        "claim.esophagus-motility-achalasia.type-one-two-options",
+        "claim.esophagus-motility-achalasia.objective-postpoem-reflux",
+        "claim.esophagus-motility-achalasia.confirmed-reflux-treatment"
+      ],
+      "accessAndTermsAssessment": {
+        "checkedOn": "2026-11-11",
+        "retrieval": "Public journal or society-hosted guideline.",
+        "observedTerms": "Copyright retained and reposting the document prohibited.",
+        "aiAccessFinding": "No express automated/AI-use prohibition identified on the accessed society-hosted page or document. Assessment is limited to this retrieval route.",
+        "storedMaterial": "Bibliographic metadata, links and original atomic claims."
+      }
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.bariatric-metabolic.sfe-2024",
+      "title": "Society for Endocrinology guidelines for the diagnosis and management of post-bariatric hypoglycaemia",
+      "completeCitation": "Hazlehurst J, Khoo B, Brito Lobato C, Ilesanmi I, Abbott S, Chan T, Pillai S, Maslin K, Purkayastha S, McGowan B, Andrews R, Tan TMM. Society for Endocrinology guidelines for the diagnosis and management of post-bariatric hypoglycaemia. Endocrine Connections. 2024;13(5):e230285. doi:10.1530/EC-23-0285.",
+      "organizationOrJournal": "Society for Endocrinology / Endocrine Connections",
+      "authors": [
+        "Hazlehurst J",
+        "Khoo B",
+        "Brito Lobato C",
+        "Ilesanmi I",
+        "Abbott S",
+        "Chan T",
+        "Pillai S",
+        "Maslin K",
+        "Purkayastha S",
+        "McGowan B",
+        "Andrews R",
+        "Tan TMM"
+      ],
+      "publicationYear": 2024,
+      "doi": "10.1530/EC-23-0285",
+      "pmid": null,
+      "officialUrl": "https://discovery.ucl.ac.uk/id/eprint/10190207/1/ECC230285.pdf",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "CC BY 4.0 (UCL published version and landing-page rights)",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "PMC returned a browser challenge; used the published CC BY 4.0 version in the authors' institutional repository. Attribution and https://creativecommons.org/licenses/by/4.0/ retained. No article text stored.",
+      "authorityAssessment": "Specialist guideline; diagnostic and drug recommendations generally moderate certainty. Single directly read current guideline for drug sequencing.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.bariatric-metabolic.pbh-confirm",
+        "claim.bariatric-metabolic.pbh-cgm",
+        "claim.bariatric-metabolic.pbh-no-provocation",
+        "claim.bariatric-metabolic.pbh-diet",
+        "claim.bariatric-metabolic.pbh-acarbose",
+        "claim.bariatric-metabolic.pbh-second-line",
+        "claim.bariatric-metabolic.pbh-rescue",
+        "claim.bariatric-metabolic.pbh-diazoxide",
+        "claim.bariatric-metabolic.pbh-cgm-management",
+        "claim.bariatric-metabolic.acarbose-substrate",
+        "claim.bariatric-metabolic.pbh-protein-target",
+        "claim.bariatric-metabolic.pbh-acarbose-gi-effects",
+        "claim.bariatric-metabolic.pbh-severe-glucagon"
+      ]
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.bariatric-metabolic.labmed-hypoglycemia-summary-2019",
+      "title": "Summary of Endocrinology Society Guidelines: Evaluation and management of adult hypoglycaemic disorders",
+      "completeCitation": "Burns A; reviewed by McNeilly J. Summary of Endocrinology Society Guidelines: Evaluation and management of adult hypoglycaemic disorders. Association for Clinical Biochemistry and Laboratory Medicine (now Association for Laboratory Medicine). Reviewed February 2019. Summarizes Cryer PE et al., J Clin Endocrinol Metab. 2009;94(3):709-728.",
+      "organizationOrJournal": "Association for Laboratory Medicine",
+      "authors": [
+        "Burns A",
+        "McNeilly J"
+      ],
+      "publicationYear": 2019,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://labmed.org.uk/static/a8c7f434-10d3-44c9-ab28555dc6f8acfb/evaluation-and-management-of-adult-hypoglycaemic-disorders.pdf",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "open_educational_resource",
+      "licenseLabel": "Professional-association guideline summary; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Professional-association guidance read for a targeted factual cross-check; no table, assay cutoff or protocol copied. Original 2009 publisher full text was inaccessible and is not represented as read. Older mixed-meal recommendations do not supersede 2024 PBH guidance.",
+      "authorityAssessment": "Older professional guideline summary supports the existence and clinical role of supervised fasting evaluation as a competing investigation; current PBH key remains governed by the directly read 2024 SfE guideline.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.bariatric-metabolic.hypoglycemia-sampling-context"
+      ]
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.bariatric-metabolic.acg-gerd-2022",
+      "title": "ACG Clinical Guideline: Guidelines for the Diagnosis and Management of Gastroesophageal Reflux Disease",
+      "completeCitation": "Katz PO, Dunbar KB, Schnoll-Sussman FH, Greer KB, Yadlapati R, Spechler SJ. ACG Clinical Guideline: Guidelines for the Diagnosis and Management of Gastroesophageal Reflux Disease. American Journal of Gastroenterology. 2022;117(1):27-56. doi:10.14309/ajg.0000000000001538.",
+      "organizationOrJournal": "American College of Gastroenterology / American Journal of Gastroenterology",
+      "authors": [
+        "Katz PO",
+        "Dunbar KB",
+        "Schnoll-Sussman FH",
+        "Greer KB",
+        "Yadlapati R",
+        "Spechler SJ"
+      ],
+      "publicationYear": 2022,
+      "doi": "10.14309/ajg.0000000000001538",
+      "pmid": null,
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8754510/",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted society guideline; no reusable-expression license asserted",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted underlying-fact verification of the society guideline. PMC availability is not treated as a reuse grant. No guideline prose, tables, figures, algorithms or excerpts retained; no publisher-site corpus ingested.",
+      "authorityAssessment": "Society guideline directly supports verifying PPI administration and choosing reflux-monitoring protocol according to established diagnosis and current therapy.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.bariatric-metabolic.ppi-meal-timing",
+        "claim.bariatric-metabolic.ppi-before-escalation",
+        "claim.bariatric-metabolic.gerd-established-on-therapy-testing",
+        "claim.bariatric-metabolic.gerd-unproven-off-therapy-testing",
+        "claim.bariatric-metabolic.gerd-impedance-scope"
+      ]
+    },
+    {
+      "contentVersion": "question-topic-bariatric-metabolic.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.bariatric-metabolic.sages-comorbidities-2024",
+      "title": "SAGES guidelines for the management of comorbidities relevant to metabolic and bariatric surgery",
+      "completeCitation": "Kumar SS, Wunker C, Collings A, Bansal V, Zoumpou T, et al. SAGES guidelines for the management of comorbidities relevant to metabolic and bariatric surgery. Surgical Endoscopy. 2025;39:1-10. Published online December 12, 2024. doi:10.1007/s00464-024-11433-2.",
+      "organizationOrJournal": "SAGES / Surgical Endoscopy",
+      "authors": [
+        "Kumar SS",
+        "Wunker C",
+        "Collings A",
+        "Bansal V",
+        "Zoumpou T",
+        "et al."
+      ],
+      "publicationYear": 2025,
+      "doi": "10.1007/s00464-024-11433-2",
+      "pmid": null,
+      "officialUrl": "https://www.sages.org/publications/guidelines/guidelines-for-the-management-of-comorbidities-relevant-to-bariatric-surgery/",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Society web guidance; reuse license not asserted",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Society-hosted guidance used for targeted factual verification, not expression reuse. No automated-use prohibition found on retrieved guidance. Correction 10.1007/s00464-025-11537-3 checked: author-name presentation only.",
+      "authorityAssessment": "Post-sleeve GERD recommendations based on expert opinion; IBD procedure preference conditional with very low certainty.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.bariatric-metabolic.reflux-initial",
+        "claim.bariatric-metabolic.reflux-conversion",
+        "claim.bariatric-metabolic.ibd-procedure",
+        "claim.bariatric-metabolic.reflux-msa-boundary",
+        "claim.bariatric-metabolic.ppi-before-escalation"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-gi-abdominal-wall.bspr-intussusception-2017",
+      "title": "A UK evidence based guideline for the acute management of paediatric intussusception",
+      "completeCitation": "BSPR Intussusception Working Group. A UK evidence based guideline for the acute management of paediatric intussusception. Final-draft document dated 18 August 2017; public BSPR copy posted under 2024/01.",
+      "organizationOrJournal": "British Society of Paediatric Radiology",
+      "authors": [
+        "BSPR Intussusception Working Group"
+      ],
+      "publicationYear": 2017,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.bspr.co.uk/wp-content/uploads/2024/01/2017.08.18-Intussusception-Guideline-Final-Draft.pdf",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained; targeted verification",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Copyright retained. Targeted factual verification only; no copied or closely paraphrased expression, source excerpts, images or algorithms. Public access is not treated as blanket AI permission. No express AI/automated-access prohibition was identified in the accessed document; no corpus or bulk collection was made.",
+      "authorityAssessment": "Professional radiology/surgery working-group guidance. The filename says final draft and the document is older; grade C/D repeat-enema advice is not presented as a high-certainty universal requirement.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.pediatric-gi-abdominal-wall.intussusception-risk",
+        "claim.pediatric-gi-abdominal-wall.intussusception-repeat",
+        "claim.pediatric-gi-abdominal-wall.intussusception-operation"
+      ],
+      "accessMethod": "public_primary_document_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsUrl": null,
+      "accessAndRightsFinding": "Public official society PDF checked. Privacy-policy route unavailable; no express AI prohibition in document. No algorithm copied; current society review provides a separate cross-check."
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-gi-abdominal-wall.kps-intussusception-2023",
+      "title": "Current diagnosis and image-guided reduction for intussusception in children",
+      "completeCitation": "Hwang J, Yoon HM, Kim PH, Jung AY, Lee JS, Cho YA. Current diagnosis and image-guided reduction for intussusception in children. Clin Exp Pediatr. 2023;66(1):12-21. Published online 4 July 2022. doi:10.3345/cep.2021.01816.",
+      "organizationOrJournal": "Clinical and Experimental Pediatrics / Korean Pediatric Society",
+      "authors": [
+        "Jisun Hwang",
+        "Hee Mang Yoon",
+        "Pyeong Hwa Kim",
+        "Ah Young Jung",
+        "Jin Seong Lee",
+        "Young Ah Cho"
+      ],
+      "publicationYear": 2023,
+      "doi": "10.3345/cep.2021.01816",
+      "pmid": null,
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9815940/",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "CC BY-NC 4.0; limited factual verification",
+      "reuseStatus": "cc_by_nc_4_0_restricted",
+      "reuseNotes": "Copyright retained. Targeted factual verification only; no copied or closely paraphrased expression, source excerpts, images or algorithms. Public access is not treated as blanket AI permission. No express AI/automated-access prohibition was identified in the accessed document; no corpus or bulk collection was made.",
+      "authorityAssessment": "Specialty-society narrative review, not a new formal guideline. Used for narrow clinical cross-checks of partial reduction, recurrence, lead points and operative boundary.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.pediatric-gi-abdominal-wall.intussusception-risk",
+        "claim.pediatric-gi-abdominal-wall.intussusception-repeat",
+        "claim.pediatric-gi-abdominal-wall.intussusception-operation",
+        "claim.pediatric-gi-abdominal-wall.intussusception-transient"
+      ],
+      "accessMethod": "public_primary_document_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsUrl": null,
+      "accessAndRightsFinding": "Article-level CC BY-NC 4.0 explicitly checked. No source expression adapted or licensed content incorporated into a commercial asset; only underlying clinical facts independently synthesized. Do not infer commercial rights to the article or figures."
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-gi-abdominal-wall.ernica-nec-2025",
+      "title": "ERNICA Evidence-Based Guideline on Surgical Aspects of Necrotizing Enterocolitis in Premature Neonates",
+      "completeCitation": "Hulscher J, Irvine W, Conforti A, et al. European Reference Network for Inherited and Congenital Anomalies Evidence-Based Guideline on Surgical Aspects of Necrotizing Enterocolitis in Premature Neonates. Neonatology. 2025;122(3):376-384. doi:10.1159/000542540. Online 19 November 2024.",
+      "organizationOrJournal": "Neonatology / ERNICA",
+      "authors": [
+        "Jan Hulscher",
+        "Willemijn Irvine",
+        "Andrea Conforti",
+        "et al."
+      ],
+      "publicationYear": 2025,
+      "doi": "10.1159/000542540",
+      "pmid": null,
+      "officialUrl": "https://pure.eur.nl/ws/files/226057027/European_Reference_Network_for_Inherited_and_Congenital_Anomalies_Evidence-Based_Guideline_on_Surgical_Aspects_of_Necrotizing_Enterocolitis_in_Premature_Neonates.pdf",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "CC BY 4.0",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level CC BY 4.0; https://creativecommons.org/licenses/by/4.0/. Underlying facts independently synthesized with bibliographic attribution. No source prose, figure, table, algorithm or clinical vignette reproduced; fictional applications are original. License permissiveness is separate from medical authority.",
+      "authorityAssessment": "Current GRADE guidance with mostly very-low certainty. Does not establish universal laparotomy superiority over drainage or a single laboratory threshold for surgery.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.pediatric-gi-abdominal-wall.nec-fixed-loop",
+        "claim.pediatric-gi-abdominal-wall.nec-drain",
+        "claim.pediatric-gi-abdominal-wall.nec-procedure-uncertainty"
+      ],
+      "accessMethod": "public_primary_document_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsUrl": null,
+      "accessAndRightsFinding": "Article and institutional cover explicitly identify CC BY; used the university-hosted publisher version after PMC returned a browser check. No bypass of authentication or challenge attempted."
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-gi-abdominal-wall.donos-meconium-2024",
+      "title": "Diagnosis and Management of Simple and Complicated Meconium Ileus in Cystic Fibrosis, a Systematic Review",
+      "completeCitation": "Donos MA, Ghiga G, Trandafir LM, et al. Diagnosis and Management of Simple and Complicated Meconium Ileus in Cystic Fibrosis, a Systematic Review. Diagnostics (Basel). 2024;14(11):1179. doi:10.3390/diagnostics14111179.",
+      "organizationOrJournal": "Diagnostics (Basel)",
+      "authors": [
+        "Madalina Andreea Donos",
+        "Gabriela Ghiga",
+        "Laura Mihaela Trandafir",
+        "et al."
+      ],
+      "publicationYear": 2024,
+      "doi": "10.3390/diagnostics14111179",
+      "pmid": null,
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11171516/",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "systematic_review",
+      "licenseLabel": "CC BY 4.0",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level CC BY 4.0; https://creativecommons.org/licenses/by/4.0/. Underlying facts independently synthesized with bibliographic attribution. No source prose, figure, table, algorithm or clinical vignette reproduced; fictional applications are original. License permissiveness is separate from medical authority.",
+      "authorityAssessment": "Recent systematic review; heterogeneous small observational studies and nonstandard treatment. One adequate directly read publication for the authored treatment boundary. Do not adopt its exact fluid volumes, enema concentrations or attempt counts.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.pediatric-gi-abdominal-wall.meconium-obstruction",
+        "claim.pediatric-gi-abdominal-wall.meconium-enema",
+        "claim.pediatric-gi-abdominal-wall.meconium-complicated",
+        "claim.pediatric-gi-abdominal-wall.meconium-repeat"
+      ],
+      "accessMethod": "public_primary_document_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsUrl": null,
+      "accessAndRightsFinding": "Article-level license and public document checked; no protected expression retained."
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-gi-abdominal-wall.nci-wilms-2025",
+      "title": "Wilms Tumor and Other Childhood Kidney Tumors Treatment (PDQ) - Health Professional Version",
+      "completeCitation": "PDQ Pediatric Treatment Editorial Board. Wilms Tumor and Other Childhood Kidney Tumors Treatment (PDQ), Health Professional Version. Bethesda, MD: National Cancer Institute. Updated 15 April 2025. Accessed 11 November 2026.",
+      "organizationOrJournal": "National Cancer Institute",
+      "authors": [
+        "PDQ Pediatric Treatment Editorial Board"
+      ],
+      "publicationYear": 2025,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.cancer.gov/types/kidney/hp/wilms-treatment-pdq",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "Government publication; conditions apply",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Copyright retained. Targeted factual verification only; no copied or closely paraphrased expression, source excerpts, images or algorithms. Public access is not treated as blanket AI permission. No express AI/automated-access prohibition was identified in the accessed document; no corpus or bulk collection was made.",
+      "authorityAssessment": "Peer-reviewed government evidence summary, expressly not a policy statement/formal guideline. COG/North American pathway must be stated; SIOP preoperative chemotherapy is a valid different framework. One primary summary checked for surgical facts.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.pediatric-gi-abdominal-wall.wilms-no-biopsy",
+        "claim.pediatric-gi-abdominal-wall.wilms-biopsy-stage",
+        "claim.pediatric-gi-abdominal-wall.wilms-nodes",
+        "claim.pediatric-gi-abdominal-wall.wilms-preop-exceptions",
+        "claim.pediatric-gi-abdominal-wall.wilms-caval-biopsy-first",
+        "claim.pediatric-gi-abdominal-wall.wilms-sample-provenance",
+        "claim.pediatric-gi-abdominal-wall.wilms-sampling-extent"
+      ],
+      "accessMethod": "public_primary_document_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsUrl": "https://www.cancer.gov/policies/copyright-reuse",
+      "accessAndRightsFinding": "NCI reuse policy and PDQ permission section checked. Credit NCI; no endorsement implied. Third-party images/tables excluded; this packet is original content, not an NCI PDQ summary."
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-gi-abdominal-wall.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-gi-abdominal-wall.hashmi-preterm-hernia-2025",
+      "title": "Meta-Analysis to Determine Optimal Timing for Repair of Inguinal Hernia in Pre-Term Infants",
+      "completeCitation": "Hashmi TM, Ashraf H, Fatima T, et al. Meta-Analysis to Determine Optimal Timing for Repair of Inguinal Hernia in Pre-Term Infants. World J Surg. 2025;49(9):2540-2548. doi:10.1002/wjs.70014. Published online 25 July 2025.",
+      "organizationOrJournal": "World Journal of Surgery",
+      "authors": [
+        "Tallal Mushtaq Hashmi",
+        "Hadiah Ashraf",
+        "Tehreem Fatima",
+        "Amna Javed",
+        "Abdullah",
+        "Muhammad Abdullah Kashif",
+        "Soban Raza",
+        "Khawaja Haris Ismail",
+        "Arooj Fatima",
+        "Javed Iqbal",
+        "Raheel Ahmed",
+        "Areeba Ahsan",
+        "Mushood Ahmed"
+      ],
+      "publicationYear": 2025,
+      "doi": "10.1002/wjs.70014",
+      "pmid": null,
+      "officialUrl": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/wjs.70014",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "systematic_review",
+      "licenseLabel": "CC BY 4.0",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level CC BY 4.0; https://creativecommons.org/licenses/by/4.0/. Underlying facts independently synthesized with bibliographic attribution. No source prose, figure, table, algorithm or clinical vignette reproduced; fictional applications are original. License permissiveness is separate from medical authority.",
+      "authorityAssessment": "Recent synthesis includes one RCT and predominantly retrospective cohorts. Respiratory versus incarceration tradeoff is real; this does not justify one compulsory repair age. Different syntheses disagree on the incarceration estimate.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.pediatric-gi-abdominal-wall.preterm-hernia-tradeoff",
+        "claim.pediatric-gi-abdominal-wall.preterm-hernia-respiratory"
+      ],
+      "accessMethod": "public_primary_document_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsUrl": null,
+      "accessAndRightsFinding": "Official full PDF and explicit Creative Commons Attribution license statement verified, not inferred from PMC or a search snippet. No exact effect size or trial-specific age threshold is taught."
+    }
+  ],
+  "frozenLedgerBindings": [
+    {
+      "topic": "pediatric-neck-thoracic-gu",
+      "path": "docs/research/sources-question-topic-pediatric-neck-thoracic-gu-20261111.json",
+      "sha256": "799c65440bee4ba061949701b4ee1874d38f3a3c7233b2510efe8d59160ecb9b"
+    },
+    {
+      "topic": "vascular-venous-lymphatic-access",
+      "path": "docs/research/sources-question-topic-vascular-venous-lymphatic-access-20261111.json",
+      "sha256": "ffa517a8d94401ab2265bc9c525b1bce3dd24f6a43dc5d17aca66ea45a6921eb"
+    },
+    {
+      "topic": "esophagus-motility-achalasia",
+      "path": "docs/research/sources-question-topic-esophagus-motility-achalasia-20261111.json",
+      "sha256": "8239e8acd8153d81121b117bd690f0991ef12c7034978549226d8ea2eea61247"
+    },
+    {
+      "topic": "bariatric-metabolic",
+      "path": "docs/research/sources-question-topic-bariatric-metabolic-20261111.json",
+      "sha256": "efdd4932b8561029aff4f046b8d73083f5f65fd0ef5fc8ab3374b47a536723fd"
+    },
+    {
+      "topic": "pediatric-gi-abdominal-wall",
+      "path": "docs/research/sources-question-topic-pediatric-gi-abdominal-wall-20261111.json",
+      "sha256": "940b62ee7d0df3edfea0dbebc00879364a9ef6ef2ec81c4c5756ad9557c1ed35"
+    }
+  ]
+}

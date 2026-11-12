@@ -13,6 +13,8 @@ const batches = [
   [1, 15, clinical.QUESTION_PROGRAM_BATCH1_ACCEPTED_TEST_ORDER_RECORDS],
   [2, 33, clinical.QUESTION_PROGRAM_BATCH2_ACCEPTED_TEST_ORDER_RECORDS],
   [3, 209, clinical.QUESTION_PROGRAM_BATCH3_ACCEPTED_TEST_ORDER_RECORDS],
+  [4, 292, clinical.QUESTION_PROGRAM_BATCH4_ACCEPTED_TEST_ORDER_RECORDS],
+  [5, 24, clinical.QUESTION_PROGRAM_BATCH5_ACCEPTED_TEST_ORDER_RECORDS],
 ] as const;
 const keyOf = (record: Pick<ExactTestChoiceOrderRecord, "caseId" | "nodeId" | "questionVariantId" | "choiceId">) =>
   `${record.caseId}|${record.nodeId}|${record.questionVariantId}|${record.choiceId}`;

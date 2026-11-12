@@ -1,8 +1,8 @@
-import { SYNTHETIC_CLINICAL_RELEASE, QUESTION_PROGRAM_BATCH2_RETAINED_CASES,QUESTION_PROGRAM_BATCH3_RETAINED_CASES, QUESTION_SHIP_MANIFEST } from "@gamify-surgery/clinical-content";
+import { SYNTHETIC_CLINICAL_RELEASE, QUESTION_PROGRAM_BATCH2_RETAINED_CASES,QUESTION_PROGRAM_BATCH3_RETAINED_CASES,QUESTION_PROGRAM_BATCH4_RETAINED_CASES, QUESTION_SHIP_MANIFEST } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
 import { EXACT_DIAGNOSTIC_RESULT_RECORDS, getDiagnosticResultDisposition } from "../src/diagnostic-result-dispositions";
 import type { EncounterState } from "../src";
-const retainedCases=[...QUESTION_PROGRAM_BATCH2_RETAINED_CASES,...QUESTION_PROGRAM_BATCH3_RETAINED_CASES];
+const retainedCases=[...QUESTION_PROGRAM_BATCH2_RETAINED_CASES,...QUESTION_PROGRAM_BATCH3_RETAINED_CASES,...QUESTION_PROGRAM_BATCH4_RETAINED_CASES];
 function exactCase(caseId:string){
   const active=SYNTHETIC_CLINICAL_RELEASE.cases.find(cs=>cs.id===caseId);
   if(active)return active;

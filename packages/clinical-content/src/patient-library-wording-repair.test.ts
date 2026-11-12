@@ -1,3 +1,4 @@
+import {QUESTION_PROGRAM_BATCH5_ACCEPTED_CASES} from "./question-program-batch5-accepted-20261111";
 import { describe, expect, it } from "vitest";
 import type { SyntheticClinicalCase } from "./schema";
 import { validateSyntheticClinicalRelease } from "./schema";
@@ -79,7 +80,8 @@ describe("full patient-library wording repair", () => {
       expect(clinicalCase.chiefComplaint, clinicalCase.id).not.toMatch(
         /^(?:Select|Identify|Level|Clinic|Outpatient)\b|\bv\d+\b/i,
       );
-      const name = (clinicalCase.pediatricProfile || clinicalCase.id.startsWith("case.variety3.")) ? clinicalCase.patientDisplayName : "{patientName}";
+      const acceptedTemplate = QUESTION_PROGRAM_BATCH5_ACCEPTED_CASES.some(accepted => accepted.id === clinicalCase.id);
+      const name = ((clinicalCase.pediatricProfile && !acceptedTemplate) || clinicalCase.id.startsWith("case.variety3.")) ? clinicalCase.patientDisplayName : "{patientName}";
       expect(clinicalCase.presentation, clinicalCase.id).toContain(name);
       expect(clinicalCase.presentation, clinicalCase.id).not.toMatch(
         /^(?:A patient|An adult|Patient with)\b/i,

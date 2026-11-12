@@ -1,3 +1,4 @@
+import { beforeProgramBatch4AcceptanceRelease } from "../../../../packages/clinical-content/src/question-program-batch4-acceptance-test-support";
 import { describe, expect, it } from "vitest";
 import {
   createInitialGameState,
@@ -12,6 +13,11 @@ import {
   tryStartPatientBathroomTrip,
 } from "@gamify-surgery/game-domain";
 import { createPrototypePlayerView, pendingPatientAwaitingCopy } from "./viewModels";
+
+// Only historical admission uses the complete hash-verified pre-batch4 bank.
+// Following commands, service routing and rendering use the current runtime.
+const historicalTopicContext = { ...PROTOTYPE_DOMAIN_CONTEXT,
+  clinicalRelease: beforeProgramBatch4AcceptanceRelease(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease) };
 
 function ready(state: GameState, encounterId: string, prefix: string): GameState {
   let next = state;
@@ -39,7 +45,7 @@ function actionableThyroid(): GameState {
   state = gameReducer(state, {
     type: "ADMIT_PATIENT", operationId: "sc.thyroid.admit", encounterId: "encounter.sc.thyroid",
     caseId: "case.thyroid-nodule.palpable-referral", patientDisplayName: "Preview Patient", arrivalClass: "routine",
-  });
+  }, historicalTopicContext);
   return ready(state, "encounter.sc.thyroid", "sc.thyroid");
 }
 

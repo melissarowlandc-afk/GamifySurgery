@@ -18,13 +18,17 @@ afterEach(async () => { vi.restoreAllMocks(); await cleanupPhoneTests(); });
 async function fixture(layout: "phone" | "desktop", marker: boolean, partialSummaries: boolean,
   options: { heldSelection?: ReturnType<typeof deferred>; fakeTimers?: boolean; secondCampaign?: boolean } = {}) {
   const h = await syncHarness(), store = new MemoryCloudEntryStore(), transport = h.server.transport(h.scope.accountId);
-  const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: h.prepared.checkpoint, source: h.prepared.sourceRecovery,
+  const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: h.prepared.checkpoint,
+    source: { sha256: h.prepared.sourceRecovery.sha256, utf8Bytes: h.prepared.sourceRecovery.utf8Bytes,
+      schemaVersion: h.prepared.sourceRecovery.schemaVersion },
     campaign: { ...h.prepared.envelope.campaign, tutorial: { guidance: { version: 2, mode: "off", exposedTopicIds: [] },
       introDismissed: true, dailyRoutineTipAcknowledgments: [], dailyRoutinePause: null } }, operationId: "reopen.fixture", expectedRevision: "1" });
   const confirmed = { ...h.confirmed, snapshot: encoded.snapshot }; h.server.seed(h.scope.accountId, confirmed);
   if (options.secondCampaign) {
     const second = await syncFixture("manual.other-clinic");
-    const copy = await encodeCloudEvidenceCheckpoint({ checkpoint: second.prepared.checkpoint, source: second.prepared.sourceRecovery,
+    const copy = await encodeCloudEvidenceCheckpoint({ checkpoint: second.prepared.checkpoint,
+      source: { sha256: second.prepared.sourceRecovery.sha256, utf8Bytes: second.prepared.sourceRecovery.utf8Bytes,
+        schemaVersion: second.prepared.sourceRecovery.schemaVersion },
       campaign: { ...second.prepared.envelope.campaign, name: "Manual clinic", tutorial: { ...h.prepared.envelope.campaign.tutorial,
         guidance: { version: 2, mode: "off", exposedTopicIds: [] } } }, operationId: "manual.fixture", expectedRevision: "1" });
     h.server.seed(h.scope.accountId, { ...second.confirmed, snapshot: copy.snapshot });

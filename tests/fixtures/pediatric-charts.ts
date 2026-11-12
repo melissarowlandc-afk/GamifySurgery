@@ -1,4 +1,5 @@
-import { PEDIATRIC_CLINIC_CASES } from "@gamify-surgery/clinical-content";
+import { PEDIATRIC_CLINIC_CASES, QUESTION_PROGRAM_BATCH5_RETAINED_CASES,
+  QUESTION_PROGRAM_BATCH5_REPLACEMENTS, QUESTION_PROGRAM_BATCH5_CONSOLIDATIONS } from "@gamify-surgery/clinical-content";
 import { gameReducer, type DomainContext, type GameCommand, type GameState } from "@gamify-surgery/game-domain";
 import { createLevelFourRoomsQaContext, createLevelFourRoomsQaState } from "./level-four-rooms";
 
@@ -18,8 +19,18 @@ export function createPediatricChartsQaState(
   context = createLevelFourRoomsQaContext(),
   caseId = PEDIATRIC_CHARTS_QA_CASE_ID,
 ): GameState {
-  const clinicalCase = PEDIATRIC_CLINIC_CASES.find(clinicalCase => clinicalCase.id === caseId);
-  if (!clinicalCase) throw new Error("Pediatric chart QA needs an admitted batch variant.");
+  const authored = PEDIATRIC_CLINIC_CASES.find(clinicalCase => clinicalCase.id === caseId);
+  if (!authored) throw new Error("Pediatric chart QA needs an admitted batch variant.");
+  const current = context.clinicalRelease.cases.find(clinicalCase => clinicalCase.id === caseId);
+  const retained = QUESTION_PROGRAM_BATCH5_RETAINED_CASES.find(clinicalCase => clinicalCase.id === caseId);
+  const retired = QUESTION_PROGRAM_BATCH5_REPLACEMENTS.some(row => row.replaces === caseId) ||
+    QUESTION_PROGRAM_BATCH5_CONSOLIDATIONS.some(row => row.replaces.includes(caseId));
+  if (!current && (!retained || !retired)) throw new Error("Pediatric chart QA needs its exact retained source and retirement relation.");
+  const clinicalCase = current ?? retained!;
+  // This fixture opens the original M7 chart after its fresh replacement.
+  // Keep the old question/profile identities while using the current reducer.
+  const admissionContext = current ? context : {...context,
+    clinicalRelease: {...context.clinicalRelease, cases: [...context.clinicalRelease.cases, clinicalCase]}};
   let state = createLevelFourRoomsQaState(context);
   state.campaignId = PEDIATRIC_CHARTS_QA_CAMPAIGN_ID;
   state.campaignSeed = "level-four-pediatric-charts-m7";
@@ -33,5 +44,5 @@ export function createPediatricChartsQaState(
   }
   return apply(state, { type: "ADMIT_PATIENT", operationId: "peds.chart.qa.admit",
     encounterId: PEDIATRIC_CHARTS_QA_ENCOUNTER_ID, caseId, patientDisplayName: clinicalCase.patientDisplayName,
-    arrivalClass: "routine" }, context);
+    arrivalClass: "routine" }, admissionContext);
 }

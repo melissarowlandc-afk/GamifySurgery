@@ -1,3 +1,5 @@
+import {QUESTION_PROGRAM_BATCH4_ACCEPTED_SOURCE_VIEWS,QUESTION_PROGRAM_BATCH4_FROZEN_PRESERVATION} from "./question-program-batch4-accepted-20261111";
+import {createHash} from "node:crypto";
 import { describe, expect, it } from "vitest";
 import { SYNTHETIC_CLINICAL_RELEASE } from "./synthetic-content";
 import {QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE} from "./question-stats1-accepted-20261108";
@@ -8,7 +10,7 @@ import type {SyntheticClinicalCase} from "./schema";
 // presentation-only staff profiles. They never introduce patient demographics.
 // Every other staff discussion keeps the original no-profile assertion.
 function expectStaffProfiles(clinicalCase:SyntheticClinicalCase):void {
- const exact=[...QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE.cases,...QUESTION_PROGRAM_BATCH3_ACCEPTED_SOURCE_VIEWS["topic-batch3-statistics"]!.cases].find(c=>c.id===clinicalCase.id&&
+ const exact=[...QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE.cases,...Object.values(QUESTION_PROGRAM_BATCH4_ACCEPTED_SOURCE_VIEWS).flatMap(view=>view.cases),...QUESTION_PROGRAM_BATCH3_ACCEPTED_SOURCE_VIEWS["topic-batch3-statistics"]!.cases].find(c=>c.id===clinicalCase.id&&
   c.participant?.kind==="employee_discussion"&&c.decisionNodes[0]!.questionVariantId===clinicalCase.decisionNodes[0]!.questionVariantId);
  if(!exact){expect(clinicalCase.approvedInstantiationProfiles,clinicalCase.id).toBeUndefined();return;}
  expect(clinicalCase.approvedInstantiationProfiles,clinicalCase.id).toEqual(exact.approvedInstantiationProfiles);
@@ -56,8 +58,18 @@ describe("playable one-patient narratives", () => {
         PATIENT_REFERENCE,
       );
       expect(clinicalCase.presentation, clinicalCase.id).toMatch(STORY_CUE);
+      let patientStory=clinicalCase.presentation;
+      if(clinicalCase.id==="case.topic.quality-safety-systems.specimen-observed-barrier.standalone.v1"){
+        // This reviewed single-patient chart describes a batch-printing error.
+        // Bind the exact background sentence before testing the patient story.
+        const background="Labels for several patients had been printed together and placed at the shared collection bench. ";
+        expect(patientStory).toContain(background);
+        expect(createHash("sha256").update(JSON.stringify(clinicalCase)).digest("hex"))
+          .toBe(QUESTION_PROGRAM_BATCH4_FROZEN_PRESERVATION.find(row=>row.caseId===clinicalCase.id)!.retainedCaseSha256);
+        patientStory=patientStory.replace(background,"");
+      }
       for (const pattern of MULTI_PATIENT_FRAMING) {
-        expect(clinicalCase.presentation, clinicalCase.id).not.toMatch(
+        expect(patientStory, clinicalCase.id).not.toMatch(
           pattern,
         );
       }

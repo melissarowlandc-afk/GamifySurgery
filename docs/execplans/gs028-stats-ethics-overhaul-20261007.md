@@ -13551,3 +13551,431 @@ tools/question-quality/topic-acceptance-batch3-config-20261111.mjs
 ```
 
 Open manager follow-up: browser validation, especially the unchanged management chart-fill geometry check; review the scoped diff and own the commit/push/deploy gate. No other known failing suite, typecheck, boundary or build remains. All work stays local and uncommitted.
+
+
+## rebind 34 (release worktree, frozen topic batches 4/5 + bindings + test repairs)
+
+Completed locally on2026-11-12 in GS-release only; manager-stated base34a1eefa. Main was read-only. Exact path dispositions, before/after/frozen hashes and all observed exclusions: `.local-dev/release-verify/port34-20261112.json`. Native staging, verifier/publisher, controls, failure receipts and exact output: `.local-dev/release-port34-20261112/`. No Git, install, network, agent, database, browser, commit, push or deployment operation.
+
+Only the accepted batch4(260nodes/252cases) and batch5(22nodes/21cases),316 new exact diagnostic bindings, codec-provenance/headroom tests and management chart-geometry/native-phone tests are integrated. No production balance/pacing/player/cloud/codec/art change. Both frozen builders reproduce their recorded hashes. Default: **1,338cases /1,533nodes /1,035meanings /686manifest rows**; manifest SHA`6e074c70648de65270be5f86610d55f0a3a1ab2212df453ac0e5adee1834c9ce`, default SHA`2c524904fafc7e915dab19256a191397e0a00f5a68bf0ebc9e2e37fe69394921`. Prior404authority rows and813meanings preserved. All new clinical versions remain`needs_clinician_review`, without clinician promotion. Batch4 has112name-only fields across30cases; batch5 has65across12. Accepted ledgers contain637claims/289sources and72/26 respectively, extracted exactly from frozen intakes.
+
+Frozen-source handling: no current topic-worker module was ported, including active pediatric-neck salvage. Seven batch4 skips were later explicitly accepted in batch5; the final seven batch5 skips remain excluded. The newer venous test was reconstructed from immutable migration bytes and verified against its accepted SHA`929774f0ccc716c7d5e6b239218c9deabf4aeb52bd9688a994a67f57fda17985`; newer working edits are excluded. The25 repaired raw authoring tests import unaccepted modules/packets absent from this release. Their complete exact postimages are preserved in `tools/question-quality/fixtures/question-topic-batches45-repaired-tests-20261112.json`;27 accepted-only membership regressions execute complete immutable candidate and retained-case matrices. This is a release-test adapter, **not execution of the25 full raw authoring suites**. The batch5 raw-source check binds the captured source inventory and actual frozen serialized-object hashes instead of reading mutable Main files.22 precise presence/absence checks make this explicit. No earlier guard pin, immutable capture, authorization history or required absence is deleted:75existing checks remain,100now execute across74unique paths. Exact changed postimages flow through the established authorized-delta mechanism.
+
+### Native run and controls
+
+| Arm | Commands | Closing cents | Completed | Walkouts | First finish |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Published rebind33 | 31,531 | 6,516,049 | 490 | 0 | 22,690 |
+| Old813-content/current bindings | 31,531 | 6,516,049 | 490 | 0 | 22,690 |
+| Batch4-only/current bindings | 31,431 | 6,097,832 | 492 | 0 | 22,747 |
+| Shipping batches4+5 | **31,565** | **6,511,330** | **491** | **0** | **22,821** |
+
+Both native generators ran from scratch with the original seed/funded Level4 opening. Every command/report/best/latest/cash assertion remains; more than20,000commands reconciled. Old-content/current-bindings reproduces every previous serialized save value byte-for-byte and all three reports, proving the316bindings do not move that old run. No balance or pacing policy changed. Batch4 adds57first-finish ticks; batch5 adds74more, total131(+0.5773468488320832%). The actual content-pacing CLI passes the20,421–24,959bound. Shipping unlock19,763/final29,538/minimumcash1,565,700. Changes reflect the newly admitted content/patient selection and content-dependent timing.
+
+Cash: `1,689,500 +17,903,700 -437,748 -11,468,122 -1,176,000 =6,511,330`. Delta versus33 is-4,719: gross+8,400, stock+11,922, operating+1,197, opening/capital unchanged. All control arms also reconcile and have zero walkouts. Three raw scores change `62.52848345524158 /66.87414165714839 /45.556063093993636` → `62.4378624141503 /66.52116591673192 /45.42353709508832`; qualifying samples50/50/49→51/49/48. Best/latest/immutable-first are correct. Launch pins use51patients, raw62.4378624141503 and actual conservative display62.43. Large-upload expectation is the measured9,158records with all3,200real actions retained;8,500floor and time budget unchanged.
+
+All nine new checkpoints differ honestly:
+
+| Save | Tick before → after | Cash before → after | Changed paths |
+| --- | ---: | ---: | ---: |
+| integration-l4 | 4190 → 4623 | 2691750 → 2741700 | 10628 |
+| integration-build | 4190 → 4623 | 1515750 → 1565700 | 10327 |
+| integration-preparing | 19633 → 19764 | 4804930 → 4731703 | 20383 |
+| integration-running | 19770 → 19901 | 4832480 → 4795250 | 21726 |
+| integration-final | 22689 → 22820 | 5386575 → 5371449 | 24645 |
+| integration-finish | 22690 → 22821 | 5386575 → 5371649 | 22258 |
+| integration-repeat-final | 26346 → 26480 | 6244723 → 6188945 | 25350 |
+| integration-repeat | 26347 → 26481 | 6244723 → 6188945 | 23007 |
+| integration-lower-repeat | 29404 → 29538 | 6516049 → 6511330 | 24806 |
+
+Canonical publication occurred only after `verify-staged.mjs` passed, via `publish-verified.mjs`. Only established liveCap4→5metadata correction and append-only history were applied. History28→29 preserves all earlier entries and600prior input hashes. Current606inputs include457clinical(previous600/451);12bound paths change/add. The Level5 integration guard remains byte-exact SHA`812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`. All25legacy schema5–9load/120minute comparisons are regenerated by the actual reducer. Loads differ only by222new blank concept histories; existing histories, frozen definitions and lateProgression remain exact. Twenty continuations admit different new patients; old-content/current-bindings reproduces all25old continuations. No frozen saves or evidence were hand-edited.
+
+| Artifact | Before SHA-256 | After SHA-256 |
+| --- | --- | --- |
+| `tools/qa/level-five-integration-results-20261012.json` | `8804775c358c7e3c3f7db0c219017b4847e146079e4583e8e71c8519037cd6ab` | `ab129da534ee852be0a1352be75fc591de64c82e289cec829d99f66a56d9965f` |
+| `tests/fixtures/level-five-integration-checkpoints-20261012.json` | `d1a57bfe510c121d462de920e6b2b504e870b2309bb9d6f84bbc0be7c275a5db` | `2426cc4daa325042735f57b4f5f68bbca7ce5ee86433b17144199192e74654a4` |
+| `tests/fixtures/level-five-legacy-behavior-20261012.json` | `ffc233cbfe986eaee6734c85d1f806a2b4cd710bdebb1d1b426854b3b4a01ffc` | `cde94c0a5c543846b83915c4450ed5a58491c8ef2cb431af24c66630b1c251f0` |
+
+Exact changed bound inputs (complete old map also retained in inputHistory):
+
+```text
+packages/clinical-content/src/answer-choice-timing.ts
+  before a2aa5a57fe053d0aff5d20e18866595845ab596f1de17117b7d4afb02aceab6b
+  after  32ca68874463e954dfccdd211145fa410aaf61bc351001ccc9dd651523a244cd
+packages/clinical-content/src/index.ts
+  before 30d8f42e0ee1cbeb84a80985a78b1f5c263493c722b6626a2196723758ba45bd
+  after  80f335e1752faa411561443223f30b8a59e0d1a4dd65d89641db04ae6e21a017
+packages/clinical-content/src/question-program-batch3-acceptance-test-support.ts
+  before 0580d2b8a1db317d27fb2f404a45656b29b65b8c94c8f4dcef66bd179ddd431e
+  after  c81cd196af8d4c4dddd28b8bf98dbd8bf659bec839c64feb60b5c9c4bee681fb
+packages/clinical-content/src/question-program-batch4-acceptance-test-support.ts
+  before (absent)
+  after  bc1b4ba757b0110e8154905dfc2137ae8309a31973e89c5aa6644f4c66b2f15e
+packages/clinical-content/src/question-program-batch4-accepted-20261111.ts
+  before (absent)
+  after  c244b9963d803d7173b6c56c6cbdaa7aef39c3366be041b3db1f9dbd4ce75197
+packages/clinical-content/src/question-program-batch4-accepted-data-20261111.ts
+  before (absent)
+  after  9478da9aed6e4037595aea93bb4c9796e397e4b12ed3ab33a8707cace0eca934
+packages/clinical-content/src/question-program-batch5-acceptance-test-support.ts
+  before (absent)
+  after  d21ecba658dbfb8c1e3962d37aff8b50b5af7e52e746293d80e607a1640c082a
+packages/clinical-content/src/question-program-batch5-accepted-20261111.ts
+  before (absent)
+  after  3f422ab5294215bc2798736bd330b85aa46a19eab252ca20cb1f28a20229329a
+packages/clinical-content/src/question-program-batch5-accepted-data-20261111.ts
+  before (absent)
+  after  6f85d109511e79a639249d2558a026752b3c920e91bd7c4591dade6eeec089a0
+packages/clinical-content/src/question-ship-manifest.ts
+  before c891343f89e29b0009e65c4f464b5ca694f9fce0f43eb5960b7bc5542dbba7bc
+  after  626a052bac091812c2ef6053d7e56bed18c88849a093de767d6f14a0c54d9ab0
+packages/clinical-content/src/synthetic-content.ts
+  before 8c76b4cb6c6458682b0b31023f1a214405733b2dd5b67f378d699a153e561b25
+  after  bfc1c6c3051d46543b6f2ca13efa90d2683924d78f6d15506aef468eb90c538f
+packages/game-domain/src/test-choice-orders.ts
+  before 2e1d068fab93c7d6e985954bcfcb274b99a4425b6e1d3b168fe4de20b5a1dff2
+  after  70830c0fe17b00a8e712cff0e7bc09b0603830fa1fb2e96ddf6ce8bc0c81b205
+```
+
+### Validation
+
+All seven workspace suites ran directly with`CI=true`, threads(2workers;player4). Final results:
+
+| Workspace | Files | Passed | Failed | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 431 | 5282 | 0 | 0 |
+| balance-config | 26 | 168 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 137 | 1701 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 211 | 5886 | 0 | 1 |
+| **Total** | **828** | **13244** | **0** | **1** |
+
+The single existing domain skip is retained. Focused new save/admission/binding compatibility:648passed; focused codec/chart fixtures:96passed; acceptance/membership/naming:68passed. Full suites include existing Level4/5 earned/partial goals, lateProgression, frozen encounters, journals and FSRS for retired/consolidated cases. Nine actual new saves round-trip through production page/wire codecs below existing1MiB evidence/3MiB snapshot/6MiBtransport limits; every source/FSRS/frozen field checked. No limit, workload, guard or timeout was widened. Seven typechecks, player build, boundary/launcher assertions(read-only checksum-verified7,785path index adapter; no Git subprocess), touched-e2e TypeScript, actual pacing CLI,3pacing tests and33clinical-lint tests pass. No browser/e2e runtime pass is claimed.
+
+Original failures are retained and classified in `validation-summary.json`:27initial domain failures(binding+25legacy+explicit concept inventory), private/focused release-adapter setup errors, one implicit-any in the new membership test(fixed before final types), and a player run with11retired-thyroid setup failures plus an uncollectable21-test retired-pediatric matrix and the already-loaded old9,216record expectation. Both historical fixtures now use the complete hash-verified pre-batch4 release for admission only; all original runtime/rendering assertions remain. The updated large-upload test passes in isolation; the final full player rerun is green. No unresolved suite failure remains. Complete original and final logs are retained; this handoff does not discard failure evidence.
+
+Exact non-workspace command output (ANSI color removed; raw logs retained):
+
+Command: npm.cmd run typecheck
+```text
+
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+```
+
+Command: npm.cmd run build --workspace @gamify-surgery/player
+```text
+
+> @gamify-surgery/player@0.0.1 build
+> vite build
+
+vite v8.1.5 building client environment for production...
+
+transforming...[PLUGIN_TIMINGS] Your build spent significant time in plugins. Here is a breakdown:
+  - player-runtime-clinical-data (70%)
+  - forbid-private-clinical-modules (28%)
+See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+
+[PLUGIN_TIMINGS] Your build spent significant time in plugins. Here is a breakdown:
+  - player-runtime-clinical-data (66%)
+  - forbid-private-clinical-modules (32%)
+See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+
+✓ 674 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                         1.49 kB │ gzip:     0.64 kB
+dist/assets/atkinson-hyperlegible-latin-400-normal-BbWidj28.woff       14.02 kB
+dist/assets/atkinson-hyperlegible-latin-700-normal-BK6Glc0m.woff       14.29 kB
+dist/assets/atkinson-hyperlegible-latin-400-normal-BrHNak5F.woff2      17.20 kB
+dist/assets/atkinson-hyperlegible-latin-700-normal-GZI4o3u0.woff2      17.52 kB
+dist/assets/codec.worker-CiQM-QvR.js                                8,223.84 kB
+dist/assets/operationalEngine.worker-D_tjmaJ0.js                    8,721.16 kB
+dist/assets/MobileEntryPresentation-BTU4GZUB.css                        2.63 kB │ gzip:     0.76 kB
+dist/assets/MobileShell-Cf-Ijzgz.css                                   62.04 kB │ gzip:     9.87 kB
+dist/assets/index-ByZcFCkc.css                                        204.11 kB │ gzip:    37.87 kB
+dist/assets/MobileEntryPresentation-5T-pwepp.js                         0.32 kB │ gzip:     0.21 kB
+dist/assets/MobileShell-9h5n9PmX.js                                   126.13 kB │ gzip:    32.91 kB
+dist/assets/index-3TjmaHer.js                                      17,096.17 kB │ gzip: 2,823.36 kB
+
+[INEFFECTIVE_DYNAMIC_IMPORT] src/session/cloud/codecEvidence.ts is dynamically imported by src/session/cloud/snapshotCodec.ts but also statically imported by src/session/cloud/codecTasks.ts, src/session/cloud/copySelection.ts, src/session/cloud/importCampaigns.ts, src/session/cloud/journalCodec.ts, src/session/cloud/journalWarm.ts, ..., dynamic import will not move module into another chunk.
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+[INEFFECTIVE_DYNAMIC_IMPORT] src/session/localProfileJournal.ts is dynamically imported by src/App.tsx but also statically imported by src/session/usePrototypeSession.ts, dynamic import will not move module into another chunk.
+
+[PLUGIN_TIMINGS] Your build spent significant time in plugins. Here is a breakdown:
+  - forbid-private-clinical-modules (43%)
+  - player-runtime-clinical-data (41%)
+  - vite:worker-import-meta-url (10%)
+See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+
+✓ built in 11.18s
+```
+
+Command: node node_modules/typescript/bin/tsc --noEmit -p .local-dev/release-port34-20261112/e2e-entry-tsconfig.json
+```text
+
+```
+
+Command: npm.cmd run test:boundaries
+```text
+
+> gamify-surgery@0.0.1 test:boundaries
+> node scripts/verify-app-boundaries.mjs && node scripts/verify-launcher-contract.mjs
+
+Verified runtime dependency boundaries and 7785 tracked path(s).
+Verified launcher health contract gamify-surgery-player protocol 1.
+```
+
+Command: node tools/qa/content-pacing-check.mjs
+```text
+{
+  "firstFinishTick": 22821,
+  "closingCashCents": 5371649,
+  "completions": 382,
+  "walkouts": 0,
+  "referenceTick": 22690,
+  "driftPercent": 0.5773468488320832,
+  "clinicalSha256": "2c524904fafc7e915dab19256a191397e0a00f5a68bf0ebc9e2e37fe69394921",
+  "caseCount": 1338,
+  "registeredMeanings": 1035
+}
+(node:1892) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+```
+
+Command: node --test --test-isolation=none tools/qa/content-pacing-check.test.mjs
+```text
+✔ accepts the reference and both edges inside the ten-percent budget (0.5305ms)
+✔ flags the observed batch3 delay and excessive speedup (0.5486ms)
+✔ requires a measured positive integer first finish (0.1967ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14.7039
+```
+
+Command: npm.cmd run clinical:lint:test
+```text
+
+> gamify-surgery@0.0.1 clinical:lint:test
+> node --test --test-isolation=none tools/question-quality/lint.test.mjs
+
+✔ reports key-only phrases and exact reconstructable spans (10.2466ms)
+✔ owner rule flags X alone in either key or distractor, with exact spans (0.5889ms)
+✔ owner rule compares generic individualization with concrete options (0.8566ms)
+✔ owner rule asks for a named treatment while retaining exact candidate spans (0.8427ms)
+✔ image inventory checks visible descriptions and captions, excluding the asset path (0.5777ms)
+✔ investigation categories recognize full modality names and physiological/pathological studies (0.6152ms)
+✔ owner availability cues are found in presentation, task, update and exhibit without using feedback metadata (1.2856ms)
+✔ owner findings rule flags supplied eligibility and named rejection but permits a supplied diagnosis for management (0.5447ms)
+✔ owner clarity rules distinguish bare negative imaging and unqualified cervical from actual findings and explicit sites (0.9649ms)
+✔ bounded anatomy screen detects the actual remote nerve distractors without claiming to validate new choices (0.491ms)
+✔ owner's actual flagged records trigger each new targeted rule and reconstruct source spans (64.0159ms)
+✔ round-one draft contexts remove owner-rule giveaways; the retained held FNA keeps its original cue (2220.992ms)
+✔ detects length and qualifier disparity without requiring a long key (0.3326ms)
+✔ reports abbreviation, named-test aliases, explanatory clauses and absolutes (0.2658ms)
+✔ compares abbreviation tokens consistently and does not invent a B-cell abbreviation (0.23ms)
+✔ heterogeneous categories and subtotal scope are advisory (0.2939ms)
+✔ convergence and near duplicate report the competing option evidence (0.2514ms)
+✔ a complete balanced component matrix does not uniquely converge on the key (0.4825ms)
+✔ diagnosis disclosure is conditional on task and metadata (0.4382ms)
+✔ negative match requires exactly one distractor and stops at contrast (0.2439ms)
+✔ three and four balanced options both accepted; malformed keys rejected (0.3725ms)
+✔ visible history includes prior feedback but excludes future/current feedback (0.0955ms)
+✔ census deduplicates variant identity while preserving cases and profile-specific cues (1.3902ms)
+✔ legacy approval metadata applies only to explicitly named old identities (0.085ms)
+✔ flags the reviewed A17 principle cue without pretending its rationale match is key-exclusive (2.4201ms)
+✔ reports an alias-matched principle only when every explicit rationale is available and the key is unique (0.3622ms)
+✔ reviews named comparison principles without banning ordinary timing or leaking rationale words into context (0.6803ms)
+✔ uses explicit authoring rationale metadata and refuses missing or conflicting key reasons (0.3733ms)
+✔ flags the owner's actual round-one preference, availability and mechanism cues outside the task (4.7388ms)
+✔ rationale overlap requires complete explicit reasons and reports separate exact metadata spans (0.5963ms)
+✔ retains raw observations without inventing semantic paraphrase detection or treating prior feedback as a new case detail (0.1889ms)
+✔ flags an explicit cross-field ulcer-site conflict and returns exact spans (0.2967ms)
+✔ flags repeated complete case findings but excludes legitimate returned-result history (0.2259ms)
+(node:33824) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2360.1278
+```
+
+### Exact public paths changed
+
+127paths. The disposition record also lists every other observed live-tree difference not shipped; excluded raw topic/salvage/parked drafts and unrelated player/domain/perf/cloud work remain at their entry release bytes/absence. Regenerated files are explicitly identified by method within the copied/hunk-ported disposition categories.
+
+```text
+apps/player/src/App.cloudLifecycle.test.tsx
+apps/player/src/App.cloudReopenAsync.test.tsx
+apps/player/src/questionProgramBatch4SaveCompatibility.test.ts
+apps/player/src/questionProgramBatch4StaffAdmission.test.ts
+apps/player/src/questionProgramBatch5SaveCompatibility.test.ts
+apps/player/src/session/cloud/automaticResolution.test.ts
+apps/player/src/session/cloud/codecStringHeadroom.test.ts
+apps/player/src/session/cloud/openingUploadLarge.test.ts
+apps/player/src/session/cloud/separateCampaign.test.ts
+apps/player/src/session/levelFiveLaunch.test.tsx
+apps/player/src/session/pediatricChartsViewModels.test.ts
+apps/player/src/session/surgeryCenterServicePreviews.test.ts
+apps/player/src/session/topicRuntimeBindings.test.ts
+apps/player/src/ui/chartPlacement.test.ts
+docs/execplans/codec-string-limit-20261111.md
+docs/execplans/gs028-stats-ethics-overhaul-20261007.md
+docs/execplans/question-topic-acceptance-batch4-20261111.md
+docs/execplans/question-topic-acceptance-batch5-20261111.md
+docs/execplans/release-port34-20261112.md
+docs/execplans/topic-runtime-bindings-batch4-20261111.md
+docs/handoffs/CURRENT_THREAD_HANDOFF.md
+docs/research/codec-string-limit-20261111.md
+docs/research/management-mode-splitter-test-20261111.md
+docs/research/question-topic-acceptance-batch4-20261111.md
+docs/research/question-topic-acceptance-batch4-dispositions-20261111.json
+docs/research/question-topic-acceptance-batch4-files-20261111.json
+docs/research/question-topic-acceptance-batch4-lint-20261111.json
+docs/research/question-topic-acceptance-batch4-packet-20261111.json
+docs/research/question-topic-acceptance-batch4-source-freeze-20261111.json
+docs/research/question-topic-acceptance-batch4-validation-20261111.json
+docs/research/question-topic-acceptance-batch5-20261111.md
+docs/research/question-topic-acceptance-batch5-dispositions-20261111.json
+docs/research/question-topic-acceptance-batch5-files-20261111.json
+docs/research/question-topic-acceptance-batch5-lint-20261111.json
+docs/research/question-topic-acceptance-batch5-packet-20261111.json
+docs/research/question-topic-acceptance-batch5-source-freeze-20261111.json
+docs/research/question-topic-acceptance-batch5-validation-20261111.json
+docs/research/sources-question-topic-acceptance-batch4-release-20261112.json
+docs/research/sources-question-topic-acceptance-batch5-release-20261112.json
+docs/research/topic-runtime-bindings-batch4-20261111.md
+packages/clinical-content/src/answer-choice-timing.test.ts
+packages/clinical-content/src/answer-choice-timing.ts
+packages/clinical-content/src/approved-data/desmoid-management-pathway.test.ts
+packages/clinical-content/src/index.ts
+packages/clinical-content/src/patient-library-wording-repair.test.ts
+packages/clinical-content/src/pilot-content.test.ts
+packages/clinical-content/src/playable-patient-narrative.test.ts
+packages/clinical-content/src/question-flags3-20261107.test.ts
+packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts
+packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts
+packages/clinical-content/src/question-n4-acceptance-20261110.test.ts
+packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts
+packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts
+packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts
+packages/clinical-content/src/question-program-batch3-acceptance-test-support.ts
+packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts
+packages/clinical-content/src/question-program-batch4-acceptance-test-support.ts
+packages/clinical-content/src/question-program-batch4-accepted-20261111.ts
+packages/clinical-content/src/question-program-batch4-accepted-data-20261111.ts
+packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts
+packages/clinical-content/src/question-program-batch5-acceptance-test-support.ts
+packages/clinical-content/src/question-program-batch5-accepted-20261111.ts
+packages/clinical-content/src/question-program-batch5-accepted-data-20261111.ts
+packages/clinical-content/src/question-ship-manifest.test.ts
+packages/clinical-content/src/question-ship-manifest.ts
+packages/clinical-content/src/question-stats1-20261108.test.ts
+packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts
+packages/clinical-content/src/question-topic-release-membership-20261112.test.ts
+packages/clinical-content/src/synthetic-content.ts
+packages/game-domain/src/test-choice-orders.ts
+packages/game-domain/tests/approved-clinical-admission.test.ts
+packages/game-domain/tests/approved-room-geometry-migration.test.ts
+packages/game-domain/tests/diagnostic-result-dispositions.test.ts
+packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts
+packages/game-domain/tests/level-five-launch.test.ts
+packages/game-domain/tests/pediatric-clinic-admission.test.ts
+packages/game-domain/tests/periop-nurse-real-visit-fixture.ts
+packages/game-domain/tests/topic-runtime-bindings.test.ts
+tests/e2e/cloud-recovery.spec.ts
+tests/e2e/management-mode.spec.ts
+tests/fixtures/level-five-integration-checkpoints-20261012.json
+tests/fixtures/level-five-legacy-behavior-20261012.json
+tests/fixtures/pediatric-charts.ts
+tools/qa/level-five-integration-results-20261012.json
+tools/question-quality/build-topic-acceptance-batch4-20261111.mjs
+tools/question-quality/build-topic-acceptance-batch5-20261111.mjs
+tools/question-quality/capture-topic-acceptance-batch4-20261111.mjs
+tools/question-quality/capture-topic-acceptance-batch5-20261111.mjs
+tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json
+tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json
+tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json
+tools/question-quality/fixtures/question-n4-release-source-pins-20261110.json
+tools/question-quality/fixtures/question-program-batch1-release-source-pins-20261111.json
+tools/question-quality/fixtures/question-program-batch2-release-source-pins-20261111.json
+tools/question-quality/fixtures/question-program-batch3-release-source-pins-20261111.json
+tools/question-quality/fixtures/question-program-batch4-release-source-pins-20261111.json
+tools/question-quality/fixtures/question-program-batch5-release-source-pins-20261111.json
+tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json
+tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json
+tools/question-quality/fixtures/question-topic-acceptance-batch4-additional-before-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch4-before-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch4-literal-name-corrections-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch4-selection-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch4-source-migration-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch5-additional-before-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch5-before-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch5-initial-preflight-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch5-late-membership-before-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch5-literal-name-corrections-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch5-membership-before-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch5-selection-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch5-source-migration-20261111.json
+tools/question-quality/fixtures/question-topic-batch5-release-source-inventory-20261112.json
+tools/question-quality/fixtures/question-topic-batches45-repaired-tests-20261112.json
+tools/question-quality/freeze-topic-acceptance-batch4-source-20261111.mjs
+tools/question-quality/freeze-topic-acceptance-batch5-source-20261111.mjs
+tools/question-quality/handoff-topic-acceptance-batch4-20261111.mjs
+tools/question-quality/handoff-topic-acceptance-batch5-20261111.mjs
+tools/question-quality/integrate-topic-acceptance-batch4-20261111.mjs
+tools/question-quality/integrate-topic-acceptance-batch5-20261111.mjs
+tools/question-quality/lint.test.mjs
+tools/question-quality/prepare-topic-acceptance-batch4-20261111.mjs
+tools/question-quality/prepare-topic-acceptance-batch5-20261111.mjs
+tools/question-quality/review-topic-acceptance-batch4-20261111.mjs
+tools/question-quality/review-topic-acceptance-batch5-20261111.mjs
+tools/question-quality/topic-acceptance-batch4-config-20261111.mjs
+tools/question-quality/topic-acceptance-batch5-config-20261111.mjs
+```
+
+Manager follow-up: inspect the scoped release-test adapters and frozen provenance, run the management/native-phone browser acceptance and own backup/rollout. No other known failing suite/typecheck/boundary/build remains. Work is local and uncommitted; opening pathways unchanged.
