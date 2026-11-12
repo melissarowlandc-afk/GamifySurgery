@@ -1490,6 +1490,16 @@ export function getFacilityProgressionStatus(
     state,
     context,
   );
+  // Ended visits already include their facility experience. Late progression
+  // evaluates that record once, independently of the live HUD condition overlay.
+  const progressionSatisfaction = state.facilityLevel >= 4
+    ? historicalSatisfaction ?? 100
+    : effectiveSatisfaction;
+  const minimumRatedEncounters = state.facilityLevel === 5
+    ? definition.minimumCompletedEncounters : 0;
+  const earnedInspectionUnlock = Boolean(state.levelFive?.progress.inspectionUnlocked);
+  const hasEstablishedSatisfaction = minimumRatedEncounters === 0 || earnedInspectionUnlock ||
+    (completedEncounters >= minimumRatedEncounters && historicalSatisfaction !== null);
   const averageStaffMorale = state.facilityLevel === 5 ? getAverageEffectiveStaffMorale(state) : null;
   const accessValidation = getFacilityAccessValidation(state, context);
   const requiredRooms = definition.requiredRoomDefinitionIds.map(
@@ -1585,7 +1595,7 @@ export function getFacilityProgressionStatus(
             required: clinicalXpGoal.required,
           },
         ]),
-    ...(definition.minimumCompletedEncounters > 0
+    ...(definition.minimumCompletedEncounters > 0 && state.facilityLevel !== 5
       ? [
           {
             id: "progression.completed_encounters",
@@ -1603,15 +1613,18 @@ export function getFacilityProgressionStatus(
       : [
           {
             id: "progression.satisfaction",
-            label: `Satisfaction above ${definition.satisfactionMustBeGreaterThan}%`,
+            label: state.facilityLevel >= 4
+              ? `Recent patient satisfaction above ${definition.satisfactionMustBeGreaterThan}%${minimumRatedEncounters > 0 ? ` after ${minimumRatedEncounters} completed encounters` : ""}`
+              : `Satisfaction above ${definition.satisfactionMustBeGreaterThan}%`,
             met:
+              hasEstablishedSatisfaction &&
               (state.facilityLevel >= 4 || historicalSatisfaction !== null) &&
-              effectiveSatisfaction >
+              progressionSatisfaction >
               definition.satisfactionMustBeGreaterThan,
             current:
               state.facilityLevel < 4 && historicalSatisfaction === null
                 ? 0
-                : effectiveSatisfaction,
+                : progressionSatisfaction,
             required: definition.satisfactionMustBeGreaterThan + 1,
           },
         ]),

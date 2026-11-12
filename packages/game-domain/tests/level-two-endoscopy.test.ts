@@ -1,10 +1,9 @@
+import {beforeProgramBatch3AcceptanceRelease} from "../../clinical-content/src/question-program-batch3-acceptance-test-support";
+import {createClinicalAuthorStage} from "../../../tests/fixtures/clinical-author-stage";
 import { LEGACY_PROTOTYPE_CLINICAL_RELEASE } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
 import {
-  PROTOTYPE_DOMAIN_CONTEXT,
-  createInitialGameState,
-  deserializeGameState,
-  gameReducer,
+  PROTOTYPE_DOMAIN_CONTEXT as actualPrototype,
   getCurrentCapabilities,
   getFacilityProgressionStatus,
   getEligibleServiceRoute,
@@ -17,9 +16,13 @@ import {
   validateDomainContext,
   type DomainContext,
   type GameState,
+  
 } from "../src";
 
 const XRAY_CASE_ID = "case.synthetic.xray-routing";
+
+// Original gated/procedural contracts use the verified retained source epoch.
+const {context:PROTOTYPE_DOMAIN_CONTEXT,createInitialGameState,gameReducer,deserializeGameState}=createClinicalAuthorStage(beforeProgramBatch3AcceptanceRelease(actualPrototype.clinicalRelease));
 
 function createEndoscopyContext(): DomainContext {
   const release = JSON.parse(JSON.stringify(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease)) as typeof PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease;

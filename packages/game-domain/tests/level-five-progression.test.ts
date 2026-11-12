@@ -2,22 +2,27 @@ import { describe, expect, it } from "vitest";
 import { LEVEL_FIVE_INSPECTION_UNLOCK_EVENT_ID, PROTOTYPE_BALANCE_RELEASE } from "@gamify-surgery/balance-config";
 import {
   PROTOTYPE_DOMAIN_CONTEXT, deserializeGameState, gameReducer, getAverageEffectiveStaffMorale,
-  getCurrentQuestion, getDisplayedClinicSatisfaction, getEmployeeTrainingQuote, getFacilityProgressionStatus,
+  getCurrentQuestion, getClinicSatisfaction, getDisplayedClinicSatisfaction, getEmployeeTrainingQuote, getFacilityProgressionStatus,
   getInspectionBookingBlockedReason, serializeGameState, type GameCommand, type GameState,
 } from "../src";
 import { createLevelFiveStateQaContext, createLevelFiveStateQaState } from "../../../tests/fixtures/level-five-state";
-import { createLevelFourReadyForFiveQaState, LEVEL_FIVE_GOALS_QA_ENCOUNTER_ID, setLevelFiveQaDisplayedSatisfaction } from "../../../tests/fixtures/level-five-progression";
+import { createLevelFourReadyForFiveQaState, LEVEL_FIVE_GOALS_QA_ENCOUNTER_ID, setLevelFiveQaCompletedEncounters, setLevelFiveQaPatientSatisfaction } from "../../../tests/fixtures/level-five-progression";
 import { createPreLevelFiveLaunchContext } from "../../../tests/fixtures/level-five-launch";
 
 const context = createLevelFiveStateQaContext();
 const base = createLevelFiveStateQaState("pre-goal", context);
-const ready = () => ({ ...structuredClone(base), clinicalXp: 2300 });
+const ready = () => {
+  const state = { ...structuredClone(base), clinicalXp: 2300 };
+  setLevelFiveQaPatientSatisfaction(state, context, 100);
+  setLevelFiveQaCompletedEncounters(state, 330);
+  return state;
+};
 const apply = (state: GameState, command: GameCommand) => gameReducer(state, command, context);
 const acknowledge = (state: GameState, id = "m6.ack") => apply(state, { type: "SET_PAUSED", paused: state.paused, operationId: id });
 const unlock = (state: GameState) => state.levelFive?.progress.inspectionUnlocked;
 
 describe("M6 three-goal inspection eligibility", () => {
-  it("uses exactly current-level XP, displayed satisfaction and the nonempty effective workforce mean", () => {
+  it("uses current-level XP, established patient satisfaction and the nonempty workforce mean", () => {
     const state = ready();
     expect(getDisplayedClinicSatisfaction(state, context)).toBeGreaterThan(90);
     expect(state.rooms.some(room => room.roomDefinitionId.startsWith("room.") &&
@@ -29,7 +34,7 @@ describe("M6 three-goal inspection eligibility", () => {
     ]);
     const earned = acknowledge(state);
     expect(unlock(earned)).toEqual({ version: "level-five-inspection-unlock.v1", earnedAtFacilityTick: state.facilityTick,
-      clinicalXp: 2300, displayedSatisfaction: getDisplayedClinicSatisfaction(state, context), averageStaffMorale: 85, employedStaffCount: 1 });
+      clinicalXp: 2300, displayedSatisfaction: getClinicSatisfaction(state, context), averageStaffMorale: 85, employedStaffCount: 1 });
     expect(earned.levelFive!.inspection.status).toBe("ready");
     for (const key of ["cashCents", "clinicalXp", "learningHistories", "reviewIntents", "settlements", "serviceIncomeReceipts", "rooms", "employees"] as const)
       expect(earned[key], key).toEqual(state[key]);
@@ -42,10 +47,10 @@ describe("M6 three-goal inspection eligibility", () => {
   it.each([
     [2299, 91, 85, false], [2300, 90, 85, false], [2300, 91, 84.999, false],
     [2300, 91, 85, true], [2301, 100, 100, true],
-  ])("XP %i, displayed satisfaction %i, morale %f => unlocked %s", (xp, satisfaction, morale, expected) => {
+  ])("XP %i, patient satisfaction %i, morale %f => unlocked %s", (xp, satisfaction, morale, expected) => {
     const state = ready(); state.clinicalXp = xp; state.employees[0]!.morale = morale;
-    setLevelFiveQaDisplayedSatisfaction(state, context, satisfaction);
-    expect(getDisplayedClinicSatisfaction(state, context)).toBe(satisfaction);
+    setLevelFiveQaPatientSatisfaction(state, context, satisfaction);
+    expect(getClinicSatisfaction(state, context)).toBe(satisfaction);
     expect(Boolean(unlock(acknowledge(state)))).toBe(expected);
   });
 
@@ -63,10 +68,10 @@ describe("M6 three-goal inspection eligibility", () => {
     state.clinicalXp = 2300; state.employees[0]!.morale = 84;
     state = acknowledge(state, "m6.separate.2");
     state.employees[0]!.morale = 85;
-    setLevelFiveQaDisplayedSatisfaction(state, context, 90);
+    setLevelFiveQaPatientSatisfaction(state, context, 90);
     state = acknowledge(state, "m6.separate.3");
     expect(unlock(state)).toBeNull();
-    setLevelFiveQaDisplayedSatisfaction(state, context, 91);
+    setLevelFiveQaPatientSatisfaction(state, context, 91);
     expect(unlock(acknowledge(state, "m6.separate.4"))).toBeTruthy();
   });
 
@@ -93,6 +98,8 @@ describe("M6 three-goal inspection eligibility", () => {
     expect(state.operationReceipts["m6.train"]?.status).toBe("applied");
     expect(state.employees.find(employee => employee.id === id)?.training).toBeTruthy();
     state.clinicalXp = 2300;
+    setLevelFiveQaPatientSatisfaction(state, context, 100);
+    setLevelFiveQaCompletedEncounters(state, 330);
     for (const employee of state.employees) employee.morale = 83; // +2 owned Founder Office = 85.
     expect(unlock(acknowledge(state))).toMatchObject({ averageStaffMorale: 85, employedStaffCount: state.employees.length });
   });
@@ -101,7 +108,7 @@ describe("M6 three-goal inspection eligibility", () => {
     let state = acknowledge(ready()); const earned = structuredClone(unlock(state));
     const first = state;
     expect(acknowledge(state)).toBe(first);
-    state.employees = []; setLevelFiveQaDisplayedSatisfaction(state, context, 70);
+    state.employees = []; setLevelFiveQaPatientSatisfaction(state, context, 70);
     for (let i = 0; i < 3; i++) {
       state = deserializeGameState(serializeGameState(state), context);
       state = acknowledge(state, `m6.reload.${i}`);
@@ -173,7 +180,7 @@ describe("Ordinary Level 4 advance and compatibility", () => {
   it.each(["xp", "satisfaction", "app", "pediatric", "wound"])("does not let historical acknowledgment bypass the live Level 4 %s goal", missing => {
     const state = createLevelFourReadyForFiveQaState(context);
     if (missing === "xp") state.clinicalXp = 749;
-    if (missing === "satisfaction") setLevelFiveQaDisplayedSatisfaction(state, context, 90);
+    if (missing === "satisfaction") setLevelFiveQaPatientSatisfaction(state, context, 90);
     if (missing === "app") state.employees = state.employees.filter(employee => employee.staffRoleDefinitionId !== "staff.app");
     if (missing === "pediatric") state.levelFourCompletion!.pediatricVisitWithParent = null;
     if (missing === "wound") state.levelFourCompletion!.woundOstomyCareVisit = null;

@@ -10241,14 +10241,16 @@ function acknowledgeLevelFourCompletion(state: GameState, context: DomainContext
 /** Freeze simultaneous live goals once, independently of any future inspection. */
 function acknowledgeLevelFiveGoals(state: GameState, context: DomainContext): void {
   if (state.facilityLevel !== 5 || context.balanceRelease.facility.maximumPlayableLevel < 5 ||
-      state.levelFive?.progress.inspectionUnlocked ||
-      !getFacilityProgressionStatus(state, context).requirements.every(requirement => requirement.met)) return;
+      state.levelFive?.progress.inspectionUnlocked) return;
+  const goals = getFacilityProgressionStatus(state, context).requirements;
+  if (!goals.every(requirement => requirement.met)) return;
   const morale = getAverageEffectiveStaffMorale(state);
   if (morale === null) return;
   const levelFive = state.levelFive ??= createLevelFiveState();
   levelFive.progress.inspectionUnlocked = {
     version: "level-five-inspection-unlock.v1", earnedAtFacilityTick: state.facilityTick,
-    clinicalXp: state.clinicalXp, displayedSatisfaction: getDisplayedClinicSatisfaction(state, context),
+    clinicalXp: state.clinicalXp,
+    displayedSatisfaction: goals.find(requirement => requirement.id === "progression.satisfaction")!.current,
     averageStaffMorale: morale, employedStaffCount: state.employees.length,
   };
   levelFive.inspection.status = "ready";

@@ -1,3 +1,10 @@
+import { beforeProgramBatch3AcceptanceRelease } from "../../../../packages/clinical-content/src/question-program-batch3-acceptance-test-support";
+import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
+
+// Historical chart fixtures freeze the hash-verified pre-batch3 release.
+// Following commands and view projections still use the current runtime.
+const historicalTopicContext = { ...PROTOTYPE_DOMAIN_CONTEXT,
+  clinicalRelease: beforeProgramBatch3AcceptanceRelease(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease) };
 import { describe, expect, it } from "vitest";
 import {
   ANSWER_CHOICE_TIMING_REGISTRY,
@@ -35,7 +42,7 @@ function admit(caseId: string, index: number) {
     caseId,
     patientDisplayName: `Bread Butter Patient ${index}`,
     arrivalClass: "routine",
-  });
+  }, historicalTopicContext);
   const encounter = state.encounters[encounterId]!;
   encounter.lifecycle = "active_action_required";
   encounter.patientMovement = null;

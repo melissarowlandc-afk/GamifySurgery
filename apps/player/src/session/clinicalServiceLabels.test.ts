@@ -1,3 +1,10 @@
+import { beforeProgramBatch3AcceptanceRelease } from "../../../../packages/clinical-content/src/question-program-batch3-acceptance-test-support";
+import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
+
+// Historical chart fixtures freeze the hash-verified pre-batch3 release.
+// Following commands and view projections still use the current runtime.
+const historicalTopicContext = { ...PROTOTYPE_DOMAIN_CONTEXT,
+  clinicalRelease: beforeProgramBatch3AcceptanceRelease(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease) };
 import { describe, expect, it } from "vitest";
 import {
   createInitialGameState,
@@ -21,7 +28,7 @@ function actionableCeliacState(): GameState {
     caseId: "case.celiac.chronic-diarrhea",
     patientDisplayName: "Service Label Patient",
     arrivalClass: "routine",
-  });
+  }, historicalTopicContext);
   const encounter = state.encounters[ENCOUNTER_ID]!;
   encounter.lifecycle = "active_action_required";
   encounter.patientMovement = null;

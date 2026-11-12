@@ -13097,3 +13097,457 @@ other-nonclinical
 One avoidable expected-display error was corrected transparently: the first full player run had4171passes/2failures because I initially assumed62.48rounding. The unchanged product formatter displays62.47; correct only that expected string, then focused display and the **entire** player suite pass. Raw report and product formatter never changed. Private legacy proof initially compared optional undefined in-memory keys to JSON; corrected the comparison to the persisted JSON contract, with all old hashes exact and no artifact alteration. All original/final outputs and exact commands/exit codes are retained in validation-summary.json and matching logs.
 
 Open limitation: the obsolete610counterfactual bound failure is retained above; future content/accuracy/upkeep can shift rolling-window timing again. Current654shipping result meets the accepted13.82%target. Browser/e2e runtime not run and e2e specs unchanged; no release/deployment/backup performed. Manager owns final review and rollout.
+
+## rebind 33 (release worktree, topic batch 3 + bindings + content-robust pacing) — 2026-11-11
+
+Completed in GS-release only, at manager-reported entry f2518919. Main was read-only. No Git process, commit, push, install, network, agent, database action or deployment. The validated changes remain uncommitted for manager review.
+
+Accepted scope: batch3's211 exact PASS nodes in199 complete cases,257 exact diagnostic tuples for batches1-3, the five accepted pacing inputs, and stale room-upgrade price expectations. The default is404 authority rows (193 retained +211),1,250 cases /1,514 nodes /813 meanings. Fourteen requested nodes remain excluded, including the conditional REVISE case and unlisted siblings. All new clinical versions remain needs_clinician_review; no approval was conferred.
+
+The generated accepted runtime data is copied from the immutable acceptance, not current topic-worker sources. Builder --check reproduces it exactly. The33-case /148-field name-only correction ledger is replayed and tested. The three intake/selection/raw-source archives keep their original hashes. Accepted-only source metadata retains517 claims and218 source records. No mutable question-topic source or unaccepted runtime case was ported.
+
+- Default SHA-256: `d496267ffb29477ed2437de391119fca352c0a43ac9fd41bb3e979e285927d6a`.
+- Manifest SHA-256: `f513973eb86567fdf9dcb24bd5ceb318fc95403ed5a4776577a4413502a8f18f`.
+- Accepted-data module SHA-256: `622ed66d2d0d8be3bc93b61edcd0d021f3b2f7dc66686b8f8a030fdb60bc4762`.
+- Complete path dispositions/hashes/exclusions: `.local-dev/release-verify/port33-20261111.json`. Scoped content diff:318 initial differences,281 after port;247 current scoped paths are not shipped. Broader observed public differences are individually dispositioned there as well.
+
+### Native evidence and controls
+
+Both unchanged native generators ran from scratch inside GS-release, into private staging. verify-staged.mjs checked all sources, nine saves, three completed reports, cash, zero walkouts, minimum cash, old frozen records and controls before publish-verified.mjs wrote canonical evidence. Every journey and guard assertion remains. The only fresh-run metadata correction is liveCap4->5. All27 earlier inputHistory entries remain exact; entry28 preserves all597 superseded input hashes and the previous lower-helper hash. Current binding is600 inputs,451 clinical (previously597/448).
+
+| Arm | Commands | Closing cents | Completed | Walkouts | First finish |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Published32:654 meanings / old policy | 31570 | 6677125 | 491 | 0 | 22690 |
+| Control:654 meanings / new policy | 31570 | 6677125 | 491 | 0 | 22690 |
+| Control:813 meanings / old policy | 47628 | 9449993 | 744 | 0 | 37801 |
+| Shipping33:813 meanings / new policy | 31531 | 6516049 | 490 | 0 | 22690 |
+
+
+Shipping delta versus32: -39 commands, -161,076 closing cents and -1 completion; unlock remains19,632 and first finish22,690. Minimum cash is1,505,654 cents. Reconciliation is exact:
+
+```text
+1,689,500 + 17,895,300 - 425,826 - 11,466,925 - 1,176,000 = 6,516,049
+opening       gross        stock       operating      capital      closing
+```
+
+The old-content/new-policy arm preserves every total and all three previous reports exactly. Its save differences are confined to the accepted goal-guidance wording and frozen satisfaction witness91->97; its Level4/build saves are byte-exact. Under old policy, new content reaches2,300 XP at16,837 but its live HUD satisfaction is88 while the ended rating is96; the old reversible overlay delays unlock to34,743. New policy uses the ended rating and330 completed encounters, restoring unlock19,632 / first finish22,690. Thus content selection changes the receipt mix and report samples, while the accepted policy removes15,111 ticks of content-sensitive satisfaction-window delay. At the restored timeline, gross is196,900 cents lower, stock16,897 lower and operating18,927 lower, yielding the measured161,076-cent closing delta; capital is unchanged. Full arm/receipt evidence is in control-attribution.json and the read-only observer receipts.
+
+The pacing CLI independently measured first finish22,690 (allowed20,421-24,959),0% drift,5,386,575 first-finish cents,380 completions and zero walkouts. Its three guard unit tests pass. No calendar/seed/funding/XP/history/report substitution or driver-bound change was made.
+
+| Report | Before raw score / patients | After raw score / patients |
+| --- | ---: | ---: |
+| 1 | 62.4750682937747 / 49 | 62.52848345524158 / 50 |
+| 2 | 66.9067363288048 / 50 | 66.87414165714839 / 50 |
+| 3 | 45.33668223820304 / 51 | 45.556063093993636 / 49 |
+
+
+All nine checkpoint saves changed through the accepted content/policy, with no walkouts. The first report remains immutable, the higher retry is best and the lower retry is latest. Exact raw/category reports are regenerated; launch pins now assert50 qualifying patients / raw62.52848345524158 and conservative display62.52.
+
+| Save | Tick before/after | Cash cents before/after | Changed JSON paths |
+| --- | ---: | ---: | ---: |
+| integration-l4 | 4038 / 4190 | 2639850 / 2691750 | 10692 |
+| integration-build | 4038 / 4190 | 1463850 / 1515750 | 10359 |
+| integration-preparing | 19633 / 19633 | 4895027 / 4804930 | 20011 |
+| integration-running | 19770 / 19770 | 4907177 / 4832480 | 20255 |
+| integration-final | 22689 / 22689 | 5471443 / 5386575 | 23560 |
+| integration-finish | 22690 / 22690 | 5481255 / 5386575 | 22650 |
+| integration-repeat-final | 26346 / 26346 | 6272351 / 6244723 | 24421 |
+| integration-repeat | 26347 / 26347 | 6272351 / 6244723 | 23195 |
+| integration-lower-repeat | 29404 / 29404 | 6677125 / 6516049 | 25595 |
+
+
+| Evidence file | Before SHA-256 | After SHA-256 |
+| --- | --- | --- |
+| `tools/qa/level-five-integration-results-20261012.json` | `9bea79257502b6b1058b437d7d944898797d8929a4b599952ce5aac4a9c21ad8` | `8804775c358c7e3c3f7db0c219017b4847e146079e4583e8e71c8519037cd6ab` |
+| `tests/fixtures/level-five-integration-checkpoints-20261012.json` | `c1da0b9b4816786b1eb1f8dce3c1dac9db8dfb26b36a5664f4e7c97631f47770` | `d1a57bfe510c121d462de920e6b2b504e870b2309bb9d6f84bbc0be7c275a5db` |
+| `tests/fixtures/level-five-legacy-behavior-20261012.json` | `9413ae70b80a991df1f4539ff582891cb761345bd89b26e635ae3e607b1ff1c5` | `ffc233cbfe986eaee6734c85d1f806a2b4cd710bdebb1d1b426854b3b4a01ffc` |
+
+
+The integration guard SHA remains `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`. The pre-policy lateProgression archive remains byte-exact. Complete changed input hashes:
+
+| Bound path | Before SHA-256 | After SHA-256 |
+| --- | --- | --- |
+| `packages/balance-config/src/level-five-progression.ts` | `31b1be8d93ed3a0eda587431a4ae14ff8e05b36e3e8310036b35d6e1bc65c171` | `8bd7fd778839087a6a60fd65512d02db0a19c0c9c8d5b05575248b3d28cc4f9a` |
+| `packages/clinical-content/src/answer-choice-timing.ts` | `99be435f815472aa35dec0c1150cf0419e8f51a39da1f9a07f0e06e04b1ceee2` | `a2aa5a57fe053d0aff5d20e18866595845ab596f1de17117b7d4afb02aceab6b` |
+| `packages/clinical-content/src/index.ts` | `aa69ce2b91e00459f137b467567878d2986c0eaa00055488c43b3a9aadd3c68e` | `30d8f42e0ee1cbeb84a80985a78b1f5c263493c722b6626a2196723758ba45bd` |
+| `packages/clinical-content/src/question-program-batch2-acceptance-test-support.ts` | `dbd27f1580405ee5bee9308561674ac26e5f5446d014534fe2f32bf501c5b2db` | `3d02f6fbeb9fa81caf1948a03f34d26232606e8d3b15afd68658e9f53af9661c` |
+| `packages/clinical-content/src/question-program-batch3-acceptance-test-support.ts` | `new` | `0580d2b8a1db317d27fb2f404a45656b29b65b8c94c8f4dcef66bd179ddd431e` |
+| `packages/clinical-content/src/question-program-batch3-accepted-20261111.ts` | `new` | `cc1af0eb16a8e2f09f66e41914a7d86ed3fc6a69915fcdb6ba3c1fccabccebce` |
+| `packages/clinical-content/src/question-program-batch3-accepted-data-20261111.ts` | `new` | `622ed66d2d0d8be3bc93b61edcd0d021f3b2f7dc66686b8f8a030fdb60bc4762` |
+| `packages/clinical-content/src/question-ship-manifest.ts` | `b470422f55280d0a7b0fe318f0254b83be6864f57f4faa7609f32fbc2103475a` | `c891343f89e29b0009e65c4f464b5ca694f9fce0f43eb5960b7bc5542dbba7bc` |
+| `packages/clinical-content/src/synthetic-content.ts` | `9c51a1e0d1fdfb4c0d28b70cb9de3695dacf0eeb87ea0b7485b6e5f154d6e56b` | `8c76b4cb6c6458682b0b31023f1a214405733b2dd5b67f378d699a153e561b25` |
+| `packages/game-domain/src/guidance-progression.ts` | `f6c4d618bfb0d9ec162c7954f9b8e5a4bc11ac3d7c98759ff6efc8a46facf9a7` | `d54c7c2c74f7174a8be9cc939d013cb214aa1a288ad3ab38b928bd036d0039a1` |
+| `packages/game-domain/src/level-five-types.ts` | `27de0ca03a500e0227dfec2c2d15411da074be972ee7b3cdc757bd1ec7caed93` | `6790fb29c21d816068f4d16e30a4da0e2d57be459bd1631efeec1c7ceb12f53b` |
+| `packages/game-domain/src/reducer.ts` | `d669ca508d49852f36adef09000aee0d2d2271f7bdc8553a45f5fa59eaa4e420` | `8bf096d9eef46caf79d919835a1f1ca65007871a674734c1828643b94dfdd63a` |
+| `packages/game-domain/src/selectors.ts` | `eeabe57ab10fcbda9966222fb831c9b1616ffd3680529ee15fac98e752812afb` | `fc01be3ce35fa0007bb48e7c88e5283f2546a7b93ff627dcc7e58e244e2c5e88` |
+| `packages/game-domain/src/test-choice-orders.ts` | `9b76d8b67b8e21f226addbdde7363aab6bb8bc1c3f6d2d7a8159b99a07b9a68f` | `2e1d068fab93c7d6e985954bcfcb274b99a4425b6e1d3b168fe4de20b5a1dff2` |
+
+
+### Compatibility and strict integration corrections
+
+All25 schema5-9 legacy loads add only159 blank concept histories. Every prior frozen definition, existing history and lateProgression record remains exact. The real120-minute generator and25 old-content/current-policy controls prove continuation differences are20 fresh admissions plus two fresh sidewalk-art identity fields in the Level4 arm, reproduced by the unchanged occupied-art factory. Published legacy rows are the actual new reducer output; five serialized old inputs and afterUpdates remain exact. See legacy-diagnosis.json, legacy-deltas.json and legacy-admission-attribution.json.
+
+The fresh full player suite passes all175 accepted patient format3 admissions,123 retired-case reopen/completions and123 committed legacy-admission journal replays; all24 accepted staff discussions and three player binding checks also pass. Domain coverage includes11 content-robust pacing tests,23 lateProgression tests,21 Level5 progression tests,14 Level4 progression tests and eight binding regressions. Clinical's full-library naming guard passes7/7.
+
+Narrow integration fixes preserve the full28-character compact-goal contract and complete accessible goal text; update the truthful0/3 just-advanced phone fixture; compare complete choice objects after exact patient-name rendering while retaining absent rationales; retain the explicit concept-inventory equality with159 literal accepted additions; and preserve seven historical chart fixtures via the complete hash-verified pre-batch3 admission context, followed by current runtime/rendering. Their64 focused tests and the fresh full suite pass. No original assertion was removed.
+
+All eight earlier clinical source-pin fixtures keep their immutable captures and authorization history. Exact accepted postimages and parent-fixture hashes are recorded through the existing mechanism. Batch3 adds a strict three-path release delta for the two older guard files and the retained diagnostic fixture safeguards. All75 required-absence checks across49 unique paths remain. No broad source allow-list was introduced.
+
+The cloud entry stress fixture now has2,816 base records plus6,400 records from the same3,200 real commands =9,216. Its8,500 floor,3,200 actions and240,000ms budget remain. All nine production codec/wire round-trips pass unchanged capacities; no cloud product code was ported. The maximum measured per-row evidence is900,432 bytes, actual page evidence230,337 bytes, RPC320,793 bytes and decoded game2,070,157 bytes.
+
+Room-upgrade e2e fixtures had stale tier4/5 price expectations. Their native fixture already has enough cash (2,856,500 cents after setup). Exact tables/totals now match the shipped catalog:198,500 cents for satisfaction and796,000 for work upgrades. All20 native purchases, tier5 coverage, frozen work and reload pass; every UI Undo/cash/reload assertion is retained. The management-mode chart-fill assertion is independent of those prices; no stale-fixture diagnosis was established, so it is unchanged and needs manager browser review.
+
+### Exact validation output
+
+All commands used CI=true and the narrow net-use EPERM preload in .local-dev/release-port33-20261111. Root's default boundary invocation is blocked by spawnSync git EPERM. As permitted, all seven suites ran directly with threads. A private adapter decodes the read-only v2 index, verifies its full checksum/bounds/order (SHA-256 `1fe67e1d95dbbaf0aa3be9f0e55c56326055f801cfe4e0ac490c73face6e1f4f`), and supplies only the7,740-path inventory to the unchanged boundary verifier. No Git process or index write was used; boundaries and launcher contract pass. The manager retains the ordinary root/default-pool and browser gate.
+
+```powershell
+$env:CI='true'
+npm.cmd run test --workspace @gamify-surgery/clinical-context-workbench --workspace @gamify-surgery/balance-config --workspace @gamify-surgery/clinical-authoring --workspace @gamify-surgery/clinical-research -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port33-20261111/workspace-json-reporter.mjs
+npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=4 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port33-20261111/workspace-player-verified.json
+npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port33-20261111/workspace-clinical-content-final.json
+npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port33-20261111/workspace-game-domain-final.json
+```
+
+| Workspace | Files | Passed | Failed | Existing skips |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 427 | 4621 | 0 | 0 |
+| balance-config | 26 | 168 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 134 | 1652 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 211 | 5600 | 0 | 1 |
+
+
+Total:821 test files,12,248 passed,0 failed,1 existing skip. There were no pure timeouts. The skip is the pre-existing26,710-command oracle case in game-evidence-incremental.test.ts, unchanged from release32.
+
+`@gamify-surgery/clinical-context-workbench`
+
+```text
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Duration  5.93s (transform 1.10s, setup 0ms, import 2.37s, tests 6.50s, environment 1ms)
+```
+
+`@gamify-surgery/player`
+
+```text
+ Test Files  427 passed (427)
+      Tests  4621 passed (4621)
+   Duration  576.47s (transform 27.05s, setup 0ms, import 794.32s, tests 1462.71s, environment 32ms)
+```
+
+`@gamify-surgery/balance-config`
+
+```text
+ Test Files  26 passed (26)
+      Tests  168 passed (168)
+   Duration  4.66s (transform 1.43s, setup 0ms, import 4.77s, tests 332ms, environment 2ms)
+```
+
+`@gamify-surgery/clinical-authoring`
+
+```text
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Duration  928ms (transform 178ms, setup 0ms, import 524ms, tests 412ms, environment 1ms)
+```
+
+`@gamify-surgery/clinical-content`
+
+```text
+ Test Files  134 passed (134)
+      Tests  1652 passed (1652)
+   Duration  165.84s (transform 10.01s, setup 0ms, import 281.40s, tests 30.86s, environment 11ms)
+```
+
+`@gamify-surgery/clinical-research`
+
+```text
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Duration  2.67s (transform 249ms, setup 0ms, import 675ms, tests 1.21s, environment 1ms)
+```
+
+`@gamify-surgery/game-domain`
+
+```text
+ Test Files  211 passed (211)
+      Tests  5600 passed | 1 skipped (5601)
+   Duration  730.40s (transform 13.52s, setup 0ms, import 522.30s, tests 913.26s, environment 16ms)
+```
+
+`npm.cmd run typecheck` (exit0)
+
+```text
+> gamify-surgery@0.0.1 typecheck
+> npm run typecheck --workspaces --if-present
+
+
+> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
+
+
+> @gamify-surgery/player@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/balance-config@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-authoring@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-content@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/clinical-research@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+
+> @gamify-surgery/game-domain@0.0.1 typecheck
+> tsc --noEmit -p tsconfig.json
+```
+
+`npm.cmd run build --workspace @gamify-surgery/player` (exit0)
+
+```text
+> @gamify-surgery/player@0.0.1 build
+> vite build
+
+vite v8.1.5 building client environment for production...
+[2K
+transforming...[PLUGIN_TIMINGS] Your build spent significant time in plugins. Here is a breakdown:
+  - forbid-private-clinical-modules (50%)
+  - player-runtime-clinical-data (48%)
+See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+
+[PLUGIN_TIMINGS] Your build spent significant time in plugins. Here is a breakdown:
+  - player-runtime-clinical-data (71%)
+  - forbid-private-clinical-modules (28%)
+See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+
+✓ 674 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                         1.49 kB │ gzip:     0.64 kB
+dist/assets/atkinson-hyperlegible-latin-400-normal-BbWidj28.woff       14.02 kB
+dist/assets/atkinson-hyperlegible-latin-700-normal-BK6Glc0m.woff       14.29 kB
+dist/assets/atkinson-hyperlegible-latin-400-normal-BrHNak5F.woff2      17.20 kB
+dist/assets/atkinson-hyperlegible-latin-700-normal-GZI4o3u0.woff2      17.52 kB
+dist/assets/codec.worker-Dt_qFXyP.js                                7,733.25 kB
+dist/assets/operationalEngine.worker-BRu-jQkt.js                    8,230.58 kB
+dist/assets/MobileEntryPresentation-BTU4GZUB.css                        2.63 kB │ gzip:     0.76 kB
+dist/assets/MobileShell-Cf-Ijzgz.css                                   62.04 kB │ gzip:     9.87 kB
+dist/assets/index-ByZcFCkc.css                                        204.11 kB │ gzip:    37.87 kB
+dist/assets/MobileEntryPresentation-CqLipVb5.js                         0.32 kB │ gzip:     0.21 kB
+dist/assets/MobileShell-DNGiyT3d.js                                   126.13 kB │ gzip:    32.91 kB
+dist/assets/index-BmCRtHYI.js                                      16,605.58 kB │ gzip: 2,654.15 kB
+
+[INEFFECTIVE_DYNAMIC_IMPORT] src/session/cloud/codecEvidence.ts is dynamically imported by src/session/cloud/snapshotCodec.ts but also statically imported by src/session/cloud/codecTasks.ts, src/session/cloud/copySelection.ts, src/session/cloud/importCampaigns.ts, src/session/cloud/journalCodec.ts, src/session/cloud/journalWarm.ts, ..., dynamic import will not move module into another chunk.
+
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+[INEFFECTIVE_DYNAMIC_IMPORT] src/session/localProfileJournal.ts is dynamically imported by src/App.tsx but also statically imported by src/session/usePrototypeSession.ts, dynamic import will not move module into another chunk.
+
+[PLUGIN_TIMINGS] Your build spent significant time in plugins. Here is a breakdown:
+  - player-runtime-clinical-data (49%)
+  - forbid-private-clinical-modules (27%)
+  - vite:worker-import-meta-url (15%)
+  - vite:prepare-out-dir (4%)
+See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+
+✓ built in 12.42s
+```
+
+`node node_modules/typescript/bin/tsc --noEmit -p .local-dev/release-port33-20261111/e2e-tsconfig.json` (exit0)
+
+```text
+
+```
+
+`npm.cmd run test:boundaries` (exit0)
+
+```text
+> gamify-surgery@0.0.1 test:boundaries
+> node scripts/verify-app-boundaries.mjs && node scripts/verify-launcher-contract.mjs
+
+Verified runtime dependency boundaries and 7740 tracked path(s).
+Verified launcher health contract gamify-surgery-player protocol 1.
+```
+
+`node tools/qa/content-pacing-check.mjs` (exit0)
+
+```text
+{
+  "firstFinishTick": 22690,
+  "closingCashCents": 5386575,
+  "completions": 380,
+  "walkouts": 0,
+  "referenceTick": 22690,
+  "driftPercent": 0,
+  "clinicalSha256": "d496267ffb29477ed2437de391119fca352c0a43ac9fd41bb3e979e285927d6a",
+  "caseCount": 1250,
+  "registeredMeanings": 813
+}
+(node:17604) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+```
+
+`node --test --test-isolation=none tools/qa/content-pacing-check.test.mjs` (exit0)
+
+```text
+✔ accepts the reference and both edges inside the ten-percent budget (0.8365ms)
+✔ flags the observed batch3 delay and excessive speedup (0.6066ms)
+✔ requires a measured positive integer first finish (0.3658ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18.3615
+```
+
+Initial domain classification:5,573 passed /27 failed /1 skipped, exactly one binding guard,25 legacy-evidence comparisons and the explicit admitted-concept inventory. Actual generation and exact expected-ID additions resolve them; final5,600/0/1. Initial full player classification:4,597 passed /24 failed, comprising12 optional-rationale expectation errors and12 retired historical-fixture failures. Optional fields and historical contexts were corrected as described; fresh full rerun4,621/0. Earlier focused goal-label, exact name-rendering and optional-field type diagnostics are resolved. Full raw outputs, process exits, JSON reports and the classification are retained in validation-summary.json and the immutable per-command logs. No timeout or budget was extended.
+
+### Every changed public path
+
+124 files:76 copied from frozen accepted sources,35 narrow hunk/coordination changes and13 native/provenance regenerations. Final exact hashes and all other observed differences are in the disposition JSON.
+
+```text
+apps/player/src/mobile/levelFiveGoals.test.tsx
+apps/player/src/questionProgramBatch3SaveCompatibility.test.ts
+apps/player/src/questionProgramBatch3StatisticsAdmission.test.ts
+apps/player/src/session/breadButterPresentation.test.ts
+apps/player/src/session/chartFeedbackPresentation.test.tsx
+apps/player/src/session/clinicalServiceLabels.test.ts
+apps/player/src/session/cloud/openingUploadLarge.test.ts
+apps/player/src/session/diagnosticTimingViewModels.test.ts
+apps/player/src/session/earlyLevelsPresentation.test.ts
+apps/player/src/session/employeeTrainingViewModels.test.ts
+apps/player/src/session/goalDisplayLabels.test.tsx
+apps/player/src/session/goalDisplayLabels.ts
+apps/player/src/session/levelFiveLaunch.test.tsx
+apps/player/src/session/levelFiveProgressionViews.test.tsx
+apps/player/src/session/topicRuntimeBindings.test.ts
+apps/player/src/session/variety3ChartsViewModels.test.ts
+docs/execplans/content-robust-pacing-20261111.md
+docs/execplans/gs028-stats-ethics-overhaul-20261007.md
+docs/execplans/question-topic-acceptance-batch3-20261111.md
+docs/execplans/release-port33-20261111.md
+docs/execplans/topic-runtime-bindings-20261111.md
+docs/handoffs/CURRENT_THREAD_HANDOFF.md
+docs/research/content-robust-pacing-20261111.md
+docs/research/question-topic-acceptance-batch3-20261111.md
+docs/research/question-topic-acceptance-batch3-dispositions-20261111.json
+docs/research/question-topic-acceptance-batch3-files-20261111.json
+docs/research/question-topic-acceptance-batch3-lint-20261111.json
+docs/research/question-topic-acceptance-batch3-packet-20261111.json
+docs/research/question-topic-acceptance-batch3-source-freeze-20261111.json
+docs/research/question-topic-acceptance-batch3-validation-20261111.json
+docs/research/sources-question-topic-acceptance-batch3-release-20261111.json
+docs/research/topic-runtime-bindings-20261111.md
+packages/balance-config/src/late-game-balance.test.ts
+packages/balance-config/src/level-five-progression.test.ts
+packages/balance-config/src/level-five-progression.ts
+packages/clinical-content/src/answer-choice-timing.test.ts
+packages/clinical-content/src/answer-choice-timing.ts
+packages/clinical-content/src/approved-data/level-two-runtime.test.ts
+packages/clinical-content/src/approved-data/obstructive-jaundice-vitamin-k.test.ts
+packages/clinical-content/src/development-batch/2026-09-10/surgery-center-admission.test.ts
+packages/clinical-content/src/development-batch/2026-10-10-variety-3/draft-runtime-guard.test.ts
+packages/clinical-content/src/index.ts
+packages/clinical-content/src/pilot-content.test.ts
+packages/clinical-content/src/playable-patient-narrative.test.ts
+packages/clinical-content/src/question-bank-batch2b-acceptance-20261105.test.ts
+packages/clinical-content/src/question-bank-batch2b-round2-20261104.test.ts
+packages/clinical-content/src/question-flags2-20261105.test.ts
+packages/clinical-content/src/question-flags3-20261107.test.ts
+packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts
+packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts
+packages/clinical-content/src/question-n4-acceptance-20261110.test.ts
+packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts
+packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts
+packages/clinical-content/src/question-program-batch2-acceptance-test-support.ts
+packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts
+packages/clinical-content/src/question-program-batch3-acceptance-test-support.ts
+packages/clinical-content/src/question-program-batch3-accepted-20261111.ts
+packages/clinical-content/src/question-program-batch3-accepted-data-20261111.ts
+packages/clinical-content/src/question-ship-manifest.test.ts
+packages/clinical-content/src/question-ship-manifest.ts
+packages/clinical-content/src/question-stats1-20261108.test.ts
+packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts
+packages/clinical-content/src/synthetic-content.ts
+packages/game-domain/src/guidance-progression.ts
+packages/game-domain/src/level-five-types.ts
+packages/game-domain/src/reducer.ts
+packages/game-domain/src/selectors.ts
+packages/game-domain/src/test-choice-orders.ts
+packages/game-domain/tests/answer-choice-timing.test.ts
+packages/game-domain/tests/approved-clinical-admission.test.ts
+packages/game-domain/tests/board-expansion-20260912-batch.test.ts
+packages/game-domain/tests/bread-butter-20260917-batch.test.ts
+packages/game-domain/tests/content-robust-pacing.test.ts
+packages/game-domain/tests/diagnostic-result-dispositions.test.ts
+packages/game-domain/tests/diagnostic-timing-fixtures.ts
+packages/game-domain/tests/early-levels-20260913-batch.test.ts
+packages/game-domain/tests/gs028-20261007-level3-batch.test.ts
+packages/game-domain/tests/gs028-second-pre-endoscopy-batch.test.ts
+packages/game-domain/tests/level-five-launch.test.ts
+packages/game-domain/tests/level-five-progression.test.ts
+packages/game-domain/tests/level-four-progression.test.ts
+packages/game-domain/tests/level-two-endoscopy.test.ts
+packages/game-domain/tests/question-ship-gate.test.ts
+packages/game-domain/tests/service-procedure-operations.test.ts
+packages/game-domain/tests/topic-runtime-bindings.test.ts
+packages/game-domain/tests/twenty-concept-batch.test.ts
+packages/game-domain/tests/variety3-admission.test.ts
+tests/e2e/room-upgrades.spec.ts
+tests/fixtures/diagnostic-workload.ts
+tests/fixtures/level-five-integration-checkpoints-20261012.json
+tests/fixtures/level-five-legacy-behavior-20261012.json
+tests/fixtures/level-five-progression.ts
+tests/fixtures/level-five-state.ts
+tools/qa/content-pacing-check.mjs
+tools/qa/content-pacing-check.test.mjs
+tools/qa/level-five-integration-results-20261012.json
+tools/question-quality/build-topic-acceptance-batch3-20261111.mjs
+tools/question-quality/capture-topic-acceptance-batch3-20261111.mjs
+tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json
+tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json
+tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json
+tools/question-quality/fixtures/question-n4-release-source-pins-20261110.json
+tools/question-quality/fixtures/question-program-batch1-release-source-pins-20261111.json
+tools/question-quality/fixtures/question-program-batch2-release-source-pins-20261111.json
+tools/question-quality/fixtures/question-program-batch3-release-source-pins-20261111.json
+tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json
+tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json
+tools/question-quality/fixtures/question-topic-acceptance-batch3-additional-before-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch3-before-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch3-domain-before-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch3-domain-suites-before-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch3-flags2-guard-before-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch3-literal-name-corrections-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch3-narrative-before-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch3-selection-20261111.json
+tools/question-quality/fixtures/question-topic-acceptance-batch3-source-migration-20261111.json
+tools/question-quality/freeze-topic-acceptance-batch3-source-20261111.mjs
+tools/question-quality/handoff-topic-acceptance-batch3-20261111.mjs
+tools/question-quality/integrate-topic-acceptance-batch3-20261111.mjs
+tools/question-quality/prepare-topic-acceptance-batch3-20261111.mjs
+tools/question-quality/record-topic-acceptance-batch3-files-20261111.mjs
+tools/question-quality/record-topic-acceptance-batch3-migration-20261111.mjs
+tools/question-quality/review-topic-acceptance-batch3-20261111.mjs
+tools/question-quality/topic-acceptance-batch3-config-20261111.mjs
+```
+
+Open manager follow-up: browser validation, especially the unchanged management chart-fill geometry check; review the scoped diff and own the commit/push/deploy gate. No other known failing suite, typecheck, boundary or build remains. All work stays local and uncommitted.

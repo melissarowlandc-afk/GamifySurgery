@@ -1,5 +1,7 @@
+import {beforeProgramBatch3AcceptanceRelease} from "../../clinical-content/src/question-program-batch3-acceptance-test-support";
+import {createClinicalAuthorStage} from "../../../tests/fixtures/clinical-author-stage";
 import { describe, expect, it } from "vitest";
-import { ANSWER_CHOICE_TIMING_REGISTRY, SYNTHETIC_CLINICAL_RELEASE, type SyntheticClinicalCase } from "@gamify-surgery/clinical-content";
+import { ANSWER_CHOICE_TIMING_REGISTRY, SYNTHETIC_CLINICAL_RELEASE as actualRelease, type SyntheticClinicalCase } from "@gamify-surgery/clinical-content";
 import {
   GS028_20260929_BATCH_MANIFEST,
   GS028_20260929_CASES as authoredCases,
@@ -11,18 +13,18 @@ import {
   GS028_20260929_TIMING_ENTRIES as authoredTimings,
 } from "../../clinical-content/src/development-batch/2026-09-29-pre-endoscopy/pre-endoscopy-batch";
 import {
-  PROTOTYPE_DOMAIN_CONTEXT,
-  createInitialGameState,
-  deserializeGameState,
-  gameReducer,
+  PROTOTYPE_DOMAIN_CONTEXT as actualPrototype,
   getCurrentQuestion,
   getEligibleServiceRoute,
   selectRoutineClinicalCase,
   serializeGameState,
   validateDomainContext,
   type ConceptReviewEvidence,
-  type GameState,
+  type GameState
 } from "../src";
+
+const SYNTHETIC_CLINICAL_RELEASE=beforeProgramBatch3AcceptanceRelease(actualRelease);
+const {context:PROTOTYPE_DOMAIN_CONTEXT,createInitialGameState,gameReducer,deserializeGameState}=createClinicalAuthorStage(SYNTHETIC_CLINICAL_RELEASE);
 import { EXACT_TEST_CHOICE_ORDER_RECORDS } from "../src/test-choice-orders";
 
 const GS028_20260929_CASES = authoredCases.map(original => SYNTHETIC_CLINICAL_RELEASE.cases.find(candidate => candidate.id === original.id)! as typeof original);

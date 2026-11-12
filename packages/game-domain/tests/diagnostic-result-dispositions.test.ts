@@ -1,14 +1,23 @@
-import { SYNTHETIC_CLINICAL_RELEASE, QUESTION_PROGRAM_BATCH2_RETAINED_CASES, QUESTION_SHIP_MANIFEST } from "@gamify-surgery/clinical-content";
+import { SYNTHETIC_CLINICAL_RELEASE, QUESTION_PROGRAM_BATCH2_RETAINED_CASES,QUESTION_PROGRAM_BATCH3_RETAINED_CASES, QUESTION_SHIP_MANIFEST } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
 import { EXACT_DIAGNOSTIC_RESULT_RECORDS, getDiagnosticResultDisposition } from "../src/diagnostic-result-dispositions";
 import type { EncounterState } from "../src";
+const retainedCases=[...QUESTION_PROGRAM_BATCH2_RETAINED_CASES,...QUESTION_PROGRAM_BATCH3_RETAINED_CASES];
+function exactCase(caseId:string){
+  const active=SYNTHETIC_CLINICAL_RELEASE.cases.find(cs=>cs.id===caseId);
+  if(active)return active;
+  const retained=retainedCases.find(cs=>cs.id===caseId)!;
+  expect(retained,caseId).toBeDefined();
+  expect(QUESTION_SHIP_MANIFEST.replacements.some(row=>row.replaces===caseId)||QUESTION_SHIP_MANIFEST.topicConsolidations.some(row=>row.replaces.includes(caseId))).toBe(true);
+  return retained;
+}
 
 describe("exact frozen endoscopy result contracts", () => {
   it("binds every operational annotation to an active or retained frozen exact choice and profile, including distractors", () => {
     const keys = new Set<string>();
     for (const record of EXACT_DIAGNOSTIC_RESULT_RECORDS) {
       const active = SYNTHETIC_CLINICAL_RELEASE.cases.find(candidate => candidate.id === record.caseId);
-      const retained = QUESTION_PROGRAM_BATCH2_RETAINED_CASES.find(candidate => candidate.id === record.caseId);
+      const retained = retainedCases.find(candidate => candidate.id === record.caseId);
       if (!active && retained) {
         expect(QUESTION_SHIP_MANIFEST.replacements.some(row => row.replaces === retained.id) ||
           QUESTION_SHIP_MANIFEST.topicConsolidations.some(row => row.replaces.includes(retained.id))).toBe(true);
@@ -28,7 +37,7 @@ describe("exact frozen endoscopy result contracts", () => {
 
   it("separates a visual update with pending histology from a returned biopsy result", () => {
     const selected = (caseId: string, index: number, choiceId: string) => {
-      const clinicalCase = SYNTHETIC_CLINICAL_RELEASE.cases.find((candidate) => candidate.id === caseId)!;
+      const clinicalCase = exactCase(caseId);
       return getDiagnosticResultDisposition({ frozenCase: clinicalCase } as EncounterState, clinicalCase.decisionNodes[index]!, choiceId);
     };
     expect(selected("case.recovered-diverticulitis.drained-abscess", 0, "colonoscopy_1")).toEqual({ specimenCollected: false, resultKind: "visual" });
@@ -38,7 +47,7 @@ describe("exact frozen endoscopy result contracts", () => {
   });
 
   it("does not infer specimen collection from altered labels or new question versions", () => {
-    const original = SYNTHETIC_CLINICAL_RELEASE.cases.find((candidate) => candidate.id === "case.esophageal-dysphagia.bread-sticking")!;
+    const original = exactCase("case.esophageal-dysphagia.bread-sticking");
     const clinicalCase = JSON.parse(JSON.stringify(original)) as typeof original;
     const node = clinicalCase.decisionNodes[0]!;
     const encounter = { frozenCase: clinicalCase } as EncounterState;

@@ -78,6 +78,7 @@ export interface LevelFiveInspectionUnlock {
   earnedAtFacilityTick: number;
   /** Frozen simultaneous goal evidence; later conditions cannot rewrite it. */
   clinicalXp: number;
+  /** Percentage displayed for the earned satisfaction goal. Older records used the HUD measure. */
   displayedSatisfaction: number;
   averageStaffMorale: number;
   employedStaffCount: number;

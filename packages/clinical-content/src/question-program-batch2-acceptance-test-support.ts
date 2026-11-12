@@ -1,3 +1,4 @@
+import {beforeProgramBatch3AcceptanceRelease,beforeProgramBatch3AcceptanceManifest,beforeProgramBatch3AcceptanceTimings,beforeProgramBatch3AcceptanceSource} from "./question-program-batch3-acceptance-test-support";
 import {readFileSync} from "node:fs";
 import {createHash} from "node:crypto";
 import {expect} from "vitest";
@@ -17,6 +18,7 @@ const digest = (value: unknown) => createHash("sha256").update(JSON.stringify(va
 const cases = Object.values(views).flatMap(view => view.cases);
 
 export function beforeProgramBatch2AcceptanceRelease(release: SyntheticClinicalRelease): SyntheticClinicalRelease {
+  release = beforeProgramBatch3AcceptanceRelease(release);
   if (digest(release) === before.default.sha256) return release;
   if (!release.cases.some(cs => cases.some(accepted => accepted.id === cs.id))) return release;
   for (const cs of cases) expect(release.cases.find(actual => actual.id === cs.id), cs.id).toEqual(cs);
@@ -37,6 +39,7 @@ export function beforeProgramBatch2AcceptanceRelease(release: SyntheticClinicalR
 }
 
 export function beforeProgramBatch2AcceptanceManifest(manifest: QuestionShipManifest): QuestionShipManifest & {id: string; clinicalApproval: false} {
+  manifest = beforeProgramBatch3AcceptanceManifest(manifest);
   if (!manifest.accepted.some(row => row.sourceView.startsWith("topic-batch2-")))
     return manifest as ReturnType<typeof beforeProgramBatch2AcceptanceManifest>;
   expect(manifest).toEqual({...before.manifest, id:"question-ship.2026-11-11.v11",
@@ -47,12 +50,14 @@ export function beforeProgramBatch2AcceptanceManifest(manifest: QuestionShipMani
 }
 
 export function beforeProgramBatch2AcceptanceTimings(actual: readonly AnswerChoiceTimingRegistryEntry[]): AnswerChoiceTimingRegistryEntry[] {
+  actual = beforeProgramBatch3AcceptanceTimings(actual);
   if (!actual.some(entry => rows.some(row => row.questionVariantId === entry.questionVariantId))) return [...actual];
   expect(actual).toEqual([...before.timing, ...timings]);
   return structuredClone(before.timing);
 }
 
 export function beforeProgramBatch2AcceptanceSource(path: string, current: string): string {
+  current = beforeProgramBatch3AcceptanceSource(path, current);
   const row = migration.files.find(file => file.path === path);
   if (!row) return current;
   const hash = (text: string) => createHash("sha256").update(text).digest("hex");

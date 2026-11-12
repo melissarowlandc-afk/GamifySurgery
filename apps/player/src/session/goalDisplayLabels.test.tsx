@@ -10,8 +10,8 @@ const labelsByLevel = [
   ["Clinical XP", "Satisfaction above 90%", "Build Ultrasound Room", "Build Minor-Procedure Room", "Hire Imaging Technician"],
   ["Clinical XP", "Satisfaction above 90%", "First endoscopy"],
   ["Clinical XP", "Satisfaction above 90%", "Hire Pharmacist", "First ambulatory operation"],
-  ["Clinical XP", "Satisfaction above 90%", "APP in an operating room", "Pediatric visit with parent", "Wound/ostomy visit"],
-  ["Current-level Clinical XP", "Satisfaction above 90%", "Average staff morale ≥85"],
+  ["Clinical XP", "Recent patient satisfaction", "APP in an operating room", "Pediatric visit with parent", "Wound/ostomy visit"],
+  ["Current-level Clinical XP", "Rating after 330 encounters", "Average staff morale ≥85"],
 ];
 
 describe("player-only goal display labels", () => {

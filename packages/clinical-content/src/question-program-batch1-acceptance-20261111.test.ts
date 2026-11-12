@@ -79,7 +79,7 @@ describe("topic acceptance batch1 exact complete clinic cases",()=>{
  it("pins nine owned clinical deltas without changing worker files or prior captures",()=>{
   const migration=read("tools/question-quality/fixtures/question-topic-acceptance-batch1-source-migration-20261111.json");expect(migration.files).toHaveLength(9);
   const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch1-release-source-pins-20261111.json",import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("51405e0f078966f1a536c332b53508d35da0f66c25040e2dc29c498531001a50");
+  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("2091e221e9d7380089796e531dbe85262a05d0e4582696bb0b075ef7985a9078");
   const releasePins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;testSupportSha256:string;paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string}>};
   expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-topic-acceptance-batch1-source-migration-20261111.json",import.meta.url))).digest("hex")).toBe(releasePins.capturedFixtureSha256);
   expect(createHash("sha256").update(readFileSync(new URL("./question-program-batch1-acceptance-test-support.ts",import.meta.url))).digest("hex")).toBe(releasePins.testSupportSha256);

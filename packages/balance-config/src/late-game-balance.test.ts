@@ -5,10 +5,11 @@ import { EMPLOYEE_TRAINING_ROLES } from "./employee-training";
 import { getRoomUpgradeDefinition } from "./room-upgrades";
 
 describe("November11 editorial late-game purchase curves", () => {
-  it("preserves early builds, low tiers, all running costs, rewards and non-XP goals", () => {
+  it("preserves early builds, low tiers, running costs and rewards with explicit late progression goals", () => {
     expect(balance.clinicalSettlement).toEqual(before.clinicalSettlement);
     expect(balance.facility.stageDefinitions).toEqual(before.progression.map(stage => ({
       ...stage, minimumClinicalXp: ({ 3: 550, 4: 790, 5: 2300 } as Record<number, number>)[stage.level] ?? stage.minimumClinicalXp,
+      minimumCompletedEncounters: stage.level === 5 ? 330 : stage.minimumCompletedEncounters,
     })));
     for (const room of balance.facility.roomDefinitions) {
       const old = before.rooms[room.id as keyof typeof before.rooms];

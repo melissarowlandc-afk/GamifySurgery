@@ -1,9 +1,26 @@
 /// <reference types="node" />
+import {beforeProgramBatch3AcceptanceRelease} from "../../clinical-content/src/question-program-batch3-acceptance-test-support";
+import {createClinicalAuthorStage} from "../../../tests/fixtures/clinical-author-stage";
 import {writeFileSync} from "node:fs";
 import {resolve} from "node:path";
 import {afterAll,describe,expect,it} from "vitest";
-import {GS028_20261007_LEVEL3_CASES as authoredCases,GS028_20261007_LEVEL3_TESTED_CONCEPTS as concepts,SYNTHETIC_CLINICAL_RELEASE,ANSWER_CHOICE_TIMING_REGISTRY,type SyntheticClinicalCase} from "@gamify-surgery/clinical-content";
-import {PROTOTYPE_DOMAIN_CONTEXT,createInitialGameState,createPatientDisplayName,deserializeGameState,deterministicInteger,RANDOM_STREAMS,gameReducer,getAnswerChoiceServicePreview,getCurrentCapabilities,getCurrentQuestion,selectRoutineClinicalCase,serializeGameState,type ConceptReviewEvidence,type GameState} from "../src";
+import {GS028_20261007_LEVEL3_CASES as authoredCases,GS028_20261007_LEVEL3_TESTED_CONCEPTS as concepts,SYNTHETIC_CLINICAL_RELEASE as actualRelease,ANSWER_CHOICE_TIMING_REGISTRY,type SyntheticClinicalCase} from "@gamify-surgery/clinical-content";
+import {
+  PROTOTYPE_DOMAIN_CONTEXT as actualPrototype,
+  createPatientDisplayName,
+  deterministicInteger,
+  RANDOM_STREAMS,
+  getAnswerChoiceServicePreview,
+  getCurrentCapabilities,
+  getCurrentQuestion,
+  selectRoutineClinicalCase,
+  serializeGameState,
+  type ConceptReviewEvidence,
+  type GameState
+} from "../src";
+
+const SYNTHETIC_CLINICAL_RELEASE=beforeProgramBatch3AcceptanceRelease(actualRelease);
+const {context:PROTOTYPE_DOMAIN_CONTEXT,createInitialGameState,gameReducer,deserializeGameState}=createClinicalAuthorStage(SYNTHETIC_CLINICAL_RELEASE);
 import {EXACT_TEST_CHOICE_ORDER_RECORDS} from "../src/test-choice-orders";
 const cases = authoredCases.map(original => SYNTHETIC_CLINICAL_RELEASE.cases.find(candidate => candidate.id === original.id)! as typeof original);
 const timings = ANSWER_CHOICE_TIMING_REGISTRY.filter(t => cases.some(c => c.id === t.caseId && c.decisionNodes.some(n => n.id === t.nodeId && n.questionVariantId === t.questionVariantId)));

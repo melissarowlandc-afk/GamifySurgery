@@ -1,3 +1,4 @@
+import {beforeProgramBatch3AcceptanceRelease} from "../../clinical-content/src/question-program-batch3-acceptance-test-support";
 import { describe, expect, it } from "vitest";
 import { VARIETY3_ADULT_CONTEXTS as adults, VARIETY3_CASES as cases,
   VARIETY3_TESTED_CONCEPTS as concepts, VARIETY3_TIMING_ENTRIES as timings,
@@ -11,6 +12,7 @@ import { applyFsrsReview, createInitialGameState, createNewFsrsCard, deserialize
 import { EXACT_TEST_CHOICE_ORDER_RECORDS, getExactTestChoiceOrderRecord } from "../src/test-choice-orders";
 
 const context = createLevelFourRoomsQaContext();
+context.clinicalRelease=beforeProgramBatch3AcceptanceRelease(context.clinicalRelease);
 const NOW = 1_800_000_000_000;
 const onlyCases = (selected: SyntheticClinicalCase[]): DomainContext => ({ ...context,
   clinicalRelease: { ...context.clinicalRelease, cases: selected } });

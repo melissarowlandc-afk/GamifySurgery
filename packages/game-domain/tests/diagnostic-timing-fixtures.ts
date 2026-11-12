@@ -1,8 +1,10 @@
+import {beforeProgramBatch3AcceptanceRelease} from "../../clinical-content/src/question-program-batch3-acceptance-test-support";
 import { createInitialGameState, PROTOTYPE_DOMAIN_CONTEXT } from "../src";
 import type { DiagnosticOrderPlan, DomainContext, EmployeeState, GameState, PendingResult, PlacedRoom, ServiceOperationState } from "../src";
 
 export function timingFixture() {
   const context = JSON.parse(JSON.stringify(PROTOTYPE_DOMAIN_CONTEXT)) as DomainContext;
+  context.clinicalRelease=beforeProgramBatch3AcceptanceRelease(context.clinicalRelease);
   context.balanceRelease.facility.gridWidth = 80;
   context.balanceRelease.facility.gridHeight = 80;
   // Small open rooms make travel/queue assertions independent of artwork masks.

@@ -1,3 +1,4 @@
+import {beforeProgramBatch3AcceptanceRelease} from "./question-program-batch3-acceptance-test-support";
 import {beforeFlags3AcceptanceManifest} from "./question-flags3-acceptance-test-support";
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
@@ -7,7 +8,7 @@ import {
   QUESTION_BANK_BATCH2B_REVISIONS,
   QUESTION_BANK_BATCH2B_ROUND2_REVISIONS,
   QUESTION_BANK_BATCH2B_ROUND2_SOURCE_RELEASE as source,
-  SYNTHETIC_CLINICAL_RELEASE as live,
+  SYNTHETIC_CLINICAL_RELEASE as actualLive,
 } from "./index";
 import { QUESTION_SHIP_MANIFEST as manifest, type QuestionShipManifest } from "./question-ship-manifest";
 import { QUESTION_FLAGS2_ROUND3_SOURCE_RELEASE as acceptedFlags2 } from "./question-flags2-round3-20261105";
@@ -39,6 +40,8 @@ const ownRows = manifest.accepted.filter(row => row.sourceView === "batch2b-roun
 const saved = (value: unknown): string | undefined => JSON.stringify(value);
 const nodeFor = (release: typeof live, caseId: string, nodeId: string) =>
   release.cases.find(cs => cs.id === caseId)!.decisionNodes.find(node => node.id === nodeId)!;
+
+const live=beforeProgramBatch3AcceptanceRelease(actualLive);
 
 describe("batch 2b manager-directed exact-version acceptance", () => {
   it("accepts exactly the sixteen unconditional PASS tuples and their reviewed headers", () => {

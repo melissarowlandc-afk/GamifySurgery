@@ -1,3 +1,9 @@
+import { beforeProgramBatch3AcceptanceRelease } from "../../../../packages/clinical-content/src/question-program-batch3-acceptance-test-support";
+
+// Historical chart fixtures freeze the hash-verified pre-batch3 release.
+// Following commands and view projections still use the current runtime.
+const historicalTopicContext = { ...PROTOTYPE_DOMAIN_CONTEXT,
+  clinicalRelease: beforeProgramBatch3AcceptanceRelease(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease) };
 import { describe, expect, it } from "vitest";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
@@ -19,7 +25,7 @@ function actionable(caseId: string) {
   state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
   const encounter = structuredClone(Object.values(state.encounters)[0]!);
   encounter.id = "encounter.timing.presentation";
-  encounter.frozenCase = structuredClone(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find((entry) => entry.id === caseId)!);
+  encounter.frozenCase = structuredClone(historicalTopicContext.clinicalRelease.cases.find((entry) => entry.id === caseId)!);
   encounter.arrivalClass = "routine"; encounter.checkInStatus = "checked_in";
   encounter.lifecycle = "active_action_required"; encounter.currentNodeIndex = 0;
   encounter.patientMovement = null; encounter.patientLocation = { ...state.environment.founderLocation };

@@ -1,17 +1,20 @@
-import { BREAD_BUTTER_20260917_CASES as authoredCases, SYNTHETIC_CLINICAL_RELEASE } from "@gamify-surgery/clinical-content";
+import {beforeProgramBatch3AcceptanceRelease} from "../../clinical-content/src/question-program-batch3-acceptance-test-support";
+import {createClinicalAuthorStage} from "../../../tests/fixtures/clinical-author-stage";
+import { BREAD_BUTTER_20260917_CASES as authoredCases, SYNTHETIC_CLINICAL_RELEASE as actualRelease } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
 import {
-  createInitialGameState,
-  deserializeGameState,
-  gameReducer,
   getCurrentQuestion,
   getEligibleServiceRoute,
   serializeGameState,
   type GameState,
+  PROTOTYPE_DOMAIN_CONTEXT as actualPrototype
 } from "../src";
 
-// These tests admit fresh cases. New scored versions must be checked against
-// their current concept, while the original export remains for frozen saves.
+const SYNTHETIC_CLINICAL_RELEASE=beforeProgramBatch3AcceptanceRelease(actualRelease);
+const {context:PROTOTYPE_DOMAIN_CONTEXT,createInitialGameState,gameReducer,deserializeGameState}=createClinicalAuthorStage(SYNTHETIC_CLINICAL_RELEASE);
+
+// Historical batch flows use the exact verified pre-topic source. New default
+// admission and retired saves are covered by the batch3 acceptance suite.
 const BREAD_BUTTER_20260917_CASES = authoredCases.map(c => {
   const current = SYNTHETIC_CLINICAL_RELEASE.cases.find(current => current.id === c.id)!;
   if (current.earliestFacilityStage !== c.earliestFacilityStage) throw new Error(`Changed facility stage: ${c.id}`);

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  PROTOTYPE_DOMAIN_CONTEXT, TUTORIAL_ENCOUNTER_ID, createInitialGameState, deserializeGameState, gameReducer, getDisplayedClinicSatisfaction, getEmployeeTrainingQuote, getFacilityProgressionStatus, getRoomSalePreview,
+  PROTOTYPE_DOMAIN_CONTEXT, TUTORIAL_ENCOUNTER_ID, createInitialGameState, deserializeGameState, gameReducer, getClinicSatisfaction, getDisplayedClinicSatisfaction, getEmployeeTrainingQuote, getFacilityProgressionStatus, getRoomSalePreview,
   serializeGameState, type DomainContext, type GameState,
 } from "../src";
 import { createLevelFourAlmostQaState, createLevelThreeReadyQaState } from "../../../tests/fixtures/level-four-progression";
@@ -84,14 +84,15 @@ describe("Level 4 launch progression and old saves", () => {
     expect(getFacilityProgressionStatus(training).requirements.find(row => row.id === "progression.staff.staff.app")?.met).toBe(true);
   });
 
-  it("uses strict displayed satisfaction and current-level XP", () => {
+  it("uses strict recent patient satisfaction and current-level XP", () => {
     const state = createLevelFourAlmostQaState();
     state.clinicalXp = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.stageDefinitions.find(stage => stage.level === 4)!.minimumClinicalXp - 1;
     const ended = createInitialGameState().encounters[TUTORIAL_ENCOUNTER_ID]!;
     ended.lifecycle = "resolved"; ended.resolutionReason = "completed"; ended.resolvedAtFacilityTick = 0;
-    ended.finalPatientSatisfaction = 90 + 100 - getDisplayedClinicSatisfaction(state);
+    ended.finalPatientSatisfaction = 90;
     state.encounters = { [ended.id]: ended };
-    expect(getDisplayedClinicSatisfaction(state)).toBe(90);
+    expect(getClinicSatisfaction(state)).toBe(90);
+    expect(getDisplayedClinicSatisfaction(state)).toBeLessThanOrEqual(90);
     expect(getFacilityProgressionStatus(state).requirements.slice(0, 2).every(row => !row.met)).toBe(true);
   });
 

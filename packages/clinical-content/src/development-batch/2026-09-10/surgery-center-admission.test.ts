@@ -1,5 +1,6 @@
+import {beforeProgramBatch3AcceptanceRelease} from "../../question-program-batch3-acceptance-test-support";
 import { describe, expect, it } from "vitest";
-import { SYNTHETIC_CLINICAL_RELEASE } from "../../synthetic-content";
+import { SYNTHETIC_CLINICAL_RELEASE as actualLive } from "../../synthetic-content";
 import {
   SURGERY_CENTER_BATCH_MANIFEST,
   SURGERY_CENTER_CASES,
@@ -27,6 +28,8 @@ const RECEIPT_PATHS = [
   "packages/clinical-content/src/development-batch/2026-09-10/pilonidal-disease.ts",
   "packages/clinical-content/src/development-batch/2026-09-10/surgery-center-batch.ts",
 ] as const;
+
+const SYNTHETIC_CLINICAL_RELEASE=beforeProgramBatch3AcceptanceRelease(actualLive);
 
 describe("September 10 surgery-center batch admission", () => {
   it("admits the complete unapproved batch exactly once with its authored boundaries", () => {

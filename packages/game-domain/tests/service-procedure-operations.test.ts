@@ -1,13 +1,12 @@
+import {beforeProgramBatch3AcceptanceRelease} from "../../clinical-content/src/question-program-batch3-acceptance-test-support";
+import {createClinicalAuthorStage} from "../../../tests/fixtures/clinical-author-stage";
 import { describe, expect, it } from "vitest";
 import {QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE, QUESTION_BANK_PRE_BATCH2B_RELEASE, QUESTION_NEW_N2_ROUND2_PRE_RELEASE} from "@gamify-surgery/clinical-content";
 import {
-  PROTOTYPE_DOMAIN_CONTEXT,
+  PROTOTYPE_DOMAIN_CONTEXT as actualPrototype,
   advanceServiceOperations,
-  createInitialGameState,
-  deserializeGameState,
   encounterHasActiveServiceOperation,
   findDeterministicRoomPath,
-  gameReducer,
   getCurrentQuestion,
   getCurrentCapabilities,
   getAnswerChoiceServicePreview,
@@ -24,9 +23,13 @@ import {
   startEncounterProcedureOperation,
   startServiceOperation,
   type GameState,
+  
 } from "../src";
 
 let sequence = 0;
+
+// Original gated/procedural contracts use the verified retained source epoch.
+const {context:PROTOTYPE_DOMAIN_CONTEXT,createInitialGameState,gameReducer,deserializeGameState}=createClinicalAuthorStage(beforeProgramBatch3AcceptanceRelease(actualPrototype.clinicalRelease));
 
 function minorProcedureState(): GameState {
   const state = createInitialGameState(undefined, {

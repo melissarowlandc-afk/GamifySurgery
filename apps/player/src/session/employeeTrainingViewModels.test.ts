@@ -1,3 +1,10 @@
+import { beforeProgramBatch3AcceptanceRelease } from "../../../../packages/clinical-content/src/question-program-batch3-acceptance-test-support";
+import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
+
+// Historical chart fixtures freeze the hash-verified pre-batch3 release.
+// Following commands and view projections still use the current runtime.
+const historicalTopicContext = { ...PROTOTYPE_DOMAIN_CONTEXT,
+  clinicalRelease: beforeProgramBatch3AcceptanceRelease(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease) };
 import { describe, expect, it } from "vitest";
 import {
   createInitialGameState,
@@ -203,7 +210,7 @@ describe("employee training presentation", () => {
     state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
     state = gameReducer(state, { type: "ADMIT_PATIENT", operationId: "training-eta.admit",
       encounterId: "encounter.training-eta", caseId: "case.iron-deficiency.adult-man-fatigue",
-      patientDisplayName: "Timing Test", arrivalClass: "routine" });
+      patientDisplayName: "Timing Test", arrivalClass: "routine" }, historicalTopicContext);
     expect(state.operationReceipts["training-eta.admit"]?.status).toBe("applied");
     let encounter = state.encounters["encounter.training-eta"]!;
     encounter.lifecycle = "active_action_required";

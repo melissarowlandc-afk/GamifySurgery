@@ -49,7 +49,10 @@ describe("M6 phone Goals chip and sheet through the shared session", () => {
     expect(env.session.state.levelFive!.inspection.status).toBe("locked");
     expect(Object.values(env.session.state.operationReceipts).filter(receipt => receipt.commandType === "LEVEL_UP" && receipt.status === "applied")).toHaveLength(1);
     if (surface === "chip") {
-      expect(env.advance).toHaveBeenCalledOnce(); await env.click("Goals 1/3");
+      expect(env.advance).toHaveBeenCalledOnce();
+      expect(createPrototypePlayerView(env.session.state, null, false, null).progression.goals.map(goal => goal.complete))
+        .toEqual([false, false, false]);
+      await env.click("Goals 0/3");
     }
     expect(env.element.textContent).toContain("Current-level Clinical XP");
     expect(env.element.textContent).toContain("0/2,300 XP");

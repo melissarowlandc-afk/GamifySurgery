@@ -20,27 +20,27 @@ const pageErrors = new WeakMap<Page, string[]>();
 const phonePages = new WeakSet<Page>();
 const ladders = {
   [ids.waiting]: {
-    name: "Waiting Room A", prices: [110, 170, 250, 360],
+    name: "Waiting Room A", prices: [110, 170, 300, 505],
     benefit: "+2 satisfaction points for waiting patients",
     totals: ["Baseline", "+2 points", "+4 points", "+6 points", "+8 points"],
   },
   [ids.examination]: {
-    name: "Examination Room", prices: [90, 140, 210, 300],
+    name: "Examination Room", prices: [90, 140, 250, 420],
     benefit: "+2 satisfaction points after examination",
     totals: ["Baseline", "+2 points", "+4 points", "+6 points", "+8 points"],
   },
   [ids.reading]: {
-    name: "Radiology Reading Room", prices: [450, 675, 990, 1350],
+    name: "Radiology Reading Room", prices: [450, 675, 1190, 1890],
     benefit: "Scan reading takes 10% less time",
     totals: ["Baseline", "10% less time", "20% less time", "30% less time", "40% less time"],
   },
   [ids.training]: {
-    name: "Training Room", prices: [165, 245, 360, 490],
+    name: "Training Room", prices: [165, 245, 430, 685],
     benefit: "Training sessions take 10% less time",
     totals: ["Baseline", "10% less time", "20% less time", "30% less time", "40% less time"],
   },
   [ids.revenue]: {
-    name: "Ultrasound Room", prices: [240, 360, 525, 715],
+    name: "Ultrasound Room", prices: [240, 360, 630, 1000],
     benefit: "+6% ultrasound service revenue",
     totals: ["Baseline", "+6%", "+12%", "+18%", "+24%"],
   },
@@ -416,7 +416,7 @@ test("satisfaction upgrades use ordinary list/menu controls, refund Undo and pre
   for (let index = 0; index < 4; index++) await purchase(page, baseline, ids.waiting, index, "menu");
   await closeRoomMenu(page);
   for (let index = 0; index < 4; index++) await purchase(page, baseline, ids.examination, index, "row");
-  const finalCash = initialCash - (890 + 740) * 100;
+  const finalCash = initialCash - (1085 + 900) * 100;
   expect((await readState(page)).cashCents).toBe(finalCash);
   await exitBuild(page);
   await captureRoom(page, info, ids.waiting, "waiting-after");
@@ -464,7 +464,7 @@ test("Reading, training and revenue purchases preserve old work and new chart or
   for (const roomId of [ids.training, ids.revenue] as const) {
     for (let index = 0; index < 4; index++) await purchase(page, baseline, roomId, index, "row");
   }
-  const finalCash = originalCash - (3465 + 1260 + 1840) * 100;
+  const finalCash = originalCash - (4205 + 1525 + 2230) * 100;
   expect((await readState(page)).cashCents).toBe(finalCash);
   await exitBuild(page);
   await expectFourReaderPosts(page, baseline);

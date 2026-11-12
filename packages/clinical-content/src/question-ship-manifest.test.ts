@@ -1,3 +1,4 @@
+import {QUESTION_PROGRAM_BATCH3_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch3Concepts} from "./question-program-batch3-accepted-20261111";
 import {QUESTION_PROGRAM_BATCH2_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch2Concepts} from "./question-program-batch2-accepted-20261111";
 import {QUESTION_PROGRAM_BATCH1_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch1Concepts} from "./question-program-batch1-accepted-20261111";
 import {QUESTION_N4_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionN4Concepts} from "./question-n4-accepted-20261110";
@@ -26,8 +27,9 @@ import { withAcceptedQuestionNewN3Round2Concepts } from "./question-new-n3-round
 // unaccepted draft meanings are not added merely for this validation fixture.
 const n3Catalog = withAcceptedQuestionNewN3Round2Concepts(completeCatalog,authoringCatalog.concepts);
 const priorCatalog = withAcceptedQuestionFlags3Concepts(withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionStats1Concepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(n3Catalog)))));
-const catalog = withAcceptedQuestionProgramBatch2Concepts(withAcceptedQuestionProgramBatch1Concepts(withAcceptedQuestionN4Concepts(withAcceptedHarden1N3r4Concepts(priorCatalog))));
-const views = {...QUESTION_PROGRAM_BATCH2_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH1_ACCEPTED_SOURCE_VIEWS,...QUESTION_N4_ACCEPTED_SOURCE_VIEWS, "harden1-round1":harden1,"n3-round4":n3r4, "flags4-accepted":flags4,"stats1-accepted":stats1,"flags3-accepted":flags3, legacy, "flags-round3": flags, "batch2a-round3": batch2a, "n1-round3": n1, "n2-round2": n2, "batch2b-round2": batch2b, "flags2-round1": flags2, "flags2-round3":flags2round3, "n3-round3":n3 };
+const batch2Catalog = withAcceptedQuestionProgramBatch2Concepts(withAcceptedQuestionProgramBatch1Concepts(withAcceptedQuestionN4Concepts(withAcceptedHarden1N3r4Concepts(priorCatalog))));
+const catalog=withAcceptedQuestionProgramBatch3Concepts(batch2Catalog);
+const views = {...QUESTION_PROGRAM_BATCH3_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH2_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH1_ACCEPTED_SOURCE_VIEWS,...QUESTION_N4_ACCEPTED_SOURCE_VIEWS, "harden1-round1":harden1,"n3-round4":n3r4, "flags4-accepted":flags4,"stats1-accepted":stats1,"flags3-accepted":flags3, legacy, "flags-round3": flags, "batch2a-round3": batch2a, "n1-round3": n1, "n2-round2": n2, "batch2b-round2": batch2b, "flags2-round1": flags2, "flags2-round3":flags2round3, "n3-round3":n3 };
 const readReview = (name: string) => JSON.parse(readFileSync(new URL("../../../docs/research/" + name, import.meta.url), "utf8")) as Array<{id: string; verdict: string}>;
 
 describe("projection-only manager shipping manifest", () => {
@@ -37,7 +39,7 @@ describe("projection-only manager shipping manifest", () => {
   // Separate exact-version tests pin the sixteen 2b rows and the single G06
   // row; every earlier lane retains its exact acceptance checks below.
   expect(beforeFlags3AcceptanceManifest(manifest).accepted.filter(row => !["batch2b-round2", "flags2-round1", "flags2-round3", "n3-round3"].includes(row.sourceView))).toHaveLength(45);
-  expect(live.cases).toHaveLength(1174);
+  expect(live.cases).toHaveLength(1250);
   expect(catalog.cases).toHaveLength(1229);
  });
  it("ships exactly twelve N1 review-three acceptances and parks all twenty-eight returned drafts", () => {
@@ -82,7 +84,8 @@ describe("projection-only manager shipping manifest", () => {
   expect(manifest.accepted.filter(row => /^F\d\d$/.test(row.acceptanceId)).map(row => row.acceptanceId).sort()).toEqual(["F01","F03","F05","F09","F10","F11","F12","F15","F17"]);
   expect(beforeFlags3AcceptanceManifest(manifest).accepted.filter(row => /^B2A/.test(row.acceptanceId)).map(row => row.acceptanceId).sort()).toEqual(["B2A01","B2A02","B2A04","B2A05","B2A06","B2A07","B2A08","B2A09","B2A10","B2A11"]);
   for (const row of manifest.accepted) {
-   const replacement=manifest.replacements.find(r=>r.replaces===row.caseId);
+   const replacement=manifest.replacements.find(r=>r.replaces===row.caseId) ??
+     manifest.topicConsolidations.find(r=>r.replaces.includes(row.caseId));
    if(replacement&&manifest.accepted.find(r=>r.questionVariantId===replacement.with)!.caseId!==row.caseId){
     const accepted=manifest.accepted.find(r=>r.questionVariantId===replacement.with)!;
     expect(live.cases.some(cs=>cs.id===row.caseId)).toBe(false);

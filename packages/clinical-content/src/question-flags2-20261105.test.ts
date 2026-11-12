@@ -1,4 +1,5 @@
 import {createHash} from "node:crypto";
+import {beforeProgramBatch3AcceptanceSource} from "./question-program-batch3-acceptance-test-support";
 import {readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
 import {
@@ -107,7 +108,8 @@ describe("owner flags2 retained candidates",()=>{
     const b2b=read("docs/research/question-bank-batch2b-round2-20261104.json") as {id:string;after:{variantId:string}}[];
     expect(b2b.find(p=>p.id==="B2B36")!.after.variantId).toBe("question.palpable-breast.negative-mammogram-targeted-us.v1.r2");
     for(const[path,hash]of Object.entries(capture.files).filter(([p])=>/question-bank-batch2b/.test(p))){
-      expect(createHash("sha256").update(readFileSync(new URL("../../../"+path,import.meta.url))).digest("hex"),path).toBe(hash);
+      const current=readFileSync(new URL("../../../"+path,import.meta.url),"utf8");
+      expect(createHash("sha256").update(beforeProgramBatch3AcceptanceSource(path,current)).digest("hex"),path).toBe(hash);
     }
   });
 

@@ -1,3 +1,4 @@
+import {beforeProgramBatch3AcceptanceRelease} from "./question-program-batch3-acceptance-test-support";
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
@@ -12,12 +13,14 @@ import {
   ANSWER_CHOICE_TIMING_REGISTRY,
   applyQuestionBankBatch2bRound2Revisions,
   QUESTION_QUALITY_CLINICAL_APPROVALS,
-  SYNTHETIC_CLINICAL_RELEASE as live,
+  SYNTHETIC_CLINICAL_RELEASE as actualLive,
 } from "./index";
 import { syntheticClinicalReleaseSchema } from "./schema";
 import { QUESTION_SHIP_MANIFEST } from "./question-ship-manifest";
 const capture=JSON.parse(readFileSync(new URL("../../../tools/question-quality/fixtures/question-bank-batch2b-round2-before-20261104.json",import.meta.url),"utf8")) as {files:Record<string,string>;approvals:unknown;packet:Array<{id:string;caseId:string;nodeId:string}>};
 const clone=<T>(v:T):T=>JSON.parse(JSON.stringify(v)) as T;
+
+const live=beforeProgramBatch3AcceptanceRelease(actualLive);
 
 describe("batch 2b round-two candidate safety and compatibility",()=>{
   it("changes only the thirty-eight returned/omitted nodes in thirty-seven retained cases",()=>{

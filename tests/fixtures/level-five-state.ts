@@ -1,7 +1,7 @@
 import { PROTOTYPE_BALANCE_RELEASE, prototypeBalanceReleaseSchema } from "@gamify-surgery/balance-config";
 import {
   PROTOTYPE_DOMAIN_CONTEXT, createInspectionAccumulators, createLevelFiveState, gameReducer,
-  getDisplayedClinicSatisfaction, getRoomStaffCapacity, INSPECTION_CATEGORY_WEIGHTS,
+  getClinicSatisfaction, getDisplayedClinicSatisfaction, getRoomStaffCapacity, INSPECTION_CATEGORY_WEIGHTS,
   validateDomainContext, type DomainContext, type ExecutiveEffectQuote, type GameCommand,
   type GameState, type InspectionReportState, type InspectionRunState, type InspectorStillId,
 } from "@gamify-surgery/game-domain";
@@ -10,7 +10,7 @@ import { placeLevelFiveRoomsQaRooms } from "./level-five-rooms";
 import { prepareLevelFiveExecutiveQaState, LEVEL_FIVE_EXECUTIVE_QA_PREFIX } from "./level-five-executive";
 import { prepareLevelFiveSupportQaState, LEVEL_FIVE_SUPPORT_QA_CAMPAIGN_ID } from "./level-five-support";
 import { prepareLevelFiveGiftQaState, LEVEL_FIVE_GIFT_QA_PREFIX } from "./level-five-gift-retail";
-import { createLevelFourReadyForFiveQaState, prepareLevelFiveProgressionQaState,
+import { createLevelFourReadyForFiveQaState, prepareLevelFiveProgressionQaState, setLevelFiveQaCompletedEncounters,
   LEVEL_FIVE_PROGRESSION_QA_PREFIX, LEVEL_FIVE_PROGRESSION_QA_SCENARIOS, type LevelFiveProgressionQaScenario } from "./level-five-progression";
 import { createLevelFiveInspectionQaState, LEVEL_FIVE_INSPECTION_QA_PREFIX, LEVEL_FIVE_INSPECTION_QA_SCENARIOS, type LevelFiveInspectionQaScenario } from "./level-five-inspection";
 import { createLevelFiveInspectorsQaState, LEVEL_FIVE_INSPECTORS_QA_PREFIX, LEVEL_FIVE_INSPECTORS_QA_SCENARIOS, type LevelFiveInspectorsQaScenario } from "./level-five-inspectors";
@@ -140,6 +140,16 @@ export function createLevelFiveStateQaState(scenario: LevelFiveQaScenario = "pre
   state.campaignId = levelFiveQaCampaignId(scenario);
   state.campaignSeed = `level-five-state-m1.${scenario}`;
   state.facilityTick = 100;
+  // Synthetic mature-clinic history for eligibility/inspection previews. The
+  // native pacing driver earns every encounter through its own reducer play.
+  const minimumCompleted = context.balanceRelease.facility.stageDefinitions.find(stage => stage.level === 5)!.minimumCompletedEncounters;
+  setLevelFiveQaCompletedEncounters(state, minimumCompleted);
+  if (minimumCompleted > 0 && getClinicSatisfaction(state, context) === null) {
+    state.retiredEncounterSummary!.recentEndedSatisfaction = [{
+      id: "retired.qa.level-five.patient-rating", resolvedAtFacilityTick: state.facilityTick,
+      finalPatientSatisfaction: 100, resolutionReason: "completed",
+    }];
+  }
   const minimumXp = context.balanceRelease.facility.stageDefinitions.find(stage => stage.level === 5)!.minimumClinicalXp;
   state.clinicalXp = scenario === "pre-goal" || scenario === "rooms" || scenario === "support" || scenario.startsWith("executive") || scenario.startsWith("gift") ? minimumXp - 1 : minimumXp;
   const foundation = state.levelFive!;

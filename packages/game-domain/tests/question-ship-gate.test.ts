@@ -71,7 +71,8 @@ describe("default release projection and explicit catalog runtime behavior",()=>
  });
  it.each(QUESTION_SHIP_MANIFEST.accepted.filter(r=>!r.acceptanceId.startsWith("review.n")).map(r=>[r.acceptanceId,r]as const))
  ("selects manager-accepted rewrite %s with its full accepted/fallback case",(_id,row)=>{
-  const relation=QUESTION_SHIP_MANIFEST.replacements.find(r=>r.replaces===row.caseId);
+  const relation=QUESTION_SHIP_MANIFEST.replacements.find(r=>r.replaces===row.caseId) ??
+    QUESTION_SHIP_MANIFEST.topicConsolidations.find(r=>r.replaces.includes(row.caseId));
   const replacementRow=relation?QUESTION_SHIP_MANIFEST.accepted.find(r=>r.questionVariantId===relation.with)!:null;
   const effectiveRow=replacementRow&&replacementRow.caseId!==row.caseId?replacementRow:row;
   if(replacementRow&&replacementRow.caseId!==row.caseId)expect(SYNTHETIC_CLINICAL_RELEASE.cases.some(c=>c.id===row.caseId)).toBe(false);

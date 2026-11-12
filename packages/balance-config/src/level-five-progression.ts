@@ -6,7 +6,9 @@ export const LEVEL_FIVE_STAGE_DEFINITION = facilityStageDefinitionSchema.parse({
   displayName: "Level 5 - Optimized ASC / Prestige",
   // Editorial campaign pacing; existing inspection unlocks remain earned.
   minimumClinicalXp: 2300,
-  minimumCompletedEncounters: 0,
+  // Editorial clinic-volume requirement for an established satisfaction record.
+  // Completed encounters advance once regardless of their scored-node count.
+  minimumCompletedEncounters: 330,
   satisfactionMustBeGreaterThan: 90,
   minimumAverageStaffMorale: 85,
   requiredRoomDefinitionIds: [],

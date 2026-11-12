@@ -9,7 +9,7 @@
       "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
       "mainBeforeSha256": "8c488117164c0ec32709c19b093c42d2e5de7ff5a93d2e27eb05068f4ed15b30",
       "mainAfterSha256": "59413788d5d5421d12b79a44107bd56d60a86638aecc5d9183452cf8e52cc2a0",
-      "requiredReleaseSha256": "4d305d5438eca4a0de11c956041b4f9d0fb5074876462ec54e65fa3fffda2250",
+      "requiredReleaseSha256": "c09bf33f765c406163c7a81364b046eddce936ad3e80e03666b319e4827b7445",
       "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
     },
     {
@@ -380,6 +380,146 @@
           "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
           "beforeSha256": "1fb59b15661874492f1a49ea672fb40055937d983106ed1f915d6d86d587f089",
           "afterSha256": "4d305d5438eca4a0de11c956041b4f9d0fb5074876462ec54e65fa3fffda2250"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-11",
+      "milestone": "release-port33-port",
+      "priorFixtureSha256": "1db338adb155246bf20425d78d5dcdb257cfb6ad51f49a606a0f5282b7e3b607",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+          "mainBeforeSha256": "8c488117164c0ec32709c19b093c42d2e5de7ff5a93d2e27eb05068f4ed15b30",
+          "mainAfterSha256": "59413788d5d5421d12b79a44107bd56d60a86638aecc5d9183452cf8e52cc2a0",
+          "requiredReleaseSha256": "4d305d5438eca4a0de11c956041b4f9d0fb5074876462ec54e65fa3fffda2250",
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        },
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-test-support.ts",
+          "mainBeforeSha256": "673eb53ba621031555ccbc55e9e930764e43db51482d633ddcd4954c9aceafdd",
+          "mainAfterSha256": "0a2b2370e96d2ac3c28941499fc6188ad1a4cefb73c81d7a229906e70cb7596a",
+          "requiredReleaseSha256": "b11276425ea732828209d2461c5134671c7d2f6fc2f19cdf31189888369fb284",
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        },
+        {
+          "path": "packages/clinical-content/src/question-harden1-round2-20261110.test.ts",
+          "mainBeforeSha256": "c1be8bbc9bdea0032493d9df3a0c830cc5dec1f3f63929e72dd1f67abad46e9e",
+          "mainAfterSha256": "b4ba37830da65ffc95c9e24b5104ef2e55af1ddb2ab1c9eb7a3d958e3d1bcec7",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+          "beforeSha256": "4d305d5438eca4a0de11c956041b4f9d0fb5074876462ec54e65fa3fffda2250",
+          "afterSha256": "1eb71560150ce5d39fbb16d24c4ddcec3bc9d3915869f2a13d7eec44bbeb2080"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-11",
+      "milestone": "release-port33-evidence",
+      "priorFixtureSha256": "552d07f580f901fde0a8716e9a88b7d95dac61d4969c6ac6f40dbc0912b5eba8",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+          "mainBeforeSha256": "8c488117164c0ec32709c19b093c42d2e5de7ff5a93d2e27eb05068f4ed15b30",
+          "mainAfterSha256": "59413788d5d5421d12b79a44107bd56d60a86638aecc5d9183452cf8e52cc2a0",
+          "requiredReleaseSha256": "1eb71560150ce5d39fbb16d24c4ddcec3bc9d3915869f2a13d7eec44bbeb2080",
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        },
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-test-support.ts",
+          "mainBeforeSha256": "673eb53ba621031555ccbc55e9e930764e43db51482d633ddcd4954c9aceafdd",
+          "mainAfterSha256": "0a2b2370e96d2ac3c28941499fc6188ad1a4cefb73c81d7a229906e70cb7596a",
+          "requiredReleaseSha256": "b11276425ea732828209d2461c5134671c7d2f6fc2f19cdf31189888369fb284",
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        },
+        {
+          "path": "packages/clinical-content/src/question-harden1-round2-20261110.test.ts",
+          "mainBeforeSha256": "c1be8bbc9bdea0032493d9df3a0c830cc5dec1f3f63929e72dd1f67abad46e9e",
+          "mainAfterSha256": "b4ba37830da65ffc95c9e24b5104ef2e55af1ddb2ab1c9eb7a3d958e3d1bcec7",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+          "beforeSha256": "1eb71560150ce5d39fbb16d24c4ddcec3bc9d3915869f2a13d7eec44bbeb2080",
+          "afterSha256": "97651caf69c50e9960278df44f5f8406237fb3a0ec1185102f8a18d6bf048bd4"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-11",
+      "milestone": "release-port33-closure",
+      "priorFixtureSha256": "e02515b677ff224ce6d9bbd72e93f965a84b2384fb96d582ecfae14455e97c04",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+          "mainBeforeSha256": "8c488117164c0ec32709c19b093c42d2e5de7ff5a93d2e27eb05068f4ed15b30",
+          "mainAfterSha256": "59413788d5d5421d12b79a44107bd56d60a86638aecc5d9183452cf8e52cc2a0",
+          "requiredReleaseSha256": "97651caf69c50e9960278df44f5f8406237fb3a0ec1185102f8a18d6bf048bd4",
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        },
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-test-support.ts",
+          "mainBeforeSha256": "673eb53ba621031555ccbc55e9e930764e43db51482d633ddcd4954c9aceafdd",
+          "mainAfterSha256": "0a2b2370e96d2ac3c28941499fc6188ad1a4cefb73c81d7a229906e70cb7596a",
+          "requiredReleaseSha256": "b11276425ea732828209d2461c5134671c7d2f6fc2f19cdf31189888369fb284",
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        },
+        {
+          "path": "packages/clinical-content/src/question-harden1-round2-20261110.test.ts",
+          "mainBeforeSha256": "c1be8bbc9bdea0032493d9df3a0c830cc5dec1f3f63929e72dd1f67abad46e9e",
+          "mainAfterSha256": "b4ba37830da65ffc95c9e24b5104ef2e55af1ddb2ab1c9eb7a3d958e3d1bcec7",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+          "beforeSha256": "97651caf69c50e9960278df44f5f8406237fb3a0ec1185102f8a18d6bf048bd4",
+          "afterSha256": "1e01dc450287dc9f6e0587629cb36a7f3c696c7cb23580167e213059c0369e4e"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-11",
+      "milestone": "release-port33-entry-size",
+      "priorFixtureSha256": "cc3d6038a8e4c6fc9283e9d6ff3000c30345286fa42ed14490a54948e4527636",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+          "mainBeforeSha256": "8c488117164c0ec32709c19b093c42d2e5de7ff5a93d2e27eb05068f4ed15b30",
+          "mainAfterSha256": "59413788d5d5421d12b79a44107bd56d60a86638aecc5d9183452cf8e52cc2a0",
+          "requiredReleaseSha256": "1e01dc450287dc9f6e0587629cb36a7f3c696c7cb23580167e213059c0369e4e",
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        },
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-test-support.ts",
+          "mainBeforeSha256": "673eb53ba621031555ccbc55e9e930764e43db51482d633ddcd4954c9aceafdd",
+          "mainAfterSha256": "0a2b2370e96d2ac3c28941499fc6188ad1a4cefb73c81d7a229906e70cb7596a",
+          "requiredReleaseSha256": "b11276425ea732828209d2461c5134671c7d2f6fc2f19cdf31189888369fb284",
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        },
+        {
+          "path": "packages/clinical-content/src/question-harden1-round2-20261110.test.ts",
+          "mainBeforeSha256": "c1be8bbc9bdea0032493d9df3a0c830cc5dec1f3f63929e72dd1f67abad46e9e",
+          "mainAfterSha256": "b4ba37830da65ffc95c9e24b5104ef2e55af1ddb2ab1c9eb7a3d958e3d1bcec7",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+          "beforeSha256": "1e01dc450287dc9f6e0587629cb36a7f3c696c7cb23580167e213059c0369e4e",
+          "afterSha256": "c09bf33f765c406163c7a81364b046eddce936ad3e80e03666b319e4827b7445"
         }
       ]
     }

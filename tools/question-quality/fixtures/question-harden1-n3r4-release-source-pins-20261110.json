@@ -6,21 +6,21 @@
       "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
       "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
       "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
-      "requiredReleaseSha256": "133f1d0c8b4857b52edcadfed66e8ee835986bf29b2fc6cb7393254ccdc5f17f",
+      "requiredReleaseSha256": "7ce710f5151ac98b60ef6046caa9597814ffbaa2c52e8f8fc39c61948d9f33a9",
       "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
     },
     {
       "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
       "mainBeforeSha256": "c06b05b6fd567362484b6a588be6047d2633684bc0386a9c0a7d2b6760d61863",
       "mainAfterSha256": "192d7f712c3fd848ab2fdc43a087c522963e1d9ea60ce6f33a34e5523384ce52",
-      "requiredReleaseSha256": "79c4db609242c2ae38fe9234d63e67a1d95710521ee95ffb988ae8a773a47dcd",
+      "requiredReleaseSha256": "14fba1263c1db0496650b614dc4c364874a9c43f2e8500f9631974e57f126d86",
       "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
     },
     {
       "path": "packages/game-domain/src/test-choice-orders.ts",
       "mainBeforeSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6",
       "mainAfterSha256": "573f4c6156d7c1819db74ad87e9a6413482a8a4e4f64d0563f3510f50e12a983",
-      "requiredReleaseSha256": "9b76d8b67b8e21f226addbdde7363aab6bb8bc1c3f6d2d7a8159b99a07b9a68f",
+      "requiredReleaseSha256": "2e1d068fab93c7d6e985954bcfcb274b99a4425b6e1d3b168fe4de20b5a1dff2",
       "reason": "Manager-accepted exact eight N4 future-planned diagnostic bindings; retain captured main preimage/postimage."
     }
   ],
@@ -499,6 +499,151 @@
           "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
           "beforeSha256": "af935114805c2b7685f6392ef86e56511e9c4c9c051033724ec228bf7741bb5a",
           "afterSha256": "133f1d0c8b4857b52edcadfed66e8ee835986bf29b2fc6cb7393254ccdc5f17f"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-11",
+      "milestone": "release-port33-port",
+      "priorFixtureSha256": "c0c179d36d67a7a797d89be668659462cd1d80c9d689702df2c4ea4d185aa6f7",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
+          "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
+          "requiredReleaseSha256": "133f1d0c8b4857b52edcadfed66e8ee835986bf29b2fc6cb7393254ccdc5f17f",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+          "mainBeforeSha256": "c06b05b6fd567362484b6a588be6047d2633684bc0386a9c0a7d2b6760d61863",
+          "mainAfterSha256": "192d7f712c3fd848ab2fdc43a087c522963e1d9ea60ce6f33a34e5523384ce52",
+          "requiredReleaseSha256": "79c4db609242c2ae38fe9234d63e67a1d95710521ee95ffb988ae8a773a47dcd",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6",
+          "mainAfterSha256": "573f4c6156d7c1819db74ad87e9a6413482a8a4e4f64d0563f3510f50e12a983",
+          "requiredReleaseSha256": "9b76d8b67b8e21f226addbdde7363aab6bb8bc1c3f6d2d7a8159b99a07b9a68f",
+          "reason": "Manager-accepted exact eight N4 future-planned diagnostic bindings; retain captured main preimage/postimage."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "beforeSha256": "133f1d0c8b4857b52edcadfed66e8ee835986bf29b2fc6cb7393254ccdc5f17f",
+          "afterSha256": "d223c7d18aa6f7862689ecdcc7ea32e318b38891b0759a58fd478824210328fc"
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "beforeSha256": "9b76d8b67b8e21f226addbdde7363aab6bb8bc1c3f6d2d7a8159b99a07b9a68f",
+          "afterSha256": "2e1d068fab93c7d6e985954bcfcb274b99a4425b6e1d3b168fe4de20b5a1dff2"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-11",
+      "milestone": "release-port33-evidence",
+      "priorFixtureSha256": "102ba6774e2a98f377b258ba2a31bb02cbc6628d5ff8c606e6f73fc38d1b9f7d",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
+          "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
+          "requiredReleaseSha256": "d223c7d18aa6f7862689ecdcc7ea32e318b38891b0759a58fd478824210328fc",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+          "mainBeforeSha256": "c06b05b6fd567362484b6a588be6047d2633684bc0386a9c0a7d2b6760d61863",
+          "mainAfterSha256": "192d7f712c3fd848ab2fdc43a087c522963e1d9ea60ce6f33a34e5523384ce52",
+          "requiredReleaseSha256": "79c4db609242c2ae38fe9234d63e67a1d95710521ee95ffb988ae8a773a47dcd",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6",
+          "mainAfterSha256": "573f4c6156d7c1819db74ad87e9a6413482a8a4e4f64d0563f3510f50e12a983",
+          "requiredReleaseSha256": "2e1d068fab93c7d6e985954bcfcb274b99a4425b6e1d3b168fe4de20b5a1dff2",
+          "reason": "Manager-accepted exact eight N4 future-planned diagnostic bindings; retain captured main preimage/postimage."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "beforeSha256": "d223c7d18aa6f7862689ecdcc7ea32e318b38891b0759a58fd478824210328fc",
+          "afterSha256": "cd92acb5729afc87a89de4c17533bdbcd778f32d65d78c5f32e96db4d0b3e585"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-11",
+      "milestone": "release-port33-closure",
+      "priorFixtureSha256": "22b293a66ab9349fc8923c573bde88c8393a9314b271edf2b75e5f81f5740b86",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
+          "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
+          "requiredReleaseSha256": "cd92acb5729afc87a89de4c17533bdbcd778f32d65d78c5f32e96db4d0b3e585",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+          "mainBeforeSha256": "c06b05b6fd567362484b6a588be6047d2633684bc0386a9c0a7d2b6760d61863",
+          "mainAfterSha256": "192d7f712c3fd848ab2fdc43a087c522963e1d9ea60ce6f33a34e5523384ce52",
+          "requiredReleaseSha256": "79c4db609242c2ae38fe9234d63e67a1d95710521ee95ffb988ae8a773a47dcd",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6",
+          "mainAfterSha256": "573f4c6156d7c1819db74ad87e9a6413482a8a4e4f64d0563f3510f50e12a983",
+          "requiredReleaseSha256": "2e1d068fab93c7d6e985954bcfcb274b99a4425b6e1d3b168fe4de20b5a1dff2",
+          "reason": "Manager-accepted exact eight N4 future-planned diagnostic bindings; retain captured main preimage/postimage."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+          "beforeSha256": "79c4db609242c2ae38fe9234d63e67a1d95710521ee95ffb988ae8a773a47dcd",
+          "afterSha256": "14fba1263c1db0496650b614dc4c364874a9c43f2e8500f9631974e57f126d86"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-11",
+      "milestone": "release-port33-entry-size",
+      "priorFixtureSha256": "91ce4351f0bdb7fdf33d26a185e2e2723d3a76612b6290fff9b1fea8ee8000bc",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
+          "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
+          "requiredReleaseSha256": "cd92acb5729afc87a89de4c17533bdbcd778f32d65d78c5f32e96db4d0b3e585",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+          "mainBeforeSha256": "c06b05b6fd567362484b6a588be6047d2633684bc0386a9c0a7d2b6760d61863",
+          "mainAfterSha256": "192d7f712c3fd848ab2fdc43a087c522963e1d9ea60ce6f33a34e5523384ce52",
+          "requiredReleaseSha256": "14fba1263c1db0496650b614dc4c364874a9c43f2e8500f9631974e57f126d86",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6",
+          "mainAfterSha256": "573f4c6156d7c1819db74ad87e9a6413482a8a4e4f64d0563f3510f50e12a983",
+          "requiredReleaseSha256": "2e1d068fab93c7d6e985954bcfcb274b99a4425b6e1d3b168fe4de20b5a1dff2",
+          "reason": "Manager-accepted exact eight N4 future-planned diagnostic bindings; retain captured main preimage/postimage."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "beforeSha256": "cd92acb5729afc87a89de4c17533bdbcd778f32d65d78c5f32e96db4d0b3e585",
+          "afterSha256": "7ce710f5151ac98b60ef6046caa9597814ffbaa2c52e8f8fc39c61948d9f33a9"
         }
       ]
     }

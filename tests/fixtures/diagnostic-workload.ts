@@ -9,6 +9,8 @@ import {
 } from "@gamify-surgery/game-domain";
 import { getServiceIncomeLine } from "@gamify-surgery/balance-config";
 
+import {QUESTION_PROGRAM_BATCH3_RETAINED_CASES,QUESTION_SHIP_MANIFEST} from "@gamify-surgery/clinical-content";
+
 export function createDiagnosticWorkload(): { state: GameState; chartId: string } {
   let state = createInitialGameState(PROTOTYPE_DOMAIN_CONTEXT, {
     campaignId: "campaign.synthetic.diagnostic-workload", campaignSeed: "diagnostic-workload", createdAtRealMs: 0,
@@ -70,7 +72,14 @@ export function createDiagnosticWorkload(): { state: GameState; chartId: string 
   const anchor = getRoomNavigationAnchor(front, getRoomDefinition(front.roomDefinitionId)!);
   state.environment.founderLocation = anchor; state.environment.founderActivity = null; state.environment.pendingFounderConsult = null;
   state.encounters = {};
-  const clinicalCase = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(entry => entry.id === "case.esophageal-dysphagia.bread-sticking")!;
+  // This fixture constructs already frozen historical diagnostic encounters.
+  // A later fresh-case replacement must not substitute their original nodes.
+  const legacyId="case.esophageal-dysphagia.bread-sticking";
+  const clinicalCase = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(entry => entry.id === legacyId) ??
+    QUESTION_PROGRAM_BATCH3_RETAINED_CASES.find(entry=>entry.id===legacyId)!;
+  if(!clinicalCase || (!PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.some(entry=>entry.id===legacyId) &&
+    !QUESTION_SHIP_MANIFEST.replacements.some(row=>row.replaces===legacyId) &&
+    !QUESTION_SHIP_MANIFEST.topicConsolidations.some(row=>row.replaces.includes(legacyId))))throw new Error("Unbound retained diagnostic fixture");
   for (let i = 0; i < 3; i++) {
     const encounter: EncounterState = { ...structuredClone(template), id: `synthetic.encounter.${i}`, patientDisplayName: `Synthetic patient ${i}`,
       frozenCase: structuredClone(clinicalCase), arrivalClass: "routine", lifecycle: "active_action_required", checkInStatus: "checked_in",
