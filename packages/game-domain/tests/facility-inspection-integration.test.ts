@@ -22,7 +22,7 @@ describe("M7a actual reducer/retirement inspection integration", () => {
     employee.trainingLevel = level; // Explicit test achieved-tier setup before real round acceptance.
     state.rooms.find(room => room.roomDefinitionId === "room.executive_office")!.upgradeLevel = 5;
     state = apply(state, { type: "SET_EMPLOYEE_SALARY", operationId: `prep.salary.${level}`, employeeId: employee.id, salaryPerExpenseInterval: 49 });
-    state.clinicalXp = 2000; // Unlock boundary setup; normal answer rewards are tested below.
+    state.clinicalXp = context.balanceRelease.facility.stageDefinitions.find(stage => stage.level === 5)!.minimumClinicalXp; // Unlock boundary setup; normal answer rewards are tested below.
     state = apply(state, { type: "SET_PAUSED", operationId: `prep.play.${level}`, paused: false });
     for (let minute = 0; minute < 180 && state.levelFive!.management.round?.status !== "completed"; minute++) state = tick(state);
     expect(state.levelFive!.management.round).toMatchObject({ status: "completed", employeeTrainingLevel: level, durationMinutes: 24 });
@@ -53,7 +53,7 @@ describe("M7a actual reducer/retirement inspection integration", () => {
     expect(run.accumulators.observedActiveMinutes).toBe(2999);
     expect(run.accumulators.qualifyingCompletedEncounterIds.length).toBeGreaterThanOrEqual(20);
     const firstAnswers = run.accumulators.presentedQuestions.filter(q => q.firstAnswer);
-    expect(state.clinicalXp).toBe(2000 + firstAnswers.length * 10);
+    expect(state.clinicalXp).toBe(2300 + firstAnswers.length * 10);
     expect(state.levelFive!.progress.gameFinished).toBeNull();
     expect(state.encounters[run.accumulators.qualifyingCompletedEncounterIds[0]!]).toBeUndefined(); // earlier evidence retired
     state = deserializeGameState(serializeGameState(state), context);
@@ -128,7 +128,7 @@ describe("M7a actual reducer/retirement inspection integration", () => {
     const command = { type: "SUBMIT_ANSWER" as const, operationId: "pair.answer", encounterId: patient!.id, decisionNodeId: q.node.id,
       answerChoiceId: q.node.answerChoices.find(choice => !choice.isCorrect)!.id, reviewedAtMs: 1_791_806_400_000 };
     observed = apply(observed, command); control = apply(control, command);
-    expect(observed.clinicalXp - 2000).toBe(2);
+    expect(observed.clinicalXp - 2300).toBe(2);
     expect(observed.levelFive!.inspection.run!.accumulators.presentedQuestions.some(q => q.firstAnswer?.correct === false)).toBe(true);
     for (const key of ["campaignSeed", "encounters", "employees", "rooms", "cashCents", "clinicalXp", "learningHistories", "reviewIntents", "serviceIncomeReceipts", "settlements", "events"] as const) {
       expect(observed[key], key).toEqual(control[key]);

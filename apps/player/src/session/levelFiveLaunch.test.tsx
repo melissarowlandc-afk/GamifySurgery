@@ -32,7 +32,7 @@ describe("M10 ordinary launch in desktop and phone presentations", () => {
 
   it("exposes the five rooms, Executive and final-level goals through the ordinary shared view", () => {
     const view = viewOf(createLevelFiveLaunchQaState("launch-build"));
-    expect(view.resourceBar.xpProgressLabel).toBe("0/2000 XP");
+    expect(view.resourceBar.xpProgressLabel).toBe("0/2300 XP");
     expect(view.facility.levelFiveRoomArt).toBe(true);
     for (const id of ["room.founder_office", "room.executive_office", "room.gift_shop", "room.indoor_garden", "room.staff_gym"])
       expect(view.roomOptions.filter(room => room.id === id)).toHaveLength(1);
@@ -51,7 +51,7 @@ describe("M10 ordinary launch in desktop and phone presentations", () => {
 
   it.each([false, true])("renders the ordinary finish report with ten categories and both actions, compact=%s", compact => {
     const inspection = viewOf(createLevelFiveLaunchQaState("launch-finish")).progression.inspection!;
-    expect(inspection.finish!.report.scoreLabel).toBe("62.44");
+    expect(inspection.finish!.report.scoreLabel).toBe("62.47");
     expect(inspection.finish!.report.categories).toHaveLength(10);
     const markup = renderToStaticMarkup(<FinishedGamePage view={inspection.finish!} compact={compact}
       bestLabel={inspection.bestLabel} latestLabel={inspection.latestLabel} onKeepPlaying={vi.fn()} onStartNewCampaign={vi.fn()} />);

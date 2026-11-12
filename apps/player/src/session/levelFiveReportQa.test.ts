@@ -17,7 +17,7 @@ describe("M7c earned report and finish QA states on the existing 5184 server", (
     const state = deserializeGameState(serializeGameState(createLevelFiveStateQaState(scenario, context)), context);
     const report = state.levelFive!.progress.gameFinished!.firstCompletedReport;
     expect(report).toMatchObject({ outcome: "completed", observedActiveMinutes: 3000, qualifyingScoredPatientCount: 25, recognition: "improving" });
-    expect(state.clinicalXp).toBe(2250); expect(report.categories).toHaveLength(10);
+    expect(state.clinicalXp).toBe(2550); expect(report.categories).toHaveLength(10);
     expect(report.categories.reduce((sum, category) => sum + category.weightPercent, 0)).toBe(100);
     expect(report.categories.reduce((sum, category) => sum + category.weightedPoints!, 0)).toBe(report.rawTotalScore);
     const view = createFacilityInspectionView(state);

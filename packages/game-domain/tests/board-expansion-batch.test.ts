@@ -1,6 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { BOARD_EXPANSION_CASES, SYNTHETIC_CLINICAL_RELEASE } from "@gamify-surgery/clinical-content";
-import { createInitialGameState, createPatientPixelAppearance, deserializeGameState, gameReducer, getCurrentQuestion, serializeGameState, type GameState } from "../src";
+import { BOARD_EXPANSION_CASES } from "@gamify-surgery/clinical-content";
+import { PROTOTYPE_DOMAIN_CONTEXT, createPatientPixelAppearance, getCurrentQuestion, serializeGameState, type GameState } from "../src";
+import {beforeProgramBatch2AcceptanceRelease} from "../../clinical-content/src/question-program-batch2-acceptance-test-support";
+import {createClinicalAuthorStage} from "../../../tests/fixtures/clinical-author-stage";
+
+// This historical gate suite retains the complete pre-topic source. Current
+// admission and all retired saves are exercised by the batch2 acceptance tests.
+const SYNTHETIC_CLINICAL_RELEASE = beforeProgramBatch2AcceptanceRelease(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease);
+const {createInitialGameState, gameReducer, deserializeGameState} = createClinicalAuthorStage(SYNTHETIC_CLINICAL_RELEASE);
 
 function prepared(seed: string): GameState {
   const state = createInitialGameState(undefined, { campaignId: `campaign.board.${seed}`, campaignSeed: seed, createdAtRealMs: 0 });

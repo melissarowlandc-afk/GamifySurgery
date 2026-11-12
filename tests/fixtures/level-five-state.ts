@@ -140,11 +140,12 @@ export function createLevelFiveStateQaState(scenario: LevelFiveQaScenario = "pre
   state.campaignId = levelFiveQaCampaignId(scenario);
   state.campaignSeed = `level-five-state-m1.${scenario}`;
   state.facilityTick = 100;
-  state.clinicalXp = scenario === "pre-goal" || scenario === "rooms" || scenario === "support" || scenario.startsWith("executive") || scenario.startsWith("gift") ? 1999 : 2000;
+  const minimumXp = context.balanceRelease.facility.stageDefinitions.find(stage => stage.level === 5)!.minimumClinicalXp;
+  state.clinicalXp = scenario === "pre-goal" || scenario === "rooms" || scenario === "support" || scenario.startsWith("executive") || scenario.startsWith("gift") ? minimumXp - 1 : minimumXp;
   const foundation = state.levelFive!;
   if (scenario !== "pre-goal" && scenario !== "rooms" && scenario !== "support" && !scenario.startsWith("executive") && !scenario.startsWith("gift") && !scenario.startsWith("goals")) {
     foundation.progress.inspectionUnlocked = { version: "level-five-inspection-unlock.v1", earnedAtFacilityTick: 100,
-      clinicalXp: 2000, displayedSatisfaction: getDisplayedClinicSatisfaction(state, context),
+      clinicalXp: minimumXp, displayedSatisfaction: getDisplayedClinicSatisfaction(state, context),
       averageStaffMorale: state.employees.reduce((total, employee) => total + employee.morale, 0) / state.employees.length,
       employedStaffCount: state.employees.length };
     foundation.inspection.status = "ready";

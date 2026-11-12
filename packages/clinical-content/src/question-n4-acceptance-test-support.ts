@@ -1,3 +1,4 @@
+import {beforeProgramBatch1AcceptanceRelease,beforeProgramBatch1AcceptanceManifest,beforeProgramBatch1AcceptanceTimings,beforeProgramBatch1AcceptanceSource} from "./question-program-batch1-acceptance-test-support";
 import {readFileSync} from "node:fs";
 import {createHash} from "node:crypto";
 import {expect} from "vitest";
@@ -10,6 +11,7 @@ const migration=read("tools/question-quality/fixtures/question-n4-acceptance-sou
 const digest=(v:unknown)=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
 /** Test-only epoch reconstruction. Prove the exact whole delta first. */
 export function beforeN4AcceptanceRelease(release:SyntheticClinicalRelease):SyntheticClinicalRelease{
+ release=beforeProgramBatch1AcceptanceRelease(release);
  if(digest(release)===before.default.sha256)return release;
  if(!release.cases.some(c=>rows.some(r=>r.caseId===c.id)))return release;
  for(const cs of cases)expect(release.cases.find(c=>c.id===cs.id),cs.id+" exact N4 PASS case").toEqual(cs);
@@ -22,16 +24,19 @@ export function beforeN4AcceptanceRelease(release:SyntheticClinicalRelease):Synt
  expect(digest(old),"only eight exact cases and two registered meanings changed").toBe(before.default.sha256);return old;
 }
 export function beforeN4AcceptanceManifest(manifest:QuestionShipManifest):QuestionShipManifest&{id:string;clinicalApproval:false}{
+ manifest=beforeProgramBatch1AcceptanceManifest(manifest);
  if(!manifest.accepted.some(r=>r.sourceView==="n4-round1"||r.sourceView==="n4-round2"))return manifest as ReturnType<typeof beforeN4AcceptanceManifest>;
  expect(manifest).toEqual({...before.manifest,id:"question-ship.2026-11-10.v9",accepted:[...before.manifest.accepted,...rows],
   headerSources:{...Object.fromEntries(rows.map(r=>[r.caseId,r.sourceView])),...before.manifest.headerSources}});
  return structuredClone(before.manifest);
 }
 export function beforeN4AcceptanceTimings(actual:readonly AnswerChoiceTimingRegistryEntry[]):AnswerChoiceTimingRegistryEntry[]{
+ actual=beforeProgramBatch1AcceptanceTimings(actual);
  if(!actual.some(t=>rows.some(r=>r.questionVariantId===t.questionVariantId)))return [...actual];
  expect(actual,"all2287 old rows plus eight exact N4 PASS classifications").toEqual([...before.timing,...estimates]);return structuredClone(before.timing);
 }
 export function beforeN4AcceptanceSource(path:string,current:string):string{
+ current=beforeProgramBatch1AcceptanceSource(path,current);
  const row=migration.files.find(r=>r.path===path);if(!row)return current;
  const hash=(s:string)=>createHash("sha256").update(s).digest("hex");
  const releasePins=read("tools/question-quality/fixtures/question-n4-release-source-pins-20261110.json") as {paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string|null}>};

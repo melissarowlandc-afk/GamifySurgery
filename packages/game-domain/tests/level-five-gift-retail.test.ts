@@ -257,7 +257,7 @@ describe("M5 independent demand and approved approaches", () => {
     state = reload(state); retailTick(state, 119); expect(state.giftRetailDemand?.opportunitySequence).toBe(1);
     retailTick(state); expect(state.giftRetailDemand?.opportunitySequence).toBe(2);
     expect(state.externalRetailSequence).toBe(shared);
-    expect(state.clinicalXp).toBe(1999); expect(state.levelFive!.progress.inspectionUnlocked).toBeNull();
+    expect(state.clinicalXp).toBe(2299); expect(state.levelFive!.progress.inspectionUnlocked).toBeNull();
   });
   it("preserves an overdue gift opportunity on load and skips blocked access without a paid sale", () => {
     let state = initial(); state.giftRetailDemand!.nextOpportunityAtFacilityTick = state.facilityTick - 1;

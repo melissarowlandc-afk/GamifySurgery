@@ -1,4 +1,5 @@
 import { settledStateQuery } from "./settledStateQueries";
+import { getProgressionClinicalXpGoal } from "./late-progression";
 import type {
   ArrivalClass,
   CurrentQuestion,
@@ -1473,6 +1474,7 @@ export function getFacilityProgressionStatus(
       `Missing progression definition for Level ${state.facilityLevel}.`,
     );
   }
+  const clinicalXpGoal = getProgressionClinicalXpGoal(state, definition.minimumClinicalXp);
   const placedRoomTypes = new Set(
     state.rooms.map((room) => room.roomDefinitionId),
   );
@@ -1578,9 +1580,9 @@ export function getFacilityProgressionStatus(
           {
             id: "progression.clinical_xp",
             label: "Clinical XP",
-            met: state.clinicalXp >= definition.minimumClinicalXp,
+            met: clinicalXpGoal.met,
             current: state.clinicalXp,
-            required: definition.minimumClinicalXp,
+            required: clinicalXpGoal.required,
           },
         ]),
     ...(definition.minimumCompletedEncounters > 0

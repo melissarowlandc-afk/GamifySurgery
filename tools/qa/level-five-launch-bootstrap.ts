@@ -29,6 +29,6 @@ export async function bootstrapLevelFiveLaunchQa(): Promise<void> {
   const result = savePrototypeProfileResult(prepareLevelFiveLaunchQaProfile(profile, scenario));
   if (!result.ok) throw new Error(`Level 5 launch QA fixture could not be saved: ${result.failure.message}`);
   document.title = `Level 5 M10 ordinary launch ${scenario} - disposable prototype`;
-  console.info(`M10 ${scenario}: ordinary shipped balance/context, paused M9 journey checkpoint; launch-unmet alone sets 749 XP as synthetic boundary metadata. No browser answer bot. location.origin=${location.origin}. Reload resumes; ordinary / resumes the same campaign without QA setup.`);
+  console.info(`M10 ${scenario}: ordinary shipped balance/context, paused M9 journey checkpoint; launch-unmet alone sets current-goal-minus-one XP as synthetic boundary metadata. No browser answer bot. location.origin=${location.origin}. Reload resumes; ordinary / resumes the same campaign without QA setup.`);
   await import("../../apps/player/src/main");
 }

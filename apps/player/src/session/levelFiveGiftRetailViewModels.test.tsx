@@ -97,7 +97,7 @@ describe("M5 shared shop facts, desktop and compact phone", () => {
     selected.state.cashCents=12345;selected.state.cash=123.45;
     const resumed=prepareLevelFiveQaProfile(profile,"gift");expect(resumed.campaigns.find(c=>c.campaignId===selected.campaignId)).toBe(selected);
     expect(resumed.campaigns.find(c=>c.campaignId===selected.campaignId)!.state.cashCents).toBe(12345);
-    expect(selected.state.clinicalXp).toBe(1999);expect(selected.state.levelFive!.progress.inspectionUnlocked).toBeNull();
+    expect(selected.state.clinicalXp).toBe(2299);expect(selected.state.levelFive!.progress.inspectionUnlocked).toBeNull();
     expect(original.facility.maximumPlayableLevel).toBe(5);
   });
 });

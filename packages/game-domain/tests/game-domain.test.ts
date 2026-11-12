@@ -705,14 +705,14 @@ describe("current prototype contracts", () => {
       }),
       expect.objectContaining({
         level: 3,
-        minimumClinicalXp: 500,
+        minimumClinicalXp: 550,
         requiredRoomDefinitionIds: [],
         requiredStaffRoleIds: ["staff.pharmacist"],
         nextFacilityLevel: 4,
       }),
       expect.objectContaining({
         level: 4,
-        minimumClinicalXp: 750,
+        minimumClinicalXp: 790,
         requiredRoomDefinitionIds: [],
         requiredStaffRoleIds: ["staff.app"],
         requiredCompletionWitnessIds: ["pediatric_visit_with_parent", "wound_ostomy_care_visit"],
@@ -720,7 +720,7 @@ describe("current prototype contracts", () => {
       }),
       expect.objectContaining({
         level: 5,
-        minimumClinicalXp: 2000,
+        minimumClinicalXp: 2300,
         satisfactionMustBeGreaterThan: 90,
         minimumAverageStaffMorale: 85,
         requiredRoomDefinitionIds: [],

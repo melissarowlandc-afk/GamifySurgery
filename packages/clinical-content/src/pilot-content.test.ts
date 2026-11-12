@@ -1,3 +1,5 @@
+import {QUESTION_PROGRAM_BATCH2_LENGTH_RESIDUALS,QUESTION_PROGRAM_BATCH2_FROZEN_PRESERVATION} from "./question-program-batch2-accepted-20261111";
+import {QUESTION_PROGRAM_BATCH1_LENGTH_RESIDUALS,QUESTION_PROGRAM_BATCH1_FROZEN_PRESERVATION} from "./question-program-batch1-accepted-20261111";
 import {QUESTION_N4_FROZEN_PRESERVATION} from "./question-n4-accepted-20261110";
 import { describe, expect, it } from "vitest";
 import { createHash } from "node:crypto";
@@ -55,6 +57,9 @@ const N4_EXACT_LENGTH_EXCEPTIONS=new Map([
  ["question.n4.venous-ulcer-contralateral-pressure-trap.v1",{correctLength:45,longestDistractor:42}],
  ["question.n4.unexpected-deep-mass-during-lipoma-excision.v2",{correctLength:67,longestDistractor:65}],
 ]);
+const PROGRAM_EXACT_LENGTH_EXCEPTIONS=new Map<string,typeof QUESTION_PROGRAM_BATCH1_LENGTH_RESIDUALS[number]>(QUESTION_PROGRAM_BATCH1_LENGTH_RESIDUALS.map(r=>[r.questionVariantId,r]));
+const PROGRAM_BATCH2_LENGTH_EXCEPTIONS = new Map<string,typeof QUESTION_PROGRAM_BATCH2_LENGTH_RESIDUALS[number]>(
+  QUESTION_PROGRAM_BATCH2_LENGTH_RESIDUALS.map(row => [row.questionVariantId,row]));
 const stats1Packet=JSON.parse(readFileSync(new URL("../../../docs/research/question-stats1-accepted-20261108.json",import.meta.url),"utf8")) as Array<{
  questionVariantId:string;frozenPreservation:{acceptedCaseSha256:string};
 }>;
@@ -94,9 +99,28 @@ describe("five-diagnosis pilot registry", () => {
     );
 
     expect(
-      violations.filter(v => !N4_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId) && v.questionVariantId !== "question.n3.venous-ulcer-with-competing-arterial-findings.v4" && v.questionVariantId !== "question.n3.gastric-lymphoma-new-large-cell-process.v2"&&!STATS1_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId))
+      violations.filter(v => !PROGRAM_BATCH2_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !N4_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId) && v.questionVariantId !== "question.n3.venous-ulcer-with-competing-arterial-findings.v4" && v.questionVariantId !== "question.n3.gastric-lymphoma-new-large-cell-process.v2"&&!STATS1_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId))
         .map((violation) => violation.questionVariantId).sort(),
     ).toEqual([...IMMUTABLE_APPROVED_LENGTH_EXCEPTIONS].sort());
+    for (const [id,row] of PROGRAM_BATCH2_LENGTH_EXCEPTIONS) {
+      expect(violations.filter(violation => violation.questionVariantId === id))
+        .toEqual([{questionVariantId:id,correctLength:row.correctLength,longestDistractor:row.longestDistractor}]);
+      const clinicalCase = PILOT_CLINICAL_RELEASE.cases.find(cs => cs.id === row.caseId)!;
+      expect(QUESTION_SHIP_MANIFEST.accepted.find(accepted => accepted.questionVariantId === id))
+        .toMatchObject({decision:"docs/research/question-topic-acceptance-batch2-20261111.md"});
+      expect(createHash("sha256").update(JSON.stringify(clinicalCase)).digest("hex"))
+        .toBe(QUESTION_PROGRAM_BATCH2_FROZEN_PRESERVATION.find(frozen => frozen.caseId === row.caseId)!.retainedCaseSha256);
+    }
+    // Exact independently PASSed topic versions stay immutable. Report and
+    // bind every raw-character residual rather than rewording an accepted key.
+    for(const [id,row]of PROGRAM_EXACT_LENGTH_EXCEPTIONS){
+      expect(violations.filter(v=>v.questionVariantId===id)).toEqual([{questionVariantId:id,correctLength:row.correctLength,longestDistractor:row.longestDistractor}]);
+      const cs=PILOT_CLINICAL_RELEASE.cases.find(c=>c.id===row.caseId)!;
+      expect(QUESTION_SHIP_MANIFEST.accepted.find(r=>r.questionVariantId===id))
+        .toMatchObject({decision:"docs/research/question-topic-acceptance-batch1-20261111.md"});
+      expect(createHash("sha256").update(JSON.stringify(cs)).digest("hex"))
+        .toBe(QUESTION_PROGRAM_BATCH1_FROZEN_PRESERVATION.find(r=>r.caseId===cs.id)!.retainedCaseSha256);
+    }
     // Two exact N4 PASS versions have tiny raw-character residuals. Preserve
     // reviewed prose; pin actual disparity, authority and complete case hashes.
     for(const [id,lengths]of N4_EXACT_LENGTH_EXCEPTIONS){

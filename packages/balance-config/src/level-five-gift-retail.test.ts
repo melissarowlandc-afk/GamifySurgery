@@ -15,7 +15,7 @@ describe("M5 editorial gift retail contract", () => {
     ]);
     expect(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel).toBe(5);
     expect(PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(r => r.id === "room.gift_shop")).toMatchObject({ width:3, height:3, maximumInstances:1,
-      constructionCost:800, upkeepPerExpenseInterval:1, upkeepPerUpgradeLevel:0, capabilityIds:["capability.gift_shop"] });
+      constructionCost:960, upkeepPerExpenseInterval:1, upkeepPerUpgradeLevel:0, capabilityIds:["capability.gift_shop"] });
   });
   it("adds percentages of base gross, without compound profit or stock arithmetic", () => {
     expect([1,2,3,4,5].map(t => Math.round(1500 * getRoomUpgradeRevenueMultiplier("room.gift_shop", t)))).toEqual([1500,1590,1680,1770,1860]);

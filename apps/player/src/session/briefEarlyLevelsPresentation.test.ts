@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { ANSWER_CHOICE_TIMING_REGISTRY, BRIEF_EARLY_LEVELS_20260917_CASES, SYNTHETIC_CLINICAL_RELEASE } from "@gamify-surgery/clinical-content";
-import { createInitialGameState, gameReducer, patientRosterEntryById } from "@gamify-surgery/game-domain";
+import { ANSWER_CHOICE_TIMING_REGISTRY, BRIEF_EARLY_LEVELS_20260917_CASES } from "@gamify-surgery/clinical-content";
+import { PROTOTYPE_DOMAIN_CONTEXT, patientRosterEntryById } from "@gamify-surgery/game-domain";
+import { beforeProgramBatch2AcceptanceRelease } from "../../../../packages/clinical-content/src/question-program-batch2-acceptance-test-support";
+import { createClinicalAuthorStage } from "../../../../tests/fixtures/clinical-author-stage";
+const historicalRelease = beforeProgramBatch2AcceptanceRelease(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease);
+const { createInitialGameState, gameReducer } = createClinicalAuthorStage(historicalRelease);
 import { createPrototypePlayerView } from "./viewModels";
 
 function admit(caseId: string, index: number) {
@@ -20,7 +24,7 @@ describe("September 17 brief early-level chart presentation", () => {
         encounter.currentNodeIndex = nodeIndex; encounter.steps.forEach((step, index) => { step.status = index < nodeIndex ? "completed" : index === nodeIndex ? "action_required" : "locked"; });
         const chart = createPrototypePlayerView(state, encounterId, false, null).chart!; expect(chart.presentation).toContain(`September Patient ${caseIndex}`); expect(chart.presentation).not.toContain("{patientName}"); expect(chart.presentation).toContain(`${demographics.ageYears}-year-old ${sexWord}`);
         const choices = chart.decisionSteps?.find((step) => step.current)?.answerChoices ?? chart.answerChoices;
-        const authored = SYNTHETIC_CLINICAL_RELEASE.cases.find(c => c.id === clinicalCase.id)!.decisionNodes.find(n => n.id === node.id)!;
+        const authored = historicalRelease.cases.find(c => c.id === clinicalCase.id)!.decisionNodes.find(n => n.id === node.id)!;
         // The pilot deliberately permits three credible options. Check the
         // complete current set, rather than assuming a fourth filler choice.
         expect(choices).toHaveLength(authored.answerChoices.length);

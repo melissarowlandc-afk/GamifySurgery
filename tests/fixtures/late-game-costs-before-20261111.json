@@ -1,0 +1,864 @@
+{
+  "capturedFrom": "2026-11-11 pre-pass production balance; editorial simulation prices only",
+  "rooms": {
+    "room.front_desk": {
+      "unlock": 0,
+      "construction": 0,
+      "upgrades": [],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    },
+    "room.hallway": {
+      "unlock": 0,
+      "construction": 35,
+      "upgrades": [],
+      "upkeep": 0,
+      "tierUpkeep": 0
+    },
+    "room.examination": {
+      "unlock": 0,
+      "construction": 160,
+      "upgrades": [
+        90,
+        140,
+        210,
+        300
+      ],
+      "upkeep": 2,
+      "tierUpkeep": 0
+    },
+    "room.bathroom": {
+      "unlock": 1,
+      "construction": 225,
+      "upgrades": [
+        70,
+        110,
+        170,
+        250
+      ],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    },
+    "room.waiting": {
+      "unlock": 1,
+      "construction": 350,
+      "upgrades": [
+        110,
+        170,
+        250,
+        360
+      ],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    },
+    "room.xray": {
+      "unlock": 2,
+      "construction": 750,
+      "upgrades": [
+        190,
+        280,
+        400,
+        560
+      ],
+      "upkeep": 4,
+      "tierUpkeep": 1
+    },
+    "room.imaging_control": {
+      "unlock": 1,
+      "construction": 440,
+      "upgrades": [
+        90,
+        140,
+        210,
+        300
+      ],
+      "upkeep": 0,
+      "tierUpkeep": 0
+    },
+    "room.minor_procedure": {
+      "unlock": 1,
+      "construction": 800,
+      "upgrades": [
+        220,
+        330,
+        480,
+        680
+      ],
+      "upkeep": 4,
+      "tierUpkeep": 1
+    },
+    "room.ultrasound": {
+      "unlock": 1,
+      "construction": 950,
+      "upgrades": [
+        240,
+        360,
+        525,
+        715
+      ],
+      "upkeep": 8,
+      "tierUpkeep": 1
+    },
+    "room.ct": {
+      "unlock": 2,
+      "construction": 1600,
+      "upgrades": [
+        400,
+        600,
+        880,
+        1200
+      ],
+      "upkeep": 8,
+      "tierUpkeep": 1
+    },
+    "room.phlebotomy": {
+      "unlock": 2,
+      "construction": 550,
+      "upgrades": [
+        140,
+        210,
+        305,
+        415
+      ],
+      "upkeep": 2,
+      "tierUpkeep": 1
+    },
+    "room.evs_closet": {
+      "unlock": 2,
+      "construction": 475,
+      "upgrades": [
+        120,
+        180,
+        260,
+        360
+      ],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    },
+    "room.endoscopy": {
+      "unlock": 2,
+      "construction": 1450,
+      "upgrades": [
+        365,
+        545,
+        800,
+        1090
+      ],
+      "upkeep": 12,
+      "tierUpkeep": 2
+    },
+    "room.periop_recovery": {
+      "unlock": 2,
+      "construction": 900,
+      "upgrades": [
+        225,
+        340,
+        495,
+        675
+      ],
+      "upkeep": 3,
+      "tierUpkeep": 0
+    },
+    "room.training": {
+      "unlock": 2,
+      "construction": 650,
+      "upgrades": [
+        165,
+        245,
+        360,
+        490
+      ],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    },
+    "room.coffee_kiosk": {
+      "unlock": 2,
+      "construction": 500,
+      "upgrades": [
+        125,
+        190,
+        275,
+        375
+      ],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    },
+    "room.glp1_telehealth_suite": {
+      "unlock": 2,
+      "construction": 1200,
+      "upgrades": [
+        300,
+        450,
+        660,
+        900
+      ],
+      "upkeep": 2,
+      "tierUpkeep": 1
+    },
+    "room.ambulatory_or": {
+      "unlock": 3,
+      "construction": 2400,
+      "upgrades": [
+        600,
+        900,
+        1320,
+        1800
+      ],
+      "upkeep": 12,
+      "tierUpkeep": 2
+    },
+    "room.laboratory": {
+      "unlock": 3,
+      "construction": 1800,
+      "upgrades": [
+        450,
+        675,
+        990,
+        1350
+      ],
+      "upkeep": 4,
+      "tierUpkeep": 1
+    },
+    "room.pharmacy": {
+      "unlock": 3,
+      "construction": 1200,
+      "upgrades": [
+        300,
+        450,
+        660,
+        900
+      ],
+      "upkeep": 2,
+      "tierUpkeep": 1
+    },
+    "room.maintenance_workshop": {
+      "unlock": 3,
+      "construction": 800,
+      "upgrades": [
+        200,
+        300,
+        440,
+        600
+      ],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    },
+    "room.staff_break": {
+      "unlock": 3,
+      "construction": 900,
+      "upgrades": [
+        225,
+        340,
+        495,
+        675
+      ],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    },
+    "room.surgeon_office": {
+      "unlock": 3,
+      "construction": 700,
+      "upgrades": [
+        175,
+        265,
+        385,
+        525
+      ],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    },
+    "room.vending": {
+      "unlock": 3,
+      "construction": 450,
+      "upgrades": [
+        115,
+        170,
+        250,
+        340
+      ],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    },
+    "room.reading": {
+      "unlock": 3,
+      "construction": 1800,
+      "upgrades": [
+        450,
+        675,
+        990,
+        1350
+      ],
+      "upkeep": 6,
+      "tierUpkeep": 0
+    },
+    "room.mri": {
+      "unlock": 4,
+      "construction": 2400,
+      "upgrades": [
+        600,
+        900,
+        1300,
+        1800
+      ],
+      "upkeep": 8,
+      "tierUpkeep": 1
+    },
+    "room.pediatric_waiting": {
+      "unlock": 4,
+      "construction": 600,
+      "upgrades": [
+        150,
+        225,
+        325,
+        450
+      ],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    },
+    "room.pediatric_examination": {
+      "unlock": 4,
+      "construction": 600,
+      "upgrades": [
+        150,
+        225,
+        325,
+        450
+      ],
+      "upkeep": 2,
+      "tierUpkeep": 0
+    },
+    "room.wound_ostomy": {
+      "unlock": 4,
+      "construction": 1000,
+      "upgrades": [
+        250,
+        375,
+        550,
+        750
+      ],
+      "upkeep": 2,
+      "tierUpkeep": 1
+    },
+    "room.founder_office": {
+      "unlock": 5,
+      "construction": 1200,
+      "upgrades": [
+        300,
+        500,
+        750,
+        1000
+      ],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    },
+    "room.executive_office": {
+      "unlock": 5,
+      "construction": 2000,
+      "upgrades": [
+        500,
+        750,
+        1100,
+        1500
+      ],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    },
+    "room.gift_shop": {
+      "unlock": 5,
+      "construction": 800,
+      "upgrades": [
+        200,
+        300,
+        450,
+        600
+      ],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    },
+    "room.indoor_garden": {
+      "unlock": 5,
+      "construction": 800,
+      "upgrades": [
+        200,
+        300,
+        450,
+        600
+      ],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    },
+    "room.staff_gym": {
+      "unlock": 5,
+      "construction": 1000,
+      "upgrades": [
+        250,
+        375,
+        550,
+        750
+      ],
+      "upkeep": 1,
+      "tierUpkeep": 0
+    }
+  },
+  "hiring": {
+    "staff.executive": {
+      "unlock": 5,
+      "cost": 600,
+      "salary": 45
+    },
+    "staff.receptionist": {
+      "unlock": 1,
+      "cost": 180,
+      "salary": 10
+    },
+    "staff.imaging_technician": {
+      "unlock": 1,
+      "cost": 300,
+      "salary": 18
+    },
+    "staff.periop_nurse": {
+      "unlock": 2,
+      "cost": 450,
+      "salary": 20
+    },
+    "staff.endoscopy_nurse": {
+      "unlock": 2,
+      "cost": 500,
+      "salary": 24
+    },
+    "staff.endoscopist": {
+      "unlock": 2,
+      "cost": 900,
+      "salary": 40
+    },
+    "staff.phlebotomist": {
+      "unlock": 2,
+      "cost": 350,
+      "salary": 18
+    },
+    "staff.evs_worker": {
+      "unlock": 2,
+      "cost": 280,
+      "salary": 12
+    },
+    "staff.glp1_np": {
+      "unlock": 2,
+      "cost": 600,
+      "salary": 30
+    },
+    "staff.laboratory_technician": {
+      "unlock": 3,
+      "cost": 500,
+      "salary": 20
+    },
+    "staff.surgeon": {
+      "unlock": 3,
+      "cost": 1400,
+      "salary": 50
+    },
+    "staff.or_nurse": {
+      "unlock": 3,
+      "cost": 650,
+      "salary": 26
+    },
+    "staff.pharmacist": {
+      "unlock": 3,
+      "cost": 600,
+      "salary": 24
+    },
+    "staff.repair_person": {
+      "unlock": 3,
+      "cost": 400,
+      "salary": 16
+    },
+    "staff.radiologist": {
+      "unlock": 3,
+      "cost": 300,
+      "salary": 18
+    },
+    "staff.app": {
+      "unlock": 4,
+      "cost": 600,
+      "salary": 30
+    }
+  },
+  "training": {
+    "staff.receptionist": [
+      75,
+      150,
+      225,
+      300
+    ],
+    "staff.imaging_technician": [
+      75,
+      150,
+      225,
+      300
+    ],
+    "staff.periop_nurse": [
+      125,
+      250,
+      375,
+      500
+    ],
+    "staff.endoscopy_nurse": [
+      125,
+      250,
+      375,
+      500
+    ],
+    "staff.endoscopist": [
+      225,
+      450,
+      675,
+      900
+    ],
+    "staff.phlebotomist": [
+      100,
+      200,
+      300,
+      400
+    ],
+    "staff.evs_worker": [
+      75,
+      150,
+      225,
+      300
+    ],
+    "staff.glp1_np": [
+      150,
+      300,
+      450,
+      600
+    ],
+    "staff.app": [
+      150,
+      300,
+      450,
+      600
+    ],
+    "staff.executive": [
+      100,
+      200,
+      300,
+      400
+    ],
+    "staff.laboratory_technician": [
+      125,
+      250,
+      375,
+      500
+    ],
+    "staff.surgeon": [
+      350,
+      700,
+      1050,
+      1400
+    ],
+    "staff.or_nurse": [
+      175,
+      350,
+      525,
+      700
+    ],
+    "staff.pharmacist": [
+      150,
+      300,
+      450,
+      600
+    ],
+    "staff.repair_person": [
+      100,
+      200,
+      300,
+      400
+    ],
+    "staff.radiologist": [
+      75,
+      150,
+      225,
+      300
+    ]
+  },
+  "upgradeBenefits": {
+    "room.front_desk": {
+      "kind": "none",
+      "points": 0,
+      "status": "current"
+    },
+    "room.hallway": {
+      "kind": "none",
+      "points": 0,
+      "status": "current"
+    },
+    "room.examination": {
+      "kind": "examination_satisfaction_points",
+      "points": 2,
+      "status": "current"
+    },
+    "room.waiting": {
+      "kind": "waiting_satisfaction_points",
+      "points": 2,
+      "status": "current"
+    },
+    "room.bathroom": {
+      "kind": "cleanliness_decay_reduction_percent",
+      "points": 10,
+      "status": "current"
+    },
+    "room.minor_procedure": {
+      "kind": "revenue_percent",
+      "points": 6,
+      "status": "current"
+    },
+    "room.ultrasound": {
+      "kind": "revenue_percent",
+      "points": 6,
+      "status": "current"
+    },
+    "room.xray": {
+      "kind": "revenue_percent",
+      "points": 6,
+      "status": "current"
+    },
+    "room.ct": {
+      "kind": "revenue_percent",
+      "points": 6,
+      "status": "current"
+    },
+    "room.phlebotomy": {
+      "kind": "revenue_percent",
+      "points": 6,
+      "status": "current"
+    },
+    "room.evs_closet": {
+      "kind": "cleaning_duration_reduction_percent",
+      "points": 10,
+      "status": "current"
+    },
+    "room.endoscopy": {
+      "kind": "revenue_percent",
+      "points": 6,
+      "status": "current"
+    },
+    "room.periop_recovery": {
+      "kind": "recovery_satisfaction_points",
+      "points": 2,
+      "status": "current"
+    },
+    "room.training": {
+      "kind": "training_duration_reduction_percent",
+      "points": 10,
+      "status": "current"
+    },
+    "room.coffee_kiosk": {
+      "kind": "daily_coffee_morale_points",
+      "points": 1,
+      "status": "current"
+    },
+    "room.glp1_telehealth_suite": {
+      "kind": "revenue_percent",
+      "points": 6,
+      "status": "current"
+    },
+    "room.ambulatory_or": {
+      "kind": "revenue_percent",
+      "points": 6,
+      "status": "current"
+    },
+    "room.laboratory": {
+      "kind": "revenue_percent",
+      "points": 6,
+      "status": "current"
+    },
+    "room.pharmacy": {
+      "kind": "revenue_percent",
+      "points": 6,
+      "status": "current"
+    },
+    "room.maintenance_workshop": {
+      "kind": "repair_duration_reduction_percent",
+      "points": 10,
+      "status": "current"
+    },
+    "room.staff_break": {
+      "kind": "break_morale_points",
+      "points": 2,
+      "status": "current"
+    },
+    "room.surgeon_office": {
+      "kind": "quality_review_duration_reduction_percent",
+      "points": 10,
+      "status": "current"
+    },
+    "room.vending": {
+      "kind": "revenue_percent",
+      "points": 6,
+      "status": "current"
+    },
+    "room.reading": {
+      "kind": "reading_duration_reduction_percent",
+      "points": 10,
+      "status": "current"
+    },
+    "room.imaging_control": {
+      "kind": "none",
+      "points": 0,
+      "status": "retired"
+    },
+    "room.mri": {
+      "kind": "revenue_percent",
+      "points": 6,
+      "status": "current"
+    },
+    "room.pediatric_waiting": {
+      "kind": "waiting_satisfaction_points",
+      "points": 2,
+      "status": "current"
+    },
+    "room.pediatric_examination": {
+      "kind": "examination_satisfaction_points",
+      "points": 2,
+      "status": "current"
+    },
+    "room.wound_ostomy": {
+      "kind": "revenue_percent",
+      "points": 6,
+      "status": "current"
+    },
+    "room.founder_office": {
+      "kind": "founder_office_morale_points",
+      "points": 2,
+      "status": "current"
+    },
+    "room.executive_office": {
+      "kind": "administration_duration_reduction_percent",
+      "points": 5,
+      "status": "current"
+    },
+    "room.gift_shop": {
+      "kind": "revenue_percent",
+      "points": 6,
+      "status": "current"
+    },
+    "room.indoor_garden": {
+      "kind": "garden_satisfaction_points",
+      "points": 2,
+      "status": "current"
+    },
+    "room.staff_gym": {
+      "kind": "gym_morale_points",
+      "points": 2,
+      "status": "current"
+    }
+  },
+  "clinicalSettlement": {
+    "patientRewardTiers": [
+      {
+        "id": "reward.tutorial",
+        "completionRevenue": 45
+      },
+      {
+        "id": "reward.clinic_basic",
+        "completionRevenue": 75
+      },
+      {
+        "id": "reward.referral",
+        "completionRevenue": 60
+      }
+    ],
+    "maximumQualityRevenueBonus": 15,
+    "maximumIncorrectFinancialConsequence": 5,
+    "clinicalXpPerCorrectFirstAnswer": 10,
+    "clinicalXpPerIncorrectFirstAnswer": 2,
+    "firstTutorialCorrectDecisionXp": 20,
+    "levelZeroBasePayment": 15,
+    "levelZeroPerQuestionPayment": 10,
+    "levelZeroPerCorrectPayment": 50,
+    "levelOneBasePayment": 20,
+    "levelOnePerQuestionPayment": 15,
+    "levelOnePerCorrectPayment": 65,
+    "maximumCorrectSatisfactionBonus": 0,
+    "maximumIncorrectSatisfactionConsequence": 0,
+    "patientSatisfactionDeltaMinimum": 0,
+    "patientSatisfactionDeltaMaximum": 0
+  },
+  "progression": [
+    {
+      "level": 0,
+      "displayName": "Level 0 - Founder Desk Clinic",
+      "minimumClinicalXp": 10,
+      "minimumCompletedEncounters": 0,
+      "satisfactionMustBeGreaterThan": 90,
+      "requiredRoomDefinitionIds": [
+        "room.examination"
+      ],
+      "requiredStaffRoleIds": [],
+      "nextFacilityLevel": 1
+    },
+    {
+      "level": 1,
+      "displayName": "Level 1 - First Clinic",
+      "minimumClinicalXp": 150,
+      "minimumCompletedEncounters": 0,
+      "satisfactionMustBeGreaterThan": 90,
+      "requiredRoomDefinitionIds": [
+        "room.ultrasound",
+        "room.minor_procedure"
+      ],
+      "requiredStaffRoleIds": [
+        "staff.imaging_technician"
+      ],
+      "nextFacilityLevel": 2
+    },
+    {
+      "level": 2,
+      "displayName": "Level 2 - Expanded Outpatient / Endoscopy",
+      "minimumClinicalXp": 300,
+      "minimumCompletedEncounters": 0,
+      "satisfactionMustBeGreaterThan": 90,
+      "requiredRoomDefinitionIds": [],
+      "requiredStaffRoleIds": [],
+      "nextFacilityLevel": 3
+    },
+    {
+      "level": 3,
+      "displayName": "Level 3 - Ambulatory Surgery Center",
+      "minimumClinicalXp": 500,
+      "minimumCompletedEncounters": 0,
+      "satisfactionMustBeGreaterThan": 90,
+      "requiredRoomDefinitionIds": [],
+      "requiredStaffRoleIds": [
+        "staff.pharmacist"
+      ],
+      "nextFacilityLevel": 4
+    },
+    {
+      "level": 4,
+      "displayName": "Level 4 - Specialty Expansion",
+      "minimumClinicalXp": 750,
+      "minimumCompletedEncounters": 0,
+      "satisfactionMustBeGreaterThan": 90,
+      "requiredRoomDefinitionIds": [],
+      "requiredStaffRoleIds": [
+        "staff.app"
+      ],
+      "requiredCompletionWitnessIds": [
+        "pediatric_visit_with_parent",
+        "wound_ostomy_care_visit"
+      ],
+      "nextFacilityLevel": 5
+    },
+    {
+      "level": 5,
+      "displayName": "Level 5 - Optimized ASC / Prestige",
+      "minimumClinicalXp": 2000,
+      "minimumCompletedEncounters": 0,
+      "satisfactionMustBeGreaterThan": 90,
+      "minimumAverageStaffMorale": 85,
+      "requiredRoomDefinitionIds": [],
+      "requiredStaffRoleIds": [],
+      "nextFacilityLevel": null
+    }
+  ]
+}

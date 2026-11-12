@@ -213,7 +213,7 @@ describe("Level 2 expanded outpatient definitions", () => {
         }),
         expect.objectContaining({
           level: 3,
-          minimumClinicalXp: 500,
+          minimumClinicalXp: 550,
           satisfactionMustBeGreaterThan: 90,
           requiredRoomDefinitionIds: [],
           requiredStaffRoleIds: ["staff.pharmacist"],

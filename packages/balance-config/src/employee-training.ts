@@ -38,7 +38,9 @@ function role(
   direction: EmployeeTrainingRole["direction"] = "reduces",
   percentPerLevel: 5 | 10 | 25 = 10,
 ): EmployeeTrainingRole {
-  return { staffRoleDefinitionId, metric, levelPrices: [basePrice, basePrice * 2, basePrice * 3, basePrice * 4], percentPerLevel, shortMetric, direction };
+  // Editorial future-purchase weights: keep tiers2/3, add20% at4 and40% at5.
+  // Saved paidAmount and achieved training levels remain authoritative.
+  return { staffRoleDefinitionId, metric, levelPrices: [basePrice, basePrice * 2, Math.round(basePrice * 3.6), Math.round(basePrice * 5.6)], percentPerLevel, shortMetric, direction };
 }
 
 /** Owner-approved editorial game balance; these are not clinical claims. */

@@ -1,13 +1,17 @@
 import { describe, expect, it } from "vitest";
 import { BRIEF_EARLY_LEVELS_20260917_CASES } from "@gamify-surgery/clinical-content";
 import {
-  createInitialGameState,
-  deserializeGameState,
-  gameReducer,
+  PROTOTYPE_DOMAIN_CONTEXT,
   getCurrentQuestion,
   serializeGameState,
   type GameState,
 } from "../src";
+import {beforeProgramBatch2AcceptanceRelease} from "../../clinical-content/src/question-program-batch2-acceptance-test-support";
+import {createClinicalAuthorStage} from "../../../tests/fixtures/clinical-author-stage";
+
+const {createInitialGameState, deserializeGameState, gameReducer} = createClinicalAuthorStage(
+  beforeProgramBatch2AcceptanceRelease(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease),
+);
 
 function prepared(seed: string, level: 0 | 1 | 2): GameState {
   const state = createInitialGameState(undefined, {

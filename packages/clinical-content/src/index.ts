@@ -180,3 +180,8 @@ export * from "./question-new-n3-round4-20261110";
 
 // Manager-directed N4 exact PASS sources, provenance and accepted-only metadata.
 export * from "./question-n4-accepted-20261110";
+
+// Exact accepted-only topic archive; topic authoring modules are not imported.
+export * from "./question-program-batch1-accepted-20261111";
+
+export * from "./question-program-batch2-accepted-20261111";

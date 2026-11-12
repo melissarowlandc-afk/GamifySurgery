@@ -97,10 +97,10 @@ describe("stats1 exact manager acceptance and frozen identities",()=>{
  it("pins each authorized existing-source delta before preserving old capture assertions",()=>{
   // Release integration retains every original protected path check.
   const pinsPath="tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json",pinBytes=readFileSync(new URL("../../../"+pinsPath,import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("b5f97d48d89ea2de2aa997018b2d9b02ca69eec6e6cd05af8427c794285b928c");
+  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("949ebc6e8156d1f13c6e8d9f8683ebaaeac5e6894855233c7d977d8a4549b957");
   const pins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;paths:Array<{path:string;capturedMainSha256:string;requiredReleaseSha256:string|null}>};
   expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-stats1-acceptance-before-20261108.json",import.meta.url))).digest("hex")).toBe(pins.capturedFixtureSha256);
-  expect(pins.paths).toHaveLength(107);
+  expect(pins.paths).toHaveLength(126);
   const releasePins=new Map(pins.paths.map(row=>[row.path,row]));
   for(const row of pins.paths)expect(before.files[row.path],row.path+" immutable main capture").toBe(row.capturedMainSha256);
   for(const[p,h]of Object.entries(before.files)){

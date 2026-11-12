@@ -86,7 +86,7 @@ describe("Level 4 launch progression and old saves", () => {
 
   it("uses strict displayed satisfaction and current-level XP", () => {
     const state = createLevelFourAlmostQaState();
-    state.clinicalXp = 749;
+    state.clinicalXp = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.stageDefinitions.find(stage => stage.level === 4)!.minimumClinicalXp - 1;
     const ended = createInitialGameState().encounters[TUTORIAL_ENCOUNTER_ID]!;
     ended.lifecycle = "resolved"; ended.resolutionReason = "completed"; ended.resolvedAtFacilityTick = 0;
     ended.finalPatientSatisfaction = 90 + 100 - getDisplayedClinicSatisfaction(state);

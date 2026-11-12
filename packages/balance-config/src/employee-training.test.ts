@@ -5,15 +5,15 @@ import { EMPLOYEE_TRAINING_PLACES, EMPLOYEE_TRAINING_ROLES, EMPLOYEE_TRAINING_SE
 describe("approved employee training catalog", () => {
   it("retains every approved fixed per-transition price, independent of salaries", () => {
     const approved = {
-      receptionist: [75, 150, 225, 300], imaging_technician: [75, 150, 225, 300],
-      periop_nurse: [125, 250, 375, 500], endoscopy_nurse: [125, 250, 375, 500],
-      endoscopist: [225, 450, 675, 900], phlebotomist: [100, 200, 300, 400],
-      evs_worker: [75, 150, 225, 300], glp1_np: [150, 300, 450, 600],
-      laboratory_technician: [125, 250, 375, 500], surgeon: [350, 700, 1050, 1400],
-      or_nurse: [175, 350, 525, 700], pharmacist: [150, 300, 450, 600],
-      repair_person: [100, 200, 300, 400], radiologist: [75, 150, 225, 300],
-      app: [150, 300, 450, 600],
-      executive: [100, 200, 300, 400],
+      receptionist: [75, 150, 270, 420], imaging_technician: [75, 150, 270, 420],
+      periop_nurse: [125, 250, 450, 700], endoscopy_nurse: [125, 250, 450, 700],
+      endoscopist: [225, 450, 810, 1260], phlebotomist: [100, 200, 360, 560],
+      evs_worker: [75, 150, 270, 420], glp1_np: [150, 300, 540, 840],
+      laboratory_technician: [125, 250, 450, 700], surgeon: [350, 700, 1260, 1960],
+      or_nurse: [175, 350, 630, 980], pharmacist: [150, 300, 540, 840],
+      repair_person: [100, 200, 360, 560], radiologist: [75, 150, 270, 420],
+      app: [150, 300, 540, 840],
+      executive: [100, 200, 360, 560],
     };
     expect(EMPLOYEE_TRAINING_ROLES).toHaveLength(16);
     for (const [role, prices] of Object.entries(approved)) {

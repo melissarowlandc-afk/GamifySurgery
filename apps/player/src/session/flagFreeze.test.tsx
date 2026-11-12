@@ -54,7 +54,7 @@ afterEach(async () => {
 });
 
 const reportedVariant = "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v4";
-async function fixture(layout: "phone" | "desktop", employee: boolean, casual: boolean, reported = false, large = false, automatic = false) {
+async function fixture(layout: "phone" | "desktop", employee: boolean, casual: boolean, reported = false, large = false, automatic = false, largeScenario: "integration-running" | "integration-build" = "integration-running") {
   const env = phoneTestDom(), stored = new Map<string, string>();
   const budget = { localLimit: Infinity, sharedLimit: Infinity, denyCloud: false, failedCloudWrites: 0 };
   const localBytes = () => [...stored].reduce((total, [key, value]) => total + 2 * (key.length + value.length), 0);
@@ -79,7 +79,7 @@ async function fixture(layout: "phone" | "desktop", employee: boolean, casual: b
   }, { monotonic: () => 0, wall: Date.now }, () => crypto.randomUUID());
   await context.tracker.refreshAccess();
   context.transport = { send: vi.fn(async () => ({ status: "open" as const, fixedInVersion: null })), read: vi.fn(async () => []) };
-  const state = employee ? scoredEmployeeFixture() : large ? createLevelFiveIntegrationQaState("integration-running", PROTOTYPE_DOMAIN_CONTEXT) : scoredPatientFixture();
+  const state = employee ? scoredEmployeeFixture() : large ? createLevelFiveIntegrationQaState(largeScenario, PROTOTYPE_DOMAIN_CONTEXT) : scoredPatientFixture();
   if (large) {
     const encounter = structuredClone(Object.values(scoredPatientFixture().encounters)[0]!);
     encounter.id = "encounter.flag-quota";
@@ -208,7 +208,9 @@ describe("reported hosted flag recovery boundaries", () => {
   });
   it.each(["phone", "desktop"] as const)("prioritizes a real Level 5 campaign over auxiliary growth under a modeled 5 MiB shared quota in %s", async layout => {
     vi.stubGlobal("indexedDB", new IDBFactory());
-    const f = await fixture(layout, false, false, false, true, true);
+    const f = await fixture(layout, false, false, false, true, true, "integration-build");
+    // Keep the complete real Level5 build checkpoint for this two-copy5MiB
+    // boundary. Later report checkpoints are larger; no campaign data is cut.
     // Real Level 5 checkpoint data, plus a legacy local profile retained from
     // before cloud enrollment. No synthetic padding is added to the campaign.
     const profile: LocalPrototypeProfile = { ...createFreshProfile(), activeCampaignId: f.current().state.campaignId,

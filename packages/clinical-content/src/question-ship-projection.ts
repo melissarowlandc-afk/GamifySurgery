@@ -23,13 +23,17 @@ export function projectManagerAcceptedQuestions(
     rows.set(row.caseId, [...(rows.get(row.caseId) ?? []), row]);
   }
   const cases: SyntheticClinicalCase[] = [];
+  const admittedReplacementIds = new Set<string>();
   for (const caseId of new Set([...legacyCases.keys(), ...rows.keys()])) {
     const fallback = legacyCases.get(caseId);
     const replacement=replacements.byLegacy.get(caseId);
     if(replacement){
       // Use the complete accepted source, including its node list. Never merge
       // retired neighbors into an explicitly approved one-node encounter.
-      cases.push(replacement);
+      if (!admittedReplacementIds.has(replacement.id)) {
+        cases.push(replacement);
+        admittedReplacementIds.add(replacement.id);
+      }
       continue;
     }
     if(replacements.blockedLegacyIds.has(caseId)||replacements.reservedTargetIds.has(caseId)){

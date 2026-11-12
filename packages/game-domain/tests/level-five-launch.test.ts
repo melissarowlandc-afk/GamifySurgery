@@ -38,7 +38,7 @@ describe("M10 ordinary Level 5 launch", () => {
     expect(getFacilityProgressionStatus(state).requirements.filter(goal => !goal.met).map(goal => goal.id)).toEqual(["progression.clinical_xp"]);
     const next = gameReducer(state, { type: "LEVEL_UP", operationId: "m10.unmet" });
     expect(next.operationReceipts["m10.unmet"]!.status).toBe("rejected");
-    expect(next.facilityLevel).toBe(4); expect(next.clinicalXp).toBe(749);
+    expect(next.facilityLevel).toBe(4); expect(next.clinicalXp).toBe(789);
     expect(next.cashCents).toBe(state.cashCents); expect(next.levelFourCompletion).toEqual(state.levelFourCompletion);
     expect(next).not.toHaveProperty("levelFive");
   });
@@ -60,8 +60,8 @@ describe("M10 ordinary Level 5 launch", () => {
     const report = state.levelFive!.inspection.lastReport!;
     expect(report.outcome).toBe("completed");
     expect(report.observedActiveMinutes).toBe(3000);
-    expect(report.qualifyingScoredPatientCount).toBe(51);
-    expect(report.rawTotalScore).toBe(62.441674349990286);
+    expect(report.qualifyingScoredPatientCount).toBe(49);
+    expect(report.rawTotalScore).toBe(62.4750682937747);
     expect(report.categories).toHaveLength(10);
     expect(state.levelFive!.progress.gameFinished!.firstCompletedReport).toEqual(report);
     expect(state.levelFive!.inspectionPresentation.actors).toHaveLength(0);

@@ -1,4 +1,5 @@
 import { founderConsultClockKey, founderProcedureConsultPath, procedureConsultKind, reconcileFounderConsultSources, selectProcedureConsult, sourceConsultOperation } from "./founder-consults";
+import { createLateProgressionState } from "./late-progression";
 import { clinicFounderPath, clinicFounderWaitsForSeat, isClinicFounderConsult, reconcileClinicConsultClosures,
   releaseClinicConsult, returnClinicProvider, selectClinicConsult, vacateClinicProvider } from "./clinic-consults";
 import { withFacilityNavigationScope } from "./facilityNavigation";
@@ -11268,9 +11269,17 @@ export function gameReducer(
   command: GameCommand,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): GameState {
-  const next = reduceGameCommand(state, command, context);
-  if (next === state) {
-    return next;
+  const input = !state.lateProgression && state.facilityLevel >= 3
+    ? { ...state, lateProgression: createLateProgressionState(state) }
+    : state;
+  const next = reduceGameCommand(input, command, context);
+  if (next === input) {
+    return state;
+  }
+  if (!next.lateProgression && next.facilityLevel >= 3) {
+    // Use the pre-command XP: crossing a historical threshold after the update
+    // must not grant legacy credit. Advancing from Level 2 starts the new policy.
+    next.lateProgression = createLateProgressionState(state);
   }
   reconcilePediatricFamilies(next, context);
   if (next.operationReceipts[command.operationId]?.status === "applied") {

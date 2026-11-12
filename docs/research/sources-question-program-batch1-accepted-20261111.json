@@ -1,0 +1,2526 @@
+{
+  "version": "accepted-topic-source-ledger.v1",
+  "authority": "docs/research/question-topic-acceptance-batch1-20261111.md",
+  "frozenStaticDataPath": "packages/clinical-content/src/question-program-batch1-accepted-data-20261111.ts",
+  "frozenStaticDataSha256": "f50b06a0583ec4c2ea87d5d129bac030cdab97b50cf40b70929810619d1890a7",
+  "capturedOriginalLedgers": [
+    {
+      "path": "docs/research/sources-question-topic-small-bowel-obstruction-ileus-20261111.json",
+      "sha256": "406eed587599937ad6d2efbec13a1ecfdcf4b736e9e8f525da68df7c84f66fa2"
+    },
+    {
+      "path": "docs/research/sources-question-topic-critical-renal-organ-support-20261111.json",
+      "sha256": "c8850d30310b64fb3334a6dce2711fcead30471f39da14fc664e2afebd060e2a"
+    },
+    {
+      "path": "docs/research/sources-question-topic-critical-shock-resuscitation-20261111.json",
+      "sha256": "219af865c8c19c46985da918a867bcaaf63a4e8b2967f37d2db506652e2c924d"
+    },
+    {
+      "path": "docs/research/sources-question-topic-appendix-appendicitis-20261111.json",
+      "sha256": "28188c87a1e05859a33b26d4450bb92dea04aa8746a51511f07bb98e8863ab39"
+    },
+    {
+      "path": "docs/research/sources-question-topic-trauma-initial-abdomen-20261111.json",
+      "sha256": "02fbf752bad59d416325801ff7e20f51c5117cd08d521b8958ebae44f1ae5fb7"
+    },
+    {
+      "path": "docs/research/sources-question-topic-critical-respiratory-ventilation-20261111.json",
+      "sha256": "c1cff446954a0467b4a736bc824fe48c22a5a166896c8d41ff81dcc6c5a9721f"
+    }
+  ],
+  "acceptedQuestionIds": [
+    "question.topic.small-bowel-obstruction-ileus.closed-loop-normal-lactate.v1",
+    "question.topic.small-bowel-obstruction-ileus.postcontrast-deterioration.v1",
+    "question.topic.small-bowel-obstruction-ileus.virgin-abdomen-observation.v1",
+    "question.topic.critical-renal-organ-support.citrate-bleeding-circuit.v1",
+    "question.topic.critical-renal-organ-support.trial-off-crrt.v2",
+    "question.critical-shock-resuscitation.choose-valid-fluid-test.v1",
+    "question.critical-shock-resuscitation.response-versus-fluid-risk.v1",
+    "question.critical-shock-resuscitation.echo-for-persistent-shock.v2",
+    "question.topic.appendix-appendicitis.peritoneal-mucin-referral.v2",
+    "question.topic.appendix-appendicitis.goblet-cell-oncologic-resection.v1",
+    "question.topic.appendix-appendicitis.net-regional-resection.v2",
+    "question.topic.trauma-initial-abdomen.belt-equivocal-observation.v1",
+    "question.topic.trauma-initial-abdomen.belt-evolving-repeat-imaging.v2",
+    "question.topic.trauma-initial-abdomen.pelvis-packing-after-angio.v1",
+    "question.topic.trauma-initial-abdomen.pelvis-recurrent-arterial-focus.v1",
+    "question.topic.trauma-initial-abdomen.bladder-acquisition.v2",
+    "question.topic.trauma-initial-abdomen.bladder-intraperitoneal-repair.v2",
+    "question.topic.trauma-initial-abdomen.pancreas-distal-duct-operation.v1",
+    "question.topic.trauma-initial-abdomen.renal-contained-hematoma.v1",
+    "question.topic.trauma-initial-abdomen.jejunum-primary-repair.v2",
+    "question.topic.critical-respiratory-ventilation.expiratory-time.v1",
+    "question.topic.critical-respiratory-ventilation.postextubation-rescue.v1"
+  ],
+  "evidenceClaims": [
+    {
+      "contentVersion": "question-topic-small-bowel-obstruction-ileus.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.small-bowel-obstruction-ileus.transition-pattern",
+      "statement": "A focal small-bowel caliber change with upstream dilation and downstream collapse supports a mechanical obstruction.",
+      "sourceIds": [
+        "source.sbo.wses-2018",
+        "source.sbo.east-2012"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Distribution alone does not establish cause or bowel viability.",
+      "applicablePopulation": "Adults with suspected or established small-bowel obstruction.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "question-topic-small-bowel-obstruction-ileus.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.small-bowel-obstruction-ileus.closed-loop-risk",
+      "statement": "A closed-loop configuration, especially with reduced mural enhancement or associated fluid, warrants prompt operative assessment for threatened bowel.",
+      "sourceIds": [
+        "source.sbo.wses-2018",
+        "source.sbo.east-2012"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "The questions combine anatomy with perfusion findings. A single minor fluid finding is not a universal operation threshold.",
+      "applicablePopulation": "Adults with suspected or established small-bowel obstruction.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "question-topic-small-bowel-obstruction-ileus.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.small-bowel-obstruction-ileus.normal-lactate-limit",
+      "statement": "A lactate value in the laboratory reference interval does not exclude bowel ischemia.",
+      "sourceIds": [
+        "source.small-bowel-obstruction-ileus.wses-virgin-abdomen-2021",
+        "source.small-bowel-obstruction-ileus.wses-ifso-oba-2022"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "Serial clinical and imaging findings determine concern. No laboratory cutoff is authored.",
+      "applicablePopulation": "Adults with suspected or established small-bowel obstruction.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "question-topic-small-bowel-obstruction-ileus.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.small-bowel-obstruction-ileus.nonoperative-eligibility",
+      "statement": "Presumed adhesive SBO can receive an inpatient nonoperative trial when clinical assessment and CT reveal no peritonitis, strangulation or ischemia.",
+      "sourceIds": [
+        "source.sbo.wses-2018",
+        "source.sbo.east-2012"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Exact clinical application and competing actions require named clinician review.",
+      "applicablePopulation": "Adults with suspected or established small-bowel obstruction.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "question-topic-small-bowel-obstruction-ileus.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.small-bowel-obstruction-ileus.contrast-prognosis",
+      "statement": "In an adequately performed enteral water-soluble contrast assessment for adhesive SBO, failure to reach the colon by the 24-hour film strongly suggests nonoperative failure.",
+      "sourceIds": [
+        "source.sbo.wses-2018",
+        "source.sbo.east-2012"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Technical adequacy and clinical trajectory matter. This is not an isolated automatic operation deadline.",
+      "applicablePopulation": "Adults with suspected or established small-bowel obstruction.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "question-topic-small-bowel-obstruction-ileus.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.small-bowel-obstruction-ileus.contrast-viability-limit",
+      "statement": "Contrast transit predicts the chance of nonoperative resolution and does not override new findings concerning for ischemia or peritonitis.",
+      "sourceIds": [
+        "source.sbo.wses-2018",
+        "source.sbo.east-2012"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "Exact clinical application and competing actions require named clinician review.",
+      "applicablePopulation": "Adults with suspected or established small-bowel obstruction.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "question-topic-small-bowel-obstruction-ileus.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.small-bowel-obstruction-ileus.deterioration-operation",
+      "statement": "New peritoneal findings or clinical deterioration during SBO care warrant timely exploration even when earlier assessment supported observation.",
+      "sourceIds": [
+        "source.sbo.east-2012",
+        "source.sbo.wses-2018"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Exact clinical application and competing actions require named clinician review.",
+      "applicablePopulation": "Adults with suspected or established small-bowel obstruction.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "question-topic-small-bowel-obstruction-ileus.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.small-bowel-obstruction-ileus.virgin-abdomen-trial",
+      "statement": "Absence of prior abdominal surgery does not by itself require exploration in every SBO patient when CT and examination support a supervised nonoperative trial.",
+      "sourceIds": [
+        "source.small-bowel-obstruction-ileus.wses-virgin-abdomen-2021",
+        "source.sbo.wses-2018"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "WSES position paper evidence is mostly retrospective. A nonadhesive cause must still be considered.",
+      "applicablePopulation": "Adults with suspected or established small-bowel obstruction.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "question-topic-small-bowel-obstruction-ileus.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.small-bowel-obstruction-ileus.nonoperative-support",
+      "statement": "A nonoperative SBO trial includes bowel rest, decompression when indicated, intravenous volume and electrolyte replacement, and serial surgical reassessment.",
+      "sourceIds": [
+        "source.sbo.wses-2018",
+        "source.sbo.east-2012"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Exact clinical application and competing actions require named clinician review.",
+      "applicablePopulation": "Adults with suspected or established small-bowel obstruction.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "question-topic-small-bowel-obstruction-ileus.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.small-bowel-obstruction-ileus.virgin-followup",
+      "statement": "Resolution of SBO in a previously unoperated abdomen does not establish its cause and should be followed by evaluation for an underlying lesion when indicated.",
+      "sourceIds": [
+        "source.small-bowel-obstruction-ileus.wses-virgin-abdomen-2021"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "low",
+      "limitation": "One adequate retrieved position paper. It does not specify a universal modality, surveillance interval or cancer-screening pathway.",
+      "applicablePopulation": "Adults with suspected or established small-bowel obstruction.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-renal-organ-support.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-renal-organ-support.citrate-bleeding",
+      "statement": "Regional citrate can extend CRRT circuit life in adults at high bleeding risk when citrate use is appropriate.",
+      "sourceIds": [
+        "src.critical-renal-organ-support.srlf-gfrup-2025",
+        "src.critical-renal-organ-support.citrate-consensus-2023"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "The preference over no anticoagulation is conditional. Systemic anticoagulation needs and metabolic risk alter the decision.",
+      "applicablePopulation": "Adults with surgical or general critical illness and AKI. Pediatric and chronic maintenance-dialysis decisions are excluded.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-renal-organ-support.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-renal-organ-support.citrate-monitoring",
+      "statement": "Citrate anticoagulation requires monitoring of systemic ionized calcium and metabolic changes.",
+      "sourceIds": [
+        "src.critical-renal-organ-support.citrate-consensus-2023",
+        "src.critical-renal-organ-support.srlf-gfrup-2025"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "No universal infusion recipe or monitoring interval is authored.",
+      "applicablePopulation": "Adults with surgical or general critical illness and AKI. Pediatric and chronic maintenance-dialysis decisions are excluded.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-renal-organ-support.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-renal-organ-support.rrt-weaning",
+      "statement": "A monitored trial off CRRT can be considered when spontaneous urine output and current metabolic and volume needs suggest sufficient kidney support.",
+      "sourceIds": [
+        "src.critical-renal-organ-support.srlf-gfrup-2025",
+        "src.critical-renal-organ-support.japanese-aki-2018"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "There is no universal successful-weaning urine cutoff. Reassess and restart if needed.",
+      "applicablePopulation": "Adults with surgical or general critical illness and AKI. Pediatric and chronic maintenance-dialysis decisions are excluded.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-renal-organ-support.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-renal-organ-support.creatinine-on-circuit",
+      "statement": "A low creatinine during CRRT can reflect treatment removal and does not establish independent kidney recovery.",
+      "sourceIds": [
+        "src.critical-renal-organ-support.japanese-aki-2018"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "One guideline explicitly explains production, native elimination and treatment removal. Use the observed interruption course.",
+      "applicablePopulation": "Adults with surgical or general critical illness and AKI. Pediatric and chronic maintenance-dialysis decisions are excluded.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-renal-organ-support.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-renal-organ-support.kidney-assessment",
+      "statement": "Creatinine and urine-output trajectories should be integrated with the clinical course when assessing AKI.",
+      "sourceIds": [
+        "src.critical-renal-organ-support.japanese-aki-2018",
+        "src.critical-renal-organ-support.aki-workup-2016"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Creatinine lags changes in filtration and is affected by fluid distribution and treatment clearance.",
+      "applicablePopulation": "Adults with surgical or general critical illness and AKI. Pediatric and chronic maintenance-dialysis decisions are excluded.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-renal-organ-support.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-renal-organ-support.stable-rrt-modality",
+      "statement": "Hemodynamically stable adults with an ongoing replacement need may receive either continuous or intermittent kidney support.",
+      "sourceIds": [
+        "src.critical-renal-organ-support.srlf-gfrup-2025",
+        "src.critical-renal-organ-support.japanese-aki-2018"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Modality conversion does not establish that replacement remains necessary. Current requirements and local expertise govern.",
+      "applicablePopulation": "Adults with surgical or general critical illness and AKI. Pediatric and chronic maintenance-dialysis decisions are excluded.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-shock-resuscitation.ppv-validity",
+      "statement": "Respiratory pulse-pressure variation becomes unreliable with spontaneous respiratory effort or an irregular rhythm.",
+      "sourceIds": [
+        "source.critical-shock-resuscitation.monnet-fluid-response-2016"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "One directly inspected technical source. An arterial-line variation value does not rescue violated acquisition assumptions.",
+      "applicablePopulation": "Adults undergoing acute hospital shock assessment and resuscitation",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-shock-resuscitation.plr-flow",
+      "statement": "Passive leg raising can assess preload responsiveness during spontaneous breathing or arrhythmia when its effect on flow is measured directly.",
+      "sourceIds": [
+        "source.critical-shock-resuscitation.monnet-fluid-response-2016",
+        "source.critical-shock-resuscitation.ssc-2026"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Use technically adequate flow measurement and the reversible response. Arterial pressure change and isolated IVC diameter are insufficient substitutes.",
+      "applicablePopulation": "Adults undergoing acute hospital shock assessment and resuscitation",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-shock-resuscitation.dynamic-over-static",
+      "statement": "Dynamic flow response is more useful than static filling pressure for predicting a cardiac-output response to further volume expansion.",
+      "sourceIds": [
+        "source.critical-shock-resuscitation.monnet-fluid-response-2016",
+        "source.critical-shock-resuscitation.esicm-shock-2025"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Predicting a cardiac-output response does not establish clinical benefit or a mandate to give fluid.",
+      "applicablePopulation": "Adults undergoing acute hospital shock assessment and resuscitation",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-shock-resuscitation.ivc-variation-limitations",
+      "statement": "Respiratory vena-caval variation has important acquisition and physiologic limitations, especially during spontaneous breathing.",
+      "sourceIds": [
+        "source.critical-shock-resuscitation.monnet-fluid-response-2016"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "One directly inspected technical source. No universal caval-diameter cutoff is authored and no isolated caval observation establishes fluid responsiveness.",
+      "applicablePopulation": "Adults undergoing acute hospital shock assessment and resuscitation",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-shock-resuscitation.fluid-need-risk",
+      "statement": "A positive preload-response test requires a separate assessment of hypoperfusion and fluid-related harm before a bolus is chosen.",
+      "sourceIds": [
+        "source.critical-shock-resuscitation.monnet-fluid-response-2016",
+        "source.critical-shock-resuscitation.esicm-shock-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Risk-benefit assessment is individualized. No source establishes the numerical patient observations as a universal treatment cutoff.",
+      "applicablePopulation": "Adults undergoing acute hospital shock assessment and resuscitation",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-shock-resuscitation.norepinephrine-first",
+      "statement": "Norepinephrine is the preferred initial vasopressor for septic shock with persistent hypotension and preserved cardiac systolic function.",
+      "sourceIds": [
+        "source.critical-shock-resuscitation.ssc-2026",
+        "source.critical-shock-resuscitation.jsscg-2024"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "SSC 2026 allows either norepinephrine or epinephrine with concomitant cardiac dysfunction. These initial cases explicitly retain preserved systolic function.",
+      "applicablePopulation": "Adults undergoing acute hospital shock assessment and resuscitation",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-shock-resuscitation.inotrope-low-flow",
+      "statement": "Dobutamine added to norepinephrine is an option for septic cardiac dysfunction with ongoing hypoperfusion despite adequate pressure and volume assessment.",
+      "sourceIds": [
+        "source.critical-shock-resuscitation.ssc-2026",
+        "source.critical-shock-resuscitation.jsscg-2024"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "Very-low-certainty SSC recommendation. Epinephrine is another supported strategy. This packet does not offer both as mutually exclusive keys or claim a survival benefit.",
+      "applicablePopulation": "Adults undergoing acute hospital shock assessment and resuscitation",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-shock-resuscitation.pressure-flow-distinction",
+      "statement": "An achieved arterial-pressure target does not establish adequate cardiac output or tissue perfusion.",
+      "sourceIds": [
+        "source.critical-shock-resuscitation.mclean-echo-2016",
+        "source.critical-shock-resuscitation.esicm-shock-2025",
+        "source.critical-shock-resuscitation.jsscg-2024"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Interpret serial perfusion, flow and ventricular findings together. No isolated catheter value diagnoses the shock mechanism.",
+      "applicablePopulation": "Adults undergoing acute hospital shock assessment and resuscitation",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.round2.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-shock-resuscitation.r2-limited-tte",
+      "statement": "A preserved left-ventricular contraction observation from incomplete transthoracic imaging does not assess unvisualized right-sided or pericardial structures.",
+      "sourceIds": [
+        "source.critical-shock-resuscitation.mclean-echo-2016",
+        "source.critical-shock-resuscitation.minami-tee-2026"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "The inference is limited to the structures actually acquired. A missing exported image and a documented failed acoustic window are different problems.",
+      "applicablePopulation": "Adults undergoing acute hospital shock assessment and resuscitation",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.round2.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-shock-resuscitation.r2-tee-after-limited-tte",
+      "statement": "TEE can provide structural cardiac assessment when persistent shock remains unexplained and transthoracic windows cannot provide the needed views.",
+      "sourceIds": [
+        "source.critical-shock-resuscitation.mclean-echo-2016",
+        "source.critical-shock-resuscitation.minami-tee-2026"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "TEE requires trained acquisition and procedure-specific safety assessment. The current cohort concerns cardiovascular ICU practice. This fictional patient's postoperative window problem is an acquisition-based application, requiring clinician review.",
+      "applicablePopulation": "Adults undergoing acute hospital shock assessment and resuscitation",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.round2.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-shock-resuscitation.r2-contrast-border",
+      "statement": "Ultrasound contrast can improve endocardial-border definition during echocardiographic assessment of ventricular contraction.",
+      "sourceIds": [
+        "source.critical-shock-resuscitation.mclean-echo-2016"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "One directly inspected review. This supports the contrast-TTE competitor under an appropriate border-definition problem. It does not establish that contrast restores a physically inaccessible transthoracic acoustic path.",
+      "applicablePopulation": "Adults undergoing acute hospital shock assessment and resuscitation",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-shock-resuscitation.echo-first",
+      "statement": "Bedside echocardiography helps distinguish cardiac, obstructive and mixed mechanisms when shock persists despite initial treatment.",
+      "sourceIds": [
+        "source.critical-shock-resuscitation.esicm-shock-2025",
+        "source.critical-shock-resuscitation.jsscg-2024",
+        "source.critical-shock-resuscitation.mclean-echo-2016"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Echo findings require clinical interpretation. First-line echo is not a claim that all other testing or advanced monitoring is unnecessary.",
+      "applicablePopulation": "Adults undergoing acute hospital shock assessment and resuscitation",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-appendix-appendicitis.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.appendix-appendicitis.lamn-versus-invasive",
+      "statement": "Infiltrative malignant glands distinguish appendiceal adenocarcinoma from a noninfiltrative low-grade mucinous neoplasm.",
+      "sourceIds": [
+        "source.appendix-appendicitis.ascrs-2025"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "moderate",
+      "limitation": "One directly verified current specialty guideline. A fully evaluated permanent specimen is supplied in the draft. A small biopsy or uncertain frozen section would not establish the same extent.",
+      "applicablePopulation": "Permanent pathology assessment of an appendectomy specimen.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-appendix-appendicitis.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.appendix-appendicitis.adenocarcinoma-colectomy",
+      "statement": "Nonmetastatic appendiceal adenocarcinoma generally warrants oncologic right hemicolectomy with regional nodal assessment.",
+      "sourceIds": [
+        "source.appendix-appendicitis.ascrs-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "One directly verified current specialty guideline, recommendation 13. The draft has invasion into mesoappendiceal fat, adequate staging and a fit patient. The recommendation is not generalized to isolated LAMN or disseminated peritoneal disease.",
+      "applicablePopulation": "Fit adults with invasive appendiceal adenocarcinoma and no distant or peritoneal metastases.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-appendix-appendicitis.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.appendix-appendicitis.lamn-complete-resection",
+      "statement": "Appendectomy is sufficient surgical treatment for a margin-negative LAMN with an intact wall and no peritoneal involvement.",
+      "sourceIds": [
+        "source.appendix-appendicitis.ascrs-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "One directly verified current specialty guideline, recommendation 12. Used for counterfactuals and the boundary against invasive carcinoma. Surveillance details remain outside the scored task.",
+      "applicablePopulation": "Completely resected, nonperforated LAMN without peritoneal disease.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-appendix-appendicitis.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.appendix-appendicitis.peritoneal-mucin-treatment",
+      "statement": "Selected patients with appendiceal mucinous neoplasia and peritoneal dissemination merit peritoneal-surface surgical assessment for cytoreduction and intraperitoneal treatment.",
+      "sourceIds": [
+        "source.appendix-appendicitis.ascrs-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "One directly verified current specialty guideline, recommendations 13-15. Right colectomy does not by itself address diffuse peritoneal disease. Systemic chemotherapy has limited activity in low-grade disease. Referral does not assert that every patient is operable or requires one HIPEC regimen.",
+      "applicablePopulation": "A fit patient with biopsy-confirmed low-grade appendiceal mucinous peritoneal disease and no distant solid-organ metastases.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-appendix-appendicitis.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.appendix-appendicitis.cellular-deposit-assessment",
+      "statement": "A permanent biopsy containing low-grade mucinous epithelium in a deposit outside the appendix establishes cellular extra-appendiceal disease in that sampled site; an acellular sample from another site does not negate it.",
+      "sourceIds": [
+        "source.appendix-appendicitis.ascrs-2025"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "moderate",
+      "limitation": "ASCRS 2025 recommendations 2, 11 and 14 support representative biopsy, tissue-based cellularity and limitations of cytology. The conclusion is confined to represented tissue, not a claim that all deposits share that grade or that cytology should be routinely ordered.",
+      "applicablePopulation": "Separately labelled mucin and solid-nodule samples obtained at appendectomy.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-appendix-appendicitis.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.appendix-appendicitis.goblet-cell-identity",
+      "statement": "Infiltrative appendiceal goblet-cell epithelial tumors follow an adenocarcinoma treatment pathway despite possible focal neuroendocrine-marker expression.",
+      "sourceIds": [
+        "source.appendix-appendicitis.ascrs-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "One directly verified current specialty guideline. The exact diagnosis is confirmed on expert permanent review. A stain result by itself is insufficient to reclassify the tumor.",
+      "applicablePopulation": "Localized appendiceal goblet cell adenocarcinoma.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-appendix-appendicitis.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.appendix-appendicitis.intact-abnormal-appendix",
+      "statement": "An abnormal appendix encountered incidentally can be removed intact with a grossly clear base, preserving definitive specimen assessment before deciding on oncologic colectomy.",
+      "sourceIds": [
+        "source.appendix-appendicitis.ascrs-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "One directly verified current specialty guideline, recommendation 2. The base and extent govern resection. Suspected mucinous lesions require avoidance of rupture. No automatic operation is specified for extensive peritoneal disease.",
+      "applicablePopulation": "An incidentally dilated, unruptured appendix with a separable uninvolved base and no peritoneal deposits.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-appendix-appendicitis.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.appendix-appendicitis.small-favorable-net-resection",
+      "statement": "A subcentimeter appendiceal NET without unfavorable features can be treated by appendectomy that includes the mesoappendix.",
+      "sourceIds": [
+        "source.appendix-appendicitis.ascrs-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "One directly verified current specialty guideline, recommendation 7. Used as a counterfactual boundary. This packet supplies no universal rule for 1-2-cm tumors or a surveillance schedule.",
+      "applicablePopulation": "A completely removed appendiceal NET smaller than 1 cm with favorable histology.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-appendix-appendicitis.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.appendix-appendicitis.hepatic-cyst-mri",
+      "statement": "A liver lesion with homogeneous fluid signal, a thin smooth wall and no enhancing internal tissue on adequate contrast MRI has the characteristic morphology of a simple hepatic cyst.",
+      "sourceIds": [
+        "source.appendix-appendicitis.chenin-2022-cysts"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Publisher full text and CC BY 4.0 verified. This is a narrow morphology claim, not a claim that a negative receptor scan excludes all liver metastases. Imaging must actually resolve the represented lesions.",
+      "applicablePopulation": "Adequate precontrast, fluid-sensitive and postcontrast liver MRI of previously indeterminate lesions.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-appendix-appendicitis.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.appendix-appendicitis.net-resection",
+      "statement": "For a nonmetastatic appendiceal NET larger than 2 cm, right hemicolectomy addresses the regional nodal basin even after a margin-negative appendectomy.",
+      "sourceIds": [
+        "source.appendix-appendicitis.ascrs-2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "One directly verified current specialty guideline, recommendation 7. The exact greater-than-2-cm threshold is directly stated there. Management of tumors measuring 1-2 cm is withheld as a disputed boundary.",
+      "applicablePopulation": "A fit adult with a 2.6-cm well-differentiated appendiceal NET and no distant disease.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-appendix-appendicitis.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.appendix-appendicitis.net-functional-staging",
+      "statement": "Somatostatin-receptor PET/CT can clarify staging of a well-differentiated appendiceal NET when cross-sectional imaging leaves possible metastases unresolved.",
+      "sourceIds": [
+        "source.appendix-appendicitis.ascrs-2025"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "One directly verified current specialty guideline, recommendation 5. Ga-DOTA PET/CT is favored over older receptor scintigraphy for sensitivity and over FDG PET/CT in well-differentiated NETs. Exact comparative performance estimates are excluded.",
+      "applicablePopulation": "Patients with appendiceal NETs larger than 2 cm or indeterminate metastatic findings.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.equivocal-bowel-observe",
+      "statement": "A high-risk blunt mechanism with nonspecific bowel or mesenteric CT abnormalities warrants inpatient observation with serial assessment rather than reassurance from absence of free air.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-bowel-2022"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "One guideline; limited to stable, clinically evaluable patients without a direct operative sign. This is not a blanket rule after a completely normal high-quality CT.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.bowel-direct-sign",
+      "statement": "A traumatic bowel-wall defect or convincing extraluminal enteric contrast is a direct indication for prompt surgical exploration.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-bowel-2022"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "high",
+      "limitation": "One guideline; isolated free fluid or mesenteric stranding does not carry the same implication.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.stable-ct",
+      "statement": "In a sustained stable or stabilized adult without an immediate operative indication, IV-contrast CT characterizes abdominal injury beyond what FAST can exclude.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-liver-2020",
+        "source.trauma-initial-abdomen.east-liver-2012",
+        "source.trauma-initial-abdomen.east-spleen-2012"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "high",
+      "limitation": "Negative FAST is not a general exclusion of visceral or retroperitoneal injury; no sensitivity number is taught.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.evolving-bowel-repeat-ct",
+      "statement": "Evolving suspicion after an equivocal initial bowel CT can justify repeat CT while the patient remains stable and has not developed an operative indication.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-bowel-2022"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "One guideline; repeat imaging must not delay operation for peritonitis or instability. The question does not teach a fixed interval.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.equivocal-bowel-six-hour-reassessment",
+      "statement": "After an equivocal initial CT in suspected blunt bowel injury, WSES supports CT reassessment after a six-hour interval; an evolving suspicious course also supports repeat imaging.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-bowel-2022"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "This is a guideline reassessment recommendation for selected equivocal or evolving presentations, not a mandatory universal scan clock, a gameplay wait estimate, or a reason to delay operation for peritonitis. One guideline publication directly supports the six-hour value.",
+      "applicablePopulation": "Adults with traumatic abdominal injury receiving hospital care, reviewed here as outside-hospital clinic records.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.unstable-positive-fast",
+      "statement": "Persistent circulatory deterioration after resuscitation together with intraperitoneal fluid on FAST supports urgent trauma laparotomy rather than transport for CT.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-bowel-2022",
+        "source.trauma-initial-abdomen.wses-pancreas-duodenum-2019",
+        "source.trauma-initial-abdomen.east-liver-2012"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "high",
+      "limitation": "A transient pressure rise does not establish sustained stabilization; this claim does not choose among hybrid-suite interventions in a sustained responder.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.pelvic-packing-after-angio",
+      "statement": "Persistent pelvic hemorrhage after angiography despite pelvic stabilization is an indication to consider preperitoneal packing for bleeding not controlled by an arterial procedure.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-pelvis-2017"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "One older guideline publication; does not rank initial packing against immediate angiography in every center or select orthopedic fixation.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.pelvic-arterial-embolization",
+      "statement": "Persistent pelvic bleeding with an arterial CT focus after stabilization or packing supports angiography and possible selective embolization, including repeat angiography.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-pelvis-2017"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "One older guideline; arterial and nonarterial bleeding may coexist. An isolated fracture pattern does not identify the bleeding source.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.pelvic-fast-limitation",
+      "statement": "Absence of intraperitoneal fluid on FAST does not exclude pelvic retroperitoneal hemorrhage.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-pelvis-2017",
+        "source.trauma-initial-abdomen.wses-liver-2020"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "high",
+      "limitation": "It also does not prove the pelvis is the only source; associated thoracic, abdominal and external sources must be assessed.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.contrast-phase-interpretation",
+      "statement": "Multiphase trauma CT can distinguish an enlarging pool of extravasated arterial contrast from a contained vascular sac that follows blood-pool enhancement.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-liver-2020"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "One guideline supports active-versus-contained vascular interpretation. The constructed report is text, not a simulated scan or a performance claim.",
+      "applicablePopulation": "Adults with the specific abdominal/pelvic injury and care phase described in the mapped draft.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.bladder-cystography",
+      "statement": "Gross hematuria after blunt pelvic trauma warrants retrograde cystography, using conventional radiography or a CT cystogram.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-uro-2019",
+        "source.trauma-initial-abdomen.east-bladder-2019"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "high",
+      "limitation": "Cystography follows urgent hemorrhage control. If urethral injury is suspected, urethral assessment precedes catheter placement.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.passive-ct-insufficient",
+      "statement": "Renally excreted contrast reaching a partially filled bladder on ordinary trauma CT does not substitute for retrograde bladder distension during cystography.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-uro-2019"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "high",
+      "limitation": "One guideline publication; distinguishes an unperformed adequate acquisition from a missing exported image series.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.renal-excretory-phase",
+      "statement": "Delayed excretory imaging evaluates urinary extravasation and ureteral continuity beyond the arterial and venous trauma CT phases.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-uro-2019"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "high",
+      "limitation": "One guideline publication; does not require an invented acquisition delay or presume a missing series was never acquired.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.urethral-assessment",
+      "statement": "When traumatic urethral injury is suspected, retrograde urethrography or appropriate urethroscopy evaluates the urethra; urethral assessment precedes bladder catheterization when feasible.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-uro-2019"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Single guideline; modality varies with sex and specific injury. The mapped patient already has documented atraumatic catheter access.",
+      "applicablePopulation": "Adults with the specific abdominal/pelvic injury and care phase described in the mapped draft.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.complex-bladder",
+      "statement": "Bladder-neck involvement, intravesical bone injury or associated rectal/vaginal injury can make an extraperitoneal bladder rupture a repair problem rather than simple catheter care.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.east-bladder-2019",
+        "source.trauma-initial-abdomen.wses-uro-2019"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Do not equate a pelvic fracture by itself with every listed complex feature; the precise boundary remains for clinician review.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.extraperitoneal-bladder",
+      "statement": "Uncomplicated traumatic extraperitoneal bladder rupture can be treated with catheter drainage rather than routine repair.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.east-bladder-2019",
+        "source.trauma-initial-abdomen.wses-uro-2019"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Complex injuries, adjacent organ injury and planned relevant pelvic surgery may alter management. WSES wording around fracture-associated complexity is broader than EAST; no fracture-alone repair rule is taught.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.distal-pancreatic-duct",
+      "statement": "A distal pancreatic transection with main-duct disruption is a resectional injury; distal pancreatectomy is supported in a stable adult requiring operative treatment.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-pancreas-duodenum-2019",
+        "source.trauma-initial-abdomen.east-pancreas-2017"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "Both guidelines are conditional/low-quality here. Proximal injuries and endoscopically bridgeable selected injuries need a different discussion; the draft is an intraoperative distal complete transection.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.minor-pancreas",
+      "statement": "A minor pancreatic injury with an intact main duct generally permits nonresectional management; intraoperative drainage may be used.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-pancreas-duodenum-2019",
+        "source.trauma-initial-abdomen.east-pancreas-2017"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Duct status must be adequately assessed, not inferred from a normal early enzyme value.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.pancreatic-duct-evaluate",
+      "statement": "If duct integrity remains uncertain after CT, further duct assessment with MRCP or ERCP can change pancreatic injury management.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-pancreas-duodenum-2019",
+        "source.trauma-initial-abdomen.east-pancreas-2017"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Neither option is ranked universally; the draft does not claim a normal MRCP invariably excludes duct injury or rank the two tests.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.duodenal-complex",
+      "statement": "Destructive duodenopancreatic injury may need complex reconstruction; shock favors damage control with reconstruction staged by experienced teams.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-pancreas-duodenum-2019"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "One guideline; do not teach routine pancreaticoduodenectomy or pyloric exclusion for an otherwise repairable duodenal tear.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.pancreatic-specialist-reconstruction",
+      "statement": "Pancreaticojejunostomy is a described specialist reconstructive option in selected severe pancreatic injuries; limited evidence does not make it routine for isolated distal duct transection.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-pancreas-duodenum-2019",
+        "source.trauma-initial-abdomen.east-pancreas-2017"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "WSES describes selected reconstructions; EAST includes very limited severe-injury reports. This is an existence/selection boundary, not a rule favoring Roux-en-Y reconstruction for every proximal injury.",
+      "applicablePopulation": "Adults with the specific abdominal/pelvic injury and care phase described in the mapped draft.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.contained-zone-two",
+      "statement": "During exploration of an unstable adult trauma patient, a stable nonexpanding zone-II renal hematoma need not be opened; instability may come from another injury.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.east-renal-2023"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "Conditional EAST 2023 recommendation from limited observational data. Stable describes the hematoma, not the patient. Do not generalize to an expanding/pulsatile hematoma or central vascular injury.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.renal-preservation",
+      "statement": "When an expanding renal hematoma requires intervention, kidney-preserving techniques are conditionally favored over automatic nephrectomy when feasible.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.east-renal-2023"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "Conditional low-quality evidence; life-saving nephrectomy remains possible when repair cannot control hemorrhage.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.small-bowel-repair",
+      "statement": "A viable nondestructive small-bowel laceration can undergo primary repair; loss of more than half the circumference or mesenteric devascularization argues against that repair.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-bowel-2022"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "One guideline; the greater-than-50% boundary is directly stated in its primary-repair section. No universal suture technique or mandatory stoma rule is taught.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.small-bowel-anastomosis-selection",
+      "statement": "After necessary small-bowel resection, viable bowel and restored physiology can support immediate anastomosis; unresolved perfusion, resuscitation or control tasks can favor staged reconstruction.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-bowel-2022"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Choice remains patient- and operation-specific. No exact blood, pressor, pH or contamination threshold is asserted. WSES is the direct publication; this is not independent cohort replication.",
+      "applicablePopulation": "Adults with traumatic abdominal injury receiving hospital care, reviewed here as outside-hospital clinic records.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.damage-control",
+      "statement": "Continuing hypotension, worsening acidosis, hypothermia and coagulopathic bleeding favor an abbreviated operation with hemorrhage/contamination control and temporary abdominal closure.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-open-abdomen-2018",
+        "source.trauma-initial-abdomen.wses-pancreas-duodenum-2019"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Physiology and unfinished surgical tasks govern the decision; no universal numerical trigger or exact resuscitation prescription is taught.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.trauma-initial-abdomen.keep-open",
+      "statement": "An open abdomen may remain necessary while resuscitation, contamination control, deferred reconstruction or reassessment of questionable bowel viability is unfinished.",
+      "sourceIds": [
+        "source.trauma-initial-abdomen.wses-open-abdomen-2018"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "One adequate guideline publication; does not imply that edema or a trauma diagnosis mandates an open abdomen.",
+      "applicablePopulation": "Adults with abdominal or pelvic trauma in a trauma-capable hospital.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-respiratory-ventilation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-respiratory-ventilation.air-trapping",
+      "statement": "In severe obstructive airflow limitation, incomplete exhalation can cause intrinsic PEEP; reducing respiratory rate can lengthen expiration and lessen trapping despite persistent hypercapnia.",
+      "sourceIds": [
+        "source.critical-respiratory-ventilation.gayen2024",
+        "source.critical-respiratory-ventilation.aarc-pva2024"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Review directly supports the rate action; assessment guideline independently supports checking auto-PEEP. No numeric rate, safe pH or external-PEEP prescription is generalized.",
+      "applicablePopulation": "Adults in the stated outside-hospital record; clinic encounter is retrospective review.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-respiratory-ventilation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-respiratory-ventilation.plateau",
+      "statement": "During passive ventilation, an end-inspiratory hold measures plateau pressure and helps separate a flow-dependent peak-pressure increase from persistent static pressure loading.",
+      "sourceIds": [
+        "source.critical-respiratory-ventilation.aarc-pva2024",
+        "source.critical-respiratory-ventilation.gayen2024"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Acquisition requires minimal patient effort and no major leak; unchanged delivered volume, flow and measured total PEEP are necessary for matched inference.",
+      "applicablePopulation": "Adults in the stated outside-hospital record; clinic encounter is retrospective review.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-respiratory-ventilation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-respiratory-ventilation.niv-rescue",
+      "statement": "NIV should generally not delay reintubation for established post-extubation respiratory failure in the general non-COPD, non-postoperative population.",
+      "sourceIds": [
+        "source.critical-respiratory-ventilation.ers-ats-niv2017"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "low",
+      "limitation": "Conditional low-certainty guidance; COPD and postoperative populations are exceptions to generalization. Case uses medical pneumonia and worsening fatigue.",
+      "applicablePopulation": "Adults in the stated outside-hospital record; clinic encounter is retrospective review.",
+      "lastCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-respiratory-ventilation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.critical-respiratory-ventilation.niv-failure",
+      "statement": "Immediate clinical deterioration during an NIV trial requires prompt reassessment for invasive ventilation rather than extending the mask trial to normalize saturation.",
+      "sourceIds": [
+        "source.critical-respiratory-ventilation.ers-ats-niv2017"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": "Single joint guideline; key case has worsening consciousness, effort and acidemia together, not a universal pH-alone intubation threshold.",
+      "applicablePopulation": "Adults in the stated outside-hospital record; clinic encounter is retrospective review.",
+      "lastCheckedOn": "2026-11-11"
+    }
+  ],
+  "sources": [
+    {
+      "contentVersion": "question-topic-small-bowel-obstruction-ileus.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.sbo.wses-2018",
+      "title": "Bologna guidelines for adhesive small bowel obstruction, 2017 update",
+      "completeCitation": "ten Broek RPG, Krielen P, Di Saverio S, Coccolini F, Biffl WL, Ansaloni L, et al. Bologna guidelines for diagnosis and management of adhesive small bowel obstruction (ASBO): 2017 update of the evidence-based guidelines from the world society of emergency surgery ASBO working group. World J Emerg Surg. 2018;13:24. doi:10.1186/s13017-018-0185-2.",
+      "organizationOrJournal": "World Society of Emergency Surgery / World Journal of Emergency Surgery",
+      "authors": [
+        "Richard PG ten Broek",
+        "P Krielen",
+        "Salomone Di Saverio",
+        "Federico Coccolini",
+        "Walter L Biffl",
+        "Luca Ansaloni",
+        "et al."
+      ],
+      "publicationYear": 2018,
+      "doi": "10.1186/s13017-018-0185-2",
+      "pmid": "29946347",
+      "officialUrl": "https://link.springer.com/article/10.1186/s13017-018-0185-2",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article rights section explicitly grants CC BY 4.0. Independent atomic factual synthesis with attribution and original constructed patients. Source expression, algorithms and figures are excluded. Existing source identity retained. First repository access 2026-09-28. Targeted online recheck 2026-11-11.",
+      "authorityAssessment": "WSES society guideline addressing adhesive SBO diagnosis, urgency, observation and contrast. The guideline is older and exact observation duration rests on limited evidence.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.small-bowel-obstruction-ileus.transition-pattern",
+        "claim.small-bowel-obstruction-ileus.nonoperative-eligibility",
+        "claim.small-bowel-obstruction-ileus.nonoperative-support",
+        "claim.small-bowel-obstruction-ileus.closed-loop-risk",
+        "claim.small-bowel-obstruction-ileus.deterioration-operation",
+        "claim.small-bowel-obstruction-ileus.contrast-prognosis",
+        "claim.small-bowel-obstruction-ileus.trial-duration",
+        "claim.small-bowel-obstruction-ileus.contrast-viability-limit",
+        "claim.small-bowel-obstruction-ileus.postoperative-reassessment",
+        "claim.small-bowel-obstruction-ileus.virgin-abdomen-trial",
+        "claim.small-bowel-obstruction-ileus.laparoscopic-selection",
+        "claim.small-bowel-obstruction-ileus.contrast-therapeutic-disagreement",
+        "claim.small-bowel-obstruction-ileus.ct-assessment",
+        "claim.small-bowel-obstruction-ileus.plain-film-limit",
+        "claim.small-bowel-obstruction-ileus.alternative-imaging",
+        "claim.small-bowel-obstruction-ileus.adhesive-operation-target",
+        "claim.small-bowel-obstruction-ileus.recurrence-not-acute-indication",
+        "claim.small-bowel-obstruction-ileus.changed-course-reassessment"
+      ]
+    },
+    {
+      "contentVersion": "question-topic-small-bowel-obstruction-ileus.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.sbo.east-2012",
+      "title": "Evaluation and management of small-bowel obstruction, EAST guideline",
+      "completeCitation": "Maung AA, Johnson DC, Piper GL, Barbosa RR, Rowell SE, Bokhari F, Collins JN, Gordon JR, Ra JH, Kerwin AJ. Evaluation and management of small-bowel obstruction: an Eastern Association for the Surgery of Trauma practice management guideline. J Trauma Acute Care Surg. 2012;73(5 Suppl 4):S362-S369. doi:10.1097/TA.0b013e31827019de.",
+      "organizationOrJournal": "Eastern Association for the Surgery of Trauma",
+      "authors": [
+        "Adrian A Maung",
+        "Dirk C Johnson",
+        "Greta L Piper",
+        "Ronald R Barbosa",
+        "Susan E Rowell",
+        "Faran Bokhari",
+        "Jay N Collins",
+        "Joseph R Gordon",
+        "Jin H Ra",
+        "Andrew J Kerwin"
+      ],
+      "publicationYear": 2012,
+      "doi": "10.1097/TA.0b013e31827019de",
+      "pmid": "23114494",
+      "officialUrl": "https://www.east.org/education-resources/practice-management-guidelines/details/smallbowel-obstruction-evaluation-and-management-of",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Targeted factual verification of copyrighted society guidance",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Copyright reserved. Targeted factual checking and citation only. Terms at https://www.east.org/terms-of-use reviewed 2026-11-11, with no explicit AI-use prohibition observed in that page. No protected expression reproduced. Existing source identity retained. First repository access 2026-09-28.",
+      "authorityAssessment": "Independent society cross-check for deterioration, CT assessment and initial nonoperative management. Publication predates newer contrast trials.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.small-bowel-obstruction-ileus.transition-pattern",
+        "claim.small-bowel-obstruction-ileus.nonoperative-eligibility",
+        "claim.small-bowel-obstruction-ileus.nonoperative-support",
+        "claim.small-bowel-obstruction-ileus.closed-loop-risk",
+        "claim.small-bowel-obstruction-ileus.deterioration-operation",
+        "claim.small-bowel-obstruction-ileus.contrast-prognosis",
+        "claim.small-bowel-obstruction-ileus.trial-duration",
+        "claim.small-bowel-obstruction-ileus.contrast-viability-limit",
+        "claim.small-bowel-obstruction-ileus.postoperative-reassessment",
+        "claim.small-bowel-obstruction-ileus.laparoscopic-selection",
+        "claim.small-bowel-obstruction-ileus.contrast-therapeutic-disagreement",
+        "claim.small-bowel-obstruction-ileus.ct-assessment",
+        "claim.small-bowel-obstruction-ileus.plain-film-limit",
+        "claim.small-bowel-obstruction-ileus.alternative-imaging",
+        "claim.small-bowel-obstruction-ileus.adhesive-operation-target",
+        "claim.small-bowel-obstruction-ileus.intravenous-ct-perfusion",
+        "claim.small-bowel-obstruction-ileus.changed-course-reassessment"
+      ]
+    },
+    {
+      "contentVersion": "question-topic-small-bowel-obstruction-ileus.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.small-bowel-obstruction-ileus.wses-virgin-abdomen-2021",
+      "title": "Diagnosis and management of small bowel obstruction in virgin abdomen",
+      "completeCitation": "Amara Y, Leppaniemi A, Catena F, Ansaloni L, Sugrue M, Fraga GP, Coccolini F, Biffl WL, Peitzman AB, Kluger Y, Sartelli M, Moore EE, Di Saverio S, Darwish E, Endo C, van Goor H, ten Broek RP. Diagnosis and management of small bowel obstruction in virgin abdomen: a WSES position paper. World J Emerg Surg. 2021;16:36. doi:10.1186/s13017-021-00379-8.",
+      "organizationOrJournal": "World Society of Emergency Surgery / World Journal of Emergency Surgery",
+      "authors": [
+        "Yousef Amara",
+        "Ari Leppaniemi",
+        "Fausto Catena",
+        "Luca Ansaloni",
+        "Michael Sugrue",
+        "Gustavo P Fraga",
+        "Federico Coccolini",
+        "Walter L Biffl",
+        "Andrew B Peitzman",
+        "Yoram Kluger",
+        "Massimo Sartelli",
+        "Ernest E Moore",
+        "Salomone Di Saverio",
+        "Esfo Darwish",
+        "Chikako Endo",
+        "Harry van Goor",
+        "Richard P ten Broek"
+      ],
+      "publicationYear": 2021,
+      "doi": "10.1186/s13017-021-00379-8",
+      "pmid": "34217331",
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8254282/",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-specific license checked at copyright/license section. Attribution to Amara and colleagues. Independent factual synthesis. A contrast sentence in this publication appears internally inverted, so contrast timing claims use Bologna guidance and independent checking.",
+      "authorityAssessment": "WSES position paper, supported principally by small retrospective cohorts. Supports selective nonoperative care and subsequent etiologic evaluation, with low-certainty population limits.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.small-bowel-obstruction-ileus.normal-lactate-limit",
+        "claim.small-bowel-obstruction-ileus.virgin-abdomen-trial",
+        "claim.small-bowel-obstruction-ileus.virgin-followup"
+      ]
+    },
+    {
+      "contentVersion": "question-topic-small-bowel-obstruction-ileus.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.small-bowel-obstruction-ileus.wses-ifso-oba-2022",
+      "title": "OBA guidelines for acute abdomen after bariatric surgery",
+      "completeCitation": "De Simone B, Chouillard E, Ramos AC, Donatelli G, Pintar T, Gupta R, et al. Operative management of acute abdomen after bariatric surgery in the emergency setting: the OBA guidelines. World J Emerg Surg. 2022;17:51. doi:10.1186/s13017-022-00452-w. Corrected 2022 Nov 7.",
+      "organizationOrJournal": "World Society of Emergency Surgery / International Federation for the Surgery of Obesity and Metabolic Disorders",
+      "authors": [
+        "Belinda De Simone",
+        "Elie Chouillard",
+        "Almino C Ramos",
+        "Gianfranco Donatelli",
+        "Tadeja Pintar",
+        "Rahul Gupta",
+        "et al."
+      ],
+      "publicationYear": 2022,
+      "doi": "10.1186/s13017-022-00452-w",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s13017-022-00452-w",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Corrected publisher version and article CC BY 4.0 section reviewed. Independent synthesis restricted to obstruction urgency. Bariatric reconstruction, fistula repair and procedure technique remain outside this lane.",
+      "authorityAssessment": "Multisociety guidance for altered-anatomy emergencies. Persistent post-RYGB pain can warrant exploration despite unrevealing testing. Strong recommendations have low-quality evidence.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.small-bowel-obstruction-ileus.normal-lactate-limit",
+        "claim.small-bowel-obstruction-ileus.rygb-persistent-pain",
+        "claim.small-bowel-obstruction-ileus.rygb-negative-imaging-limit"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-renal-organ-support.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "accessedOn": "2026-11-11",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.critical-renal-organ-support.rrt-context",
+        "claim.critical-renal-organ-support.rrt-pulmonary",
+        "claim.critical-renal-organ-support.uf-hypovolemia",
+        "claim.critical-renal-organ-support.clearance-versus-removal",
+        "claim.critical-renal-organ-support.citrate-bleeding",
+        "claim.critical-renal-organ-support.citrate-monitoring",
+        "claim.critical-renal-organ-support.citrate-accumulation",
+        "claim.critical-renal-organ-support.rrt-weaning",
+        "claim.critical-renal-organ-support.slow-clearance-neuro",
+        "claim.critical-renal-organ-support.dose-outcome",
+        "claim.critical-renal-organ-support.stable-rrt-modality"
+      ],
+      "key": "srlf-gfrup-2025",
+      "title": "Renal replacement therapy in an intensive care unit: guidelines from the SRLF-GFRUP consensus conference",
+      "completeCitation": "Jourdain M, Gragueb Chatti I, Housni B, et al. Renal replacement therapy in an intensive care unit: guidelines from the SRLF-GFRUP consensus conference. Ann Intensive Care. 2025;15:100. doi:10.1186/s13613-025-01517-0.",
+      "organizationOrJournal": "Annals of Intensive Care / SRLF and GFRUP",
+      "authors": [
+        "Mercè Jourdain",
+        "Ines Gragueb Chatti",
+        "Brahim Housni",
+        "Pierre Jaquet",
+        "Mélissa Jezequel",
+        "Oumar Kane",
+        "Béatrice La Combe",
+        "Mickael Landais",
+        "Mehdi Marzouk",
+        "Etienne de Montmollin",
+        "Guillaume Mortamet",
+        "Mai-Anh Nay",
+        "Charlotte Salmon-Gandonnière",
+        "Sophie Perinel-Ragey",
+        "Jérôme Rambaud",
+        "Joanna Schmitt",
+        "Marie Simon",
+        "Julie Starck",
+        "Arnaud W. Thille",
+        "Pierre-François Dequin"
+      ],
+      "publicationYear": 2025,
+      "doi": "10.1186/s13613-025-01517-0",
+      "pmid": "40668437",
+      "officialUrl": "https://link.springer.com/article/10.1186/s13613-025-01517-0",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "CC BY 4.0",
+      "reuseStatus": "cc_by_4_0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "authorityAssessment": "Current multisociety adult/pediatric ICU consensus using GRADE. Adult recommendations are used. Several bedside actions rely on low-certainty panel opinion.",
+      "publicationIdentity": "srlf-gfrup-2025",
+      "verificationLocator": "Sections 1, 2, 4 and 5. Recommendations 1.1C, 1.1E, 1.2, 3.1, 4.4, 4.5, 6.2 and 7.2.",
+      "id": "src.critical-renal-organ-support.srlf-gfrup-2025",
+      "reuseNotes": "Targeted factual verification and independent original synthesis. Source expression, tables, algorithms, figures and excerpts are excluded. Attribution and article-specific licence links are retained. ",
+      "termsCheckedOn": "2026-11-11",
+      "termsUrl": "https://link.springer.com/termsandconditions",
+      "aiAccessAssessment": "Article-level rights and targeted society verification reviewed. No publisher AI-answering service was used. Rights assessment and medical authority are separate."
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-renal-organ-support.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "accessedOn": "2026-11-11",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.critical-renal-organ-support.citrate-bleeding",
+        "claim.critical-renal-organ-support.citrate-monitoring",
+        "claim.critical-renal-organ-support.citrate-accumulation",
+        "claim.critical-renal-organ-support.citrate-response"
+      ],
+      "key": "citrate-consensus-2023",
+      "title": "Management of regional citrate anticoagulation for CRRT — Chinese emergency medical doctor consensus",
+      "completeCitation": "Liu SY, Xu SY, Yin L, et al. Management of regional citrate anticoagulation for continuous renal replacement therapy: guideline recommendations from Chinese emergency medical doctor consensus. Mil Med Res. 2023;10:23. doi:10.1186/s40779-023-00457-9.",
+      "organizationOrJournal": "Military Medical Research / Emergency Medical Doctor Branch, Chinese Medical Doctor Association",
+      "authors": [
+        "Shu-Yuan Liu",
+        "Sheng-Yong Xu",
+        "Lu Yin"
+      ],
+      "authorListNote": "First three authors in standard et al. citation. Complete author list is available at the DOI.",
+      "publicationYear": 2023,
+      "doi": "10.1186/s40779-023-00457-9",
+      "pmid": "37248514",
+      "officialUrl": "https://link.springer.com/article/10.1186/s40779-023-00457-9",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "CC BY 4.0",
+      "reuseStatus": "cc_by_4_0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "authorityAssessment": "Specialist consensus on citrate monitoring and adverse effects. Some recommendations have low-certainty support and region-specific fluid formulations.",
+      "publicationIdentity": "citrate-consensus-2023",
+      "verificationLocator": "Recommendations 9–12 and the citrate-accumulation discussion.",
+      "id": "src.critical-renal-organ-support.citrate-consensus-2023",
+      "reuseNotes": "Targeted factual verification and independent original synthesis. Source expression, tables, algorithms, figures and excerpts are excluded. Attribution and article-specific licence links are retained. ",
+      "termsCheckedOn": "2026-11-11",
+      "termsUrl": "https://link.springer.com/termsandconditions",
+      "aiAccessAssessment": "Article-level rights and targeted society verification reviewed. No publisher AI-answering service was used. Rights assessment and medical authority are separate."
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-renal-organ-support.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "accessedOn": "2026-11-11",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.critical-renal-organ-support.volume-context",
+        "claim.critical-renal-organ-support.diuretic-congestion",
+        "claim.critical-renal-organ-support.fluid-excess",
+        "claim.critical-renal-organ-support.urine-indices",
+        "claim.critical-renal-organ-support.kidney-assessment",
+        "claim.critical-renal-organ-support.rrt-context",
+        "claim.critical-renal-organ-support.rrt-pulmonary",
+        "claim.critical-renal-organ-support.clearance-versus-removal",
+        "claim.critical-renal-organ-support.rrt-weaning",
+        "claim.critical-renal-organ-support.creatinine-on-circuit",
+        "claim.critical-renal-organ-support.slow-clearance-neuro",
+        "claim.critical-renal-organ-support.dose-outcome",
+        "claim.critical-renal-organ-support.aki-followup",
+        "claim.critical-renal-organ-support.stable-rrt-modality",
+        "claim.critical-renal-organ-support.urine-solute-indices-limits.r2"
+      ],
+      "key": "japanese-aki-2018",
+      "title": "The Japanese Clinical Practice Guideline for acute kidney injury 2016",
+      "completeCitation": "Doi K, Nishida O, Shigematsu T, et al., Japanese Clinical Practice Guideline for Acute Kidney Injury 2016 Committee. The Japanese Clinical Practice Guideline for acute kidney injury 2016. J Intensive Care. 2018;6:48. doi:10.1186/s40560-018-0308-6.",
+      "organizationOrJournal": "Journal of Intensive Care / Japanese multidisciplinary AKI committee",
+      "authors": [
+        "Kent Doi",
+        "Osamu Nishida",
+        "Takashi Shigematsu",
+        "Tomohito Sadahiro",
+        "Noritomo Itami",
+        "Kunitoshi Iseki",
+        "Yukio Yuzawa",
+        "Hirokazu Okada",
+        "Daisuke Koya",
+        "Hideyasu Kiyomoto",
+        "Yugo Shibagaki",
+        "Kenichi Matsuda",
+        "Akihiko Kato",
+        "Terumasa Hayashi",
+        "Tomonari Ogawa",
+        "Tatsuo Tsukamoto",
+        "Eisei Noiri",
+        "Shigeo Negi",
+        "Koichi Kamei",
+        "Hirotsugu Kitayama",
+        "Naoki Kashihara",
+        "Toshiki Moriyama",
+        "Yoshio Terada",
+        "Japanese Clinical Practice Guideline for Acute Kidney Injury 2016 Committee"
+      ],
+      "publicationYear": 2018,
+      "doi": "10.1186/s40560-018-0308-6",
+      "pmid": "30123509",
+      "officialUrl": "https://link.springer.com/article/10.1186/s40560-018-0308-6",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "CC BY 4.0",
+      "reuseStatus": "cc_by_4_0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "authorityAssessment": "Multisociety guideline based mainly on evidence through 2015–2016. Co-publications count once. Regional dose and anticoagulation practice is not universalized.",
+      "publicationIdentity": "japanese-aki-2018",
+      "verificationLocator": "CQ2, CQ4-3, CQ5-3, CQ7-1 to CQ7-4 and CQ8.",
+      "id": "src.critical-renal-organ-support.japanese-aki-2018",
+      "reuseNotes": "Targeted factual verification and independent original synthesis. Source expression, tables, algorithms, figures and excerpts are excluded. Attribution and article-specific licence links are retained. ",
+      "termsCheckedOn": "2026-11-11",
+      "termsUrl": "https://link.springer.com/termsandconditions",
+      "aiAccessAssessment": "Article-level rights and targeted society verification reviewed. No publisher AI-answering service was used. Rights assessment and medical authority are separate."
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-renal-organ-support.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "accessedOn": "2026-11-11",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.critical-renal-organ-support.urine-indices",
+        "claim.critical-renal-organ-support.kidney-assessment",
+        "claim.critical-renal-organ-support.pressure-organ-failure",
+        "claim.critical-renal-organ-support.sediment-scope",
+        "claim.critical-renal-organ-support.urine-solute-indices-limits.r2"
+      ],
+      "key": "aki-workup-2016",
+      "title": "Acute kidney injury 2016: diagnosis and diagnostic workup",
+      "completeCitation": "Ostermann M, Joannidis M. Acute kidney injury 2016: diagnosis and diagnostic workup. Crit Care. 2016;20:299. doi:10.1186/s13054-016-1478-z.",
+      "organizationOrJournal": "Critical Care",
+      "authors": [
+        "Marlies Ostermann",
+        "Michael Joannidis"
+      ],
+      "publicationYear": 2016,
+      "doi": "10.1186/s13054-016-1478-z",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s13054-016-1478-z",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "CC BY 4.0",
+      "reuseStatus": "cc_by_4_0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "authorityAssessment": "Diagnostic review addressing limitations of urinary indices and creatinine. Supplies diagnostic physiology, with separate current guidance for management.",
+      "publicationIdentity": "aki-workup-2016",
+      "verificationLocator": "Urine microscopy, urinary electrolytes, ultrasound, creatinine limitations and biopsy. No claim uses the review’s quotation of NICE.",
+      "id": "src.critical-renal-organ-support.aki-workup-2016",
+      "reuseNotes": "Targeted factual verification and independent original synthesis. Source expression, tables, algorithms, figures and excerpts are excluded. Attribution and article-specific licence links are retained. ",
+      "termsCheckedOn": "2026-11-11",
+      "termsUrl": "https://link.springer.com/termsandconditions",
+      "aiAccessAssessment": "Article-level rights and targeted society verification reviewed. No publisher AI-answering service was used. Rights assessment and medical authority are separate."
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.critical-shock-resuscitation.monnet-fluid-response-2016",
+      "title": "Prediction of fluid responsiveness",
+      "completeCitation": "Monnet X, Marik PE, Teboul JL. Prediction of fluid responsiveness: an update. Annals of Intensive Care. 2016;6:111. doi:10.1186/s13613-016-0216-7.",
+      "organizationOrJournal": "Annals of Intensive Care",
+      "authors": [
+        "Xavier Monnet",
+        "Paul E. Marik",
+        "Jean-Louis Teboul"
+      ],
+      "publicationYear": 2016,
+      "doi": "10.1186/s13613-016-0216-7",
+      "pmid": "27858374",
+      "officialUrl": "https://link.springer.com/article/10.1186/s13613-016-0216-7",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level CC BY 4.0 verified. Credit Monnet, Marik and Teboul, Annals of Intensive Care, and https://creativecommons.org/licenses/by/4.0/. Original statements and fictional numerical examples. No figure, table, wording or source case copied.",
+      "authorityAssessment": "Detailed physiology review for test validity and the distinction between fluid responsiveness, perfusion need and fluid risk. Older technical source cross-checked against current ESICM and SSC principles. No outcome benefit or universal cutoff inferred.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.critical-shock-resuscitation.dynamic-over-static",
+        "claim.critical-shock-resuscitation.ivc-variation-limitations",
+        "claim.critical-shock-resuscitation.ppv-validity",
+        "claim.critical-shock-resuscitation.plr-flow",
+        "claim.critical-shock-resuscitation.fluid-need-risk",
+        "claim.critical-shock-resuscitation.lactate-context",
+        "claim.critical-shock-resuscitation.rv-fluid-risk"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.critical-shock-resuscitation.ssc-2026",
+      "title": "Surviving Sepsis Campaign adult guidelines 2026",
+      "completeCitation": "Prescott HC, Antonelli M, Alhazzani W, et al. Surviving Sepsis Campaign: international guidelines for management of sepsis and septic shock 2026. Intensive Care Medicine. 2026;52:863–936. doi:10.1007/s00134-026-08361-1. Parallel publication in Critical Care Medicine. doi:10.1097/CCM.0000000000007075.",
+      "organizationOrJournal": "SCCM and ESICM / Intensive Care Medicine / Critical Care Medicine",
+      "authors": [
+        "Hallie C. Prescott",
+        "Massimo Antonelli",
+        "Waleed Alhazzani",
+        "SSC international guideline panel"
+      ],
+      "publicationYear": 2026,
+      "publicationDateNote": "Published 23 March 2026. Publisher metadata records a correction on 5 May 2026, doi:10.1007/s00134-026-08410-9. Targeted verification used the current society recommendations page, with current ESICM-linked companion materials as a cross-check. Full subscription article was unavailable.",
+      "doi": "10.1007/s00134-026-08361-1",
+      "pmid": "41870560",
+      "officialUrl": "https://survivingsepsis.org/guidelines-and-resources/surviving-sepsis-campaign-adult-guidelines",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright SCCM and ESICM, all rights reserved",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted factual verification of publicly displayed recommendations. No guideline expression, figure, table, algorithm, source excerpt or article text retained. SCCM terms prohibit automated regular or systematic collection and accumulation. This one-topic check creates original atomic statements and bibliographic links. No corpus or continuing collection. Rights are separately assessed from clinical authority.",
+      "authorityAssessment": "Current international multidisciplinary adult sepsis guideline. Conditional recommendations and low or very-low evidence remain conditional in the claims. The two journal publications and companion materials are one guideline, with no independent-source credit.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.critical-shock-resuscitation.plr-flow",
+        "claim.critical-shock-resuscitation.norepinephrine-first",
+        "claim.critical-shock-resuscitation.peripheral-start",
+        "claim.critical-shock-resuscitation.vasopressin-addition",
+        "claim.critical-shock-resuscitation.epinephrine-after-dual",
+        "claim.critical-shock-resuscitation.epinephrine-cardiac-phenotype",
+        "claim.critical-shock-resuscitation.inotrope-low-flow",
+        "claim.critical-shock-resuscitation.lactate-context",
+        "claim.critical-shock-resuscitation.map-target",
+        "claim.critical-shock-resuscitation.higher-map-tradeoff",
+        "claim.critical-shock-resuscitation.antibiotic-urgency",
+        "claim.critical-shock-resuscitation.pct-initiation",
+        "claim.critical-shock-resuscitation.possible-infection-reassessment",
+        "claim.critical-shock-resuscitation.early-source-control"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.critical-shock-resuscitation.esicm-shock-2025",
+      "title": "ESICM circulatory shock and hemodynamic monitoring 2025",
+      "completeCitation": "Monnet X, Messina A, Greco M, et al. ESICM guidelines on circulatory shock and hemodynamic monitoring 2025. Intensive Care Medicine. 2025;51:1971–2012. doi:10.1007/s00134-025-08137-z.",
+      "organizationOrJournal": "ESICM / Intensive Care Medicine",
+      "authors": [
+        "Xavier Monnet",
+        "Antonio Messina",
+        "Massimiliano Greco",
+        "ESICM guideline panel"
+      ],
+      "publicationYear": 2025,
+      "doi": "10.1007/s00134-025-08137-z",
+      "pmid": "41236566",
+      "officialUrl": "https://link.springer.com/article/10.1007/s00134-025-08137-z",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyrighted society guideline, public abstract",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Only the publicly readable guideline abstract and official society announcement support the mapped cross-checks. Publisher body is subscription content. Society SharedIt link requested browser verification, and institutional PDF exceeded retrieval limit. No inaccessible detail or search snippet supplies a key.",
+      "authorityAssessment": "Current adult shock guideline with graded recommendations and ungraded good-practice statements. Abstract directly supports dynamic assessment, echocardiography and serial perfusion assessment. It cannot verify unexposed technical details.",
+      "usageRole": "cross_check",
+      "evidenceClaimIds": [
+        "claim.critical-shock-resuscitation.dynamic-over-static",
+        "claim.critical-shock-resuscitation.fluid-need-risk",
+        "claim.critical-shock-resuscitation.pressure-flow-distinction",
+        "claim.critical-shock-resuscitation.echo-first"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.critical-shock-resuscitation.jsscg-2024",
+      "title": "Japanese sepsis and septic shock clinical practice guideline 2024",
+      "completeCitation": "Shime N, Nakada T, Yatabe T, et al. The Japanese Clinical Practice Guidelines for Management of Sepsis and Septic Shock 2024. Journal of Intensive Care. 2025;13:15. doi:10.1186/s40560-025-00776-0.",
+      "organizationOrJournal": "Japanese Society of Intensive Care Medicine and Japanese Association for Acute Medicine / Journal of Intensive Care",
+      "authors": [
+        "Nobuaki Shime",
+        "Taka-aki Nakada",
+        "Tomoaki Yatabe",
+        "J-SSCG 2024 guideline committee"
+      ],
+      "publicationYear": 2025,
+      "publicationDateNote": "Guideline edition 2024, published 14 March 2025. Co-publication represents the same guideline.",
+      "doi": "10.1186/s40560-025-00776-0",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s40560-025-00776-0",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level CC BY 4.0 verified. Credit Shime and colleagues, Journal of Intensive Care, and https://creativecommons.org/licenses/by/4.0/. Independent factual synthesis into fictional applications. No source text, tables, figures or algorithms reproduced.",
+      "authorityAssessment": "Independent society guideline with explicit evidence grading. Its recommendations reflect a Japanese practice context. Specific disagreements with SSC are recorded separately.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.critical-shock-resuscitation.norepinephrine-first",
+        "claim.critical-shock-resuscitation.peripheral-start",
+        "claim.critical-shock-resuscitation.vasopressin-addition",
+        "claim.critical-shock-resuscitation.pressure-flow-distinction",
+        "claim.critical-shock-resuscitation.inotrope-low-flow",
+        "claim.critical-shock-resuscitation.lactate-context",
+        "claim.critical-shock-resuscitation.map-target",
+        "claim.critical-shock-resuscitation.higher-map-tradeoff",
+        "claim.critical-shock-resuscitation.pct-initiation",
+        "claim.critical-shock-resuscitation.echo-first"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.critical-shock-resuscitation.mclean-echo-2016",
+      "title": "Echocardiography in shock management",
+      "completeCitation": "McLean AS. Echocardiography in shock management. Critical Care. 2016;20:275. doi:10.1186/s13054-016-1401-7.",
+      "organizationOrJournal": "Critical Care",
+      "authors": [
+        "Anthony S. McLean"
+      ],
+      "publicationYear": 2016,
+      "doi": "10.1186/s13054-016-1401-7",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s13054-016-1401-7",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level CC BY 4.0 verified. Credit McLean, Critical Care, and https://creativecommons.org/licenses/by/4.0/. Independently written observations and applications. No diagnostic image, tracing, figure or prose reproduced.",
+      "authorityAssessment": "Physiology-oriented critical-care echocardiography review. Current ESICM supports the general first-line echo role. Tamponade-specific management has one directly inspected adequate source in this packet and needs named clinician review.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.critical-shock-resuscitation.pressure-flow-distinction",
+        "claim.critical-shock-resuscitation.echo-first",
+        "claim.critical-shock-resuscitation.tamponade-physiology",
+        "claim.critical-shock-resuscitation.tamponade-drainage",
+        "claim.critical-shock-resuscitation.rv-fluid-risk"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-critical-shock-resuscitation.2026-11-11.round2.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.critical-shock-resuscitation.minami-tee-2026",
+      "title": "TEE after limited transthoracic imaging in the cardiovascular ICU",
+      "completeCitation": "Minami K, Saga T, Kato M, Nakayama D, Morinaga M, Shimatani T, Takeuchi M. Derivation of a pragmatic three-view protocol for point-of-care transesophageal echocardiography in the cardiovascular ICU: a real-world cohort study. Critical Care. 2026;30:154. doi:10.1186/s13054-026-05925-x.",
+      "organizationOrJournal": "Critical Care",
+      "authors": [
+        "Kimito Minami",
+        "Takashi Saga",
+        "Mitsuharu Kato",
+        "Daisuke Nakayama",
+        "Masahiro Morinaga",
+        "Tatsutoshi Shimatani",
+        "Muneyuki Takeuchi"
+      ],
+      "publicationYear": 2026,
+      "publicationDateNote": "Published 1 March 2026. Publisher lists version of record 7 April 2026.",
+      "doi": "10.1186/s13054-026-05925-x",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s13054-026-05925-x",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "observational_study",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level CC BY 4.0 verified. Credit Minami and colleagues, Critical Care, and https://creativecommons.org/licenses/by/4.0/. Independently written claims and a fictional acquisition report. No patient case, view set, image, table or article wording reproduced.",
+      "authorityAssessment": "Current retrospective single-center cardiovascular-ICU cohort. Supports the observed use of TEE when TTE is nondiagnostic and describes postoperative acoustic barriers. Application to this abdominal postoperative patient is a physical-acquisition inference, with the older general shock review as a cross-check. No outcome benefit or universal TEE superiority is inferred.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.critical-shock-resuscitation.r2-limited-tte",
+        "claim.critical-shock-resuscitation.r2-tee-after-limited-tte"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-appendix-appendicitis.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.appendix-appendicitis.ascrs-2025",
+      "title": "ASCRS clinical practice guidelines for appendiceal neoplasms, 2025",
+      "completeCitation": "Gaertner WB, Brown SR, Deutsch M, Jafari MD, Krane MK, Simianu VV, Valente MA, Lightner AL, Feingold DL, Paquette IM. The American Society of Colon and Rectal Surgeons Clinical Practice Guidelines for the Management of Appendiceal Neoplasms. Dis Colon Rectum. 2025;68(7):815-834. doi:10.1097/DCR.0000000000003796.",
+      "organizationOrJournal": "American Society of Colon and Rectal Surgeons / Diseases of the Colon & Rectum",
+      "authors": [
+        "Wolfgang B. Gaertner",
+        "Shaun R. Brown",
+        "Michael Deutsch",
+        "Mehraneh D. Jafari",
+        "Mukta K. Krane",
+        "Vlad V. Simianu",
+        "Michael A. Valente",
+        "Amy L. Lightner",
+        "Daniel L. Feingold",
+        "Ian M. Paquette"
+      ],
+      "publicationYear": 2025,
+      "doi": "10.1097/DCR.0000000000003796",
+      "pmid": "40262165",
+      "officialUrl": "https://www.ascrsu.com/ascrs/view/ASCRS-Evidence-Based-Guidelines-and-Expert-Consensus/3982016/all/Management_of_Appendiceal_Neoplasms__2025_?q=management+practice",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright ASCRS 2025. Targeted factual verification only.",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Read the public society guideline and publicly linked guideline PDF for targeted factual checks. The former free-resource URL now points to another location. No authentication or paywall bypass was used. ASCRS Access to and Use of Works Policy checked. No content, table, algorithm, image or source excerpt is retained. The published guideline is a factual cross-check, with independently written claims and fictional cases.",
+      "authorityAssessment": "Current specialty GRADE guideline, literature search through February 2025. Several recommendations rest on observational data. Many exact tumor-management decisions have this single directly verified publication in this packet.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.appendix-appendicitis.intermediate-net-boundary",
+        "claim.appendix-appendicitis.lamn-complete-resection",
+        "claim.appendix-appendicitis.small-favorable-net-resection",
+        "claim.appendix-appendicitis.post-abscess-neoplasm",
+        "claim.appendix-appendicitis.colonoscopy-neoplasm",
+        "claim.appendix-appendicitis.interval-tissue-evaluation",
+        "claim.appendix-appendicitis.intact-abnormal-appendix",
+        "claim.appendix-appendicitis.lamn-margin",
+        "claim.appendix-appendicitis.lamn-versus-invasive",
+        "claim.appendix-appendicitis.adenocarcinoma-colectomy",
+        "claim.appendix-appendicitis.goblet-cell-identity",
+        "claim.appendix-appendicitis.net-functional-staging",
+        "claim.appendix-appendicitis.net-resection",
+        "claim.appendix-appendicitis.peritoneal-mucin-treatment",
+        "claim.appendix-appendicitis.complete-specimen-assessment",
+        "claim.appendix-appendicitis.cellular-deposit-assessment"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-appendix-appendicitis.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.appendix-appendicitis.chenin-2022-cysts",
+      "title": "MRI morphology of simple hepatic cysts (Chenin et al., 2022)",
+      "completeCitation": "Chenin M, Paisant A, Lebigot J, Bazeries P, Debbi K, Ronot M, Laurent V, Aub? C. Cystic liver lesions: a pictorial review. Insights Imaging. 2022;13:116. doi:10.1186/s13244-022-01242-3.",
+      "organizationOrJournal": "Insights into Imaging",
+      "authors": [
+        "M?gane Chenin",
+        "Anita Paisant",
+        "J?r?me Lebigot",
+        "Paul Bazeries",
+        "Kawtar Debbi",
+        "Maxime Ronot",
+        "Val?rie Laurent",
+        "Christophe Aub?"
+      ],
+      "publicationYear": 2022,
+      "doi": "10.1186/s13244-022-01242-3",
+      "pmid": "35838923",
+      "officialUrl": "https://link.springer.com/article/10.1186/s13244-022-01242-3",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "CC BY 4.0; https://creativecommons.org/licenses/by/4.0/",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level Rights and permissions verified at the publisher. Attribution to Chenin et al. Facts independently restated for a fictional staging record; no prose, table, algorithm, figure or image reproduced. The new application changes the context to an appendiceal NET case.",
+      "authorityAssessment": "Peer-reviewed radiology educational review, used only for established cyst imaging morphology and the boundary of noninvasive characterization. It supplies no appendiceal NET management recommendation and is not independent corroboration of the surgical size threshold.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.appendix-appendicitis.hepatic-cyst-mri"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.trauma-initial-abdomen.wses-bowel-2022",
+      "title": "WSES guidelines on blunt and penetrating bowel injury: diagnosis, investigations, and treatment",
+      "completeCitation": "Smyth L, Bendinelli C, Lee N, et al. WSES guidelines on blunt and penetrating bowel injury: diagnosis, investigations, and treatment. World J Emerg Surg. 2022;17:13. doi:10.1186/s13017-022-00418-y.",
+      "organizationOrJournal": "World Journal of Emergency Surgery / World Society of Emergency Surgery",
+      "authors": [
+        "Luke Smyth",
+        "Cino Bendinelli",
+        "Nicholas Lee",
+        "et al."
+      ],
+      "publicationYear": 2022,
+      "doi": "10.1186/s13017-022-00418-y",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s13017-022-00418-y",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "termsUrl": "https://link.springer.com/termsandconditions",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level CC BY 4.0 rights statement inspected. Credit authors/publication and license; all claims, vignettes and teaching prose below are independently synthesized. No figures, tables, algorithms, passages, third-party assets or source text retained.",
+      "authorityAssessment": "Peer-reviewed multidisciplinary society guideline/consensus; recommendation strength and evidence quality remain claim-specific. Open licensing establishes reuse rights, not clinical certainty.",
+      "usageRole": "both",
+      "accessMethod": "Targeted public HTML guideline/rights-section retrieval through web tool on 2026-11-11; no saved source text.",
+      "verificationSections": [
+        "Blunt injury recommendations 1-9",
+        "Penetrating injury observation and recommendations",
+        "Surgical options / primary repair",
+        "Rights and permissions"
+      ],
+      "evidenceClaimIds": [
+        "claim.trauma-initial-abdomen.unstable-positive-fast",
+        "claim.trauma-initial-abdomen.equivocal-bowel-observe",
+        "claim.trauma-initial-abdomen.evolving-bowel-repeat-ct",
+        "claim.trauma-initial-abdomen.bowel-direct-sign",
+        "claim.trauma-initial-abdomen.small-bowel-repair",
+        "claim.trauma-initial-abdomen.bowel-resection-risk",
+        "claim.trauma-initial-abdomen.splenic-failure",
+        "claim.trauma-initial-abdomen.penetrating-observation",
+        "claim.trauma-initial-abdomen.penetrating-operation",
+        "claim.trauma-initial-abdomen.unreliable-exam",
+        "claim.trauma-initial-abdomen.equivocal-bowel-six-hour-reassessment",
+        "claim.trauma-initial-abdomen.small-bowel-anastomosis-selection"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.trauma-initial-abdomen.wses-liver-2020",
+      "title": "Liver trauma: WSES 2020 guidelines",
+      "completeCitation": "Coccolini F, Coimbra R, Ordonez C, et al. Liver trauma: WSES 2020 guidelines. World J Emerg Surg. 2020;15:24. doi:10.1186/s13017-020-00302-7.",
+      "organizationOrJournal": "World Journal of Emergency Surgery / World Society of Emergency Surgery",
+      "authors": [
+        "Federico Coccolini",
+        "Raul Coimbra",
+        "Carlos Ordonez",
+        "et al."
+      ],
+      "publicationYear": 2020,
+      "doi": "10.1186/s13017-020-00302-7",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s13017-020-00302-7",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "termsUrl": "https://link.springer.com/termsandconditions",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level CC BY 4.0 rights statement inspected. Credit authors/publication and license; all claims, vignettes and teaching prose below are independently synthesized. No figures, tables, algorithms, passages, third-party assets or source text retained.",
+      "authorityAssessment": "Peer-reviewed multidisciplinary society guideline/consensus; recommendation strength and evidence quality remain claim-specific. Open licensing establishes reuse rights, not clinical certainty.",
+      "usageRole": "both",
+      "accessMethod": "Targeted public HTML guideline/rights-section retrieval through web tool on 2026-11-11; no saved source text.",
+      "verificationSections": [
+        "Diagnosis",
+        "Non-operative and operative management",
+        "Complications",
+        "Rights and permissions"
+      ],
+      "evidenceClaimIds": [
+        "claim.trauma-initial-abdomen.stable-ct",
+        "claim.trauma-initial-abdomen.liver-nonoperative",
+        "claim.trauma-initial-abdomen.liver-arterial-bleeding",
+        "claim.trauma-initial-abdomen.liver-pseudoaneurysm",
+        "claim.trauma-initial-abdomen.biloma-drainage",
+        "claim.trauma-initial-abdomen.bile-leak-adjunct",
+        "claim.trauma-initial-abdomen.pelvic-fast-limitation",
+        "claim.trauma-initial-abdomen.hepatic-devascularized-complication",
+        "claim.trauma-initial-abdomen.contrast-phase-interpretation",
+        "claim.trauma-initial-abdomen.recurrent-biloma-undrained-collection"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.trauma-initial-abdomen.east-liver-2012",
+      "title": "Hepatic Injury, Blunt, Selective Nonoperative Management of",
+      "completeCitation": "Stassen NA, Bhullar I, Cheng JD, et al. Nonoperative management of blunt hepatic injury: an Eastern Association for the Surgery of Trauma practice management guideline. J Trauma Acute Care Surg. 2012;73(5 Suppl 4):S288-S293.",
+      "organizationOrJournal": "Eastern Association for the Surgery of Trauma / Journal of Trauma and Acute Care Surgery",
+      "authors": [
+        "Nicole A. Stassen",
+        "Indermeet Bhullar",
+        "Julius D. Cheng",
+        "et al."
+      ],
+      "publicationYear": 2012,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.east.org/education-resources/practice-management-guidelines/details/hepatic-injury-blunt-selective-nonoperative-management-of",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained; professional-society targeted factual verification only",
+      "licenseUrl": null,
+      "termsUrl": "https://www.east.org/terms-of-use",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Public official society guideline and EAST terms inspected. Targeted factual verification and bibliographic citation only; no source expression reproduced, corpus collection, full-text storage or derivative tables. No AI-specific prohibition found in inspected public terms.",
+      "authorityAssessment": "Independent trauma-society guideline cross-check; publication age and conditional/low-quality recommendations limit inference. Public access is not an open license.",
+      "usageRole": "both",
+      "accessMethod": "Targeted public HTML guideline/rights-section retrieval through web tool on 2026-11-11; no saved source text.",
+      "verificationSections": [
+        "Level 1-3 recommendations"
+      ],
+      "evidenceClaimIds": [
+        "claim.trauma-initial-abdomen.unstable-positive-fast",
+        "claim.trauma-initial-abdomen.stable-ct",
+        "claim.trauma-initial-abdomen.liver-nonoperative",
+        "claim.trauma-initial-abdomen.liver-arterial-bleeding",
+        "claim.trauma-initial-abdomen.liver-pseudoaneurysm",
+        "claim.trauma-initial-abdomen.biloma-drainage",
+        "claim.trauma-initial-abdomen.bile-leak-adjunct",
+        "claim.trauma-initial-abdomen.recurrent-biloma-undrained-collection"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.trauma-initial-abdomen.east-spleen-2012",
+      "title": "Splenic Injury, Blunt, Selective Nonoperative Management of",
+      "completeCitation": "Stassen NA, Bhullar I, Cheng JD, et al. Selective nonoperative management of blunt splenic injury: an Eastern Association for the Surgery of Trauma practice management guideline. J Trauma Acute Care Surg. 2012;73(5 Suppl 4):S294-S300.",
+      "organizationOrJournal": "Eastern Association for the Surgery of Trauma / Journal of Trauma and Acute Care Surgery",
+      "authors": [
+        "Nicole A. Stassen",
+        "Indermeet Bhullar",
+        "Julius D. Cheng",
+        "et al."
+      ],
+      "publicationYear": 2012,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.east.org/education-resources/practice-management-guidelines/details/splenic-injury-blunt-selective-nonoperative-management-of",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained; professional-society targeted factual verification only",
+      "licenseUrl": null,
+      "termsUrl": "https://www.east.org/terms-of-use",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Public official society guideline and EAST terms inspected. Targeted factual verification and bibliographic citation only; no source expression reproduced, corpus collection, full-text storage or derivative tables. No AI-specific prohibition found in inspected public terms.",
+      "authorityAssessment": "Independent trauma-society guideline cross-check; publication age and conditional/low-quality recommendations limit inference. Public access is not an open license.",
+      "usageRole": "both",
+      "accessMethod": "Targeted public HTML guideline/rights-section retrieval through web tool on 2026-11-11; no saved source text.",
+      "verificationSections": [
+        "Level 1-3 recommendations; unanswered questions"
+      ],
+      "evidenceClaimIds": [
+        "claim.trauma-initial-abdomen.stable-ct",
+        "claim.trauma-initial-abdomen.splenic-embolization",
+        "claim.trauma-initial-abdomen.splenic-observation",
+        "claim.trauma-initial-abdomen.splenic-failure"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.trauma-initial-abdomen.wses-pancreas-duodenum-2019",
+      "title": "Duodeno-pancreatic and extrahepatic biliary tree trauma: WSES-AAST guidelines",
+      "completeCitation": "Coccolini F, Kobayashi L, Kluger Y, et al. Duodeno-pancreatic and extrahepatic biliary tree trauma: WSES-AAST guidelines. World J Emerg Surg. 2019;14:56. doi:10.1186/s13017-019-0278-6.",
+      "organizationOrJournal": "World Journal of Emergency Surgery / World Society of Emergency Surgery",
+      "authors": [
+        "Federico Coccolini",
+        "Leslie Kobayashi",
+        "Yoram Kluger",
+        "et al."
+      ],
+      "publicationYear": 2019,
+      "doi": "10.1186/s13017-019-0278-6",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s13017-019-0278-6",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "termsUrl": "https://link.springer.com/termsandconditions",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level CC BY 4.0 rights statement inspected. Credit authors/publication and license; all claims, vignettes and teaching prose below are independently synthesized. No figures, tables, algorithms, passages, third-party assets or source text retained.",
+      "authorityAssessment": "Peer-reviewed multidisciplinary society guideline/consensus; recommendation strength and evidence quality remain claim-specific. Open licensing establishes reuse rights, not clinical certainty.",
+      "usageRole": "both",
+      "accessMethod": "Targeted public HTML guideline/rights-section retrieval through web tool on 2026-11-11; no saved source text.",
+      "verificationSections": [
+        "Diagnosis / duct evaluation",
+        "Duodenal non-operative management",
+        "Operative management: duodenum and pancreas",
+        "Rights and permissions"
+      ],
+      "evidenceClaimIds": [
+        "claim.trauma-initial-abdomen.unstable-positive-fast",
+        "claim.trauma-initial-abdomen.damage-control",
+        "claim.trauma-initial-abdomen.distal-pancreatic-duct",
+        "claim.trauma-initial-abdomen.minor-pancreas",
+        "claim.trauma-initial-abdomen.pancreatic-duct-evaluate",
+        "claim.trauma-initial-abdomen.duodenal-hematoma",
+        "claim.trauma-initial-abdomen.duodenal-primary-repair",
+        "claim.trauma-initial-abdomen.duodenal-complex",
+        "claim.trauma-initial-abdomen.duodenal-hematoma-evacuation",
+        "claim.trauma-initial-abdomen.pancreatic-specialist-reconstruction",
+        "claim.trauma-initial-abdomen.duodenal-fourteen-day-nonresolution"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.trauma-initial-abdomen.wses-pelvis-2017",
+      "title": "Pelvic trauma: WSES classification and guidelines",
+      "completeCitation": "Coccolini F, Stahel PF, Montori G, et al. Pelvic trauma: WSES classification and guidelines. World J Emerg Surg. 2017;12:5. doi:10.1186/s13017-017-0117-6.",
+      "organizationOrJournal": "World Journal of Emergency Surgery / World Society of Emergency Surgery",
+      "authors": [
+        "Federico Coccolini",
+        "Philip F. Stahel",
+        "Giulia Montori",
+        "et al."
+      ],
+      "publicationYear": 2017,
+      "doi": "10.1186/s13017-017-0117-6",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s13017-017-0117-6",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "termsUrl": "https://link.springer.com/termsandconditions",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level CC BY 4.0 rights statement inspected. Credit authors/publication and license; all claims, vignettes and teaching prose below are independently synthesized. No figures, tables, algorithms, passages, third-party assets or source text retained.",
+      "authorityAssessment": "Peer-reviewed multidisciplinary society guideline/consensus; recommendation strength and evidence quality remain claim-specific. Open licensing establishes reuse rights, not clinical certainty.",
+      "usageRole": "both",
+      "accessMethod": "Targeted public HTML guideline/rights-section retrieval through web tool on 2026-11-11; no saved source text.",
+      "verificationSections": [
+        "Diagnostic workup",
+        "Preperitoneal pelvic packing",
+        "Angiography/angioembolization",
+        "Rights and permissions"
+      ],
+      "evidenceClaimIds": [
+        "claim.trauma-initial-abdomen.pelvic-packing-after-angio",
+        "claim.trauma-initial-abdomen.pelvic-arterial-embolization",
+        "claim.trauma-initial-abdomen.pelvic-fast-limitation"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.trauma-initial-abdomen.wses-uro-2019",
+      "title": "Kidney and uro-trauma: WSES-AAST guidelines",
+      "completeCitation": "Coccolini F, Moore EE, Kluger Y, et al. Kidney and uro-trauma: WSES-AAST guidelines. World J Emerg Surg. 2019;14:54. doi:10.1186/s13017-019-0274-x.",
+      "organizationOrJournal": "World Journal of Emergency Surgery / World Society of Emergency Surgery",
+      "authors": [
+        "Federico Coccolini",
+        "Ernest E. Moore",
+        "Yoram Kluger",
+        "et al."
+      ],
+      "publicationYear": 2019,
+      "doi": "10.1186/s13017-019-0274-x",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s13017-019-0274-x",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "termsUrl": "https://link.springer.com/termsandconditions",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level CC BY 4.0 rights statement inspected. Credit authors/publication and license; all claims, vignettes and teaching prose below are independently synthesized. No figures, tables, algorithms, passages, third-party assets or source text retained.",
+      "authorityAssessment": "Peer-reviewed multidisciplinary society guideline/consensus; recommendation strength and evidence quality remain claim-specific. Open licensing establishes reuse rights, not clinical certainty.",
+      "usageRole": "both",
+      "accessMethod": "Targeted public HTML guideline/rights-section retrieval through web tool on 2026-11-11; no saved source text.",
+      "verificationSections": [
+        "Diagnostic procedures: kidney, ureter and bladder",
+        "Renal non-operative management",
+        "Bladder management",
+        "Rights and permissions"
+      ],
+      "evidenceClaimIds": [
+        "claim.trauma-initial-abdomen.bladder-cystography",
+        "claim.trauma-initial-abdomen.passive-ct-insufficient",
+        "claim.trauma-initial-abdomen.intraperitoneal-bladder",
+        "claim.trauma-initial-abdomen.extraperitoneal-bladder",
+        "claim.trauma-initial-abdomen.complex-bladder",
+        "claim.trauma-initial-abdomen.renal-deceleration-ct",
+        "claim.trauma-initial-abdomen.renal-excretory-phase",
+        "claim.trauma-initial-abdomen.renal-urine-observe",
+        "claim.trauma-initial-abdomen.renal-urinoma-intervention",
+        "claim.trauma-initial-abdomen.urethral-assessment"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.trauma-initial-abdomen.east-bladder-2019",
+      "title": "Blunt Force Bladder Injuries Management of",
+      "completeCitation": "Yeung LL, McDonald AA, Como JJ, et al. Management of blunt force bladder injuries: a practice management guideline from the Eastern Association for the Surgery of Trauma. J Trauma Acute Care Surg. 2019;86(2):326-336.",
+      "organizationOrJournal": "Eastern Association for the Surgery of Trauma / Journal of Trauma and Acute Care Surgery",
+      "authors": [
+        "Lawrence L. Yeung",
+        "Amy A. McDonald",
+        "John J. Como",
+        "Bryce Robinson",
+        "Jennifer Knight",
+        "Michael A. Person",
+        "Jane K. Lee",
+        "Philipp Dahm"
+      ],
+      "publicationYear": 2019,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.east.org/education-resources/practice-management-guidelines/details/blunt-force-bladder-injuries-management-of",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained; professional-society targeted factual verification only",
+      "licenseUrl": null,
+      "termsUrl": "https://www.east.org/terms-of-use",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Public official society guideline and EAST terms inspected. Targeted factual verification and bibliographic citation only; no source expression reproduced, corpus collection, full-text storage or derivative tables. No AI-specific prohibition found in inspected public terms.",
+      "authorityAssessment": "Independent trauma-society guideline cross-check; publication age and conditional/low-quality recommendations limit inference. Public access is not an open license.",
+      "usageRole": "both",
+      "accessMethod": "Targeted public HTML guideline/rights-section retrieval through web tool on 2026-11-11; no saved source text.",
+      "verificationSections": [
+        "PICO 1-3; diagnostic evaluation and intraperitoneal versus extraperitoneal repair"
+      ],
+      "evidenceClaimIds": [
+        "claim.trauma-initial-abdomen.bladder-cystography",
+        "claim.trauma-initial-abdomen.intraperitoneal-bladder",
+        "claim.trauma-initial-abdomen.extraperitoneal-bladder",
+        "claim.trauma-initial-abdomen.complex-bladder"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.trauma-initial-abdomen.east-pancreas-2017",
+      "title": "Pancreatic Injuries",
+      "completeCitation": "Ho VP, Patel NJ, Bokhari F, et al. Management of adult pancreatic injuries: a practice management guideline from the Eastern Association for the Surgery of Trauma. J Trauma Acute Care Surg. 2017;82(1):185-199.",
+      "organizationOrJournal": "Eastern Association for the Surgery of Trauma / Journal of Trauma and Acute Care Surgery",
+      "authors": [
+        "Vanessa P. Ho",
+        "Nimitt J. Patel",
+        "Faran Bokhari",
+        "et al."
+      ],
+      "publicationYear": 2017,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.east.org/education-resources/practice-management-guidelines/details/pancreatic-injuries",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright retained; professional-society targeted factual verification only",
+      "licenseUrl": null,
+      "termsUrl": "https://www.east.org/terms-of-use",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Public official society guideline and EAST terms inspected. Targeted factual verification and bibliographic citation only; no source expression reproduced, corpus collection, full-text storage or derivative tables. No AI-specific prohibition found in inspected public terms.",
+      "authorityAssessment": "Independent trauma-society guideline cross-check; publication age and conditional/low-quality recommendations limit inference. Public access is not an open license.",
+      "usageRole": "both",
+      "accessMethod": "Targeted public HTML guideline/rights-section retrieval through web tool on 2026-11-11; no saved source text.",
+      "verificationSections": [
+        "PICO 1-4; summary recommendations 1-4"
+      ],
+      "evidenceClaimIds": [
+        "claim.trauma-initial-abdomen.distal-pancreatic-duct",
+        "claim.trauma-initial-abdomen.minor-pancreas",
+        "claim.trauma-initial-abdomen.pancreatic-duct-evaluate",
+        "claim.trauma-initial-abdomen.pancreatic-specialist-reconstruction"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.trauma-initial-abdomen.east-renal-2023",
+      "title": "Management of adult renal trauma: a practice management guideline from the eastern association for the surgery of trauma",
+      "completeCitation": "Aziz HA, Bugaev N, Baltazar G, et al. Management of adult renal trauma: a practice management guideline from the eastern association for the surgery of trauma. BMC Surg. 2023;23:22. doi:10.1186/s12893-023-01914-x.",
+      "organizationOrJournal": "BMC Surgery / Eastern Association for the Surgery of Trauma",
+      "authors": [
+        "Hiba Abdel Aziz",
+        "Nikolay Bugaev",
+        "Gerard Baltazar",
+        "Zachary Brown",
+        "Krista Haines",
+        "Sameer Gupta",
+        "Lawrence Yeung",
+        "Joseph Posluszny",
+        "John Como",
+        "Jennifer Freeman",
+        "George Kasotakis"
+      ],
+      "publicationYear": 2023,
+      "doi": "10.1186/s12893-023-01914-x",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s12893-023-01914-x",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "termsUrl": "https://link.springer.com/termsandconditions",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level CC BY 4.0 rights statement inspected. Credit authors/publication and license; all claims, vignettes and teaching prose below are independently synthesized. No figures, tables, algorithms, passages, third-party assets or source text retained.",
+      "authorityAssessment": "Peer-reviewed multidisciplinary society guideline/consensus; recommendation strength and evidence quality remain claim-specific. Open licensing establishes reuse rights, not clinical certainty.",
+      "usageRole": "both",
+      "accessMethod": "Targeted public HTML guideline/rights-section retrieval through web tool on 2026-11-11; no saved source text.",
+      "verificationSections": [
+        "PICO 1-4 recommendations and limitations",
+        "Rights and permissions"
+      ],
+      "evidenceClaimIds": [
+        "claim.trauma-initial-abdomen.contained-zone-two",
+        "claim.trauma-initial-abdomen.renal-preservation",
+        "claim.trauma-initial-abdomen.renal-evidence-limit"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic-trauma-initial-abdomen.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.trauma-initial-abdomen.wses-open-abdomen-2018",
+      "title": "The open abdomen in trauma and non-trauma patients: WSES guidelines",
+      "completeCitation": "Coccolini F, Roberts D, Ansaloni L, et al. The open abdomen in trauma and non-trauma patients: WSES guidelines. World J Emerg Surg. 2018;13:7. doi:10.1186/s13017-018-0167-4.",
+      "organizationOrJournal": "World Journal of Emergency Surgery / World Society of Emergency Surgery",
+      "authors": [
+        "Federico Coccolini",
+        "Derek Roberts",
+        "Luca Ansaloni",
+        "et al."
+      ],
+      "publicationYear": 2018,
+      "doi": "10.1186/s13017-018-0167-4",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s13017-018-0167-4",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "termsUrl": "https://link.springer.com/termsandconditions",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Article-level CC BY 4.0 rights statement inspected. Credit authors/publication and license; all claims, vignettes and teaching prose below are independently synthesized. No figures, tables, algorithms, passages, third-party assets or source text retained.",
+      "authorityAssessment": "Peer-reviewed multidisciplinary society guideline/consensus; recommendation strength and evidence quality remain claim-specific. Open licensing establishes reuse rights, not clinical certainty.",
+      "usageRole": "both",
+      "accessMethod": "Targeted public HTML guideline/rights-section retrieval through web tool on 2026-11-11; no saved source text.",
+      "verificationSections": [
+        "Trauma indications",
+        "Re-exploration before definitive closure",
+        "Definitive closure",
+        "Rights and permissions"
+      ],
+      "evidenceClaimIds": [
+        "claim.trauma-initial-abdomen.damage-control",
+        "claim.trauma-initial-abdomen.keep-open",
+        "claim.trauma-initial-abdomen.fascial-closure",
+        "claim.trauma-initial-abdomen.planned-hernia-fallback",
+        "claim.trauma-initial-abdomen.temporary-negative-pressure"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-respiratory-ventilation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.critical-respiratory-ventilation.gayen2024",
+      "title": "Critical Care Management of Severe Asthma Exacerbations",
+      "completeCitation": "Shameek Gayen; Stephen Dachert; Bilal H. Lashari; Matthew Gordon; Parag Desai; Gerard J. Criner; Juan Carlos Cardet; Kartik Shenoy. Critical Care Management of Severe Asthma Exacerbations. Journal of Clinical Medicine 13(3):859. 2024. doi:10.3390/jcm13030859. https://www.mdpi.com/2077-0383/13/3/859. Accessed 2026-11-11.",
+      "organizationOrJournal": "Journal of Clinical Medicine 13(3):859",
+      "authors": [
+        "Shameek Gayen",
+        "Stephen Dachert",
+        "Bilal H. Lashari",
+        "Matthew Gordon",
+        "Parag Desai",
+        "Gerard J. Criner",
+        "Juan Carlos Cardet",
+        "Kartik Shenoy"
+      ],
+      "publicationYear": 2024,
+      "doi": "10.3390/jcm13030859",
+      "pmid": null,
+      "officialUrl": "https://www.mdpi.com/2077-0383/13/3/859",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "CC BY 4.0; https://creativecommons.org/licenses/by/4.0/",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Publisher licence inspected. Credit Gayen et al.; independent statements and constructed data, no adapted figure/table. Exact rate, I:E, dose and permissive-acidemia thresholds are not adopted.",
+      "authorityAssessment": "Open specialist review, lower authority than a formal guideline; physiologic mechanics and air-trapping principles.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.critical-respiratory-ventilation.plateau",
+        "claim.critical-respiratory-ventilation.air-trapping"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-respiratory-ventilation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.critical-respiratory-ventilation.aarc-pva2024",
+      "title": "AARC Clinical Practice Guideline: Patient-Ventilator Assessment",
+      "completeCitation": "Lynda T. Goodfellow; Andrew G. Miller; Sarah M. Varekojis; Carolyn J. LaVita; Joel T. Glogowski; Dean R. Hess. AARC Clinical Practice Guideline: Patient-Ventilator Assessment. Respiratory Care 69(8):1042–1054. 2024. doi:10.4187/respcare.12007. https://www.aarc.org/wp-content/uploads/2024/10/patient-ventilator-assessment-aarc-cpg.pdf. Accessed 2026-11-11.",
+      "organizationOrJournal": "Respiratory Care 69(8):1042–1054",
+      "authors": [
+        "Lynda T. Goodfellow",
+        "Andrew G. Miller",
+        "Sarah M. Varekojis",
+        "Carolyn J. LaVita",
+        "Joel T. Glogowski",
+        "Dean R. Hess"
+      ],
+      "publicationYear": 2024,
+      "doi": "10.4187/respcare.12007",
+      "pmid": null,
+      "officialUrl": "https://www.aarc.org/wp-content/uploads/2024/10/patient-ventilator-assessment-aarc-cpg.pdf",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright 2024 Daedalus Enterprises; society-hosted public guideline",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted factual verification only; AARC privacy/site policy inspected, terms endpoint unavailable; no blanket AI/reuse licence asserted. No protected expression or figures retained.",
+      "authorityAssessment": "GRADE recommendations on plateau, tidal volume, PEEP/auto-PEEP and artificial-airway assessment.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.critical-respiratory-ventilation.pbw",
+        "claim.critical-respiratory-ventilation.protective-range",
+        "claim.critical-respiratory-ventilation.pressure-reduction",
+        "claim.critical-respiratory-ventilation.plateau",
+        "claim.critical-respiratory-ventilation.air-trapping",
+        "claim.critical-respiratory-ventilation.hme-resistance-r1",
+        "claim.critical-respiratory-ventilation.active-humidification-r1"
+      ]
+    },
+    {
+      "contentVersion": "clinical.question-topic.critical-respiratory-ventilation.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.critical-respiratory-ventilation.ers-ats-niv2017",
+      "title": "Official ERS/ATS clinical practice guidelines: noninvasive ventilation for acute respiratory failure",
+      "completeCitation": "Bram Rochwerg; Laurent Brochard; Mark W. Elliott; Dean Hess; Nicholas S. Hill; Stefano Nava; Paolo Navalesi; ERS/ATS task force (complete group in official PDF). Official ERS/ATS clinical practice guidelines: noninvasive ventilation for acute respiratory failure. European Respiratory Journal 50:1602426. 2017. doi:10.1183/13993003.02426-2016. https://www.thoracic.org/statements/resources/cc/niv-guidelines.pdf. Accessed 2026-11-11.",
+      "organizationOrJournal": "European Respiratory Journal 50:1602426",
+      "authors": [
+        "Bram Rochwerg",
+        "Laurent Brochard",
+        "Mark W. Elliott",
+        "Dean Hess",
+        "Nicholas S. Hill",
+        "Stefano Nava",
+        "Paolo Navalesi",
+        "ERS/ATS task force (complete group in official PDF)"
+      ],
+      "publicationYear": 2017,
+      "doi": "10.1183/13993003.02426-2016",
+      "pmid": null,
+      "officialUrl": "https://www.thoracic.org/statements/resources/cc/niv-guidelines.pdf",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright ERS; official public society guideline",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted factual verification; no algorithm copied. Postoperative ARF and general post-extubation failure are distinct populations; rescue item deliberately uses nonoperative pneumonia without COPD. Search did not establish a newer joint replacement.",
+      "authorityAssessment": "GRADE NIV guidance. Strong COPD-acidosis recommendation; conditional low-certainty prophylaxis/rescue recommendations with population limits.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.critical-respiratory-ventilation.niv-copd",
+        "claim.critical-respiratory-ventilation.niv-failure",
+        "claim.critical-respiratory-ventilation.niv-prevention",
+        "claim.critical-respiratory-ventilation.niv-rescue",
+        "claim.critical-respiratory-ventilation.niv-low-risk-r1",
+        "claim.critical-respiratory-ventilation.niv-response-r1"
+      ]
+    }
+  ],
+  "note": "Exact unmodified claim and source objects from the frozen accepted archive; no live topic-worker or salvage ledger was imported. Original full-ledger identities remain historical provenance."
+}

@@ -5,6 +5,8 @@ import { applyGameEvidenceCommand, createInitialGameState, deserializeGameState,
 import { encodeCloudEvidenceCheckpoint, loadCloudEvidenceCheckpoint, prepareCloudEvidenceImport } from "./codecEvidence";
 import { compressCloudText, decompressCloudText } from "./codecCompression";
 import { codecTestCampaign } from "./codecTestSupport";
+import { CLOUD_CAPACITY_LIMITS } from "./codec";
+import { prepareCloudImportWire } from "./codecWire";
 import { logicalJsonText } from "./codecJson";
 import { compressCloudEvidencePages, decompressCloudEvidencePages } from "./codecEvidencePages";
 // Hosted CI runners run long simulations up to ten times slower.
@@ -38,6 +40,8 @@ describe("cloud format 2 normalized evidence and compressed storage", () => {
     expect(prepared.sourceRecovery.sha256).toBe(createHash("sha256").update(fixture.source).digest("hex"));
     expect(prepared.snapshotText).not.toContain('"schedulerLog"');
     expect(prepared.snapshotText).not.toContain('"explanation"');
+    // The corrected checkpoint set fits the unchanged per-record diagnostic
+    // and the actual page-wire limits; keep both checks strict.
     expect(prepared.compressedCapacity.failures).toEqual([]);
     const deflate = await encodeCloudEvidenceCheckpoint({ checkpoint: prepared.checkpoint, campaign: prepared.envelope.campaign,
       operationId: `import.deflate.${fixture.name}`, expectedRevision: "0", source: loaded.source, encoding: "deflate" });
@@ -49,6 +53,21 @@ describe("cloud format 2 normalized evidence and compressed storage", () => {
     const gzipPages = await compressCloudEvidencePages(recordTexts), deflatePages = await compressCloudEvidencePages(recordTexts, 0, "deflate");
     expect(await decompressCloudEvidencePages(gzipPages)).toEqual(prepared.checkpoint.evidence.records);
     expect(await decompressCloudEvidencePages(deflatePages)).toEqual(prepared.checkpoint.evidence.records);
+    for (const [header, pages] of [[prepared.packedEvidence.header, gzipPages], [deflate.packedEvidence.header, deflatePages]] as const) {
+      expect(header.compressedBytes + pages.reduce((sum, page) => sum + page.content.compressedBytes, 0))
+        .toBeLessThanOrEqual(CLOUD_CAPACITY_LIMITS.evidencePerCampaignBytes);
+    }
+    const wire = await prepareCloudImportWire({ operationId: `import.wire.${fixture.name}`, campaignId: loaded.state.campaignId,
+      campaign: prepared.envelope.campaign, snapshot: prepared.snapshot, evidence: prepared.packedEvidence,
+      baselineId: prepared.envelope.baselineId, writerToken: "synthetic-local-measurement" }, 1_800_000_000_000);
+    const body = JSON.parse(wire.text);
+    expect(await decompressCloudEvidencePages(body.evidence.pages)).toEqual(prepared.checkpoint.evidence.records);
+    expect(body.evidence.header.compressedBytes + body.evidence.pages.reduce((sum: number, page: {content: {compressedBytes: number}}) => sum + page.content.compressedBytes, 0))
+      .toBeLessThanOrEqual(CLOUD_CAPACITY_LIMITS.evidencePerCampaignBytes);
+    expect(prepared.sizes.decodedGameBytes).toBeLessThanOrEqual(CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes);
+    expect(prepared.snapshot.compressedBytes).toBeLessThanOrEqual(CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes);
+    expect(Buffer.byteLength(JSON.stringify({ p_request_text: wire.text, p_request_sha256: wire.sha256 })) + 8)
+      .toBeLessThanOrEqual(CLOUD_CAPACITY_LIMITS.transportBodyBytes);
     process.stdout.write(`B2.1b MEASURE ${JSON.stringify({ fixture: fixture.name, file: fixture.file, fileSha256: fixture.fileSha256,
       sourceBytes: Buffer.byteLength(fixture.source), ...prepared.sizes, deflateSnapshotBytes: deflate.sizes.snapshotStoredBytes,
       deflateEvidenceRowsBytes: deflate.sizes.evidenceStoredBytes, deflateTransportBodyBytes: deflate.sizes.transportBodyBytes,

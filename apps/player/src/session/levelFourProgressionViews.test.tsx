@@ -27,7 +27,7 @@ describe("Level 4 player progression and operating views", () => {
     expect(viewOf(state).progression.secondaryGoals![0]!.complete).toBe(false);
     const advanced = gameReducer(state, { type: "LEVEL_UP", operationId: "views.advance" });
     const view = viewOf(advanced);
-    expect(view.resourceBar.xpProgressLabel).toBe("0/750 XP");
+    expect(view.resourceBar.xpProgressLabel).toBe("0/790 XP");
     expect(view.progression.canLevelUp).toBe(false);
     expect(view.progression.nextLevelLabel).toBe("Level 5");
     for (const id of ["room.mri", "room.pediatric_waiting", "room.pediatric_examination", "room.wound_ostomy"])
@@ -71,7 +71,7 @@ describe("Level 4 player progression and operating views", () => {
     const view = viewOf(state);
     const finance = view.serviceIncome.finances!;
     const summary = getRollingIncomeSummary(state);
-    expect(state.clinicalXp).toBe(750);
+    expect(state.clinicalXp).toBe(790);
     expect(finance.hourlyIncomeSources.find((source) => source.id === "scheduled_services")!.amount).toBe(summary.incomePerHour);
     expect(finance.hourlyCosts.find((cost) => cost.id === "staff")!.amount).toBe(state.employees.reduce((sum, employee) => sum + employee.salaryPerExpenseInterval, 0));
     expect(view.resourceBar.moneyHourlyDeltaLabel).toBe(finance.hourlyNetLabel);

@@ -11,7 +11,7 @@ export function createLevelFiveInspectorsQaState(scenario: LevelFiveInspectorsQa
   let state = createLevelFiveStateQaState("rooms", context);
   state.campaignId = `${LEVEL_FIVE_INSPECTORS_QA_PREFIX}.${scenario}`;
   state.campaignSeed = `level-five-inspectors-m7b.${scenario}`;
-  state.clinicalXp = 2000;
+  state.clinicalXp = context.balanceRelease.facility.stageDefinitions.find(stage => stage.level === 5)!.minimumClinicalXp;
   // Explicit clean-floor presentation QA: the small unstaffed clinic otherwise
   // spawns ordinary litter beside the Gift Shop/Garden inspector's shoes.
   // Defer only this fixture's next litter event beyond the 60 + 3000 minutes;

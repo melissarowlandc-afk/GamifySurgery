@@ -308,6 +308,8 @@ export function readLevelFiveState(value: unknown, facilityTick: number, facilit
   requireState(progress.version === "level-five-progress.v1" && nullableTick(progress.finishPageAcknowledgedAtFacilityTick, facilityTick), "invalid progression version/acknowledgment");
   if (progress.inspectionUnlocked !== null) {
     const unlock = record(progress.inspectionUnlocked, ["version", "earnedAtFacilityTick", "clinicalXp", "displayedSatisfaction", "averageStaffMorale", "employedStaffCount"]);
+    // Historical earned unlocks remain valid after future editorial XP increases.
+    // New unlocks use the current stage definition in acknowledgeLevelFiveGoals.
     requireState(unlock.version === "level-five-inspection-unlock.v1" && tick(unlock.earnedAtFacilityTick, facilityTick) && integer(unlock.clinicalXp, 2000) &&
       number(unlock.displayedSatisfaction, 0, 100) && unlock.displayedSatisfaction > 90 && number(unlock.averageStaffMorale, 85, 100) && integer(unlock.employedStaffCount, 1), "unlock lacks simultaneous nonempty goal evidence");
   }

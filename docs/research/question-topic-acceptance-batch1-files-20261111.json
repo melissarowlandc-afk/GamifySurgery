@@ -1,0 +1,509 @@
+{
+  "checkedOn": "2026-11-11",
+  "scope": "Exact owned paths only. Observed concurrent worker changes are separate and never included as owned deltas.",
+  "existingFiles": [
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "beforeSha256": "cc05d21e43357d1f80f6500a3c53868acf06aa2f43461b1012ba28971daf7e8a",
+      "afterSha256": "c2cfc4290ab8ae067c92d24126eacd478bdb661cb3039b816ba9e3196338b0fd"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "5fffcaa36446800168f2c3362cff2c357f7726a9f4cc44afdb065f804ec630dd",
+      "afterSha256": "1ce574bdf797a34ee99505ac3ad7c03cd7f09d93d8301edfd42bff1b9947a221"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "9b9217631c612cf22b5237808d4eedf0b065472d165190bfbcec2b691921ae5b",
+      "afterSha256": "0fad854518fa1babd8fd7c6e91627df094a21ad9edf338397f7432b0d3f3e878"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "2c6af289ba8b2d47d79390d40eaae53fe412fcb1dff638c8019aeee2661eae36",
+      "afterSha256": "4f5e6bae6b16fbd693153add3ddbbb48c2e997ed16159522f177d917167077c2"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "beforeSha256": "36dad57b9c1f31b4900af8c2b163101b2eb2082ebc173c62896f1a84303f67c8",
+      "afterSha256": "49de4547769c87c3e66455061aeb4e16bad110526a7dce01f537be68676baa1c"
+    },
+    {
+      "path": "packages/clinical-content/src/question-n4-acceptance-test-support.ts",
+      "beforeSha256": "8cf0f25391eeda7684c625b9b1d63785ed06880321408940ef33beb8c2fb75db",
+      "afterSha256": "20e940a5fc00771040ba3dbfb228aa0f6d1d2cca0d3da8b5d2c063e753e8c5f2"
+    },
+    {
+      "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+      "beforeSha256": "9a99b4b85cd738baaa37c1ffdc7a261e6b6dab61db80d965fc647877ba24e735",
+      "afterSha256": "b15ca90c435e9b60417b871d335a73bed647fb76eadfa2a566d5190725aaad02"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "beforeSha256": "8f80190c42fb9afbf2167dc13c05e9a8ce3e7343b1920ce50d1203b51536f0ed",
+      "afterSha256": "132327618c0b6ad0b322cf9e222d11e4d19ac79fd839f2750c98dfcf67b700b8"
+    },
+    {
+      "path": "packages/clinical-content/src/pilot-content.test.ts",
+      "beforeSha256": "7d12ea5fce9e0c931ff76365d38cc0ad69f62dcfea83947282f1ebc148f9c946",
+      "afterSha256": "5d0ea2357aa42af814aebea404af1061758b974c28e8a5fba7eb6268cc7aa74b"
+    }
+  ],
+  "newFiles": [
+    {
+      "path": "docs/execplans/question-topic-acceptance-batch1-20261111.md",
+      "bytes": 6050,
+      "sha256": "9d74ed46f0da9d7039357eeebcdbf5889df7cd7078f4a07547e7190ccdd832b2"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch1-accepted-data-20261111.ts",
+      "bytes": 449949,
+      "sha256": "f50b06a0583ec4c2ea87d5d129bac030cdab97b50cf40b70929810619d1890a7"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch1-accepted-20261111.ts",
+      "bytes": 2201,
+      "sha256": "9d873ffa722a47d779c4f654af05b4716a9d90c0d5c5b50943c1dd5e89890aa5"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch1-acceptance-test-support.ts",
+      "bytes": 3985,
+      "sha256": "ee579791c0bc964b7e9b5c94079fcd2c2937823224646a4f492d45e4d671a51d"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+      "bytes": 7780,
+      "sha256": "b1dbaed6698c006ae5cb88fc3308308da39eec327c0aa9a31eacfefa25888d05"
+    },
+    {
+      "path": "apps/player/src/questionProgramBatch1SaveCompatibility.test.ts",
+      "bytes": 13003,
+      "sha256": "817189ed5f09f8c93bcbc9bd2f1c6e3d9c507089a3e07b19475152143b4dc4fb"
+    },
+    {
+      "path": "tools/question-quality/topic-acceptance-batch1-config-20261111.mjs",
+      "bytes": 3127,
+      "sha256": "18c380d18938f3c7938da276354c8f5532d2c44cbebaa5554221892c1ed284e8"
+    },
+    {
+      "path": "tools/question-quality/capture-topic-acceptance-batch1-20261111.mjs",
+      "bytes": 11171,
+      "sha256": "2082e54c8ee81355d99f554976ff1a12ce5931482309e89de76cbc1271bf8aa0"
+    },
+    {
+      "path": "tools/question-quality/probe-topic-acceptance-batch1-20261111.mjs",
+      "bytes": 3537,
+      "sha256": "d63c99286f524028208535d512cd66ca8150fb5d44e6a4e37b36797b039a77b4"
+    },
+    {
+      "path": "tools/question-quality/build-topic-acceptance-batch1-20261111.mjs",
+      "bytes": 11488,
+      "sha256": "403aae6e48fa9edd2b8e2a06c271eaaa17ceb1908600ae13dbbada407e62c2e2"
+    },
+    {
+      "path": "tools/question-quality/integrate-topic-acceptance-batch1-20261111.mjs",
+      "bytes": 3025,
+      "sha256": "598bea1ec4d2086f3d43cb8338b33cce9dec1c03c02cf6127855c97bff4bb877"
+    },
+    {
+      "path": "tools/question-quality/record-topic-acceptance-batch1-source-migration-20261111.mjs",
+      "bytes": 928,
+      "sha256": "b82221e1eb6a4c01e9e91efa89287ff8b43e49bdb995be280b4f6e7750a4a43d"
+    },
+    {
+      "path": "tools/question-quality/review-topic-acceptance-batch1-20261111.mjs",
+      "bytes": 8613,
+      "sha256": "4cb271e55c90cdc13edbcfe0170e7dc5d00a713da52a8e774f71c4f40e5f9d15"
+    },
+    {
+      "path": "tools/question-quality/handoff-topic-acceptance-batch1-20261111.mjs",
+      "bytes": 18389,
+      "sha256": "dec552e87406369fdee16bbdb6b0c3cf0c3d99aa073671af8191434940c82cb7"
+    },
+    {
+      "path": "tools/question-quality/record-topic-acceptance-batch1-files-20261111.mjs",
+      "bytes": 3686,
+      "sha256": "44022e15cf0bf6c3a0f7baaf60a99d1b1e1b2c6a835dda215ae27d29a106a250"
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch1-before-20261111.json",
+      "bytes": 4465459,
+      "sha256": "37913f386e5b8fabf2281a5a0160367cb563299def7ac705bafc6d8f6d5532bd"
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch1-source-migration-20261111.json",
+      "bytes": 803727,
+      "sha256": "e09b22c7efc8efe51e4d1689e8ad0518b816d2cbd4340f26784b15b9cae44c61"
+    },
+    {
+      "path": "docs/research/question-topic-acceptance-batch1-20261111.md",
+      "bytes": 48500,
+      "sha256": "7c9b238011bcbc8cd918d7b562f4e01958e5353ac2afcee8b635a3f3f89e58b8"
+    },
+    {
+      "path": "docs/research/question-topic-acceptance-batch1-admission-probe-20261111.json",
+      "bytes": 31017,
+      "sha256": "02c6c201f250cf3dcc3150b25bf4aa59bfe42d17f48b5cb714f87e5bb9677911"
+    },
+    {
+      "path": "docs/research/question-topic-acceptance-batch1-dispositions-20261111.json",
+      "bytes": 138281,
+      "sha256": "bff524ce7158c1326304b9aa15ffdfab3e20cdc922c4aa62d6093c12636babb4"
+    },
+    {
+      "path": "docs/research/question-topic-acceptance-batch1-packet-20261111.json",
+      "bytes": 445488,
+      "sha256": "393f6b367bf23a198efebcd7baaa87f62c6549f9f97cb73574b62c8f7ceba887"
+    },
+    {
+      "path": "docs/research/question-topic-acceptance-batch1-lint-20261111.json",
+      "bytes": 6967954,
+      "sha256": "2bda904eb05c0b10c71c4e755326876d3fa27b57465cdd8a6ad58a93e16c2832"
+    },
+    {
+      "path": "docs/research/question-topic-acceptance-batch1-validation-20261111.json",
+      "bytes": 121887,
+      "sha256": "238ee175b210f158c20efb57aa9b8d2540d4f8f6e7039496b309dda362eff890"
+    }
+  ],
+  "sharedHandoff": {
+    "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+    "operation": "append_only",
+    "originalPrefixBytes": 933552,
+    "originalPrefixSha256": "95d7f62c173f490c4424a98c086dd34d314aae9730bfe40df2e7dc3803038ffd",
+    "currentBytes": 940256,
+    "currentSha256": "3f73524974e95f1c7c7d5df4810402ea823ed80ec6b58110d0bf7b9c8e327df3"
+  },
+  "levelFiveBoundInputs": [
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "5fffcaa36446800168f2c3362cff2c357f7726a9f4cc44afdb065f804ec630dd",
+      "afterSha256": "1ce574bdf797a34ee99505ac3ad7c03cd7f09d93d8301edfd42bff1b9947a221",
+      "recordedSha256": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c",
+      "alreadyUnboundAtIntake": true
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "9b9217631c612cf22b5237808d4eedf0b065472d165190bfbcec2b691921ae5b",
+      "afterSha256": "0fad854518fa1babd8fd7c6e91627df094a21ad9edf338397f7432b0d3f3e878",
+      "recordedSha256": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4",
+      "alreadyUnboundAtIntake": true
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "2c6af289ba8b2d47d79390d40eaae53fe412fcb1dff638c8019aeee2661eae36",
+      "afterSha256": "4f5e6bae6b16fbd693153add3ddbbb48c2e997ed16159522f177d917167077c2",
+      "recordedSha256": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245",
+      "alreadyUnboundAtIntake": true
+    }
+  ],
+  "protectedTopicInputs": [
+    {
+      "path": "packages/clinical-content/src/question-topic-small-bowel-obstruction-ileus-20261111.ts",
+      "sha256": "87a832d7976dfae82e75c41af6a7fd7d38099ee54ccb4bc553539fc3104b56fa",
+      "currentSha256": "87a832d7976dfae82e75c41af6a7fd7d38099ee54ccb4bc553539fc3104b56fa",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-small-bowel-obstruction-ileus-20261111.json",
+      "sha256": "2a0363fd371cb02bf259f94052f094906a630d9d04ed6ac0f99190b17eb772d1",
+      "currentSha256": "2a0363fd371cb02bf259f94052f094906a630d9d04ed6ac0f99190b17eb772d1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/sources-question-topic-small-bowel-obstruction-ileus-20261111.json",
+      "sha256": "406eed587599937ad6d2efbec13a1ecfdcf4b736e9e8f525da68df7c84f66fa2",
+      "currentSha256": "406eed587599937ad6d2efbec13a1ecfdcf4b736e9e8f525da68df7c84f66fa2",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-small-bowel-obstruction-ileus-review-20261111.json",
+      "sha256": "f7b2a972bce1398bb5c231e5b07ba6804d1abe5d978f82825cfb941cfff39588",
+      "currentSha256": "f7b2a972bce1398bb5c231e5b07ba6804d1abe5d978f82825cfb941cfff39588",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-small-bowel-obstruction-ileus-review2-20261111.json",
+      "sha256": "b255817ca2b060a1d7a0f684e53ffc70a2bc686218dc79569b0bb780570bfac4",
+      "currentSha256": "b255817ca2b060a1d7a0f684e53ffc70a2bc686218dc79569b0bb780570bfac4",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-critical-renal-organ-support-20261111.ts",
+      "sha256": "4e1d2ec4c529559018ec87970e83894b0ebfff7c1e57630163c77a1c81a68718",
+      "currentSha256": "4e1d2ec4c529559018ec87970e83894b0ebfff7c1e57630163c77a1c81a68718",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-critical-renal-organ-support-20261111.json",
+      "sha256": "7a42c13fbae0eccb1becb5b05e8bfb5ea205518de0b898a5385174a3ee075f07",
+      "currentSha256": "7a42c13fbae0eccb1becb5b05e8bfb5ea205518de0b898a5385174a3ee075f07",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/sources-question-topic-critical-renal-organ-support-20261111.json",
+      "sha256": "c8850d30310b64fb3334a6dce2711fcead30471f39da14fc664e2afebd060e2a",
+      "currentSha256": "c8850d30310b64fb3334a6dce2711fcead30471f39da14fc664e2afebd060e2a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-critical-renal-organ-support-review-20261111.json",
+      "sha256": "8140780cbc17d9382c53c5020c126e36487739a10b2a2536d0e071dfdbb89e80",
+      "currentSha256": "8140780cbc17d9382c53c5020c126e36487739a10b2a2536d0e071dfdbb89e80",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-critical-renal-organ-support-review2-20261111.json",
+      "sha256": "5de14b1d38f4418fc32aad6517a4b25e5bcd009af3902607a39670ed9a591cdb",
+      "currentSha256": "5de14b1d38f4418fc32aad6517a4b25e5bcd009af3902607a39670ed9a591cdb",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-critical-shock-resuscitation-20261111.ts",
+      "sha256": "6c872fbaba2ed1da025e0f57b42efbf7f8d284db8ce893521bbcb9a7e6d084a1",
+      "currentSha256": "6c872fbaba2ed1da025e0f57b42efbf7f8d284db8ce893521bbcb9a7e6d084a1",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-critical-shock-resuscitation-20261111.json",
+      "sha256": "300e4da91d5ce1eeb737d63444ebafa7749ef831d9a4af818e0f8f894615d920",
+      "currentSha256": "300e4da91d5ce1eeb737d63444ebafa7749ef831d9a4af818e0f8f894615d920",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/sources-question-topic-critical-shock-resuscitation-20261111.json",
+      "sha256": "219af865c8c19c46985da918a867bcaaf63a4e8b2967f37d2db506652e2c924d",
+      "currentSha256": "219af865c8c19c46985da918a867bcaaf63a4e8b2967f37d2db506652e2c924d",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-critical-shock-resuscitation-review-20261111.json",
+      "sha256": "42ef629534bc752ecfdebaedb886954c9eece104546393c3c4cf1f27f53dfaef",
+      "currentSha256": "42ef629534bc752ecfdebaedb886954c9eece104546393c3c4cf1f27f53dfaef",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-critical-shock-resuscitation-review2-20261111.json",
+      "sha256": "c3cf836d9fde3aff920f47aeef4921868301fa2f31c9ebacefc3fd57445ac2e3",
+      "currentSha256": "c3cf836d9fde3aff920f47aeef4921868301fa2f31c9ebacefc3fd57445ac2e3",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-appendix-appendicitis-20261111.ts",
+      "sha256": "9a97e1356ea2c06dbbc999ec306cf096832fd989967bc8abbd96fc1fe07aee83",
+      "currentSha256": "9a97e1356ea2c06dbbc999ec306cf096832fd989967bc8abbd96fc1fe07aee83",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-appendix-appendicitis-20261111.json",
+      "sha256": "2561d3e8dffe9a56aa8469fb85a7f56df6716f4ee98ca10a1b42114232569da6",
+      "currentSha256": "2561d3e8dffe9a56aa8469fb85a7f56df6716f4ee98ca10a1b42114232569da6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/sources-question-topic-appendix-appendicitis-20261111.json",
+      "sha256": "28188c87a1e05859a33b26d4450bb92dea04aa8746a51511f07bb98e8863ab39",
+      "currentSha256": "28188c87a1e05859a33b26d4450bb92dea04aa8746a51511f07bb98e8863ab39",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-appendix-appendicitis-review-20261111.json",
+      "sha256": "79df70da3b285676c6d00f141b6c6f63d9fdb41bca6fa4e461f79fd78df75445",
+      "currentSha256": "79df70da3b285676c6d00f141b6c6f63d9fdb41bca6fa4e461f79fd78df75445",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-appendix-appendicitis-review2-20261111.json",
+      "sha256": "6bad000ffdf0374452d73406b9590067b489857e0b567d263706e2c473b98941",
+      "currentSha256": "6bad000ffdf0374452d73406b9590067b489857e0b567d263706e2c473b98941",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-trauma-initial-abdomen-20261111.ts",
+      "sha256": "3ea339f3df4549a59d24086c41fe9786b829f08264bb1cf06d770178eb5e5f74",
+      "currentSha256": "3ea339f3df4549a59d24086c41fe9786b829f08264bb1cf06d770178eb5e5f74",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-trauma-initial-abdomen-20261111.json",
+      "sha256": "b3b262e1e280709c371b684be6e7ee350c22744482d24987d86a613149ca5cf6",
+      "currentSha256": "b3b262e1e280709c371b684be6e7ee350c22744482d24987d86a613149ca5cf6",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/sources-question-topic-trauma-initial-abdomen-20261111.json",
+      "sha256": "02fbf752bad59d416325801ff7e20f51c5117cd08d521b8958ebae44f1ae5fb7",
+      "currentSha256": "02fbf752bad59d416325801ff7e20f51c5117cd08d521b8958ebae44f1ae5fb7",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-trauma-initial-abdomen-review-20261111.json",
+      "sha256": "39df185c9f8a8debebba72a6aaaa8f8236b86eaa43cef84b1eb32bde20b8c1ba",
+      "currentSha256": "39df185c9f8a8debebba72a6aaaa8f8236b86eaa43cef84b1eb32bde20b8c1ba",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-trauma-initial-abdomen-review-preserved-20261111.json",
+      "sha256": "c9586d20cfe580ec28442df3f424ba9019463c54de61bdcf52e287ad07f43654",
+      "currentSha256": "c9586d20cfe580ec28442df3f424ba9019463c54de61bdcf52e287ad07f43654",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-trauma-initial-abdomen-review2-20261111.json",
+      "sha256": "14e10ef37e1783ad27d57d703b1029aff75264855477f2007172aa55acd43153",
+      "currentSha256": "14e10ef37e1783ad27d57d703b1029aff75264855477f2007172aa55acd43153",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-trauma-initial-abdomen-review3-20261111.json",
+      "sha256": "ed245ecd42f68d13b82f149669a88018dadc9bf15ce5082424ce154f0fa2872e",
+      "currentSha256": "ed245ecd42f68d13b82f149669a88018dadc9bf15ce5082424ce154f0fa2872e",
+      "unchanged": true
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-critical-respiratory-ventilation-20261111.ts",
+      "sha256": "6a1d298090d821117c123ceca5b23df57db10a3e76de9111956a017ec09be566",
+      "currentSha256": "6a1d298090d821117c123ceca5b23df57db10a3e76de9111956a017ec09be566",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-critical-respiratory-ventilation-20261111.json",
+      "sha256": "12b2ed650a0490d877af9fae6364ec92585ae9248379be14c62159af427cd450",
+      "currentSha256": "12b2ed650a0490d877af9fae6364ec92585ae9248379be14c62159af427cd450",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/sources-question-topic-critical-respiratory-ventilation-20261111.json",
+      "sha256": "c1cff446954a0467b4a736bc824fe48c22a5a166896c8d41ff81dcc6c5a9721f",
+      "currentSha256": "c1cff446954a0467b4a736bc824fe48c22a5a166896c8d41ff81dcc6c5a9721f",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-critical-respiratory-ventilation-review-20261111.json",
+      "sha256": "195c6d145dc0d3058df459967b0323709790158e9d69f85b39afc35a340b863a",
+      "currentSha256": "195c6d145dc0d3058df459967b0323709790158e9d69f85b39afc35a340b863a",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-critical-respiratory-ventilation-review2-20261111.json",
+      "sha256": "e1f676afe0b374b3ee640c1ca9d22a20dd4c6a94918728dcdb9ead3491bafbc6",
+      "currentSha256": "e1f676afe0b374b3ee640c1ca9d22a20dd4c6a94918728dcdb9ead3491bafbc6",
+      "unchanged": true
+    }
+  ],
+  "separateObservedConcurrentClinicalChanges": [
+    {
+      "path": "packages/clinical-content/src/question-topic-colon-diverticular-lower-bleeding-20261111.ts",
+      "beforeSha256": "c66b5f7217c1337053689da990302ae5569e34ac61b2682eac40a75d907efb36",
+      "currentSha256": "b4bab2c1a1d2a9aedb204224eba5a646d89206b66f00b5b41972be623aaf81c0"
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-esophagus-motility-achalasia-20261111.ts",
+      "beforeSha256": "bba00da32ae10713580fbaf075bf1e79c18db759badbf45db14aa785f25ad790",
+      "currentSha256": "83c8fdfae6b48877e0dbabea944814a07665084e01a392502b3a935edadfa2b8"
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-liver-malignancy-20261111.test.ts",
+      "beforeSha256": "ae22b7f82aee25581a16140fa482b6bb672e8e50472af01994f5f59f3a4a6ebe",
+      "currentSha256": "0d1e6d13fed34f03916a5af1b5331886fa151a0e391a5494cdb8f7bd5cc1d44c"
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-liver-malignancy-20261111.ts",
+      "beforeSha256": "9317d442c197bca8d334d2811b61c71e40c9f3e158e42f3328b5b5d4c7931cb2",
+      "currentSha256": "88dac8081a07c52589249864e644ec9f9b9c2883dce43b9ee285a87d6237e48c"
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-vascular-aorta-20261111.test.ts",
+      "beforeSha256": "f5c5771c265bdf748613c5ad979c1986248ac53009e36e25c720c151a156ef6a",
+      "currentSha256": "c4e2cf6987a18784b204c669d1ce9a48693b7b6cb1a2d69c951f59e356ef72d4"
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-vascular-aorta-20261111.ts",
+      "beforeSha256": "701a26dc22318c7513aa0ac65ce8dba416f292c61485f26755eac894321851b9",
+      "currentSha256": "eab5139a384a5692b9f3c93a5a6169fe14097e1d68f19e4184c7bb1b77f25349"
+    }
+  ],
+  "separateObservedConcurrentRuntimeChanges": [
+    {
+      "path": "packages/game-domain/src/level-five-state.ts",
+      "beforeSha256": "71fad192a2eff539551d37fae80f02ae35d078e4a654864871ba39607f076295",
+      "currentSha256": "ff5d3f728e24ada576dc53aefd62f05f46109425a38c6fbdad4c1017d4eaa67a"
+    },
+    {
+      "path": "packages/game-domain/src/persistence.ts",
+      "beforeSha256": "5856c780b56aa82e771e741a0f97567822cd5924db359280d1bbe80315b19904",
+      "currentSha256": "68356819d6d574f07d30c7f93a4ceb71c98c5fbbf41a63ac5beba42e8b1d1e92"
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "beforeSha256": "67eefafbbc6f104e098e0559f36252f6e140550d62cd379d6feefbd251dffc23",
+      "currentSha256": "448a2a845537a6c0864838bc056d0a8cdc3ba928b127c199a3d4540719510329"
+    },
+    {
+      "path": "packages/game-domain/src/selectors.ts",
+      "beforeSha256": "8ce9d46e024a6f37ea50e83e3e064c57483a91338276324de51cdba5f58475a7",
+      "currentSha256": "eeabe57ab10fcbda9966222fb831c9b1616ffd3680529ee15fac98e752812afb"
+    },
+    {
+      "path": "packages/game-domain/src/types.ts",
+      "beforeSha256": "7d8dc527b95a3ca00a48afde790dbc4440c7ea2a9d1c08d55c1d3865cd71f047",
+      "currentSha256": "3382d8f3fcf425ee116f1c3b56beda360eaea6e501ca629eedfe7ae8485afbaf"
+    },
+    {
+      "path": "packages/balance-config/src/late-game-balance.test.ts",
+      "beforeSha256": "de17bd920133a66ae9085dd2732fc99c74b3a7a92cbc088bd5da000874127350",
+      "currentSha256": "318e967da8080edd9dd3e88b003acb467b1f4ee083c09688bbe0b6372f3881e5"
+    },
+    {
+      "path": "packages/balance-config/src/level-five-progression.test.ts",
+      "beforeSha256": "ca1814f1c1a8d7db5229d24ea48c99f5ac0fece6c188e9f90c35fd994b3dafe2",
+      "currentSha256": "e8be5db5229586b2605988977d323ca7a08c162c5d613d1d2e346de63f3bd197"
+    },
+    {
+      "path": "packages/balance-config/src/level-five-progression.ts",
+      "beforeSha256": "2567589a0cfe11d81a1d259b21b31867920b73494511997a08a70c53f69e933d",
+      "currentSha256": "31b1be8d93ed3a0eda587431a4ae14ff8e05b36e3e8310036b35d6e1bc65c171"
+    },
+    {
+      "path": "packages/balance-config/src/prototype-balance.test.ts",
+      "beforeSha256": "25a36075d7a2523ce18a3d761291f723ef31ec84420e353a3f8e50d7c6e1ba6e",
+      "currentSha256": "3197a1c29b8e1ed86e61a4d322063d1de2bfd1487f098f9054cd984864c07f3a"
+    },
+    {
+      "path": "packages/balance-config/src/prototype-balance.ts",
+      "beforeSha256": "038df1f51db0a368a99003c7c665bbddf338d8d57293c354ee7d94d757466cbe",
+      "currentSha256": "b6e7ed9e31ab7801d9715456b8ca67649d0e940fe867d1076ef4c1b69368208c"
+    },
+    {
+      "path": "apps/player/src/session/cloud/codecOwnership.ts",
+      "beforeSha256": "28a7e80a7b932b2bc78d0636d0196b3686c026a023a3f8cafca69eae75046a57",
+      "currentSha256": "ee41c6fcdbb78f560015caf0bd78a5edeebac73540bbfff818fc950c4d456524"
+    },
+    {
+      "path": "apps/player/src/session/levelFiveGiftRetailViewModels.test.tsx",
+      "beforeSha256": "b8f158887e494d30248801199c304ff8b5cad33bf41f65746aaea5ff9e879ed7",
+      "currentSha256": "71e3d4f4a27d91b23d73501995eb44090e6a8a251f7d96879d5aaf1657edc9ca"
+    },
+    {
+      "path": "apps/player/src/session/levelFiveLaunch.test.tsx",
+      "beforeSha256": "c5d48818ccadeb07163b30a145aba70947b52e544dc9e6c1240b440a3409393a",
+      "currentSha256": "4a6927544200bd9081aee78636b8985e51ed4eefae7a60bd04eef938da2df710"
+    },
+    {
+      "path": "apps/player/src/session/levelFiveProgressionViews.test.tsx",
+      "beforeSha256": "d49161127591fa319bf15727ba5e6255ef32f5440521b5ee635b4cb800cf221e",
+      "currentSha256": "e5e8d97b05b555013d72e2ca5cf2e65f7607da87afb60be3ddb42822557c2eab"
+    },
+    {
+      "path": "apps/player/src/session/levelFourProgressionViews.test.tsx",
+      "beforeSha256": "e33d30d0cfe16876778f0df83efc2c66bc2de5f81b3916fcd41847ef0a84e2d2",
+      "currentSha256": "56445ac5ba04fffaf10868f54c6a43188d82a2437d55c454310e28c2dd3f870d"
+    }
+  ],
+  "receiptSelf": "docs/research/question-topic-acceptance-batch1-files-20261111.json; self hash intentionally excluded",
+  "noGit": true,
+  "noInstall": true,
+  "noNetwork": true,
+  "noAgents": true,
+  "noDeploy": true,
+  "noRebind": true
+}

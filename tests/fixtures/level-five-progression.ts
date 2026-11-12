@@ -20,6 +20,8 @@ function apply(state: GameState, context: DomainContext, command: GameCommand): 
 /** Synthetic prior-save shape; no new witness, reward or unlock is earned by load. */
 export function createLevelFourReadyForFiveQaState(context: DomainContext): GameState {
   const state = createLevelFourAlmostQaState(context);
+  state.clinicalXp = 750;
+  delete state.lateProgression; // Prior-save preview: its historical XP goal was earned.
   state.campaignId = `${LEVEL_FIVE_PROGRESSION_QA_PREFIX}.l4-ready`;
   state.levelFourCompletion!.woundOstomyCareVisit = {
     serviceOperationId: "retired.qa.wound", encounterId: null, incomeLineId: "income.wound_care", completedAtFacilityTick: 0,
@@ -46,7 +48,8 @@ export function setLevelFiveQaDisplayedSatisfaction(state: GameState, context: D
 export function prepareLevelFiveProgressionQaState(state: GameState, context: DomainContext, scenario: LevelFiveProgressionQaScenario): GameState {
   state.campaignId = `${LEVEL_FIVE_PROGRESSION_QA_PREFIX}.${scenario}`;
   state.campaignSeed = `level-five-progression-m6.${scenario}`;
-  state.clinicalXp = scenario === "goals" ? 1990 : 2000;
+  const minimumXp = context.balanceRelease.facility.stageDefinitions.find(stage => stage.level === 5)!.minimumClinicalXp;
+  state.clinicalXp = scenario === "goals" ? minimumXp - 10 : minimumXp;
   state.nextEmployeeDiscussionTick = state.nextExternalRetailOpportunityTick = Number.MAX_SAFE_INTEGER;
   state.environment.nextLitterSpawnTick = state.environment.nextAmbientPedestrianTick = state.environment.nextWaterCoolerDrainTick = Number.MAX_SAFE_INTEGER;
   for (const employee of state.employees) employee.nextIdleActionAtFacilityTick = Number.MAX_SAFE_INTEGER;

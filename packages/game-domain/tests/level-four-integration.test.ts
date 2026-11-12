@@ -182,6 +182,8 @@ describe("Level 4 M9 integrated launch", () => {
     apply({ type: "PLACE_DOOR", doorId: "door.fresh.pharmacy", roomId: "room.fresh.pharmacy", side: "south", offset: 1 }, "pharmacy.door");
     apply({ type: "HIRE_STAFF", employeeId: "employee.fresh.pharmacist", staffRoleDefinitionId: "staff.pharmacist" }, "pharmacist");
     state.clinicalXp = earned.clinicalXp;
+    expect(getFacilityProgressionStatus(state).requirements.find(goal => goal.id === "progression.clinical_xp")?.met).toBe(false);
+    state.clinicalXp = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.stageDefinitions.find(stage => stage.level === 3)!.minimumClinicalXp;
     state.serviceIncomeReceipts.push(...structuredClone(earned.serviceIncomeReceipts));
     const before = structuredClone(state);
     expect(getFacilityProgressionStatus(state).eligible).toBe(true);

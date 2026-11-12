@@ -11,7 +11,7 @@ import { createPreLevelFiveLaunchContext } from "../../../tests/fixtures/level-f
 
 const context = createLevelFiveStateQaContext();
 const base = createLevelFiveStateQaState("pre-goal", context);
-const ready = () => ({ ...structuredClone(base), clinicalXp: 2000 });
+const ready = () => ({ ...structuredClone(base), clinicalXp: 2300 });
 const apply = (state: GameState, command: GameCommand) => gameReducer(state, command, context);
 const acknowledge = (state: GameState, id = "m6.ack") => apply(state, { type: "SET_PAUSED", paused: state.paused, operationId: id });
 const unlock = (state: GameState) => state.levelFive?.progress.inspectionUnlocked;
@@ -29,7 +29,7 @@ describe("M6 three-goal inspection eligibility", () => {
     ]);
     const earned = acknowledge(state);
     expect(unlock(earned)).toEqual({ version: "level-five-inspection-unlock.v1", earnedAtFacilityTick: state.facilityTick,
-      clinicalXp: 2000, displayedSatisfaction: getDisplayedClinicSatisfaction(state, context), averageStaffMorale: 85, employedStaffCount: 1 });
+      clinicalXp: 2300, displayedSatisfaction: getDisplayedClinicSatisfaction(state, context), averageStaffMorale: 85, employedStaffCount: 1 });
     expect(earned.levelFive!.inspection.status).toBe("ready");
     for (const key of ["cashCents", "clinicalXp", "learningHistories", "reviewIntents", "settlements", "serviceIncomeReceipts", "rooms", "employees"] as const)
       expect(earned[key], key).toEqual(state[key]);
@@ -40,8 +40,8 @@ describe("M6 three-goal inspection eligibility", () => {
   });
 
   it.each([
-    [1999, 91, 85, false], [2000, 90, 85, false], [2000, 91, 84.999, false],
-    [2000, 91, 85, true], [2001, 100, 100, true],
+    [2299, 91, 85, false], [2300, 90, 85, false], [2300, 91, 84.999, false],
+    [2300, 91, 85, true], [2301, 100, 100, true],
   ])("XP %i, displayed satisfaction %i, morale %f => unlocked %s", (xp, satisfaction, morale, expected) => {
     const state = ready(); state.clinicalXp = xp; state.employees[0]!.morale = morale;
     setLevelFiveQaDisplayedSatisfaction(state, context, satisfaction);
@@ -58,9 +58,9 @@ describe("M6 three-goal inspection eligibility", () => {
   });
 
   it("requires simultaneous fulfillment rather than remembering three separate live successes", () => {
-    let state = ready(); state.clinicalXp = 1999;
+    let state = ready(); state.clinicalXp = 2299;
     state = acknowledge(state, "m6.separate.1");
-    state.clinicalXp = 2000; state.employees[0]!.morale = 84;
+    state.clinicalXp = 2300; state.employees[0]!.morale = 84;
     state = acknowledge(state, "m6.separate.2");
     state.employees[0]!.morale = 85;
     setLevelFiveQaDisplayedSatisfaction(state, context, 90);
@@ -92,7 +92,7 @@ describe("M6 three-goal inspection eligibility", () => {
     state = apply(state, { type: "TRAIN_EMPLOYEE", employeeId: id, operationId: "m6.train" });
     expect(state.operationReceipts["m6.train"]?.status).toBe("applied");
     expect(state.employees.find(employee => employee.id === id)?.training).toBeTruthy();
-    state.clinicalXp = 2000;
+    state.clinicalXp = 2300;
     for (const employee of state.employees) employee.morale = 83; // +2 owned Founder Office = 85.
     expect(unlock(acknowledge(state))).toMatchObject({ averageStaffMorale: 85, employedStaffCount: state.employees.length });
   });
@@ -109,7 +109,7 @@ describe("M6 three-goal inspection eligibility", () => {
       expect(state.levelFive!.inspection.status).toBe("ready");
       expect(state.levelFive!.progress.gameFinished).toBeNull();
       expect(state.events.filter(event => event.id === LEVEL_FIVE_INSPECTION_UNLOCK_EVENT_ID)).toHaveLength(1);
-      expect(state.clinicalXp).toBe(2000);
+      expect(state.clinicalXp).toBe(2300);
       expect(getInspectionBookingBlockedReason(state, context)).toBeNull();
     }
     state.events = []; state.encounters = {}; state.serviceOperations = []; state.serviceIncomeReceipts = [];
@@ -124,7 +124,7 @@ describe("M6 three-goal inspection eligibility", () => {
     state.environment.nextWaterCoolerDrainTick = state.facilityTick + 2;
     const next = apply(state, { type: "DEV_FAST_FORWARD", tickCount: 100, operationId: "m6.fast" });
     expect(unlock(next)?.earnedAtFacilityTick).toBe(state.facilityTick + 1);
-    expect(next.clinicalXp).toBe(2000);
+    expect(next.clinicalXp).toBe(2300);
     expect(next.events.filter(event => event.id === LEVEL_FIVE_INSPECTION_UNLOCK_EVENT_ID)).toHaveLength(1);
   });
 
@@ -141,8 +141,8 @@ describe("M6 three-goal inspection eligibility", () => {
     const before = state;
     const correct = apply(before, answer);
     const wrong = apply(before, { ...answer, answerChoiceId: question.node.answerChoices.find(choice => !choice.isCorrect)!.id, operationId: "m6.chart.wrong" });
-    expect(correct.clinicalXp).toBe(2000); expect(unlock(correct)).toBeTruthy();
-    expect(wrong.clinicalXp).toBe(1992); expect(unlock(wrong)).toBeNull();
+    expect(correct.clinicalXp).toBe(2300); expect(unlock(correct)).toBeTruthy();
+    expect(wrong.clinicalXp).toBe(2292); expect(unlock(wrong)).toBeNull();
     expect(apply(correct, answer)).toBe(correct);
     expect(correct.levelFive!.progress.gameFinished).toBeNull();
   });

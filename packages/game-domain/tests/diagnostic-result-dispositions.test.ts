@@ -1,13 +1,19 @@
-import { SYNTHETIC_CLINICAL_RELEASE } from "@gamify-surgery/clinical-content";
+import { SYNTHETIC_CLINICAL_RELEASE, QUESTION_PROGRAM_BATCH2_RETAINED_CASES, QUESTION_SHIP_MANIFEST } from "@gamify-surgery/clinical-content";
 import { describe, expect, it } from "vitest";
 import { EXACT_DIAGNOSTIC_RESULT_RECORDS, getDiagnosticResultDisposition } from "../src/diagnostic-result-dispositions";
 import type { EncounterState } from "../src";
 
 describe("exact frozen endoscopy result contracts", () => {
-  it("binds every operational annotation to an active exact choice and profile, including distractors", () => {
+  it("binds every operational annotation to an active or retained frozen exact choice and profile, including distractors", () => {
     const keys = new Set<string>();
     for (const record of EXACT_DIAGNOSTIC_RESULT_RECORDS) {
-      const clinicalCase = SYNTHETIC_CLINICAL_RELEASE.cases.find((candidate) => candidate.id === record.caseId);
+      const active = SYNTHETIC_CLINICAL_RELEASE.cases.find(candidate => candidate.id === record.caseId);
+      const retained = QUESTION_PROGRAM_BATCH2_RETAINED_CASES.find(candidate => candidate.id === record.caseId);
+      if (!active && retained) {
+        expect(QUESTION_SHIP_MANIFEST.replacements.some(row => row.replaces === retained.id) ||
+          QUESTION_SHIP_MANIFEST.topicConsolidations.some(row => row.replaces.includes(retained.id))).toBe(true);
+      }
+      const clinicalCase = active ?? retained;
       const node = clinicalCase?.decisionNodes.find((candidate) => candidate.id === record.nodeId && candidate.questionVariantId === record.questionVariantId);
       const key = `${record.caseId}|${record.nodeId}|${record.choiceId}`;
       expect(keys.has(key), key).toBe(false); keys.add(key);

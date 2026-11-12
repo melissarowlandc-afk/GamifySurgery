@@ -1,7 +1,7 @@
 /** Owner-approved editorial management values, independent of clinical work. */
 export const EXECUTIVE_ROLE_DEFINITION = {
   id: "staff.executive", displayName: "Executive", unlockFacilityLevel: 5,
-  hiringCost: 600, salaryPerExpenseInterval: 45,
+  hiringCost: 720, salaryPerExpenseInterval: 45,
   minimumSalaryPerExpenseInterval: 35, maximumSalaryPerExpenseInterval: 65,
   salaryAdjustmentStep: 2, moralePerSalaryStep: 5, baseMorale: 75,
   maximumEmployees: 1, maximumTrainingLevel: 5, workloadLimitContribution: 0,

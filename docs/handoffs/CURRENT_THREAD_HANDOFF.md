@@ -9371,3 +9371,21 @@ Fresh native journey/lower:28601commands/6227467closing cents/445completed/0walk
 Seven final workspace suites:806files/11381passed/0failed/1existing skip; seven types, player build673modules/11.29s, scoped phone-spec types and unchanged boundary/launcher via exact7601-path inventory pass. Full domain was rerun after its one stale608-ID expectation; both original/final outputs retained. Focused saves/visibility306, source/domain38, admission7 and final guards242pass. No test budget/guard relaxation.
 
 Manager owns release browser/phone and real staffed procedure frequency, clinical sign-off, backup and rollout. No main writes, unrelated renderer/perf/cloud/art/SQL/CI edits, network, agents, browser, install, Git mutation or deploy. Owner opening pathways unchanged. Local/uncommitted.
+
+
+### Port32 / rebind32 handback (2026-11-11)
+
+Local GS-release milestone complete; manager-stated base63819987. Only frozen topic batches1/2 + accepted late-game cost/pacing lane ported. Manifest193/default1174cases/1491nodes/654meanings,48accepted nodes, allnew needs_clinician_review. Raw mutable topic/salvage files excluded; exact frozen static archive hashes verified.155public changed paths;63copied/75hunk-ported/17regenerated;764other differences excluded. Full disposition/hash list: .local-dev/release-verify/port32-20261111.json.
+
+Actual CHECK45792commands/9514568cents/709completed/0walkouts; all9checkpoints/3reports change. Before28601/6227467/445/0; balance-only30790/6460039/477/0; content-only35201/7732431/546/0. Cash reconciles, guard unchanged, history25->26. First finish80.26%later: material satisfaction-gate interaction beyond earlier10-20%goal; accepted values unchanged. GS028 handoff contains full attribution, before/after hashes, all validation counts and fixture-safety limitations.
+
+Seven suites:815files/11558pass/0fail/1existing skip; seven types, boundaries via exact native inventory, player build pass. Old/frozen saves, lateProgression, actual page-wire capacity and journals verified; native assertions/source guards retained; quotas/budgets unchanged. Two-copy5MiB recovery fixture uses a complete earlier native Level5 checkpoint; larger late reports are tested independently. No e2e/browser runtime, commit/push/network/install/agent/deploy. Main read-only; owner opening pathways unchanged. Manager owns review, backup and rollout.
+
+
+### Port32 correction / rebind32 rerun handback (2026-11-11)
+
+Supersedes earlier850-goal totals. Only production delta:Level4 XP850->790;550/2300,costs/all448clinical hashes exact. Fresh shipping CHECK31570commands/6677125cents/491completed/0walkouts; unlock19632/first finish22690/final29404/minimum cash1452073. First finish+13.82%vsrebind31,13245minutes earlier than old port32. The satisfaction-gate wait falls16723->2973minutes despite2300XP being reached505minutes later. All shipping assertions/guard retained; history26->27.
+
+Fresh content-only35201/7732431/546/0 reproduces all nine previous checkpoints. Old610/new790control retains the unchanged goal-bound failure at40187:42992commands/9297631partial cash/668completed/0walkouts,6236XP/100morale/84satisfaction; no unlock/reports/finish. Cash reconciles in full arms and partial stop. Explicit accepted limitation, not a completed passing control.
+
+All nine canonical saves/three reports change. Raw first62.4750682937747, actual conservative display62.47. Legacy25loads/continuations and frozen pre-policy archives exact. Seven suites815files/11558pass/0fail/1existing skip; seven types/build/boundaries pass.31follow-up paths within same155cumulative paths; full hashes/dispositions .local-dev/release-verify/port32-20261111.json, fresh receipts .local-dev/release-port32-retune-20261111. GS028 appended correction has all arms, artifacts and exact outputs. Main read-only; no commit/push/install/network/agent/deploy/browser/e2e; owner pathways unchanged. Manager owns review, backup and rollout.

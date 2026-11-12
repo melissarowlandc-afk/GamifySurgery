@@ -1,3 +1,5 @@
+import {QUESTION_PROGRAM_BATCH2_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch2Concepts} from "./question-program-batch2-accepted-20261111";
+import {QUESTION_PROGRAM_BATCH1_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch1Concepts} from "./question-program-batch1-accepted-20261111";
 import {QUESTION_N4_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionN4Concepts} from "./question-n4-accepted-20261110";
 import {QUESTION_HARDEN1_ACCEPTANCE_SOURCE as harden1, QUESTION_N3R4_RETAINED_ACCEPTANCE_SOURCE as n3r4, withAcceptedHarden1N3r4Concepts} from "./question-harden1-n3r4-accepted-20261110";
 import {QUESTION_FLAGS3_ACCEPTED_SOURCE_RELEASE as flags3, withAcceptedQuestionFlags3Concepts} from "./question-flags3-accepted-20261107";
@@ -24,8 +26,8 @@ import { withAcceptedQuestionNewN3Round2Concepts } from "./question-new-n3-round
 // unaccepted draft meanings are not added merely for this validation fixture.
 const n3Catalog = withAcceptedQuestionNewN3Round2Concepts(completeCatalog,authoringCatalog.concepts);
 const priorCatalog = withAcceptedQuestionFlags3Concepts(withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionStats1Concepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(n3Catalog)))));
-const catalog = withAcceptedQuestionN4Concepts(withAcceptedHarden1N3r4Concepts(priorCatalog));
-const views = {...QUESTION_N4_ACCEPTED_SOURCE_VIEWS, "harden1-round1":harden1,"n3-round4":n3r4, "flags4-accepted":flags4,"stats1-accepted":stats1,"flags3-accepted":flags3, legacy, "flags-round3": flags, "batch2a-round3": batch2a, "n1-round3": n1, "n2-round2": n2, "batch2b-round2": batch2b, "flags2-round1": flags2, "flags2-round3":flags2round3, "n3-round3":n3 };
+const catalog = withAcceptedQuestionProgramBatch2Concepts(withAcceptedQuestionProgramBatch1Concepts(withAcceptedQuestionN4Concepts(withAcceptedHarden1N3r4Concepts(priorCatalog))));
+const views = {...QUESTION_PROGRAM_BATCH2_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH1_ACCEPTED_SOURCE_VIEWS,...QUESTION_N4_ACCEPTED_SOURCE_VIEWS, "harden1-round1":harden1,"n3-round4":n3r4, "flags4-accepted":flags4,"stats1-accepted":stats1,"flags3-accepted":flags3, legacy, "flags-round3": flags, "batch2a-round3": batch2a, "n1-round3": n1, "n2-round2": n2, "batch2b-round2": batch2b, "flags2-round1": flags2, "flags2-round3":flags2round3, "n3-round3":n3 };
 const readReview = (name: string) => JSON.parse(readFileSync(new URL("../../../docs/research/" + name, import.meta.url), "utf8")) as Array<{id: string; verdict: string}>;
 
 describe("projection-only manager shipping manifest", () => {
@@ -35,7 +37,7 @@ describe("projection-only manager shipping manifest", () => {
   // Separate exact-version tests pin the sixteen 2b rows and the single G06
   // row; every earlier lane retains its exact acceptance checks below.
   expect(beforeFlags3AcceptanceManifest(manifest).accepted.filter(row => !["batch2b-round2", "flags2-round1", "flags2-round3", "n3-round3"].includes(row.sourceView))).toHaveLength(45);
-  expect(live.cases).toHaveLength(1151);
+  expect(live.cases).toHaveLength(1174);
   expect(catalog.cases).toHaveLength(1229);
  });
  it("ships exactly twelve N1 review-three acceptances and parks all twenty-eight returned drafts", () => {
@@ -91,8 +93,9 @@ describe("projection-only manager shipping manifest", () => {
    expect(node).toMatchObject({ questionVariantId: row.questionVariantId, primaryConceptId: row.conceptId });
   }
   for (const cs of legacy.cases) for (const node of cs.decisionNodes) {
-   if(manifest.replacements.some(row=>row.replaces===cs.id)){
-    const relation=manifest.replacements.find(row=>row.replaces===cs.id)!;
+   const relation = manifest.replacements.find(row => row.replaces === cs.id) ??
+     manifest.topicConsolidations.find(row => row.replaces.includes(cs.id));
+   if(relation){
     const accepted=manifest.accepted.find(row=>row.questionVariantId===relation.with)!;
     expect(live.cases.find(row=>row.id===accepted.caseId)).toEqual(views[accepted.sourceView as keyof typeof views]!.cases.find(row=>row.id===accepted.caseId));
     if(accepted.caseId!==cs.id)expect(live.cases.some(row=>row.id===cs.id)).toBe(false);

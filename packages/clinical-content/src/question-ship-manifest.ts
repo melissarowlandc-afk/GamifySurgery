@@ -14,14 +14,23 @@ export interface QuestionShipCaseReplacement {
   replaces: string;
   with: string;
 }
+/** Explicit manager authorization to consolidate duplicate topic-program cases. */
+export interface QuestionShipTopicConsolidation {
+  id: string;
+  program: "topic-program";
+  replaces: readonly string[];
+  with: string;
+  decision: string;
+}
 export interface QuestionShipManifest {
   legacyBindings: readonly (readonly [string, string, string, string])[];
   accepted: readonly QuestionShipAcceptance[];
   headerSources: Readonly<Record<string, string>>;
   replacements?: readonly QuestionShipCaseReplacement[];
+  topicConsolidations?: readonly QuestionShipTopicConsolidation[];
 }
 export const QUESTION_SHIP_MANIFEST = {
-  id: "question-ship.2026-11-10.v9",
+  id: "question-ship.2026-11-11.v11",
   clinicalApproval: false,
   legacyDecision: "Carry forward the existing live bank before the owner-flag rewrite program; user-directed fallback on 2026-11-05. This does not independently accept prior drafts or grant clinical approval.",
   legacyBindings: [
@@ -9808,9 +9817,453 @@ export const QUESTION_SHIP_MANIFEST = {
     "decision": "docs/research/question-n4-manager-decision-20261110.md"
   }
 ,
+  // Topic program batch1: exact complete-case PASS rows, no clinical approval.
+{
+    "acceptanceId": "question.topic.small-bowel-obstruction-ileus.closed-loop-normal-lactate.v1",
+    "caseId": "case.topic.small-bowel-obstruction-ileus.closed-loop.v1",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.closed-loop-normal-lactate.v1",
+    "questionVariantId": "question.topic.small-bowel-obstruction-ileus.closed-loop-normal-lactate.v1",
+    "conceptId": "concept.small-bowel-obstruction.urgent-surgical-escalation.v2",
+    "sourceView": "topic-batch1-small-bowel-obstruction-ileus",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.small-bowel-obstruction-ileus.postcontrast-deterioration.v1",
+    "caseId": "case.topic.small-bowel-obstruction-ileus.transit-course.v1",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.postcontrast-deterioration.v1",
+    "questionVariantId": "question.topic.small-bowel-obstruction-ileus.postcontrast-deterioration.v1",
+    "conceptId": "concept.small-bowel-obstruction.urgent-surgical-escalation.v2",
+    "sourceView": "topic-batch1-small-bowel-obstruction-ileus",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.small-bowel-obstruction-ileus.virgin-abdomen-observation.v1",
+    "caseId": "case.topic.small-bowel-obstruction-ileus.virgin-abdomen.v1",
+    "nodeId": "node.topic.small-bowel-obstruction-ileus.virgin-abdomen-observation.v1",
+    "questionVariantId": "question.topic.small-bowel-obstruction-ileus.virgin-abdomen-observation.v1",
+    "conceptId": "concept.small-bowel-obstruction-ileus.nonoperative-eligibility.v1",
+    "sourceView": "topic-batch1-small-bowel-obstruction-ileus",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.critical-renal-organ-support.citrate-bleeding-circuit.v1",
+    "caseId": "case.topic.critical-renal-organ-support.circuit-anticoagulation.v1",
+    "nodeId": "node.topic.critical-renal-organ-support.citrate-bleeding-circuit.v1",
+    "questionVariantId": "question.topic.critical-renal-organ-support.citrate-bleeding-circuit.v1",
+    "conceptId": "concept.critical-renal-organ-support.citrate-bleeding-circuit.v1",
+    "sourceView": "topic-batch1-critical-renal-organ-support",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.critical-renal-organ-support.trial-off-crrt.v2",
+    "caseId": "case.topic.critical-renal-organ-support.kidney-recovery.v1",
+    "nodeId": "node.topic.critical-renal-organ-support.trial-off-crrt.v2",
+    "questionVariantId": "question.topic.critical-renal-organ-support.trial-off-crrt.v2",
+    "conceptId": "concept.critical-renal-organ-support.trial-off-crrt.v1",
+    "sourceView": "topic-batch1-critical-renal-organ-support",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.critical-shock-resuscitation.choose-valid-fluid-test.v1",
+    "caseId": "case.critical-shock-resuscitation.fluid-assessment.v1",
+    "nodeId": "node.critical-shock-resuscitation.choose-valid-fluid-test.v1",
+    "questionVariantId": "question.critical-shock-resuscitation.choose-valid-fluid-test.v1",
+    "conceptId": "concept.critical-shock-resuscitation.choose-valid-fluid-test.v1",
+    "sourceView": "topic-batch1-critical-shock-resuscitation",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.critical-shock-resuscitation.response-versus-fluid-risk.v1",
+    "caseId": "case.critical-shock-resuscitation.fluid-assessment.v1",
+    "nodeId": "node.critical-shock-resuscitation.response-versus-fluid-risk.v1",
+    "questionVariantId": "question.critical-shock-resuscitation.response-versus-fluid-risk.v1",
+    "conceptId": "concept.critical-shock-resuscitation.response-versus-fluid-risk.v1",
+    "sourceView": "topic-batch1-critical-shock-resuscitation",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.critical-shock-resuscitation.echo-for-persistent-shock.v2",
+    "caseId": "case.critical-shock-resuscitation.reassess-shock-mechanism.v2",
+    "nodeId": "node.critical-shock-resuscitation.echo-for-persistent-shock.v2",
+    "questionVariantId": "question.critical-shock-resuscitation.echo-for-persistent-shock.v2",
+    "conceptId": "concept.critical-shock-resuscitation.echo-for-persistent-shock.v2",
+    "sourceView": "topic-batch1-critical-shock-resuscitation",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.appendix-appendicitis.peritoneal-mucin-referral.v2",
+    "caseId": "case.topic.appendix-appendicitis.peritoneal-mucin.v2",
+    "nodeId": "node.topic.appendix-appendicitis.peritoneal-mucin-referral.v2",
+    "questionVariantId": "question.topic.appendix-appendicitis.peritoneal-mucin-referral.v2",
+    "conceptId": "concept.appendix-appendicitis.low-grade-peritoneal-disease-referral.v1",
+    "sourceView": "topic-batch1-appendix-appendicitis",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.appendix-appendicitis.goblet-cell-oncologic-resection.v1",
+    "caseId": "case.topic.appendix-appendicitis.goblet-cell-pathology.v1",
+    "nodeId": "node.topic.appendix-appendicitis.goblet-cell-oncologic-resection.v1",
+    "questionVariantId": "question.topic.appendix-appendicitis.goblet-cell-oncologic-resection.v1",
+    "conceptId": "concept.appendix-appendicitis.goblet-cell-adenocarcinoma-resection.v1",
+    "sourceView": "topic-batch1-appendix-appendicitis",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.appendix-appendicitis.net-regional-resection.v2",
+    "caseId": "case.topic.appendix-appendicitis.net-staging.v2",
+    "nodeId": "node.topic.appendix-appendicitis.net-regional-resection.v2",
+    "questionVariantId": "question.topic.appendix-appendicitis.net-regional-resection.v2",
+    "conceptId": "concept.appendix-appendicitis.large-net-regional-resection.v1",
+    "sourceView": "topic-batch1-appendix-appendicitis",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.trauma-initial-abdomen.belt-equivocal-observation.v1",
+    "caseId": "case.topic.trauma-initial-abdomen.belt-bowel-evolution.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.belt-equivocal-observation.v1",
+    "questionVariantId": "question.topic.trauma-initial-abdomen.belt-equivocal-observation.v1",
+    "conceptId": "concept.topic.trauma-initial-abdomen.equivocal-bowel-inpatient-observation",
+    "sourceView": "topic-batch1-trauma-initial-abdomen",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.trauma-initial-abdomen.belt-evolving-repeat-imaging.v2",
+    "caseId": "case.topic.trauma-initial-abdomen.belt-bowel-evolution.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.belt-evolving-repeat-imaging.v2",
+    "questionVariantId": "question.topic.trauma-initial-abdomen.belt-evolving-repeat-imaging.v2",
+    "conceptId": "concept.topic.trauma-initial-abdomen.evolving-bowel-repeat-ct",
+    "sourceView": "topic-batch1-trauma-initial-abdomen",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.trauma-initial-abdomen.pelvis-packing-after-angio.v1",
+    "caseId": "case.topic.trauma-initial-abdomen.pelvic-mixed-hemorrhage.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.pelvis-packing-after-angio.v1",
+    "questionVariantId": "question.topic.trauma-initial-abdomen.pelvis-packing-after-angio.v1",
+    "conceptId": "concept.topic.trauma-initial-abdomen.persistent-pelvic-bleeding-packing",
+    "sourceView": "topic-batch1-trauma-initial-abdomen",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.trauma-initial-abdomen.pelvis-recurrent-arterial-focus.v1",
+    "caseId": "case.topic.trauma-initial-abdomen.pelvic-mixed-hemorrhage.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.pelvis-recurrent-arterial-focus.v1",
+    "questionVariantId": "question.topic.trauma-initial-abdomen.pelvis-recurrent-arterial-focus.v1",
+    "conceptId": "concept.topic.trauma-initial-abdomen.pelvic-arterial-rescue-embolization",
+    "sourceView": "topic-batch1-trauma-initial-abdomen",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.trauma-initial-abdomen.bladder-acquisition.v2",
+    "caseId": "case.topic.trauma-initial-abdomen.bladder-protocol-and-repair.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.bladder-acquisition.v2",
+    "questionVariantId": "question.topic.trauma-initial-abdomen.bladder-acquisition.v2",
+    "conceptId": "concept.topic.trauma-initial-abdomen.traumatic-bladder-retrograde-cystography",
+    "sourceView": "topic-batch1-trauma-initial-abdomen",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.trauma-initial-abdomen.bladder-intraperitoneal-repair.v2",
+    "caseId": "case.topic.trauma-initial-abdomen.bladder-protocol-and-repair.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.bladder-intraperitoneal-repair.v2",
+    "questionVariantId": "question.topic.trauma-initial-abdomen.bladder-intraperitoneal-repair.v2",
+    "conceptId": "concept.topic.trauma-initial-abdomen.complicated-extraperitoneal-bladder-repair.v2",
+    "sourceView": "topic-batch1-trauma-initial-abdomen",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.trauma-initial-abdomen.pancreas-distal-duct-operation.v1",
+    "caseId": "case.topic.trauma-initial-abdomen.pancreatic-duct-location.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.pancreas-distal-duct-operation.v1",
+    "questionVariantId": "question.topic.trauma-initial-abdomen.pancreas-distal-duct-operation.v1",
+    "conceptId": "concept.topic.trauma-initial-abdomen.distal-pancreatic-duct-transection-resection",
+    "sourceView": "topic-batch1-trauma-initial-abdomen",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.trauma-initial-abdomen.renal-contained-hematoma.v1",
+    "caseId": "case.topic.trauma-initial-abdomen.contained-renal-compartment.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.renal-contained-hematoma.v1",
+    "questionVariantId": "question.topic.trauma-initial-abdomen.renal-contained-hematoma.v1",
+    "conceptId": "concept.topic.trauma-initial-abdomen.contained-zone-two-hematoma-preservation",
+    "sourceView": "topic-batch1-trauma-initial-abdomen",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.trauma-initial-abdomen.jejunum-primary-repair.v2",
+    "caseId": "case.topic.trauma-initial-abdomen.limited-jejunum-defect.v2",
+    "nodeId": "node.topic.trauma-initial-abdomen.jejunum-primary-repair.v2",
+    "questionVariantId": "question.topic.trauma-initial-abdomen.jejunum-primary-repair.v2",
+    "conceptId": "concept.topic.trauma-initial-abdomen.mesenteric-devascularization-reconstruction.v2",
+    "sourceView": "topic-batch1-trauma-initial-abdomen",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.critical-respiratory-ventilation.expiratory-time.v1",
+    "caseId": "case.topic.critical-respiratory-ventilation.air-trapping.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.expiratory-time.v1",
+    "questionVariantId": "question.topic.critical-respiratory-ventilation.expiratory-time.v1",
+    "conceptId": "concept.critical-respiratory-ventilation.expiratory-time.v1",
+    "sourceView": "topic-batch1-critical-respiratory-ventilation",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.critical-respiratory-ventilation.postextubation-rescue.v1",
+    "caseId": "case.topic.critical-respiratory-ventilation.extubation-rescue.v1",
+    "nodeId": "node.topic.critical-respiratory-ventilation.postextubation-rescue.v1",
+    "questionVariantId": "question.topic.critical-respiratory-ventilation.postextubation-rescue.v1",
+    "conceptId": "concept.critical-respiratory-ventilation.postextubation-rescue.v1",
+    "sourceView": "topic-batch1-critical-respiratory-ventilation",
+    "decision": "docs/research/question-topic-acceptance-batch1-20261111.md"
+  }
+,
+  // Manager-accepted complete topic cases, batch 2.
+{
+    "acceptanceId": "question.trauma-thoracic.bci-selective-imaging.20261111.v2",
+    "caseId": "case.trauma-thoracic.cardiac-course.20261111.v1",
+    "nodeId": "node.trauma-thoracic.bci-selective-imaging.20261111.v2",
+    "questionVariantId": "question.trauma-thoracic.bci-selective-imaging.20261111.v2",
+    "conceptId": "concept.trauma-thoracic.bci-selective-imaging.v1",
+    "sourceView": "topic-batch2-trauma-thoracic",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.trauma-thoracic.bci-persistent-arrhythmia.20261111.v2",
+    "caseId": "case.trauma-thoracic.cardiac-course.20261111.v1",
+    "nodeId": "node.trauma-thoracic.bci-persistent-arrhythmia.20261111.v2",
+    "questionVariantId": "question.trauma-thoracic.bci-persistent-arrhythmia.20261111.v2",
+    "conceptId": "concept.trauma-thoracic.bci-arrhythmia-echo.v1",
+    "sourceView": "topic-batch2-trauma-thoracic",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.trauma-thoracic.bci-normalpair-other-admission.20261111.v1",
+    "caseId": "case.trauma-thoracic.cardiac-disposition.20261111.v1",
+    "nodeId": "node.trauma-thoracic.bci-normalpair-other-admission.20261111.v1",
+    "questionVariantId": "question.trauma-thoracic.bci-normalpair-other-admission.20261111.v1",
+    "conceptId": "concept.blunt-cardiac-injury.monitored-disposition",
+    "sourceView": "topic-batch2-trauma-thoracic",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.trauma-thoracic.chest-drain-organ-trajectory.20261111.v1",
+    "caseId": "case.trauma-thoracic.drain-complication.20261111.v1",
+    "nodeId": "node.trauma-thoracic.chest-drain-organ-trajectory.20261111.v1",
+    "questionVariantId": "question.trauma-thoracic.chest-drain-organ-trajectory.20261111.v1",
+    "conceptId": "concept.trauma-thoracic.chest-drain-organ-trajectory.v1",
+    "sourceView": "topic-batch2-trauma-thoracic",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.trauma-thoracic.thoracic-bleeding-control.20261111.v1",
+    "caseId": "case.trauma-thoracic.bleeding-course.20261111.v1",
+    "nodeId": "node.trauma-thoracic.thoracic-bleeding-control.20261111.v1",
+    "questionVariantId": "question.trauma-thoracic.thoracic-bleeding-control.20261111.v1",
+    "conceptId": "concept.trauma-thoracic.hemothorax-physiology-escalation.v1",
+    "sourceView": "topic-batch2-trauma-thoracic",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.trauma-thoracic.retained-hemothorax.20261111.v2",
+    "caseId": "case.trauma-thoracic.bleeding-course.20261111.v1",
+    "nodeId": "node.trauma-thoracic.retained-hemothorax.20261111.v2",
+    "questionVariantId": "question.trauma-thoracic.retained-hemothorax.20261111.v2",
+    "conceptId": "concept.trauma-thoracic.retained-hemothorax-vats.v1",
+    "sourceView": "topic-batch2-trauma-thoracic",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.trauma-thoracic.rib-fixation-weaning.20261111.v2",
+    "caseId": "case.trauma-thoracic.chestwall-course.20261111.v1",
+    "nodeId": "node.trauma-thoracic.rib-fixation-weaning.20261111.v2",
+    "questionVariantId": "question.trauma-thoracic.rib-fixation-weaning.20261111.v2",
+    "conceptId": "concept.trauma-thoracic.rib-fixation-failed-weaning.v1",
+    "sourceView": "topic-batch2-trauma-thoracic",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.vascular-aorta.screening.v2",
+    "caseId": "case.vascular-aorta.screening-review.v2",
+    "nodeId": "node.vascular-aorta.screening.v2",
+    "questionVariantId": "question.vascular-aorta.screening.v2",
+    "conceptId": "concept.aaa.one-time-ultrasound-screening",
+    "sourceView": "topic-batch2-vascular-aorta",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.vascular-aorta.proximal-seal-repair.v1",
+    "caseId": "case.vascular-aorta.proximal-attachment-leak.v1",
+    "nodeId": "node.vascular-aorta.proximal-seal-repair.v1",
+    "questionVariantId": "question.vascular-aorta.proximal-seal-repair.v1",
+    "conceptId": "concept.vascular-aorta.type-i-endoleak-prompt-seal-repair.v1",
+    "sourceView": "topic-batch2-vascular-aorta",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.vascular-aorta.ascending-emergency.v1",
+    "caseId": "case.vascular-aorta.retrograde-ascending-extension.v1",
+    "nodeId": "node.vascular-aorta.ascending-emergency.v1",
+    "questionVariantId": "question.vascular-aorta.ascending-emergency.v1",
+    "conceptId": "concept.vascular-aorta.retrograde-ascending-dissection-emergency-repair.v1",
+    "sourceView": "topic-batch2-vascular-aorta",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.vascular-aorta.initial-type-b.v2",
+    "caseId": "case.vascular-aorta.impulse-response-review.v2",
+    "nodeId": "node.vascular-aorta.initial-type-b.v2",
+    "questionVariantId": "question.vascular-aorta.initial-type-b.v2",
+    "conceptId": "concept.vascular-aorta.aortic-syndrome-vasodilation-after-rate-control.v1",
+    "sourceView": "topic-batch2-vascular-aorta",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.vascular-aorta.lsa-coronary-inflow.v1",
+    "caseId": "case.vascular-aorta.tevar-inflow-and-neurology.v1",
+    "nodeId": "node.vascular-aorta.lsa-coronary-inflow.v1",
+    "questionVariantId": "question.vascular-aorta.lsa-coronary-inflow.v1",
+    "conceptId": "concept.vascular-aorta.tevar-lsa-lima-inflow-preservation.v1",
+    "sourceView": "topic-batch2-vascular-aorta",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.vascular-aorta.post-tevar-cord-rescue.v1",
+    "caseId": "case.vascular-aorta.tevar-inflow-and-neurology.v1",
+    "nodeId": "node.vascular-aorta.post-tevar-cord-rescue.v1",
+    "questionVariantId": "question.vascular-aorta.post-tevar-cord-rescue.v1",
+    "conceptId": "concept.vascular-aorta.post-tevar-spinal-cord-perfusion-rescue.v1",
+    "sourceView": "topic-batch2-vascular-aorta",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.vascular-aorta.small-embolizing-paa.v2",
+    "caseId": "case.vascular-aorta.small-popliteal-course.v2",
+    "nodeId": "node.vascular-aorta.small-embolizing-paa.v2",
+    "questionVariantId": "question.vascular-aorta.small-embolizing-paa.v2",
+    "conceptId": "concept.vascular-aorta.small-popliteal-aneurysm-embolic-repair.v1",
+    "sourceView": "topic-batch2-vascular-aorta",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.vascular-aorta.associated-aneurysm-survey.v2",
+    "caseId": "case.vascular-aorta.small-popliteal-course.v2",
+    "nodeId": "node.vascular-aorta.associated-aneurysm-survey.v2",
+    "questionVariantId": "question.vascular-aorta.associated-aneurysm-survey.v2",
+    "conceptId": "concept.vascular-aorta.popliteal-associated-aneurysm-survey-completeness.v1",
+    "sourceView": "topic-batch2-vascular-aorta",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.vascular-aorta.graft-bleed-imaging.v2",
+    "caseId": "case.vascular-aorta.graft-diagnostic-review.v2",
+    "nodeId": "node.vascular-aorta.graft-bleed-imaging.v2",
+    "questionVariantId": "question.vascular-aorta.graft-bleed-imaging.v2",
+    "conceptId": "concept.vascular-aorta.aortic-graft-infection-bleeding-cross-sectional-evaluation.v1",
+    "sourceView": "topic-batch2-vascular-aorta",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.vascular-aorta.marfan-repair-approach.v1",
+    "caseId": "case.vascular-aorta.heritable-native-taaa.v1",
+    "nodeId": "node.vascular-aorta.marfan-repair-approach.v1",
+    "questionVariantId": "question.vascular-aorta.marfan-repair-approach.v1",
+    "conceptId": "concept.vascular-aorta.marfan-intact-taaa-open-repair-selection.v1",
+    "sourceView": "topic-batch2-vascular-aorta",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.liver-malignancy.hcc-acquisition.v1",
+    "caseId": "case.topic.liver-malignancy.dynamic-hcc.v1",
+    "nodeId": "node.topic.liver-malignancy.hcc-acquisition.v1",
+    "questionVariantId": "question.topic.liver-malignancy.hcc-acquisition.v1",
+    "conceptId": "concept.topic.liver-malignancy.dynamic-acquisition.v1",
+    "sourceView": "topic-batch2-liver-malignancy",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.liver-malignancy.hcc-imaging-diagnosis.v2",
+    "caseId": "case.topic.liver-malignancy.dynamic-hcc.v1",
+    "nodeId": "node.topic.liver-malignancy.hcc-imaging-diagnosis.v2",
+    "questionVariantId": "question.topic.liver-malignancy.hcc-imaging-diagnosis.v2",
+    "conceptId": "concept.topic.liver-malignancy.mixed-imaging-tissue-selection.v1",
+    "sourceView": "topic-batch2-liver-malignancy",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.liver-malignancy.hcc-raw-reserve.v2",
+    "caseId": "case.topic.liver-malignancy.hcc-favorable-resection.v1",
+    "nodeId": "node.topic.liver-malignancy.hcc-raw-reserve.v2",
+    "questionVariantId": "question.topic.liver-malignancy.hcc-raw-reserve.v2",
+    "conceptId": "concept.hcc.compensated-cirrhosis-resection-selection",
+    "sourceView": "topic-batch2-liver-malignancy",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.liver-malignancy.hcc-portal-flow.v1",
+    "caseId": "case.topic.liver-malignancy.hcc-portal-flow.v1",
+    "nodeId": "node.topic.liver-malignancy.hcc-portal-flow.v1",
+    "questionVariantId": "question.topic.liver-malignancy.hcc-portal-flow.v1",
+    "conceptId": "concept.topic.liver-malignancy.hcc-vascular-pathway.v1",
+    "sourceView": "topic-batch2-liver-malignancy",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.pancreas-chronic-cysts-neoplasia.borderline-systemic-first.v2",
+    "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.head-cancer-sequence.v2",
+    "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.borderline-systemic-first.v2",
+    "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.borderline-systemic-first.v2",
+    "conceptId": "concept.pancreas-chronic-cysts-neoplasia.borderline-venous-neoadjuvant-sequence.v1",
+    "sourceView": "topic-batch2-pancreas-chronic-cysts-neoplasia",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.pancreas-chronic-cysts-neoplasia.neoadjuvant-jaundice-drainage.v2",
+    "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.head-cancer-sequence.v2",
+    "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.neoadjuvant-jaundice-drainage.v2",
+    "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.neoadjuvant-jaundice-drainage.v2",
+    "conceptId": "concept.pancreas-chronic-cysts-neoplasia.neoadjuvant-obstructive-jaundice-stent.v1",
+    "sourceView": "topic-batch2-pancreas-chronic-cysts-neoplasia",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.pancreas-chronic-cysts-neoplasia.postop-infected-collection-drain.v2",
+    "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.postoperative-source-control.v2",
+    "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.postop-infected-collection-drain.v2",
+    "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.postop-infected-collection-drain.v2",
+    "conceptId": "concept.pancreas-chronic-cysts-neoplasia.postop-collection-source-control.v1",
+    "sourceView": "topic-batch2-pancreas-chronic-cysts-neoplasia",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.pancreas-chronic-cysts-neoplasia.serous-symptomatic-plan.v1",
+    "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.serous-compression.v1",
+    "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.serous-symptomatic-plan.v1",
+    "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.serous-symptomatic-plan.v1",
+    "conceptId": "concept.pancreas-chronic-cysts-neoplasia.serous-compressive-symptoms.v1",
+    "sourceView": "topic-batch2-pancreas-chronic-cysts-neoplasia",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  },
+  {
+    "acceptanceId": "question.topic.pancreas-chronic-cysts-neoplasia.ipmn-remnant-surveillance.v1",
+    "caseId": "case.topic.pancreas-chronic-cysts-neoplasia.ipmn-after-resection.v1",
+    "nodeId": "node.topic.pancreas-chronic-cysts-neoplasia.ipmn-remnant-surveillance.v1",
+    "questionVariantId": "question.topic.pancreas-chronic-cysts-neoplasia.ipmn-remnant-surveillance.v1",
+    "conceptId": "concept.pancreas-chronic-cysts-neoplasia.ipmn-remnant-low-grade-followup.v1",
+    "sourceView": "topic-batch2-pancreas-chronic-cysts-neoplasia",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  }
+,
 ] satisfies QuestionShipAcceptance[],
   // BEGIN FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   replacements: [
+    {"replaces":"case.gs028d.blunt-cardiac-injury.b-both-results-normal","with":"question.trauma-thoracic.bci-normalpair-other-admission.20261111.v1"},
+    {"replaces":"case.aaa.retired-carpenter","with":"question.vascular-aorta.screening.v2"},
+    {"replaces":"case.aaa.current-smoker","with":"question.vascular-aorta.small-embolizing-paa.v2"},
+    {"replaces":"case.hcc.resection.candidate-profile","with":"question.topic.liver-malignancy.hcc-raw-reserve.v2"},
+    {"replaces":"case.pancreatic-cyst.tail-lesion-review","with":"question.topic.pancreas-chronic-cysts-neoplasia.serous-symptomatic-plan.v1"},
+    {"replaces":"case.pancreatic-cyst.surveillance-question","with":"question.topic.pancreas-chronic-cysts-neoplasia.ipmn-remnant-surveillance.v1"},
+    {"replaces":"case.gs028.small-bowel-obstruction.b-stable-no-red-flags","with":"question.topic.small-bowel-obstruction-ileus.closed-loop-normal-lactate.v1"},
+    {"replaces":"case.gs028.small-bowel-obstruction.b-peritoneal-signs","with":"question.topic.small-bowel-obstruction-ileus.postcontrast-deterioration.v1"},
     { replaces: "case.gs028f.nutrition.c1-metabolic-transition", with: "question.gs028f.nutrition.refeeding-insulin-phosphate-shift.v3.r3" },
     { replaces: "case.gs028c.palpable-breast.paired-dense-focal", with: "question.palpable-breast.negative-mammogram-targeted-us.v1.r4" },
     { replaces: "case.asymptomatic-phpt.incidental-calcium", with: "question.asymptomatic-phpt.age-based-surgery.v1.r3" },
@@ -9818,7 +10271,62 @@ export const QUESTION_SHIP_MANIFEST = {
     { replaces: "case.inguinal-hernia.caregiving-strain", with: "question.inguinal-hernia.symptomatic-elective-repair.v3.r12" },
   ] satisfies QuestionShipCaseReplacement[],
   // END FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
+  topicConsolidations: [
+  {
+    "id": "topic-program.trauma-thoracic.20261111",
+    "program": "topic-program",
+    "replaces": [
+      "case.gs028d.blunt-cardiac-injury.a-bicycle-handlebar-impact",
+      "case.gs028d.blunt-cardiac-injury.a-fall-anterior-chest",
+      "case.gs028d.blunt-cardiac-injury.a-sports-chest-impact",
+      "case.gs028d.blunt-cardiac-injury.a-steering-wheel-impact",
+      "case.gs028d.blunt-cardiac-injury.b-both-results-abnormal",
+      "case.gs028d.blunt-cardiac-injury.b-isolated-troponin-elevation",
+      "case.gs028d.blunt-cardiac-injury.b-new-ecg-change"
+    ],
+    "with": "question.trauma-thoracic.bci-selective-imaging.20261111.v2",
+    "decision": "docs/research/question-topic-acceptance-batch2-20261111.md"
+  }
+] satisfies QuestionShipTopicConsolidation[],
   headerSources: {
+    "case.trauma-thoracic.cardiac-course.20261111.v1": "topic-batch2-trauma-thoracic",
+    "case.trauma-thoracic.cardiac-disposition.20261111.v1": "topic-batch2-trauma-thoracic",
+    "case.trauma-thoracic.drain-complication.20261111.v1": "topic-batch2-trauma-thoracic",
+    "case.trauma-thoracic.bleeding-course.20261111.v1": "topic-batch2-trauma-thoracic",
+    "case.trauma-thoracic.chestwall-course.20261111.v1": "topic-batch2-trauma-thoracic",
+    "case.vascular-aorta.screening-review.v2": "topic-batch2-vascular-aorta",
+    "case.vascular-aorta.proximal-attachment-leak.v1": "topic-batch2-vascular-aorta",
+    "case.vascular-aorta.retrograde-ascending-extension.v1": "topic-batch2-vascular-aorta",
+    "case.vascular-aorta.impulse-response-review.v2": "topic-batch2-vascular-aorta",
+    "case.vascular-aorta.tevar-inflow-and-neurology.v1": "topic-batch2-vascular-aorta",
+    "case.vascular-aorta.small-popliteal-course.v2": "topic-batch2-vascular-aorta",
+    "case.vascular-aorta.graft-diagnostic-review.v2": "topic-batch2-vascular-aorta",
+    "case.vascular-aorta.heritable-native-taaa.v1": "topic-batch2-vascular-aorta",
+    "case.topic.liver-malignancy.dynamic-hcc.v1": "topic-batch2-liver-malignancy",
+    "case.topic.liver-malignancy.hcc-favorable-resection.v1": "topic-batch2-liver-malignancy",
+    "case.topic.liver-malignancy.hcc-portal-flow.v1": "topic-batch2-liver-malignancy",
+    "case.topic.pancreas-chronic-cysts-neoplasia.head-cancer-sequence.v2": "topic-batch2-pancreas-chronic-cysts-neoplasia",
+    "case.topic.pancreas-chronic-cysts-neoplasia.postoperative-source-control.v2": "topic-batch2-pancreas-chronic-cysts-neoplasia",
+    "case.topic.pancreas-chronic-cysts-neoplasia.serous-compression.v1": "topic-batch2-pancreas-chronic-cysts-neoplasia",
+    "case.topic.pancreas-chronic-cysts-neoplasia.ipmn-after-resection.v1": "topic-batch2-pancreas-chronic-cysts-neoplasia",
+    "case.topic.small-bowel-obstruction-ileus.closed-loop.v1": "topic-batch1-small-bowel-obstruction-ileus",
+    "case.topic.small-bowel-obstruction-ileus.transit-course.v1": "topic-batch1-small-bowel-obstruction-ileus",
+    "case.topic.small-bowel-obstruction-ileus.virgin-abdomen.v1": "topic-batch1-small-bowel-obstruction-ileus",
+    "case.topic.critical-renal-organ-support.circuit-anticoagulation.v1": "topic-batch1-critical-renal-organ-support",
+    "case.topic.critical-renal-organ-support.kidney-recovery.v1": "topic-batch1-critical-renal-organ-support",
+    "case.critical-shock-resuscitation.fluid-assessment.v1": "topic-batch1-critical-shock-resuscitation",
+    "case.critical-shock-resuscitation.reassess-shock-mechanism.v2": "topic-batch1-critical-shock-resuscitation",
+    "case.topic.appendix-appendicitis.peritoneal-mucin.v2": "topic-batch1-appendix-appendicitis",
+    "case.topic.appendix-appendicitis.goblet-cell-pathology.v1": "topic-batch1-appendix-appendicitis",
+    "case.topic.appendix-appendicitis.net-staging.v2": "topic-batch1-appendix-appendicitis",
+    "case.topic.trauma-initial-abdomen.belt-bowel-evolution.v2": "topic-batch1-trauma-initial-abdomen",
+    "case.topic.trauma-initial-abdomen.pelvic-mixed-hemorrhage.v2": "topic-batch1-trauma-initial-abdomen",
+    "case.topic.trauma-initial-abdomen.bladder-protocol-and-repair.v2": "topic-batch1-trauma-initial-abdomen",
+    "case.topic.trauma-initial-abdomen.pancreatic-duct-location.v2": "topic-batch1-trauma-initial-abdomen",
+    "case.topic.trauma-initial-abdomen.contained-renal-compartment.v2": "topic-batch1-trauma-initial-abdomen",
+    "case.topic.trauma-initial-abdomen.limited-jejunum-defect.v2": "topic-batch1-trauma-initial-abdomen",
+    "case.topic.critical-respiratory-ventilation.air-trapping.v1": "topic-batch1-critical-respiratory-ventilation",
+    "case.topic.critical-respiratory-ventilation.extubation-rescue.v1": "topic-batch1-critical-respiratory-ventilation",
     "case.n4.cholecystectomy-neck-plane-bailout.v1": "n4-round1",
     "case.n4.colonic-wall-pattern-after-mucosal-biopsy.v1": "n4-round1",
     "case.n4.venous-ulcer-contralateral-pressure-trap.v1": "n4-round1",

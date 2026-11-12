@@ -1,0 +1,24 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import '../economy-audit/source-loader.mjs';
+import {PROGRAM_BATCH1_ROWS as rows,PROGRAM_BATCH1_REPLACEMENTS as relations} from '../../packages/clinical-content/src/question-program-batch1-accepted-data-20261111.ts';
+const paths=['packages/clinical-content/src/question-ship-manifest.ts','packages/clinical-content/src/synthetic-content.ts','packages/clinical-content/src/index.ts','packages/clinical-content/src/answer-choice-timing.ts'];
+const old=Object.fromEntries(paths.map(p=>[p,fs.readFileSync(p,'utf8')]));
+const replace=(s,a,b)=>{assert.equal(s.split(a).length,2,'Unique anchor '+a);return s.replace(a,b);};
+assert(old[paths[0]].includes('question-ship.2026-11-10.v9'),'One-shot integration; never rerun');
+const edits={};
+let manifest=replace(old[paths[0]],'question-ship.2026-11-10.v9','question-ship.2026-11-11.v10');
+manifest=replace(manifest,'\n] satisfies QuestionShipAcceptance[],','\n  // Topic program batch1: exact complete-case PASS rows, no clinical approval.\n'+JSON.stringify(rows,null,2).slice(1,-1).trimStart()+',\n] satisfies QuestionShipAcceptance[],');
+manifest=replace(manifest,'  replacements: [','  replacements: [\n'+relations.map(r=>'    '+JSON.stringify(r)+',').join('\n'));
+manifest=replace(manifest,'  headerSources: {','  headerSources: {\n'+[...new Map(rows.map(r=>[r.caseId,r.sourceView]))].map(([id,view])=>'    '+JSON.stringify(id)+': '+JSON.stringify(view)+',').join('\n'));
+edits[paths[0]]=manifest;
+let source='import {QUESTION_PROGRAM_BATCH1_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch1Concepts} from "./question-program-batch1-accepted-20261111";\n'+old[paths[1]];
+const start=source.indexOf('projectManagerAcceptedQuestions(')+'projectManagerAcceptedQuestions('.length;assert(start>50);
+let depth=0,end=start;for(;end<source.length;end++){const ch=source[end];if(ch==='(')depth++;else if(ch===')')depth--;else if(ch===','&&depth===0)break;}
+assert(end<source.length&&depth===0);source=source.slice(0,start)+'withAcceptedQuestionProgramBatch1Concepts('+source.slice(start,end)+')'+source.slice(end);
+source=replace(source,', QUESTION_FLAGS_PRE_REVISION_RELEASE, {',', QUESTION_FLAGS_PRE_REVISION_RELEASE, {\n  ...QUESTION_PROGRAM_BATCH1_ACCEPTED_SOURCE_VIEWS,');
+edits[paths[1]]=source;
+edits[paths[2]]=old[paths[2]]+'\n// Exact accepted-only topic archive; topic authoring modules are not imported.\nexport * from "./question-program-batch1-accepted-20261111";\n';
+edits[paths[3]]=old[paths[3]]+'\n// Accepted topic retrospective-study estimates; runtime order installation belongs to the domain owner.\nimport {QUESTION_PROGRAM_BATCH1_ACCEPTED_TIMING_ENTRIES} from "./question-program-batch1-accepted-20261111";\nANSWER_CHOICE_TIMING_REGISTRY.push(...QUESTION_PROGRAM_BATCH1_ACCEPTED_TIMING_ENTRIES);\n';
+for(const [path,text]of Object.entries(edits))fs.writeFileSync(path,text);
+console.log(JSON.stringify({rows:rows.length,relations:relations.length,coreFiles:paths,topicOrDomainFilesEdited:0}));

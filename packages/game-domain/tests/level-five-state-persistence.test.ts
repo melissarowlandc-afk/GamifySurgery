@@ -82,7 +82,7 @@ describe("Level 5 optional state foundation", () => {
     expect(eligible.employees[0]!.staffRoleDefinitionId).not.toBe("staff.executive");
     expect(eligible.rooms.some(room => context.balanceRelease.facility.roomDefinitions.find(def => def.id === room.roomDefinitionId)?.unlockFacilityLevel === 5)).toBe(false);
     expect(getDisplayedClinicSatisfaction(eligible, context)).toBeGreaterThan(90);
-    expect(eligible.levelFive!.progress.inspectionUnlocked).toMatchObject({ clinicalXp: 2000, averageStaffMorale: 85, employedStaffCount: 1 });
+    expect(eligible.levelFive!.progress.inspectionUnlocked).toMatchObject({ clinicalXp: 2300, averageStaffMorale: 85, employedStaffCount: 1 });
     expect(eligible.levelFive!.progress.gameFinished).toBeNull();
     const finished = createLevelFiveStateQaState("finish").levelFive!;
     expect(finished.progress.gameFinished!.firstCompletedReport.rawTotalScore).toBe(12);

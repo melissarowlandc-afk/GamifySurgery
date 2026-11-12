@@ -1,15 +1,17 @@
+import {beforeProgramBatch1AcceptanceRelease,beforeProgramBatch1AcceptanceManifest,beforeProgramBatch1AcceptanceTimings} from "./question-program-batch1-acceptance-test-support";
 import {describe,expect,it} from "vitest";
 import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
-import {SYNTHETIC_CLINICAL_RELEASE as live,QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
-import {QUESTION_SHIP_MANIFEST as manifest} from "./question-ship-manifest";
-import {ANSWER_CHOICE_TIMING_REGISTRY as timing} from "./answer-choice-timing";
+import {SYNTHETIC_CLINICAL_RELEASE as actualLive,QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
+import {QUESTION_SHIP_MANIFEST as actualManifest} from "./question-ship-manifest";
+import {ANSWER_CHOICE_TIMING_REGISTRY as actualTiming} from "./answer-choice-timing";
 import {QUESTION_N4_ACCEPTED_ROWS as rows,QUESTION_N4_ACCEPTED_CASES as cases,QUESTION_N4_ACCEPTED_QUESTIONS as questions,
  QUESTION_N4_ACCEPTED_SOURCE_VIEWS as views,QUESTION_N4_FROZEN_PRESERVATION as bindings,QUESTION_N4_ACCEPTED_TIMING_ENTRIES as estimates,
  QUESTION_N4_ACCEPTED_TEST_ORDER_RECORDS as orders,QUESTION_N4_ACCEPTED_CASE_REVIEWS as reviews,
  QUESTION_NEW_N4_ROUND2_CATALOG_RELEASE as fullDraftCatalog} from "./question-n4-accepted-20261110";
 import {beforeN4AcceptanceRelease as previous,beforeN4AcceptanceManifest as oldManifest,
  beforeN4AcceptanceTimings as oldTimings,beforeN4AcceptanceSource as oldSource} from "./question-n4-acceptance-test-support";
+const live=beforeProgramBatch1AcceptanceRelease(actualLive),manifest=beforeProgramBatch1AcceptanceManifest(actualManifest),timing=beforeProgramBatch1AcceptanceTimings(actualTiming);
 const read=(p:string)=>JSON.parse(readFileSync(new URL("../../../"+p,import.meta.url),"utf8"));
 const before=read("tools/question-quality/fixtures/question-n4-acceptance-before-20261110.json");
 const digest=(v:unknown)=>createHash("sha256").update(JSON.stringify(v)).digest("hex");
@@ -77,7 +79,7 @@ describe("N4 exact eight independent PASS acceptances",()=>{
  it("pins ten explicit clinical-only preimages/postimages without changing previous captures",()=>{
   const migration=read("tools/question-quality/fixtures/question-n4-acceptance-source-migration-20261110.json");expect(migration.files).toHaveLength(10);
   const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-n4-release-source-pins-20261110.json",import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("879402e37dbf395fa71cbde87eeea247723c017aa62ac3e0ff40c24141bc43d0");
+  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("1db338adb155246bf20425d78d5dcdb257cfb6ad51f49a606a0f5282b7e3b607");
   const releasePins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;testSupportSha256:string;paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string|null}>};
   expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-n4-acceptance-source-migration-20261110.json",import.meta.url))).digest("hex")).toBe(releasePins.capturedFixtureSha256);
   expect(createHash("sha256").update(readFileSync(new URL("./question-n4-acceptance-test-support.ts",import.meta.url))).digest("hex")).toBe(releasePins.testSupportSha256);

@@ -13,7 +13,7 @@ describe("Level 5 M2 real construction and compatibility", () => {
     const before = createLevelFiveStateQaState("pre-goal", context);
     const state = placeLevelFiveRoomsQaRooms(before, context);
     const halls = state.rooms.length - before.rooms.length - 5;
-    expect(before.cashCents - state.cashCents).toBe((5800 + halls * context.balanceRelease.facility.roomDefinitions.find(r => r.id === "room.hallway")!.constructionCost) * 100);
+    expect(before.cashCents - state.cashCents).toBe((6960 + halls * context.balanceRelease.facility.roomDefinitions.find(r => r.id === "room.hallway")!.constructionCost) * 100);
     expect(getFacilityAccessValidation(state, context).unreachableRoomIds).toEqual([]);
     // Existing selector expresses costs as a negative cash-flow rate.
     expect(getOperatingExpensePerFacilityHour(state, context) - getOperatingExpensePerFacilityHour(before, context)).toBe(-5);

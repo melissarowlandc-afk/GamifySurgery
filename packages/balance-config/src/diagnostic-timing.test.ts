@@ -175,7 +175,7 @@ describe("approved four-workstation Level 3 reading room", () => {
     expect(room).toMatchObject({
       unlockFacilityLevel: 3, width: 4, height: 4,
       constructionCost: 1800, upkeepPerExpenseInterval: 6,
-      maximumInstances: 4, maximumUpgradeLevel: 5, upgradeCosts: [450, 675, 990, 1350],
+      maximumInstances: 4, maximumUpgradeLevel: 5, upgradeCosts: [450, 675, 1190, 1890],
       workloadLimitContribution: 0,
       upkeepPerUpgradeLevel: 0,
       workloadLimitContributionPerUpgradeLevel: 0,

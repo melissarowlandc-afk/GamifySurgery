@@ -1704,6 +1704,14 @@ export interface DomainEvent {
   };
 }
 
+export interface LateProgressionState {
+  version: "late-progression.v1";
+  preservedClinicalXpGoal: {
+    facilityLevel: 3 | 4 | 5;
+    minimumClinicalXp: number;
+  } | null;
+}
+
 export interface GameState {
   schemaVersion: 8 | 9;
   /** Present only when an older campaign required the approved-room geometry migration. */
@@ -1726,6 +1734,8 @@ export interface GameState {
   salaryEconomyVersion?: "room-economy-b.v1";
   schedulerPins: SchedulerPins;
   facilityLevel: FacilityLevel;
+  /** Level 3+ only: retain earned legacy XP goals without lowering future goals. */
+  lateProgression?: LateProgressionState;
   /** Omission means no families or earned witnesses; preserve old save bytes. */
   pediatricFamilies?: Record<string, PediatricFamilyState>;
   levelFourCompletion?: LevelFourCompletionState;

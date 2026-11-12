@@ -4,6 +4,7 @@ import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
 import { syntheticClinicalCaseSchema } from "@gamify-surgery/clinical-content";
 import { normalizeGuidanceTipsState } from "./guidance-tip-persistence";
 import { readLevelFiveState } from "./level-five-state";
+import { readLateProgressionState } from "./late-progression";
 import { normalizeExecutiveComfort, normalizeExecutiveStock, validateExecutiveTaskReservations } from "./executive-management";
 import { normalizeGiftCheckout, normalizeGiftOnlyVisit, normalizeGiftRetailDemand, validateGiftRetailReservations } from "./gift-retail";
 import { reconcileGiftRetailTrips } from "./retail-operations";
@@ -4766,6 +4767,9 @@ function finishApprovedRoomMigration(
   if (parsed.levelFive !== undefined) {
     migrated.levelFive = readLevelFiveState(parsed.levelFive, migrated.facilityTick, migrated.facilityLevel);
   }
+  const lateProgression = readLateProgressionState(parsed.lateProgression, migrated);
+  if (lateProgression) migrated.lateProgression = lateProgression;
+  else delete migrated.lateProgression;
   validateExecutiveTaskReservations(migrated);
   if (migrated.employees.some((employee) => isEmployeeAwayForTraining(employee) && employee.facilityTask)) {
     throw new Error("The saved employee has conflicting training and work assignments.");

@@ -34,7 +34,7 @@ describe("M5 measured dedicated gift demand", () => {
     expect(state.cashCents-cash).toBe(net - (Math.round(state.totalOperatingExpenses*100)-costs));
     expect(state.levelFive!.management.activeTerms).toBeNull();
     expect(state.levelFive!.management.supplierSavings.stockCents).toBe(0);
-    expect(state.clinicalXp).toBe(1999); expect(state.learningHistories).toEqual(learning);
+    expect(state.clinicalXp).toBe(2299); expect(state.learningHistories).toEqual(learning);
     expect(new Set(state.serviceIncomeReceipts.map(r => r.transactionKey)).size).toBe(state.serviceIncomeReceipts.length);
     if (process.env.LEVEL5_M5_REPORT === "1") writeFileSync(new URL("../../../.local-dev/level5-m5/normal-demand.json", import.meta.url), JSON.stringify({
       seed:state.campaignSeed, warmupHours:4, measuredHours:48, opportunities:24, normalSales:24, grossCents:gross, stockCents:stock,

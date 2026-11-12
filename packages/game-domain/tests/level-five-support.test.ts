@@ -348,7 +348,7 @@ describe("Integrated support preview/save behavior", () => {
     expect(Object.values(state.encounters).filter(encounter => encounter.gardenVisitBenefit)).toHaveLength(2);
     expect(state.employees.some(employee => employee.lastBreakAtFacilityTick !== null)).toBe(true);
     expect(state.levelFive!.management.round).toBeNull(); expect(state.levelFive!.progress.inspectionUnlocked).toBeNull();
-    expect(state.clinicalXp).toBe(1999); expect(Object.values(state.learningHistories).every(history => history.reviews.length === 0)).toBe(true);
+    expect(state.clinicalXp).toBe(2299); expect(Object.values(state.learningHistories).every(history => history.reviews.length === 0)).toBe(true);
     expect(state.serviceIncomeReceipts).toHaveLength(0); expect(state.levelFive!.inspection.status).toBe("locked");
   });
 });

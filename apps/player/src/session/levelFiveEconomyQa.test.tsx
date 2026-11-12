@@ -37,7 +37,7 @@ describe("M8 funded economy and actual inspection in both shells", () => {
     expect(view.serviceIncome.finances!.hourlyCosts.find(cost => cost.id === "staff")!.amount).toBe(209);
     const desktop = renderToStaticMarkup(<GoalsPanel view={view.progression} onLevelUp={noop} onProcedureSetupAction={noop} onBookInspection={noop} onCancelInspection={noop} />);
     const phone = renderToStaticMarkup(<MobileGoals view={view.progression} onLevelUp={noop} onSetupAction={noop} onBookInspection={noop} onCancelInspection={noop} />);
-    for (const markup of [desktop, phone]) { expect(markup).toContain("2,000"); expect(markup).toContain("Locked"); }
+    for (const markup of [desktop, phone]) { expect(markup).toContain("2,300"); expect(markup).toContain("Locked"); }
   });
 
   it("uses the actual posted savings, payroll and Gift receipts in desktop Money and one-tap phone details", async () => {

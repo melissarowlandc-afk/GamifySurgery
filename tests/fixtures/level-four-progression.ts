@@ -90,7 +90,7 @@ export function createLevelFourAlmostQaState(context = PROTOTYPE_DOMAIN_CONTEXT)
   apply({ type: "HIRE_STAFF", operationId: "almost.reception", employeeId: "employee.almost.reception", staffRoleDefinitionId: "staff.receptionist" });
   state.campaignId = LEVEL_FOUR_ALMOST_QA_CAMPAIGN_ID;
   state.campaignSeed = "level-four-almost-m8";
-  state.clinicalXp = 750;
+  state.clinicalXp = context.balanceRelease.facility.stageDefinitions.find(stage => stage.level === 4)!.minimumClinicalXp;
   state.levelFourCompletion = {
     version: "level-four-completion.v1", acknowledgedAtFacilityTick: null,
     pediatricVisitWithParent: { serviceOperationId: "retired.qa.pediatric", encounterId: null,

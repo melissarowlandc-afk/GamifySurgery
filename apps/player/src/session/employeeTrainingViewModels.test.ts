@@ -45,6 +45,15 @@ function session(stage: EmployeeTrainingState["stage"], placeId: "stool1" | "sto
 }
 
 describe("employee training presentation", () => {
+  it("shows future tier5 pricing while retaining a legacy queued payment", () => {
+    const state = createInitialGameState(); state.facilityLevel = 2;
+    const employee = addEmployee(state, "staff.receptionist", 4);
+    expect(createEmployeeTrainingView(state, employee.id)).toMatchObject({ nextLevel: 5, cost: 420, costLabel: "$420" });
+    employee.training = { ...session("queued"), targetLevel: 5, paidAmount: 300,
+      roomInstanceId: null, placeId: null, startedAtFacilityTick: null, lastProgressAtFacilityTick: 0 };
+    expect(createEmployeeTrainingView(state, employee.id)).toMatchObject({ nextLevel: 5, cost: 300, costLabel: "$300", statusLabel: "Queued · working" });
+  });
+
   it.each([[1, 60], [2, 54], [3, 48], [4, 42], [5, 36]] as const)(
     "shows the saved Level %s room session duration after upgrade and reload", (level, duration) => {
       const state = createInitialGameState(); state.facilityLevel = 2; state.facilityTick = 20;
@@ -122,7 +131,7 @@ describe("employee training presentation", () => {
       currentBenefitLabel: "Adds $10 per consult",
       nextBenefitLabel: "Adds $15 per consult",
       incrementBenefitLabel: "Adds $5 per consult",
-      costLabel: "$450",
+      costLabel: "$540",
     });
     employee.trainingLevel = 5;
     expect(createEmployeeTrainingView(state, employee.id)).toMatchObject({

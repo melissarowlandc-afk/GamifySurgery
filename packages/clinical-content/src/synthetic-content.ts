@@ -1,3 +1,5 @@
+import {QUESTION_PROGRAM_BATCH2_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch2Concepts} from "./question-program-batch2-accepted-20261111";
+import {QUESTION_PROGRAM_BATCH1_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch1Concepts} from "./question-program-batch1-accepted-20261111";
 import {QUESTION_N4_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionN4Concepts} from "./question-n4-accepted-20261110";
 import { validateSyntheticClinicalRelease } from "./schema";
 import { applyQuestionQualityRevisions } from "./question-quality-pilot-20261028";
@@ -1583,7 +1585,9 @@ import { QUESTION_FLAGS4_ACCEPTED_SOURCE_RELEASE } from "./question-flags4-accep
 import {QUESTION_HARDEN1_ACCEPTANCE_SOURCE,QUESTION_N3R4_RETAINED_ACCEPTANCE_SOURCE,withAcceptedHarden1N3r4Concepts} from "./question-harden1-n3r4-accepted-20261110";
 // END HARDEN1 / N3R4 accepted exact source integration 20261110
 /** Default runtime content: exact accepted rewrites/new items plus legacy fallback. */
-export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease(projectManagerAcceptedQuestions(withAcceptedQuestionN4Concepts(withAcceptedHarden1N3r4Concepts(withAcceptedQuestionFlags3Concepts(withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionStats1Concepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(withAcceptedQuestionNewN3Round2Concepts(QUESTION_CATALOG_RELEASE, QUESTION_NEW_N3_PRE_RELEASE.concepts)))))))), QUESTION_FLAGS_PRE_REVISION_RELEASE, {
+export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease(projectManagerAcceptedQuestions(withAcceptedQuestionProgramBatch2Concepts(withAcceptedQuestionProgramBatch1Concepts(withAcceptedQuestionN4Concepts(withAcceptedHarden1N3r4Concepts(withAcceptedQuestionFlags3Concepts(withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionStats1Concepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(withAcceptedQuestionNewN3Round2Concepts(QUESTION_CATALOG_RELEASE, QUESTION_NEW_N3_PRE_RELEASE.concepts)))))))))), QUESTION_FLAGS_PRE_REVISION_RELEASE, {
+  ...QUESTION_PROGRAM_BATCH2_ACCEPTED_SOURCE_VIEWS,
+  ...QUESTION_PROGRAM_BATCH1_ACCEPTED_SOURCE_VIEWS,
   ...QUESTION_N4_ACCEPTED_SOURCE_VIEWS,
   "harden1-round1": QUESTION_HARDEN1_ACCEPTANCE_SOURCE,
   "n3-round4": QUESTION_N3R4_RETAINED_ACCEPTANCE_SOURCE,

@@ -162,7 +162,7 @@ describe("M4 daily Executive lifecycle", () => {
       for (let i = 0; state.employees.find(employee => employee.id === id)!.training && i < 120; i++) state = tick(state);
       const before = state.cashCents;
       state = apply(state, { type: "TRAIN_EMPLOYEE", employeeId: id });
-      expect(state.cashCents).toBe(before - (level - 1) * 10000);
+      expect(state.cashCents).toBe(before - [10000, 20000, 36000, 56000][level - 2]!);
       state = reload(state);
       for (let i = 0; i < 160 && state.employees.find(employee => employee.id === id)!.trainingLevel < level; i++) state = tick(state);
       expect(state.employees.find(employee => employee.id === id)!.trainingLevel).toBe(level);
@@ -206,7 +206,7 @@ describe("M4 accepted quotes and expense arithmetic", () => {
     const applied = settled.appliedAtFacilityTick;
     state = tick(reload(state), 4);
     expect(state.serviceOperations.find(operation => operation.id === id)!.executiveComfort!.appliedAtFacilityTick).toBe(applied);
-    expect(state.clinicalXp).toBe(1999);
+    expect(state.clinicalXp).toBe(2299);
     expect(state.encounters).toEqual({});
   });
   it("freezes and settles real unscored APP visitor comfort without scored completions or learning", () => {

@@ -44,7 +44,7 @@ describe("player-only goal display labels", () => {
   it("keeps Level 5 progress compact while retaining the full current-level and workforce context", () => {
     const state = createInitialGameState(); state.facilityLevel = 5;
     const view = createPrototypePlayerView(state, null, false, null).progression;
-    expect(view.goals[0]).toMatchObject({ displayProgressLabel: "0/2,000", progressLabel: "0/2,000 XP" });
+    expect(view.goals[0]).toMatchObject({ displayProgressLabel: "0/2,300", progressLabel: "0/2,300 XP" });
     expect(view.goals[1]!.displayProgressLabel).toMatch(/^\d+(?:\.\d+)?%$/);
     expect(view.goals[2]).toMatchObject({ displayProgressLabel: "No staff", progressLabel: "No employees · hire staff to establish an average" });
     const markup = renderToStaticMarkup(<GoalList goals={view.goals} renderSetup={() => null} />);

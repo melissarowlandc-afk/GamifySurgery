@@ -31,11 +31,11 @@ describe("M6 shared desktop and phone Goals projection", () => {
     }
     expect(viewOf(state).messages.find(item => item.id === "event.facility-level-4-complete")?.message).not.toContain("coming later");
     const advanced = gameReducer(state, { type: "LEVEL_UP", operationId: "views.m6.advance" });
-    expect(viewOf(advanced).resourceBar.xpProgressLabel).toBe("0/2000 XP");
+    expect(viewOf(advanced).resourceBar.xpProgressLabel).toBe("0/2300 XP");
     expect(viewOf(advanced).progression).toMatchObject({ canLevelUp: false, nextLevelLabel: null, prototypeComplete: false,
       inspectionUnlock: { unlocked: false } });
     for (const markup of goals(advanced)) {
-      expect(markup).toContain("0/2,000 XP"); expect(markup).toContain("Inspections locked");
+      expect(markup).toContain("0/2,300 XP"); expect(markup).toContain("Inspections locked");
       expect(markup).not.toContain("Advance to Level 6");
     }
     PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = shipped;
@@ -55,7 +55,7 @@ describe("M6 shared desktop and phone Goals projection", () => {
       expect(markup).toContain("disabled");
       expect(markup).not.toMatch(/You finished|Congratulations|Level 4 complete/);
     }
-    if (scenario === "pre-goal") expect(view.goals[0]!.progressLabel).toBe("1,999/2,000 XP");
+    if (scenario === "pre-goal") expect(view.goals[0]!.progressLabel).toBe("2,299/2,300 XP");
     if (scenario === "goals-empty") expect(view.goals[2]!.progressLabel).toContain("No employees");
     if (scenario === "goals-satisfaction") expect(view.goals[1]).toMatchObject({ complete: false, progressLabel: "90% · goal above 90%" });
   });

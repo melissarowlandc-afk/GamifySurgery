@@ -12851,3 +12851,249 @@ Test Files  4 passed (4)
 - `tools/question-quality/review-question-n4-acceptance-20261110.mjs` (copied)
 
 Manager owns browser/phone density, real staffed OR/endoscopy/full-pool frequency and changed-save acceptance, clinical sign-off, backup and rollout. The four OR definitions are now admitted drafts, while CHECK itself has no procedural consults. Twelve pre-existing screenshot changes are preserved/excluded; no unrelated performance, renderer, cloud, art, SQL or .github source edits. Main read-only; no Git mutation/commit/push, installs, network, agents, browser, database/SQL execution or deploy. Owner origins/profiles/opening paths unchanged. Combined port31 remains local/uncommitted for manager review.
+
+
+### Release port32 / Level 5 rebind32 (release worktree, frozen topic batches + late-game balance, 2026-11-11)
+
+Completed locally in GS-release only, from manager-stated HEAD63819987. Main was read-only. No commit, push, install, network, agent or deploy. No e2e spec or opening pathway changed.
+
+Frozen acceptance is exact:48 accepted nodes in38 complete cases; manifest193 rows; default1174cases/1491nodes/654meanings. All145 prior authority rows,610 prior meanings,1136 untouched cases,1423 legacy bindings and prior approvals remain exact;15old fresh cases are replaced/retired while their frozen saves remain loadable. Every new clinical version remains needs_clinician_review. AAA screening preserves the existing meaning's stage floor1; the7-to1 BCI consolidation has explicit strict grouping/duplicate-target guards.
+
+- Default SHA256: 751b750e5cd139229a933570244fc5c613f4d60f7fa626bf5e7eb4fc5fa4feab
+- Manifest SHA256: 8eee58d13a936d3771573f705edc66e20852f8fa3a20f1f11dcd4219e052352c
+- Frozen batch1 static-data SHA256: f50b06a0583ec4c2ea87d5d129bac030cdab97b50cf40b70929810619d1890a7
+- Frozen batch2 static-data SHA256: fe72c2447b40f48c17701c78e9ae3ea972a7b97e7188fa3fbbe6fa1eca67e545
+- Neither accepted wrapper imports mutable topic-worker modules. No raw topic-worker TS/test or salvage/parked draft was ported. Seven live full source ledgers had drifted from acceptance: excluded those newer bytes and materialized exact accepted-only source/claim ledgers from frozen archives (batch1:70claims/30sources; batch2:72claims/24sources). Three full ledgers still matching acceptance hashes were copied. Original acceptance packets/dispositions/captures remain exact.
+
+**Exact files/dispositions:** 155 changed public paths: 63copied/75hunk-ported/17regenerated; 764other differing paths excluded. Every path, before/frozen-source/after SHA256, lane reason and excluded difference is in [port32 dispositions](../../.local-dev/release-verify/port32-20261111.json); [changed paths](../../.local-dev/release-port32-20261111/changed-paths.txt) and [excluded paths](../../.local-dev/release-port32-20261111/excluded-paths.txt) list them individually. Scope audit confirms unrelated facility/art/public assets/cloud production/SQL/CI lanes unchanged. Cloud production has only the accepted lateProgression operational-field ownership entry. Source-pin deltas are exact; all captures, earlier authorizations,75required absences and guard bodies retained.
+
+**Actual Level5 native journey/lower and controls:** original seed/driver/funding procedure, every assertion retained, all arms0walkouts/cash reconciled. Values are cents.
+
+| Arm | Commands | Closing cash | Completed | Walkouts | Final tick | Unlock tick |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| prior31 | 28601 | 6227467 | 445 | 0 | 26649 | 16877 |
+| combined | 45792 | 9514568 | 709 | 0 | 42649 | 32877 |
+| balance-only | 30790 | 6460039 | 477 | 0 | 28700 | 18929 |
+| content-only | 35201 | 7732431 | 546 | 0 | 32797 | 23026 |
+
+Combined versus rebind31: +17191commands/+3287101closing cents/+264completions/+16000ticks. Balance-only is the fresh old-content control (exact610-meaning pre-port release); content-only uses the new654-meaning release and hash-verified old balance/pacing runtime+QA overlay, retaining the48 new nonexecuting diagnostic bindings. Controls write no canonical source/artifact. All fees/cash postings are actual reducer output.
+
+Accepted higher prices spend96000additional cents before recorded opening (1785500->1689500), and128000additional counted capital cents (1048000->1176000):224000total construction/training effect. Different closing totals reflect different durations and real cash flows. They are not a same-duration productivity claim. Content changes deterministic selection/answers and simultaneous-goal timing; at tick28200 the combined run has4482XP/100morale but87satisfaction versus91required. New-balance effect is conditional on content: +2189commands under old content, +10591under new content. No goal/driver/assertion was retuned. The historical driver xpGoalTick still means2000XP; read-only observer receipts separately record the2300target.
+
+**Material pacing risk:** first finish is80.26084776% later (19935->35935) than rebind31. This exceeds the earlier631-card10-20% target under the final654-meaning pool. Manager should review this measured interaction before rollout; accepted550/850/2300goals remain unchanged. Full attribution/cash/selection/goal evidence: [attribution](../../.local-dev/release-port32-20261111/attribution-verification.json).
+
+| Report | Before raw score | After raw score | Before sample | After sample |
+| --- | ---: | ---: | ---: | ---: |
+| 1 | 62.441674349990286 | 62.17183573951998 | 51 | 49 |
+| 2 | 66.6965763107746 | 66.67289606944729 | 51 | 52 |
+| 3 | 45.38120376175499 | 45.38120376175499 | 50 | 50 |
+
+All three reports change; latest/best/immutable first remain correct. Launch pins now reflect the verified49-patient first report, raw62.17183573951998 and displayed62.17. All nine e2e-consumed saves change; no e2e spec was edited.
+
+| Checkpoint | Old tick | New tick | Old cash | New cash | Changed paths |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| integration-l4 | 3969 | 4375 | 2746500 | 2708150 | 10012 |
+| integration-build | 3969 | 4375 | 1698500 | 1532150 | 9712 |
+| integration-preparing | 16878 | 32878 | 4457330 | 7730219 | 21308 |
+| integration-running | 17015 | 33015 | 4477406 | 7743158 | 21962 |
+| integration-final | 19934 | 35934 | 5088398 | 8349771 | 25161 |
+| integration-finish | 19935 | 35935 | 5082782 | 8350271 | 23055 |
+| integration-repeat-final | 23591 | 39591 | 5909128 | 9202073 | 27117 |
+| integration-repeat | 23592 | 39592 | 5909128 | 9202073 | 24590 |
+| integration-lower-repeat | 26649 | 42649 | 6227467 | 9514568 | 26668 |
+
+Guarded staging, verify-staged and publish-verified receipts are in .local-dev/release-port32-20261111. Inputs590->597; clinical442->448;26bound paths change (13clinical/7domain/6balance, including7new files). Exact old/new hashes are in staging-baseline.json and the dispositions. inputHistory25->26, preserving every prior entry and appending all590previous hashes/artifact hashes. Only established liveCap metadata4->5 correction is applied to native results. Integration guard stays byte-exact: 812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909.
+
+| Evidence artifact | Before SHA256 | After SHA256 |
+| --- | --- | --- |
+| tools/qa/level-five-integration-results-20261012.json | d83dbeb8f80237a094e00c182a23c27f3491584d6b0e03130e47475f45ac102c | bd3156af48b1ae6e2afab8a7367b3d577de32e8aa225662d09268a0c156afb56 |
+| tests/fixtures/level-five-integration-checkpoints-20261012.json | 8590d582b9d462b55cf2eb1a4f208c6809f116331f7bf20dccdee1c1d26f0ab6 | 9c89fad34763a7a7791d7a6e5307da17ea925cff2ef1d42be9c0d688fb4722fd |
+| tests/fixtures/level-five-legacy-behavior-20261012.json | ef5724338ef49a1ca78c55a02bac30ff8ffc977ed820250a346e4431671a5045 | 9413ae70b80a991df1f4539ff582891cb761345bd89b26e635ae3e607b1ff1c5 |
+
+**Save safety / legacy evidence:** actual pre-port engine reproduces all25old schema5-9 loads/120-minute continuations. Current engine regenerates25loads/25continuations, with25additional old-content/new-balance continuation controls. Existing frozen records and old learning histories remain exact; loads add only44blank histories plus L3+ lateProgression. L1-4 continuations (20schema runs) select a different first fresh patient: only that newly admitted case/profile/unanswered-step data changes, and old-content controls reproduce the old result exactly. No existing frozen encounter is replaced. Historical serialized inputs/afterUpdates remain exact. The actual two pre-policy checkpoint goldens are archived at tests/fixtures/late-progression-pre-policy-checkpoints-20261111.json (SHA25624ef8c51dd46319bf8f1b895a6e03e9bdc38fc4b72a5ebf89b31e64e0315b4a4), with source SHA2568590d582b9d462b55cf2eb1a4f208c6809f116331f7bf20dccdee1c1d26f0ab6; every compatibility assertion remains. New/old L3+ goal credit, snapshot/journal preservation, rejected/duplicate commands, frozen topic encounters and default admissions are exercised by the accepted tests.
+
+**Validation, CI=true / threads:** all seven full workspace suites pass. 815files/11558passed/0failed/1existing skip (versus port31:806files/11381passed/0failed/1skip).
+
+| Workspace | Files | Passed | Failed | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 424 | 4173 | 0 | 0 |
+| balance-config | 26 | 168 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 133 | 1640 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 209 | 5370 | 0 | 1 |
+
+Seven workspace typecheck scripts exit0 (typecheck-close). Player build exit0,674modules/14.85s. Root boundary Node Git inventory is sandbox-blocked (spawnSync git EPERM); unchanged boundary/launcher verifiers pass via exact fresh native read-only7674-path inventory with index/hash checks. Seven suites ran directly; manager retains root/default-pool/browser validation. No timeout/budget relaxation or new skip. Exact commands/exit codes and raw logs are in validation-summary.json and matching *-process.json/*.log.
+
+Exact closing output:
+
+```text
+
+domain-final
+ Test Files  209 passed (209)
+      Tests  5370 passed | 1 skipped (5371)
+   Start at  16:16:06
+   Duration  670.70s (transform 21.60s, setup 0ms, import 504.53s, tests 811.15s, environment 17ms)
+
+player-final
+ Test Files  424 passed (424)
+      Tests  4173 passed (4173)
+   Start at  16:18:07
+   Duration  549.77s (transform 31.66s, setup 0ms, import 841.48s, tests 1302.42s, environment 38ms)
+
+clinical-final
+ Test Files  133 passed (133)
+      Tests  1640 passed (1640)
+   Start at  16:16:06
+   Duration  137.98s (transform 10.27s, setup 0ms, import 231.63s, tests 28.75s, environment 10ms)
+
+other-nonclinical
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  15:43:57
+   Duration  4.82s (transform 369ms, setup 0ms, import 1.13s, tests 4.68s, environment 1ms)
+ Test Files  26 passed (26)
+      Tests  168 passed (168)
+   Start at  15:44:02
+   Duration  4.37s (transform 984ms, setup 0ms, import 4.64s, tests 310ms, environment 2ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  15:44:07
+   Duration  1.05s (transform 203ms, setup 0ms, import 630ms, tests 525ms, environment 1ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  15:44:08
+   Duration  3.00s (transform 266ms, setup 0ms, import 689ms, tests 1.37s, environment 0ms)
+
+late-progression-final
+ Test Files  1 passed (1)
+      Tests  23 passed (23)
+   Start at  16:16:06
+   Duration  15.35s (transform 8.22s, setup 0ms, import 13.97s, tests 1.25s, environment 0ms)
+
+codec-capacity
+ Test Files  2 passed (2)
+      Tests  59 passed (59)
+   Start at  16:16:06
+   Duration  81.67s (transform 16.15s, setup 0ms, import 25.10s, tests 98.40s, environment 0ms)
+
+opening-large
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  16:08:44
+   Duration  138.86s (transform 6.87s, setup 0ms, import 10.88s, tests 127.87s, environment 0ms)
+```
+
+Earlier release failures were diagnosed and resolved, not suppressed:26stale domain evidence comparisons; six player tests with30stale price/goal/retired-case expectations; two new legacy-goal tests accidentally reading rebound current metadata;8post-rebind player fixture-size assumptions. Record stress retains3200real actions and pins exactly10148records. Legacy per-row format2 packing now exceeds1MB in five later checkpoints; actual production page-import evidence max278440bytes and escaped RPC max394616bytes fit unchanged1MB/6MBlimits, with original source and every logical field round-tripped. Stronger actual-wire assertions replace an obsolete per-row-fit assumption; no codec/transport/limit product logic changes. The modeled two-copy5MiB quota test uses a complete earlier native Level5 build checkpoint, retains every reclaim/silent-kill/recovery assertion, and does not claim the larger late report checkpoints fit that artificial two-copy budget. Focused codec/quota59/59, opening stress1/1, and late progression23/23 pass. Author live-tree failures are dispositioned in validation-summary.json; unaccepted salvage tests were not imported.
+
+Open risks: the measured80.26%pacing overshoot above; browser/e2e runtime not run in this sandbox; the larger late snapshots are covered by codecs/storage/import tests but not represented as fitting the two-copy5MiB quota fixture. Everything remains local/uncommitted for manager inspection and backup/rollout.
+
+
+### Port32 correction / rebind32 rerun: Level4 XP790 (release worktree, 2026-11-11)
+
+Supersedes the preceding850-goal port32 run; its evidence and all previous receipts remain archived. Completed locally in GS-release, with no commit/push/install/network/agents/deploy. Main was read-only.
+
+**Exact scope:** sole production delta is packages/balance-config/src/prototype-balance.ts Level4 minimumClinicalXp850->790; Level3/5 stay550/2300. All costs, rewards, satisfaction rules, care/selection/throughput code, save formats and448clinical hashes remain exact. Ported the worker's five test hunks and only its accepted appended research section. Preserve every release-specific assertion and frozen pre-policy golden. Default remains193manifest rows/1174cases/1491nodes/654meanings; no clinical wording, approval or raw topic/salvage import changes.
+
+Follow-up changes31existing public paths within the same155-path cumulative port32 lane: six accepted code/test paths, the research doc section, source-pin metadata, honest native evidence and exact derived test pins, plus plan/handoffs. Full current file/hash/hunk dispositions and every excluded difference: [port32 dispositions](../../.local-dev/release-verify/port32-20261111.json). Incremental list: [31follow-up paths](../../.local-dev/release-port32-retune-20261111/incremental-changed-paths.txt). Cumulative classifications:62copied/76hunk-ported/17regenerated;893other paths excluded. Earlier records remain under .local-dev/release-port32-20261111; fresh immutable staging/commands/proofs are under .local-dev/release-port32-retune-20261111.
+
+**Actual native journey/lower and controls** (cash in cents; partial row is not a successful full journey):
+
+| Arm | Commands | Cash | Completed | Walkouts | First finish | Final/stop tick |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| rebind31 | 28601 | 6227467 | 445 | 0 | 19935 | 26649 |
+| oldCombined850 | 45792 | 9514568 | 709 | 0 | 35935 | 42649 |
+| oldBalanceOnly850 | 30790 | 6460039 | 477 | 0 | 21986 | 28700 |
+| contentOnly | 35201 | 7732431 | 546 | 0 | 26083 | 32797 |
+| balanceOnly790 (partial, bound failed) | 42992 | 9297631 | 668 | 0 | none | 40187 |
+| combined790 | 31570 | 6677125 | 491 | 0 | 22690 | 29404 |
+
+Shipping654 reproduces the worker exactly:31570commands/6677125cents/491completed/0walkouts; minimum cash1452073; unlock19632,first finish22690,final29404. First finish is+2755minutes/**+13.82%** versus rebind31(19935), and13245minutes earlier than the previous port32(35935). Its post-finish6714-minute audit/retry tail is unchanged. Current cash reconciles exactly:1689500+18092200-442723-11485852-1176000=6677125. No context goal override, clock/FSRS/XP injection, extra facility purchase, altered care command or driver/bound change. Original seed/funded-opening procedure retained. Every shipping assertion (three reports, best/latest/immutable first, cash,>20000commands, rounds/comfort/savings/retirement) passes.
+
+**Counterfactual limitation retained:** old610content/new790balance hits the unchanged36000-minute Level5 goal bound at40187 and throws the original 'M9 real Level5 goals did not unlock'. Partial totals are42992commands/9297631cash/668completed/0walkouts,6236XP/100morale/**84displayed satisfaction** against91required. No unlock, reports or finish; do not describe this as a passing full control. Partial cash reconciles:1689500+25251100-601932-15865037-1176000=9297631. This is the known manager-accepted obsolete-pool limitation, not papered over by raising the limit. Real release campaigns use654for new arrivals while retaining old frozen encounters. Timing remains content-dependent; no universal10-20% multiplier is claimed.
+
+The fresh content-only old-price/old-goal overlay reproduces **all nine** previous control checkpoints exactly (35201/7732431/546/0). Read-only observations independently confirm the satisfaction-window mechanism: new shipping reaches2300XP at16659,505minutes later than the old850combined run, yet unlocks13245minutes earlier. Post-XP waiting falls16723->2973minutes. At16659,2308XP and100morale are met while90satisfaction is below91. No throughput/runtime rule was changed. Full metrics/partial-state/cash/requirements and source-overlay receipts: attribution-verification.json and balance-only-control.json.
+
+All nine canonical saves change; all three report objects change. New reports:62.4750682937747 / 66.9067363288048 / 45.33668223820304; samples49/50/51. First raw score62.4750682937747; unchanged conservative product display**62.47**. Source guard/native assertions remain exact.
+
+| Checkpoint | Previous tick | New tick | Previous cash | New cash | Changed paths |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| integration-l4 | 4375 | 4038 | 2708150 | 2639850 | 7337 |
+| integration-build | 4375 | 4038 | 1532150 | 1463850 | 7127 |
+| integration-preparing | 32878 | 19633 | 7730219 | 4895027 | 20384 |
+| integration-running | 33015 | 19770 | 7743158 | 4907177 | 21794 |
+| integration-final | 35934 | 22689 | 8349771 | 5471443 | 24287 |
+| integration-finish | 35935 | 22690 | 8350271 | 5481255 | 21977 |
+| integration-repeat-final | 39591 | 26346 | 9202073 | 6272351 | 25631 |
+| integration-repeat | 39592 | 26347 | 9202073 | 6272351 | 23201 |
+| integration-lower-repeat | 42649 | 29404 | 9514568 | 6677125 | 25470 |
+
+597bound inputs remain; only prototype-balance.ts moves:7e35ad9744c9ee05c37740de25bf7be53b4eeed21f4c10dde8b1e435d5edaabc->f3d41efae64f032cc6a79f9ff8c0a570dc3f4188218b04ff3e9612df80f9c7b1. Main's accepted CRLF source was normalized to the release's existing LF convention; every production byte besides that integer is retained. All448clinical hashes and semantic default SHA751b750e5cd139229a933570244fc5c613f4d60f7fa626bf5e7eb4fc5fa4feab remain exact. Guard SHA812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909 unchanged. inputHistory26->27 preserves all26prior entries and appends the previous597input hashes/artifact hash; native liveCap4->5 is the only established metadata correction. Individual authorized source-pin deltas retain original pathsets, all captures/history,75required absences and every guard body.
+
+| Evidence | Before SHA256 | After SHA256 |
+| --- | --- | --- |
+| tools/qa/level-five-integration-results-20261012.json | bd3156af48b1ae6e2afab8a7367b3d577de32e8aa225662d09268a0c156afb56 | 9bea79257502b6b1058b437d7d944898797d8929a4b599952ce5aac4a9c21ad8 |
+| tests/fixtures/level-five-integration-checkpoints-20261012.json | 9c89fad34763a7a7791d7a6e5307da17ea925cff2ef1d42be9c0d688fb4722fd | c1da0b9b4816786b1eb1f8dce3c1dac9db8dfb26b36a5664f4e7c97631f47770 |
+
+Legacy evidence remains byte-identical SHA9413ae70b80a991df1f4539ff582891cb761345bd89b26e635ae3e607b1ff1c5:25actual850/790schema5-9 loads/120-minute continuations match exactly. Frozen pre-policy archive24ef8c51dd46319bf8f1b895a6e03e9bdc38fc4b72a5ebf89b31e64e0315b4a4 unchanged. Earned old750XP credits/unlocks/reports, snapshot/journal safety and frozen encounters remain exercised. No new save field or ownership map change.
+
+Current checkpoint size calibrations are exact and stricter: unchanged3200real reducer actions produce9214immutable records (2814base+6400); no timeout/byte/quota budget change. All corrected checkpoints fit strict empty per-row diagnostics as well as actual page-wire limits (max219137evidence bytes/305809RPC bytes under unchanged1MB/6MB). Both original gzip/deflate and every logical/source fidelity assertion remain. The unchanged complete earlier Level5 quota fixture and recovery assertions remain.
+
+**Validation (CI=true, threads):** seven full suites815files/11558passed/0failed/1existing skip; identical counts to initial port32.
+
+| Workspace | Files | Passed | Failed | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 424 | 4173 | 0 | 0 |
+| balance-config | 26 | 168 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 133 | 1640 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 209 | 5370 | 0 | 1 |
+
+Seven typecheck scripts exit0; player build exit0(674modules/15.43s). Unchanged boundary/launcher verifiers pass with the fresh exact native7674-path inventory/index-hash adapter after Node's Git subprocess is sandbox-blocked (spawnSync git EPERM). Suites ran directly; manager retains root/default-pool/browser validation. No test/guard/budget relaxation or additional skip.
+
+Exact closing output:
+
+```text
+domain-final
+ Test Files  209 passed (209)
+      Tests  5370 passed | 1 skipped (5371)
+   Start at  18:03:30
+   Duration  711.38s (transform 24.38s, setup 0ms, import 489.79s, tests 908.75s, environment 17ms)
+
+player-close
+ Test Files  424 passed (424)
+      Tests  4173 passed (4173)
+   Start at  18:14:25
+   Duration  531.92s (transform 36.67s, setup 0ms, import 846.99s, tests 1225.64s, environment 38ms)
+
+clinical-final
+ Test Files  133 passed (133)
+      Tests  1640 passed (1640)
+   Start at  18:03:30
+   Duration  167.38s (transform 14.39s, setup 0ms, import 283.23s, tests 32.66s, environment 11ms)
+
+other-nonclinical
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  17:52:36
+   Duration  1.22s (transform 334ms, setup 0ms, import 1.00s, tests 535ms, environment 0ms)
+ Test Files  26 passed (26)
+      Tests  168 passed (168)
+   Start at  17:52:37
+   Duration  2.73s (transform 619ms, setup 0ms, import 2.63s, tests 196ms, environment 2ms)
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  17:52:40
+   Duration  736ms (transform 159ms, setup 0ms, import 441ms, tests 341ms, environment 1ms)
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  17:52:41
+   Duration  2.61s (transform 212ms, setup 0ms, import 602ms, tests 1.31s, environment 0ms)
+```
+
+One avoidable expected-display error was corrected transparently: the first full player run had4171passes/2failures because I initially assumed62.48rounding. The unchanged product formatter displays62.47; correct only that expected string, then focused display and the **entire** player suite pass. Raw report and product formatter never changed. Private legacy proof initially compared optional undefined in-memory keys to JSON; corrected the comparison to the persisted JSON contract, with all old hashes exact and no artifact alteration. All original/final outputs and exact commands/exit codes are retained in validation-summary.json and matching logs.
+
+Open limitation: the obsolete610counterfactual bound failure is retained above; future content/accuracy/upkeep can shift rolling-window timing again. Current654shipping result meets the accepted13.82%target. Browser/e2e runtime not run and e2e specs unchanged; no release/deployment/backup performed. Manager owns final review and rollout.

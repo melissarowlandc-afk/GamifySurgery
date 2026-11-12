@@ -4,7 +4,8 @@ import { facilityStageDefinitionSchema } from "./schema";
 export const LEVEL_FIVE_STAGE_DEFINITION = facilityStageDefinitionSchema.parse({
   level: 5,
   displayName: "Level 5 - Optimized ASC / Prestige",
-  minimumClinicalXp: 2000,
+  // Editorial campaign pacing; existing inspection unlocks remain earned.
+  minimumClinicalXp: 2300,
   minimumCompletedEncounters: 0,
   satisfactionMustBeGreaterThan: 90,
   minimumAverageStaffMorale: 85,

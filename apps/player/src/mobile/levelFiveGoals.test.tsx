@@ -52,7 +52,7 @@ describe("M6 phone Goals chip and sheet through the shared session", () => {
       expect(env.advance).toHaveBeenCalledOnce(); await env.click("Goals 1/3");
     }
     expect(env.element.textContent).toContain("Current-level Clinical XP");
-    expect(env.element.textContent).toContain("0/2,000 XP");
+    expect(env.element.textContent).toContain("0/2,300 XP");
     expect(env.element.textContent).toContain("Average staff morale at least 85");
     expect(env.element.textContent).toContain("Inspections locked");
     expect(env.element.textContent).not.toContain("Level 5 coming later");

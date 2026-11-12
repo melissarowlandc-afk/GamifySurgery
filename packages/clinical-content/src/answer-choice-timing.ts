@@ -6104,3 +6104,10 @@ import {QUESTION_HARDEN1_N3R4_ACCEPTED_TIMING_ENTRIES} from "./question-harden1-
 // Exact N4 PASS estimates; domain order installation is a separate owned lane.
 import {QUESTION_N4_ACCEPTED_TIMING_ENTRIES} from "./question-n4-accepted-20261110";
 ANSWER_CHOICE_TIMING_REGISTRY.push(...QUESTION_N4_ACCEPTED_TIMING_ENTRIES);
+
+// Accepted topic retrospective-study estimates; runtime order installation belongs to the domain owner.
+import {QUESTION_PROGRAM_BATCH1_ACCEPTED_TIMING_ENTRIES} from "./question-program-batch1-accepted-20261111";
+ANSWER_CHOICE_TIMING_REGISTRY.push(...QUESTION_PROGRAM_BATCH1_ACCEPTED_TIMING_ENTRIES);
+
+import {QUESTION_PROGRAM_BATCH2_ACCEPTED_TIMING_ENTRIES} from "./question-program-batch2-accepted-20261111";
+ANSWER_CHOICE_TIMING_REGISTRY.push(...QUESTION_PROGRAM_BATCH2_ACCEPTED_TIMING_ENTRIES);

@@ -24,7 +24,7 @@ export const CLOUD_GAME_FIELD_OWNERSHIP = {
   campaignId: metadata, campaignSeed: metadata, randomGeneratorVersion: metadata, createdAtRealMs: metadata,
   founder: mixedOperational, clinicalReleaseId: metadata, balanceReleaseId: metadata,
   salaryEconomyVersion: metadata, schedulerPins: metadata,
-  facilityLevel: operational, pediatricFamilies: operational, levelFourCompletion: evidenceProjection,
+  facilityLevel: operational, lateProgression: operational, pediatricFamilies: operational, levelFourCompletion: evidenceProjection,
   levelFive: mixedOperational, facilityTick: operational, paused: operational, simulationSpeed: operational,
   cash: evidenceProjection, cashCents: evidenceProjection, operatingAccrualSixtiethCents: operational,
   nextFinancialPostingTick: operational, advertisingLevel: operational, clinicalXp: evidenceProjection,
