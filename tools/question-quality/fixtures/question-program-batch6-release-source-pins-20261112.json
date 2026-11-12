@@ -1,0 +1,209 @@
+{
+  "on": "2026-11-12",
+  "capturePath": "tools/question-quality/fixtures/question-topic-acceptance-batch6-source-migration-20261112.json",
+  "capturedFixtureSha256": "cf4b4f62435b84f19056a3091008b6c987f355450272a87d59094dcc5165415b",
+  "testSupportPath": "packages/clinical-content/src/question-program-batch6-acceptance-test-support.ts",
+  "testSupportSha256": "c5b17f23e4be2bf2ab991036dd9f6167b230a06c75b3a3a8a6dcf6f941e761af",
+  "repairedTopicTestArchivePath": "tools/question-quality/fixtures/question-topic-batch6-repaired-tests-20261112.json",
+  "repairedTopicTestArchiveSha256": "0325a4b02917a6c5251e1bd3b99f545c7c04528a8685a4263259a68b08578228",
+  "authorizationHistory": [
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port35-port",
+      "priorFixtureSha256": "2f599876b3513632fe30ba8677c31c2b5199d884c8b2562684c9b8a47adc517e",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-test-support.ts",
+          "mainBeforeSha256": "2cf42b758da44118496e5040df47a6b9c55e5c12ce17ad429da54dabd1818d93",
+          "mainAfterSha256": "59538549c39905e03cab96f9e78701d38c2230361733ce18ce6a30fbe44e88e8",
+          "requiredReleaseSha256": "656c21f99547f2519e69c9843a0a089c02b49d7c0cf81d70e3c3bc2d9be9b7d2",
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "956f776eff2111652772200d150bfff89d1fd99bf8f0fe74a77b144d75e1b535",
+          "mainAfterSha256": "61eabde7376a4e7cf6c642c9bf1fce49ad8a7ce273fa0e3a9ef9fdf32855a2f6",
+          "requiredReleaseSha256": "a720118b3a8a933f2c5b23f088b4ded8b9121d578e58c99372a9284e74cad763",
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-pediatric-neck-thoracic-gu-20261111.test.ts",
+          "mainBeforeSha256": "25da8728a513ee4e208393f842207dcb1859ec398b1a47649d14d57a3106061b",
+          "mainAfterSha256": "27b512628162ba999e3e54e0dddff6334966cd32382eeba7d387889a787f7e45",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-wound-healing-immunology-20261111.test.ts",
+          "mainBeforeSha256": "9bdb26b6888aae0aab6422fa1f0da25b4ecadefd148b2204c44642eea1961366",
+          "mainAfterSha256": "f938877b47ae0ec9387f9790eb333c18dd0bd5cc4c655824bbf4fee3a82b8a40",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+          "beforeSha256": "a720118b3a8a933f2c5b23f088b4ded8b9121d578e58c99372a9284e74cad763",
+          "afterSha256": "ba0c355b6e1cfc47ec72865cfc2442d0da3f68f1500c04253db4473d40b068a4"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port35-evidence",
+      "priorFixtureSha256": "64de0be45660598f785767fa28c1d7407e3109125328b567d0ee74390fba308f",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-test-support.ts",
+          "mainBeforeSha256": "2cf42b758da44118496e5040df47a6b9c55e5c12ce17ad429da54dabd1818d93",
+          "mainAfterSha256": "59538549c39905e03cab96f9e78701d38c2230361733ce18ce6a30fbe44e88e8",
+          "requiredReleaseSha256": "656c21f99547f2519e69c9843a0a089c02b49d7c0cf81d70e3c3bc2d9be9b7d2",
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "956f776eff2111652772200d150bfff89d1fd99bf8f0fe74a77b144d75e1b535",
+          "mainAfterSha256": "61eabde7376a4e7cf6c642c9bf1fce49ad8a7ce273fa0e3a9ef9fdf32855a2f6",
+          "requiredReleaseSha256": "ba0c355b6e1cfc47ec72865cfc2442d0da3f68f1500c04253db4473d40b068a4",
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-pediatric-neck-thoracic-gu-20261111.test.ts",
+          "mainBeforeSha256": "25da8728a513ee4e208393f842207dcb1859ec398b1a47649d14d57a3106061b",
+          "mainAfterSha256": "27b512628162ba999e3e54e0dddff6334966cd32382eeba7d387889a787f7e45",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-wound-healing-immunology-20261111.test.ts",
+          "mainBeforeSha256": "9bdb26b6888aae0aab6422fa1f0da25b4ecadefd148b2204c44642eea1961366",
+          "mainAfterSha256": "f938877b47ae0ec9387f9790eb333c18dd0bd5cc4c655824bbf4fee3a82b8a40",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+          "beforeSha256": "ba0c355b6e1cfc47ec72865cfc2442d0da3f68f1500c04253db4473d40b068a4",
+          "afterSha256": "3b2303d203321cd1878c291493ee92715b93714051fbf1ff8f0e4b0d43268839"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port35-entry-size",
+      "priorFixtureSha256": "d503bb6f92cce0c72aea3ec13120d4c46aea7adb03cf96c11780b704e3a3e78e",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-test-support.ts",
+          "mainBeforeSha256": "2cf42b758da44118496e5040df47a6b9c55e5c12ce17ad429da54dabd1818d93",
+          "mainAfterSha256": "59538549c39905e03cab96f9e78701d38c2230361733ce18ce6a30fbe44e88e8",
+          "requiredReleaseSha256": "656c21f99547f2519e69c9843a0a089c02b49d7c0cf81d70e3c3bc2d9be9b7d2",
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "956f776eff2111652772200d150bfff89d1fd99bf8f0fe74a77b144d75e1b535",
+          "mainAfterSha256": "61eabde7376a4e7cf6c642c9bf1fce49ad8a7ce273fa0e3a9ef9fdf32855a2f6",
+          "requiredReleaseSha256": "3b2303d203321cd1878c291493ee92715b93714051fbf1ff8f0e4b0d43268839",
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-pediatric-neck-thoracic-gu-20261111.test.ts",
+          "mainBeforeSha256": "25da8728a513ee4e208393f842207dcb1859ec398b1a47649d14d57a3106061b",
+          "mainAfterSha256": "27b512628162ba999e3e54e0dddff6334966cd32382eeba7d387889a787f7e45",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-wound-healing-immunology-20261111.test.ts",
+          "mainBeforeSha256": "9bdb26b6888aae0aab6422fa1f0da25b4ecadefd148b2204c44642eea1961366",
+          "mainAfterSha256": "f938877b47ae0ec9387f9790eb333c18dd0bd5cc4c655824bbf4fee3a82b8a40",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+          "beforeSha256": "3b2303d203321cd1878c291493ee92715b93714051fbf1ff8f0e4b0d43268839",
+          "afterSha256": "824593bb4ff2fa894643e8db686078fbcdba84d4d317e4581c2fc38c9caa16f5"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port35-ci-timing-98c1bf38",
+      "priorFixtureSha256": "c2912f44159c6802fc049dd6ffc3ef1ed018ed74053f0586937b8b69f0effab4",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-test-support.ts",
+          "mainBeforeSha256": "2cf42b758da44118496e5040df47a6b9c55e5c12ce17ad429da54dabd1818d93",
+          "mainAfterSha256": "59538549c39905e03cab96f9e78701d38c2230361733ce18ce6a30fbe44e88e8",
+          "requiredReleaseSha256": "656c21f99547f2519e69c9843a0a089c02b49d7c0cf81d70e3c3bc2d9be9b7d2",
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "956f776eff2111652772200d150bfff89d1fd99bf8f0fe74a77b144d75e1b535",
+          "mainAfterSha256": "61eabde7376a4e7cf6c642c9bf1fce49ad8a7ce273fa0e3a9ef9fdf32855a2f6",
+          "requiredReleaseSha256": "824593bb4ff2fa894643e8db686078fbcdba84d4d317e4581c2fc38c9caa16f5",
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-pediatric-neck-thoracic-gu-20261111.test.ts",
+          "mainBeforeSha256": "25da8728a513ee4e208393f842207dcb1859ec398b1a47649d14d57a3106061b",
+          "mainAfterSha256": "27b512628162ba999e3e54e0dddff6334966cd32382eeba7d387889a787f7e45",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-wound-healing-immunology-20261111.test.ts",
+          "mainBeforeSha256": "9bdb26b6888aae0aab6422fa1f0da25b4ecadefd148b2204c44642eea1961366",
+          "mainAfterSha256": "f938877b47ae0ec9387f9790eb333c18dd0bd5cc4c655824bbf4fee3a82b8a40",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+          "beforeSha256": "824593bb4ff2fa894643e8db686078fbcdba84d4d317e4581c2fc38c9caa16f5",
+          "afterSha256": "1f42a256f256735046d319e580be463e9313bcd7d8b126f51cb24ec14048ee71"
+        }
+      ]
+    }
+  ],
+  "paths": [
+    {
+      "path": "packages/clinical-content/src/question-program-batch5-acceptance-test-support.ts",
+      "mainBeforeSha256": "2cf42b758da44118496e5040df47a6b9c55e5c12ce17ad429da54dabd1818d93",
+      "mainAfterSha256": "59538549c39905e03cab96f9e78701d38c2230361733ce18ce6a30fbe44e88e8",
+      "requiredReleaseSha256": "656c21f99547f2519e69c9843a0a089c02b49d7c0cf81d70e3c3bc2d9be9b7d2",
+      "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+      "mainBeforeSha256": "956f776eff2111652772200d150bfff89d1fd99bf8f0fe74a77b144d75e1b535",
+      "mainAfterSha256": "61eabde7376a4e7cf6c642c9bf1fce49ad8a7ce273fa0e3a9ef9fdf32855a2f6",
+      "requiredReleaseSha256": "1f42a256f256735046d319e580be463e9313bcd7d8b126f51cb24ec14048ee71",
+      "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-pediatric-neck-thoracic-gu-20261111.test.ts",
+      "mainBeforeSha256": "25da8728a513ee4e208393f842207dcb1859ec398b1a47649d14d57a3106061b",
+      "mainAfterSha256": "27b512628162ba999e3e54e0dddff6334966cd32382eeba7d387889a787f7e45",
+      "requiredReleaseSha256": null,
+      "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-wound-healing-immunology-20261111.test.ts",
+      "mainBeforeSha256": "9bdb26b6888aae0aab6422fa1f0da25b4ecadefd148b2204c44642eea1961366",
+      "mainAfterSha256": "f938877b47ae0ec9387f9790eb333c18dd0bd5cc4c655824bbf4fee3a82b8a40",
+      "requiredReleaseSha256": null,
+      "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+    }
+  ]
+}

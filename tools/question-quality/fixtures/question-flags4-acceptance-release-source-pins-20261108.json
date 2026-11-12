@@ -8,8 +8,8 @@
       "capturedMainSha256": "034f6f69da950feca9e3c4fd928eeffb3b1a7d2069a6e2611b87da6d3df95635",
       "mainAcceptedSha256": "100dababa898bd80133914633832da65537e0cfc38464d6e5b95d7318d42ad3b",
       "releaseEntrySha256": "4080f4b98a7888897bd6b9609878294bbc35c7544e770e5e787e7e7447340c86",
-      "requiredReleaseSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
-      "reason": "Manager-authorized port34: exact frozen batch4/5 acceptance,316 diagnostic bindings, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict.",
+      "requiredReleaseSha256": "b1629390802297b2a19c511c757d26050afa542d535fde129028538dffe46031",
+      "reason": "Manager explicitly authorized commit98c1bf38 in the port35 follow-up: timing margins in three cloud-save tests. Record the exact current source postimage, including the existing rebind35 record-count hunk. Preserve original captures, assertions, all earlier authorization entries and required absences.",
       "authorizedDeltas": [
         {
           "on": "2026-11-09",
@@ -194,6 +194,38 @@
           "previousRequirement": "bf927cf61d77173f88ace2b8b938ff9ad4c0266636acff56dc079d60ae8190d9",
           "releaseAfterSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
           "reason": "Manager-authorized port34: exact frozen batch4/5 acceptance,316 diagnostic bindings, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+        },
+        {
+          "on": "2026-11-12",
+          "milestone": "release-port35-port",
+          "releaseBeforeSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+          "previousRequirement": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+          "releaseAfterSha256": "50da9217d2703feabc6a010d7ce798a243691f51d959db7870c43e623a61bb02",
+          "reason": "Manager-authorized port35: exact frozen batch6 acceptance,8 planning-only bindings and pediatric admission, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+        },
+        {
+          "on": "2026-11-12",
+          "milestone": "release-port35-evidence",
+          "releaseBeforeSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+          "previousRequirement": "50da9217d2703feabc6a010d7ce798a243691f51d959db7870c43e623a61bb02",
+          "releaseAfterSha256": "5b22325e6164837f09046dcf9142ca4366b4f604b38a5cf1f66d638cfbbb4e47",
+          "reason": "Manager-authorized port35: exact frozen batch6 acceptance,8 planning-only bindings and pediatric admission, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+        },
+        {
+          "on": "2026-11-12",
+          "milestone": "release-port35-entry-size",
+          "releaseBeforeSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+          "previousRequirement": "5b22325e6164837f09046dcf9142ca4366b4f604b38a5cf1f66d638cfbbb4e47",
+          "releaseAfterSha256": "d7eaac545b7b70dd98ce17e7e66d4a8f9ca8d8e7e792557dbbb36a48b0e50d63",
+          "reason": "Manager-authorized port35: exact frozen batch6 acceptance,8 planning-only bindings and pediatric admission, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+        },
+        {
+          "on": "2026-11-12",
+          "milestone": "release-port35-ci-timing-98c1bf38",
+          "releaseBeforeSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+          "previousRequirement": "d7eaac545b7b70dd98ce17e7e66d4a8f9ca8d8e7e792557dbbb36a48b0e50d63",
+          "releaseAfterSha256": "b1629390802297b2a19c511c757d26050afa542d535fde129028538dffe46031",
+          "reason": "Manager explicitly authorized commit98c1bf38 in the port35 follow-up: timing margins in three cloud-save tests. Record the exact current source postimage, including the existing rebind35 record-count hunk. Preserve original captures, assertions, all earlier authorization entries and required absences."
         }
       ]
     }
@@ -2793,6 +2825,890 @@
           "beforeSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
           "previousRequirement": "bf927cf61d77173f88ace2b8b938ff9ad4c0266636acff56dc079d60ae8190d9",
           "afterSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port35-port",
+      "priorFixtureSha256": "62f40e8517bfb10092e22217a57072a46f8d06b0cbc3775d61e34a0416a4f047",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "capturedMainSha256": "034f6f69da950feca9e3c4fd928eeffb3b1a7d2069a6e2611b87da6d3df95635",
+          "mainAcceptedSha256": "100dababa898bd80133914633832da65537e0cfc38464d6e5b95d7318d42ad3b",
+          "releaseEntrySha256": "4080f4b98a7888897bd6b9609878294bbc35c7544e770e5e787e7e7447340c86",
+          "requiredReleaseSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+          "reason": "Manager-authorized port34: exact frozen batch4/5 acceptance,316 diagnostic bindings, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-09",
+              "milestone": "release-port25-cloud-conflict",
+              "releaseBeforeSha256": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+              "previousRequirement": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+              "releaseAfterSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "reason": "Mechanical exact digest propagation for three authorized port25 cloud-source changes; guard assertions, unrelated protected sources and immutable captures remain intact."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port26-memory-rerelease",
+              "releaseBeforeSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "previousRequirement": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "releaseAfterSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "reason": "Mechanical exact guard digest propagation after merging89a52452 CI authorizations with preserved port25 cloud authorizations; unrelated pins, captures and guard logic remain exact."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port27-nonretryable-client",
+              "releaseBeforeSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "previousRequirement": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "releaseAfterSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "reason": "Mechanical exact guard digest propagation after authorized port27 transport source/test deltas; captures, assertions, unrelated pins and all earlier authorization history remain unchanged."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port28-port",
+              "releaseBeforeSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "previousRequirement": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "releaseAfterSha256": "c49b1dc2de4c4cbe1909f77f569a306d6605a16e676c48d9bb15180147bb3477",
+              "reason": "Manager-authorized port28 exact three-case acceptance or honestly regenerated native evidence; original captures,unrelated pins and prior authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port28-evidence",
+              "releaseBeforeSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "previousRequirement": "c49b1dc2de4c4cbe1909f77f569a306d6605a16e676c48d9bb15180147bb3477",
+              "releaseAfterSha256": "e70bf90f3f61412db5f65c3a5956bf5bfd8c70b35433cb3d906d708009ea653d",
+              "reason": "Manager-authorized port28 exact three-case acceptance or honestly regenerated native evidence; original captures,unrelated pins and prior authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port29-port",
+              "releaseBeforeSha256": "e70bf90f3f61412db5f65c3a5956bf5bfd8c70b35433cb3d906d708009ea653d",
+              "previousRequirement": "e70bf90f3f61412db5f65c3a5956bf5bfd8c70b35433cb3d906d708009ea653d",
+              "releaseAfterSha256": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "reason": "Manager-authorized port29 phone performance pass only: idle codec release, large-clinic observation and representation-exact transport allocation. No clinical/product rules changed; immutable captures, unrelated pins and all prior authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port30-port",
+              "releaseBeforeSha256": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "previousRequirement": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "releaseAfterSha256": "bdb25b52dbc3ef6ddf55034378cd830d4ba2c87b179c962dbbeeb3a1596129f9",
+              "reason": "Manager-authorized port30 founder/consult M1-M4 and round2 source changes, approved readiness predicate, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port30-evidence",
+              "releaseBeforeSha256": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "previousRequirement": "bdb25b52dbc3ef6ddf55034378cd830d4ba2c87b179c962dbbeeb3a1596129f9",
+              "releaseAfterSha256": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "reason": "Manager-authorized port30 founder/consult M1-M4 and round2 source changes, approved readiness predicate, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port31-port",
+              "releaseBeforeSha256": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "previousRequirement": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "releaseAfterSha256": "f6a6a935fc459036c5d58595fb61e6b0e0cc6c4c67aa633bb4ba4f5ff15995af",
+              "reason": "Manager-authorized port31 round3 chart history, exact accepted N4 content/runtime integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port31-evidence",
+              "releaseBeforeSha256": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "previousRequirement": "f6a6a935fc459036c5d58595fb61e6b0e0cc6c4c67aa633bb4ba4f5ff15995af",
+              "releaseAfterSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "reason": "Manager-authorized port31 round3 chart history, exact accepted N4 content/runtime integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-port",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "releaseAfterSha256": "51b9c55a9ca6f46621952253050bc8e70036c43f8af8730ccf0ee3dcdf4d113d",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-evidence",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "51b9c55a9ca6f46621952253050bc8e70036c43f8af8730ccf0ee3dcdf4d113d",
+              "releaseAfterSha256": "386d097c2981dc53402ab6a04726d4d1823242ac1fc56ae8392e7b06043d13d4",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-entry-size",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "386d097c2981dc53402ab6a04726d4d1823242ac1fc56ae8392e7b06043d13d4",
+              "releaseAfterSha256": "59cced5ad82dcab860b582c5cab4aebfa11d8005bd9624e0168c69ae8f5119f6",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-fixture-diagnostics",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "59cced5ad82dcab860b582c5cab4aebfa11d8005bd9624e0168c69ae8f5119f6",
+              "releaseAfterSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-retune",
+              "releaseBeforeSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "previousRequirement": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "releaseAfterSha256": "d1ec455ba48b525796a1bdbdf25262b5d106b8933fb331cbcd572e887ff0202c",
+              "reason": "Manager-authorized port32 follow-up: exact Level4 XP850-to790 correction and expectations, or honestly regenerated guarded native evidence. Other goals/costs/clinical inputs, all captures and previous authorizations remain strict. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-retune-expectations",
+              "releaseBeforeSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "previousRequirement": "d1ec455ba48b525796a1bdbdf25262b5d106b8933fb331cbcd572e887ff0202c",
+              "releaseAfterSha256": "cc9df57988887ecebe1d0911d2b3a9c0f44013acf47edae41384f3805f268534",
+              "reason": "Manager-authorized port32 follow-up: exact Level4 XP850-to790 correction and expectations, or honestly regenerated guarded native evidence. Other goals/costs/clinical inputs, all captures and previous authorizations remain strict. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-retune-evidence",
+              "releaseBeforeSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "previousRequirement": "cc9df57988887ecebe1d0911d2b3a9c0f44013acf47edae41384f3805f268534",
+              "releaseAfterSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "reason": "Manager-authorized port32 follow-up: exact Level4 XP850-to790 correction and expectations, or honestly regenerated guarded native evidence. Other goals/costs/clinical inputs, all captures and previous authorizations remain strict. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port33-port",
+              "releaseBeforeSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "previousRequirement": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "releaseAfterSha256": "db019859c2a61f97f6c6a471ed6dc646f0af9cf167349080e2f7ea11d08e299a",
+              "reason": "Manager-authorized port33: exact frozen batch3 acceptance, diagnostic tuple bindings, content-robust pacing, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port33-evidence",
+              "releaseBeforeSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "previousRequirement": "db019859c2a61f97f6c6a471ed6dc646f0af9cf167349080e2f7ea11d08e299a",
+              "releaseAfterSha256": "e60d20362ff9a2bc832ad397165e7faa07d1c549a21d817215c77c96c1421dfd",
+              "reason": "Manager-authorized port33: exact frozen batch3 acceptance, diagnostic tuple bindings, content-robust pacing, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port33-entry-size",
+              "releaseBeforeSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "previousRequirement": "e60d20362ff9a2bc832ad397165e7faa07d1c549a21d817215c77c96c1421dfd",
+              "releaseAfterSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "reason": "Manager-authorized port33: exact frozen batch3 acceptance, diagnostic tuple bindings, content-robust pacing, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port34-port",
+              "releaseBeforeSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "previousRequirement": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "releaseAfterSha256": "ff89147e0b0f339acfe86b7077def3c0656bbc218e50742810836f65feaafc3c",
+              "reason": "Manager-authorized port34: exact frozen batch4/5 acceptance,316 diagnostic bindings, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port34-evidence",
+              "releaseBeforeSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "previousRequirement": "ff89147e0b0f339acfe86b7077def3c0656bbc218e50742810836f65feaafc3c",
+              "releaseAfterSha256": "bf927cf61d77173f88ace2b8b938ff9ad4c0266636acff56dc079d60ae8190d9",
+              "reason": "Manager-authorized port34: exact frozen batch4/5 acceptance,316 diagnostic bindings, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port34-entry-size",
+              "releaseBeforeSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "previousRequirement": "bf927cf61d77173f88ace2b8b938ff9ad4c0266636acff56dc079d60ae8190d9",
+              "releaseAfterSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+              "reason": "Manager-authorized port34: exact frozen batch4/5 acceptance,316 diagnostic bindings, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            }
+          ]
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "beforeSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+          "previousRequirement": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+          "afterSha256": "50da9217d2703feabc6a010d7ce798a243691f51d959db7870c43e623a61bb02"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port35-evidence",
+      "priorFixtureSha256": "a117fc4131170e256ffbef657071c66f7d9ed0fd87aec3c698eade57079880db",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "capturedMainSha256": "034f6f69da950feca9e3c4fd928eeffb3b1a7d2069a6e2611b87da6d3df95635",
+          "mainAcceptedSha256": "100dababa898bd80133914633832da65537e0cfc38464d6e5b95d7318d42ad3b",
+          "releaseEntrySha256": "4080f4b98a7888897bd6b9609878294bbc35c7544e770e5e787e7e7447340c86",
+          "requiredReleaseSha256": "50da9217d2703feabc6a010d7ce798a243691f51d959db7870c43e623a61bb02",
+          "reason": "Manager-authorized port35: exact frozen batch6 acceptance,8 planning-only bindings and pediatric admission, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-09",
+              "milestone": "release-port25-cloud-conflict",
+              "releaseBeforeSha256": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+              "previousRequirement": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+              "releaseAfterSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "reason": "Mechanical exact digest propagation for three authorized port25 cloud-source changes; guard assertions, unrelated protected sources and immutable captures remain intact."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port26-memory-rerelease",
+              "releaseBeforeSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "previousRequirement": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "releaseAfterSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "reason": "Mechanical exact guard digest propagation after merging89a52452 CI authorizations with preserved port25 cloud authorizations; unrelated pins, captures and guard logic remain exact."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port27-nonretryable-client",
+              "releaseBeforeSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "previousRequirement": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "releaseAfterSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "reason": "Mechanical exact guard digest propagation after authorized port27 transport source/test deltas; captures, assertions, unrelated pins and all earlier authorization history remain unchanged."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port28-port",
+              "releaseBeforeSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "previousRequirement": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "releaseAfterSha256": "c49b1dc2de4c4cbe1909f77f569a306d6605a16e676c48d9bb15180147bb3477",
+              "reason": "Manager-authorized port28 exact three-case acceptance or honestly regenerated native evidence; original captures,unrelated pins and prior authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port28-evidence",
+              "releaseBeforeSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "previousRequirement": "c49b1dc2de4c4cbe1909f77f569a306d6605a16e676c48d9bb15180147bb3477",
+              "releaseAfterSha256": "e70bf90f3f61412db5f65c3a5956bf5bfd8c70b35433cb3d906d708009ea653d",
+              "reason": "Manager-authorized port28 exact three-case acceptance or honestly regenerated native evidence; original captures,unrelated pins and prior authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port29-port",
+              "releaseBeforeSha256": "e70bf90f3f61412db5f65c3a5956bf5bfd8c70b35433cb3d906d708009ea653d",
+              "previousRequirement": "e70bf90f3f61412db5f65c3a5956bf5bfd8c70b35433cb3d906d708009ea653d",
+              "releaseAfterSha256": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "reason": "Manager-authorized port29 phone performance pass only: idle codec release, large-clinic observation and representation-exact transport allocation. No clinical/product rules changed; immutable captures, unrelated pins and all prior authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port30-port",
+              "releaseBeforeSha256": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "previousRequirement": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "releaseAfterSha256": "bdb25b52dbc3ef6ddf55034378cd830d4ba2c87b179c962dbbeeb3a1596129f9",
+              "reason": "Manager-authorized port30 founder/consult M1-M4 and round2 source changes, approved readiness predicate, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port30-evidence",
+              "releaseBeforeSha256": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "previousRequirement": "bdb25b52dbc3ef6ddf55034378cd830d4ba2c87b179c962dbbeeb3a1596129f9",
+              "releaseAfterSha256": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "reason": "Manager-authorized port30 founder/consult M1-M4 and round2 source changes, approved readiness predicate, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port31-port",
+              "releaseBeforeSha256": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "previousRequirement": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "releaseAfterSha256": "f6a6a935fc459036c5d58595fb61e6b0e0cc6c4c67aa633bb4ba4f5ff15995af",
+              "reason": "Manager-authorized port31 round3 chart history, exact accepted N4 content/runtime integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port31-evidence",
+              "releaseBeforeSha256": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "previousRequirement": "f6a6a935fc459036c5d58595fb61e6b0e0cc6c4c67aa633bb4ba4f5ff15995af",
+              "releaseAfterSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "reason": "Manager-authorized port31 round3 chart history, exact accepted N4 content/runtime integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-port",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "releaseAfterSha256": "51b9c55a9ca6f46621952253050bc8e70036c43f8af8730ccf0ee3dcdf4d113d",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-evidence",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "51b9c55a9ca6f46621952253050bc8e70036c43f8af8730ccf0ee3dcdf4d113d",
+              "releaseAfterSha256": "386d097c2981dc53402ab6a04726d4d1823242ac1fc56ae8392e7b06043d13d4",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-entry-size",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "386d097c2981dc53402ab6a04726d4d1823242ac1fc56ae8392e7b06043d13d4",
+              "releaseAfterSha256": "59cced5ad82dcab860b582c5cab4aebfa11d8005bd9624e0168c69ae8f5119f6",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-fixture-diagnostics",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "59cced5ad82dcab860b582c5cab4aebfa11d8005bd9624e0168c69ae8f5119f6",
+              "releaseAfterSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-retune",
+              "releaseBeforeSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "previousRequirement": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "releaseAfterSha256": "d1ec455ba48b525796a1bdbdf25262b5d106b8933fb331cbcd572e887ff0202c",
+              "reason": "Manager-authorized port32 follow-up: exact Level4 XP850-to790 correction and expectations, or honestly regenerated guarded native evidence. Other goals/costs/clinical inputs, all captures and previous authorizations remain strict. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-retune-expectations",
+              "releaseBeforeSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "previousRequirement": "d1ec455ba48b525796a1bdbdf25262b5d106b8933fb331cbcd572e887ff0202c",
+              "releaseAfterSha256": "cc9df57988887ecebe1d0911d2b3a9c0f44013acf47edae41384f3805f268534",
+              "reason": "Manager-authorized port32 follow-up: exact Level4 XP850-to790 correction and expectations, or honestly regenerated guarded native evidence. Other goals/costs/clinical inputs, all captures and previous authorizations remain strict. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-retune-evidence",
+              "releaseBeforeSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "previousRequirement": "cc9df57988887ecebe1d0911d2b3a9c0f44013acf47edae41384f3805f268534",
+              "releaseAfterSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "reason": "Manager-authorized port32 follow-up: exact Level4 XP850-to790 correction and expectations, or honestly regenerated guarded native evidence. Other goals/costs/clinical inputs, all captures and previous authorizations remain strict. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port33-port",
+              "releaseBeforeSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "previousRequirement": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "releaseAfterSha256": "db019859c2a61f97f6c6a471ed6dc646f0af9cf167349080e2f7ea11d08e299a",
+              "reason": "Manager-authorized port33: exact frozen batch3 acceptance, diagnostic tuple bindings, content-robust pacing, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port33-evidence",
+              "releaseBeforeSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "previousRequirement": "db019859c2a61f97f6c6a471ed6dc646f0af9cf167349080e2f7ea11d08e299a",
+              "releaseAfterSha256": "e60d20362ff9a2bc832ad397165e7faa07d1c549a21d817215c77c96c1421dfd",
+              "reason": "Manager-authorized port33: exact frozen batch3 acceptance, diagnostic tuple bindings, content-robust pacing, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port33-entry-size",
+              "releaseBeforeSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "previousRequirement": "e60d20362ff9a2bc832ad397165e7faa07d1c549a21d817215c77c96c1421dfd",
+              "releaseAfterSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "reason": "Manager-authorized port33: exact frozen batch3 acceptance, diagnostic tuple bindings, content-robust pacing, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port34-port",
+              "releaseBeforeSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "previousRequirement": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "releaseAfterSha256": "ff89147e0b0f339acfe86b7077def3c0656bbc218e50742810836f65feaafc3c",
+              "reason": "Manager-authorized port34: exact frozen batch4/5 acceptance,316 diagnostic bindings, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port34-evidence",
+              "releaseBeforeSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "previousRequirement": "ff89147e0b0f339acfe86b7077def3c0656bbc218e50742810836f65feaafc3c",
+              "releaseAfterSha256": "bf927cf61d77173f88ace2b8b938ff9ad4c0266636acff56dc079d60ae8190d9",
+              "reason": "Manager-authorized port34: exact frozen batch4/5 acceptance,316 diagnostic bindings, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port34-entry-size",
+              "releaseBeforeSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "previousRequirement": "bf927cf61d77173f88ace2b8b938ff9ad4c0266636acff56dc079d60ae8190d9",
+              "releaseAfterSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+              "reason": "Manager-authorized port34: exact frozen batch4/5 acceptance,316 diagnostic bindings, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port35-port",
+              "releaseBeforeSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+              "previousRequirement": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+              "releaseAfterSha256": "50da9217d2703feabc6a010d7ce798a243691f51d959db7870c43e623a61bb02",
+              "reason": "Manager-authorized port35: exact frozen batch6 acceptance,8 planning-only bindings and pediatric admission, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            }
+          ]
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "beforeSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+          "previousRequirement": "50da9217d2703feabc6a010d7ce798a243691f51d959db7870c43e623a61bb02",
+          "afterSha256": "5b22325e6164837f09046dcf9142ca4366b4f604b38a5cf1f66d638cfbbb4e47"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port35-entry-size",
+      "priorFixtureSha256": "85f765bcdbdac580762b41ce47398d179868ee404ff5f82eed80e7918db8cfac",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "capturedMainSha256": "034f6f69da950feca9e3c4fd928eeffb3b1a7d2069a6e2611b87da6d3df95635",
+          "mainAcceptedSha256": "100dababa898bd80133914633832da65537e0cfc38464d6e5b95d7318d42ad3b",
+          "releaseEntrySha256": "4080f4b98a7888897bd6b9609878294bbc35c7544e770e5e787e7e7447340c86",
+          "requiredReleaseSha256": "5b22325e6164837f09046dcf9142ca4366b4f604b38a5cf1f66d638cfbbb4e47",
+          "reason": "Manager-authorized port35: exact frozen batch6 acceptance,8 planning-only bindings and pediatric admission, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-09",
+              "milestone": "release-port25-cloud-conflict",
+              "releaseBeforeSha256": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+              "previousRequirement": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+              "releaseAfterSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "reason": "Mechanical exact digest propagation for three authorized port25 cloud-source changes; guard assertions, unrelated protected sources and immutable captures remain intact."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port26-memory-rerelease",
+              "releaseBeforeSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "previousRequirement": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "releaseAfterSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "reason": "Mechanical exact guard digest propagation after merging89a52452 CI authorizations with preserved port25 cloud authorizations; unrelated pins, captures and guard logic remain exact."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port27-nonretryable-client",
+              "releaseBeforeSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "previousRequirement": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "releaseAfterSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "reason": "Mechanical exact guard digest propagation after authorized port27 transport source/test deltas; captures, assertions, unrelated pins and all earlier authorization history remain unchanged."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port28-port",
+              "releaseBeforeSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "previousRequirement": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "releaseAfterSha256": "c49b1dc2de4c4cbe1909f77f569a306d6605a16e676c48d9bb15180147bb3477",
+              "reason": "Manager-authorized port28 exact three-case acceptance or honestly regenerated native evidence; original captures,unrelated pins and prior authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port28-evidence",
+              "releaseBeforeSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "previousRequirement": "c49b1dc2de4c4cbe1909f77f569a306d6605a16e676c48d9bb15180147bb3477",
+              "releaseAfterSha256": "e70bf90f3f61412db5f65c3a5956bf5bfd8c70b35433cb3d906d708009ea653d",
+              "reason": "Manager-authorized port28 exact three-case acceptance or honestly regenerated native evidence; original captures,unrelated pins and prior authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port29-port",
+              "releaseBeforeSha256": "e70bf90f3f61412db5f65c3a5956bf5bfd8c70b35433cb3d906d708009ea653d",
+              "previousRequirement": "e70bf90f3f61412db5f65c3a5956bf5bfd8c70b35433cb3d906d708009ea653d",
+              "releaseAfterSha256": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "reason": "Manager-authorized port29 phone performance pass only: idle codec release, large-clinic observation and representation-exact transport allocation. No clinical/product rules changed; immutable captures, unrelated pins and all prior authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port30-port",
+              "releaseBeforeSha256": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "previousRequirement": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "releaseAfterSha256": "bdb25b52dbc3ef6ddf55034378cd830d4ba2c87b179c962dbbeeb3a1596129f9",
+              "reason": "Manager-authorized port30 founder/consult M1-M4 and round2 source changes, approved readiness predicate, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port30-evidence",
+              "releaseBeforeSha256": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "previousRequirement": "bdb25b52dbc3ef6ddf55034378cd830d4ba2c87b179c962dbbeeb3a1596129f9",
+              "releaseAfterSha256": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "reason": "Manager-authorized port30 founder/consult M1-M4 and round2 source changes, approved readiness predicate, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port31-port",
+              "releaseBeforeSha256": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "previousRequirement": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "releaseAfterSha256": "f6a6a935fc459036c5d58595fb61e6b0e0cc6c4c67aa633bb4ba4f5ff15995af",
+              "reason": "Manager-authorized port31 round3 chart history, exact accepted N4 content/runtime integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port31-evidence",
+              "releaseBeforeSha256": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "previousRequirement": "f6a6a935fc459036c5d58595fb61e6b0e0cc6c4c67aa633bb4ba4f5ff15995af",
+              "releaseAfterSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "reason": "Manager-authorized port31 round3 chart history, exact accepted N4 content/runtime integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-port",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "releaseAfterSha256": "51b9c55a9ca6f46621952253050bc8e70036c43f8af8730ccf0ee3dcdf4d113d",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-evidence",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "51b9c55a9ca6f46621952253050bc8e70036c43f8af8730ccf0ee3dcdf4d113d",
+              "releaseAfterSha256": "386d097c2981dc53402ab6a04726d4d1823242ac1fc56ae8392e7b06043d13d4",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-entry-size",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "386d097c2981dc53402ab6a04726d4d1823242ac1fc56ae8392e7b06043d13d4",
+              "releaseAfterSha256": "59cced5ad82dcab860b582c5cab4aebfa11d8005bd9624e0168c69ae8f5119f6",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-fixture-diagnostics",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "59cced5ad82dcab860b582c5cab4aebfa11d8005bd9624e0168c69ae8f5119f6",
+              "releaseAfterSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-retune",
+              "releaseBeforeSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "previousRequirement": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "releaseAfterSha256": "d1ec455ba48b525796a1bdbdf25262b5d106b8933fb331cbcd572e887ff0202c",
+              "reason": "Manager-authorized port32 follow-up: exact Level4 XP850-to790 correction and expectations, or honestly regenerated guarded native evidence. Other goals/costs/clinical inputs, all captures and previous authorizations remain strict. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-retune-expectations",
+              "releaseBeforeSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "previousRequirement": "d1ec455ba48b525796a1bdbdf25262b5d106b8933fb331cbcd572e887ff0202c",
+              "releaseAfterSha256": "cc9df57988887ecebe1d0911d2b3a9c0f44013acf47edae41384f3805f268534",
+              "reason": "Manager-authorized port32 follow-up: exact Level4 XP850-to790 correction and expectations, or honestly regenerated guarded native evidence. Other goals/costs/clinical inputs, all captures and previous authorizations remain strict. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-retune-evidence",
+              "releaseBeforeSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "previousRequirement": "cc9df57988887ecebe1d0911d2b3a9c0f44013acf47edae41384f3805f268534",
+              "releaseAfterSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "reason": "Manager-authorized port32 follow-up: exact Level4 XP850-to790 correction and expectations, or honestly regenerated guarded native evidence. Other goals/costs/clinical inputs, all captures and previous authorizations remain strict. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port33-port",
+              "releaseBeforeSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "previousRequirement": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "releaseAfterSha256": "db019859c2a61f97f6c6a471ed6dc646f0af9cf167349080e2f7ea11d08e299a",
+              "reason": "Manager-authorized port33: exact frozen batch3 acceptance, diagnostic tuple bindings, content-robust pacing, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port33-evidence",
+              "releaseBeforeSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "previousRequirement": "db019859c2a61f97f6c6a471ed6dc646f0af9cf167349080e2f7ea11d08e299a",
+              "releaseAfterSha256": "e60d20362ff9a2bc832ad397165e7faa07d1c549a21d817215c77c96c1421dfd",
+              "reason": "Manager-authorized port33: exact frozen batch3 acceptance, diagnostic tuple bindings, content-robust pacing, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port33-entry-size",
+              "releaseBeforeSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "previousRequirement": "e60d20362ff9a2bc832ad397165e7faa07d1c549a21d817215c77c96c1421dfd",
+              "releaseAfterSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "reason": "Manager-authorized port33: exact frozen batch3 acceptance, diagnostic tuple bindings, content-robust pacing, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port34-port",
+              "releaseBeforeSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "previousRequirement": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "releaseAfterSha256": "ff89147e0b0f339acfe86b7077def3c0656bbc218e50742810836f65feaafc3c",
+              "reason": "Manager-authorized port34: exact frozen batch4/5 acceptance,316 diagnostic bindings, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port34-evidence",
+              "releaseBeforeSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "previousRequirement": "ff89147e0b0f339acfe86b7077def3c0656bbc218e50742810836f65feaafc3c",
+              "releaseAfterSha256": "bf927cf61d77173f88ace2b8b938ff9ad4c0266636acff56dc079d60ae8190d9",
+              "reason": "Manager-authorized port34: exact frozen batch4/5 acceptance,316 diagnostic bindings, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port34-entry-size",
+              "releaseBeforeSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "previousRequirement": "bf927cf61d77173f88ace2b8b938ff9ad4c0266636acff56dc079d60ae8190d9",
+              "releaseAfterSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+              "reason": "Manager-authorized port34: exact frozen batch4/5 acceptance,316 diagnostic bindings, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port35-port",
+              "releaseBeforeSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+              "previousRequirement": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+              "releaseAfterSha256": "50da9217d2703feabc6a010d7ce798a243691f51d959db7870c43e623a61bb02",
+              "reason": "Manager-authorized port35: exact frozen batch6 acceptance,8 planning-only bindings and pediatric admission, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port35-evidence",
+              "releaseBeforeSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+              "previousRequirement": "50da9217d2703feabc6a010d7ce798a243691f51d959db7870c43e623a61bb02",
+              "releaseAfterSha256": "5b22325e6164837f09046dcf9142ca4366b4f604b38a5cf1f66d638cfbbb4e47",
+              "reason": "Manager-authorized port35: exact frozen batch6 acceptance,8 planning-only bindings and pediatric admission, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            }
+          ]
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "beforeSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+          "previousRequirement": "5b22325e6164837f09046dcf9142ca4366b4f604b38a5cf1f66d638cfbbb4e47",
+          "afterSha256": "d7eaac545b7b70dd98ce17e7e66d4a8f9ca8d8e7e792557dbbb36a48b0e50d63"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port35-ci-timing-98c1bf38",
+      "priorFixtureSha256": "830f3b2f8e9a15789bafbe0db95963fa8e5aa7291118458c7897cb1b166a9a9c",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "capturedMainSha256": "034f6f69da950feca9e3c4fd928eeffb3b1a7d2069a6e2611b87da6d3df95635",
+          "mainAcceptedSha256": "100dababa898bd80133914633832da65537e0cfc38464d6e5b95d7318d42ad3b",
+          "releaseEntrySha256": "4080f4b98a7888897bd6b9609878294bbc35c7544e770e5e787e7e7447340c86",
+          "requiredReleaseSha256": "d7eaac545b7b70dd98ce17e7e66d4a8f9ca8d8e7e792557dbbb36a48b0e50d63",
+          "reason": "Manager-authorized port35: exact frozen batch6 acceptance,8 planning-only bindings and pediatric admission, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict.",
+          "authorizedDeltas": [
+            {
+              "on": "2026-11-09",
+              "milestone": "release-port25-cloud-conflict",
+              "releaseBeforeSha256": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+              "previousRequirement": "eec467ca190404e7f8d7bb53f17ad92cba14eeb4f8178d04b7b9f4928af843e4",
+              "releaseAfterSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "reason": "Mechanical exact digest propagation for three authorized port25 cloud-source changes; guard assertions, unrelated protected sources and immutable captures remain intact."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port26-memory-rerelease",
+              "releaseBeforeSha256": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "previousRequirement": "1916fd67f7e42197c23b12b5e82a9ff4aae0fe026ed0492d690f5e5882a0cbbc",
+              "releaseAfterSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "reason": "Mechanical exact guard digest propagation after merging89a52452 CI authorizations with preserved port25 cloud authorizations; unrelated pins, captures and guard logic remain exact."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port27-nonretryable-client",
+              "releaseBeforeSha256": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "previousRequirement": "d8beb6febd7736be919f87bf45e15b8da90c11ac917a85a90604fcf1acdc1833",
+              "releaseAfterSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "reason": "Mechanical exact guard digest propagation after authorized port27 transport source/test deltas; captures, assertions, unrelated pins and all earlier authorization history remain unchanged."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port28-port",
+              "releaseBeforeSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "previousRequirement": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "releaseAfterSha256": "c49b1dc2de4c4cbe1909f77f569a306d6605a16e676c48d9bb15180147bb3477",
+              "reason": "Manager-authorized port28 exact three-case acceptance or honestly regenerated native evidence; original captures,unrelated pins and prior authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port28-evidence",
+              "releaseBeforeSha256": "d818488991a992accefe6551098eeeedeff3e98bed2ba0399760c3482326bf31",
+              "previousRequirement": "c49b1dc2de4c4cbe1909f77f569a306d6605a16e676c48d9bb15180147bb3477",
+              "releaseAfterSha256": "e70bf90f3f61412db5f65c3a5956bf5bfd8c70b35433cb3d906d708009ea653d",
+              "reason": "Manager-authorized port28 exact three-case acceptance or honestly regenerated native evidence; original captures,unrelated pins and prior authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port29-port",
+              "releaseBeforeSha256": "e70bf90f3f61412db5f65c3a5956bf5bfd8c70b35433cb3d906d708009ea653d",
+              "previousRequirement": "e70bf90f3f61412db5f65c3a5956bf5bfd8c70b35433cb3d906d708009ea653d",
+              "releaseAfterSha256": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "reason": "Manager-authorized port29 phone performance pass only: idle codec release, large-clinic observation and representation-exact transport allocation. No clinical/product rules changed; immutable captures, unrelated pins and all prior authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port30-port",
+              "releaseBeforeSha256": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "previousRequirement": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "releaseAfterSha256": "bdb25b52dbc3ef6ddf55034378cd830d4ba2c87b179c962dbbeeb3a1596129f9",
+              "reason": "Manager-authorized port30 founder/consult M1-M4 and round2 source changes, approved readiness predicate, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port30-evidence",
+              "releaseBeforeSha256": "ce92ed7023586796f30aadece3cecd75d09d70801d7fdda35a1c1ea8de49fb8a",
+              "previousRequirement": "bdb25b52dbc3ef6ddf55034378cd830d4ba2c87b179c962dbbeeb3a1596129f9",
+              "releaseAfterSha256": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "reason": "Manager-authorized port30 founder/consult M1-M4 and round2 source changes, approved readiness predicate, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port31-port",
+              "releaseBeforeSha256": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "previousRequirement": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "releaseAfterSha256": "f6a6a935fc459036c5d58595fb61e6b0e0cc6c4c67aa633bb4ba4f5ff15995af",
+              "reason": "Manager-authorized port31 round3 chart history, exact accepted N4 content/runtime integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-10",
+              "milestone": "release-port31-evidence",
+              "releaseBeforeSha256": "bd9be8bdf0d5de4c27ec1410c35fd2a7ffac056d1b5ac253652c2491047973f8",
+              "previousRequirement": "f6a6a935fc459036c5d58595fb61e6b0e0cc6c4c67aa633bb4ba4f5ff15995af",
+              "releaseAfterSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "reason": "Manager-authorized port31 round3 chart history, exact accepted N4 content/runtime integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-port",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "releaseAfterSha256": "51b9c55a9ca6f46621952253050bc8e70036c43f8af8730ccf0ee3dcdf4d113d",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-evidence",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "51b9c55a9ca6f46621952253050bc8e70036c43f8af8730ccf0ee3dcdf4d113d",
+              "releaseAfterSha256": "386d097c2981dc53402ab6a04726d4d1823242ac1fc56ae8392e7b06043d13d4",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-entry-size",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "386d097c2981dc53402ab6a04726d4d1823242ac1fc56ae8392e7b06043d13d4",
+              "releaseAfterSha256": "59cced5ad82dcab860b582c5cab4aebfa11d8005bd9624e0168c69ae8f5119f6",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-fixture-diagnostics",
+              "releaseBeforeSha256": "80a991de626026080fe8ad198465e3f257474eb3bcdfeefc6d2d6cadc388fee5",
+              "previousRequirement": "59cced5ad82dcab860b582c5cab4aebfa11d8005bd9624e0168c69ae8f5119f6",
+              "releaseAfterSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "reason": "Manager-authorized port32 frozen topic batches1/2, exact deferred diagnostic bindings, accepted late-game cost/pacing compatibility, strict source guard integration, or honestly regenerated native evidence. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-retune",
+              "releaseBeforeSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "previousRequirement": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "releaseAfterSha256": "d1ec455ba48b525796a1bdbdf25262b5d106b8933fb331cbcd572e887ff0202c",
+              "reason": "Manager-authorized port32 follow-up: exact Level4 XP850-to790 correction and expectations, or honestly regenerated guarded native evidence. Other goals/costs/clinical inputs, all captures and previous authorizations remain strict. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-retune-expectations",
+              "releaseBeforeSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "previousRequirement": "d1ec455ba48b525796a1bdbdf25262b5d106b8933fb331cbcd572e887ff0202c",
+              "releaseAfterSha256": "cc9df57988887ecebe1d0911d2b3a9c0f44013acf47edae41384f3805f268534",
+              "reason": "Manager-authorized port32 follow-up: exact Level4 XP850-to790 correction and expectations, or honestly regenerated guarded native evidence. Other goals/costs/clinical inputs, all captures and previous authorizations remain strict. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port32-retune-evidence",
+              "releaseBeforeSha256": "85207906bd9bc7c5c15e31c5d8e1b4bd142694e4e7c586e603964a64584d0973",
+              "previousRequirement": "cc9df57988887ecebe1d0911d2b3a9c0f44013acf47edae41384f3805f268534",
+              "releaseAfterSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "reason": "Manager-authorized port32 follow-up: exact Level4 XP850-to790 correction and expectations, or honestly regenerated guarded native evidence. Other goals/costs/clinical inputs, all captures and previous authorizations remain strict. Original captures/preimages, unrelated pins, required absences and all earlier authorizations retained."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port33-port",
+              "releaseBeforeSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "previousRequirement": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "releaseAfterSha256": "db019859c2a61f97f6c6a471ed6dc646f0af9cf167349080e2f7ea11d08e299a",
+              "reason": "Manager-authorized port33: exact frozen batch3 acceptance, diagnostic tuple bindings, content-robust pacing, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port33-evidence",
+              "releaseBeforeSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "previousRequirement": "db019859c2a61f97f6c6a471ed6dc646f0af9cf167349080e2f7ea11d08e299a",
+              "releaseAfterSha256": "e60d20362ff9a2bc832ad397165e7faa07d1c549a21d817215c77c96c1421dfd",
+              "reason": "Manager-authorized port33: exact frozen batch3 acceptance, diagnostic tuple bindings, content-robust pacing, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-11",
+              "milestone": "release-port33-entry-size",
+              "releaseBeforeSha256": "75c0b8c0703fc3473a3c586ba74e077c8d68761c3ff732c144889b5741586c93",
+              "previousRequirement": "e60d20362ff9a2bc832ad397165e7faa07d1c549a21d817215c77c96c1421dfd",
+              "releaseAfterSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "reason": "Manager-authorized port33: exact frozen batch3 acceptance, diagnostic tuple bindings, content-robust pacing, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port34-port",
+              "releaseBeforeSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "previousRequirement": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "releaseAfterSha256": "ff89147e0b0f339acfe86b7077def3c0656bbc218e50742810836f65feaafc3c",
+              "reason": "Manager-authorized port34: exact frozen batch4/5 acceptance,316 diagnostic bindings, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port34-evidence",
+              "releaseBeforeSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "previousRequirement": "ff89147e0b0f339acfe86b7077def3c0656bbc218e50742810836f65feaafc3c",
+              "releaseAfterSha256": "bf927cf61d77173f88ace2b8b938ff9ad4c0266636acff56dc079d60ae8190d9",
+              "reason": "Manager-authorized port34: exact frozen batch4/5 acceptance,316 diagnostic bindings, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port34-entry-size",
+              "releaseBeforeSha256": "76bc73a1ae1484d8074f2f9a92b1988e75447de5640d9ba4998cbd492282a7a3",
+              "previousRequirement": "bf927cf61d77173f88ace2b8b938ff9ad4c0266636acff56dc079d60ae8190d9",
+              "releaseAfterSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+              "reason": "Manager-authorized port34: exact frozen batch4/5 acceptance,316 diagnostic bindings, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port35-port",
+              "releaseBeforeSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+              "previousRequirement": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+              "releaseAfterSha256": "50da9217d2703feabc6a010d7ce798a243691f51d959db7870c43e623a61bb02",
+              "reason": "Manager-authorized port35: exact frozen batch6 acceptance,8 planning-only bindings and pediatric admission, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port35-evidence",
+              "releaseBeforeSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+              "previousRequirement": "50da9217d2703feabc6a010d7ce798a243691f51d959db7870c43e623a61bb02",
+              "releaseAfterSha256": "5b22325e6164837f09046dcf9142ca4366b4f604b38a5cf1f66d638cfbbb4e47",
+              "reason": "Manager-authorized port35: exact frozen batch6 acceptance,8 planning-only bindings and pediatric admission, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            },
+            {
+              "on": "2026-11-12",
+              "milestone": "release-port35-entry-size",
+              "releaseBeforeSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+              "previousRequirement": "5b22325e6164837f09046dcf9142ca4366b4f604b38a5cf1f66d638cfbbb4e47",
+              "releaseAfterSha256": "d7eaac545b7b70dd98ce17e7e66d4a8f9ca8d8e7e792557dbbb36a48b0e50d63",
+              "reason": "Manager-authorized port35: exact frozen batch6 acceptance,8 planning-only bindings and pediatric admission, accepted test-only codec/management repairs, or honestly regenerated native evidence and exact test expectations. Immutable captures, unrelated pins, required absences and every earlier authorization remain strict."
+            }
+          ]
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "beforeSha256": "c2fc7a38d6b4f70971129840abc7087cae7f463da9209b9b1b122955f29d4383",
+          "previousRequirement": "d7eaac545b7b70dd98ce17e7e66d4a8f9ca8d8e7e792557dbbb36a48b0e50d63",
+          "afterSha256": "b1629390802297b2a19c511c757d26050afa542d535fde129028538dffe46031"
         }
       ]
     }

@@ -1,3 +1,4 @@
+import {QUESTION_PROGRAM_BATCH6_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch6Concepts} from "./question-program-batch6-accepted-20261112";
 import {QUESTION_PROGRAM_BATCH5_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch5Concepts} from "./question-program-batch5-accepted-20261111";
 import {QUESTION_PROGRAM_BATCH4_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch4Concepts} from "./question-program-batch4-accepted-20261111";
 import {QUESTION_PROGRAM_BATCH3_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch3Concepts} from "./question-program-batch3-accepted-20261111";
@@ -30,8 +31,8 @@ import { withAcceptedQuestionNewN3Round2Concepts } from "./question-new-n3-round
 const n3Catalog = withAcceptedQuestionNewN3Round2Concepts(completeCatalog,authoringCatalog.concepts);
 const priorCatalog = withAcceptedQuestionFlags3Concepts(withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionStats1Concepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(n3Catalog)))));
 const batch2Catalog = withAcceptedQuestionProgramBatch2Concepts(withAcceptedQuestionProgramBatch1Concepts(withAcceptedQuestionN4Concepts(withAcceptedHarden1N3r4Concepts(priorCatalog))));
-const catalog=withAcceptedQuestionProgramBatch5Concepts(withAcceptedQuestionProgramBatch4Concepts(withAcceptedQuestionProgramBatch3Concepts(batch2Catalog)));
-const views = {...QUESTION_PROGRAM_BATCH5_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH4_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH3_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH2_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH1_ACCEPTED_SOURCE_VIEWS,...QUESTION_N4_ACCEPTED_SOURCE_VIEWS, "harden1-round1":harden1,"n3-round4":n3r4, "flags4-accepted":flags4,"stats1-accepted":stats1,"flags3-accepted":flags3, legacy, "flags-round3": flags, "batch2a-round3": batch2a, "n1-round3": n1, "n2-round2": n2, "batch2b-round2": batch2b, "flags2-round1": flags2, "flags2-round3":flags2round3, "n3-round3":n3 };
+const catalog=withAcceptedQuestionProgramBatch6Concepts(withAcceptedQuestionProgramBatch5Concepts(withAcceptedQuestionProgramBatch4Concepts(withAcceptedQuestionProgramBatch3Concepts(batch2Catalog))));
+const views = {...QUESTION_PROGRAM_BATCH6_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH5_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH4_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH3_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH2_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH1_ACCEPTED_SOURCE_VIEWS,...QUESTION_N4_ACCEPTED_SOURCE_VIEWS, "harden1-round1":harden1,"n3-round4":n3r4, "flags4-accepted":flags4,"stats1-accepted":stats1,"flags3-accepted":flags3, legacy, "flags-round3": flags, "batch2a-round3": batch2a, "n1-round3": n1, "n2-round2": n2, "batch2b-round2": batch2b, "flags2-round1": flags2, "flags2-round3":flags2round3, "n3-round3":n3 };
 const readReview = (name: string) => JSON.parse(readFileSync(new URL("../../../docs/research/" + name, import.meta.url), "utf8")) as Array<{id: string; verdict: string}>;
 
 describe("projection-only manager shipping manifest", () => {
@@ -41,7 +42,7 @@ describe("projection-only manager shipping manifest", () => {
   // Separate exact-version tests pin the sixteen 2b rows and the single G06
   // row; every earlier lane retains its exact acceptance checks below.
   expect(beforeFlags3AcceptanceManifest(manifest).accepted.filter(row => !["batch2b-round2", "flags2-round1", "flags2-round3", "n3-round3"].includes(row.sourceView))).toHaveLength(45);
-  expect(live.cases).toHaveLength(1338);
+  expect(live.cases).toHaveLength(1340);
   expect(catalog.cases).toHaveLength(1229);
  });
  it("ships exactly twelve N1 review-three acceptances and parks all twenty-eight returned drafts", () => {

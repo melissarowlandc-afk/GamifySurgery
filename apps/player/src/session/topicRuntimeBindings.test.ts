@@ -4,9 +4,12 @@ import {
   QUESTION_PROGRAM_BATCH3_ACCEPTED_TEST_ORDER_RECORDS,
   QUESTION_PROGRAM_BATCH4_ACCEPTED_TEST_ORDER_RECORDS,
   QUESTION_PROGRAM_BATCH5_ACCEPTED_TEST_ORDER_RECORDS,
+  QUESTION_PROGRAM_BATCH6_ACCEPTED_TEST_ORDER_RECORDS,
+  PEDIATRIC_CLINIC_FAMILY_CONTEXTS,
 } from "@gamify-surgery/clinical-content";
 import {
   PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, getAnswerChoiceServicePreview, serializeGameState,
+  createPatientPixelAppearance, createPediatricFamily,
 } from "@gamify-surgery/game-domain";
 import { describe, expect, it } from "vitest";
 import { createPrototypePlayerView } from "./viewModels";
@@ -17,6 +20,7 @@ const batches = [
   [3, QUESTION_PROGRAM_BATCH3_ACCEPTED_TEST_ORDER_RECORDS],
   [4, QUESTION_PROGRAM_BATCH4_ACCEPTED_TEST_ORDER_RECORDS],
   [5, QUESTION_PROGRAM_BATCH5_ACCEPTED_TEST_ORDER_RECORDS],
+  [6, QUESTION_PROGRAM_BATCH6_ACCEPTED_TEST_ORDER_RECORDS],
 ] as const;
 
 describe("accepted topic testing-choice wait labels", () => {
@@ -43,6 +47,13 @@ describe("accepted topic testing-choice wait labels", () => {
       }));
       state.facilityLevel = 5;
       state.encounters = { [encounter.id]: encounter };
+      if (clinicalCase.pediatricProfile) {
+        const family = PEDIATRIC_CLINIC_FAMILY_CONTEXTS.find(row => row.caseId === clinicalCase.id);
+        encounter.patientAppearance = createPatientPixelAppearance(state.campaignSeed, encounter.id, clinicalCase.prototypeDemographics);
+        if (family) encounter.patientAppearance.stillId = family.childStillId;
+        createPediatricFamily(state, encounter, "encounter", family ? {displayName: family.parentName,
+          sexLabel: family.parentRelationship === "mother" ? "Female" : "Male"} : undefined);
+      }
       state.openChartEncounterId = encounter.id;
       const before = serializeGameState(state);
       const chart = createPrototypePlayerView(state, encounter.id, false, null).chart!;

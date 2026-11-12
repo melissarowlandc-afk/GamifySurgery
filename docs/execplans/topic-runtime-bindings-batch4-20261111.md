@@ -130,3 +130,88 @@ The only runtime bound input changed by this lane is test-choice-orders.ts,
 SHA 70830c0fe17b00a8e712cff0e7bc09b0603830fa1fb2e96ddf6ce8bc0c81b205.
 No clinical edits, retune, rebind or commits. Marked handoff and scoped receipts
 complete this bounded milestone; manager owns review and release integration.
+
+## Batch 6 extension (2026-11-12)
+
+Manager approved wait previews for eight outside-record testing choices in the
+four-case pediatric salvage batch. Use all authored profiles unchanged: five
+biopsy, two advanced_diagnostic, one combined_diagnostic. The three affected
+runtime metadata rows become test_choices; the CDH readiness row stays no_test.
+All eight bindings remain not_executed/future_planned: no service order, result
+gate, pediatric procedure enactment or progression change.
+
+The reviewed accepted-data archive and question-topic sources remain immutable.
+Compose the runtime-only metadata correction in the existing batch 6 wrapper,
+whose exports already feed the timing registry and order-binding mechanism.
+Preserve full case/node/question/choice/label matching. Update only the batch 6
+clinical timing guard/projection helper to recognize the exact authorized delta
+against the packet, retaining frozen-source, unrelated-timing and mutation guards.
+Extend the domain and player matrices and test exact authored profile identities.
+
+Ownership: batch 6 runtime wrapper and timing guard/support, domain order registry
+and topic test, player topic label test; this plan, research Batch 6 appendix and
+marked current handoff. No clinical prose, question-topic files, captured data,
+durations, save format, balance, rebind, retune, Git, network, installs, agents,
+deploy or GS-release writes. Preserve all unrelated shared-tree edits.
+
+Validation: focused binding/inventory/clinical timing guards, chart labels,
+seven workspace typechecks, full domain with threads, actual content-pacing-check
+(band 20,421–24,959; compare with 22,821). Capture exact output and source hashes
+under .local-dev/topic-runtime-bindings-batch6-20261112/. Current default at intake:
+1,340 cases / 1,535 nodes / 1,039 registered / 844 scored meanings, clinical SHA
+4eef72623a1de415f302d7d44819b40a4749b523d18c325102ad35b5d0c5d2e7.
+Next: add the regression requirements, reproduce missing previews, install the
+runtime metadata/order records, validate and append the handoff.
+
+Batch 6 implementation complete: runtime wrapper installs the exact eight
+authored profiles and not_executed/future_planned records. It derives three
+test_choices rows while retaining the CDH row and every unlisted no_test choice.
+The captured accepted-data archive and clinical release hash stay unchanged.
+All 1,393 pre-existing testing quotes/decisions match; the eight newly timed
+choices have positive estimates (3 keyed / 5 distractors). Registry 1,410.
+
+TDD reproduced two requirement failures, then the new reload check exposed an
+adult-only unit fixture without a pediatric family/appearance. Corrected the
+fixture via existing factories, preserving strict save validation and adding
+identity/family reload assertions. Final focused domain/inventory 23/23 PASS
+(12.60s); clinical timing/frozen-source guards 8/8 PASS (7.86s); player chart
+matrix 6/6 PASS (8.84s). All seven typechecks pass, including after fixture edits.
+Full domain, full clinical and actual native pacing are running. Next action:
+classify their outputs against the batch 6 acceptance baseline, report pacing
+vs 22,821 without retuning, and complete marked handoffs/scoped hash checks.
+
+The full clinical run found three real admission failures after the metadata
+change: clinical-case-eligibility treated every timed option as enacted pediatric
+testing. Added ownership of that domain source, sharing the existing exact order
+lookup with a case-only signature. Permit only complete exact future_planned
+non-execution bindings; retain all service-request/result-gate/identity guards.
+No question-topic file edits. A new regression admits all three accepted cases
+through real commands and rejects stale labels, unbound variants and enacted
+service/result mutations. Final focused domain/inventory 24/24 PASS (13.80s),
+affected clinical 31/31 PASS (9.49s), seven typechecks PASS again. Before/after
+probes retain admission semantics for all eight choices. Restarted full domain,
+clinical, player labels and native pacing after the fix; initial results are
+superseded. Current sessions/receipts identify the final runs.
+
+Final native pacing PASS: first finish 22,747, -74 minutes vs 22,821; +57 /
++0.251212% vs 22,690. Closing 5,337,091 cents, 381 completions, 0 walkouts;
+clinical hash/counts unchanged. Final full clinical: 2,942 passed / 10 failed,
+220.95s, exact same ten failure titles as acceptance; the three new admission
+failures are resolved. Final chart-label matrix 6/6 PASS (10.26s). Full domain
+is the only remaining run. Finish its classification and exact handoff output,
+then audit scoped hashes without rebind or further runtime changes.
+
+Batch 6 complete. Final full domain: 216 passed / 2 failed files; 5,880 passed /
+27 failed / 1 skipped tests (743.96s). All 27 titles match the acceptance baseline
+(26 evidence/input/load hashes plus the historical census). No new runtime or
+collection failures. Final full clinical likewise matches its ten baseline
+titles; focused guards/admission 24/24 and 31/31, chart labels 6/6, seven
+typechecks and the actual pacing check pass. First finish 22,747, -74 vs 22,821.
+
+Retained-bound changes are test-choice-orders.ts and clinical-case-eligibility.ts;
+the batch 6 runtime wrapper is a changed dependency not yet in the retained
+inventory. Exact hashes and all scoped files are in the Batch 6 report/receipts.
+Question-topic files, captured cases/prose/authority, balance, durations and all
+captured evidence/results remain unchanged. Marked current-thread handoff closes
+this bounded task. Manager owns release review, source-pin authorization, binding
+and backup. No retune, rebind, Git, installs, network, agents or release writes.

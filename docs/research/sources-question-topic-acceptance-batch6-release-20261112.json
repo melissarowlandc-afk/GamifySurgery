@@ -1,0 +1,554 @@
+{
+  "checkedOn": "2026-11-12",
+  "immutableArchive": "tools/question-quality/fixtures/question-topic-acceptance-batch6-before-20261112.json",
+  "sha256": "e6dbd6bf5997bb82c8c4cf7b0d41ae0c02022df659106aaf5a1e23431d76488e",
+  "acceptedDataPath": "packages/clinical-content/src/question-program-batch6-accepted-data-20261112.ts",
+  "acceptedDataSha256": "0855b1ba9ecead9905e770765a644504556fb0e8f9309cd409d65223656c855f",
+  "policy": "Exact accepted claim/source exports from the frozen intake. Clinical review status is retained.",
+  "claims": [
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.node-inadequate-fna",
+      "statement": "An indeterminate needle sample does not settle persistent concerning pediatric lymphadenopathy; representative surgical biopsy may be needed.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.ipso-2022",
+        "source.pediatric-neck-thoracic-gu.rch-cervical-nodes-2021"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Surgical biopsy is supported when the clinical course remains concerning, not for every reactive node.",
+      "applicablePopulation": "Children or adolescents in the explicitly defined clinical scenario",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.progressive-node-assessment",
+      "statement": "A growing firm or supraclavicular cervical node merits pediatric specialist assessment even if another node has reassuring findings.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.rch-cervical-nodes-2021",
+        "source.pediatric-neck-thoracic-gu.ipso-2022"
+      ],
+      "evidenceCategory": "disposition",
+      "certainty": "moderate",
+      "limitation": "A red flag is not a diagnosis of malignancy.",
+      "applicablePopulation": "Children or adolescents in the explicitly defined clinical scenario",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.mediastinal-anesthesia-risk",
+      "statement": "A mediastinal mass can cause airway or cardiovascular compromise during general anesthesia or heavy sedation, requiring risk-aware biopsy planning.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.nci-child-nhl-pdq",
+        "source.pediatric-neck-thoracic-gu.ipso-2022"
+      ],
+      "evidenceCategory": "safety_boundary",
+      "certainty": "moderate",
+      "limitation": null,
+      "applicablePopulation": "Children or adolescents in the explicitly defined clinical scenario",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.mediastinal-peripheral-biopsy",
+      "statement": "A peripheral node can provide tissue under local anesthesia in an appropriately cooperative child with a mediastinal mass, avoiding a more hazardous intrathoracic approach.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.nci-child-nhl-pdq",
+        "source.pediatric-neck-thoracic-gu.ipso-2022"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Requires specialist planning, adequate tissue and patient cooperation; not a guarantee of safety or a rule against all general anesthesia.",
+      "applicablePopulation": "Children or adolescents in the explicitly defined clinical scenario",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.proximal-meatus-nonpalpable-gonads",
+      "statement": "Proximal hypospadias with nonpalpable gonads warrants chromosomal and endocrine assessment for a difference of sex development.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.cua-puc-2017"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "One dated society guideline; does not determine chromosomes from appearance or prescribe hormone therapy.",
+      "applicablePopulation": "Children or adolescents in the explicitly defined clinical scenario",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.xx-nonpalpable-adrenal-evaluation",
+      "statement": "A 46,XX result with bilateral nonpalpable gonads requires evaluation for an adrenal cause of genital virilization rather than assuming unseen gonads are testes.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.cua-puc-2017"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "CUA-PUC directly supports 17-hydroxyprogesterone testing in this setting. The proximal-meatus presentation also requires full multidisciplinary DSD care; chromosomes do not determine gender identity.",
+      "applicablePopulation": "Bilateral nonpalpable gonads with a 46,XX result",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cah-past-infancy-initial-screen",
+      "statement": "For symptomatic patients past infancy, baseline early-morning serum 17-hydroxyprogesterone by liquid chromatography-tandem mass spectrometry is the initial biochemical screen for 21-hydroxylase-deficient CAH.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.endocrine-cah-2018"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Direct recommendation 3.2. CUA-PUC independently supports testing in the gonadal context. No diagnostic cutoff or drug regimen authored.",
+      "applicablePopulation": "Symptomatic individuals past infancy",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cah-borderline-confirmation",
+      "statement": "A borderline 17-hydroxyprogesterone result requires specialist assessment with a stimulated adrenal steroid profile rather than treating the screen as a complete diagnosis.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.endocrine-cah-2018"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Direct recommendation 3.3. No stimulation dose, diagnostic concentration or treatment instruction.",
+      "applicablePopulation": "Individuals with borderline CAH screening results",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cdh-physiology",
+      "statement": "Pulmonary hypoplasia, pulmonary hypertension and cardiac dysfunction can drive the early instability of congenital diaphragmatic hernia.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.chandrasekharan-cdh-2017"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "moderate",
+      "limitation": "Older licensed review; supports qualitative physiology, not modern thresholds.",
+      "applicablePopulation": "Children or adolescents in the explicitly defined clinical scenario",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cdh-stabilization-before-repair",
+      "statement": "Initial cardiorespiratory stabilization precedes congenital diaphragmatic hernia repair.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.chandrasekharan-cdh-2017"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Only one directly verified source for the broad timing sequence. Current 2023 guideline access failed. Modern readiness criteria, ECLS policy and ventilation/drug targets remain unkeyed.",
+      "applicablePopulation": "Children or adolescents in the explicitly defined clinical scenario",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cdh-cahs-perfusion-readiness-2026",
+      "statement": "May 2026 CAHS CDH guidance considers repair after a day of adequate perfusion, including urine output above 1 mL/kg/hour, lactate below 3 mmol/L and age-appropriate blood pressure with no or minimal inotropic support.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.cahs-cdh-2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Local protocol, not universal clearance or an automatic timer. Respiratory and echocardiographic criteria also matter.",
+      "applicablePopulation": "Neonates with CDH in tertiary neonatal surgical care",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cdh-cahs-oxygen-readiness-2026",
+      "statement": "May 2026 CAHS readiness guidance uses preductal saturation in its stated 85-95 percent range on reduced inspired oxygen, with FiO2 below its published 0.4-0.5 range.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.cahs-cdh-2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Published FiO2 wording spans 0.4-0.5. Fictional FiO2 0.30 lies below both bounds; no ambiguous boundary is scored. Older search snippets excluded.",
+      "applicablePopulation": "Neonates with CDH in tertiary neonatal surgical care",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cdh-cahs-pressure-readiness-2026",
+      "statement": "Improvement of estimated pulmonary artery pressure to below systemic pressure is part of the May 2026 CAHS CDH readiness assessment.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.cahs-cdh-2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Sub-systemic does not require normal pulmonary pressure. Perfusion, respiratory support and multidisciplinary judgment remain necessary.",
+      "applicablePopulation": "Neonates with CDH in tertiary neonatal surgical care",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cdh-cahs-repair-support-2026",
+      "statement": "CDH repair can proceed with continuing ventilatory support after an appropriate physiological assessment; tracheal extubation is not a universal prerequisite.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.cahs-cdh-2026",
+        "source.pediatric-neck-thoracic-gu.chandrasekharan-cdh-2017"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Current local guidance plus an older independent review; no preferred approach or fixed day of life inferred.",
+      "applicablePopulation": "Neonates with CDH in tertiary neonatal surgical care",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.pediatric-neck-thoracic-gu.cdh-cahs-ecmo-consideration-2026",
+      "statement": "Instability despite maximal medical support in CDH can prompt multidisciplinary assessment for ECMO before determining the repair sequence.",
+      "sourceIds": [
+        "source.pediatric-neck-thoracic-gu.cahs-cdh-2026"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Individual suitability assessment required. No ECMO eligibility cutoffs, outcomes or operate-on-ECMO rule authored.",
+      "applicablePopulation": "Selected critically ill neonates with CDH",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    }
+  ],
+  "sources": [
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-neck-thoracic-gu.ipso-2022",
+      "title": "International Society of Paediatric Surgical Oncology Surgical Practice Guidelines",
+      "completeCitation": "Abib SCV, Chui CH, Cox S, et al. International Society of Paediatric Surgical Oncology (IPSO) Surgical Practice Guidelines. Ecancermedicalscience. 2022;16:1356. doi:10.3332/ecancer.2022.1356. Relevant chapter: Elgendy A, Abdelhafeez H, Abib S. Management of lymph node enlargement in children.",
+      "organizationOrJournal": "Ecancermedicalscience / IPSO",
+      "authors": [
+        "Simone de Campos Vieira Abib",
+        "Chan Hon Chui",
+        "Sharon Cox",
+        "Abdelhafeez H. Abdelhafeez",
+        "Ahmed Elgendy",
+        "IPSO guideline contributors (et al.)"
+      ],
+      "publicationYear": 2022,
+      "doi": "10.3332/ecancer.2022.1356",
+      "pmid": null,
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9023308/",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Underlying facts independently synthesized with attribution. No prose, excerpts, tables, figures, algorithms or patient images reproduced. No commercial or unrestricted reuse permission is inferred.",
+      "authorityAssessment": "Specialist society consensus, not a universal mandate to biopsy every palpable childhood node. Relevant lymph-node and mediastinal-biopsy sections checked.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.improving-nodes-observation",
+        "claim.pediatric-neck-thoracic-gu.progressive-node-assessment",
+        "claim.pediatric-neck-thoracic-gu.node-inadequate-fna",
+        "claim.pediatric-neck-thoracic-gu.mediastinal-anesthesia-risk",
+        "claim.pediatric-neck-thoracic-gu.mediastinal-peripheral-biopsy"
+      ],
+      "accessMethod": "permitted_public_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsFinding": "Primary page and available rights statement checked for this targeted factual use; no source corpus or model training. See exclusions for inaccessible or restricted routes.",
+      "termsUrl": null,
+      "medicalAuthority": "Specialist society consensus, not a universal mandate to biopsy every palpable childhood node. Relevant lymph-node and mediastinal-biopsy sections checked.",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-neck-thoracic-gu.rch-cervical-nodes-2021",
+      "title": "Cervical lymphadenopathy",
+      "completeCitation": "Royal Children's Hospital Melbourne, Paediatric Improvement Collaborative. Clinical Practice Guideline: Cervical lymphadenopathy. Updated April 2021. Accessed 11 November 2026.",
+      "organizationOrJournal": "Royal Children's Hospital Melbourne / Paediatric Improvement Collaborative",
+      "authors": [
+        "RCH Clinical Practice Guidelines team"
+      ],
+      "publicationYear": 2021,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.rch.org.au/clinicalguide/guideline_index/cervical_lymphadenopathy/",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "Copyright; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Underlying facts independently synthesized with attribution. No prose, excerpts, tables, figures, algorithms or patient images reproduced. No commercial or unrestricted reuse permission is inferred.",
+      "authorityAssessment": "Government pediatric clinical guidance. Supports phenotype-based observation, infection assessment and biopsy/drainage boundaries; antibiotic regimens are local and are not imported.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.improving-nodes-observation",
+        "claim.pediatric-neck-thoracic-gu.progressive-node-assessment",
+        "claim.pediatric-neck-thoracic-gu.node-inadequate-fna",
+        "claim.pediatric-neck-thoracic-gu.bacterial-node-abscess-drainage",
+        "claim.pediatric-neck-thoracic-gu.ntm-node-pattern",
+        "claim.pediatric-neck-thoracic-gu.ntm-excision-drainage"
+      ],
+      "accessMethod": "permitted_public_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsFinding": "Primary page and available rights statement checked for this targeted factual use; no source corpus or model training. See exclusions for inaccessible or restricted routes.",
+      "termsUrl": null,
+      "medicalAuthority": "Government pediatric clinical guidance. Supports phenotype-based observation, infection assessment and biopsy/drainage boundaries; antibiotic regimens are local and are not imported.",
+      "licenseUrl": null
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-neck-thoracic-gu.nci-child-nhl-pdq",
+      "title": "Childhood Non-Hodgkin Lymphoma Treatment (PDQ), health professional version",
+      "completeCitation": "PDQ Pediatric Treatment Editorial Board. Childhood Non-Hodgkin Lymphoma Treatment (PDQ), Health Professional Version. Bethesda, MD: National Cancer Institute. Continuously maintained summary; accessed 11 November 2026.",
+      "organizationOrJournal": "National Cancer Institute",
+      "authors": [
+        "PDQ Pediatric Treatment Editorial Board"
+      ],
+      "publicationYear": null,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.cancer.gov/types/lymphoma/hp/child-nhl-treatment-pdq",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "NCI information reuse policy; conditions and third-party exclusions apply",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Underlying facts independently synthesized with attribution. No prose, excerpts, tables, figures, algorithms or patient images reproduced. No commercial or unrestricted reuse permission is inferred.",
+      "authorityAssessment": "Federal peer-reviewed evidence summary. Targeted mediastinal-mass diagnostic safety only; no lymphoma chemotherapy or unsupported cancer diagnosis.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.mediastinal-anesthesia-risk",
+        "claim.pediatric-neck-thoracic-gu.mediastinal-peripheral-biopsy"
+      ],
+      "accessMethod": "permitted_public_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsFinding": "Primary page and available rights statement checked for this targeted factual use; no source corpus or model training. See exclusions for inaccessible or restricted routes.",
+      "termsUrl": "https://www.cancer.gov/policies/copyright-reuse",
+      "medicalAuthority": "Federal peer-reviewed evidence summary. Targeted mediastinal-mass diagnostic safety only; no lymphoma chemotherapy or unsupported cancer diagnosis.",
+      "licenseUrl": null
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-neck-thoracic-gu.cua-puc-2017",
+      "title": "CUA-PUC guideline for cryptorchidism",
+      "completeCitation": "Braga LH, Lorenzo AJ, Romao RLP. Canadian Urological Association-Pediatric Urologists of Canada (CUA-PUC) guideline for the diagnosis, management, and followup of cryptorchidism. Can Urol Assoc J. 2017;11(7):E251-E260. doi:10.5489/cuaj.4585.",
+      "organizationOrJournal": "Canadian Urological Association Journal",
+      "authors": [
+        "Luis H. Braga",
+        "Armando J. Lorenzo",
+        "Rodrigo L. P. Romao"
+      ],
+      "publicationYear": 2017,
+      "doi": "10.5489/cuaj.4585",
+      "pmid": null,
+      "officialUrl": "https://cuaj.ca/index.php/journal/article/view/4585",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Underlying facts independently synthesized with attribution. No prose, excerpts, tables, figures, algorithms or patient images reproduced. No commercial or unrestricted reuse permission is inferred.",
+      "authorityAssessment": "Evidence-graded society guideline, dated 2017. Specific examination, imaging, exploration and DSD recommendations verified in publisher PDF. Not described as a 2026 update.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.maintained-scrotal-position",
+        "claim.pediatric-neck-thoracic-gu.retractile-surveillance",
+        "claim.pediatric-neck-thoracic-gu.acquired-ascent",
+        "claim.pediatric-neck-thoracic-gu.testis-exam-imaging",
+        "claim.pediatric-neck-thoracic-gu.nonpalpable-exploration",
+        "claim.pediatric-neck-thoracic-gu.vas-vessels-enter-ring",
+        "claim.pediatric-neck-thoracic-gu.proximal-meatus-nonpalpable-gonads",
+        "claim.pediatric-neck-thoracic-gu.xx-nonpalpable-adrenal-evaluation"
+      ],
+      "accessMethod": "permitted_public_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsFinding": "Primary page and available rights statement checked for this targeted factual use; no source corpus or model training. See exclusions for inaccessible or restricted routes.",
+      "termsUrl": null,
+      "medicalAuthority": "Evidence-graded society guideline, dated 2017. Specific examination, imaging, exploration and DSD recommendations verified in publisher PDF. Not described as a 2026 update.",
+      "licenseUrl": null
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-neck-thoracic-gu.endocrine-cah-2018",
+      "title": "Endocrine Society CAH guideline: diagnostic recommendations",
+      "completeCitation": "Speiser PW, Arlt W, Auchus RJ, Baskin LS, Conway GS, Merke DP, Meyer-Bahlburg HFL, Miller WL, Murad MH, Oberfield SE, White PC. Congenital Adrenal Hyperplasia Due to Steroid 21-Hydroxylase Deficiency: An Endocrine Society Clinical Practice Guideline. 2018. doi:10.1210/jc.2018-01865. Official Endocrine Society guideline resource, 19 September 2018, recommendations 3.2-3.4.",
+      "organizationOrJournal": "Endocrine Society; The Journal of Clinical Endocrinology & Metabolism",
+      "authors": [
+        "Phyllis W. Speiser",
+        "Wiebke Arlt",
+        "Richard J. Auchus",
+        "Laurence S. Baskin",
+        "Gerard S. Conway",
+        "Deborah P. Merke",
+        "Heino F. L. Meyer-Bahlburg",
+        "Walter L. Miller",
+        "M. Hassan Murad",
+        "Sharon E. Oberfield",
+        "Perrin C. White"
+      ],
+      "publicationYear": 2018,
+      "doi": "10.1210/jc.2018-01865",
+      "pmid": null,
+      "officialUrl": "https://www.endocrine.org/clinical-practice-guidelines/congenital-adrenal-hyperplasia-guideline-resources",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Underlying facts independently synthesized with attribution. No source prose, excerpts, tables, algorithms, figures or illustrations stored or adapted. No open license inferred.",
+      "authorityAssessment": "Evidence-graded society recommendations directly visible on the official resource page. Dated 2018, not described as a 2026 update. Initial diagnostic screening past infancy and follow-up of borderline results verified; paired with CUA-PUC for the gonadal context.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.cah-past-infancy-initial-screen",
+        "claim.pediatric-neck-thoracic-gu.cah-borderline-confirmation"
+      ],
+      "accessMethod": "permitted_public_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsUrl": null,
+      "licenseUrl": null,
+      "medicalAuthority": "Evidence-graded society guideline, 2018; targeted verification of recommendations 3.2-3.3.",
+      "termsFinding": "Official society resource and visible recommendations inspected for targeted factual verification. Copyright retained; no text reproduced or open-license inference. The guessed /terms-of-use route was inaccessible and linked OUP full-article route failed. No AI-specific prohibition appeared in the accessed resource; inaccessible content and snippets were not evidence."
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-neck-thoracic-gu.chandrasekharan-cdh-2017",
+      "title": "Congenital Diaphragmatic hernia ? a review",
+      "completeCitation": "Chandrasekharan PK, Rawat M, Madappa R, Rothstein DH, Lakshminrusimha S. Congenital Diaphragmatic hernia ? a review. Matern Health Neonatol Perinatol. 2017;3:6. doi:10.1186/s40748-017-0045-1.",
+      "organizationOrJournal": "Maternal Health, Neonatology and Perinatology",
+      "authors": [
+        "Praveen Kumar Chandrasekharan",
+        "Munmun Rawat",
+        "Rajeshwari Madappa",
+        "David H. Rothstein",
+        "Satyan Lakshminrusimha"
+      ],
+      "publicationYear": 2017,
+      "doi": "10.1186/s40748-017-0045-1",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1186/s40748-017-0045-1",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "Creative Commons Attribution 4.0; separately credited images excluded",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Underlying facts independently synthesized with attribution. No prose, excerpts, tables, figures, algorithms or patient images reproduced. No commercial or unrestricted reuse permission is inferred.",
+      "authorityAssessment": "Older review supporting broad stabilization-before-repair sequence. Not used for modern ECLS thresholds, ventilation targets, drug rules or exact readiness cutoffs.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.cdh-physiology",
+        "claim.pediatric-neck-thoracic-gu.cdh-stabilization-before-repair",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-repair-support-2026"
+      ],
+      "accessMethod": "permitted_public_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsFinding": "Primary page and available rights statement checked for this targeted factual use; no source corpus or model training. See exclusions for inaccessible or restricted routes.",
+      "termsUrl": null,
+      "medicalAuthority": "Older review supporting broad stabilization-before-repair sequence. Not used for modern ECLS thresholds, ventilation targets, drug rules or exact readiness cutoffs.",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "contentVersion": "clinical.question-topic-pediatric-neck-thoracic-gu.2026-11-11.v2",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.pediatric-neck-thoracic-gu.cahs-cdh-2026",
+      "title": "CAHS neonatal CDH guideline, May 2026",
+      "completeCitation": "Child and Adolescent Health Service, Neonatology. Congenital Diaphragmatic Hernia (CDH). Government of Western Australia. First issued June 2006; last reviewed May 2026; approved 26 May 2026; next review May 2029. Surgical Considerations, pp. 9-10. Official guideline URL.",
+      "organizationOrJournal": "Child and Adolescent Health Service, Government of Western Australia",
+      "authors": [
+        "Child and Adolescent Health Service Neonatology; Neonatology Coordinating Group"
+      ],
+      "publicationYear": 2026,
+      "doi": null,
+      "pmid": null,
+      "officialUrl": "https://www.cahs.health.wa.gov.au/-/media/HSPs/CAHS/Documents/Health-Professionals/Neonatology-guidelines/Congenital-Diaphragmatic-Hernia-CDH.pdf",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "Copyright; targeted factual verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Underlying facts independently synthesized with attribution. No source prose, excerpts, tables, algorithms, figures or illustrations stored or adapted. No open license inferred.",
+      "authorityAssessment": "Current local government neonatal guideline, last reviewed May 2026. Its readiness criteria and multidisciplinary judgment were directly verified in the current 15-page PDF. Not a universal operative deadline; older 13-page search snippets differ.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-perfusion-readiness-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-oxygen-readiness-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-pressure-readiness-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-repair-support-2026",
+        "claim.pediatric-neck-thoracic-gu.cdh-cahs-ecmo-consideration-2026"
+      ],
+      "accessMethod": "permitted_public_targeted_read",
+      "rightsCheckedOn": "2026-11-11",
+      "termsUrl": null,
+      "licenseUrl": null,
+      "medicalAuthority": "Current local government neonatal guideline, May 2026. Local protocol applicability requires clinical review.",
+      "termsFinding": "Public government PDF and visible notices inspected; no AI-specific prohibition encountered in the accessed document. No reuse license inferred. Guessed Global copyright/terms/disclaimer routes were inaccessible. Restricted to short original factual synthesis under repository permission for government guidance; no text reproduction or corpus ingestion."
+    }
+  ],
+  "frozenLedgerBindings": [
+    {
+      "path": "docs/research/sources-question-topic-pediatric-neck-thoracic-gu-20261111.json",
+      "sha256": "90b58544791bce0a1aaa510116e0a751aed350faa3f690719099be0af98e225c"
+    }
+  ]
+}

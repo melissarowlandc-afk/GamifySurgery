@@ -1,0 +1,190 @@
+{
+  "checkedOn": "2026-11-12",
+  "selected": [
+    {
+      "topic": "pediatric-neck-thoracic-gu",
+      "salvage": true,
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+      "rawCaseSha256": "85e8f9a7990c75623c8f0404945a4a89b27075cd13cad0e4c41a6a736eedcdf7",
+      "runtime": {
+        "setting": "clinic",
+        "issue": null,
+        "receipt": {
+          "operationId": "topic6.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicAdmissible": true,
+        "proposedTimingsInstalledForProbe": true,
+        "proposedFamiliesInstalledForProbe": true,
+        "childStillId": "level3-roster-v2.030",
+        "parentName": "Sarah Ellis"
+      }
+    },
+    {
+      "topic": "pediatric-neck-thoracic-gu",
+      "salvage": true,
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "rawCaseSha256": "b316588fbed2436e00fe16c285d1d75e31df26f166fd828fce228486936ddae5",
+      "runtime": {
+        "setting": "clinic",
+        "issue": null,
+        "receipt": {
+          "operationId": "topic6.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicAdmissible": true,
+        "proposedTimingsInstalledForProbe": true,
+        "proposedFamiliesInstalledForProbe": true,
+        "childStillId": "level3-roster-v2.027",
+        "parentName": "James Turner"
+      }
+    },
+    {
+      "topic": "pediatric-neck-thoracic-gu",
+      "salvage": true,
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "rawCaseSha256": "a49e762de3581c9ecb9fe5b94cf76e27747bfe3e50342d92620fee5746ec19db",
+      "runtime": {
+        "setting": "clinic",
+        "issue": null,
+        "receipt": {
+          "operationId": "topic6.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicAdmissible": true,
+        "proposedTimingsInstalledForProbe": true,
+        "proposedFamiliesInstalledForProbe": true,
+        "childStillId": "level3-roster-v2.022",
+        "parentName": "Daniel Wells"
+      }
+    },
+    {
+      "topic": "pediatric-neck-thoracic-gu",
+      "salvage": true,
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+      "rawCaseSha256": "00390c84bbe70a132bff5facd7e612aec81836f5fbff9f91136db68ad32c18c1",
+      "runtime": {
+        "setting": "clinic",
+        "issue": null,
+        "receipt": {
+          "operationId": "topic6.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicAdmissible": true,
+        "proposedTimingsInstalledForProbe": true,
+        "proposedFamiliesInstalledForProbe": true,
+        "childStillId": "level3-roster-v2.021",
+        "parentName": "Mei Chen"
+      }
+    }
+  ],
+  "duplicates": [],
+  "retirements": [
+    {
+      "legacyCaseId": "case.pediatric-clinic.growing-firm-neck-node",
+      "primaryTargetCaseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+      "allTargetCaseIds": [
+        "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1"
+      ],
+      "reason": "Declared source-audit replacement."
+    },
+    {
+      "legacyCaseId": "case.pediatric-clinic.retractile-testis-remains-scrotal",
+      "primaryTargetCaseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "allTargetCaseIds": [
+        "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1"
+      ],
+      "reason": "Declared source-audit replacement."
+    }
+  ],
+  "admissionChecks": [
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+      "runtime": {
+        "setting": "clinic",
+        "issue": null,
+        "receipt": {
+          "operationId": "topic6.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicAdmissible": true,
+        "proposedTimingsInstalledForProbe": true,
+        "proposedFamiliesInstalledForProbe": true,
+        "childStillId": "level3-roster-v2.030",
+        "parentName": "Sarah Ellis"
+      }
+    },
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "runtime": {
+        "setting": "clinic",
+        "issue": null,
+        "receipt": {
+          "operationId": "topic6.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicAdmissible": true,
+        "proposedTimingsInstalledForProbe": true,
+        "proposedFamiliesInstalledForProbe": true,
+        "childStillId": "level3-roster-v2.027",
+        "parentName": "James Turner"
+      }
+    },
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "runtime": {
+        "setting": "clinic",
+        "issue": null,
+        "receipt": {
+          "operationId": "topic6.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicAdmissible": true,
+        "proposedTimingsInstalledForProbe": true,
+        "proposedFamiliesInstalledForProbe": true,
+        "childStillId": "level3-roster-v2.022",
+        "parentName": "Daniel Wells"
+      }
+    },
+    {
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+      "runtime": {
+        "setting": "clinic",
+        "issue": null,
+        "receipt": {
+          "operationId": "topic6.admit",
+          "commandType": "ADMIT_PATIENT",
+          "status": "applied",
+          "message": "Patient is approaching the clinic.",
+          "facilityTick": 0
+        },
+        "clinicAdmissible": true,
+        "proposedTimingsInstalledForProbe": true,
+        "proposedFamiliesInstalledForProbe": true,
+        "childStillId": "level3-roster-v2.021",
+        "parentName": "Mei Chen"
+      }
+    }
+  ]
+}

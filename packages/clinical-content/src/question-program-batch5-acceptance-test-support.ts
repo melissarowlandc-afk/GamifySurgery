@@ -1,17 +1,12 @@
+import {beforeProgramBatch6AcceptanceRelease,beforeProgramBatch6AcceptanceManifest,beforeProgramBatch6AcceptanceTimings,beforeProgramBatch6AcceptanceSource} from "./question-program-batch6-acceptance-test-support";
 import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
 import {expect} from "vitest";
 import type {SyntheticClinicalRelease, AnswerChoiceTimingRegistryEntry} from "./schema";
 import type {QuestionShipManifest} from "./question-ship-manifest";
-import {QUESTION_SHIP_MANIFEST as currentManifest} from "./question-ship-manifest";
-import {SYNTHETIC_CLINICAL_RELEASE as currentRelease} from "./synthetic-content";
 import {PROGRAM_BATCH5_ROWS as rows, PROGRAM_BATCH5_VIEWS as views, PROGRAM_BATCH5_REPLACEMENTS as replacements,
   PROGRAM_BATCH5_CONSOLIDATIONS as consolidations, PROGRAM_BATCH5_TIMINGS as timings,
   PROGRAM_BATCH5_RETIRED_CASES as retired} from "./question-program-batch5-accepted-data-20261111";
-import {PROGRAM_BATCH1_RETIRED_CASES as retired1} from "./question-program-batch1-accepted-data-20261111";
-import {PROGRAM_BATCH2_RETIRED_CASES as retired2} from "./question-program-batch2-accepted-data-20261111";
-import {PROGRAM_BATCH3_RETIRED_CASES as retired3} from "./question-program-batch3-accepted-data-20261111";
-import {PROGRAM_BATCH4_RETIRED_CASES as retired4} from "./question-program-batch4-accepted-data-20261111";
 
 const read = (path: string) => JSON.parse(readFileSync(new URL("../../../" + path, import.meta.url), "utf8"));
 const before = read("tools/question-quality/fixtures/question-topic-acceptance-batch5-before-20261111.json");
@@ -29,55 +24,7 @@ const literalNameCorrections = read("tools/question-quality/fixtures/question-to
   records: Array<{caseId: string; fields: Array<{target: string; path: Array<string | number>; before: string; after: string}>}>;
 };
 
-/** Later manager acceptances may change membership without changing authoring.
- * Verify authority against the captured prior manifest plus this exact batch,
- * and verify every resulting case against its frozen accepted serialization. */
-export function topicQuestionAcceptance(questionVariantId: string): {accepted: boolean; live: boolean} {
-  const authorized = [...before.manifest.accepted, ...rows] as QuestionShipManifest["accepted"];
-  const expectedRows = authorized.filter(row => row.questionVariantId === questionVariantId);
-  expect(currentManifest.accepted.filter(row => row.questionVariantId === questionVariantId)).toEqual(expectedRows);
-  const retiredIds = new Set(retired.map(clinicalCase => clinicalCase.id));
-  const freshRows = expectedRows.filter(row => cases.some(clinicalCase => clinicalCase.id === row.caseId) ||
-    before.default.caseIds.includes(row.caseId) && !retiredIds.has(row.caseId));
-  const actual = currentRelease.cases.flatMap(clinicalCase => clinicalCase.decisionNodes
-    .filter(node => node.questionVariantId === questionVariantId)
-    .map(node => [clinicalCase.id, node.id, node.questionVariantId, node.primaryConceptId]));
-  const expected = freshRows.map(row => [row.caseId, row.nodeId, row.questionVariantId, row.conceptId]);
-  expect(actual.sort(), questionVariantId + " exact fresh bindings").toEqual(expected.sort());
-  for (const row of freshRows) {
-    const clinicalCase = currentRelease.cases.find(candidate => candidate.id === row.caseId)!;
-    const acceptedCase = cases.find(candidate => candidate.id === row.caseId);
-    expect(digest(clinicalCase), row.caseId + " frozen accepted context")
-      .toBe(acceptedCase ? digest(acceptedCase) : before.default.caseHashes[row.caseId]);
-  }
-  return {accepted: expectedRows.length > 0, live: freshRows.length > 0};
-}
-
-export function topicCaseIsExplicitlyLive(caseId: string): boolean {
-  const authorized = [...before.manifest.accepted, ...rows] as QuestionShipManifest["accepted"];
-  const caseRows = authorized.filter(row => row.caseId === caseId);
-  const expected = caseRows.length > 0 && (cases.some(clinicalCase => clinicalCase.id === caseId) ||
-    before.default.caseIds.includes(caseId) && !retired.some(clinicalCase => clinicalCase.id === caseId));
-  expect(currentRelease.cases.some(clinicalCase => clinicalCase.id === caseId), caseId).toBe(expected);
-  for (const row of caseRows) topicQuestionAcceptance(row.questionVariantId);
-  return expected;
-}
-
-/** An authoring preservation guard may inspect a case later retired from fresh
- * selection. Require an explicit retirement relation and its retained source. */
-export function retainedTopicCase(caseId: string): SyntheticClinicalRelease["cases"][number] | undefined {
-  const current = currentRelease.cases.find(clinicalCase => clinicalCase.id === caseId);
-  if (current) return current;
-  const archived = [...retired1, ...retired2, ...retired3, ...retired4, ...retired]
-    .find(clinicalCase => clinicalCase.id === caseId);
-  const relation = currentManifest.replacements.some(row => row.replaces === caseId) ||
-    currentManifest.topicConsolidations.some(row => row.replaces.includes(caseId));
-  expect(relation, caseId + " explicit retirement relation").toBe(true);
-  expect(archived, caseId + " retained frozen source").toBeDefined();
-  for (const node of archived!.decisionNodes)
-    expect(currentRelease.concepts.some(concept => concept.id === node.primaryConceptId), node.primaryConceptId).toBe(true);
-  return archived;
-}
+export {topicQuestionAcceptance,topicCaseIsExplicitlyLive,retainedTopicCase} from "./question-program-batch6-acceptance-test-support";
 
 /** Apply only the manager's recorded presentation substitutions to a reviewed copy. */
 export function withProgramBatch5PresentationCorrections<T>(source: T, targetId: string): T {
@@ -99,6 +46,7 @@ export function withProgramBatch5PresentationCorrections<T>(source: T, targetId:
 }
 
 export function beforeProgramBatch5AcceptanceRelease(release: SyntheticClinicalRelease): SyntheticClinicalRelease {
+  release = beforeProgramBatch6AcceptanceRelease(release);
   if (digest(release) === before.default.sha256) return release;
   if (!release.cases.some(cs => cases.some(accepted => accepted.id === cs.id))) return release;
   for (const cs of cases) expect(release.cases.find(actual => actual.id === cs.id), cs.id).toEqual(cs);
@@ -119,6 +67,7 @@ export function beforeProgramBatch5AcceptanceRelease(release: SyntheticClinicalR
 }
 
 export function beforeProgramBatch5AcceptanceManifest(manifest: QuestionShipManifest): QuestionShipManifest & {id: string; clinicalApproval: false} {
+  manifest = beforeProgramBatch6AcceptanceManifest(manifest);
   if (!manifest.accepted.some(row => row.sourceView.startsWith("topic-batch5-")))
     return manifest as ReturnType<typeof beforeProgramBatch5AcceptanceManifest>;
   expect(manifest).toEqual({...before.manifest, id:"question-ship.2026-11-11.v14",
@@ -129,12 +78,18 @@ export function beforeProgramBatch5AcceptanceManifest(manifest: QuestionShipMani
 }
 
 export function beforeProgramBatch5AcceptanceTimings(actual: readonly AnswerChoiceTimingRegistryEntry[]): AnswerChoiceTimingRegistryEntry[] {
+  actual = beforeProgramBatch6AcceptanceTimings(actual);
   if (!actual.some(entry => rows.some(row => row.questionVariantId === entry.questionVariantId))) return [...actual];
   expect(actual).toEqual([...before.timing, ...timings]);
   return structuredClone(before.timing);
 }
 
 export function beforeProgramBatch5AcceptanceSource(path: string, current: string | undefined): string {
+  const releaseSourcePins = read("tools/question-quality/fixtures/question-program-batch5-release-source-pins-20261111.json") as {
+    paths: Array<{path: string; requiredReleaseSha256: string | null}>;
+  };
+  const excludedSource = releaseSourcePins.paths.find(pin => pin.path === path)?.requiredReleaseSha256 === null;
+  if (!excludedSource) current = beforeProgramBatch6AcceptanceSource(path, current);
   const row = migration.files.find(file => file.path === path);
   if (!row) { expect(current).toBeDefined(); return current!; }
   const hash = (text: string) => createHash("sha256").update(text).digest("hex");

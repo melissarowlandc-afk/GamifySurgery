@@ -30,7 +30,7 @@ export interface QuestionShipManifest {
   topicConsolidations?: readonly QuestionShipTopicConsolidation[];
 }
 export const QUESTION_SHIP_MANIFEST = {
-  id: "question-ship.2026-11-11.v14",
+  id: "question-ship.2026-11-12.v15",
   clinicalApproval: false,
   legacyDecision: "Carry forward the existing live bank before the owner-flag rewrite program; user-directed fallback on 2026-11-05. This does not independently accept prior drafts or grant clinical approval.",
   legacyBindings: [
@@ -14696,9 +14696,49 @@ export const QUESTION_SHIP_MANIFEST = {
     "decision": "docs/research/question-topic-acceptance-batch5-20261111.md"
   }
 ,
+  // Manager-accepted complete topic cases, batch 6.
+{
+    "acceptanceId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+    "caseId": "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1",
+    "nodeId": "node.pediatric-neck-thoracic-gu.20261111.node-sample",
+    "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.node-sample.v1",
+    "conceptId": "concept.pediatric-neck-thoracic-gu.inadequate-node-sample-escalation.v1",
+    "sourceView": "topic-batch6-pediatric-neck-thoracic-gu",
+    "decision": "docs/research/question-topic-acceptance-batch6-20261112.md"
+  },
+  {
+    "acceptanceId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+    "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+    "nodeId": "node.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy",
+    "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+    "conceptId": "concept.pediatric-neck-thoracic-gu.mediastinal-peripheral-biopsy-route.v1",
+    "sourceView": "topic-batch6-pediatric-neck-thoracic-gu",
+    "decision": "docs/research/question-topic-acceptance-batch6-20261112.md"
+  },
+  {
+    "acceptanceId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+    "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+    "nodeId": "node.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+    "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2",
+    "conceptId": "concept.pediatric-neck-thoracic-gu.proximal-hypospadias-gonadal-workup.v2",
+    "sourceView": "topic-batch6-pediatric-neck-thoracic-gu",
+    "decision": "docs/research/question-topic-acceptance-batch6-20261112.md"
+  },
+  {
+    "acceptanceId": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+    "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+    "nodeId": "node.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+    "questionVariantId": "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2",
+    "conceptId": "concept.pediatric-neck-thoracic-gu.cdh-physiologic-readiness.v1",
+    "sourceView": "topic-batch6-pediatric-neck-thoracic-gu",
+    "decision": "docs/research/question-topic-acceptance-batch6-20261112.md"
+  }
+,
 ] satisfies QuestionShipAcceptance[],
   // BEGIN FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   replacements: [
+    {"replaces":"case.pediatric-clinic.growing-firm-neck-node","with":"question.pediatric-neck-thoracic-gu.20261111.node-sample.v1"},
+    {"replaces":"case.pediatric-clinic.retractile-testis-remains-scrotal","with":"question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2"},
     {"replaces":"case.gs028.varicose-veins.a-asymmetric-branches","with":"question.vascular-venous-lymphatic-access.varicose-proximal-territory.20261111.v1"},
     {"replaces":"case.gs028.primary-midline-hernia.paired-epigastric-focal-lump","with":"question.topic.hernia-ventral-abdominal-wall.epigastric-referral.v1"},
     {"replaces":"case.gs028b.mesh-infection.b-failed-conservative","with":"question.topic.hernia-ventral-abdominal-wall.mesh-failed-salvage.v1"},
@@ -14755,6 +14795,7 @@ export const QUESTION_SHIP_MANIFEST = {
   ] satisfies QuestionShipCaseReplacement[],
   // END FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   topicConsolidations: [
+
     {"id":"topic-program.batch5.case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2","program":"topic-program","replaces":["case.postoperative-dvt.bowel-surgery","case.postoperative-dvt.hernia-repair","case.postoperative-dvt.postop-visit"],"with":"question.vascular-venous-lymphatic-access.postop-residual-duration.20261111.v1","decision":"docs/research/question-topic-acceptance-batch5-20261111.md"},
     {"id":"topic-program.batch5.case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1","program":"topic-program","replaces":["case.venous-leg-ulcer.healed-edge","case.venous-leg-ulcer.recurrent-ulcer","case.venous-leg-ulcer.varicose-changes"],"with":"question.vascular-venous-lymphatic-access.ulcer-unoccluded-ankle.20261111.v1","decision":"docs/research/question-topic-acceptance-batch5-20261111.md"},
     {"id":"topic-program.batch5.case.topic.bariatric-metabolic.spontaneous-sample-salvage.v1","program":"topic-program","replaces":["case.post-bariatric-hypoglycemia.postmeal-confusion","case.post-bariatric-hypoglycemia.postmeal-dizziness","case.post-bariatric-hypoglycemia.postmeal-shaking","case.post-bariatric-hypoglycemia.postmeal-weakness"],"with":"question.topic.bariatric-metabolic.spontaneous-sample-before-label.v2","decision":"docs/research/question-topic-acceptance-batch5-20261111.md"},
@@ -14841,6 +14882,10 @@ export const QUESTION_SHIP_MANIFEST = {
   }
 ] satisfies QuestionShipTopicConsolidation[],
   headerSources: {
+    "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1": "topic-batch6-pediatric-neck-thoracic-gu",
+    "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1": "topic-batch6-pediatric-neck-thoracic-gu",
+    "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1": "topic-batch6-pediatric-neck-thoracic-gu",
+    "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1": "topic-batch6-pediatric-neck-thoracic-gu",
     "case.vascular-venous-lymphatic-access.postop-leg-coverage.20261111.v2": "topic-batch5-vascular-venous-lymphatic-access",
     "case.vascular-venous-lymphatic-access.postop-finite-course-r2.20261111.v2": "topic-batch5-vascular-venous-lymphatic-access",
     "case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2": "topic-batch5-vascular-venous-lymphatic-access",

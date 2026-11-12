@@ -371,3 +371,188 @@ Level 5 fixture JSON files retain their intake hashes.
 All seven workspace typechecks were rerun after the concurrent topic edits and
 pass again (`typecheck-final.log`, exit 0). The bounded batch 5 integration is
 complete; remaining evidence, census and source-capture gates are manager-owned.
+
+
+## Batch 6
+
+Manager decision on 2026-11-12: the eight outside-record biopsy/testing options
+are testing choices and must show runtime wait estimates. Installed all **8**
+exact accepted identities with their authored proposed existing profiles.
+No profile substitutions were needed and no durations were added to prose.
+
+| Node suffix / choices | Existing profile |
+| --- | --- |
+| `node-sample`: excision, fna | `timing.test.biopsy` |
+| `mediastinal-biopsy`: peripheral, thoracoscopy, core | `timing.test.biopsy` |
+| `dsd-assessment.v2`: 17ohp, amh | `timing.test.advanced_diagnostic` |
+| `dsd-assessment.v2`: stimulated | `timing.test.combined_diagnostic` |
+
+The eight bindings cover **3 keyed options and 5 testing distractors**, across
+three nodes/cases. Each is explicitly `not_executed / future_planned`. The fourth
+accepted CDH-readiness node and all non-testing options remain `no_test`.
+
+### Runtime correction and frozen content
+
+At intake, all four accepted timing rows were `no_test` and the batch 6 order
+export was empty. `getDiagnosticChoicePlanning` and the preview selector reject
+`no_test`, so order bindings alone could not add estimates. The before probe
+confirms no estimate for all eight approved choices.
+
+The existing batch 6 runtime wrapper now composes an exact timing/order overlay
+from the authored choice identities. Three runtime rows become `test_choices`,
+including an explicit classification for every option. The original accepted-
+data archive still contains its four reviewed `no_test` rows and retains its
+bytes. The domain imports the eight records through the same accepted-export
+mechanism as batches 1-5. No preview selector, scheduler or save-format changes.
+
+The after probe returns a positive finite estimate with the exact authored
+profile for all eight choices, without mutating state. The other **1,393**
+current testing choices retain identical before/after metadata, estimates and
+execution decisions. There are now **1,401** testing choices in the default and
+**1,410** unique exact order records (previously 1,402).
+
+The default remains **1,340 cases / 1,535 nodes / 1,039 registered /
+844 scored meanings**, clinical JSON SHA-256
+`4eef72623a1de415f302d7d44819b40a4749b523d18c325102ad35b5d0c5d2e7`.
+Question-topic files, accepted-data archive, clinical prose and authority are
+unchanged by this lane. No clinical relationship or review status changes.
+
+The clinical timing guard/projection helper recognizes only the exact manager-
+authorized eight-choice delta against the immutable acceptance packet. It still
+checks every prior timing row, full frozen cases, source/authority/family state
+and unrelated drift. The test additionally mutates a newly authorized profile
+and requires the guard to reject it. Neither old source captures nor evidence
+assertions were rewritten.
+
+The first full clinical run exposed a real admission interaction: pediatric
+semantics previously rejected every `test_choices` row, including preview-only
+outside-record care (`clinical-case-eligibility.ts`). This excluded the three
+newly timed accepted cases despite their lack of service requests/result gates.
+The gate now permits complete exact declarations only when each test choice has
+an exact `not_executed / future_planned` record. Service requests, result gates,
+stale labels, missing declarations and unbound identities still fail. The same
+case-only metadata lookup is shared with frozen-encounter planning.
+
+The new domain regression admits all three cases through real commands in an
+operational pediatric clinic, and checks the rejected mutations above. The
+affected clinical author/admission tests pass without editing question-topic
+files. Before/after probes confirm the accepted cases retain their supported
+semantics while gaining estimates. Full validation and pacing were restarted
+after this correction; intermediate results are retained under `*-initial.log`.
+
+The initial new reload test exposed an adult-only test fixture lacking the
+pediatric appearance and family link. The fixture now uses the existing child
+appearance/family factories and authored identity metadata. It checks that
+appearance, family ID, family state and frozen case survive reload. The runtime
+save validation remains unchanged. All eight answer/enact/reload checks pass
+without service operations, pending results or terminal test orders.
+
+### Batch 6 validation and pacing
+
+PowerShell commands use `CI=1`, `npm.cmd` and `--pool=threads --maxWorkers=2`.
+Player chart tests use the established OS-enumeration preload.
+
+| Validation | Exact output | Duration / exit |
+| --- | --- | --- |
+| New requirement reproduction before runtime correction | 1 failed / 1 passed files; 2 failed / 21 passed tests (23) | 10.04s / 1 |
+| Final binding/admission guards + order inventory | 2 passed files; 24 passed tests (24) | 13.80s / 0 |
+| Batch 6 clinical timing/frozen-source guard | 1 passed file; 8 passed tests (8) | 7.86s / 0 |
+| Affected pediatric author/admission + timing guards | 2 passed files; 31 passed tests (31) | 9.49s / 0 |
+| Final player chart-label matrix, batches 1-6 | 1 passed file; 6 passed tests (6) | 10.26s / 0 |
+| Seven workspace typechecks | All 7 pass; clean again after the pediatric fixture update | exit 0 |
+| Final full clinical content | 9 failed / 192 passed files (201); 10 failed / 2,942 passed tests (2,952) | 220.95s / 1 |
+| Final current-default pacing guard | First finish 22,747; 5,337,091 cents / 381 completions / 0 walkouts | exit 0 |
+| Final full domain | 2 failed / 216 passed files (218); 27 failed / 5,880 passed / 1 skipped tests (5,908) | 743.96s / 1 |
+
+```text
+ Test Files  2 failed | 216 passed (218)
+      Tests  27 failed | 5880 passed | 1 skipped (5908)
+   Start at  03:38:30
+   Duration  743.96s (transform 17.19s, setup 0ms, import 501.62s, tests 964.53s, environment 14ms)
+```
+
+All 27 domain failure titles exactly match acceptance: one historical admission
+census (587 versus 1,039 meanings), one already-unbound Level 5 input check and
+25 retained Level 0–4/schema 5–9 loaded-state SHA checks. The four added passing
+tests cover the batch 6 exact/enactment matrix, authored profiles and real
+pediatric admission/rejection semantics. No new runtime failure or collection
+failure remains. Evidence, old capture values and assertion budgets are intact.
+
+The final native pacing command passes the **20,421–24,959** band:
+
+```json
+{
+  "firstFinishTick": 22747,
+  "closingCashCents": 5337091,
+  "completions": 381,
+  "walkouts": 0,
+  "referenceTick": 22690,
+  "driftPercent": 0.2512119876597607,
+  "clinicalSha256": "4eef72623a1de415f302d7d44819b40a4749b523d18c325102ad35b5d0c5d2e7",
+  "caseCount": 1340,
+  "registeredMeanings": 1039
+}
+```
+
+First finish is **74 minutes earlier than batch 5's 22,821**, and 57 minutes
+(+0.251212%) above the 22,690 reference. These are first-finished-inspection
+totals, not the full multi-retry evidence journey. No pacing or cost retune.
+The final full clinical run has exactly the ten acceptance-baseline failure
+titles; the three admission regressions exposed by the intermediate runtime
+metadata change are fixed. No clinical/evidence hash guard was weakened.
+
+```powershell
+$env:CI='1'
+npm.cmd test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 tests/topic-runtime-bindings.test.ts tests/test-choice-order-inventory.test.ts
+npm.cmd test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2
+npm.cmd test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2 src/question-program-batch6-acceptance-20261112.test.ts
+npm.cmd test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2
+npm.cmd run typecheck
+node tools/qa/content-pacing-check.mjs
+$env:NODE_OPTIONS='--require=C:/Users/rowla/Projects/GamifySurgery/.local-dev/restroom-reception-refill-20261104/validation-preload.cjs'
+npm.cmd test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=2 src/session/topicRuntimeBindings.test.ts
+```
+
+### Batch 6 files and binding gate
+
+- `packages/clinical-content/src/question-program-batch6-accepted-20261112.ts`:
+  runtime-only overlay for the eight exact authored wait profiles and their
+  non-execution dispositions. Preserves the frozen accepted-data module.
+- `packages/game-domain/src/test-choice-orders.ts`: batch 6 import and spread.
+  Shares its exact case-identity lookup with the admission gate.
+- `packages/game-domain/src/clinical-case-eligibility.ts`: allow fully bound
+  future-planned pediatric reviews without enabling enacted testing.
+- `packages/game-domain/tests/topic-runtime-bindings.test.ts`: batch 6 matrix,
+  independent exact packet/profile guard and valid pediatric reload fixture.
+- `apps/player/src/session/topicRuntimeBindings.test.ts`: batch 6 chart-label
+  matrix and valid pediatric family/appearance setup.
+- `packages/clinical-content/src/question-program-batch6-acceptance-20261112.test.ts`
+  and `question-program-batch6-acceptance-test-support.ts`: exact authorized
+  timing delta with original frozen-source and unrelated-drift guards retained.
+- This appendix, the existing ExecPlan extension and a marked current handoff.
+
+| Changed runtime input | Intake SHA-256 | Integrated SHA-256 |
+| --- | --- | --- |
+| Existing bound `packages/game-domain/src/test-choice-orders.ts` | `70830c0fe17b00a8e712cff0e7bc09b0603830fa1fb2e96ddf6ce8bc0c81b205` | `793450bed94248300965c719be76fd068d35b3f59ba899450568ddbe73f502fe` |
+| Existing bound `packages/game-domain/src/clinical-case-eligibility.ts` | `92238a6416d765813e7e154e4bc4173a5bd19c89ecbad1a9a9769cde0f3c73a8` | `c55d0d3ad2ba1d1074b911265a9fe3b385a5c871d415d5db811cc29d1960e4a7` |
+| Batch 6 runtime dependency `packages/clinical-content/src/question-program-batch6-accepted-20261112.ts` | `39fccc832bc746049e0f5e5ba908687c12480f49e8d058f5b9ccb8c6d0e21903` | `4b90513e2ab08a9c5f18934ab56860ed7a8b411c56adc63a41a779933794e7b2` |
+
+The wrapper is one of the two new runtime dependencies already reported by
+batch 6 acceptance; the manager must capture its updated postimage when binding.
+`answer-choice-timing.ts` retains its source bytes; its existing batch 6 import
+now supplies the corrected metadata. Balance and timing-profile durations stay
+unchanged. The manager owns release inventory, source-pin reconciliation and
+rebind. This lane performs no evidence writes or retune.
+
+Private receipts: `.local-dev/topic-runtime-bindings-batch6-20261112/` contains
+owned preimages, scoped patch, authored profile comparisons, before/after
+preview probes, raw validation logs and input hashes. No question-topic/prose
+edits, Git, commits, installs, network, agents, deploy or GS-release writes.
+
+Final scope audit: the accepted-data archive, all question-topic files, public
+clinical release hash, balance/timing-profile values and all four captured
+Level 5 fixture/results JSON files retain their intake values. The only changed
+runtime sources are the two domain inputs and the batch 6 wrapper listed above.
+Source/test patch, exact postimages and guard deltas are recorded in the private
+receipts. The bounded integration is complete; source-pin reconciliation and
+release binding remain with the manager. This checkpoint is local and uncommitted.

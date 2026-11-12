@@ -709,6 +709,10 @@ describe("approved clinical admission boundaries", () => {
       "concept.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary.v1",
       "concept.pediatric-gi-abdominal-wall.wilms-caval-extension-initial-plan.v1",
       "concept.pediatric-gi-abdominal-wall.preterm-hernia-timing.v1",
+      "concept.pediatric-neck-thoracic-gu.inadequate-node-sample-escalation.v1",
+      "concept.pediatric-neck-thoracic-gu.mediastinal-peripheral-biopsy-route.v1",
+      "concept.pediatric-neck-thoracic-gu.proximal-hypospadias-gonadal-workup.v2",
+      "concept.pediatric-neck-thoracic-gu.cdh-physiologic-readiness.v1",
     ]);
   });
 

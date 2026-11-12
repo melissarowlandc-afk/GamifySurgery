@@ -3,14 +3,14 @@ import {existsSync,readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
 import {QUESTION_SHIP_MANIFEST as manifest} from "./question-ship-manifest";
 import {SYNTHETIC_CLINICAL_RELEASE as live} from "./synthetic-content";
-import {topicQuestionAcceptance,topicCaseIsExplicitlyLive,retainedTopicCase} from "./question-program-batch5-acceptance-test-support";
+import {topicQuestionAcceptance,topicCaseIsExplicitlyLive,retainedTopicCase} from "./question-program-batch6-acceptance-test-support";
 
 const read=(path:string)=>JSON.parse(readFileSync(new URL("../../../"+path,import.meta.url),"utf8"));
 const digest=(value:unknown)=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const repairs=read("tools/question-quality/fixtures/question-topic-batches45-repaired-tests-20261112.json") as {
   records:Array<{path:string;beforeSha256:string;afterSha256:string;afterText:string}>;
 };
-const archives=[1,2,3,4,5].map(n=>read(`tools/question-quality/fixtures/question-topic-acceptance-batch${n}-before-20261111.json`));
+const archives=[1,2,3,4,5,6].map(n=>read(`tools/question-quality/fixtures/question-topic-acceptance-batch${n}-before-${n===6?"20261112":"20261111"}.json`));
 // Batch1's original archive names these fields differently. Normalize only
 // the recorded container names; every captured object and ID remains intact.
 const topics=archives.flatMap((archive,index)=>archive.topics.map((topic: {config:{slug:string};candidates:Array<{case:{id:string};records?:unknown[];nodeRecords?:unknown[]}>})=>({
@@ -21,7 +21,11 @@ const topics=archives.flatMap((archive,index)=>archive.topics.map((topic: {confi
 const retainedCases=archives.flatMap((archive,index)=>index===0?archive.default.replacementBeforeCases:archive.default.retainedCases);
 const migration=read("tools/question-quality/fixtures/question-topic-acceptance-batch5-source-migration-20261111.json");
 const topicRows=manifest.accepted.filter(row=>row.sourceView.startsWith("topic-batch"));
-const repairedTopics=repairs.records.map(record=>({record,slug:record.path.match(/question-topic-(.*)-20261111\.test\.ts$/)![1]!}));
+const batch6Repairs=read("tools/question-quality/fixtures/question-topic-batch6-repaired-tests-20261112.json") as {
+  records:Array<{path:string;beforeSha256:string;afterSha256:string;afterText:string}>;
+};
+const batch6Migration=read("tools/question-quality/fixtures/question-topic-acceptance-batch6-source-migration-20261112.json");
+const repairedTopics=[...repairs.records,...batch6Repairs.records.filter(record=>!repairs.records.some(previous=>previous.path===record.path))].map(record=>({record,slug:record.path.match(/question-topic-(.*)-20261111\.test\.ts$/)![1]!}));
 
 describe("frozen repaired topic acceptance membership in the release",()=>{
   it("retains all25 exact repaired source postimages without importing raw draft modules",()=>{
@@ -33,6 +37,18 @@ describe("frozen repaired topic acceptance membership in the release",()=>{
       expect(record.afterSha256).toBe(original.afterSha256);
       expect(createHash("sha256").update(record.afterText).digest("hex")).toBe(original.afterSha256);
       expect(existsSync(new URL("../../../"+record.path,import.meta.url)),record.path+" excluded authoring dependency").toBe(false);
+    }
+  });
+
+  it("retains both exact batch6 repaired authoring postimages and requires absent raw modules",()=>{
+    expect(batch6Repairs.records).toHaveLength(2);
+    for(const record of batch6Repairs.records){
+      const row=batch6Migration.files.find((row:{path:string})=>row.path===record.path);
+      expect(row,record.path).toBeDefined();
+      expect(record.beforeSha256).toBe(row.beforeSha256);
+      expect(record.afterSha256).toBe(row.afterSha256);
+      expect(createHash("sha256").update(record.afterText).digest("hex")).toBe(row.afterSha256);
+      expect(existsSync(new URL("../../../"+record.path,import.meta.url))).toBe(false);
     }
   });
 
@@ -53,8 +69,8 @@ describe("frozen repaired topic acceptance membership in the release",()=>{
     }
   });
 
-  it("checks all541 topic authority rows and every retained topic case",()=>{
-    expect(topicRows).toHaveLength(541);
+  it("checks all545 topic authority rows and every retained topic case",()=>{
+    expect(topicRows).toHaveLength(545);
     for(const id of new Set(topicRows.map(row=>row.questionVariantId)))expect(topicQuestionAcceptance(id).accepted).toBe(true);
     const retiredIds=new Set<string>(retainedCases.map((cs:{id:string})=>cs.id));
     for(const id of retiredIds){

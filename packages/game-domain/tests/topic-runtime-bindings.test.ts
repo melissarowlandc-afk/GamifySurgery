@@ -1,12 +1,16 @@
 import * as clinical from "@gamify-surgery/clinical-content";
 import type { SyntheticClinicalCase } from "@gamify-surgery/clinical-content";
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
   PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, deserializeGameState, gameReducer,
+  createPatientPixelAppearance, createPediatricFamily,
   getAnswerChoiceServicePreview, getDiagnosticOrderPlans, serializeGameState,
   type EncounterState,
 } from "../src";
 import { getDiagnosticChoicePlanning } from "../src/diagnostic-order-requests";
+import { clinicalCaseHasSupportedPatientSemantics, getClinicalCaseEligibilityIssue } from "../src/clinical-case-eligibility";
+import { createPediatricFamilyFixture } from "../../../tests/fixtures/pediatric-families";
 import { EXACT_TEST_CHOICE_ORDER_RECORDS, getExactTestChoiceOrderRecord, type ExactTestChoiceOrderRecord } from "../src/test-choice-orders";
 
 const batches = [
@@ -15,6 +19,7 @@ const batches = [
   [3, 209, clinical.QUESTION_PROGRAM_BATCH3_ACCEPTED_TEST_ORDER_RECORDS],
   [4, 292, clinical.QUESTION_PROGRAM_BATCH4_ACCEPTED_TEST_ORDER_RECORDS],
   [5, 24, clinical.QUESTION_PROGRAM_BATCH5_ACCEPTED_TEST_ORDER_RECORDS],
+  [6, 8, clinical.QUESTION_PROGRAM_BATCH6_ACCEPTED_TEST_ORDER_RECORDS],
 ] as const;
 const keyOf = (record: Pick<ExactTestChoiceOrderRecord, "caseId" | "nodeId" | "questionVariantId" | "choiceId">) =>
   `${record.caseId}|${record.nodeId}|${record.questionVariantId}|${record.choiceId}`;
@@ -37,6 +42,13 @@ function ready(clinicalCase: SyntheticClinicalCase, index: number) {
   }));
   state.facilityLevel = 5;
   state.encounters = { [encounter.id]: encounter };
+  if (clinicalCase.pediatricProfile) {
+    const family = clinical.PEDIATRIC_CLINIC_FAMILY_CONTEXTS.find(row => row.caseId === clinicalCase.id);
+    encounter.patientAppearance = createPatientPixelAppearance(state.campaignSeed, encounter.id, clinicalCase.prototypeDemographics);
+    if (family) encounter.patientAppearance.stillId = family.childStillId;
+    createPediatricFamily(state, encounter, "encounter", family ? {displayName: family.parentName,
+      sexLabel: family.parentRelationship === "mother" ? "Female" : "Male"} : undefined);
+  }
   state.openChartEncounterId = encounter.id;
   state.attendedEncounterId = null;
   state.serviceAppointmentsEnabled = false;
@@ -45,6 +57,49 @@ function ready(clinicalCase: SyntheticClinicalCase, index: number) {
 }
 
 describe("accepted topic runtime diagnostic bindings", () => {
+  it("admits batch 6 pediatric planning reviews while rejecting enacted or incomplete testing semantics", () => {
+    const {state, context} = createPediatricFamilyFixture();
+    const caseIds = new Set(clinical.QUESTION_PROGRAM_BATCH6_ACCEPTED_TEST_ORDER_RECORDS.map(row => row.caseId));
+    expect(caseIds.size).toBe(3);
+    for (const caseId of caseIds) {
+      const clinicalCase = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(cs => cs.id === caseId)!;
+      expect(clinicalCaseHasSupportedPatientSemantics(clinicalCase), caseId).toBe(true);
+      expect(getClinicalCaseEligibilityIssue(state, clinicalCase, context), caseId).toBeNull();
+      const id = `encounter.topic.wait.${caseIds.size}.${clinicalCase.decisionNodes[0]!.id}`;
+      const admitted = gameReducer(state, {type: "ADMIT_PATIENT", operationId: id, encounterId: id,
+        caseId, patientDisplayName: clinicalCase.patientDisplayName!, arrivalClass: "routine"}, context);
+      expect(admitted.operationReceipts[id]?.status, caseId).toBe("applied");
+      expect(admitted.encounters[id]!.pediatricFamilyId).toBeTruthy();
+
+      const changedLabel = structuredClone(clinicalCase);
+      changedLabel.decisionNodes[0]!.answerChoices[0]!.label += " stale";
+      expect(clinicalCaseHasSupportedPatientSemantics(changedLabel)).toBe(false);
+      const unbound = structuredClone(clinicalCase);
+      unbound.decisionNodes[0]!.questionVariantId += ".unbound";
+      expect(clinicalCaseHasSupportedPatientSemantics(unbound)).toBe(false);
+      const enacted = structuredClone(clinicalCase);
+      enacted.decisionNodes[0]!.answerChoices[0]!.serviceRequest = structuredClone(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases
+        .flatMap(cs => cs.decisionNodes).flatMap(node => node.answerChoices).find(choice => choice.serviceRequest)!.serviceRequest);
+      expect(clinicalCaseHasSupportedPatientSemantics(enacted)).toBe(false);
+      const resultGate = structuredClone(clinicalCase);
+      resultGate.decisionNodes[0]!.resultGateAfter = structuredClone(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases
+        .flatMap(cs => cs.decisionNodes).find(node => node.resultGateAfter)!.resultGateAfter);
+      expect(clinicalCaseHasSupportedPatientSemantics(resultGate)).toBe(false);
+    }
+  });
+
+  it("uses every authored batch 6 outside-record profile on its exact accepted identity", () => {
+    const packet = JSON.parse(readFileSync(new URL("../../../docs/research/question-topic-acceptance-batch6-packet-20261112.json", import.meta.url), "utf8")) as {
+      outsideRecordTestingChoices: Array<Omit<ExactTestChoiceOrderRecord, "timingProfileId" | "disposition"> & { proposedProfileId: string }>;
+    };
+    expect(packet.outsideRecordTestingChoices).toHaveLength(8);
+    expect(clinical.QUESTION_PROGRAM_BATCH6_ACCEPTED_TEST_ORDER_RECORDS).toEqual(packet.outsideRecordTestingChoices.map(choice => ({
+      caseId: choice.caseId, nodeId: choice.nodeId, questionVariantId: choice.questionVariantId,
+      choiceId: choice.choiceId, choiceLabel: choice.choiceLabel, timingProfileId: choice.proposedProfileId,
+      disposition: { kind: "not_executed", reason: "future_planned" },
+    })));
+  });
+
   it.each(batches)("installs batch %i's %i exact accepted records", (_batch, count, accepted) => {
     expect(accepted).toHaveLength(count);
     for (const record of accepted) {
@@ -121,6 +176,11 @@ describe("accepted topic runtime diagnostic bindings", () => {
       expect(next.encounters[encounter.id]!.terminalTestOrder ?? null).toBeNull();
       const restored = deserializeGameState(serializeGameState(next));
       expect(restored.encounters[encounter.id]!.frozenCase).toEqual(next.encounters[encounter.id]!.frozenCase);
+      if (clinicalCase.pediatricProfile) {
+        expect(restored.encounters[encounter.id]!.patientAppearance).toEqual(next.encounters[encounter.id]!.patientAppearance);
+        expect(restored.encounters[encounter.id]!.pediatricFamilyId).toBe(next.encounters[encounter.id]!.pediatricFamilyId);
+        expect(restored.pediatricFamilies).toEqual(next.pediatricFamilies);
+      }
       expect(getExactTestChoiceOrderRecord(restored.encounters[encounter.id]!, node, record.choiceId)).toEqual(record);
       expect(getDiagnosticOrderPlans(restored)).toEqual([]);
     }

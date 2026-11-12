@@ -1,0 +1,335 @@
+{
+  "checkedOn": "2026-11-12",
+  "task": "topic program acceptance batch 6",
+  "reviewStatus": "needs_clinician_review",
+  "clinicalApproval": false,
+  "existingFiles": [
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "beforeSha256": "626a052bac091812c2ef6053d7e56bed18c88849a093de767d6f14a0c54d9ab0",
+      "afterSha256": "49c8f1e34b93d9815e5e9ec5cbda1c46e41ac0c46c74440c24a903d35e6f0883",
+      "bytes": 831357
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "bfc1c6c3051d46543b6f2ca13efa90d2683924d78f6d15506aef468eb90c538f",
+      "afterSha256": "73ebbee54704c8cc86d0bba3851844ff7674c6033a8e493f39c41bce52227a83",
+      "bytes": 74467
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "80f335e1752faa411561443223f30b8a59e0d1a4dd65d89641db04ae6e21a017",
+      "afterSha256": "485749eb369c0f499b0e34a9ae616f803e22ce4e81d500dc056abf2f0dea8ba1",
+      "bytes": 9397
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "32ca68874463e954dfccdd211145fa410aaf61bc351001ccc9dd651523a244cd",
+      "afterSha256": "c1149f878874858589737930b2c458173cdf2bb98a41a4b51fe18f486260c027",
+      "bytes": 199028
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "beforeSha256": "3b6fc7b62b82f10ea479763712d3a162f79e8cb45795f9cac2a98562dc2b33a1",
+      "afterSha256": "48701ac7e09fa126495651704c394b3e2d6a38b79a845547826bb1796d187442",
+      "bytes": 7645
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "beforeSha256": "01172c6077d5ae3bfb088dea92d9e7b1b5adf705934fa34573bcf03647dac4a0",
+      "afterSha256": "e41a312ffec4044f65249c93456184cf7d52fee6b2c1ecb476ef14079d8f6af6",
+      "bytes": 14407
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch5-acceptance-test-support.ts",
+      "beforeSha256": "2cf42b758da44118496e5040df47a6b9c55e5c12ce17ad429da54dabd1818d93",
+      "afterSha256": "59538549c39905e03cab96f9e78701d38c2230361733ce18ce6a30fbe44e88e8",
+      "bytes": 6620
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+      "beforeSha256": "956f776eff2111652772200d150bfff89d1fd99bf8f0fe74a77b144d75e1b535",
+      "afterSha256": "61eabde7376a4e7cf6c642c9bf1fce49ad8a7ce273fa0e3a9ef9fdf32855a2f6",
+      "bytes": 13165
+    },
+    {
+      "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+      "beforeSha256": "67a9111614379910e0ec74d7d12a560b2ece2c71b72aa882ef83254673e39015",
+      "afterSha256": "0b8b930277de9faffac2951bf3b845ba7591bcae88edb8a2051cd1d8a44c7b16",
+      "bytes": 9014
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-pediatric-neck-thoracic-gu-20261111.test.ts",
+      "beforeSha256": "25da8728a513ee4e208393f842207dcb1859ec398b1a47649d14d57a3106061b",
+      "afterSha256": "27b512628162ba999e3e54e0dddff6334966cd32382eeba7d387889a787f7e45",
+      "bytes": 29477
+    },
+    {
+      "path": "packages/clinical-content/src/question-topic-wound-healing-immunology-20261111.test.ts",
+      "beforeSha256": "9bdb26b6888aae0aab6422fa1f0da25b4ecadefd148b2204c44642eea1961366",
+      "afterSha256": "f938877b47ae0ec9387f9790eb333c18dd0bd5cc4c655824bbf4fee3a82b8a40",
+      "bytes": 19335
+    }
+  ],
+  "newFiles": [
+    {
+      "path": "packages/clinical-content/src/question-program-batch6-accepted-data-20261112.ts",
+      "bytes": 111958,
+      "sha256": "0855b1ba9ecead9905e770765a644504556fb0e8f9309cd409d65223656c855f"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch6-accepted-20261112.ts",
+      "bytes": 2969,
+      "sha256": "39fccc832bc746049e0f5e5ba908687c12480f49e8d058f5b9ccb8c6d0e21903"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch6-acceptance-test-support.ts",
+      "bytes": 10766,
+      "sha256": "488cb358d400f83b81a02e3e6734863993f8d64cf9c4c37eb8b7f3d18b82e8e6"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch6-acceptance-20261112.test.ts",
+      "bytes": 10988,
+      "sha256": "c8c6c8b007d901ac74179f969a8d5e02903b98ce15c5e7e230b4c30571e97566"
+    },
+    {
+      "path": "apps/player/src/questionProgramBatch6SaveCompatibility.test.ts",
+      "bytes": 17710,
+      "sha256": "94d61ecbf44e86ced83c33c51e3b306baff537be1a83534616b5a9ccc933d9a8"
+    },
+    {
+      "path": "tools/question-quality/topic-acceptance-batch6-config-20261112.mjs",
+      "bytes": 408,
+      "sha256": "49ff0d6f52fd22b7a809cb6fa4b7366ccd186a13bcb73f82cbd887d3e964f900"
+    },
+    {
+      "path": "tools/question-quality/capture-topic-acceptance-batch6-20261112.mjs",
+      "bytes": 16813,
+      "sha256": "a327a6b5102a06e8891759a50392f4452b69f56239352fd1537090438b3b4b1f"
+    },
+    {
+      "path": "tools/question-quality/prepare-topic-acceptance-batch6-20261112.mjs",
+      "bytes": 2026,
+      "sha256": "57d9a006ef4c61bc39779404d751d401d305f2ecf19525759d7fadec91b0f97b"
+    },
+    {
+      "path": "tools/question-quality/build-topic-acceptance-batch6-20261112.mjs",
+      "bytes": 16566,
+      "sha256": "6073bf287d95d27ccc30591af0203e63e0c85f679c6529e0f839a8b22fc6d78e"
+    },
+    {
+      "path": "tools/question-quality/integrate-topic-acceptance-batch6-20261112.mjs",
+      "bytes": 3372,
+      "sha256": "e2e12f4f5a218e835c9e79830e1481300fec5ea98a1ef32f10180651a3b784cc"
+    },
+    {
+      "path": "tools/question-quality/freeze-topic-acceptance-batch6-source-20261112.mjs",
+      "bytes": 2784,
+      "sha256": "84c6d5e32b3e04f3a9fdaecdd73979e6d97a17def103b2ab3926f51ab87ab070"
+    },
+    {
+      "path": "tools/question-quality/review-topic-acceptance-batch6-20261112.mjs",
+      "bytes": 15695,
+      "sha256": "d29d950942539110c387e6c16c4ba9f29e1d0dc55a4f965dbbe932d54f6feb33"
+    },
+    {
+      "path": "tools/question-quality/handoff-topic-acceptance-batch6-20261112.mjs",
+      "bytes": 18904,
+      "sha256": "28e25e0152a84c292bbace5350bb32d43445dd81d2e40e8c91d218eaebd74409"
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch6-before-20261112.json",
+      "bytes": 5350072,
+      "sha256": "e6dbd6bf5997bb82c8c4cf7b0d41ae0c02022df659106aaf5a1e23431d76488e"
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch6-selection-20261112.json",
+      "bytes": 6523,
+      "sha256": "d4166563869edd287b782674b18369c7b4d493f50a1e544b5bb7f544b512ed10"
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch6-literal-name-corrections-20261112.json",
+      "bytes": 6189,
+      "sha256": "fc84022f3f4af1b13db0c0a194761a3ee4500272c7bbacc199106b11b923e338"
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch6-additional-before-20261112.json",
+      "bytes": 78005,
+      "sha256": "052bbfe45c47d303a8e554e0fc1647ef7a9e03c5f3c89c15e6f499b06724d353"
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch6-source-migration-20261112.json",
+      "bytes": 1291613,
+      "sha256": "cf4b4f62435b84f19056a3091008b6c987f355450272a87d59094dcc5165415b"
+    },
+    {
+      "path": "docs/execplans/question-topic-acceptance-batch6-20261112.md",
+      "bytes": 5050,
+      "sha256": "3942b6ba3ff415581fb1ade2247dee33cfeb264b83e2cec2bbc1f085aeecd025"
+    },
+    {
+      "path": "docs/research/question-topic-acceptance-batch6-20261112.md",
+      "bytes": 24445,
+      "sha256": "e11d498107f4726ce9961f15353093e3a5ad7bd6e9facdf5e28aa64a06ebc4c9"
+    },
+    {
+      "path": "docs/research/question-topic-acceptance-batch6-packet-20261112.json",
+      "bytes": 131304,
+      "sha256": "9c922cdbd787b0e581f7237da370abeaaae42c5b53ca3dd8da366c39bd261510"
+    },
+    {
+      "path": "docs/research/question-topic-acceptance-batch6-dispositions-20261112.json",
+      "bytes": 22262,
+      "sha256": "d3d3bc3b5121ac463fcbf58aaf17e7836498c6bb2ff0f1b6a967dc25c11577c0"
+    },
+    {
+      "path": "docs/research/question-topic-acceptance-batch6-source-freeze-20261112.json",
+      "bytes": 31166,
+      "sha256": "6f48f0ecf982b10974a39f777bd082eef6833786e968c8ac97e74748dc952ec1"
+    },
+    {
+      "path": "docs/research/question-topic-acceptance-batch6-lint-20261112.json",
+      "bytes": 6425325,
+      "sha256": "5d890c43a4829ab68c4c454096b969e92bb08edd39f93bbf379dc9df1890ac17"
+    },
+    {
+      "path": "docs/research/question-topic-acceptance-batch6-validation-20261112.json",
+      "bytes": 216397,
+      "sha256": "7cab46a22d5d4f1997707c39182f7e7d8cd16194e61f0bcfcb7f1d75a930770f"
+    }
+  ],
+  "hashedFileCount": 36,
+  "self": "docs/research/question-topic-acceptance-batch6-files-20261112.json",
+  "selfHashOmitted": true,
+  "sharedHandoff": {
+    "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+    "intakeBytes": 978836,
+    "intakeSha256": "8328957385e9adf4c0de891257f49a5ab2315c4c7615e203a1293fd68992abc8",
+    "originalPrefixPreserved": true,
+    "preAppendBytes": 978836,
+    "preAppendSha256": "8328957385e9adf4c0de891257f49a5ab2315c4c7615e203a1293fd68992abc8",
+    "ownAppendBytes": 3400,
+    "ownAppendSha256": "15f23f85ef702bcd03932a21eb567177c9d3a1ec9f90f99a9c1c7f5b41eb7566",
+    "postAppendBytes": 982236,
+    "postAppendSha256": "f74534143fe10f305f375979696e7f66cf4f077322656861fd0f87b93d3f7eb6",
+    "marker": "<!-- BEGIN TOPIC ACCEPTANCE BATCH6 HANDOFF 20261112 -->"
+  },
+  "protectedInputs": [
+    {
+      "path": "packages/clinical-content/src/question-topic-pediatric-neck-thoracic-gu-20261111.ts",
+      "beforeSha256": "cc088d37bf249056798b48ab7c88182c7f71df4e8730f447299844c9ae55ce00",
+      "currentSha256": "cc088d37bf249056798b48ab7c88182c7f71df4e8730f447299844c9ae55ce00",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-20261111.json",
+      "beforeSha256": "04e860c5cb46939647d1f905d25a649c110625419a829de58ee9a680e841d160",
+      "currentSha256": "04e860c5cb46939647d1f905d25a649c110625419a829de58ee9a680e841d160",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/sources-question-topic-pediatric-neck-thoracic-gu-20261111.json",
+      "beforeSha256": "90b58544791bce0a1aaa510116e0a751aed350faa3f690719099be0af98e225c",
+      "currentSha256": "90b58544791bce0a1aaa510116e0a751aed350faa3f690719099be0af98e225c",
+      "unchanged": true
+    },
+    {
+      "path": "docs/research/question-topic-pediatric-neck-thoracic-gu-review-salvage-20261111.json",
+      "beforeSha256": "c30c43d7cdfc85f97ce8ee631595ed69ab63437a92d5d128b3d0a313665d2f33",
+      "currentSha256": "c30c43d7cdfc85f97ce8ee631595ed69ab63437a92d5d128b3d0a313665d2f33",
+      "unchanged": true
+    }
+  ],
+  "observedConcurrentChanges": [],
+  "scopeSummary": {
+    "existing": 11,
+    "newIncludingReceipt": 26,
+    "sharedAppend": 1,
+    "uniqueChangedPaths": 38,
+    "topicTestCorrections": 2,
+    "topicSourceModulesChanged": 0
+  },
+  "counts": {
+    "before": {
+      "cases": 1338,
+      "nodes": 1533,
+      "registeredMeanings": 1035,
+      "scoredMeanings": 840,
+      "acceptedRows": 686,
+      "timingRows": 2836
+    },
+    "after": {
+      "cases": 1340,
+      "nodes": 1535,
+      "registeredMeanings": 1039,
+      "scoredMeanings": 844,
+      "acceptedRows": 690,
+      "timingRows": 2840
+    },
+    "requested": 4,
+    "acceptedNodes": 4,
+    "acceptedCases": 4,
+    "skippedNodes": 0,
+    "retiredCases": 2,
+    "retiredNodes": 2,
+    "newMeanings": 4,
+    "pendingOrderRecords": 0
+  },
+  "hashes": {
+    "defaultBefore": "2c524904fafc7e915dab19256a191397e0a00f5a68bf0ebc9e2e37fe69394921",
+    "defaultAfter": "4eef72623a1de415f302d7d44819b40a4749b523d18c325102ad35b5d0c5d2e7",
+    "manifestBefore": "6e074c70648de65270be5f86610d55f0a3a1ab2212df453ac0e5adee1834c9ce",
+    "manifestAfter": "75c681e29d13d5dbe27fa5f5599244276f9e314b3e9ef1b95f0a91fa41a0ad91",
+    "catalogBefore": "3e0d1bb346abc1579e5c24400565c36c158d90304b60171b24b6a88f64b2ed40",
+    "catalogAfter": "3e0d1bb346abc1579e5c24400565c36c158d90304b60171b24b6a88f64b2ed40"
+  },
+  "manifestId": "question-ship.2026-11-12.v15",
+  "levelFiveInputs": [
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "bfc1c6c3051d46543b6f2ca13efa90d2683924d78f6d15506aef468eb90c538f",
+      "afterSha256": "73ebbee54704c8cc86d0bba3851844ff7674c6033a8e493f39c41bce52227a83",
+      "recordedSha256": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c",
+      "alreadyUnboundAtIntake": true
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "80f335e1752faa411561443223f30b8a59e0d1a4dd65d89641db04ae6e21a017",
+      "afterSha256": "485749eb369c0f499b0e34a9ae616f803e22ce4e81d500dc056abf2f0dea8ba1",
+      "recordedSha256": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4",
+      "alreadyUnboundAtIntake": true
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "32ca68874463e954dfccdd211145fa410aaf61bc351001ccc9dd651523a244cd",
+      "afterSha256": "c1149f878874858589737930b2c458173cdf2bb98a41a4b51fe18f486260c027",
+      "recordedSha256": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245",
+      "alreadyUnboundAtIntake": true
+    }
+  ],
+  "newRuntimeDependencies": [
+    {
+      "path": "packages/clinical-content/src/question-program-batch6-accepted-data-20261112.ts",
+      "sha256": "0855b1ba9ecead9905e770765a644504556fb0e8f9309cd409d65223656c855f",
+      "presentInOldBinding": false
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch6-accepted-20261112.ts",
+      "sha256": "39fccc832bc746049e0f5e5ba908687c12480f49e8d058f5b9ccb8c6d0e21903",
+      "presentInOldBinding": false
+    }
+  ],
+  "constraints": {
+    "gitUsed": false,
+    "networkUsed": false,
+    "agentsUsed": false,
+    "installs": false,
+    "deployed": false,
+    "evidenceRebound": false,
+    "topicSourceModulesEdited": false,
+    "domainRuntimeEdited": false,
+    "domainProgressionEdited": false,
+    "balanceEdited": false,
+    "cloudOrSaveRuntimeEdited": false
+  }
+}

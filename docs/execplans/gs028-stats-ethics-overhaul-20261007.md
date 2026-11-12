@@ -13979,3 +13979,278 @@ tools/question-quality/topic-acceptance-batch5-config-20261111.mjs
 ```
 
 Manager follow-up: inspect the scoped release-test adapters and frozen provenance, run the management/native-phone browser acceptance and own backup/rollout. No other known failing suite/typecheck/boundary/build remains. Work is local and uncommitted; opening pathways unchanged.
+
+
+## rebind 35 (release worktree, frozen topic batch 6 + pediatric planning bindings)
+
+The accepted port and native evidence are written locally in GS-release, based on manager-stated HEAD a8da0714. Final validation has **three unresolved clinical protected-source pin failures** caused by a concurrent edit described below. Main was read-only. Exact paths, dispositions, frozen hashes and other observed differences are recorded in `.local-dev/release-verify/port35-20261112.json`. Raw command logs, staging, controls and receipts are in `.local-dev/release-port35-20261112/`.
+
+### Frozen acceptance and runtime integration
+
+The default matches **1,340 cases / 1,535 nodes / 1,039 meanings / 690 authority rows**. Clinical JSON SHA-256 is `4eef72623a1de415f302d7d44819b40a4749b523d18c325102ad35b5d0c5d2e7`. Manifest SHA-256 is `75c681e29d13d5dbe27fa5f5599244276f9e314b3e9ef1b95f0a91fa41a0ad91`. All four accepted standalone cases and family records retain `needs_clinician_review`. The 686 earlier rows and 1,035 meaning definitions pass exact preservation checks. Fifteen accepted atomic claims and seven source records are exported directly from the frozen intake into the release ledger.
+
+The eight wait bindings use exact accepted case/node/question/choice/label tuples. Their dispositions are `not_executed/future_planned`. The pediatric gate checks complete timing declarations and exact planning records. The domain regression and reload fixture use real authored age/sex, art and family identities. All four children appear in the actual journey, with 13 admissions across the four accepted cases. The pre-gate control admits only the CDH review among these cases. The original 20 family objects are preserved, with four accepted families appended. Family-registry SHA changes from `8ce0fd8265aabb096dadc92bb42a2a538d9194c3896c458e7c3184d129fcf45c` to `200c354f793202a1a9dd8b9683ec6b989f90063d188401e9e57a4c5e5b7f51ca`.
+
+The accepted builder reproduces generated data SHA `0855b1ba9ecead9905e770765a644504556fb0e8f9309cd409d65223656c855f` and dispositions exactly in staging. Its generated acceptance wrapper has SHA `39fccc832bc746049e0f5e5ba908687c12480f49e8d058f5b9ccb8c6d0e21903`. The separately accepted runtime overlay has raw receipt SHA `4b90513e2ab08a9c5f18934ab56860ed7a8b411c56adc63a41a779933794e7b2` and LF-normalized release SHA `52944d7a9de7953dd6ca71ee9d380a1886bf2c24561d13ebb2c2383a2200a3ea`. The builder's ordinary `--check` flags that intentional wrapper difference. `verify-builder.mjs` verifies both recorded wrapper versions and stages generated outputs without overwriting the runtime overlay.
+
+The two repaired draft-dependent authoring test postimages are archived exactly in `question-topic-batch6-repaired-tests-20261112.json`, following port 34's release adapter. The clinical suite executes 29 accepted-only membership regressions over all six frozen acceptance archives. This does not claim execution of the two full raw authoring modules. Earlier 25 repaired postimages remain intact. All 100 prior required-absence checks are preserved, with 102 checks across 75 unique paths now executing. Four additional frozen raw-input presence checks bind the acceptance's recorded hashes and reviewed serialized bytes. Every original source capture and authorization-history prefix remains present. The management-mode spec matches both trees byte-for-byte at SHA `4e2fd18de0bbb004b0494bea1ea3b6af143fd2e35658a6fefd1f70a00b6fef11`.
+
+### Native CHECK and controls
+
+| Arm | Commands | Closing cents | Completed | Walkouts | First finish |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Published rebind 34 | 31,565 | 6,511,330 | 491 | 0 | 22,821 |
+| Old content with current runtime | 31,565 | 6,511,330 | 491 | 0 | 22,821 |
+| Batch 6 with the prior pediatric gate | 31,451 | 6,425,067 | 491 | 0 | 22,690 |
+| Shipping batch 6 and accepted gate | **31,511** | **6,524,517** | **492** | **0** | **22,747** |
+
+The unchanged actual journey and lower helper ran from the original seed and funded Level 4 opening. All report, best/latest, immutable-first, daily-round, comfort, supplier-saving, retirement and cash assertions pass. The original integration guard remains SHA `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`. Old-content/current-runtime reproduces all nine prior serialized save values and three reports byte-for-byte. The prior-gate control confirms that the source loader read the original admission module. It holds content and current bindings constant while isolating the gate change. The gate adds 60 commands, 99,450 cents, one completion and 57 first-finish ticks relative to that arm. The combined change versus rebind 34 is -54 commands, +13,187 cents, +1 completion and -74 first-finish ticks. These differences follow the changed clinical pool and admission eligibility. Balance and pacing input hashes match their entry values.
+
+The actual content-pacing CLI reports first finish 22,747, 5,337,091 cents, 381 completions and zero walkouts. It passes the 20,421–24,959 interval at +0.2512119876597607% against the 22,690 reference. Shipping unlock is 19,689, final tick 29,464 and minimum cash 1,597,248 cents.
+
+Cash reconciliation is `1,689,500 + 17,849,400 - 408,429 - 11,429,954 - 1,176,000 = 6,524,517`. Relative to rebind 34, gross income falls 54,300, stock spending falls 29,319 and operating spending falls 38,168, producing the 13,187-cent increase. Opening and capital amounts reconcile in every arm.
+
+All three reports change. Scores become `62.67926869955808 / 66.45754055477256 / 45.381510275164956`, with qualifying samples `51 / 49 / 50`. Launch assertions use the verified first score and display `62.67`. The 3,200-action entry fixture measures **9,119 records**, retaining its 8,500-record floor and existing timeout. All nine actual saves round-trip through the production codecs/pages/wire within their existing limits, preserving FSRS and frozen fields.
+
+| Checkpoint | Tick before → after | Cash before → after |
+| --- | ---: | ---: |
+| integration-l4 | 4623 → 4684 | 2741700 → 2792500 |
+| integration-build | 4623 → 4684 | 1565700 → 1616500 |
+| integration-preparing | 19764 → 19690 | 4731703 → 4652289 |
+| integration-running | 19901 → 19827 | 4795250 → 4676445 |
+| integration-final | 22820 → 22746 | 5371449 → 5337091 |
+| integration-finish | 22821 → 22747 | 5371649 → 5337091 |
+| integration-repeat-final | 26480 → 26403 | 6188945 → 6181501 |
+| integration-repeat | 26481 → 26404 | 6188945 → 6181501 |
+| integration-lower-repeat | 29538 → 29464 | 6511330 → 6524517 |
+
+Canonical publication used `verify-staged.mjs` followed by `publish-verified.mjs`. History 29→30 preserves all prior entries and 606 previous input hashes. The established liveCap correction is applied. Current binding contains 609 inputs, including 460 clinical inputs. All 25 legacy schema loads and 120-minute continuations are regenerated with the actual reducer. Their sole changes are the four new blank concept histories. Existing frozen definitions, learning histories and lateProgression fields match the original evidence. The old-content controls reproduce all 25 earlier continuations.
+
+| Evidence artifact | Before SHA-256 | After SHA-256 |
+| --- | --- | --- |
+| `tools/qa/level-five-integration-results-20261012.json` | `ab129da534ee852be0a1352be75fc591de64c82e289cec829d99f66a56d9965f` | `0184edeb7f8958509f3f891cc16ba902c38cddc6ac282abb5e334c7311e1a3df` |
+| `tests/fixtures/level-five-integration-checkpoints-20261012.json` | `2426cc4daa325042735f57b4f5f68bbca7ce5ee86433b17144199192e74654a4` | `3ae9ec7864795e0b0b8924e8acad07f66248a04e1762945e003cf4f7ecf8193e` |
+| `tests/fixtures/level-five-legacy-behavior-20261012.json` | `cde94c0a5c543846b83915c4450ed5a58491c8ef2cb431af24c66630b1c251f0` | `6570dc30860ac6e5bdfe04c8b37fff187c122e3899018e2d5700e0b6f121967d` |
+
+Changed bound input hashes are also retained in inputHistory and the disposition receipt.
+
+```text
+packages/clinical-content/src/answer-choice-timing.ts
+  before 32ca68874463e954dfccdd211145fa410aaf61bc351001ccc9dd651523a244cd
+  after  c1149f878874858589737930b2c458173cdf2bb98a41a4b51fe18f486260c027
+packages/clinical-content/src/index.ts
+  before 80f335e1752faa411561443223f30b8a59e0d1a4dd65d89641db04ae6e21a017
+  after  485749eb369c0f499b0e34a9ae616f803e22ce4e81d500dc056abf2f0dea8ba1
+packages/clinical-content/src/question-program-batch5-acceptance-test-support.ts
+  before d21ecba658dbfb8c1e3962d37aff8b50b5af7e52e746293d80e607a1640c082a
+  after  656c21f99547f2519e69c9843a0a089c02b49d7c0cf81d70e3c3bc2d9be9b7d2
+packages/clinical-content/src/question-program-batch6-acceptance-test-support.ts
+  before (absent)
+  after  c5b17f23e4be2bf2ab991036dd9f6167b230a06c75b3a3a8a6dcf6f941e761af
+packages/clinical-content/src/question-program-batch6-accepted-20261112.ts
+  before (absent)
+  after  52944d7a9de7953dd6ca71ee9d380a1886bf2c24561d13ebb2c2383a2200a3ea
+packages/clinical-content/src/question-program-batch6-accepted-data-20261112.ts
+  before (absent)
+  after  0855b1ba9ecead9905e770765a644504556fb0e8f9309cd409d65223656c855f
+packages/clinical-content/src/question-ship-manifest.ts
+  before 626a052bac091812c2ef6053d7e56bed18c88849a093de767d6f14a0c54d9ab0
+  after  49c8f1e34b93d9815e5e9ec5cbda1c46e41ac0c46c74440c24a903d35e6f0883
+packages/clinical-content/src/synthetic-content.ts
+  before bfc1c6c3051d46543b6f2ca13efa90d2683924d78f6d15506aef468eb90c538f
+  after  73ebbee54704c8cc86d0bba3851844ff7674c6033a8e493f39c41bce52227a83
+packages/game-domain/src/clinical-case-eligibility.ts
+  before 92238a6416d765813e7e154e4bc4173a5bd19c89ecbad1a9a9769cde0f3c73a8
+  after  c55d0d3ad2ba1d1074b911265a9fe3b385a5c871d415d5db811cc29d1960e4a7
+packages/game-domain/src/test-choice-orders.ts
+  before 70830c0fe17b00a8e712cff0e7bc09b0603830fa1fb2e96ddf6ce8bc0c81b205
+  after  793450bed94248300965c719be76fd068d35b3f59ba899450568ddbe73f502fe
+```
+
+### Exact validation counts and remaining failures
+
+All seven workspace suites ran with `CI=true` and threads, using two workers and four for player. Final counts are below.
+
+| Workspace | Files | Passed | Failed | Skipped |
+| --- | ---: | ---: | ---: | ---: |
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 432 | 5291 | 0 | 0 |
+| balance-config | 26 | 168 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 138 | 1708 | 3 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 211 | 5894 | 0 | 1 |
+| **Total** | **830** | **13,268** | **3** | **1** |
+
+The single skip matches the existing incremental-evidence 26,710-command oracle skip. Seven workspace typechecks, player build, boundaries and launcher checks, the actual pacing CLI, three pacing unit tests and 33 clinical-lint tests exit zero. Boundaries execute against the checksum-verified read-only 7,855-path index inventory. Focused acceptance/membership tests pass 55/55, domain bindings pass 24/24 and saves/charts pass 14/14. Eight new save-compatibility tests cover fresh pediatric identity/art/family, format-3 reopen and scoring, retired snapshots and committed admission journals. Existing Level 4/5 goals, frozen encounters and FSRS histories are included in the full passing domain/player suites. Raw output and exact commands are retained in `validation-summary.json` and the named `.log` files. The initial domain run had 26 input/legacy evidence failures and one old launch-score pin failure. The final domain run is green. No pure timeout remains.
+
+During validation, a concurrent edit changed `apps/player/src/session/cloud/automaticResolution.test.ts` after the worker entry capture. It widens the upload-opening check from 400 ms to 5,000 ms and adds a comment about the held upload gate. This worker preserved the source and captured the exact diff. Entry hash is `09726190a2b74f2c10864ea2b97bb1d3ac5d451365beddd5d66864b850ef482a`, observed hash is `65e47a749ca545ea166250bf3299d5ac5d2f9dac3f305717257c7d541c439790`. The full player suite passes with that source. Its existing clinical pins still require the entry bytes, producing these three failures.
+
+- `question-flags3-20261107.test.ts` — flags3 exact owner-flag candidates and retained live source leaves every existing protected source and decision file byte-exact
+- `question-stats1-20261108.test.ts` — stats1 short single-skill candidates without live acceptance preserves every protected source/capture through the exact authorized standard/test-hook migration
+- `question-stats1-acceptance-20261108.test.ts` — stats1 exact manager acceptance and frozen identities pins each authorized existing-source delta before preserving old capture assertions
+
+The worker requested manager attribution/authorization asynchronously and received no answer before this handoff. The brief's “Ship ONLY” scope covers the two accepted batch-6 lanes. The timeout edit is recorded separately as `preserved-concurrent`, and its source pins retain the entry requirement. The remaining action is a manager scope decision on that exact edit. If accepted, append its precise authorized delta through the existing pin mechanism and rerun clinical-content. Native inputs remain bound, so this test-only reconciliation requires no new native journey or history entry.
+
+### Paths and ownership
+
+There are 78 worker-owned public changes plus one preserved concurrent test edit. The disposition record provides every path's source/entry/current hashes and method, along with the complete list of other observed differences excluded from this port.
+
+```text
+apps/player/src/App.cloudLifecycle.test.tsx
+apps/player/src/questionProgramBatch6SaveCompatibility.test.ts
+apps/player/src/session/cloud/openingUploadLarge.test.ts
+apps/player/src/session/levelFiveLaunch.test.tsx
+apps/player/src/session/topicRuntimeBindings.test.ts
+docs/execplans/gs028-stats-ethics-overhaul-20261007.md
+docs/execplans/question-topic-acceptance-batch6-20261112.md
+docs/execplans/release-port35-20261112.md
+docs/execplans/topic-runtime-bindings-batch4-20261111.md
+docs/handoffs/CURRENT_THREAD_HANDOFF.md
+docs/research/question-topic-acceptance-batch6-20261112.md
+docs/research/question-topic-acceptance-batch6-dispositions-20261112.json
+docs/research/question-topic-acceptance-batch6-files-20261112.json
+docs/research/question-topic-acceptance-batch6-lint-20261112.json
+docs/research/question-topic-acceptance-batch6-packet-20261112.json
+docs/research/question-topic-acceptance-batch6-source-freeze-20261112.json
+docs/research/question-topic-acceptance-batch6-validation-20261112.json
+docs/research/sources-question-topic-acceptance-batch6-release-20261112.json
+docs/research/topic-runtime-bindings-batch4-20261111.md
+packages/clinical-content/src/answer-choice-timing.test.ts
+packages/clinical-content/src/answer-choice-timing.ts
+packages/clinical-content/src/index.ts
+packages/clinical-content/src/patient-library-wording-repair.test.ts
+packages/clinical-content/src/question-flags3-20261107.test.ts
+packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts
+packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts
+packages/clinical-content/src/question-n4-acceptance-20261110.test.ts
+packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts
+packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts
+packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts
+packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts
+packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts
+packages/clinical-content/src/question-program-batch5-acceptance-test-support.ts
+packages/clinical-content/src/question-program-batch6-acceptance-20261112.test.ts
+packages/clinical-content/src/question-program-batch6-acceptance-test-support.ts
+packages/clinical-content/src/question-program-batch6-accepted-20261112.ts
+packages/clinical-content/src/question-program-batch6-accepted-data-20261112.ts
+packages/clinical-content/src/question-ship-manifest.test.ts
+packages/clinical-content/src/question-ship-manifest.ts
+packages/clinical-content/src/question-stats1-20261108.test.ts
+packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts
+packages/clinical-content/src/question-topic-release-membership-20261112.test.ts
+packages/clinical-content/src/synthetic-content.ts
+packages/game-domain/src/clinical-case-eligibility.ts
+packages/game-domain/src/test-choice-orders.ts
+packages/game-domain/tests/approved-clinical-admission.test.ts
+packages/game-domain/tests/level-five-launch.test.ts
+packages/game-domain/tests/topic-runtime-bindings.test.ts
+tests/fixtures/level-five-integration-checkpoints-20261012.json
+tests/fixtures/level-five-legacy-behavior-20261012.json
+tools/qa/level-five-integration-results-20261012.json
+tools/question-quality/build-topic-acceptance-batch6-20261112.mjs
+tools/question-quality/capture-topic-acceptance-batch6-20261112.mjs
+tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json
+tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json
+tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json
+tools/question-quality/fixtures/question-n4-release-source-pins-20261110.json
+tools/question-quality/fixtures/question-program-batch1-release-source-pins-20261111.json
+tools/question-quality/fixtures/question-program-batch2-release-source-pins-20261111.json
+tools/question-quality/fixtures/question-program-batch3-release-source-pins-20261111.json
+tools/question-quality/fixtures/question-program-batch4-release-source-pins-20261111.json
+tools/question-quality/fixtures/question-program-batch5-release-source-pins-20261111.json
+tools/question-quality/fixtures/question-program-batch6-release-source-pins-20261112.json
+tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json
+tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json
+tools/question-quality/fixtures/question-topic-acceptance-batch6-additional-before-20261112.json
+tools/question-quality/fixtures/question-topic-acceptance-batch6-before-20261112.json
+tools/question-quality/fixtures/question-topic-acceptance-batch6-literal-name-corrections-20261112.json
+tools/question-quality/fixtures/question-topic-acceptance-batch6-selection-20261112.json
+tools/question-quality/fixtures/question-topic-acceptance-batch6-source-migration-20261112.json
+tools/question-quality/fixtures/question-topic-batch6-release-source-inventory-20261112.json
+tools/question-quality/fixtures/question-topic-batch6-repaired-tests-20261112.json
+tools/question-quality/freeze-topic-acceptance-batch6-source-20261112.mjs
+tools/question-quality/handoff-topic-acceptance-batch6-20261112.mjs
+tools/question-quality/integrate-topic-acceptance-batch6-20261112.mjs
+tools/question-quality/prepare-topic-acceptance-batch6-20261112.mjs
+tools/question-quality/review-topic-acceptance-batch6-20261112.mjs
+tools/question-quality/topic-acceptance-batch6-config-20261112.mjs
+```
+
+Preserved concurrent path is `apps/player/src/session/cloud/automaticResolution.test.ts`. The tree remains local and uncommitted. No Git, install, network, agent, browser, database or deployment action occurred. Manager review remains pending for the concurrent source delta and release rollout.
+
+
+## Port 35 follow-up resolved — manager commit 98c1bf38
+
+The manager explicitly authorized all three CI test timing edits from commit `98c1bf38`. The current manager-stated HEAD is `98c1bf38`. This resolution supersedes the pending-source decision in the preceding rebind-35 handoff.
+
+The source hunks were verified exactly. `openingUploadLarge.test.ts` uses 600,000 ms, `automaticResolution.test.ts` uses 5,000 ms for its held-upload opening race, and the manual-marker Resume wait in `App.cloudLifecycle.test.tsx` uses a 5,000 ms timeout. The opening file also contains the existing verified rebind-35 record-count update. Each source matches its original text with precisely those authorized hunks and the record-count update applied.
+
+| Authorized source | Current SHA-256 |
+| --- | --- |
+| `apps/player/src/session/cloud/openingUploadLarge.test.ts` | `7a0bd048879218bc1a4967949f5e3d8b752ff5d8eafaee8dbe2adcde5bea585d` |
+| `apps/player/src/session/cloud/automaticResolution.test.ts` | `65e47a749ca545ea166250bf3299d5ac5d2f9dac3f305717257c7d541c439790` |
+| `apps/player/src/App.cloudLifecycle.test.tsx` | `1e9c701b6dbdd5834809218f08760feffd2d5980ee1f7d077a7f9b09715c7b0c` |
+
+Three clinical pin fixtures cover the opening-upload and automatic-resolution sources, producing six direct source-pin entries. The opening-upload requirement already matched its combined timing/count postimage, so an explicit authorization entry records that timing component at the same exact hash. The automatic-resolution requirement now binds its authorized postimage. The search of clinical and player save-compatibility tests found zero active source pins for App.cloudLifecycle. Historical capture files retain their original bytes.
+
+The six source-pin authorizations propagate through 12 fixture files and their 12 verifying tests. Independent verification proves that every earlier authorization entry is preserved, path sets and counts match their previous values, all capture hashes match, and each verifying test differs only in its fixture checksum literal. All 102 required-absence checks pass. Exact deltas and beforeimages are in `.local-dev/release-port35-20261112/followup-98c1bf38/`, with the append receipt in `guard-deltas-ci-timing-98c1bf38.json`.
+
+Fresh `CI=true` validation passes with threads. Clinical-content has **138 files / 1,711 passed / 0 failed**. Player has **432 files / 5,291 passed / 0 failed**. The focused Level 5 integration suite passes **36 tests**, and all seven workspace typechecks exit zero. Combining those complete reruns with the other five previously passing suites gives **830 files / 13,271 passed / 0 failed / 1 existing skip**. The original three failures remain captured in the earlier reports.
+
+`npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port35-20261112/followup-98c1bf38/clinical.json`
+
+```text
+ Test Files  138 passed (138)
+      Tests  1711 passed (1711)
+   Duration  174.57s (transform 14.14s, setup 0ms, import 296.03s, tests 36.04s, environment 9ms)
+```
+`npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=4 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port35-20261112/followup-98c1bf38/player.json`
+
+```text
+ Test Files  432 passed (432)
+      Tests  5291 passed (5291)
+   Duration  823.77s (transform 46.43s, setup 0ms, import 942.41s, tests 2297.94s, environment 35ms)
+```
+`npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/level-five-integration.test.ts --pool=threads --maxWorkers=1 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port35-20261112/followup-98c1bf38/binding.json`
+
+```text
+ Test Files  1 passed (1)
+      Tests  36 passed (36)
+   Duration  119.12s (transform 9.42s, setup 0ms, import 14.12s, tests 104.89s, environment 0ms)
+```
+
+All 609 bound inputs, the three canonical evidence artifact hashes and the 30-entry history still match the accepted rebind-35 publication. Native totals remain **31,511 commands / 6,524,517 cents / 492 completions / 0 walkouts**, with first finish 22,747. The source-pin reconciliation adds no new evidence history entry. The earlier target clinical hash and manifest counts remain verified by the strict scope audit.
+
+The file dispositions now attribute all three timing hunks to the manager, including the opening file's combined ownership with the worker's record-count update. Exact paths and exclusions are in `.local-dev/release-verify/port35-20261112.json`.
+
+Follow-up guard files are listed below. Coordination updates append this resolution to GS028, CURRENT_THREAD_HANDOFF and the active release-port35 plan.
+
+```text
+tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json
+packages/clinical-content/src/question-flags3-20261107.test.ts
+tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json
+packages/clinical-content/src/question-stats1-20261108.test.ts
+tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json
+packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts
+tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json
+packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts
+tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json
+packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts
+tools/question-quality/fixtures/question-n4-release-source-pins-20261110.json
+packages/clinical-content/src/question-n4-acceptance-20261110.test.ts
+tools/question-quality/fixtures/question-program-batch1-release-source-pins-20261111.json
+packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts
+tools/question-quality/fixtures/question-program-batch2-release-source-pins-20261111.json
+packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts
+tools/question-quality/fixtures/question-program-batch3-release-source-pins-20261111.json
+packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts
+tools/question-quality/fixtures/question-program-batch4-release-source-pins-20261111.json
+packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts
+tools/question-quality/fixtures/question-program-batch5-release-source-pins-20261111.json
+packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts
+tools/question-quality/fixtures/question-program-batch6-release-source-pins-20261112.json
+packages/clinical-content/src/question-program-batch6-acceptance-20261112.test.ts
+```
+
+The port-35 validation is complete locally. The pending source decision is resolved. Work is uncommitted, and manager review and release coordination are next.

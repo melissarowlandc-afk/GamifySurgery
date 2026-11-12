@@ -167,7 +167,7 @@ describe("topic batch3 complete exact PASS acceptance",()=>{
     const migration=read("tools/question-quality/fixtures/question-topic-acceptance-batch3-source-migration-20261111.json");
     expect(migration.files.length).toBeGreaterThanOrEqual(9);
     const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch3-release-source-pins-20261111.json",import.meta.url));
-    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("12114f123e309fae37d22eb2639570d9fbc01738f8ad185e219f54920a350677");
+    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("c68796573c33ab9a9263ea0dc12183e35616286be1f6fdab83c4ca027e18daac");
     const releasePins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;testSupportSha256:string;paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string}>};
     expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-topic-acceptance-batch3-source-migration-20261111.json",import.meta.url))).digest("hex")).toBe(releasePins.capturedFixtureSha256);
     expect(createHash("sha256").update(readFileSync(new URL("./question-program-batch3-acceptance-test-support.ts",import.meta.url))).digest("hex")).toBe(releasePins.testSupportSha256);

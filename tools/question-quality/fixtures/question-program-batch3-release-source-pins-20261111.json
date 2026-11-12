@@ -18,7 +18,7 @@
       "mainBeforeSha256": "6b6bda28d43a87d16365778aed15e937314d43774c22398cd282ddea47323d95",
       "mainAfterSha256": "da794d14e7e4acf85cc487bfce7a07310d04461779e2dc2f985c89afdf44ba52",
       "releaseBeforeSha256": "520fe53ecd0e037be70f04c7500a0b5c47f2e11e546893c63754d27ab409ad90",
-      "requiredReleaseSha256": "8574d95eabce099d6481c275a7adcc19519eb3a783d8557229591e5c4aa82016",
+      "requiredReleaseSha256": "366b6a068c752318407a9bf50131f7a6486e37c1aacada0e2e7cc659913daee9",
       "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
     },
     {
@@ -299,6 +299,158 @@
           "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
           "beforeSha256": "279c01b385100776b7b960674a4c4e907434f4da187e04202f13012e62b259f3",
           "afterSha256": "8574d95eabce099d6481c275a7adcc19519eb3a783d8557229591e5c4aa82016"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port35-port",
+      "priorFixtureSha256": "12114f123e309fae37d22eb2639570d9fbc01738f8ad185e219f54920a350677",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-test-support.ts",
+          "mainBeforeSha256": "42e459846ffd5cc9e1022dc1d5601e88948f6764c49e0b781ea75ab981d01f7e",
+          "mainAfterSha256": "5459f2c4d6c9ad166fa1cb6ad6677dbffbda08197bf096dde89e016ea11f3aa9",
+          "releaseBeforeSha256": "dbd27f1580405ee5bee9308561674ac26e5f5446d014534fe2f32bf501c5b2db",
+          "requiredReleaseSha256": "3d02f6fbeb9fa81caf1948a03f34d26232606e8d3b15afd68658e9f53af9661c",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "6b6bda28d43a87d16365778aed15e937314d43774c22398cd282ddea47323d95",
+          "mainAfterSha256": "da794d14e7e4acf85cc487bfce7a07310d04461779e2dc2f985c89afdf44ba52",
+          "releaseBeforeSha256": "520fe53ecd0e037be70f04c7500a0b5c47f2e11e546893c63754d27ab409ad90",
+          "requiredReleaseSha256": "8574d95eabce099d6481c275a7adcc19519eb3a783d8557229591e5c4aa82016",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        },
+        {
+          "path": "tests/fixtures/diagnostic-workload.ts",
+          "mainBeforeSha256": "12c41f69689e0888d9510f01fea90e69c2c00a3af712d5eec83e1b90185d8559",
+          "mainAfterSha256": "3862651c9034c43ed2260de97cd1a990423b391da1dcca621a6a9bdc7195399d",
+          "releaseBeforeSha256": "a21f273bc9770967388e9d6d718adece4581765f40c36dbbc7d11650245a6318",
+          "requiredReleaseSha256": "bcc687c06b886fe28fefbe3fc09edc8f0b3dc9492ff9460fd679f18b6605cd5c",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+          "beforeSha256": "8574d95eabce099d6481c275a7adcc19519eb3a783d8557229591e5c4aa82016",
+          "afterSha256": "e1a997952c8ca2db19dce9299d40b79f8c6b8d84e912c3f92591be44b654607b"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port35-evidence",
+      "priorFixtureSha256": "012cc0bbdcb861836edbe9cfac020eda1bdbf4308ffcc19055c9fb5993a27a08",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-test-support.ts",
+          "mainBeforeSha256": "42e459846ffd5cc9e1022dc1d5601e88948f6764c49e0b781ea75ab981d01f7e",
+          "mainAfterSha256": "5459f2c4d6c9ad166fa1cb6ad6677dbffbda08197bf096dde89e016ea11f3aa9",
+          "releaseBeforeSha256": "dbd27f1580405ee5bee9308561674ac26e5f5446d014534fe2f32bf501c5b2db",
+          "requiredReleaseSha256": "3d02f6fbeb9fa81caf1948a03f34d26232606e8d3b15afd68658e9f53af9661c",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "6b6bda28d43a87d16365778aed15e937314d43774c22398cd282ddea47323d95",
+          "mainAfterSha256": "da794d14e7e4acf85cc487bfce7a07310d04461779e2dc2f985c89afdf44ba52",
+          "releaseBeforeSha256": "520fe53ecd0e037be70f04c7500a0b5c47f2e11e546893c63754d27ab409ad90",
+          "requiredReleaseSha256": "e1a997952c8ca2db19dce9299d40b79f8c6b8d84e912c3f92591be44b654607b",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        },
+        {
+          "path": "tests/fixtures/diagnostic-workload.ts",
+          "mainBeforeSha256": "12c41f69689e0888d9510f01fea90e69c2c00a3af712d5eec83e1b90185d8559",
+          "mainAfterSha256": "3862651c9034c43ed2260de97cd1a990423b391da1dcca621a6a9bdc7195399d",
+          "releaseBeforeSha256": "a21f273bc9770967388e9d6d718adece4581765f40c36dbbc7d11650245a6318",
+          "requiredReleaseSha256": "bcc687c06b886fe28fefbe3fc09edc8f0b3dc9492ff9460fd679f18b6605cd5c",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+          "beforeSha256": "e1a997952c8ca2db19dce9299d40b79f8c6b8d84e912c3f92591be44b654607b",
+          "afterSha256": "1a793bf923c4c32a68c53f20aa113d608a5265807c82bdf55162ea8eb5e21782"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port35-entry-size",
+      "priorFixtureSha256": "2b78763c9307d613fbd8934c82039dbb0e9a7ac78479c31a67f1f76b1bc25327",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-test-support.ts",
+          "mainBeforeSha256": "42e459846ffd5cc9e1022dc1d5601e88948f6764c49e0b781ea75ab981d01f7e",
+          "mainAfterSha256": "5459f2c4d6c9ad166fa1cb6ad6677dbffbda08197bf096dde89e016ea11f3aa9",
+          "releaseBeforeSha256": "dbd27f1580405ee5bee9308561674ac26e5f5446d014534fe2f32bf501c5b2db",
+          "requiredReleaseSha256": "3d02f6fbeb9fa81caf1948a03f34d26232606e8d3b15afd68658e9f53af9661c",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "6b6bda28d43a87d16365778aed15e937314d43774c22398cd282ddea47323d95",
+          "mainAfterSha256": "da794d14e7e4acf85cc487bfce7a07310d04461779e2dc2f985c89afdf44ba52",
+          "releaseBeforeSha256": "520fe53ecd0e037be70f04c7500a0b5c47f2e11e546893c63754d27ab409ad90",
+          "requiredReleaseSha256": "1a793bf923c4c32a68c53f20aa113d608a5265807c82bdf55162ea8eb5e21782",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        },
+        {
+          "path": "tests/fixtures/diagnostic-workload.ts",
+          "mainBeforeSha256": "12c41f69689e0888d9510f01fea90e69c2c00a3af712d5eec83e1b90185d8559",
+          "mainAfterSha256": "3862651c9034c43ed2260de97cd1a990423b391da1dcca621a6a9bdc7195399d",
+          "releaseBeforeSha256": "a21f273bc9770967388e9d6d718adece4581765f40c36dbbc7d11650245a6318",
+          "requiredReleaseSha256": "bcc687c06b886fe28fefbe3fc09edc8f0b3dc9492ff9460fd679f18b6605cd5c",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+          "beforeSha256": "1a793bf923c4c32a68c53f20aa113d608a5265807c82bdf55162ea8eb5e21782",
+          "afterSha256": "d618161baa6d7fda40856cca6a03e958c00dfacd626150b01c029bdbe020acf0"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port35-ci-timing-98c1bf38",
+      "priorFixtureSha256": "4d75655009fac1b5ec8e1e9a092e91c97fe3ba3e686a7d5626cc0589ce53a3a6",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-test-support.ts",
+          "mainBeforeSha256": "42e459846ffd5cc9e1022dc1d5601e88948f6764c49e0b781ea75ab981d01f7e",
+          "mainAfterSha256": "5459f2c4d6c9ad166fa1cb6ad6677dbffbda08197bf096dde89e016ea11f3aa9",
+          "releaseBeforeSha256": "dbd27f1580405ee5bee9308561674ac26e5f5446d014534fe2f32bf501c5b2db",
+          "requiredReleaseSha256": "3d02f6fbeb9fa81caf1948a03f34d26232606e8d3b15afd68658e9f53af9661c",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "6b6bda28d43a87d16365778aed15e937314d43774c22398cd282ddea47323d95",
+          "mainAfterSha256": "da794d14e7e4acf85cc487bfce7a07310d04461779e2dc2f985c89afdf44ba52",
+          "releaseBeforeSha256": "520fe53ecd0e037be70f04c7500a0b5c47f2e11e546893c63754d27ab409ad90",
+          "requiredReleaseSha256": "d618161baa6d7fda40856cca6a03e958c00dfacd626150b01c029bdbe020acf0",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        },
+        {
+          "path": "tests/fixtures/diagnostic-workload.ts",
+          "mainBeforeSha256": "12c41f69689e0888d9510f01fea90e69c2c00a3af712d5eec83e1b90185d8559",
+          "mainAfterSha256": "3862651c9034c43ed2260de97cd1a990423b391da1dcca621a6a9bdc7195399d",
+          "releaseBeforeSha256": "a21f273bc9770967388e9d6d718adece4581765f40c36dbbc7d11650245a6318",
+          "requiredReleaseSha256": "bcc687c06b886fe28fefbe3fc09edc8f0b3dc9492ff9460fd679f18b6605cd5c",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        }
+      ],
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+          "beforeSha256": "d618161baa6d7fda40856cca6a03e958c00dfacd626150b01c029bdbe020acf0",
+          "afterSha256": "366b6a068c752318407a9bf50131f7a6486e37c1aacada0e2e7cc659913daee9"
         }
       ]
     }

@@ -23,6 +23,7 @@ import {
   QUESTION_PROGRAM_BATCH3_ACCEPTED_TEST_ORDER_RECORDS,
   QUESTION_PROGRAM_BATCH4_ACCEPTED_TEST_ORDER_RECORDS,
   QUESTION_PROGRAM_BATCH5_ACCEPTED_TEST_ORDER_RECORDS,
+  QUESTION_PROGRAM_BATCH6_ACCEPTED_TEST_ORDER_RECORDS,
 } from "@gamify-surgery/clinical-content";
 import type { EncounterState } from "./types";
 import { QUESTION_NEW_N1_TEST_ORDER_RECORDS } from "./question-new-n1-test-orders";
@@ -2238,6 +2239,7 @@ export const EXACT_TEST_CHOICE_ORDER_RECORDS: readonly ExactTestChoiceOrderRecor
   ...QUESTION_PROGRAM_BATCH3_ACCEPTED_TEST_ORDER_RECORDS,
   ...QUESTION_PROGRAM_BATCH4_ACCEPTED_TEST_ORDER_RECORDS,
   ...QUESTION_PROGRAM_BATCH5_ACCEPTED_TEST_ORDER_RECORDS,
+  ...QUESTION_PROGRAM_BATCH6_ACCEPTED_TEST_ORDER_RECORDS,
 ];
 
 // BEGIN N3 exact-order append - external-only records, old identities retained.
@@ -2267,15 +2269,24 @@ export function getExactTestChoiceOrderRecord(
   node: DecisionNode,
   choiceId: string,
 ): ExactTestChoiceOrderRecord | null {
+  return getExactTestChoiceOrderRecordForCase(encounter.frozenCase.id, node, choiceId);
+}
+
+/** Shared exact metadata lookup for admission checks and frozen encounters. */
+export function getExactTestChoiceOrderRecordForCase(
+  caseId: string,
+  node: DecisionNode,
+  choiceId: string,
+): ExactTestChoiceOrderRecord | null {
   const choice = node.answerChoices.find((candidate) => candidate.id === choiceId);
   if (!choice) return null;
   const entry = recordByExactKey.get(
-    `${encounter.frozenCase.id}|${node.id}|${node.questionVariantId}|${choice.id}`,
+    `${caseId}|${node.id}|${node.questionVariantId}|${choice.id}`,
   );
   if (!entry || entry.choiceLabel !== choice.label) return null;
   const timingEntry = ANSWER_CHOICE_TIMING_REGISTRY.find(
     (candidate) =>
-      candidate.caseId === encounter.frozenCase.id &&
+      candidate.caseId === caseId &&
       candidate.nodeId === node.id &&
       candidate.questionVariantId === node.questionVariantId,
   );
