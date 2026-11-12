@@ -97,4 +97,4 @@ it("opens 9,158 immutable records without an upload barrier and prepares only a 
       writeFileSync(new URL("measurements.json", folder), JSON.stringify(measurements, null, 2));
     }
   } finally { read.mockRestore(); }
-}, 240_000); // Includes building 3,200 real reducer actions, outside all timed steps.
+}, 600_000); // Includes building 3,200 real reducer actions, outside all timed steps; slow CI runners took >220s.

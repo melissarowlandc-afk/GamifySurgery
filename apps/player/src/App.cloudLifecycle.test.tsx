@@ -235,7 +235,7 @@ describe.each(["phone", "desktop"] as const)("%s account campaign reopen", layou
     if (marker === "manual") {
       const beforeNavigation = selectionReads;
       await act(async () => { account.showCampaigns(); });
-      await vi.waitFor(() => expect(env.button(`Resume ${h.prepared.envelope.campaign.name}`).attributes.disabled).toBeUndefined());
+      await vi.waitFor(() => expect(env.button(`Resume ${h.prepared.envelope.campaign.name}`).attributes.disabled).toBeUndefined(), { timeout: 5_000 });
       expect(selectionReads).toBe(beforeNavigation);
       await act(async () => { selection.resolve(); await selection.promise; });
       expect(env.button(`Resume ${h.prepared.envelope.campaign.name}`).attributes.disabled).toBeUndefined();

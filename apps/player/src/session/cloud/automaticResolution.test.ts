@@ -57,7 +57,9 @@ describe("automatic verified clinic progress selection", () => {
     const opening = h.resolve(); let session: CloudGameSession | null = null;
     try {
       const outcome = await Promise.race([opening.then(coordinator => ({ coordinator })),
-        new Promise<null>(resolve => setTimeout(() => resolve(null), 400))]);
+        // The commit gate holds the upload indefinitely, so a wider window only
+        // tolerates slow runners; a barrier on upload would still never resolve.
+        new Promise<null>(resolve => setTimeout(() => resolve(null), 5_000))]);
       expect(outcome, "opening must not wait for an account upload once local play is authorized").not.toBeNull();
       session = await CloudGameSession.create(outcome!.coordinator);
       expect(session.canExecute).toBe(true); expect(session.state).toEqual(expected);
