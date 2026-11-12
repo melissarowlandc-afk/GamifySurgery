@@ -1,0 +1,26 @@
+--- a/apps/player/src/ui/RestartDialog.tsx
++++ b/apps/player/src/ui/RestartDialog.tsx
+@@ -2,6 +2,7 @@
+ import { createPortal } from "react-dom";
+ 
+ interface RestartDialogProps {
++  accountMode?: boolean;
+   paused: boolean;
+   onTogglePause: () => void;
+   onRestart: () => void;
+@@ -10,6 +11,7 @@
+ }
+ 
+ export function RestartDialog({
++  accountMode = false,
+   paused,
+   onTogglePause,
+   onRestart,
+@@ -62,6 +64,7 @@
+                   available in the Campaigns list. It does not affect GitHub
+                   or project files.
+                 </p>
++                {accountMode ? <p>The archived account clinic still uses one of your two cloud campaign slots. A fresh account clinic needs a free slot; you can create a new device-only clinic instead.</p> : null}
+                 <div className="dialog-actions">
+                   <button
+                     className="button button-secondary"

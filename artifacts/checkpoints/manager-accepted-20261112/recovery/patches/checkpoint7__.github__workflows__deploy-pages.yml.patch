@@ -1,0 +1,20 @@
+--- a/.github/workflows/deploy-pages.yml
++++ b/.github/workflows/deploy-pages.yml
+@@ -23,7 +23,7 @@
+       name: github-pages
+       url: ${{ steps.deployment.outputs.page_url }}
+     runs-on: ubuntu-latest
+-    timeout-minutes: 15
++    timeout-minutes: 75
+     steps:
+       - name: Check out repository
+         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+@@ -45,6 +45,8 @@
+           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+           VITE_ENABLE_LOCAL_PROTOTYPE_BYPASS: 'false'
++          VITE_CLOUD_SAVES_ENABLED: ${{ vars.VITE_CLOUD_SAVES_ENABLED || 'false' }}
++          VITE_CLOUD_SAVES_REGION: ${{ vars.VITE_CLOUD_SAVES_REGION || '' }}
+         run: npm run build:pages
+ 
+       - name: Configure GitHub Pages

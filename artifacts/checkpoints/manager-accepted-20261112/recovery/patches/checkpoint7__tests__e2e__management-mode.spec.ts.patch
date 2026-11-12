@@ -1,0 +1,160 @@
+--- a/tests/e2e/management-mode.spec.ts
++++ b/tests/e2e/management-mode.spec.ts
+@@ -1,8 +1,42 @@
+ import { mkdirSync } from "node:fs";
+ import { expect, test, type Page } from "@playwright/test";
+ import { installLevelOneVisualState, startClinic } from "./helpers";
++import { expectPhoneTargets, openDensityFixture, showClinicPanels } from "./ui-density-helpers";
+ 
+ const SCREENSHOT_DIRECTORY = "artifacts/screenshots";
++
++test("native phone management retains pause gates, employee controls, confirmation and one-tap exit", async ({ page }, info) => {
++  test.skip(info.project.name !== "phone-chrome", "Native phone replacement for the obsolete desktop-panel selectors.");
++  await page.setViewportSize({ width: 390, height: 844 }); await openDensityFixture(page, true);
++  const play = page.getByRole("button", { name: "Resume facility time", exact: true });
++  await play.click(); await expect(play).toHaveAttribute("aria-pressed", "true");
++  await page.getByRole("button", { name: "Manage", exact: true }).click();
++  const manage = page.locator(".mobile-manage"); await expect(manage).toBeVisible();
++  await expect(play).toBeDisabled();
++  await expect(page.getByRole("button", { name: "Pause facility time", exact: true })).toBeDisabled();
++  await expect(page.getByRole("button", { name: /^Facility speed/ })).toBeDisabled();
++  await expect(manage.getByRole("button", { name: "Done", exact: true })).toHaveCount(0);
++  await manage.locator(".mobile-manage-grid [data-staff-role-id]").first().click();
++  await manage.getByRole("button", { name: /^Employee details for / }).first().click();
++  await expect(manage.getByRole("button", { name: /^Increase .* salary$/ })).toBeVisible();
++  await manage.getByRole("button", { name: /^Fire / }).click();
++  const confirm = manage.getByRole("alertdialog", { name: /^Confirm firing / });
++  await expect(confirm).toBeVisible();
++  await expect(confirm.getByRole("button", { name: "Confirm Fire", exact: true })).toBeVisible();
++  await confirm.getByRole("button", { name: "Cancel", exact: true }).click();
++  await expect(confirm).toHaveCount(0);
++  await expectPhoneTargets(page); await expectNoHorizontalOverflow(page);
++  // The detail view's Close exits the complete menu in one tap, retaining the
++  // same shared-session pause restoration as desktop Done.
++  await manage.getByRole("button", { name: "Close Manage", exact: true }).click();
++  await expect(manage).toHaveCount(0); await expect(play).toBeEnabled();
++  await expect(play).toHaveAttribute("aria-pressed", "true");
++  await page.getByRole("button", { name: "Pause facility time", exact: true }).click();
++  await expect(play).toHaveAttribute("aria-pressed", "false");
++  await page.getByRole("button", { name: "Manage", exact: true }).click();
++  await page.getByRole("button", { name: "Close Manage", exact: true }).click();
++  await expect(play).toHaveAttribute("aria-pressed", "false");
++});
+ 
+ test.beforeAll(() => mkdirSync(SCREENSHOT_DIRECTORY, { recursive: true }));
+ 
+@@ -19,9 +53,51 @@
+   ).toBe(true);
+ }
+ 
++async function expectChartAnchoredToDesk(page: Page) {
++  const chart = page.locator(".chart-sheet");
++  await expect(chart).toHaveAttribute("data-placed", "true");
++  // Patient charts float at content height (unlike the old full-desk drawer).
++  // Check their real geometry after ResizeObserver settles, including the
++  // preferred width, horizontal clamping, short/tall pin, and usable height.
++  await expect.poll(() => chart.evaluate(sheet => {
++    const element = sheet as HTMLElement;
++    const desk = document.querySelector<HTMLElement>(".desk-workspace");
++    const area = desk?.closest("main");
++    const header = sheet.querySelector<HTMLElement>(".cs-head");
++    const scroll = sheet.querySelector<HTMLElement>(".cs-scroll");
++    if (!desk || !area || !header || !scroll) return ["Missing chart placement surface"];
++    const bounds = sheet.getBoundingClientRect(), deskBounds = desk.getBoundingClientRect(), areaBounds = area.getBoundingClientRect();
++    // Sum every sheet child (header, clinical-content notice, scroll body);
++    // the scroll body contributes its full content height.
++    const contentHeight = Array.from(element.children).reduce((total, child) =>
++      total + (child === scroll ? scroll.scrollHeight : child.getBoundingClientRect().height),
++    element.offsetHeight - element.clientHeight);
++    const minLeft = areaBounds.left + 8, maxRight = areaBounds.right - 8;
++    const width = Math.round(Math.min(1040, maxRight - minLeft));
++    const short = contentHeight < deskBounds.height;
++    const preferredLeft = short || deskBounds.width >= width ? deskBounds.left + (deskBounds.width - width) / 2 : deskBounds.left;
++    const left = Math.round(Math.max(minLeft, Math.min(preferredLeft, maxRight - width)));
++    const maxHeight = Math.round(Math.max(160, deskBounds.bottom - areaBounds.top - 8));
++    const checks = [
++      { name: "preferred width", actual: bounds.width, expected: width, tolerance: 1 },
++      { name: "centered/clamped left", actual: bounds.left, expected: left, tolerance: 1 },
++      { name: short ? "short chart top pin" : "tall chart bottom pin", actual: short ? bounds.top : bounds.bottom,
++        expected: short ? deskBounds.top : deskBounds.bottom, tolerance: 1 },
++      { name: "content height / play-area cap", actual: bounds.height, expected: Math.min(contentHeight, maxHeight), tolerance: 2 },
++    ];
++    const violations = checks.filter(check => Math.abs(check.actual - check.expected) > check.tolerance)
++      .map(check => `${check.name}: ${check.actual} instead of ${check.expected}`);
++    if (bounds.left < minLeft - 1 || bounds.right > maxRight + 1 || bounds.top < areaBounds.top + 7 || bounds.bottom > deskBounds.bottom + 1) {
++      violations.push("Chart exceeds its play-area / desk-bottom bounds");
++    }
++    return violations;
++  }), { message: "The content-sized patient chart follows the yielded desk" }).toEqual([]);
++}
++
+ test("Management Mode keeps its desk controls, lifecycle, and containment across responsive layouts", async ({
+   page,
+ }, testInfo) => {
++  test.skip(testInfo.project.name === "phone-chrome", "Native phone pause/exit/controls are exercised below; the phone has no desktop desk.");
+   await startManagementFixture(page, testInfo.project.name);
+ 
+   const managementTrigger = page.getByRole("button", {
+@@ -57,7 +133,7 @@
+   await page.getByRole("button", { name: "Resume facility time" }).click();
+   await expect(page.locator(".facility-pause-indicator")).toHaveCount(0);
+   await managementTrigger.click();
+-  await expect(page.getByText("MANAGEMENT MODE", { exact: true })).toBeVisible();
++  await expect(page.locator("#management-mode-title")).toHaveText("Management Mode");
+   await expect(
+     page.getByText("Facility time is stopped while you manage staff.", {
+       exact: true,
+@@ -169,6 +245,7 @@
+ test("Management Mode yields its desk to charts and tracks the splitter", async ({
+   page,
+ }, testInfo) => {
++  test.skip(testInfo.project.name === "phone-chrome", "The native phone uses sheets; desktop splitter behavior is checked on desktop projects.");
+   test.skip(
+     testInfo.project.name !== "laptop-chrome" && testInfo.project.name !== "desktop-chrome",
+     "Chart priority uses desktop workspace projects; splitter drag uses full-height desktop.",
+@@ -212,29 +289,26 @@
+   }
+   await expectNoHorizontalOverflow(page);
+ 
+-  await page.locator(".patient-tab").first().click();
+-  const chart = page.locator(".paper-chart");
++  // Compact workspaces intentionally consolidate the side rails. Prove their
++  // visible reveal action works before using a chart tab; never force a click.
++  await showClinicPanels(page);
++  // Use the checked-in patient placed in the fixture's exam room, not whichever
++  // new arrival happens to sort first (unadmitted patients cannot open charts).
++  await page.locator('.patient-tab[data-patient-chart-id="encounter.visual.patient.3"]').click();
++  const chart = page.locator(".chart-sheet");
+   await expect(chart).toBeVisible();
+   await expect(panel).toHaveCount(0);
+   await expect(managementTrigger).toHaveCount(0);
+   await expect(buildTrigger).toHaveCount(0);
+-  const [chartBox, chartDeskBox] = await Promise.all([chart.boundingBox(), desk.boundingBox()]);
+-  expect(chartBox).not.toBeNull();
+-  expect(chartDeskBox).not.toBeNull();
+-  const edgeDeltas = {
+-    left: Math.abs(chartBox!.x - chartDeskBox!.x),
+-    top: Math.abs(chartBox!.y - chartDeskBox!.y),
+-    right: Math.abs(
+-      chartDeskBox!.x + chartDeskBox!.width - (chartBox!.x + chartBox!.width),
+-    ),
+-    bottom: Math.abs(
+-      chartDeskBox!.y + chartDeskBox!.height - (chartBox!.y + chartBox!.height),
+-    ),
+-  };
+-  expect(edgeDeltas.left).toBeLessThanOrEqual(4);
+-  expect(edgeDeltas.top).toBeLessThanOrEqual(4);
+-  expect(edgeDeltas.right).toBeLessThanOrEqual(4);
+-  expect(edgeDeltas.bottom).toBeLessThanOrEqual(4);
++  await expectChartAnchoredToDesk(page);
++  // Resize with the chart open too: yielding Management must not leave the
++  // floating chart pinned to stale desk geometry. Keyboard and pointer use the
++  // same splitter share; camera shade/zoom behavior has its own dedicated spec.
++  const chartDeskHeight = await desk.evaluate(element => element.getBoundingClientRect().height);
++  await splitter.focus(); await splitter.press("ArrowDown");
++  await expect.poll(() => desk.evaluate(element => element.getBoundingClientRect().height)).toBeLessThan(chartDeskHeight - 5);
++  await expectChartAnchoredToDesk(page);
++  await expectNoHorizontalOverflow(page);
+   if (testInfo.project.name === "laptop-chrome") {
+     await page.screenshot({
+       path: `${SCREENSHOT_DIRECTORY}/management-mode-laptop-chart-priority.png`,

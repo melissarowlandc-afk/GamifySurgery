@@ -1,0 +1,244 @@
+import { act, StrictMode } from "react";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
+import { AccountCampaignRouter } from "./App";
+import { AuthAccountContext } from "./auth/AuthAccountContext";
+import { CompetitionClientContext } from "./competition/useCompetition";
+import { allElements, cleanupPhoneTests, phoneTestDom } from "./mobile/screenTestUtils";
+import { CloudAccountContext, type CloudAccountValue } from "./session/cloud/CloudAccount";
+import { CloudSyncCoordinator } from "./session/cloud/coordinator";
+import { MemoryCloudCache } from "./session/cloud/cache";
+import { MemoryCloudEntryStore } from "./session/cloud/entryStorage";
+import { CloudGameSession } from "./session/cloud/gameSession";
+import { deferred, syncFixture, syncHarness } from "./session/cloud/syncTestSupport";
+import { cloudCodec } from "./session/cloud/codecWorker";
+import { encodeCloudEvidenceCheckpoint } from "./session/cloud/codecEvidence";
+
+vi.mock("./facility", () => ({ FacilityCanvas: () => <div>Fixture map</div> }));
+vi.mock("./mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: () => <div>Fixture map</div> }));
+afterEach(async () => { vi.restoreAllMocks(); await cleanupPhoneTests(); });
+
+describe.each(["phone", "desktop"] as const)("%s account campaign reopen", layout => {
+  it("dismisses opening and mounts play while its first durable account upload is still waiting", async () => {
+    const h = await syncHarness(), entryStore = new MemoryCloudEntryStore(), transport = h.server.transport(h.scope.accountId);
+    const coordinator = new CloudSyncCoordinator({ scope: h.scope, transport, cache: h.cache, entryStore, enabled: true, clock: h.clock });
+    await coordinator.open(); await coordinator.startWriter(); coordinator.resume();
+    const seed = await CloudGameSession.create(coordinator);
+    seed.updateMetadata({ ...seed.metadata, tutorial: { guidance: { version: 2, mode: "off", exposedTopicIds: [] },
+      introDismissed: true, dailyRoutineTipAcknowledgments: [], dailyRoutinePause: null } });
+    seed.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "open.pending.local" }, PROTOTYPE_DOMAIN_CONTEXT);
+    await seed.prepareRecoveryCopy(); seed.dispose();
+    await entryStore.write("last-active-campaign", { campaignId: h.scope.campaignId });
+    const held = deferred(), started = deferred(), commit = transport.commit;
+    vi.spyOn(transport, "commit").mockImplementation(async operation => { started.resolve(); await held.promise; return commit(operation); });
+    const env = phoneTestDom(); env.browser.location.search = `?layout=${layout}`;
+    Object.assign(env.doc, { visibilityState: "visible" });
+    Object.assign(env.browser, { setInterval: () => 1, clearInterval: () => {} });
+    let active: CloudGameSession | null = null;
+    const account: CloudAccountValue = {
+      runtime: { ...h.scope, region: "Synthetic", transport, cache: h.cache, entryStore }, access: await transport.capabilities(),
+      summaries: await transport.list(), phase: "available", error: null, active: null, refresh: vi.fn(async () => {}),
+      acceptNotice: vi.fn(async () => {}), attach: session => { active = session; }, stop: vi.fn(async () => {}), requestDeletion: vi.fn(async () => {}),
+      exportDeviceRecovery: vi.fn(async () => ""), clearDevice: vi.fn(async () => {}), showCampaigns: vi.fn(), setCampaignNavigation: vi.fn(),
+    };
+    try {
+      await env.render(<AuthAccountContext.Provider value={h.scope.accountId}><CompetitionClientContext.Provider value={null}>
+        <CloudAccountContext.Provider value={account}><AccountCampaignRouter /></CloudAccountContext.Provider>
+      </CompetitionClientContext.Provider></AuthAccountContext.Provider>);
+      await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });
+      await started.promise;
+      expect(active!.coordinator.view).toMatchObject({ canExecute: true, localDurable: true, pending: true, phase: "saving" });
+      expect(allElements(env.doc.body, node => node.attributes["aria-label"] === "Loading clinic")).toHaveLength(0);
+      expect(env.find(node => node.tagName === "DIV" && node.textContent === "Fixture map")).toBeDefined();
+      expect(active!.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "open.play.while-saving" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();
+      await act(async () => { held.resolve(); });
+      await vi.waitFor(() => expect(active!.coordinator.confirmedRevision).toBe("2"));
+      expect(active!.canExecute).toBe(true); expect(active!.needsReload).toBe(false);
+    } finally { held.resolve(); (active as CloudGameSession | null)?.dispose(); }
+  });
+  it.each([false, true])("keeps the current clinic mounted under a full opening cover (check fails=%s)", async fails => {
+    const h = await syncHarness(), entryStore = new MemoryCloudEntryStore(), transport = h.server.transport(h.scope.accountId);
+    const prepared = new CloudSyncCoordinator({ scope: h.scope, transport, cache: h.cache, entryStore, enabled: true, clock: h.clock });
+    await prepared.open(); await prepared.startWriter(); prepared.resume();
+    const seed = await CloudGameSession.create(prepared);
+    seed.updateMetadata({ ...seed.metadata, tutorial: { guidance: { version: 2, mode: "off", exposedTopicIds: [] },
+      introDismissed: true, dailyRoutineTipAcknowledgments: [], dailyRoutinePause: null } });
+    await seed.checkpointNow("purchase"); seed.dispose();
+    await entryStore.write("last-active-campaign", { campaignId: h.scope.campaignId });
+    const env = phoneTestDom(); env.browser.location.search = `?layout=${layout}`;
+    const timers = new Map<number, () => void>(); let timerId = 0;
+    Object.assign(env.doc, { visibilityState: "visible" }); Object.assign(env.browser, {
+      setInterval: (callback: () => void) => { timers.set(++timerId, callback); return timerId; }, clearInterval: (id: number) => timers.delete(id),
+    });
+    let active: CloudGameSession | null = null, open: ((id: string) => Promise<void>) | null = null;
+    const attach = vi.fn((session: CloudGameSession | null) => { active = session; });
+    const account: CloudAccountValue = {
+      runtime: { ...h.scope, region: "Synthetic", transport, cache: h.cache, entryStore }, access: await transport.capabilities(),
+      summaries: await transport.list(), phase: "available", error: null, active: null, refresh: vi.fn(async () => {}),
+      acceptNotice: vi.fn(async () => {}), attach, stop: vi.fn(async () => {}), requestDeletion: vi.fn(async () => {}),
+      exportDeviceRecovery: vi.fn(async () => ""), clearDevice: vi.fn(async () => {}), showCampaigns: vi.fn(), setCampaignNavigation: vi.fn(),
+      setCampaignOpening: callback => { open = callback; },
+    };
+    await env.render(<AuthAccountContext.Provider value={h.scope.accountId}><CompetitionClientContext.Provider value={null}>
+      <CloudAccountContext.Provider value={account}><AccountCampaignRouter /></CloudAccountContext.Provider>
+    </CompetitionClientContext.Provider></AuthAccountContext.Provider>);
+    await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });
+    const original = active!, tick = original.state.facilityTick, attached = attach.mock.calls.length;
+    const pulse = vi.spyOn(original, "pulse"), foreground = vi.spyOn(original, "foreground"), checkpoint = vi.spyOn(original, "checkpointNow");
+    const map = env.find(node => node.tagName === "DIV" && node.textContent === "Fixture map");
+    const held = deferred(), started = deferred(), head = transport.head.bind(transport);
+    vi.spyOn(transport, "head").mockImplementationOnce(async id => { started.resolve(); await held.promise;
+      if (fails) throw new TypeError("Synthetic opening failure"); return head(id); });
+    vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
+    let checking!: Promise<void>;
+    await act(async () => { checking = open!(h.scope.campaignId); await started.promise; });
+    await act(async () => { await vi.advanceTimersByTimeAsync(400); });
+    expect(active).toBe(original); expect(attach.mock.calls).toHaveLength(attached);
+    expect(env.doc.body.contains(map)).toBe(true);
+    const cover = allElements(env.doc.body, node => node.attributes["aria-label"] === "Loading clinic");
+    expect(cover).toHaveLength(1); expect(allElements(cover[0]!, node => node.tagName === "BUTTON")).toHaveLength(0);
+    expect(original.canExecute).toBe(false);
+    await act(async () => {
+      for (const callback of [...timers.values()]) callback();
+      env.browser.dispatchEvent(new Event("focus")); env.browser.dispatchEvent(new Event("pageshow")); env.doc.dispatchEvent(new Event("resume"));
+      Object.assign(env.doc, { visibilityState: "hidden" }); env.doc.dispatchEvent(new Event("visibilitychange")); env.browser.dispatchEvent(new Event("pagehide"));
+      Object.assign(env.doc, { visibilityState: "visible" }); env.doc.dispatchEvent(new Event("visibilitychange"));
+    });
+    expect(pulse).not.toHaveBeenCalled(); expect(foreground).not.toHaveBeenCalled(); expect(checkpoint).not.toHaveBeenCalled();
+    vi.useRealTimers();
+    await act(async () => { held.resolve(); await checking; });
+    if (fails) {
+      expect(active).toBe(original); expect(env.doc.body.contains(map)).toBe(true);
+      await env.clickElement(allElements(env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Return to your clinic")[0]!);
+      expect(active).toBe(original); expect(env.doc.body.contains(map)).toBe(true);
+    } else {
+      expect(active!.canExecute).toBe(true); expect(active!.state.facilityTick).toBe(tick);
+      expect(allElements(env.doc.body, node => node.attributes["aria-label"] === "Loading clinic")).toHaveLength(0);
+    }
+  });
+
+  it.each([true, false])("keeps both divergent copies with an available account slot=%s", async freeSlot => {
+    const h = await syncHarness(), entryStore = new MemoryCloudEntryStore(), transport = h.server.transport(h.scope.accountId);
+    const first = new CloudSyncCoordinator({ scope: h.scope, transport, cache: h.cache, entryStore, enabled: true, clock: h.clock });
+    await first.open(); const local = await CloudGameSession.create(first); await local.reconnect();
+    const noGuidance = { guidance: { version: 2 as const, mode: "off" as const, exposedTopicIds: [] }, introDismissed: true,
+      dailyRoutineTipAcknowledgments: [], dailyRoutinePause: null };
+    local.updateMetadata({ ...local.metadata, tutorial: noGuidance });
+    local.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "app.local-branch" }, PROTOTYPE_DOMAIN_CONTEXT);
+    local.execute({ type: "SET_PAUSED", paused: false, operationId: "app.local-start" }, PROTOTYPE_DOMAIN_CONTEXT);
+    local.execute({ type: "ADVANCE_TICK", advancedAtRealMs: 0, operationId: "app.local-tick" }, PROTOTYPE_DOMAIN_CONTEXT);
+    await local.durable(); local.dispose();
+    const other = new CloudSyncCoordinator({ scope: h.scope, transport, cache: new MemoryCloudCache(), enabled: true, clock: h.clock });
+    await other.open(); await other.startWriter(true); other.resume();
+    const remote = await CloudGameSession.create(other); remote.updateMetadata({ ...remote.metadata, tutorial: noGuidance });
+    remote.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "app.remote-branch" }, PROTOTYPE_DOMAIN_CONTEXT);
+    expect(await remote.checkpointNow("purchase")).toBe(true);
+    const accountSave = structuredClone(h.server.account(h.scope.accountId).campaigns.get(h.scope.campaignId)!);
+    if (!freeSlot) {
+      const unrelated = await syncFixture("app.other-slot");
+      const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: unrelated.prepared.checkpoint,
+      campaign: { ...unrelated.prepared.envelope.campaign, name: "Other clinic" },
+      source: { sha256: unrelated.prepared.sourceRecovery.sha256, utf8Bytes: unrelated.prepared.sourceRecovery.utf8Bytes,
+        schemaVersion: unrelated.prepared.sourceRecovery.schemaVersion },
+        operationId: "unrelated.name", expectedRevision: "1" });
+      h.server.seed(h.scope.accountId, { ...unrelated.confirmed, snapshot: encoded.snapshot });
+    }
+    const env = phoneTestDom(); Object.assign(env.browser.location, { search: `?layout=${layout}`, href: `http://127.0.0.1:4173/?layout=${layout}` });
+    Object.assign(env.doc, { visibilityState: "visible" }); Object.assign(env.browser, { setInterval: () => 1, clearInterval: vi.fn() });
+    let active: CloudGameSession | null = null;
+    const account: CloudAccountValue = {
+      runtime: { ...h.scope, region: "Synthetic", transport, cache: h.cache, entryStore }, access: await transport.capabilities(),
+      summaries: await transport.list(), phase: "available", error: null, active: null, refresh: vi.fn(async () => {}),
+      acceptNotice: vi.fn(async () => {}), attach: session => { active = session; }, stop: vi.fn(async () => {}),
+      requestDeletion: vi.fn(async () => {}), exportDeviceRecovery: vi.fn(async () => ""), clearDevice: vi.fn(async () => {}),
+      showCampaigns: vi.fn(), setCampaignNavigation: vi.fn(),
+    };
+    await env.render(<AuthAccountContext.Provider value={h.scope.accountId}><CompetitionClientContext.Provider value={null}>
+      <CloudAccountContext.Provider value={account}><AccountCampaignRouter /></CloudAccountContext.Provider>
+    </CompetitionClientContext.Provider></AuthAccountContext.Provider>);
+    await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });
+    expect(active!.coordinator.scope.campaignId).not.toBe(h.scope.campaignId);
+    expect(active!.state.simulationSpeed).toBe(2);
+    expect(active!.metadata.name).toBe(h.prepared.envelope.campaign.name);
+    expect(await entryStore.read("last-active-campaign")).toEqual({ campaignId: active!.state.campaignId });
+    expect(allElements(env.doc.body, node => node.attributes["aria-label"] === "Clinic status")).toHaveLength(0);
+    expect(env.element.textContent).not.toContain("Keep both");
+    expect((await entryStore.entries()).some(row => row.key.startsWith("conflict:"))).toBe(true);
+    if (freeSlot) {
+      const archived = h.server.account(h.scope.accountId).campaigns.get(h.scope.campaignId)!;
+      expect(archived.confirmed.evidence).toEqual(accountSave.confirmed.evidence);
+      expect((await transport.list()).find(row => row.campaignId === h.scope.campaignId)).toMatchObject({ status: "archived", name: expect.stringContaining("(older copy)") });
+    } else {
+      expect(h.server.account(h.scope.accountId).campaigns.has(h.scope.campaignId)).toBe(false);
+      expect(h.server.account(h.scope.accountId).campaigns.has("app.other-slot")).toBe(true);
+      expect((await entryStore.entries()).filter(row => row.key.startsWith("older-copy:")).some(row =>
+        JSON.stringify((row.value as any).copy.evidence) === JSON.stringify(accountSave.confirmed.evidence))).toBe(true);
+    }
+    expect(h.server.usageCount(h.scope.accountId)).toBe(0);
+  });
+
+  it.each([false, true, "manual", "warmup"] as const)("opens and uploads its newest retained campaign (selection marker=%s)", async marker => {
+    const h = await syncHarness(), entryStore = new MemoryCloudEntryStore();
+    const selection = deferred(), read = entryStore.read.bind(entryStore); let selectionReads = 0;
+    vi.spyOn(entryStore, "read").mockImplementation(async key => {
+      if (key === "last-active-campaign") { selectionReads++; if (marker === "manual") await selection.promise; }
+      return read(key);
+    });
+    const transport = h.server.transport(h.scope.accountId);
+    const previous = new CloudSyncCoordinator({ scope: h.scope, transport, cache: h.cache, entryStore, enabled: true, clock: h.clock });
+    await previous.open(); const priorSession = await CloudGameSession.create(previous); await priorSession.reconnect();
+    priorSession.updateMetadata({ ...priorSession.metadata, tutorial: { guidance: { version: 2, mode: "off", exposedTopicIds: [] },
+      introDismissed: true, dailyRoutineTipAcknowledgments: [], dailyRoutinePause: null } });
+    priorSession.execute({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "router.pending" }, PROTOTYPE_DOMAIN_CONTEXT);
+    await priorSession.durable(); priorSession.dispose();
+    if (marker === true) await entryStore.write("last-active-campaign", { campaignId: h.scope.campaignId });
+    const preparation = deferred(), processCodec = cloudCodec.run.bind(cloudCodec);
+    if (marker === "warmup") vi.spyOn(cloudCodec, "run").mockImplementation(async task => {
+      if (task.kind === "hash" && task.input === "") await preparation.promise;
+      return processCodec(task);
+    });
+    const env = phoneTestDom(); Object.assign(env.browser.location, { search: `?layout=${layout}`, href: `http://127.0.0.1:4173/?layout=${layout}` });
+    Object.assign(env.doc, { visibilityState: "visible" });
+    Object.assign(env.browser, { setInterval: () => 1, clearInterval: vi.fn() });
+    let active: CloudGameSession | null = null;
+    let campaigns: (() => void) | null = null;
+    const account: CloudAccountValue = {
+      runtime: { ...h.scope, region: "Synthetic", transport, cache: h.cache, entryStore },
+      access: await transport.capabilities(), summaries: await transport.list(), phase: "available", error: null, active: null,
+      refresh: vi.fn(async () => {}), acceptNotice: vi.fn(async () => {}), attach: session => { active = session; },
+      stop: vi.fn(async () => {}), requestDeletion: vi.fn(async () => {}), exportDeviceRecovery: vi.fn(async () => ""),
+      clearDevice: vi.fn(async () => {}), showCampaigns: () => campaigns?.(), setCampaignNavigation: callback => { campaigns = callback; },
+    };
+    await env.render(<StrictMode><AuthAccountContext.Provider value={h.scope.accountId}><CompetitionClientContext.Provider value={null}>
+      <CloudAccountContext.Provider value={account}><AccountCampaignRouter /></CloudAccountContext.Provider>
+    </CompetitionClientContext.Provider></AuthAccountContext.Provider></StrictMode>);
+    if (marker === "warmup") {
+      // Optional worker warming may stay queued without delaying the actual
+      // verified automatic reopen or its single immutable pending upload.
+      await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });
+      const opened = active;
+      await act(async () => { preparation.resolve(); await preparation.promise; });
+      expect(active).toBe(opened);
+    }
+    if (marker === "manual") {
+      await vi.waitFor(() => expect(selectionReads).toBeGreaterThan(0));
+      await env.click(`Resume ${h.prepared.envelope.campaign.name}`);
+    }
+    await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });
+    expect(active!.state.simulationSpeed).toBe(2);
+    await vi.waitFor(() => expect(active!.coordinator.confirmedRevision).toBe("2"));
+    expect(active!.coordinator.view.pending).toBe(false); expect(active!.coordinator.confirmedRevision).toBe("2");
+    expect(allElements(env.doc.body, node => node.tagName === "DIALOG" && node.attributes.class?.includes("cloud-dialog") === true)).toHaveLength(0);
+    expect(env.element.textContent).not.toContain("Continue on this device?");
+    expect(await read("last-active-campaign")).toEqual({ campaignId: h.scope.campaignId });
+    expect(h.server.operationCount(h.scope.accountId)).toBe(1);
+    if (marker === "manual") {
+      const beforeNavigation = selectionReads;
+      await act(async () => { account.showCampaigns(); });
+      await vi.waitFor(() => expect(env.button(`Resume ${h.prepared.envelope.campaign.name}`).attributes.disabled).toBeUndefined(), { timeout: 5_000 });
+      expect(selectionReads).toBe(beforeNavigation);
+      await act(async () => { selection.resolve(); await selection.promise; });
+      expect(env.button(`Resume ${h.prepared.envelope.campaign.name}`).attributes.disabled).toBeUndefined();
+    }
+  });
+});

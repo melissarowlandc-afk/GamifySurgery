@@ -1,0 +1,57 @@
+--- a/apps/player/src/facility/characterPresentation.ts
++++ b/apps/player/src/facility/characterPresentation.ts
+@@ -9,6 +9,54 @@
+ export interface CharacterPresentationMetrics {
+   width: number;
+   height: number;
++}
++
++/** Hop, squash, breathing and shadow motion live in characterHopMotion.ts. */
++export function isCharacterMovingPose(pose: string): boolean {
++  return pose === "walk-a" || pose === "walk-neutral" || pose === "walk-b";
++}
++
++/** Shared frame sizing; measured per-identity factors are applied before this.
++ * Integer width and exact 1:2 aspect avoid independent axis rounding. Camera
++ * zoom enters through tileSize, so overview zoom scales people with furniture.
++ * The factor preserves the previous 128px source's floor span at tile*1.35. */
++export const CHARACTER_STILL_WIDTH_IN_TILES = 1.35 * (181 / 128) * (160 / 287);
++
++export function getCharacterStillPresentationMetrics(
++  tileSize: number,
++  displayScale = 1,
++): CharacterPresentationMetrics {
++  const safeTileSize = Number.isFinite(tileSize) && tileSize > 0 ? tileSize : 1;
++  const safeDisplayScale = Number.isFinite(displayScale) && displayScale > 0 ? displayScale : 1;
++  const width = Math.max(1, Math.round(safeTileSize * CHARACTER_STILL_WIDTH_IN_TILES * safeDisplayScale));
++  return { width, height: width * 2 };
++}
++
++export function alignCharacterStillSeatToWorld(
++  worldSeatY: number,
++  floorY: number,
++  seatContactY: number,
++  renderedHeight: number,
++  nativeHeight = 320,
++): number {
++  return worldSeatY + (floorY - seatContactY) * (renderedHeight / nativeHeight);
++}
++
++/** Actual head edge for labels/locators, including corrected source bounds. */
++export function characterStillVisibleTop(
++  baseY: number,
++  floorY: number,
++  visibleTop: number,
++  renderedHeight: number,
++  visualLift = 0,
++  nativeHeight = 320,
++): number {
++  return baseY - visualLift - (floorY - visibleTop) * (renderedHeight / nativeHeight);
++}
++
++/** Character sources retain nearest sampling even when room textures smooth. */
++export function isCharacterTextureKey(key: string): boolean {
++  return key.startsWith("stitchin-time-art:character-still:") || key.startsWith("stitchin-time-art:character:");
+ }
+ 
+ export function getCharacterPresentationMetrics(

@@ -1,0 +1,134 @@
+--- a/apps/player/src/mobile/performance/lazyArt.test.tsx
++++ b/apps/player/src/mobile/performance/lazyArt.test.tsx
+@@ -4,23 +4,26 @@
+ import { createPrototypePlayerView } from "../../session/viewModels";
+ import { FacilityScene, type FacilitySceneBridge } from "../../facility/FacilityScene";
+ import { getPhaserTextureKey } from "../../art/bitmapAssetAdapters";
+-import { cleanupPhoneTests, phoneTestDom } from "../screenTestUtils";
++import { allElements, cleanupPhoneTests, phoneTestDom } from "../screenTestUtils";
++import { testElementProps } from "../testDom";
++import { roomThumbnailAsset } from "../../art/roomThumbnailManifest";
+ import { RoomThumbnail } from "../build/RoomThumbnail";
+ import { mobileBitmapCache, mobileRoomAssets, selectFacilityAssets } from "./roomAssets";
+ import { MobileMapPresentationPolicy } from "./presentationPolicy";
++import { phoneArtSource } from "./phoneArt";
+ 
+ vi.mock("phaser", () => ({ default: { Scene: class {} } }));
+-afterEach(async () => { await cleanupPhoneTests(); vi.restoreAllMocks(); });
++afterEach(async () => { await cleanupPhoneTests(); vi.restoreAllMocks(); vi.useRealTimers(); });
+ 
+ describe("mobile lazy art integration", () => {
+-  it("loads only Level 0 at create, then missing preview and Level 4 assets; covered completions do no drawing", async () => {
++  it("loads built and preview art once without preloading unlocked rooms; covered completions do no drawing", async () => {
+     vi.stubGlobal("Image", class {});
+     const load = vi.spyOn(mobileBitmapCache, "load").mockResolvedValue({} as HTMLImageElement);
+     const policy = new MobileMapPresentationPolicy(); policy.setCovered(true);
+     const bridge: FacilitySceneBridge = { mobileInput: true, mobilePresentation: policy, mobileFacilityLevel: 0,
+       viewModel: createPrototypePlayerView(createInitialGameState(), null, false, null).facility, onPlaceRoom: vi.fn() };
+     const scene = new FacilityScene(bridge) as any;
+-    const keys = new Set<string>(); const addImage = vi.fn((key: string) => keys.add(key));
++    const keys = new Set<string>(); const addImage = vi.fn((key: string) => { keys.add(key); return { add: vi.fn() }; });
+     scene.textures = { exists: (key: string) => keys.has(key), addImage };
+     scene.sys = { isActive: () => true }; scene.scale = { width: 390, height: 600 };
+     for (const method of ["registerEnvironmentAtlasFrames", "registerLandscapingAtlasFrames", "registerRoomFixtureAtlasFrames",
+@@ -28,16 +31,22 @@
+     scene.ensureMobileAtlases();
+     const initial = selectFacilityAssets({ mobile: true, facilityLevel: 0, builtRoomIds: ["room.front_desk"] });
+     await vi.waitFor(() => expect(keys.size).toBe(initial.length));
+-    expect(load.mock.calls.map(([asset]) => asset.id)).toEqual(initial.map(asset => asset.id));
++    expect(new Set(load.mock.calls.map(([asset]) => asset.id))).toEqual(new Set(initial.map(asset => asset.id)));
++    for (const [asset, url] of load.mock.calls) if (phoneArtSource(asset)) expect(url).toContain("/art/phone/");
+     expect(scene.drawWorld).not.toHaveBeenCalled();
+     scene.ensureMobileAtlases(); expect(load).toHaveBeenCalledTimes(initial.length);
+     bridge.mobilePreviewRoomIds = ["room.mri"]; scene.ensureMobileAtlases();
++    await Promise.resolve(); expect(load).toHaveBeenCalledTimes(initial.length);
++    // An actual placement may warm its art; an offline thumbnail never does.
++    bridge.viewModel = { ...bridge.viewModel, placement: { definitionId: "room.mri", displayName: "MRI", width: 6, height: 6 } };
++    scene.ensureMobileAtlases();
+     const preview = selectFacilityAssets({ mobile: true, facilityLevel: 0, builtRoomIds: ["room.front_desk"], previewRoomIds: ["room.mri"] });
+     await vi.waitFor(() => expect(keys.size).toBe(preview.length));
+     expect(load).toHaveBeenCalledTimes(preview.length);
+     bridge.mobileFacilityLevel = 4; scene.ensureMobileAtlases();
+-    const all = selectFacilityAssets({ mobile: true, facilityLevel: 4, builtRoomIds: ["room.front_desk"] });
++    const all = selectFacilityAssets({ mobile: true, facilityLevel: 4, builtRoomIds: ["room.front_desk"], previewRoomIds: ["room.mri"] });
+     await vi.waitFor(() => expect(keys.size).toBe(all.length));
++    expect(all.map(asset => asset.id)).toEqual(preview.map(asset => asset.id));
+     expect(load).toHaveBeenCalledTimes(all.length); expect(scene.drawWorld).not.toHaveBeenCalled();
+     expect(new Set(addImage.mock.calls.map(([key]) => key)).size).toBe(all.length);
+     expect(keys).toEqual(new Set(all.map(getPhaserTextureKey)));
+@@ -49,37 +58,56 @@
+     const bridge: FacilitySceneBridge = { mobileInput: true, mobileFacilityLevel: 0,
+       viewModel: createPrototypePlayerView(createInitialGameState(), null, false, null).facility, onPlaceRoom: vi.fn() };
+     const scene = new FacilityScene(bridge) as any; const keys = new Set<string>();
+-    scene.textures = { exists: (key: string) => keys.has(key), addImage: (key: string) => keys.add(key), get: vi.fn() };
+-    scene.sys = { isActive: () => true };
++    scene.textures = { exists: (key: string) => keys.has(key), addImage: (key: string) => { keys.add(key); return { add: vi.fn() }; }, get: vi.fn() };
++    scene.sys = { isActive: () => true }; scene.scale = { width: 390, height: 600 };
+     for (const method of ["registerEnvironmentAtlasFrames", "registerLandscapingAtlasFrames", "registerRoomFixtureAtlasFrames", "refreshLayout"]) scene[method] = vi.fn();
+     scene.ensureMobileAtlases(); await vi.waitFor(() => expect(scene.refreshLayout).toHaveBeenCalled());
+     expect(keys.has(getPhaserTextureKey(missing))).toBe(false);
+     expect(scene.drawApprovedRoomFixtures(bridge.viewModel.rooms[0], { x: 0, y: 0, width: 100, height: 80 })).toBe(false);
+     expect(scene.textures.get).not.toHaveBeenCalled();
+   });
+-  it.each([false, true])("defers catalog requests until visible and shows a whole placeholder until completion (failure=%s)", async fail => {
++  it("installs visible room sources and coalesces paint before an unrelated background source settles", async () => {
++    vi.useFakeTimers(); vi.stubGlobal("Image", class {});
++    const resolve = new Map<string, (image: HTMLImageElement | null) => void>();
++    vi.spyOn(mobileBitmapCache, "load").mockImplementation(asset => new Promise(done => resolve.set(asset.id, done)));
++    const bridge: FacilitySceneBridge = { mobileInput: true, mobileFacilityLevel: 4,
++      viewModel: createPrototypePlayerView(createInitialGameState(), null, false, null).facility, onPlaceRoom: vi.fn() };
++    const scene = new FacilityScene(bridge) as any, keys = new Set<string>();
++    scene.scale = { width: 390, height: 600 }; scene.sys = { isActive: () => true };
++    scene.textures = { exists: (key: string) => keys.has(key), addImage: (key: string) => { keys.add(key); return { add: vi.fn() }; } };
++    for (const method of ["registerEnvironmentAtlasFrames", "registerLandscapingAtlasFrames", "registerRoomFixtureAtlasFrames", "refreshLayout"]) scene[method] = vi.fn();
++    scene.ensureMobileAtlases();
++    const room = mobileRoomAssets("room.front_desk");
++    for (const asset of room) resolve.get(asset.id)!({} as HTMLImageElement);
++    await Promise.resolve();
++    expect(room.every(asset => keys.has(getPhaserTextureKey(asset)))).toBe(true);
++    expect(scene.mobilePendingAtlases.size).toBeGreaterThan(0);
++    expect(scene.refreshLayout).not.toHaveBeenCalled();
++    await vi.advanceTimersByTimeAsync(80);
++    expect(scene.refreshLayout).toHaveBeenCalledTimes(1);
++    for (const done of resolve.values()) done(null);
++    await vi.runAllTimersAsync();
++    expect(scene.mobilePendingAtlases.size).toBe(0);
++  });
++  it.each([false, true])("defers catalog PNG requests until visible; never loads room packs (failure=%s)", async fail => {
+     const env = phoneTestDom();
+-    const draw = vi.fn(); const context = { fillRect: vi.fn(), strokeRect: vi.fn(), save: vi.fn(), restore: vi.fn(),
+-      setTransform: vi.fn(), transform: vi.fn(), drawImage: draw };
+-    const createElement = env.doc.createElement.bind(env.doc);
+-    env.doc.createElement = name => { const element = createElement(name); if (name === "canvas") Object.assign(element, { dataset: {}, getContext: () => context }); return element; };
+-    vi.stubGlobal("Image", class {});
+     let intersect!: (entries: { isIntersecting: boolean }[]) => void;
+     const disconnect = vi.fn();
+     vi.stubGlobal("IntersectionObserver", class { constructor(callback: typeof intersect) { intersect = callback; } observe() {} disconnect = disconnect; });
+-    const completions: ((image: HTMLImageElement | null) => void)[] = [];
+-    const load = vi.spyOn(mobileBitmapCache, "load").mockImplementation(() => new Promise(resolve => completions.push(resolve)));
++    const load = vi.spyOn(mobileBitmapCache, "load");
+     const visible = vi.fn();
+     await env.render(<RoomThumbnail definitionId="room.mri" onVisible={visible} />);
+-    const canvas = env.find(node => node.tagName === "CANVAS") as unknown as HTMLCanvasElement;
+-    expect(canvas.dataset.artState).toBe("placeholder"); expect(load).not.toHaveBeenCalled();
+-    await act(async () => intersect([{ isIntersecting: false }])); expect(load).not.toHaveBeenCalled();
++    const frame = env.find(node => node.attributes["data-room-thumbnail"] === "room.mri");
++    expect(frame.attributes["data-art-state"]).toBe("placeholder"); expect(load).not.toHaveBeenCalled();
++    expect(allElements(env.element, node => node.tagName === "IMG")).toHaveLength(0);
++    await act(async () => intersect([{ isIntersecting: false }])); expect(visible).not.toHaveBeenCalled();
+     await act(async () => intersect([{ isIntersecting: true }]));
+-    expect(visible).toHaveBeenCalledExactlyOnceWith("room.mri"); expect(load).toHaveBeenCalledTimes(mobileRoomAssets("room.mri").length);
+-    expect(draw).not.toHaveBeenCalled(); expect(canvas.dataset.artState).toBe("placeholder");
+-    await act(async () => { completions.forEach((complete, index) => complete(fail && index === 0 ? null : {} as HTMLImageElement)); });
+-    expect(canvas.dataset.artState).toBe(fail ? "unavailable" : "ready");
+-    if (fail) expect(draw).not.toHaveBeenCalled(); else expect(draw).toHaveBeenCalled();
+-    expect(disconnect).toHaveBeenCalled();
++    expect(visible).toHaveBeenCalledExactlyOnceWith("room.mri");
++    const image = env.find(node => node.tagName === "IMG");
++    expect(image.attributes.src).toBe(roomThumbnailAsset("room.mri")!.src);
++    expect(frame.attributes["data-art-state"]).toBe("placeholder");
++    await act(async () => { (testElementProps(image)[fail ? "onError" : "onLoad"] as () => void)(); });
++    expect(frame.attributes["data-art-state"]).toBe(fail ? "unavailable" : "ready");
++    expect(load).not.toHaveBeenCalled(); expect(disconnect).toHaveBeenCalled();
+   });
+ });

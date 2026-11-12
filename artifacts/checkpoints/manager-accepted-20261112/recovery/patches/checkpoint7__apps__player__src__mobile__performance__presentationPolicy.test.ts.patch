@@ -1,0 +1,17 @@
+--- a/apps/player/src/mobile/performance/presentationPolicy.test.ts
++++ b/apps/player/src/mobile/performance/presentationPolicy.test.ts
+@@ -84,6 +84,14 @@
+     policy.setCovered(false); expect(policy.beginFrame()).toEqual({ draw: true, resync: true });
+     expect(policy.beginFrame()).toEqual({ draw: true, resync: false });
+   });
++  it("cancels stale touch contacts when a sleeping map resumes without a hidden update", () => {
++    const { scene, policy } = harness();
++    scene.mobileGestures = { cancel: vi.fn() };
++    policy.setPageHidden(true); policy.setPageHidden(false);
++    scene.update(30_000, 30_000);
++    expect(scene.mobileGestures.cancel).toHaveBeenCalledOnce();
++    expect(scene.characterRestClockMilliseconds).toBe(0);
++  });
+   it("ignores a supplied gate on desktop and retains all 60 frame calls", () => {
+     const { scene, policy } = harness(false); policy.setCovered(true); policy.setPageHidden(true);
+     for (let frame = 0; frame < 60; frame++) scene.update(frame * 16, 16);

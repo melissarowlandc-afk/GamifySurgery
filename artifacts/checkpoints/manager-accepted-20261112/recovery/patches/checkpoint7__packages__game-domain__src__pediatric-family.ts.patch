@@ -1,0 +1,43 @@
+--- a/packages/game-domain/src/pediatric-family.ts
++++ b/packages/game-domain/src/pediatric-family.ts
+@@ -124,7 +124,10 @@
+ /** Exit only along an approved native segment containing the current point. */
+ function exitVariants(state: GameState, context: DomainContext, start: GridPoint) {
+   const room = pediatricRoomAtPoint(state, context, start);
+-  if (!room) return [{ path: [clone(start)], doorId: null as string | null }];
++  // Ordinary floor/hallway tiles use the facility graph. Hallway rooms have no
++  // authored doors; requiring a native exit there stranded the approaching
++  // founder after idling. Only native pediatric furniture needs these segments.
++  if (!room || !routes[room.roomDefinitionId]) return [{ path: [clone(start)], doorId: null as string | null }];
+   const definition = getRoomDefinition(room.roomDefinitionId, context)!;
+   const variants: Array<{ path: GridPoint[]; doorId: string | null }> = [];
+   for (const door of state.doors.filter(row => row.roomId === room.id && !row.exterior)) {
+@@ -230,13 +233,14 @@
+   const scored = "frozenCase" in visit;
+   if (scored ? !visit.frozenCase.pediatricProfile || visit.resolutionReason !== "completed"
+     : visit.clinicVisit?.kind !== "pediatric_consult" || visit.incomeLineId !== "income.pediatric_consult") return;
+-  const family = pediatricFamilyForActor(state, scored ? "encounter" : "service_visitor", visit.id);
++  const convertedId = !scored && visit.actorKind === "encounter" ? visit.consultEncounterId : undefined;
++  const family = pediatricFamilyForActor(state, scored || convertedId ? "encounter" : "service_visitor", convertedId ?? visit.id);
+   if (!family || !pediatricPairAtReservation(state, family)) return;
+   if (scored && (family.reservation?.childSeatId !== "table:patient" || family.reservation.parentSeatId !== "parentChair" ||
+     !state.rooms.some(room => room.id === family.reservation!.roomInstanceId && room.roomDefinitionId === "room.pediatric_examination"))) return;
+   state.levelFourCompletion ??= { version: "level-four-completion.v1", pediatricVisitWithParent: null,
+     woundOstomyCareVisit: null, acknowledgedAtFacilityTick: null };
+-  state.levelFourCompletion.pediatricVisitWithParent ??= { serviceOperationId: scored ? null : visit.id, encounterId: scored ? visit.id : null,
++  state.levelFourCompletion.pediatricVisitWithParent ??= { serviceOperationId: scored ? null : visit.id, encounterId: scored ? visit.id : convertedId ?? null,
+     incomeLineId: "income.pediatric_consult", completedAtFacilityTick: state.facilityTick, parentActorId: family.parentActorId };
+ }
+ 
+@@ -270,8 +274,9 @@
+     parentLocation: parent.location, childSeatId: child.seatId, parentSeatId: parent.seatId }) : null;
+ }
+ 
+-export function planPediatricWaiting(state: GameState, context: DomainContext, family: PediatricFamilyState, excludedRoomId?: string): PediatricPairPlan | null {
+-  const rooms = state.rooms.filter(room => room.id !== excludedRoomId && roomOrder.includes(room.roomDefinitionId) && isRoomOperationalForFacilityWork(state, room.id, context))
++export function planPediatricWaiting(state: GameState, context: DomainContext, family: PediatricFamilyState, excludedRoomId?: string, serviceQueue = false): PediatricPairPlan | null {
++  const rooms = state.rooms.filter(room => room.id !== excludedRoomId && roomOrder.includes(room.roomDefinitionId) &&
++    (!serviceQueue || room.roomDefinitionId !== "room.front_desk") && isRoomOperationalForFacilityWork(state, room.id, context))
+     .sort((a, b) => roomOrder.indexOf(a.roomDefinitionId) - roomOrder.indexOf(b.roomDefinitionId) || a.id.localeCompare(b.id));
+   // Exhaust reachable seated pairs before using standing overflow.
+   for (const room of rooms) for (const child of roomPlaces(state, context, room, family, false)) for (const parent of roomPlaces(state, context, room, family, true)) {

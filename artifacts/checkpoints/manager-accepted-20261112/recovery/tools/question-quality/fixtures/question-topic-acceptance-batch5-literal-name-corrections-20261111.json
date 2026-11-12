@@ -1,0 +1,752 @@
+{
+  "checkedOn": "2026-11-11",
+  "authority": "Manager batch5 acceptance and literal-name correction rule",
+  "records": [
+    {
+      "id": "presentation-correction.topic-batch5.20261111.case.vascular-venous-lymphatic-access.postop-leg-coverage.20261111.v2",
+      "caseId": "case.vascular-venous-lymphatic-access.postop-leg-coverage.20261111.v2",
+      "literalName": "Daniel Price",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "c038938a6e4cb8ad4d44315a7b95ce667a3edfa13c3c532e6961c457bd8b85e0",
+      "beforeQuestionSha256": {
+        "question.vascular-venous-lymphatic-access.postop-prevention-not-failure.20261111.v1": "8c500d52a1cba462b71f7aac23a0523950ff584bd0d0c02d1a456d4862d1229e"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "displayName"
+          ],
+          "before": "Daniel Price: venous/access review",
+          "after": "{patientName}: venous/access review"
+        },
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Daniel Price, a 62-year-old man, attends clinic after colectomy for diverticulitis. His left calf and thigh have become swollen and tender. An outside report says no thrombosis. The acquisition log lists compressible posterior tibial and peroneal veins; its femoral and popliteal fields are marked not acquired. His foot is warm and moving normally.",
+          "after": "{patientName}, a 62-year-old man, attends clinic after colectomy for diverticulitis. His left calf and thigh have become swollen and tender. An outside report says no thrombosis. The acquisition log lists compressible posterior tibial and peroneal veins; its femoral and popliteal fields are marked not acquired. His foot is warm and moving normally."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Daniel Price, a 62-year-old man, attends clinic after colectomy for diverticulitis. His left calf and thigh have become swollen and tender. An outside report says no thrombosis. The acquisition log lists compressible posterior tibial and peroneal veins; its femoral and popliteal fields are marked not acquired. His foot is warm and moving normally.",
+          "after": "{patientName}, a 62-year-old man, attends clinic after colectomy for diverticulitis. His left calf and thigh have become swollen and tender. An outside report says no thrombosis. The acquisition log lists compressible posterior tibial and peroneal veins; its femoral and popliteal fields are marked not acquired. His foot is warm and moving normally."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which initial treatment plan best fits Daniel Price's returned study and medication record?",
+          "after": "Which initial treatment plan best fits {patientName}'s returned study and medication record?"
+        },
+        {
+          "target": "question.vascular-venous-lymphatic-access.postop-prevention-not-failure.20261111.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which initial treatment plan best fits Daniel Price's returned study and medication record?",
+          "after": "Which initial treatment plan best fits {patientName}'s returned study and medication record?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch5.20261111.case.vascular-venous-lymphatic-access.postop-finite-course-r2.20261111.v2",
+      "caseId": "case.vascular-venous-lymphatic-access.postop-finite-course-r2.20261111.v2",
+      "literalName": "Daniel Price",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "d343274622300983cb67d32c565c6ed5884b5085cf5e926342b01ca110b4ce7d",
+      "beforeQuestionSha256": {
+        "question.vascular-venous-lymphatic-access.postop-finite-course.20261111.v2": "aeee986ff15f7088d82710c5c224b662f3f5802b6b7cf4177a44198d5de8773b"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "displayName"
+          ],
+          "before": "Daniel Price: venous/access review",
+          "after": "{patientName}: venous/access review"
+        },
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Daniel Price, a 62-year-old man, attends clinic after colectomy for diverticulitis with new left calf and thigh swelling. The outside ultrasound log lists compression images of posterior tibial and peroneal veins, which flatten under the probe. Its separate common-femoral Doppler recordings vary with respiration on both sides. No other compression images are listed.",
+          "after": "{patientName}, a 62-year-old man, attends clinic after colectomy for diverticulitis with new left calf and thigh swelling. The outside ultrasound log lists compression images of posterior tibial and peroneal veins, which flatten under the probe. Its separate common-femoral Doppler recordings vary with respiration on both sides. No other compression images are listed."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Daniel Price, a 62-year-old man, attends clinic after colectomy for diverticulitis with new left calf and thigh swelling. The outside ultrasound log lists compression images of posterior tibial and peroneal veins, which flatten under the probe. Its separate common-femoral Doppler recordings vary with respiration on both sides. No other compression images are listed.",
+          "after": "{patientName}, a 62-year-old man, attends clinic after colectomy for diverticulitis with new left calf and thigh swelling. The outside ultrasound log lists compression images of posterior tibial and peroneal veins, which flatten under the probe. Its separate common-femoral Doppler recordings vary with respiration on both sides. No other compression images are listed."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "currentUpdate"
+          ],
+          "before": "Hospital duplex documented a femoral DVT five days after the colectomy, and Daniel has received therapeutic anticoagulation for three months. The operation was for diverticulitis. His wound has healed and he walks and works at his usual level. This was his first VTE. An outside genetic result, obtained earlier, reports heterozygous factor V Leiden.",
+          "after": "Hospital duplex documented a femoral DVT five days after the colectomy, and {patientName} has received therapeutic anticoagulation for three months. The operation was for diverticulitis. His wound has healed and he walks and works at his usual level. This was his first VTE. An outside genetic result, obtained earlier, reports heterozygous factor V Leiden."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which anticoagulation-duration plan best fits Daniel Price at this three-month review?",
+          "after": "Which anticoagulation-duration plan best fits {patientName} at this three-month review?"
+        },
+        {
+          "target": "question.vascular-venous-lymphatic-access.postop-finite-course.20261111.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which anticoagulation-duration plan best fits Daniel Price at this three-month review?",
+          "after": "Which anticoagulation-duration plan best fits {patientName} at this three-month review?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch5.20261111.case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2",
+      "caseId": "case.vascular-venous-lymphatic-access.postop-negative-summary.20261111.v2",
+      "literalName": "Rachel Ellis",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "1e8bee5cb0271fe6aab3630897c07052f47cff811ec4b27234ea832c5f8a516d",
+      "beforeQuestionSha256": {
+        "question.vascular-venous-lymphatic-access.postop-residual-duration.20261111.v1": "bd949ca8dd8a296c96a70f74492079227269c08f34b9bf845eed38bf12499ed2"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "displayName"
+          ],
+          "before": "Rachel Ellis: venous/access review",
+          "after": "{patientName}: venous/access review"
+        },
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Rachel Ellis, a 47-year-old woman, attends clinic after bowel surgery with new right-thigh and calf swelling. Her discharge note cites a negative scan. The scan label and saved images identify the left leg. The right foot is warm, with preserved movement and sensation.",
+          "after": "{patientName}, a 47-year-old woman, attends clinic after bowel surgery with new right-thigh and calf swelling. Her discharge note cites a negative scan. The scan label and saved images identify the left leg. The right foot is warm, with preserved movement and sensation."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Rachel Ellis, a 47-year-old woman, attends clinic after bowel surgery with new right-thigh and calf swelling. Her discharge note cites a negative scan. The scan label and saved images identify the left leg. The right foot is warm, with preserved movement and sensation.",
+          "after": "{patientName}, a 47-year-old woman, attends clinic after bowel surgery with new right-thigh and calf swelling. Her discharge note cites a negative scan. The scan label and saved images identify the left leg. The right foot is warm, with preserved movement and sensation."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "currentUpdate"
+          ],
+          "before": "The right-leg study subsequently showed a femoral DVT. Rachel completed three months of therapeutic anticoagulation after surgery for benign disease. She is back to usual mobility, without a continuing provoking condition. A repeat study shows the same femoral segment as the index examination, with no newly involved segment; swelling has decreased. This remains her first VTE.",
+          "after": "The right-leg study subsequently showed a femoral DVT. {patientName} completed three months of therapeutic anticoagulation after surgery for benign disease. She is back to usual mobility, without a continuing provoking condition. A repeat study shows the same femoral segment as the index examination, with no newly involved segment; swelling has decreased. This remains her first VTE."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which treatment-duration plan best fits Rachel Ellis's current record?",
+          "after": "Which treatment-duration plan best fits {patientName}'s current record?"
+        },
+        {
+          "target": "question.vascular-venous-lymphatic-access.postop-residual-duration.20261111.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which treatment-duration plan best fits Rachel Ellis's current record?",
+          "after": "Which treatment-duration plan best fits {patientName}'s current record?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch5.20261111.case.vascular-venous-lymphatic-access.lymphatic-acute-change-r2.20261111.v2",
+      "caseId": "case.vascular-venous-lymphatic-access.lymphatic-acute-change-r2.20261111.v2",
+      "literalName": "Nora Bennett",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "a1eaa9552713847dc8ea0acf72fe0b01c88bf36b1ab747028a5781c41a273503",
+      "beforeQuestionSha256": {
+        "question.vascular-venous-lymphatic-access.lymphatic-acute-change.20261111.v2": "499cd13f88f821d8bab6e1e7244979415d1c54824a60b6b8955f86120931de02"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "displayName"
+          ],
+          "before": "Nora Bennett: venous/access review",
+          "after": "{patientName}: venous/access review"
+        },
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Nora Bennett, a 61-year-old woman, attends clinic after abdominal surgery. Her left arm has been mildly enlarged since earlier axillary-node treatment, but it became painful and substantially more swollen during this recovery. A peripheral line was used in that arm. The change extends from hand to upper arm.",
+          "after": "{patientName}, a 61-year-old woman, attends clinic after abdominal surgery. Her left arm has been mildly enlarged since earlier axillary-node treatment, but it became painful and substantially more swollen during this recovery. A peripheral line was used in that arm. The change extends from hand to upper arm."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Nora Bennett, a 61-year-old woman, attends clinic after abdominal surgery. Her left arm has been mildly enlarged since earlier axillary-node treatment, but it became painful and substantially more swollen during this recovery. A peripheral line was used in that arm. The change extends from hand to upper arm.",
+          "after": "{patientName}, a 61-year-old woman, attends clinic after abdominal surgery. Her left arm has been mildly enlarged since earlier axillary-node treatment, but it became painful and substantially more swollen during this recovery. A peripheral line was used in that arm. The change extends from hand to upper arm."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which investigation should guide Nora Bennett's changed left-arm swelling now?",
+          "after": "Which investigation should guide {patientName}'s changed left-arm swelling now?"
+        },
+        {
+          "target": "question.vascular-venous-lymphatic-access.lymphatic-acute-change.20261111.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which investigation should guide Nora Bennett's changed left-arm swelling now?",
+          "after": "Which investigation should guide {patientName}'s changed left-arm swelling now?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch5.20261111.case.vascular-venous-lymphatic-access.whole-leg-venous-change.20261111.v2",
+      "caseId": "case.vascular-venous-lymphatic-access.whole-leg-venous-change.20261111.v2",
+      "literalName": "George Nolan",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "7624db576d5714612d00d91de288b232a45ab86584472b84469da9cbee96e072",
+      "beforeQuestionSha256": {
+        "question.vascular-venous-lymphatic-access.varicose-proximal-territory.20261111.v1": "475458fec1c768a915b084fcb28664e3bab205d54d84a688d7193e156d8d62bf"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "displayName"
+          ],
+          "before": "George Nolan: venous/access review",
+          "after": "{patientName}: venous/access review"
+        },
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "George Nolan, a 59-year-old man, attends clinic for varices and swelling extending above the knee. Walking produces thigh fullness that settles after he elevates the leg. New veins cross the lower abdomen. Duplex shows compressible femoral and popliteal veins; left common-femoral flow is continuous while the right varies with respiration.",
+          "after": "{patientName}, a 59-year-old man, attends clinic for varices and swelling extending above the knee. Walking produces thigh fullness that settles after he elevates the leg. New veins cross the lower abdomen. Duplex shows compressible femoral and popliteal veins; left common-femoral flow is continuous while the right varies with respiration."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "George Nolan, a 59-year-old man, attends clinic for varices and swelling extending above the knee. Walking produces thigh fullness that settles after he elevates the leg. New veins cross the lower abdomen. Duplex shows compressible femoral and popliteal veins; left common-femoral flow is continuous while the right varies with respiration.",
+          "after": "{patientName}, a 59-year-old man, attends clinic for varices and swelling extending above the knee. Walking produces thigh fullness that settles after he elevates the leg. New veins cross the lower abdomen. Duplex shows compressible femoral and popliteal veins; left common-femoral flow is continuous while the right varies with respiration."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which study should George Nolan's team arrange next?",
+          "after": "Which study should {patientName}'s team arrange next?"
+        },
+        {
+          "target": "question.vascular-venous-lymphatic-access.varicose-proximal-territory.20261111.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which study should George Nolan's team arrange next?",
+          "after": "Which study should {patientName}'s team arrange next?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch5.20261111.case.vascular-venous-lymphatic-access.access-unresolved-maturation-r2.20261111.v2",
+      "caseId": "case.vascular-venous-lymphatic-access.access-unresolved-maturation-r2.20261111.v2",
+      "literalName": "Paula Reed",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "b8c1bdc08dc3b66bcafe3cfc61792be7cc5f51f7984521398cbe49889a776a2c",
+      "beforeQuestionSha256": {
+        "question.vascular-venous-lymphatic-access.access-unresolved-maturation.20261111.v2": "6bf77eef5476263eb5742ca5e45ed22ed7d8a9ae49bcb93f9aa0190115a7a2a8"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "displayName"
+          ],
+          "before": "Paula Reed: venous/access review",
+          "after": "{patientName}: venous/access review"
+        },
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Paula Reed, a 45-year-old woman, attends clinic eight weeks after left radiocephalic fistula creation. The wrist segment is visibly enlarged, but it is firm and pulsatile with only a short systolic thrill. The enlarged forearm vein remains distended when the arm is raised. No forearm segment has developed a sustained continuous thrill on serial examinations. The dialysis team has not cannulated it.",
+          "after": "{patientName}, a 45-year-old woman, attends clinic eight weeks after left radiocephalic fistula creation. The wrist segment is visibly enlarged, but it is firm and pulsatile with only a short systolic thrill. The enlarged forearm vein remains distended when the arm is raised. No forearm segment has developed a sustained continuous thrill on serial examinations. The dialysis team has not cannulated it."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Paula Reed, a 45-year-old woman, attends clinic eight weeks after left radiocephalic fistula creation. The wrist segment is visibly enlarged, but it is firm and pulsatile with only a short systolic thrill. The enlarged forearm vein remains distended when the arm is raised. No forearm segment has developed a sustained continuous thrill on serial examinations. The dialysis team has not cannulated it.",
+          "after": "{patientName}, a 45-year-old woman, attends clinic eight weeks after left radiocephalic fistula creation. The wrist segment is visibly enlarged, but it is firm and pulsatile with only a short systolic thrill. The enlarged forearm vein remains distended when the arm is raised. No forearm segment has developed a sustained continuous thrill on serial examinations. The dialysis team has not cannulated it."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which next access plan best fits Paula Reed's serial examination?",
+          "after": "Which next access plan best fits {patientName}'s serial examination?"
+        },
+        {
+          "target": "question.vascular-venous-lymphatic-access.access-unresolved-maturation.20261111.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which next access plan best fits Paula Reed's serial examination?",
+          "after": "Which next access plan best fits {patientName}'s serial examination?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch5.20261111.case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1",
+      "caseId": "case.vascular-venous-lymphatic-access.ulcer-noncompressible.20261111.v1",
+      "literalName": "Joan Fletcher",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "e9fff28946a7107c1e2b9fb27983c2714943cefe64f65954e7821d386c06b5e2",
+      "beforeQuestionSha256": {
+        "question.vascular-venous-lymphatic-access.ulcer-unoccluded-ankle.20261111.v1": "246fa0850fcff2fd2b2202643ddeadc3d33a804b581b40c0d58a641fae30b363",
+        "question.vascular-venous-lymphatic-access.ulcer-severe-perfusion.20261111.v1": "d872c94f36441b0df416f8b624d31452d7ac0d8a8cf89750c4ea366e1d7f1def"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "displayName"
+          ],
+          "before": "Joan Fletcher: venous/access review",
+          "after": "{patientName}: venous/access review"
+        },
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Joan Fletcher, a 70-year-old woman with diabetes and kidney disease, attends clinic for a recurrent left medial-ankle ulcer and swelling. Duplex shows superficial reflux. During ankle testing, pedal Doppler signals persist at the cuff's maximum inflation; the sheet prints a high ankle-to-brachial ratio from that attempt.",
+          "after": "{patientName}, a 70-year-old woman with diabetes and kidney disease, attends clinic for a recurrent left medial-ankle ulcer and swelling. Duplex shows superficial reflux. During ankle testing, pedal Doppler signals persist at the cuff's maximum inflation; the sheet prints a high ankle-to-brachial ratio from that attempt."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Joan Fletcher, a 70-year-old woman with diabetes and kidney disease, attends clinic for a recurrent left medial-ankle ulcer and swelling. Duplex shows superficial reflux. During ankle testing, pedal Doppler signals persist at the cuff's maximum inflation; the sheet prints a high ankle-to-brachial ratio from that attempt.",
+          "after": "{patientName}, a 70-year-old woman with diabetes and kidney disease, attends clinic for a recurrent left medial-ankle ulcer and swelling. Duplex shows superficial reflux. During ankle testing, pedal Doppler signals persist at the cuff's maximum inflation; the sheet prints a high ankle-to-brachial ratio from that attempt."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which investigation should guide Joan Fletcher's compression selection next?",
+          "after": "Which investigation should guide {patientName}'s compression selection next?"
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            1,
+            "currentUpdate"
+          ],
+          "before": "Toe testing now records a left pressure of 22 mm Hg with a markedly damped digital waveform. Joan describes new forefoot pain at night that improves when she sits with the foot dependent. The old printed ankle ratio remains on the front of the chart.",
+          "after": "Toe testing now records a left pressure of 22 mm Hg with a markedly damped digital waveform. {patientName} describes new forefoot pain at night that improves when she sits with the foot dependent. The old printed ankle ratio remains on the front of the chart."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            1,
+            "stem"
+          ],
+          "before": "Which ulcer-care plan should Joan Fletcher's team use now?",
+          "after": "Which ulcer-care plan should {patientName}'s team use now?"
+        },
+        {
+          "target": "question.vascular-venous-lymphatic-access.ulcer-unoccluded-ankle.20261111.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which investigation should guide Joan Fletcher's compression selection next?",
+          "after": "Which investigation should guide {patientName}'s compression selection next?"
+        },
+        {
+          "target": "question.vascular-venous-lymphatic-access.ulcer-severe-perfusion.20261111.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which ulcer-care plan should Joan Fletcher's team use now?",
+          "after": "Which ulcer-care plan should {patientName}'s team use now?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch5.20261111.case.vascular-venous-lymphatic-access.mixed-ulcer-physiology.20261111.v1",
+      "caseId": "case.vascular-venous-lymphatic-access.mixed-ulcer-physiology.20261111.v1",
+      "literalName": "Sara Mills",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "17efb5547367e701fb2796dffee8a1e1072feb0aec84efc0ef4c032bc3123d71",
+      "beforeQuestionSha256": {
+        "question.vascular-venous-lymphatic-access.ulcer-mixed-compression.20261111.v1": "c269a009a9d0a03a80d83b787737bb188da8db395d6a62fe338a221da8f14579"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "displayName"
+          ],
+          "before": "Sara Mills: venous/access review",
+          "after": "{patientName}: venous/access review"
+        },
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Sara Mills, a 49-year-old woman, attends clinic with a medial-ankle ulcer, dependent edema and duplex-confirmed superficial reflux. The left ankle pressure is 90 mm Hg, brachial pressure 125 mm Hg and toe pressure 55 mm Hg. She has no rest pain or tissue loss beyond the shallow ulcer. The wound team will supervise treatment.",
+          "after": "{patientName}, a 49-year-old woman, attends clinic with a medial-ankle ulcer, dependent edema and duplex-confirmed superficial reflux. The left ankle pressure is 90 mm Hg, brachial pressure 125 mm Hg and toe pressure 55 mm Hg. She has no rest pain or tissue loss beyond the shallow ulcer. The wound team will supervise treatment."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Sara Mills, a 49-year-old woman, attends clinic with a medial-ankle ulcer, dependent edema and duplex-confirmed superficial reflux. The left ankle pressure is 90 mm Hg, brachial pressure 125 mm Hg and toe pressure 55 mm Hg. She has no rest pain or tissue loss beyond the shallow ulcer. The wound team will supervise treatment.",
+          "after": "{patientName}, a 49-year-old woman, attends clinic with a medial-ankle ulcer, dependent edema and duplex-confirmed superficial reflux. The left ankle pressure is 90 mm Hg, brachial pressure 125 mm Hg and toe pressure 55 mm Hg. She has no rest pain or tissue loss beyond the shallow ulcer. The wound team will supervise treatment."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which compression strategy should Sara Mills's wound team consider?",
+          "after": "Which compression strategy should {patientName}'s wound team consider?"
+        },
+        {
+          "target": "question.vascular-venous-lymphatic-access.ulcer-mixed-compression.20261111.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which compression strategy should Sara Mills's wound team consider?",
+          "after": "Which compression strategy should {patientName}'s wound team consider?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch5.20261111.case.vascular-venous-lymphatic-access.dvt-serial-negative-proximal-r2.20261111.v2",
+      "caseId": "case.vascular-venous-lymphatic-access.dvt-serial-negative-proximal-r2.20261111.v2",
+      "literalName": "Victor Hale",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "e965dfc7a9024f181dd3e049e2f77239c77e8d95ff32eea792a7ef772d5f8988",
+      "beforeQuestionSha256": {
+        "question.vascular-venous-lymphatic-access.dvt-serial-negative-proximal.20261111.v2": "77c0665e39d7207d2e3eb71e7d809e61a5572d5579ac009a8aa270ad7e99b9ff"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "displayName"
+          ],
+          "before": "Victor Hale: venous/access review",
+          "after": "{patientName}: venous/access review"
+        },
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Victor Hale, a 66-year-old man, attends clinic after hip surgery with persistent new left calf swelling and tenderness. Initial ultrasound compression images show the common-femoral, femoral and popliteal veins flattening. Calf-vein acquisition was not part of that examination. The left and right common-femoral flow recordings both vary with respiration. No alternative cause has been identified at reassessment.",
+          "after": "{patientName}, a 66-year-old man, attends clinic after hip surgery with persistent new left calf swelling and tenderness. Initial ultrasound compression images show the common-femoral, femoral and popliteal veins flattening. Calf-vein acquisition was not part of that examination. The left and right common-femoral flow recordings both vary with respiration. No alternative cause has been identified at reassessment."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Victor Hale, a 66-year-old man, attends clinic after hip surgery with persistent new left calf swelling and tenderness. Initial ultrasound compression images show the common-femoral, femoral and popliteal veins flattening. Calf-vein acquisition was not part of that examination. The left and right common-femoral flow recordings both vary with respiration. No alternative cause has been identified at reassessment.",
+          "after": "{patientName}, a 66-year-old man, attends clinic after hip surgery with persistent new left calf swelling and tenderness. Initial ultrasound compression images show the common-femoral, femoral and popliteal veins flattening. Calf-vein acquisition was not part of that examination. The left and right common-femoral flow recordings both vary with respiration. No alternative cause has been identified at reassessment."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which diagnostic plan best fits Victor Hale's persistent postoperative calf findings?",
+          "after": "Which diagnostic plan best fits {patientName}'s persistent postoperative calf findings?"
+        },
+        {
+          "target": "question.vascular-venous-lymphatic-access.dvt-serial-negative-proximal.20261111.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which diagnostic plan best fits Victor Hale's persistent postoperative calf findings?",
+          "after": "Which diagnostic plan best fits {patientName}'s persistent postoperative calf findings?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch5.20261111.case.vascular-venous-lymphatic-access.access-hand-physiology-r2.20261111.v2",
+      "caseId": "case.vascular-venous-lymphatic-access.access-hand-physiology-r2.20261111.v2",
+      "literalName": "Marian Scott",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "7dcd936d412271aa99269252a99f924810129cfe75e9b95840f6b5c1955031f8",
+      "beforeQuestionSha256": {
+        "question.vascular-venous-lymphatic-access.access-hand-physiology.20261111.v2": "968a2a4165991e080c99112eb314cf1fb9b3f7cd7c5d52da3a9272e2ab468b31"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "displayName"
+          ],
+          "before": "Marian Scott: venous/access review",
+          "after": "{patientName}: venous/access review"
+        },
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Marian Scott, a 60-year-old woman, attends clinic with new aching and coolness of her fistula-side fingers during dialysis and while carrying groceries. Numbness involves the thumb, index finger and little finger; it settles between episodes. A prior nerve-conduction report, obtained before fistula creation for nocturnal thumb/index tingling, showed slowed median conduction at the wrist. The access still delivers the prescribed dialysis.",
+          "after": "{patientName}, a 60-year-old woman, attends clinic with new aching and coolness of her fistula-side fingers during dialysis and while carrying groceries. Numbness involves the thumb, index finger and little finger; it settles between episodes. A prior nerve-conduction report, obtained before fistula creation for nocturnal thumb/index tingling, showed slowed median conduction at the wrist. The access still delivers the prescribed dialysis."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Marian Scott, a 60-year-old woman, attends clinic with new aching and coolness of her fistula-side fingers during dialysis and while carrying groceries. Numbness involves the thumb, index finger and little finger; it settles between episodes. A prior nerve-conduction report, obtained before fistula creation for nocturnal thumb/index tingling, showed slowed median conduction at the wrist. The access still delivers the prescribed dialysis.",
+          "after": "{patientName}, a 60-year-old woman, attends clinic with new aching and coolness of her fistula-side fingers during dialysis and while carrying groceries. Numbness involves the thumb, index finger and little finger; it settles between episodes. A prior nerve-conduction report, obtained before fistula creation for nocturnal thumb/index tingling, showed slowed median conduction at the wrist. The access still delivers the prescribed dialysis."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which investigation should Marian Scott's access team prioritize for the new hand episodes?",
+          "after": "Which investigation should {patientName}'s access team prioritize for the new hand episodes?"
+        },
+        {
+          "target": "question.vascular-venous-lymphatic-access.access-hand-physiology.20261111.v2",
+          "path": [
+            "stem"
+          ],
+          "before": "Which investigation should Marian Scott's access team prioritize for the new hand episodes?",
+          "after": "Which investigation should {patientName}'s access team prioritize for the new hand episodes?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch5.20261111.case.vascular-venous-lymphatic-access.postaccess-neurologic-record.20261111.v1",
+      "caseId": "case.vascular-venous-lymphatic-access.postaccess-neurologic-record.20261111.v1",
+      "literalName": "Lydia Park",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "134cac805fd2bb9190a2b5fd8c8aebf08736aafe5a26fc9c0f3e098cfc6696fc",
+      "beforeQuestionSha256": {
+        "question.vascular-venous-lymphatic-access.access-multinerve-neuropathy.20261111.v1": "3bb59fa7b221bf0dde6d0be27758e61c99b709897fa5b8e805c64e61cb7ebd13"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "displayName"
+          ],
+          "before": "Lydia Park: venous/access review",
+          "after": "{patientName}: venous/access review"
+        },
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Lydia Park, a 58-year-old woman, attends clinic to review an outside admission after brachial-based fistula creation. Once the regional anesthetic had resolved, she had severe hand pain and new weakness of finger abduction, thumb opposition and wrist extension, with sensory loss across several nerve territories. The hand remained warm with a palpable radial pulse; the forearm was soft.",
+          "after": "{patientName}, a 58-year-old woman, attends clinic to review an outside admission after brachial-based fistula creation. Once the regional anesthetic had resolved, she had severe hand pain and new weakness of finger abduction, thumb opposition and wrist extension, with sensory loss across several nerve territories. The hand remained warm with a palpable radial pulse; the forearm was soft."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Lydia Park, a 58-year-old woman, attends clinic to review an outside admission after brachial-based fistula creation. Once the regional anesthetic had resolved, she had severe hand pain and new weakness of finger abduction, thumb opposition and wrist extension, with sensory loss across several nerve territories. The hand remained warm with a palpable radial pulse; the forearm was soft.",
+          "after": "{patientName}, a 58-year-old woman, attends clinic to review an outside admission after brachial-based fistula creation. Once the regional anesthetic had resolved, she had severe hand pain and new weakness of finger abduction, thumb opposition and wrist extension, with sensory loss across several nerve territories. The hand remained warm with a palpable radial pulse; the forearm was soft."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which plan best fits that point in Lydia Park's outside postoperative record?",
+          "after": "Which plan best fits that point in {patientName}'s outside postoperative record?"
+        },
+        {
+          "target": "question.vascular-venous-lymphatic-access.access-multinerve-neuropathy.20261111.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which plan best fits that point in Lydia Park's outside postoperative record?",
+          "after": "Which plan best fits that point in {patientName}'s outside postoperative record?"
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch5.20261111.case.vascular-venous-lymphatic-access.dialysis-catheter-course.20261111.v2",
+      "caseId": "case.vascular-venous-lymphatic-access.dialysis-catheter-course.20261111.v2",
+      "literalName": "Patrick Doyle",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "df7ff00b88d4ae58d6f678418e2eb94c594703c195e7c562017a347373b8c777",
+      "beforeQuestionSha256": {
+        "question.vascular-venous-lymphatic-access.catheter-intraluminal-dysfunction.20261111.v1": "fb7422d06e682da54848506ebe87eb8ab2900e8e85a43a88b4a369d892cdca9c"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "displayName"
+          ],
+          "before": "Patrick Doyle: venous/access review",
+          "after": "{patientName}: venous/access review"
+        },
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "Patrick Doyle, a 61-year-old man, attends clinic to review his outside dialysis-access course. At the first decision point, a tunneled catheter was being selected while his new left-arm fistula remained too deep for use. Ultrasound showed patent right and left internal jugular veins; central outflow was patent. The left-arm fistula remained the intended permanent access.",
+          "after": "{patientName}, a 61-year-old man, attends clinic to review his outside dialysis-access course. At the first decision point, a tunneled catheter was being selected while his new left-arm fistula remained too deep for use. Ultrasound showed patent right and left internal jugular veins; central outflow was patent. The left-arm fistula remained the intended permanent access."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "Patrick Doyle, a 61-year-old man, attends clinic to review his outside dialysis-access course. At the first decision point, a tunneled catheter was being selected while his new left-arm fistula remained too deep for use. Ultrasound showed patent right and left internal jugular veins; central outflow was patent. The left-arm fistula remained the intended permanent access.",
+          "after": "{patientName}, a 61-year-old man, attends clinic to review his outside dialysis-access course. At the first decision point, a tunneled catheter was being selected while his new left-arm fistula remained too deep for use. Ultrasound showed patent right and left internal jugular veins; central outflow was patent. The left-arm fistula remained the intended permanent access."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "stem"
+          ],
+          "before": "Which treatment should the outside dialysis team try next for Patrick Doyle's later catheter dysfunction?",
+          "after": "Which treatment should the outside dialysis team try next for {patientName}'s later catheter dysfunction?"
+        },
+        {
+          "target": "question.vascular-venous-lymphatic-access.catheter-intraluminal-dysfunction.20261111.v1",
+          "path": [
+            "stem"
+          ],
+          "before": "Which treatment should the outside dialysis team try next for Patrick Doyle's later catheter dysfunction?",
+          "after": "Which treatment should the outside dialysis team try next for {patientName}'s later catheter dysfunction?"
+        }
+      ]
+    }
+  ],
+  "previousPreflight": "tools/question-quality/fixtures/question-topic-acceptance-batch5-initial-preflight-20261111.json"
+}

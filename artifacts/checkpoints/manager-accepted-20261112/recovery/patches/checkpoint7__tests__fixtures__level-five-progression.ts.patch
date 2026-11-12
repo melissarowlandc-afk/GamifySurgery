@@ -1,0 +1,69 @@
+--- a/tests/fixtures/level-five-progression.ts
++++ b/tests/fixtures/level-five-progression.ts
+@@ -20,6 +20,8 @@
+ /** Synthetic prior-save shape; no new witness, reward or unlock is earned by load. */
+ export function createLevelFourReadyForFiveQaState(context: DomainContext): GameState {
+   const state = createLevelFourAlmostQaState(context);
++  state.clinicalXp = 750;
++  delete state.lateProgression; // Prior-save preview: its historical XP goal was earned.
+   state.campaignId = `${LEVEL_FIVE_PROGRESSION_QA_PREFIX}.l4-ready`;
+   state.levelFourCompletion!.woundOstomyCareVisit = {
+     serviceOperationId: "retired.qa.wound", encounterId: null, incomeLineId: "income.wound_care", completedAtFacilityTick: 0,
+@@ -39,19 +41,46 @@
+   ended.nextIdleActionAtFacilityTick = Number.MAX_SAFE_INTEGER;
+   ended.finalPatientSatisfaction = 100;
+   state.encounters = { [ended.id]: ended };
++  if (state.retiredEncounterSummary) state.retiredEncounterSummary.recentEndedSatisfaction = [];
+   ended.finalPatientSatisfaction = value + 100 - getDisplayedClinicSatisfaction(state, context);
++}
++
++/** Synthetic ended-patient rating for the established late-level goal. */
++export function setLevelFiveQaPatientSatisfaction(state: GameState, context: DomainContext, value: number): void {
++  setLevelFiveQaDisplayedSatisfaction(state, context, value);
++  state.encounters[TUTORIAL_ENCOUNTER_ID]!.finalPatientSatisfaction = value;
++}
++
++/** Explicit QA history counters, without income, scored answers or learning XP. */
++export function setLevelFiveQaCompletedEncounters(state: GameState, count: number): void {
++  const liveCompleted = Object.values(state.encounters).filter(encounter => encounter.resolutionReason === "completed").length;
++  const previous = state.retiredEncounterSummary;
++  const completedCount = Math.max(0, count - liveCompleted);
++  state.retiredEncounterSummary = {
++    version: "retired-encounter-summary.v1",
++    retiredCount: completedCount + (previous ? previous.retiredCount - previous.completedCount : 0),
++    completedCount,
++    ordinaryEncounterCompleted: completedCount > 0 || previous?.ordinaryEncounterCompleted === true,
++    inHouseEndoscopyCompleted: previous?.inHouseEndoscopyCompleted ?? false,
++    recentEndedSatisfaction: previous?.recentEndedSatisfaction ?? [],
++    recentStillUses: previous?.recentStillUses ?? [],
++  };
+ }
+ 
+ /** Real admission and unlock commands; starting XP/history/idle clocks are labeled QA metadata. */
+ export function prepareLevelFiveProgressionQaState(state: GameState, context: DomainContext, scenario: LevelFiveProgressionQaScenario): GameState {
+   state.campaignId = `${LEVEL_FIVE_PROGRESSION_QA_PREFIX}.${scenario}`;
+   state.campaignSeed = `level-five-progression-m6.${scenario}`;
+-  state.clinicalXp = scenario === "goals" ? 1990 : 2000;
++  const minimumXp = context.balanceRelease.facility.stageDefinitions.find(stage => stage.level === 5)!.minimumClinicalXp;
++  const minimumCompleted = context.balanceRelease.facility.stageDefinitions.find(stage => stage.level === 5)!.minimumCompletedEncounters;
++  state.clinicalXp = scenario === "goals" ? minimumXp - 10 : minimumXp;
++  setLevelFiveQaPatientSatisfaction(state, context, 100);
++  setLevelFiveQaCompletedEncounters(state, minimumCompleted);
+   state.nextEmployeeDiscussionTick = state.nextExternalRetailOpportunityTick = Number.MAX_SAFE_INTEGER;
+   state.environment.nextLitterSpawnTick = state.environment.nextAmbientPedestrianTick = state.environment.nextWaterCoolerDrainTick = Number.MAX_SAFE_INTEGER;
+   for (const employee of state.employees) employee.nextIdleActionAtFacilityTick = Number.MAX_SAFE_INTEGER;
+   if (scenario === "goals-morale") state.employees[0]!.morale = 84;
+-  if (scenario === "goals-satisfaction") setLevelFiveQaDisplayedSatisfaction(state, context, 90);
++  if (scenario === "goals-satisfaction") setLevelFiveQaPatientSatisfaction(state, context, 90);
+   if (scenario === "goals-empty") state.employees = [];
+   if (scenario === "goals-unlocked" || scenario === "goals-declined") {
+     state = apply(state, context, { type: "SET_PAUSED", paused: true, operationId: "m6.qa.earn-unlock" });
+@@ -60,7 +89,7 @@
+       const role = context.balanceRelease.facility.staffRoleDefinitions.find(role => role.id === employee.staffRoleDefinitionId)!;
+       state = apply(state, context, { type: "SET_EMPLOYEE_SALARY", employeeId: employee.id,
+         salaryPerExpenseInterval: role.salaryPerExpenseInterval, operationId: "m6.qa.morale-decline" });
+-      setLevelFiveQaDisplayedSatisfaction(state, context, 90);
++      setLevelFiveQaPatientSatisfaction(state, context, 90);
+     }
+   }
+   if (scenario === "goals") {

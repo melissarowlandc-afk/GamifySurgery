@@ -1,0 +1,53 @@
+--- a/apps/player/src/styles/clinicPresentation.test.ts
++++ b/apps/player/src/styles/clinicPresentation.test.ts
+@@ -57,15 +57,48 @@
+ });
+ 
+ describe("compact Goals and Alerts spacing", () => {
++  const desktopRailCss = css.slice(css.indexOf("/* Goals keep their full content height"), css.indexOf("@media (min-width: 1181px)", css.indexOf("/* Goals keep their full content height")));
++
++  it("keeps desktop goals and their list at content height without clipping or shrinking", () => {
++    expect(css.slice(0, css.indexOf(desktopRailCss)).lastIndexOf("@media (min-width: 761px)")).toBeGreaterThan(css.slice(0, css.indexOf(desktopRailCss)).lastIndexOf("@media (max-width: 760px)"));
++    expect(declarations(".game-shell .operations-column > .goals-panel", desktopRailCss)).toMatchObject({
++      height: "auto", "min-height": "max-content", "max-height": "none", overflow: "visible", flex: "0 0 auto",
++    });
++    expect(declarations(".game-shell .operations-column > .goals-panel .goal-list", desktopRailCss)).toMatchObject({
++      "min-height": "max-content", overflow: "visible", flex: "0 0 auto",
++    });
++    expect(declarations(".game-shell .operations-column > .goals-panel .goal-secondary-label", desktopRailCss)).toMatchObject({
++      overflow: "visible", "white-space": "normal", "overflow-wrap": "anywhere",
++    });
++    expect(declarations(".game-shell .operations-column > .goals-panel .goal-secondary-progress", desktopRailCss)["flex-shrink"]).toBe("0");
++    expect(desktopRailCss).not.toContain(".has-procedure-setup");
++  });
++
++  it("gives desktop Alerts the remaining height and its own scroll surface, with rail overflow as a fallback", () => {
++    expect(declarations(".game-shell .operations-column", desktopRailCss)).toMatchObject({
++      "overflow-x": "hidden", "overflow-y": "auto", "overscroll-behavior": "contain",
++    });
++    expect(declarations(".game-shell .operations-column > .first-shift-goal-note", desktopRailCss).flex).toBe("0 0 auto");
++    expect(declarations(".game-shell .operations-column > .event-message-board", desktopRailCss)).toMatchObject({
++      "min-height": "0", "max-height": "none", flex: "1 1 auto", "overflow-y": "auto", "overflow-anchor": "none",
++    });
++    expect(declarations(".game-shell .operations-column > .event-message-board > .panel-heading", desktopRailCss)).toMatchObject({
++      position: "sticky", top: "0",
++    });
++    expect(declarations(".game-shell .operations-column > .event-message-board > .message-board-feed", desktopRailCss).flex).toBe("0 0 auto");
++    expect(desktopRailCss).toMatch(/\.game-shell \.operations-column > \.event-message-board > \.message-board-feed\s*\{\s*overflow: visible;/);
++  });
++
+   it("packs every level's goal rows to their content without shrinking labels, progress or the optional chip", () => {
+     expect(declarations(".goals-panel.panel", goalsCss)).toMatchObject({
+       "--goal-row-gap": "3px", "--goal-inset-block": "4px", "--goal-inset-inline": "6px",
+       "min-height": "0", "padding-bottom": "0",
+     });
+     const list = declarations(".goals-panel .goal-list", goalsCss);
+-    expect(list).toMatchObject({ "align-content": "start", "grid-auto-rows": "max-content", flex: "0 1 auto", gap: "var(--goal-row-gap)" });
++    expect(list).toMatchObject({ "align-content": "start", "grid-auto-rows": "max-content", flex: "0 0 auto", gap: "var(--goal-row-gap)" });
+     expect(list.font).toBeUndefined(); expect(list["font-size"]).toBeUndefined();
+-    expect(declarations(".goals-panel .goal-label", goalsCss)["row-gap"]).toBe("0");
++    expect(declarations(".goals-panel .goal-completion-toggle", goalsCss)).toMatchObject({ "min-height": "0", padding: "2px 4px" });
++    expect(declarations(".goals-panel .goal-progress", goalsCss)["font-size"]).toBe("0.78rem");
+     expect(declarations(".goals-panel .goal-secondary-chip", goalsCss)).toMatchObject({ padding: "2px 6px", font: "12px/1.3 var(--font-pixel)" });
+     expect(declarations(".goals-panel .goals-advance-area", goalsCss).gap).toBe("4px");
+   });

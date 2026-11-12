@@ -1,0 +1,244 @@
+--- a/apps/player/src/AppShell.tsx
++++ b/apps/player/src/AppShell.tsx
+@@ -1,9 +1,15 @@
++import { mapSessionAction } from "./session/sessionActions";
+ import type { SubmitQuestionReviewFlag } from "./session/questionReviewFlags";
+ import { clinicFeedForTutorial } from "./session/tutorialTipsIntegration";
++import { TesterFeedbackMenu } from "./feedback/TesterFeedback";
++import { ActionFeedbackLayer } from "./ui/ActionFeedbackLayer";
+ import { useEffect, useRef, useState, type CSSProperties } from "react";
+ import { EmployeeDiscussionPanel } from "./ui/EmployeeDiscussionPanel";
+ import { RoomActionMenu, type RoomMenuAnchor } from "./ui/RoomActionMenu";
+ import { ClinicHeadline } from "./ui/ClinicHeadline";
++import { CloudSaveControls, cloudStatusText, type CloudShellSave } from "./ui/CloudSaveControls";
++import { AccountMenu } from "./ui/AccountMenu";
++import { useAuthAccountActions } from "./auth/AuthAccountContext";
+ import { FinishedGamePage } from "./ui/FinishedGamePage";
+ import type {
+   EmployeeDiscussionTabView,
+@@ -81,6 +87,7 @@
+ } from "./session";
+ 
+ interface AppShellProps {
++  cloudSave?: CloudShellSave;
+   resourceBar: ResourceBarView;
+   paused: boolean;
+   simulationSpeed: SimulationSpeed;
+@@ -104,7 +111,7 @@
+   serviceIncome: ServiceIncomeView;
+   messages: MessageBoardItemView[];
+   needsYou?: NeedsYouItemView[];
+-  onClinicAlertAction?: (action: ClinicAlertAction) => ClinicAlertActionResult;
++  onClinicAlertAction?: (action: ClinicAlertAction) => ClinicAlertActionResult | Promise<ClinicAlertActionResult>;
+   systemNotices: MessageBoardItemView[];
+   questionReviewFlags: QuestionReviewFlag[];
+   development: DevelopmentView;
+@@ -145,7 +152,7 @@
+     tileX: number,
+     tileY: number,
+     orientation?: RoomOrientation,
+-  ) => boolean;
++  ) => boolean | Promise<boolean>;
+   onEnterBuildMode: () => void;
+   onExitBuildMode: () => void;
+   onEnterManagementMode: () => void;
+@@ -172,11 +179,11 @@
+   onTrainEmployee?: (employeeId: string) => void;
+   onCollectLitter: (litterId: string) => void;
+   onRefillWaterCooler: () => void;
+-  onSeatFounderAtFrontDesk: () => boolean;
+-  onSeatFounderInChair: (roomInstanceId: string, location: GridPoint, seatId?: string) => boolean;
++  onSeatFounderAtFrontDesk: () => boolean | Promise<boolean>;
++  onSeatFounderInChair: (roomInstanceId: string, location: GridPoint, seatId?: string) => boolean | Promise<boolean>;
+   onDescribeCharacter?: DescribeCharacterRequest;
+   onPraiseEmployee: (employeeId: string) => void;
+-  onMoveFounder: (destination: GridPoint) => boolean;
++  onMoveFounder: (destination: GridPoint) => boolean | Promise<boolean>;
+   onLevelUp: () => void;
+   onBookInspection?: () => void;
+   onCancelInspection?: () => void;
+@@ -194,7 +201,7 @@
+   onReplayFirstShift?: () => void;
+   onReferencePauseLockedChange?: (locked: boolean) => void;
+   onTutorialTopicExposure?: (topicIds: readonly string[]) => void;
+-  onSaveAndPause: () => PrototypeSaveResult;
++  onSaveAndPause: () => PrototypeSaveResult | Promise<PrototypeSaveResult>;
+   onClearLocalCampaigns: () => boolean;
+   onRestart: () => void;
+ }
+@@ -208,6 +215,7 @@
+  * domain/session layers; this component coordinates visible workspaces.
+  */
+ export function AppShell({
++  cloudSave,
+   resourceBar,
+   paused,
+   simulationSpeed,
+@@ -314,10 +322,19 @@
+   onClearLocalCampaigns,
+   onRestart,
+ }: AppShellProps) {
++  const account = useAuthAccountActions();
++  const setShellOwnsSignOut = account?.setShellOwnsSignOut;
++  useEffect(() => {
++    setShellOwnsSignOut?.(true);
++    return () => setShellOwnsSignOut?.(false);
++  }, [setShellOwnsSignOut]);
++  const [cloudCloseRequest, setCloudCloseRequest] = useState(0);
++  const [cloudSaveBusy, setCloudSaveBusy] = useState(false);
+   const clinicWorkspaceRef = useRef<HTMLElement>(null);
+   const [workspaceMapShare, setWorkspaceMapShare] = useState(() =>
+     readWorkspaceMapShare(getWorkspaceStorage()),
+   );
++  const [workspaceRailsOpen, setWorkspaceRailsOpen] = useState(false);
+   const [helpOpen, setHelpOpen] = useState(false);
+   const [questionReviewQueueOpen, setQuestionReviewQueueOpen] =
+     useState(false);
+@@ -534,13 +551,13 @@
+     tileX: number,
+     tileY: number,
+     orientation?: RoomOrientation,
+-  ): boolean => {
++  ): boolean | Promise<boolean> => {
+     const placingNewRoom =
+       !movingRoomInstanceId &&
+       roomOptions.some(
+         (room) => room.selected && room.id !== "room.hallway",
+       );
+-    const placed = onPlaceRoom(tileX, tileY, orientation);
++    return mapSessionAction(onPlaceRoom(tileX, tileY, orientation), placed => {
+     if (placed) {
+       setRoomMenuOpen(false);
+       if (placingNewRoom) {
+@@ -548,6 +565,7 @@
+       }
+     }
+     return placed;
++    });
+   };
+ 
+   const handleMessageAction = (
+@@ -684,13 +702,13 @@
+     ...needsYou,
+   ];
+   const clinicFeed = clinicFeedForTutorial([...messages, ...systemNotices.filter((notice) => notice.targetType !== "save")], tutorialStep);
+-  const runClinicAction = (id: string, action: ClinicAlertAction) => {
+-    const result = onClinicAlertAction?.(action) ?? (action.kind === "save_and_pause"
+-      ? (() => { const saved = onSaveAndPause(); return { ok: saved.ok, reason: saved.ok ? undefined : "The save failed. Keep this tab open and retry." }; })()
+-      : { ok: false, reason: "This action is unavailable in this preview." });
++  const runClinicAction = async (id: string, action: ClinicAlertAction) => {
++    if (action.kind === "save_and_pause" && cloudSave) { await cloudSave.onSaveAndClose(); return; }
++    const result = action.kind === "save_and_pause" ? await onSaveAndPause() :
++      await onClinicAlertAction?.(action) ?? { ok: false, reason: "This action is unavailable in this preview." };
+     setClinicActionFailures((current) => {
+       const next = { ...current };
+-      if (result.ok) delete next[id]; else next[id] = result.reason ?? "The action could not be applied.";
++      if (result.ok) delete next[id]; else next[id] = "reason" in result && result.reason ? result.reason : "The action could not be applied.";
+       return next;
+     });
+     if (!result.ok) return;
+@@ -710,7 +728,7 @@
+         managementMode ? " is-management-mode" : ""
+       }${
+         chart ? " has-open-chart" : ""
+-      }`}
++      }${workspaceRailsOpen ? " has-workspace-rails" : ""}`}
+     >
+       <div className="game-display-title">Stitchin&apos; Time</div>
+       <ResourceBar
+@@ -719,20 +737,27 @@
+         paused={paused}
+         buildMode={buildMode}
+         managementMode={managementMode}
+-        pauseLocked={buildMode || managementMode || finishReportOpen}
++        pauseLocked={buildMode || managementMode || finishReportOpen || Boolean(cloudSave && !cloudSave.view.canExecute)}
++        pauseLockReason={cloudSave && !cloudSave.view.canExecute ? cloudStatusText(cloudSave.view) ?? "Check your account save before resuming." : undefined}
+         simulationSpeed={simulationSpeed}
+         onTogglePause={onTogglePause}
+         onSimulationSpeedChange={onSimulationSpeedChange}
+         endControls={
+-          <SaveCloseDialog
++          cloudSave ? <CloudSaveControls save={cloudSave} closeRequest={cloudCloseRequest}
++            showCloseButton={false} onBusyChange={setCloudSaveBusy} /> : <><span className="cloud-local-status">Local only</span><SaveCloseDialog
+             onSaveAndPause={onSaveAndPause}
+             onClearLocalCampaigns={onClearLocalCampaigns}
+-          />
++          /></>
+         }
+       />
+ 
+       <main className="game-grid game-grid-workspaces">
+-        <aside className="left-column patient-rail-column">
++        {buildMode || managementMode ? <button type="button" className="workspace-rails-toggle"
++          aria-expanded={workspaceRailsOpen} aria-controls="desktop-patient-panel desktop-operations-panel"
++          onClick={() => setWorkspaceRailsOpen(open => !open)}>
++          {workspaceRailsOpen ? "Hide clinic panels" : "Show clinic panels"}
++        </button> : null}
++        <aside id="desktop-patient-panel" className="left-column patient-rail-column">
+           {!buildMode ? (
+             <>
+               <EmergencyGlp1Panel
+@@ -1009,6 +1034,7 @@
+             />
+             <ManagementPanel
+               managementMode={managementMode}
++              competitionTutorial={{ campaignId: facility.campaignId ?? "", enabled: tutorialsEnabled }}
+               showInactiveTrigger={!chart && !employeeDiscussion && !buildMode}
+               roles={staffRoles}
+               staffTraining={staffTraining}
+@@ -1052,7 +1078,7 @@
+           </section>
+         </section>
+ 
+-        <aside className="right-column operations-column">
++        <aside id="desktop-operations-panel" className="right-column operations-column">
+           {progression.facilityLevelLabel === "Level 0" ? <p className="first-shift-goal-note">Finish both introductory visits and connect an Examination Room to graduate. Mistakes still count as completed visits.</p> : null}
+           <GoalsPanel
+             view={progression}
+@@ -1072,6 +1098,7 @@
+               onNeedAction={(item) => runClinicAction(item.id, item.action)}
+               onAction={(id, target) => { const item = clinicFeed.find((candidate) => candidate.id === id); if (item?.action) runClinicAction(id, item.action); else handleMessageAction(id, target); }}
+               mode="ticker"
++              scrollWholePanel
+               maximumVisibleItems={7}
+             />
+         </aside>
+@@ -1099,6 +1126,9 @@
+           </p>
+         ) : null}
+         <div className="footer-actions">
++          <AccountMenu />
++          <TesterFeedbackMenu level={campaigns.find(campaign => campaign.active)?.facilityLevel ??
++            Number(progression.facilityLevelLabel.match(/\d+/)?.[0] ?? 0)} />
+           <HelpDialog
+             paused={paused}
+             onTogglePause={onTogglePause}
+@@ -1117,20 +1147,28 @@
+           ) : null}
+           <CampaignManager
+             campaigns={campaigns}
++            accountMode={Boolean(cloudSave)}
+             onCreateCampaign={onCreateCampaign}
+             onSwitchCampaign={onSwitchCampaign}
+           />
+           <RestartDialog
++            accountMode={Boolean(cloudSave)}
+             paused={paused}
+             onTogglePause={onTogglePause}
+             onRestart={onRestart}
+           />
++          {cloudSave ? <button className="text-button footer-session-link" type="button" aria-label="Save & Close"
++            disabled={cloudSaveBusy} onClick={() => setCloudCloseRequest(value => value + 1)}>Save &amp; Close</button> : null}
++          {account ? <button className="text-button footer-session-link" type="button" aria-label="Sign out" disabled={account.pending}
++            onClick={() => void account.signOut()}>{account.pending ? "Signing out…" : "Sign out"}</button> : null}
+         </div>
++        {account?.message ? <p className="footer-session-error" role="alert">{account.message}</p> : null}
+       </footer>
+ 
+       <p className="screen-reader-only" role="status" aria-live="polite">
+         {announcement}
+       </p>
++      <ActionFeedbackLayer shell="desktop" />
+       {showCharacterQa ? (
+         <CharacterQaGallery facility={facility} />
+       ) : null}

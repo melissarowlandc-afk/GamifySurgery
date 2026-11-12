@@ -1,0 +1,21 @@
+--- a/apps/player/src/ui/OpeningSequence.css
++++ b/apps/player/src/ui/OpeningSequence.css
+@@ -202,18 +202,6 @@
+   width: min(100%, 24rem);
+ }
+ 
+-.opening-wordmark {
+-  font-family: var(--font-pixel);
+-  border: 2px solid #35382f;
+-  padding: 0.35rem 0.55rem;
+-  background: #e8e7d6;
+-  box-shadow: 3px 3px 0 #9b9c86;
+-  font-size: 0.78rem;
+-  font-weight: 950;
+-  letter-spacing: 0.12em;
+-  text-transform: uppercase;
+-}
+-
+ .opening-tagline-slot {
+   display: grid;
+   width: 100%;

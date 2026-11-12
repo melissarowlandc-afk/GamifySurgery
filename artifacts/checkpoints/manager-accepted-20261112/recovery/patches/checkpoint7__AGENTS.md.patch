@@ -1,0 +1,11 @@
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -192,7 +192,7 @@
+ `gpt-6.1-sol` on a ChatGPT login). The folder name changes with each Codex app
+ update; re-point the path and the allow rules in `.claude/settings.local.json`
+ after an update. Current path:
+-`/c/Users/rowla/AppData/Local/OpenAI/Codex/bin/9691020b546a15b2/codex.exe`.
++`/c/Users/rowla/AppData/Local/OpenAI/Codex/bin/5449c1f0f26f1f98/codex.exe`.
+ 
+ - Always add `-c 'windows.sandbox="unelevated"'` to `exec` and `exec resume`.
+   The configured elevated sandbox fails setup ("setup refresh had errors")

@@ -1,0 +1,601 @@
+{
+  "purpose": "Dev-only exact 2026-11-04 pre-fix phlebotomy draws/supports; native art and pending seated factors are unchanged.",
+  "views": [
+    {
+      "orientation": 0,
+      "records": [
+        {
+          "id": "window-1",
+          "assetId": "gs015:phlebotomy:window",
+          "sourceRect": [
+            0,
+            0,
+            1213,
+            1060
+          ],
+          "renderSizeTiles": [
+            0.7628930817610063,
+            0.6666666666666666
+          ],
+          "destinationTopLeftTiles": [
+            1.1185534591194968,
+            -0.7166666666666667
+          ],
+          "canvasTransform": [
+            2,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "attachments": {},
+          "doorOwners": [
+            "N2"
+          ],
+          "backedOwners": [
+            "N2"
+          ],
+          "depthKey": -1,
+          "depthPolicy": "wall"
+        },
+        {
+          "id": "window-2",
+          "assetId": "gs015:phlebotomy:window",
+          "sourceRect": [
+            0,
+            0,
+            1213,
+            1060
+          ],
+          "renderSizeTiles": [
+            0.7628930817610063,
+            0.6666666666666666
+          ],
+          "destinationTopLeftTiles": [
+            2.118553459119497,
+            -0.7166666666666667
+          ],
+          "canvasTransform": [
+            2,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "attachments": {},
+          "doorOwners": [
+            "N3"
+          ],
+          "backedOwners": [
+            "N3"
+          ],
+          "depthKey": -1,
+          "depthPolicy": "wall"
+        },
+        {
+          "id": "sink",
+          "assetId": "gs015:phlebotomy:south",
+          "sourceRect": [
+            1065,
+            0,
+            555,
+            698
+          ],
+          "renderSizeTiles": [
+            0.7999659742120344,
+            1.0060833333333334
+          ],
+          "destinationTopLeftTiles": [
+            0.03362046322827119,
+            -0.6801384909264566
+          ],
+          "canvasTransform": [
+            2,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "sourceFloorContact": [
+            275,
+            680
+          ],
+          "worldLocalGround": [
+            0.43,
+            0.3
+          ],
+          "footprint": {
+            "left": 0.03,
+            "top": 0,
+            "width": 0.8,
+            "height": 0.3
+          },
+          "attachments": {
+            "groundContact": {
+              "x": 111.6,
+              "y": 166
+            }
+          },
+          "doorOwners": [
+            "N1",
+            "WA"
+          ],
+          "backedOwners": [
+            "N1"
+          ],
+          "depthKey": 0.3,
+          "depthPolicy": "ground-contact"
+        },
+        {
+          "id": "chair",
+          "assetId": "gs015:phlebotomy:south",
+          "sourceRect": [
+            0,
+            0,
+            648,
+            748
+          ],
+          "renderSizeTiles": [
+            1.0323529411764705,
+            1.1916666666666667
+          ],
+          "destinationTopLeftTiles": [
+            0.9838235294117648,
+            -0.18299019607843145
+          ],
+          "canvasTransform": [
+            2,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "sourceFloorContact": [
+            324,
+            730
+          ],
+          "worldLocalGround": [
+            1.5,
+            0.98
+          ],
+          "footprint": {
+            "left": 1.05,
+            "top": 0.5,
+            "width": 0.9,
+            "height": 0.48
+          },
+          "approach": {
+            "x": 1.5,
+            "y": 1.32
+          },
+          "seat": {
+            "x": 1.5,
+            "y": 0.5148039215686272
+          },
+          "attachments": {
+            "groundContact": {
+              "x": 240,
+              "y": 247.6
+            },
+            "seatContact": {
+              "x": 240,
+              "y": 191.77647058823527
+            },
+            "seatRisePx": 55.8235294117647
+          },
+          "doorOwners": [],
+          "backedOwners": [],
+          "depthKey": 0.98,
+          "depthPolicy": "ground-contact"
+        },
+        {
+          "id": "stool",
+          "assetId": "gs015:phlebotomy:south",
+          "sourceRect": [
+            654,
+            0,
+            405,
+            430
+          ],
+          "renderSizeTiles": [
+            0.5199854651162791,
+            0.5520833333333334
+          ],
+          "destinationTopLeftTiles": [
+            1.2406492248062015,
+            1.1607558139534884
+          ],
+          "canvasTransform": [
+            2,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "sourceFloorContact": [
+            202,
+            420
+          ],
+          "worldLocalGround": [
+            1.5,
+            1.7
+          ],
+          "footprint": {
+            "left": 1.24,
+            "top": 1.44,
+            "width": 0.52,
+            "height": 0.26
+          },
+          "approach": {
+            "x": 1.5,
+            "y": 1.7
+          },
+          "seat": {
+            "x": 1.5,
+            "y": 1.2891472868217055
+          },
+          "attachments": {
+            "groundContact": {
+              "x": 240,
+              "y": 334
+            },
+            "seatContact": {
+              "x": 240,
+              "y": 284.69767441860466
+            },
+            "seatRisePx": 49.30232558139535
+          },
+          "doorOwners": [],
+          "backedOwners": [],
+          "depthKey": 1.7,
+          "depthPolicy": "ground-contact"
+        }
+      ],
+      "supports": [
+        {
+          "id": "chair:patient",
+          "role": "phlebotomy-patient",
+          "pose": "seated",
+          "facing": "south",
+          "seat": {
+            "x": 1.5,
+            "y": 0.5148039215686272
+          },
+          "ground": {
+            "x": 1.5,
+            "y": 0.98
+          },
+          "fixtureGround": {
+            "x": 1.5,
+            "y": 0.98
+          },
+          "sideChairLayer": {
+            "drawId": "chair",
+            "maskId": "phlebotomy-south-patient"
+          }
+        },
+        {
+          "id": "stool:clinician",
+          "role": "phlebotomy-clinician",
+          "pose": "seated",
+          "facing": "north",
+          "seat": {
+            "x": 1.5,
+            "y": 1.2891472868217055
+          },
+          "ground": {
+            "x": 1.5,
+            "y": 1.7
+          },
+          "fixtureGround": {
+            "x": 1.5,
+            "y": 1.7
+          }
+        }
+      ]
+    },
+    {
+      "orientation": 270,
+      "records": [
+        {
+          "id": "window-1",
+          "assetId": "gs015:phlebotomy:window",
+          "sourceRect": [
+            0,
+            0,
+            1213,
+            1060
+          ],
+          "renderSizeTiles": [
+            0.7628930817610063,
+            0.6666666666666666
+          ],
+          "destinationTopLeftTiles": [
+            0.11855345911949679,
+            -0.7166666666666667
+          ],
+          "canvasTransform": [
+            2,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "attachments": {},
+          "doorOwners": [
+            "N1"
+          ],
+          "backedOwners": [
+            "N1"
+          ],
+          "depthKey": -1,
+          "depthPolicy": "wall"
+        },
+        {
+          "id": "window-2",
+          "assetId": "gs015:phlebotomy:window",
+          "sourceRect": [
+            0,
+            0,
+            1213,
+            1060
+          ],
+          "renderSizeTiles": [
+            0.7628930817610063,
+            0.6666666666666666
+          ],
+          "destinationTopLeftTiles": [
+            1.1185534591194968,
+            -0.7166666666666667
+          ],
+          "canvasTransform": [
+            2,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "attachments": {},
+          "doorOwners": [
+            "N2"
+          ],
+          "backedOwners": [
+            "N2"
+          ],
+          "depthKey": -1,
+          "depthPolicy": "wall"
+        },
+        {
+          "id": "chair",
+          "assetId": "gs015:phlebotomy:east",
+          "sourceRect": [
+            8,
+            8,
+            589,
+            807
+          ],
+          "renderSizeTiles": [
+            1.0002173688558447,
+            1.3704166666666666
+          ],
+          "destinationTopLeftTiles": [
+            0.4382863486162743,
+            0.15335760016522096
+          ],
+          "canvasTransform": [
+            2,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "sourceFloorContact": [
+            319,
+            793
+          ],
+          "worldLocalGround": [
+            0.98,
+            1.5
+          ],
+          "footprint": {
+            "left": 0.5,
+            "top": 1.0499999999999998,
+            "width": 0.48,
+            "height": 0.9
+          },
+          "approach": {
+            "x": 1.32,
+            "y": 1.5
+          },
+          "seat": {
+            "x": 1.3535956216439486,
+            "y": 1.0228165014456834
+          },
+          "attachments": {
+            "groundContact": {
+              "x": 237.60000000000002,
+              "y": 310
+            },
+            "seatContact": {
+              "x": 282.43147459727385,
+              "y": 252.73798017348201
+            },
+            "seatRisePx": 57.262019826517964
+          },
+          "doorOwners": [],
+          "backedOwners": [],
+          "depthKey": 1.5,
+          "depthPolicy": "ground-contact"
+        },
+        {
+          "id": "stool",
+          "assetId": "gs015:phlebotomy:east",
+          "sourceRect": [
+            605,
+            8,
+            409,
+            517
+          ],
+          "renderSizeTiles": [
+            0.5022841715022566,
+            0.6349166666666667
+          ],
+          "destinationTopLeftTiles": [
+            1.4347350096711797,
+            0.8884168278529981
+          ],
+          "canvasTransform": [
+            2,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "sourceFloorContact": [
+            216,
+            498
+          ],
+          "worldLocalGround": [
+            1.7,
+            1.5
+          ],
+          "footprint": {
+            "left": 1.44,
+            "top": 1.24,
+            "width": 0.26,
+            "height": 0.52
+          },
+          "approach": {
+            "x": 1.7,
+            "y": 1.5
+          },
+          "seat": {
+            "x": 1.7012280786589296,
+            "y": 1.0394705029013542
+          },
+          "attachments": {
+            "groundContact": {
+              "x": 324,
+              "y": 310
+            },
+            "seatContact": {
+              "x": 324.14736943907155,
+              "y": 254.7364603481625
+            },
+            "seatRisePx": 55.26353965183752
+          },
+          "doorOwners": [],
+          "backedOwners": [],
+          "depthKey": 1.5,
+          "depthPolicy": "ground-contact"
+        },
+        {
+          "id": "sink",
+          "assetId": "gs015:phlebotomy:east",
+          "sourceRect": [
+            1022,
+            8,
+            429,
+            813
+          ],
+          "renderSizeTiles": [
+            0.6105202952029521,
+            1.157
+          ],
+          "destinationTopLeftTiles": [
+            0.055603936039360376,
+            1.7358081180811804
+          ],
+          "canvasTransform": [
+            2,
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "sourceFloorContact": [
+            242,
+            804
+          ],
+          "worldLocalGround": [
+            0.4,
+            2.88
+          ],
+          "footprint": {
+            "left": 0,
+            "top": 2.17,
+            "width": 0.3,
+            "height": 0.8
+          },
+          "attachments": {
+            "groundContact": {
+              "x": 168,
+              "y": 475.59999999999997
+            }
+          },
+          "doorOwners": [
+            "WC",
+            "S1"
+          ],
+          "backedOwners": [
+            "WC"
+          ],
+          "depthKey": 2.88,
+          "depthPolicy": "ground-contact"
+        }
+      ],
+      "supports": [
+        {
+          "id": "chair:patient",
+          "role": "phlebotomy-patient",
+          "pose": "seated",
+          "facing": "east",
+          "seat": {
+            "x": 1.3535956216439486,
+            "y": 1.0228165014456834
+          },
+          "ground": {
+            "x": 0.98,
+            "y": 1.5
+          },
+          "fixtureGround": {
+            "x": 0.98,
+            "y": 1.5
+          },
+          "sideChairLayer": {
+            "drawId": "chair",
+            "maskId": "phlebotomy-east-patient"
+          }
+        },
+        {
+          "id": "stool:clinician",
+          "role": "phlebotomy-clinician",
+          "pose": "seated",
+          "facing": "west",
+          "seat": {
+            "x": 1.7012280786589296,
+            "y": 1.0394705029013542
+          },
+          "ground": {
+            "x": 1.7,
+            "y": 1.5
+          },
+          "fixtureGround": {
+            "x": 1.7,
+            "y": 1.5
+          }
+        }
+      ]
+    }
+  ]
+}

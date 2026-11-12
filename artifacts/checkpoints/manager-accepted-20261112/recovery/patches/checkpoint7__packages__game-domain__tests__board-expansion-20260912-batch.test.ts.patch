@@ -1,0 +1,49 @@
+--- a/packages/game-domain/tests/board-expansion-20260912-batch.test.ts
++++ b/packages/game-domain/tests/board-expansion-20260912-batch.test.ts
+@@ -1,14 +1,17 @@
++import {beforeProgramBatch3AcceptanceRelease} from "../../clinical-content/src/question-program-batch3-acceptance-test-support";
++import {createClinicalAuthorStage} from "../../../tests/fixtures/clinical-author-stage";
+ import { describe, expect, it } from "vitest";
+ import { BOARD_EXPANSION_20260912_CASES } from "@gamify-surgery/clinical-content";
+ import {
+-  createInitialGameState,
+   createPatientPixelAppearance,
+-  deserializeGameState,
+-  gameReducer,
+   getCurrentQuestion,
+   serializeGameState,
+   type GameState,
++  PROTOTYPE_DOMAIN_CONTEXT as actualPrototype
+ } from "../src";
++
++// Original gated/procedural contracts use the verified retained source epoch.
++const {context:PROTOTYPE_DOMAIN_CONTEXT,createInitialGameState,gameReducer,deserializeGameState}=createClinicalAuthorStage(beforeProgramBatch3AcceptanceRelease(actualPrototype.clinicalRelease));
+ 
+ function prepared(seed: string): GameState {
+   const state = createInitialGameState(undefined, {
+@@ -17,6 +20,25 @@
+     createdAtRealMs: 0,
+   });
+   state.facilityLevel = 1;
++  // This ordinary-care batch authors the connected clinical room that a fresh
++  // campaign now requires the player to construct.
++  state.rooms.push({
++    id: "room.board.20260912.examination",
++    roomDefinitionId: "room.examination",
++    x: 34,
++    y: 26,
++    orientation: 0,
++    doorSide: "south",
++    upgradeLevel: 1,
++    cleanliness: 100,
++  });
++  state.doors.push({
++    id: "door.board.20260912.examination",
++    roomId: "room.board.20260912.examination",
++    side: "south",
++    offset: 1,
++    exterior: false,
++  });
+   state.encounters = {};
+   state.openChartEncounterId = null;
+   state.attendedEncounterId = null;

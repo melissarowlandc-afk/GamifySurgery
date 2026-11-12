@@ -1,0 +1,43 @@
+--- a/apps/player/src/facility/furnitureSeatLayering.test.ts
++++ b/apps/player/src/facility/furnitureSeatLayering.test.ts
+@@ -64,9 +64,13 @@
+ }
+ 
+ describe("furniture seating layer audit", () => {
+-  it("preserves all 56 pre-change actor contacts and all 64 furniture crops/positions", () => {
++  it("preserves the 52 contacts and 60 furniture placements outside the explicit phlebotomy layout fix", () => {
+     let seatCount = 0, drawCount = 0;
+     for (const view of before) {
++      // The phlebotomy owner playtest deliberately relocates both occupants
++      // and resizes the draw chair. Its native crops/contacts/clearance have
++      // dedicated regressions in phlebotomyPresentation.test.ts.
++      if (view.room === "room.phlebotomy") continue;
+       const orientation = view.orientation as 0 | 270;
+       const supports = resolveApprovedRoomActorSupports(view.room, orientation);
+       const draws = resolveApprovedRoomDrawRecords(view.room, orientation);
+@@ -83,12 +87,12 @@
+         drawCount += 1;
+       }
+     }
+-    expect([seatCount, drawCount]).toEqual([56, 64]);
++    expect([seatCount, drawCount]).toEqual([52, 60]);
+   });
+ 
+   it("covers every runtime east/west chair and bench, distinguishing armless seats", () => {
+     const armless = new Set([
+-      "room.examination:0:stool:clinician", "room.phlebotomy:270:stool:clinician",
++      "room.examination:0:stool:clinician", "room.phlebotomy:0:stool:clinician", "room.phlebotomy:270:stool:clinician",
+       "room.staff_break:0:largeWest", "room.staff_break:0:largeEast",
+     ]);
+     const checked: string[] = [];
+@@ -112,8 +116,8 @@
+         checked.push(key);
+       }
+     }
+-    expect(checked).toHaveLength(13);
+-    expect(checked.filter((key) => armless.has(key))).toHaveLength(4);
++    expect(checked).toHaveLength(14);
++    expect(checked.filter((key) => armless.has(key))).toHaveLength(5);
+   });
+ 
+   it("keeps south-facing beds and exam tables completely below their occupants at every scale", () => {

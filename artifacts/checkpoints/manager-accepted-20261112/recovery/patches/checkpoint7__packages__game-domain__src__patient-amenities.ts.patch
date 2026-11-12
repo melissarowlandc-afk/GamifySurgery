@@ -1,0 +1,181 @@
+--- a/packages/game-domain/src/patient-amenities.ts
++++ b/packages/game-domain/src/patient-amenities.ts
+@@ -9,7 +9,9 @@
+   PatientAmenityTripState,
+   ServiceOperationState,
+ } from "./types";
+-import { findRouteFromDisplacedLocationToPoint } from "./displaced-routing";
++import { findRouteFromDisplacedLocationOffscreen, findRouteFromDisplacedLocationToPoint } from "./displaced-routing";
++import { planRestroomRecovery, restroomAtPoint } from "./restroom-recovery";
++import { commitPediatricPairPlan, planPediatricWaiting } from "./pediatric-family";
+ import { LEVEL_FIVE_SUPPORT_TUNING } from "@gamify-surgery/balance-config";
+ import { findLevelFiveSupportExitPath, findLevelFiveSupportPath, getGardenSatisfactionPoints, getLevelFiveSupportExitDoorId, getLevelFiveSupportRoomAt } from "./level-five-support";
+ 
+@@ -129,7 +131,8 @@
+     .filter((room) => room.roomDefinitionId === "room.bathroom" && isRoomOperationalForFacilityWork(state, room.id, context))
+     .sort((left, right) => left.id.localeCompare(right.id))
+     .flatMap((room) => {
+-      if (founderOccupiesBathroom(state, room.id) || state.patientAmenityTrips?.some((trip) => trip.bathroomRoomInstanceId === room.id)) return [];
++      if (founderOccupiesBathroom(state, room.id) || state.patientAmenityTrips?.some((trip) => trip.bathroomRoomInstanceId === room.id) ||
++        state.retailExternalActors.some(actor => actor.lifecycle !== "departed" && restroomAtPoint(state, context, actor.location)?.id === room.id)) return [];
+       const definition = getRoomDefinition(room.roomDefinitionId, context);
+       if (!definition) return [];
+       return route(state, context, start, getRoomNavigationAnchor(room, definition)).length > 0 ? [room.id] : [];
+@@ -310,8 +313,22 @@
+   const escapedReturn = soldGardenEscape.length ? route(state, context, soldGardenEscape.at(-1)!, trip.returnTarget, allowedReturnRooms) : [];
+   const insideNativeGarden = garden && getLevelFiveSupportRoomAt(state, current)?.id === garden.id &&
+     current.x >= garden.x && current.x < garden.x + 4 && current.y >= garden.y && current.y < garden.y + 4;
+-  const returnPath = gardenExit.length ? gardenExit : soldGardenEscape.length && escapedReturn.length ? [...soldGardenEscape, ...escapedReturn] :
++  let returnPath = gardenExit.length ? gardenExit : soldGardenEscape.length && escapedReturn.length ? [...soldGardenEscape, ...escapedReturn] :
+     insideNativeGarden ? [] : route(state, context, current, trip.returnTarget, allowedReturnRooms);
++  if (trip.amenityKind === "bathroom" && (returnPath.length === 0 || restroomAtPoint(state, context, trip.returnTarget))) {
++    const recovery = planRestroomRecovery(state, context, { kind, id, location: current });
++    if (recovery?.reservation) {
++      trip.returnTarget = { ...recovery.reservation.location };
++      returnPath = recovery.relocated ? [{ ...trip.returnTarget }] : recovery.path;
++      if (recovery.relocated) setActorLocation(state, trip, trip.returnTarget);
++      if (encounter) encounter.waitingDestination = recovery.reservation;
++      if (serviceOperation) {
++        // Visitor waiting paths carry their seat claims. The amenity owns the
++        // live walk until return completes; keep its new endpoint reserved.
++        serviceOperation.path = [{ ...trip.returnTarget }]; serviceOperation.pathIndex = 0;
++      }
++    }
++  }
+   if (returnPath.length === 0) {
+     if (trip.amenityKind === "garden") { trip.status = "returning"; trip.returnBlocked = true; trip.dwellEndsAtFacilityTick = null; }
+     return true;
+@@ -356,6 +373,8 @@
+   if (trip.amenityKind === "garden") return advanceGardenRest(state, trip, context);
+   const current = actorLocation(state, trip.actorKind, trip.actorId);
+   if (!current) return false;
++  const patientMovement = trip.actorKind === "encounter" ? state.encounters[trip.actorId]?.patientMovement : null;
++  if (patientMovement?.kind === "leaving_after_walkout" || patientMovement?.kind === "leaving_after_resolution") return false;
+   const operation = activeOperationForActor(state, trip.actorKind, trip.actorId);
+   if (operation && !operationAllowsBathroom(operation) && !(trip.purpose === "departure" &&
+     trip.linkedServiceOperationId === operation.id && operation.periopBedFlowVersion === 1 &&
+@@ -372,8 +391,13 @@
+   if (trip.returnRequested && trip.status !== "returning") {
+     requestPatientAmenityReturn(state, trip.actorKind, trip.actorId, context);
+   }
++  if (trip.status === "returning" && samePoint(actorLocation(state, trip.actorKind, trip.actorId), trip.returnTarget)) return false;
+   if (trip.status === "using_amenity") {
+-    if (trip.dwellEndsAtFacilityTick !== null && state.facilityTick >= trip.dwellEndsAtFacilityTick) {
++    // The arrival cursor supplies a legacy-safe upper bound even if a reopened
++    // trip has no deadline or an impossible far-future deadline.
++    const deadline = Math.min(trip.dwellEndsAtFacilityTick ?? Number.MAX_SAFE_INTEGER,
++      trip.lastMovedAtFacilityTick + context.balanceRelease.environment.idleActionMaximumMinutes);
++    if (state.facilityTick >= deadline) {
+       requestPatientAmenityReturn(state, trip.actorKind, trip.actorId, context);
+     }
+     return true;
+@@ -405,7 +429,16 @@
+     ? new Set([authorizedDestinationRoom.id])
+     : new Set<string>();
+   const currentRoute = route(state, context, current, destination, allowedDestinationRooms);
+-  if (currentRoute.length === 0 && !samePoint(current, destination)) return false;
++  if (currentRoute.length === 0 && !samePoint(current, destination)) {
++    if (trip.status === "returning") {
++      // Replan an invalidated return instead of dropping its movement owner
++      // and leaving a visible actor in the restroom indefinitely.
++      trip.status = "using_amenity";
++      requestPatientAmenityReturn(state, trip.actorKind, trip.actorId, context);
++      return getPatientAmenityTrip(state, trip.actorKind, trip.actorId)?.status === "returning";
++    }
++    return false;
++  }
+   const savedRemaining = trip.path.slice(Math.floor(trip.pathIndex));
+   if (currentRoute.length > 0 && !samePath(currentRoute, savedRemaining)) {
+     trip.path = currentRoute.map((point) => ({ ...point }));
+@@ -491,6 +524,7 @@
+   state.patientAmenityNextOpportunityTicks ??= {};
+   state.patientAmenityTripSequence ??= 0;
+   state.patientAmenityTrips = state.patientAmenityTrips.filter((trip) => advanceTrip(state, trip, context));
++  repairOrphanedBathroomActors(state, context);
+ 
+   // A resolved patient who has left the map, or a finished visitor operation,
+   // can never become eligible again. Skip that campaign history each minute.
+@@ -525,3 +559,83 @@
+     }
+   }
+ }
++
++/** Load validation may discard a stale trip while retaining its actor location,
++ * including open ground left by a sold bathroom. A stationary restroom occupant
++ * or displaced checked-in waiter is never an intentional wait. Repair that
++ * orphan on the next tick; intact exit walks keep their owner. */
++function repairOrphanedBathroomActors(state: GameState, context: DomainContext): void {
++  const actors = [
++    ...Object.values(state.encounters).map(encounter => ({ kind: "encounter" as const, id: encounter.id,
++      location: encounter.patientLocation, movement: encounter.patientMovement,
++      waiting: encounter.checkInStatus === "checked_in" && Boolean(encounter.waitingDestination) })),
++    ...state.serviceOperations.filter(op => op.actorKind === "visitor").map(op => ({ kind: "service_visitor" as const,
++      id: op.id, location: op.location, movement: op, waiting: op.status === "waiting_for_resources" })),
++  ];
++  for (const actor of actors) {
++    const location = actor.location;
++    if (!location || getPatientAmenityTrip(state, actor.kind, actor.id) || hasActiveRetailMovement(state, actor.kind, actor.id)) continue;
++    const inBathroom = restroomAtPoint(state, context, location);
++    const displacedWaiter = !inBathroom && actor.waiting && location.x >= 0 && location.y >= 0 &&
++      location.x < context.balanceRelease.facility.gridWidth && location.y < context.balanceRelease.facility.gridHeight &&
++      !state.rooms.some(room => {
++        const definition = getRoomDefinition(room.roomDefinitionId, context);
++        const size = definition && getRotatedFootprint(definition, room.orientation);
++        return size && location.x >= room.x && location.x < room.x + size.width && location.y >= room.y && location.y < room.y + size.height;
++      });
++    if (!inBathroom && !displacedWaiter) continue;
++    const movement = actor.movement;
++    const encounter = actor.kind === "encounter" ? state.encounters[actor.id] : undefined;
++    const operations = state.serviceOperations.filter(op => actor.kind === "encounter"
++      ? op.actorKind === "encounter" && op.actorId === actor.id : op.id === actor.id);
++    const family = Object.values(state.pediatricFamilies ?? {}).find(row => row.child.kind === actor.kind && row.child.id === actor.id);
++    // Captured native escape paths remain authoritative after a room sale.
++    // Re-querying the deleted room's graph can reject their fractional prefix.
++    // Only repair lost ownership, including service-owned encounter walks.
++    if ([movement, ...operations].some(owner => owner && owner.pathIndex < owner.path.length - 1 &&
++      samePoint(owner.path[Math.floor(owner.pathIndex)], actor.location) &&
++      (!("status" in owner) || !["completed", "cancelled"].includes(owner.status)))) continue;
++    // Plan the child as a public actor first; restore paired ownership below.
++    const recovery = planRestroomRecovery(state, context, family ? { ...actor, id: `restroom-repair:${actor.id}` } : actor);
++    if (!recovery?.reservation) continue;
++    const target = { ...recovery.reservation.location };
++    if (actor.kind === "encounter") {
++      const encounter = state.encounters[actor.id]!;
++      encounter.patientLocation = target;
++      encounter.patientMovement = null;
++      encounter.waitingDestination = recovery.reservation;
++      encounter.assignedRoomInstanceId = recovery.roomId;
++      if ((encounter.lifecycle === "resolved" || movement && "kind" in movement && movement.kind.startsWith("leaving")) &&
++        !operations.some(op => !["completed", "cancelled"].includes(op.status))) {
++        const exit = findRouteFromDisplacedLocationOffscreen(state, context, target);
++        if (exit.length) {
++          encounter.patientMovement = { kind: encounter.resolutionReason === "walkout" || movement && "kind" in movement && movement.kind === "leaving_after_walkout"
++            ? "leaving_after_walkout" : "leaving_after_resolution", path: exit, pathIndex: 0,
++            lastMovedAtFacilityTick: state.facilityTick, destinationRoomInstanceId: null };
++          encounter.waitingDestination = null;
++        }
++      }
++    }
++    for (const operation of operations) {
++      operation.location = { ...target }; operation.path = [{ ...target }]; operation.pathIndex = 0;
++      operation.lastMovedAtFacilityTick = state.facilityTick;
++    }
++    if (family) {
++      family.reservation = null; family.movement = undefined;
++      const parent = state.retailExternalActors.find(row => row.id === family.parentActorId);
++      if (parent) { parent.location = { ...target }; parent.path = [{ ...target }]; parent.pathIndex = 0; }
++      const pair = planPediatricWaiting(state, context, family, undefined, true);
++      if (pair?.reservation) {
++        const path = commitPediatricPairPlan(family, pair);
++        if (encounter) {
++          encounter.waitingDestination = { roomInstanceId: pair.reservation.roomInstanceId,
++            location: { ...pair.reservation.childLocation }, kind: pair.reservation.childSeatId ? "chair" : "standing" };
++          encounter.patientMovement = path.length > 1 ? { kind: "walking_to_waiting", path, pathIndex: 0,
++            lastMovedAtFacilityTick: state.facilityTick, destinationRoomInstanceId: pair.reservation.roomInstanceId } : null;
++        } else for (const operation of operations) {
++          operation.path = path; operation.pathIndex = 0; operation.lastMovedAtFacilityTick = state.facilityTick;
++        }
++      }
++    }
++  }
++}

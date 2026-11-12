@@ -1,0 +1,42 @@
+--- a/apps/player/src/ui/ChartPanel.tsx
++++ b/apps/player/src/ui/ChartPanel.tsx
+@@ -1,4 +1,5 @@
+ import { QuestionFlagControl } from "./QuestionFlagControl";
++import { ClinicalImageExhibit } from "./ClinicalImageExhibit";
+ import { ClinicalContentNotice } from "./ClinicalContentNotice";
+ import type { SubmitQuestionReviewFlag } from "../session/questionReviewFlags";
+ import {
+@@ -12,6 +13,7 @@
+ } from "react";
+ import { createPortal } from "react-dom";
+ import { PixelAvatar } from "./PixelAvatar";
++import { useQuestionWaitSnapshots } from "./useQuestionWaitSnapshots";
+ import type {
+   AnswerChoiceView,
+   ChartClinicalReviewView,
+@@ -245,7 +247,7 @@
+         <span className="cs-eyebrow">Teaching dataset</span>
+         {heading ? <span className="cs-exhibit-step">{heading}</span> : null}
+       </figcaption>
+-      {exhibit.kind === "table" ? (
++      {exhibit.kind === "image" ? <ClinicalImageExhibit exhibit={exhibit} /> : exhibit.kind === "table" ? (
+         <div className="cs-exhibit-table" tabIndex={0} role="region" aria-label={exhibit.caption}>
+           <table>
+             <caption>{exhibit.caption}</caption>
+@@ -792,7 +794,7 @@
+   const [expandedChoices, setExpandedChoices] = useState<Record<string, boolean>>({});
+   const placement = useChartPlacement(sheetRef, chart !== null);
+ 
+-  const steps = chart ? getDecisionSteps(chart) : [];
++  const steps = useQuestionWaitSnapshots(chart?.id ?? null, chart ? getDecisionSteps(chart) : []);
+   const currentStep = steps.find((step) => step.current);
+   const showingBack = Boolean(chart?.summaryAvailable && chart.summaryVisible);
+   const primary: ChartPrimaryAction | null = !chart
+@@ -1066,6 +1068,7 @@
+             </section>
+ 
+             <section className="cs-decisions" aria-label="Encounter decisions and results">
++              {chart.answerChoicesPending ? <p role="status">Checking your account mode...</p> : null}
+               {steps.length === 0 ? (
+                 <div className="cs-empty">
+                   <strong>Encounter complete</strong>

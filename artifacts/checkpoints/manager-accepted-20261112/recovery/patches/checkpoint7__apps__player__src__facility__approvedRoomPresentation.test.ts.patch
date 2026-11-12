@@ -1,0 +1,53 @@
+--- a/apps/player/src/facility/approvedRoomPresentation.test.ts
++++ b/apps/player/src/facility/approvedRoomPresentation.test.ts
+@@ -384,21 +384,22 @@
+       { role: "ct-operator", pose: "standing", facing: "north", seat: { x: 3.35, y: 2.7 } },
+     ]);
+     expect(resolveApprovedRoomActorSupports("room.phlebotomy", 0)).toMatchObject([
+-      { id: "chair:patient", role: "phlebotomy-patient", pose: "seated", facing: "south", ground: { x: 1.5, y: .98 } },
+-      { id: "stool:clinician", role: "phlebotomy-clinician", pose: "seated", facing: "north", ground: { x: 1.5, y: 1.7 } },
++      { id: "chair:patient", role: "phlebotomy-patient", pose: "seated", facing: "south", ground: { x: 1.3, y: 1.08 } },
++      { id: "stool:clinician", role: "phlebotomy-clinician", pose: "seated", facing: "west", ground: { x: 2.2, y: 1.34 } },
+     ]);
+     const phlebotomySouth = resolveApprovedRoomActorSupports("room.phlebotomy", 0);
+-    expect(phlebotomySouth[0]!.seat.y).toBeCloseTo(.5148039);
+-    expect(phlebotomySouth[1]!.seat.y).toBeCloseTo(1.2891473);
++    // Owner playtest correction: smaller chair, clinician beside the armrest.
++    expect(phlebotomySouth[0]!.seat.y).toBeCloseTo(.6845833);
++    expect(phlebotomySouth[1]!.seat.y).toBeCloseTo(.9291473);
+     const phlebotomyEast = resolveApprovedRoomActorSupports("room.phlebotomy", 270);
+     expect(phlebotomyEast).toMatchObject([
+-      { id: "chair:patient", role: "phlebotomy-patient", pose: "seated", facing: "east", ground: { x: .98, y: 1.5 } },
+-      { id: "stool:clinician", role: "phlebotomy-clinician", pose: "seated", facing: "west", ground: { x: 1.7, y: 1.5 } },
+-    ]);
+-    expect(phlebotomyEast[0]!.seat.x).toBeCloseTo(1.3535956);
+-    expect(phlebotomyEast[0]!.seat.y).toBeCloseTo(1.0228165);
++      { id: "chair:patient", role: "phlebotomy-patient", pose: "seated", facing: "east", ground: { x: .78, y: 1.5 } },
++      { id: "stool:clinician", role: "phlebotomy-clinician", pose: "seated", facing: "west", ground: { x: 1.7, y: 1.95 } },
++    ]);
++    expect(phlebotomyEast[0]!.seat.x).toBeCloseTo(.7453575);
++    expect(phlebotomyEast[0]!.seat.y).toBeCloseTo(.9832493);
+     expect(phlebotomyEast[1]!.seat.x).toBeCloseTo(1.7012281);
+-    expect(phlebotomyEast[1]!.seat.y).toBeCloseTo(1.0394705);
++    expect(phlebotomyEast[1]!.seat.y).toBeCloseTo(1.4894705);
+ 
+     const telehealthSouth = resolveApprovedRoomActorSupports("room.glp1_telehealth_suite", 0);
+     expect(telehealthSouth).toMatchObject([
+@@ -446,10 +447,14 @@
+             draw.renderSizeTiles[0] * tilePixels,
+             draw.renderSizeTiles[1] * tilePixels,
+           ];
++          // Only these two fixtures have an owner-requested presentation
++          // transform after the original proof. Their crop must still match
++          // exactly; new placement/scale is tested in phlebotomyPresentation.
++          const phlebotomyMoved = room.roomDefinitionId === "room.phlebotomy" && ["chair", "stool"].includes(draw.id);
+           const matchingCalls = capture.drawImages.filter((call) =>
+-            call.src.assetId === draw.assetId && call.args.slice(-4).every((value, index) =>
+-              Math.abs(value - destination[index]!) < .01
+-            )
++            call.src.assetId === draw.assetId && (phlebotomyMoved
++              ? call.args.length === 8 && draw.sourceRect.every((value, index) => value === call.args[index])
++              : call.args.slice(-4).every((value, index) => Math.abs(value - destination[index]!) < .01))
+           );
+           expect(matchingCalls, `${room.proofId}:${draw.id}:destination`).toHaveLength(1);
+           expect(draw.assetId, `${room.proofId}:${draw.id}:asset`).toBe(matchingCalls[0]!.src.assetId);

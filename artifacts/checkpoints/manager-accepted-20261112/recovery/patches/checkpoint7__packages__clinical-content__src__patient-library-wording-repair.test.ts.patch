@@ -1,0 +1,50 @@
+--- a/packages/clinical-content/src/patient-library-wording-repair.test.ts
++++ b/packages/clinical-content/src/patient-library-wording-repair.test.ts
+@@ -1,3 +1,5 @@
++import {QUESTION_PROGRAM_BATCH6_ACCEPTED_CASES} from "./question-program-batch6-accepted-20261112";
++import {QUESTION_PROGRAM_BATCH5_ACCEPTED_CASES} from "./question-program-batch5-accepted-20261111";
+ import { describe, expect, it } from "vitest";
+ import type { SyntheticClinicalCase } from "./schema";
+ import { validateSyntheticClinicalRelease } from "./schema";
+@@ -11,6 +13,7 @@
+ } from "./patient-library-wording-repair";
+ import {
+   PATIENT_LIBRARY_WORDING_REPAIR_SOURCE_CASES,
++  QUESTION_QUALITY_SOURCE_RELEASE,
+   SYNTHETIC_CLINICAL_RELEASE,
+ } from "./synthetic-content";
+ 
+@@ -78,7 +81,8 @@
+       expect(clinicalCase.chiefComplaint, clinicalCase.id).not.toMatch(
+         /^(?:Select|Identify|Level|Clinic|Outpatient)\b|\bv\d+\b/i,
+       );
+-      const name = (clinicalCase.pediatricProfile || clinicalCase.id.startsWith("case.variety3.")) ? clinicalCase.patientDisplayName : "{patientName}";
++      const acceptedTemplate = [...QUESTION_PROGRAM_BATCH5_ACCEPTED_CASES,...QUESTION_PROGRAM_BATCH6_ACCEPTED_CASES].some(accepted => accepted.id === clinicalCase.id);
++      const name = ((clinicalCase.pediatricProfile && !acceptedTemplate) || clinicalCase.id.startsWith("case.variety3.")) ? clinicalCase.patientDisplayName : "{patientName}";
+       expect(clinicalCase.presentation, clinicalCase.id).toContain(name);
+       expect(clinicalCase.presentation, clinicalCase.id).not.toMatch(
+         /^(?:A patient|An adult|Patient with)\b/i,
+@@ -92,7 +96,11 @@
+         );
+       }
+       for (const node of clinicalCase.decisionNodes) {
+-        expect(node.stem, `${clinicalCase.id}/${node.id}`).toMatch(/\?$/);
++        if(node.questionVariantId==="question.statistics-ethics.risk-ratio-odds-ratio.v3.r4"){
++          // Frozen independent PASS: its complete question is followed by an
++          // explicit rounding instruction, as the owner statistics style asks.
++          expect(node.stem).toBe("What event probability does the model predict for group A? Round to the nearest whole percent.");
++        }else expect(node.stem, `${clinicalCase.id}/${node.id}`).toMatch(/\?$/);
+         expect(node.stem, `${clinicalCase.id}/${node.id}`).not.toBe(
+           "Which answer is appropriate?",
+         );
+@@ -102,7 +110,9 @@
+ 
+   it("marks every repaired complaint and all changed narrative text for clinician review", () => {
+     const historicalCaseIds = new Set(sourceCases.map((clinicalCase) => clinicalCase.id));
+-    const historicalCases = SYNTHETIC_CLINICAL_RELEASE.cases.filter(
++    // Prove the original presentation-only receipt independently of later,
++    // explicitly versioned question revisions (covered by their own tests).
++    const historicalCases = QUESTION_QUALITY_SOURCE_RELEASE.cases.filter(
+       (clinicalCase) => historicalCaseIds.has(clinicalCase.id),
+     );
+     expect(historicalCases).toHaveLength(298);

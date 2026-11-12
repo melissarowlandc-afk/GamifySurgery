@@ -1,0 +1,61 @@
+--- a/apps/player/src/facility/characterPresentation.test.ts
++++ b/apps/player/src/facility/characterPresentation.test.ts
+@@ -1,8 +1,14 @@
+ import { describe, expect, it } from "vitest";
+ import { readFileSync } from "node:fs";
+ import {
++  alignCharacterStillSeatToWorld,
++  characterStillVisibleTop,
++  CHARACTER_STILL_WIDTH_IN_TILES,
++  getCharacterStillPresentationMetrics,
+   getCharacterPresentationMetrics,
+   getAuthoredCharacterPresentationMetrics,
++  isCharacterMovingPose,
++  isCharacterTextureKey,
+   MAP_CHARACTER_REFERENCE_HEIGHT,
+   MAP_CHARACTER_REFERENCE_TILE_SIZE,
+ } from "./characterPresentation";
+@@ -73,9 +79,40 @@
+     expect(metrics).toEqual({ width: 1, height: 1 });
+   });
+ 
+-  it("limits linear sampling to the character-atlas registration loop", () => {
++  it("keeps character texture sampling crisp when the room smoothing pass runs", () => {
+     const source = readFileSync(new URL("./FacilityScene.ts", import.meta.url), "utf8");
+-    expect(source).toContain("private registerCharacterAtlasFrames(");
+-    expect(source).toContain("texture.setFilter(Phaser.Textures.FilterMode.LINEAR);");
++    expect(source).toContain("private ensureCharacterStill(");
++    expect(source).toContain("isCharacterTextureKey(texture.key)");
++    expect(source).toContain("setFilter(Phaser.Textures.FilterMode.NEAREST)");
++    expect(isCharacterTextureKey("stitchin-time-art:character-still:founder.14:123")).toBe(true);
++    expect(isCharacterTextureKey("stitchin-time-art:character:founders-front-idle-v4")).toBe(true);
++    expect(isCharacterTextureKey("stitchin-time-art:gs015:examination:bed-south")).toBe(false);
++  });
++
++  it("uses one 160x320 scale whose floor span matches the previous canonical frame", () => {
++    const metrics = getCharacterStillPresentationMetrics(52);
++    expect(metrics.height).toBe(metrics.width * 2);
++    expect(CHARACTER_STILL_WIDTH_IN_TILES).toBeCloseTo(1.06424, 4);
++    expect(Math.abs(metrics.height * (287 / 320) - 52 * 1.35 * (181 / 128))).toBeLessThan(1);
++  });
++
++  it("places the authored seat contact on the furniture plane without changing scale", () => {
++    const metrics = getCharacterStillPresentationMetrics(52);
++    const floorBase = alignCharacterStillSeatToWorld(200, 287, 221.153, metrics.height);
++    expect(floorBase).toBeCloseTo(200 + (287 - 221.153) * (metrics.height / 320), 8);
++    expect(getCharacterStillPresentationMetrics(52)).toEqual(metrics);
++  });
++
++  it("treats only the walking poses as moving", () => {
++    for (const pose of ["walk-a", "walk-neutral", "walk-b"]) expect(isCharacterMovingPose(pose)).toBe(true);
++    for (const pose of ["idle", "seated", "exam-table", "working"]) expect(isCharacterMovingPose(pose)).toBe(false);
++  });
++
++  it("anchors head labels to visible pixels at every zoom and visual lift", () => {
++    for (const zoom of [.1, .5, .7, 1, 1.6, 2.5]) {
++      const metrics = getCharacterStillPresentationMetrics(52 * zoom, .9);
++      expect(characterStillVisibleTop(200, 288, 40, metrics.height, 7 * zoom))
++        .toBeCloseTo(200 - 7 * zoom - 248 * metrics.height / 320, 8);
++    }
+   });
+ });

@@ -1,0 +1,10 @@
+--- a/apps/player/src/ui/EmployeeDiscussionPanel.tsx
++++ b/apps/player/src/ui/EmployeeDiscussionPanel.tsx
+@@ -27,6 +27,7 @@
+     statusLabel: STATUS_LABELS[discussion.status],
+     presentation: discussion.presentation,
+     answerChoices: [],
++    answerChoicesPending: discussion.answerChoicesPending,
+     terminalFeedbackNeedsAcknowledgment: discussion.status === "feedback",
+     summaryAvailable: false,
+     summaryVisible: false,

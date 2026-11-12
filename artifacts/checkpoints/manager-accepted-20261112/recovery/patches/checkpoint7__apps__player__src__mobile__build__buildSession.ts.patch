@@ -1,0 +1,26 @@
+--- a/apps/player/src/mobile/build/buildSession.ts
++++ b/apps/player/src/mobile/build/buildSession.ts
+@@ -4,6 +4,7 @@
+ } from "@gamify-surgery/game-domain";
+ import { getApprovedPlacementOrientations } from "../../facility/roomVisualLayout";
+ import type { BuildValidation, DoorRequest, HallwayCell, HallwayPreview } from "./types";
++import { getRoomAccessWarning } from "../../ui/roomAccessFeedback";
+ 
+ function previewId(state: GameState, prefix: string): string {
+   let id = prefix;
+@@ -24,10 +25,13 @@
+   x: number, y: number, orientation: RoomOrientation = 0): BuildValidation {
+   if (!definitionId) return { valid: false, reason: "Select a room before choosing its location.", cost: 0 };
+   const operationId = previewId(state, "mobile.preview.placement");
+-  return previewCommand(state, movingId
++  const preview = previewCommand(state, movingId
+     ? { type: "MOVE_ROOM", operationId, roomId: movingId, x, y }
+     : { type: "PLACE_ROOM", operationId, roomId: previewId(state, "room.mobile.preview"), roomDefinitionId: definitionId,
+-      x, y, orientation: getApprovedPlacementOrientations(definitionId).includes(orientation) ? orientation : 0 }).validation;
++      x, y, orientation: getApprovedPlacementOrientations(definitionId).includes(orientation) ? orientation : 0 });
++  const roomId = movingId ?? previewId(state, "room.mobile.preview");
++  const warning = preview.validation.valid ? getRoomAccessWarning(preview.next, roomId) : null;
++  return warning ? { ...preview.validation, warning } : preview.validation;
+ }
+ 
+ /** Desktop's visual per-cell gate, then the identical PLACE_ROOM reducer/cost gate.

@@ -1,0 +1,22 @@
+--- a/packages/clinical-content/src/approved-data/hcc-resection-selection.test.ts
++++ b/packages/clinical-content/src/approved-data/hcc-resection-selection.test.ts
+@@ -1,6 +1,7 @@
+ import { describe, expect, it } from "vitest";
+ import { validateSyntheticClinicalRelease } from "../schema";
+-import { SYNTHETIC_CLINICAL_RELEASE } from "../synthetic-content";
++import { SYNTHETIC_CLINICAL_RELEASE as currentRelease } from "../synthetic-content";
++import {beforeProgramBatch2AcceptanceRelease} from "../question-program-batch2-acceptance-test-support";
+ import { ROW_029_CONCEPT } from "./hcc-milan-criteria";
+ import {
+   ROW_092_CASES,
+@@ -9,6 +10,10 @@
+   ROW_092_QUESTION_VARIANTS,
+   ROW_092_SOURCES,
+ } from "./hcc-resection-selection";
++
++// This package's original approval/admission receipt predates the exact topic
++// replacement. The batch2 suite checks its successor in the actual default.
++const SYNTHETIC_CLINICAL_RELEASE = beforeProgramBatch2AcceptanceRelease(currentRelease);
+ 
+ describe("owner row 92 HCC resection-selection package", () => {
+   it("keeps one new management concept, four variants, and five active cases", () => {

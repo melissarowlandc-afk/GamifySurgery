@@ -1,0 +1,133 @@
+--- a/packages/game-domain/src/selectors.ts
++++ b/packages/game-domain/src/selectors.ts
+@@ -1,3 +1,5 @@
++import { settledStateQuery } from "./settledStateQueries";
++import { getProgressionClinicalXpGoal } from "./late-progression";
+ import type {
+   ArrivalClass,
+   CurrentQuestion,
+@@ -329,12 +331,13 @@
+ }
+ 
+ /** Non-clinical work targets must be reachable and satisfy their room rules. */
++const operationalRoomQuery = Symbol("operational-room");
+ export function isRoomOperationalForFacilityWork(
+   state: GameState,
+   roomId: string,
+   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+ ): boolean {
+-  return isRoomOperational(state, roomId, context, getFacilityAccessValidation(state, context));
++  return settledStateQuery(state, context, operationalRoomQuery, roomId, () => isRoomOperational(state, roomId, context, getFacilityAccessValidation(state, context)));
+ }
+ 
+ /** Capacity acquisition excludes overdue equipment and rooms already claimed for repair. */
+@@ -359,10 +362,14 @@
+   return isRoomAccessible(state, roomId, context, getFacilityAccessValidation(state, context));
+ }
+ 
++const capabilityQuery = Symbol("installed-capabilities");
+ export function getCurrentCapabilities(
+   state: GameState,
+   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+ ): Set<string> {
++  return new Set(settledStateQuery(state, context, capabilityQuery, null, () => computeCurrentCapabilities(state, context)));
++}
++function computeCurrentCapabilities(state: GameState, context: DomainContext): Set<string> {
+   const capabilities = new Set<string>();
+   const access = getFacilityAccessValidation(state, context);
+   for (const placedRoom of state.rooms) {
+@@ -1467,6 +1474,7 @@
+       `Missing progression definition for Level ${state.facilityLevel}.`,
+     );
+   }
++  const clinicalXpGoal = getProgressionClinicalXpGoal(state, definition.minimumClinicalXp);
+   const placedRoomTypes = new Set(
+     state.rooms.map((room) => room.roomDefinitionId),
+   );
+@@ -1482,6 +1490,16 @@
+     state,
+     context,
+   );
++  // Ended visits already include their facility experience. Late progression
++  // evaluates that record once, independently of the live HUD condition overlay.
++  const progressionSatisfaction = state.facilityLevel >= 4
++    ? historicalSatisfaction ?? 100
++    : effectiveSatisfaction;
++  const minimumRatedEncounters = state.facilityLevel === 5
++    ? definition.minimumCompletedEncounters : 0;
++  const earnedInspectionUnlock = Boolean(state.levelFive?.progress.inspectionUnlocked);
++  const hasEstablishedSatisfaction = minimumRatedEncounters === 0 || earnedInspectionUnlock ||
++    (completedEncounters >= minimumRatedEncounters && historicalSatisfaction !== null);
+   const averageStaffMorale = state.facilityLevel === 5 ? getAverageEffectiveStaffMorale(state) : null;
+   const accessValidation = getFacilityAccessValidation(state, context);
+   const requiredRooms = definition.requiredRoomDefinitionIds.map(
+@@ -1572,12 +1590,12 @@
+           {
+             id: "progression.clinical_xp",
+             label: "Clinical XP",
+-            met: state.clinicalXp >= definition.minimumClinicalXp,
++            met: clinicalXpGoal.met,
+             current: state.clinicalXp,
+-            required: definition.minimumClinicalXp,
++            required: clinicalXpGoal.required,
+           },
+         ]),
+-    ...(definition.minimumCompletedEncounters > 0
++    ...(definition.minimumCompletedEncounters > 0 && state.facilityLevel !== 5
+       ? [
+           {
+             id: "progression.completed_encounters",
+@@ -1595,15 +1613,18 @@
+       : [
+           {
+             id: "progression.satisfaction",
+-            label: `Satisfaction above ${definition.satisfactionMustBeGreaterThan}%`,
++            label: state.facilityLevel >= 4
++              ? `Recent patient satisfaction above ${definition.satisfactionMustBeGreaterThan}%${minimumRatedEncounters > 0 ? ` after ${minimumRatedEncounters} completed encounters` : ""}`
++              : `Satisfaction above ${definition.satisfactionMustBeGreaterThan}%`,
+             met:
++              hasEstablishedSatisfaction &&
+               (state.facilityLevel >= 4 || historicalSatisfaction !== null) &&
+-              effectiveSatisfaction >
++              progressionSatisfaction >
+               definition.satisfactionMustBeGreaterThan,
+             current:
+               state.facilityLevel < 4 && historicalSatisfaction === null
+                 ? 0
+-                : effectiveSatisfaction,
++                : progressionSatisfaction,
+             required: definition.satisfactionMustBeGreaterThan + 1,
+           },
+         ]),
+@@ -1747,6 +1768,13 @@
+         : "Resolved";
+   }
+ 
++  if (encounter.consult?.closedAtFacilityTick === null) {
++    const label = { endoscopy: "Intra-endoscopy consult", operation: "Intra-op consult", app: "APP consult",
++      pediatric: "Pediatric consult", wound_ostomy: "Wound/ostomy consult" }[encounter.consult.kind];
++    statusLabel = encounter.terminalFeedback?.acknowledged ? `${label}: close chart to resume care` : label;
++    if (["app", "pediatric", "wound_ostomy"].includes(encounter.consult.kind) &&
++        state.serviceOperations.find(op => op.id === encounter.consult!.serviceOperationId)?.status !== "in_service") statusLabel = `${label}: waiting for clinic capacity`;
++  }
+   return {
+     encounterId: encounter.id,
+     patientDisplayName: encounter.patientDisplayName,
+@@ -1754,7 +1782,7 @@
+     arrivalClass: encounter.arrivalClass,
+     statusLabel,
+     actionRequired:
+-      encounter.lifecycle === "active_action_required" &&
++      (encounter.lifecycle === "active_action_required" || encounter.consult?.closedAtFacilityTick === null && encounter.lifecycle !== "resolved") &&
+       (encounter.patientMovement === null ||
+         encounter.patientMovement.kind === "walking_to_care" ||
+         encounter.patientMovement.kind === "walking_to_waiting" ||
+@@ -1900,6 +1928,8 @@
+   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+ ): CurrentQuestion | null {
+   const encounter = state.encounters[encounterId];
++  if (encounter?.consult?.closedAtFacilityTick === null && ["app", "pediatric", "wound_ostomy"].includes(encounter.consult.kind) &&
++      state.serviceOperations.find(op => op.id === encounter.consult!.serviceOperationId)?.status !== "in_service") return null;
+   if (
+     !encounter ||
+     encounter.lifecycle !== "active_action_required" ||

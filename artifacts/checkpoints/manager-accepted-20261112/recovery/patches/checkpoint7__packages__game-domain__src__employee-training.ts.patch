@@ -1,0 +1,19 @@
+--- a/packages/game-domain/src/employee-training.ts
++++ b/packages/game-domain/src/employee-training.ts
+@@ -1,3 +1,4 @@
++import { settledStateQuery } from "./settledStateQueries";
+ import {
+   EMPLOYEE_TRAINING_CAPACITY,
+   EMPLOYEE_TRAINING_PLACES,
+@@ -142,7 +143,11 @@
+   nextBenefit: EmployeeTrainingBenefit | null;
+ }
+ 
++const trainingQuoteQuery = Symbol("training-quote");
+ export function getEmployeeTrainingQuote(state: GameState, employeeId: string, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT): EmployeeTrainingQuote {
++  return settledStateQuery(state, context, trainingQuoteQuery, employeeId, () => computeEmployeeTrainingQuote(state, employeeId, context));
++}
++function computeEmployeeTrainingQuote(state: GameState, employeeId: string, context: DomainContext): EmployeeTrainingQuote {
+   const employee = state.employees.find((candidate) => candidate.id === employeeId);
+   const currentLevel = employee?.trainingLevel ?? 1;
+   const session = employee?.training;

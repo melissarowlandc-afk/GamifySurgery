@@ -1,0 +1,131 @@
+--- a/packages/game-domain/src/level-three-support.ts
++++ b/packages/game-domain/src/level-three-support.ts
+@@ -1,7 +1,8 @@
+-import { getServiceIncomeLine } from "@gamify-surgery/balance-config";
++import { getRoomUpgradePurchaseCount, getServiceIncomeLine, LEGACY_STAFF_BREAK_MORALE_GAIN } from "@gamify-surgery/balance-config";
+ import { getExecutiveDeskLocation } from "./executive-management";
+ import { isEmployeeAwayForTraining } from "./employee-training";
+ import { getPeriopNurseAttentionQueue } from "./periop-nurse-attention";
++import { getClinicalResourceReservations, type ClinicalResourceReservations } from "./service-operations";
+ import { getRadiologistReadingStation } from "./reading-stations";
+ import { getEmployeeRoleTrainingPercent, getEmployeeTrainingWorkMinutes } from "./employee-training-effects";
+ import { findCareAwareFacilityPath } from "./care-room-access";
+@@ -136,7 +137,8 @@
+   )[0] ?? null;
+ }
+ 
+-function employeeHasCareDemand(state: GameState, employee: EmployeeState): boolean {
++function employeeHasCareDemand(state: GameState, employee: EmployeeState, clinical: ClinicalResourceReservations): boolean {
++  if (clinical.employeeIds.has(employee.id) || (clinical.staffRoleCounts.get(employee.staffRoleDefinitionId) ?? 0) > 0) return true;
+   if (employee.staffRoleDefinitionId === "staff.periop_nurse" && getPeriopNurseAttentionQueue(state).length > 0) return true;
+   if (state.serviceOperations.some((operation) =>
+     operation.status !== "completed" && operation.status !== "cancelled" &&
+@@ -154,7 +156,7 @@
+     discussion.employeeId === employee.id && discussion.lifecycle !== "resolved" && discussion.lifecycle !== "cancelled",
+   )) return true;
+   if (employee.staffRoleDefinitionId === "staff.receptionist" && Object.values(state.encounters).some((encounter) =>
+-    encounter.lifecycle === "waiting_unopened" || encounter.checkInStatus !== "checked_in",
++    !encounter.resolutionReason && (encounter.checkInStatus !== "checked_in" || encounter.patientMovement?.kind === "returning_from_offsite_testing"),
+   )) return true;
+   return state.retailOperations.some((operation) =>
+     operation.status === "queued" && operation.staffRoleDefinitionId === employee.staffRoleDefinitionId,
+@@ -271,12 +273,14 @@
+   }
+ }
+ 
+-function progressTasks(state: GameState, context: DomainContext): void {
+-  const tuning = context.balanceRelease.environment.levelThreeSupport;
++function progressTasks(state: GameState, context: DomainContext, clinical: ClinicalResourceReservations): void {
+   for (const employee of state.employees) {
+     const task = employee.facilityTask;
+     if (!task || !["take_break", "repair_room", "review_ambulatory_qi"].includes(task.kind)) continue;
+-    if (employeeHasCareDemand(state, employee) && task.kind !== "repair_room") {
++    if (employeeHasCareDemand(state, employee, clinical) && task.kind !== "repair_room") {
++      // No partial credit. Throttle interrupted attempts too, so short idle
++      // gaps cannot repeatedly send the same worker away from incoming care.
++      if (task.kind === "take_break") employee.lastBreakAtFacilityTick = state.facilityTick;
+       clearSupportTask(state, employee, context);
+       continue;
+     }
+@@ -290,7 +294,7 @@
+     }
+     if (task.workMinutesRemaining > 0) continue;
+     if (task.kind === "take_break") {
+-      employee.morale = Math.min(100, employee.morale + (task.roomUpgradeBreakBenefit?.moraleGain ?? tuning.breakMoraleGain));
++      employee.morale = Math.min(100, employee.morale + (task.roomUpgradeBreakBenefit?.moraleGain ?? LEGACY_STAFF_BREAK_MORALE_GAIN));
+       employee.lastBreakAtFacilityTick = state.facilityTick;
+     } else if (task.kind === "repair_room" && task.targetId) {
+       const room = state.rooms.find((candidate) => candidate.id === task.targetId);
+@@ -389,11 +393,11 @@
+   }
+ }
+ 
+-function assignQi(state: GameState, context: DomainContext): void {
++function assignQi(state: GameState, context: DomainContext, clinical: ClinicalResourceReservations): void {
+   if (state.levelThreeQiReviews.some((candidate) => candidate.status === "in_progress")) return;
+   const review = state.levelThreeQiReviews.find((candidate) => candidate.status === "queued");
+   if (!review) return;
+-  const surgeon = state.employees.find((employee) => employee.staffRoleDefinitionId === "staff.surgeon" && idle(state, employee) && !employeeHasCareDemand(state, employee));
++  const surgeon = state.employees.find((employee) => employee.staffRoleDefinitionId === "staff.surgeon" && idle(state, employee) && !employeeHasCareDemand(state, employee, clinical));
+   const office = surgeon?.homeRoomInstanceId ? state.rooms.find((candidate) => candidate.id === surgeon.homeRoomInstanceId) : null;
+   const definition = office ? getRoomDefinition(office.roomDefinitionId, context) : null;
+   if (!surgeon || office?.roomDefinitionId !== "room.surgeon_office" || !definition || !isRoomOperationalForFacilityWork(state, office.id, context)) return;
+@@ -410,15 +414,19 @@
+     ...(review.roomUpgradeWork ? { roomUpgradeWork: review.roomUpgradeWork } : {}) };
+ }
+ 
+-function assignBreaks(state: GameState, context: DomainContext): void {
++function assignBreaks(state: GameState, context: DomainContext, clinical: ClinicalResourceReservations): void {
+   const tuning = context.balanceRelease.environment.levelThreeSupport;
+   const occupied = new Set(state.employees.flatMap((employee) => employee.facilityTask?.kind === "take_break" && employee.facilityTask.targetId && employee.facilityTask.seatId
+     ? [`${employee.facilityTask.targetId}:${employee.facilityTask.seatId}`] : []));
+   const founderSeat = getFounderBreakSeatClaim(state);
+   if (founderSeat) occupied.add(`${founderSeat.roomId}:${founderSeat.seatId}`);
+   for (const employee of state.employees) {
+-    if (!idle(state, employee) || employeeHasCareDemand(state, employee) || getEmployeeEffectiveMorale(state, employee) >= 100 ||
+-        (employee.lastBreakAtFacilityTick != null && state.facilityTick - employee.lastBreakAtFacilityTick < tuning.breakCooldownMinutes)) continue;
++    const morale = getEmployeeEffectiveMorale(state, employee);
++    const cooldown = tuning.breakCooldownMinutes *
++      (morale >= tuning.breakHighMoraleThreshold ? tuning.breakHighMoraleCooldownMultiplier : 1);
++    if (!idle(state, employee) || employeeHasCareDemand(state, employee, clinical) ||
++        morale >= 100 ||
++        (employee.lastBreakAtFacilityTick != null && state.facilityTick - employee.lastBreakAtFacilityTick < cooldown)) continue;
+     const rooms = state.rooms.filter(candidate => (candidate.roomDefinitionId === "room.staff_break" ||
+       state.facilityLevel >= 5 && candidate.roomDefinitionId === "room.staff_gym") && isRoomOperationalForFacilityWork(state, candidate.id, context));
+     // One policy/cooldown; prefer the gym when it has a real free reachable contact.
+@@ -453,6 +461,19 @@
+   }
+ }
+ 
++/** One clinic-wide daily benefit: the best reachable operational staff room,
++ * not the sum of rooms. Busy staff benefit without leaving a care assignment. */
++export function getBestOperationalStaffRoomMoraleBonus(state: GameState, context: DomainContext): number {
++  if (state.facilityLevel < 3) return 0;
++  const tuning = context.balanceRelease.environment.levelThreeSupport;
++  return state.rooms.reduce((best, room) => {
++    if (!(room.roomDefinitionId === "room.staff_break" || state.facilityLevel >= 5 && room.roomDefinitionId === "room.staff_gym") ||
++        !isRoomOperationalForFacilityWork(state, room.id, context)) return best;
++    return Math.max(best, tuning.staffRoomMoraleBonusPerDay +
++      getRoomUpgradePurchaseCount(room.upgradeLevel) * tuning.staffRoomMoraleBonusPerUpgrade);
++  }, 0);
++}
++
+ export function advanceLevelThreeSupport(state: GameState, context: DomainContext): void {
+   state.levelThreeQiReviews ??= [];
+   state.levelThreeQiReviewSequence ??= state.levelThreeQiReviews.reduce((highest, review) => {
+@@ -461,10 +482,11 @@
+   }, 0);
+   state.levelThreeMaintenanceAppliedUseKeys ??= state.rooms.flatMap((room) => room.maintenance?.appliedUseKeys ?? []);
+   reconcileSupportAssignments(state, context);
+-  progressTasks(state, context);
++  const clinical = getClinicalResourceReservations(state, context);
++  progressTasks(state, context, clinical);
+   reconcileMaintenance(state);
+   enqueueQi(state, context);
+   assignRepairs(state, context);
+-  assignQi(state, context);
+-  assignBreaks(state, context);
+-}
++  assignQi(state, context, clinical);
++  assignBreaks(state, context, clinical);
++}

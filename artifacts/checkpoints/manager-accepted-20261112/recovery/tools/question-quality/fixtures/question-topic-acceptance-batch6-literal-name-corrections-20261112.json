@@ -1,0 +1,110 @@
+{
+  "checkedOn": "2026-11-12",
+  "authority": "Manager batch6 acceptance and name-only correction rule",
+  "records": [
+    {
+      "id": "presentation-correction.topic-batch6.20261112.case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1",
+      "literalName": "Grace Turner",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "b316588fbed2436e00fe16c285d1d75e31df26f166fd828fce228486936ddae5",
+      "beforeQuestionSha256": {
+        "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1": "3f10a94b1da21d564168a38c1d6734ada4bed1275fb4d3f7244aa88770cb342b"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "currentUpdate"
+          ],
+          "before": "At a subsequent clinic chart-review visit, the founder and Grace's father review the outside children's hospital record. Grace is being managed there; no biopsy or anesthesia is performed in this clinic.",
+          "after": "At a subsequent clinic chart-review visit, the founder and {patientName}'s father review the outside children's hospital record. {patientName} is being managed there; no biopsy or anesthesia is performed in this clinic."
+        },
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "exhibit",
+            "items",
+            0,
+            "value"
+          ],
+          "before": "Grace speaks comfortably seated but becomes breathless when supine. She remained calm during an awake needle procedure.",
+          "after": "{patientName} speaks comfortably seated but becomes breathless when supine. She remained calm during an awake needle procedure."
+        },
+        {
+          "target": "question.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy.v1",
+          "path": [
+            "exhibit",
+            "items",
+            0,
+            "value"
+          ],
+          "before": "Grace speaks comfortably seated but becomes breathless when supine. She remained calm during an awake needle procedure.",
+          "after": "{patientName} speaks comfortably seated but becomes breathless when supine. She remained calm during an awake needle procedure."
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch6.20261112.case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1",
+      "literalName": "Noah Wells",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "a49e762de3581c9ecb9fe5b94cf76e27747bfe3e50342d92620fee5746ec19db",
+      "beforeQuestionSha256": {
+        "question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2": "3d26940603545eb9223b06fab256286f295fef4b58871930b47d3fcc904de64e"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "decisionNodes",
+            0,
+            "currentUpdate"
+          ],
+          "before": "Examination documents a proximal urethral opening and no palpable gonad on either side. Noah is comfortable, eating normally and has no vomiting or dehydration. Multidisciplinary endocrine/urologic assessment is underway.",
+          "after": "Examination documents a proximal urethral opening and no palpable gonad on either side. {patientName} is comfortable, eating normally and has no vomiting or dehydration. Multidisciplinary endocrine/urologic assessment is underway."
+        }
+      ]
+    },
+    {
+      "id": "presentation-correction.topic-batch6.20261112.case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+      "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+      "literalName": "Isla Chen",
+      "correctionType": "presentation_only",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "beforeCaseSha256": "00390c84bbe70a132bff5facd7e612aec81836f5fbff9f91136db68ad32c18c1",
+      "beforeQuestionSha256": {
+        "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2": "154613bc903f12cc13f5f6c4ae0401731312f36e7731bfc20d4a86b52b2a3246"
+      },
+      "fields": [
+        {
+          "target": "case",
+          "path": [
+            "presentation"
+          ],
+          "before": "{patientName}, a 6-year-old girl, attends clinic with her mother, Mei Chen, who remains in the room. The founder reviews outside neonatal ICU records from when Isla was a 4-day-old girl treated at the referring tertiary hospital for a left congenital diaphragmatic hernia. All questions concern that recorded ICU care.",
+          "after": "{patientName}, a 6-year-old girl, attends clinic with her mother, Mei Chen, who remains in the room. The founder reviews outside neonatal ICU records from when {patientName} was a 4-day-old girl treated at the referring tertiary hospital for a left congenital diaphragmatic hernia. All questions concern that recorded ICU care."
+        },
+        {
+          "target": "case",
+          "path": [
+            "approvedInstantiationProfiles",
+            0,
+            "presentation"
+          ],
+          "before": "{patientName}, a 6-year-old girl, attends clinic with her mother, Mei Chen, who remains in the room. The founder reviews outside neonatal ICU records from when Isla was a 4-day-old girl treated at the referring tertiary hospital for a left congenital diaphragmatic hernia. All questions concern that recorded ICU care.",
+          "after": "{patientName}, a 6-year-old girl, attends clinic with her mother, Mei Chen, who remains in the room. The founder reviews outside neonatal ICU records from when {patientName} was a 4-day-old girl treated at the referring tertiary hospital for a left congenital diaphragmatic hernia. All questions concern that recorded ICU care."
+        }
+      ]
+    }
+  ]
+}

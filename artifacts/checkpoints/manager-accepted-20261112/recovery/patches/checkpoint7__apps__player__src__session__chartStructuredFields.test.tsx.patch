@@ -1,0 +1,22 @@
+--- a/apps/player/src/session/chartStructuredFields.test.tsx
++++ b/apps/player/src/session/chartStructuredFields.test.tsx
+@@ -78,7 +78,8 @@
+     expect(after.answerChoices.find((choice) => choice.selected)?.rationale).toBe(wrong.rationale);
+     const html = render(chartAfter);
+     if (legacy) {
+-      expect(html).toContain(node.explanation);
++      // Compare exact frozen text with the HTML escaping required by SSR.
++      expect(html).toContain(renderToStaticMarkup(<>{node.explanation}</>));
+       expect(html).not.toContain("Teaching dataset");
+       expect(html).not.toContain("Why not your pick");
+     } else {
+@@ -126,7 +127,8 @@
+     expect(after.choices?.find((choice) => choice.selected)?.rationale).toBe(wrong.rationale);
+     const html = render(employeeDiscussionChartView(after));
+     if (kind === "legacy") {
+-      expect(html).toContain(node.explanation);
++      // Compare exact frozen text with the HTML escaping required by SSR.
++      expect(html).toContain(renderToStaticMarkup(<>{node.explanation}</>));
+       expect(html).not.toContain("Teaching dataset");
+       expect(html).not.toContain("Why not your pick");
+     } else {

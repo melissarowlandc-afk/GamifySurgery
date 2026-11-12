@@ -1,0 +1,29 @@
+--- a/apps/player/src/session/facilityCameraPreference.ts
++++ b/apps/player/src/session/facilityCameraPreference.ts
+@@ -1,5 +1,7 @@
+ import type { FacilityCameraView } from "../facility/types";
++import { setAuxiliaryItem } from "./storagePressure";
+ import { isValidFacilityCamera } from "../facility/facilityCameraBounds";
++import { readDesktopCameraViewport } from "../facility/desktopMapShade";
+ 
+ export const FACILITY_CAMERA_PREFERENCE_KEY = "gamify-surgery.prototype.facility-camera.v1";
+ export const FACILITY_CAMERA_SAVE_DEBOUNCE_MS = 250;
+@@ -20,7 +22,8 @@
+ }
+ 
+ function copyCamera(camera: FacilityCameraView): FacilityCameraView {
+-  return { zoom: camera.zoom, panX: camera.panX, panY: camera.panY };
++  const desktopViewport = readDesktopCameraViewport(camera.desktopViewport);
++  return { zoom: camera.zoom, panX: camera.panX, panY: camera.panY, ...(desktopViewport ? { desktopViewport } : {}) };
+ }
+ 
+ export function readFacilityCameraPreference(
+@@ -48,7 +51,7 @@
+ ): boolean {
+   if (!storage || !isValidFacilityCamera(camera)) return false;
+   try {
+-    storage.setItem(facilityCameraPreferenceKey(campaignId), JSON.stringify({
++    setAuxiliaryItem(storage, facilityCameraPreferenceKey(campaignId), JSON.stringify({
+       schemaVersion: SCHEMA_VERSION,
+       camera: copyCamera(camera),
+     }));

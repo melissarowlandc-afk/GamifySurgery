@@ -1,0 +1,26 @@
+--- a/apps/player/src/ui/ClinicHeadline.tsx
++++ b/apps/player/src/ui/ClinicHeadline.tsx
+@@ -1,4 +1,5 @@
+ import { useEffect, useRef, useState } from "react";
++import { retainPresentationIds } from "../recentPresentationIds";
+ import type { MessageBoardItemView, NeedsYouItemView } from "./types";
+ import { LEVEL_FIVE_INSPECTION_UNLOCK_EVENT_ID } from "@gamify-surgery/balance-config";
+ 
+@@ -13,13 +14,14 @@
+ 
+ /** Finite, readable announcement; same-ID updates and restored history stay quiet. */
+ export function ClinicHeadline({ items, needs }: { items: MessageBoardItemView[]; needs: NeedsYouItemView[] }) {
+-  const known = useRef(new Set(clinicHeadlineCandidates(items, needs).map((item) => item.id)));
++  const known = useRef<Set<string> | null>(null);
++  if (!known.current) known.current = new Set(clinicHeadlineCandidates(items, needs).map(item => item.id));
+   const [headline, setHeadline] = useState<string | null>(null);
+   const timer = useRef<number | null>(null);
+   useEffect(() => {
+     const candidates = clinicHeadlineCandidates(items, needs);
+-    const newest = candidates.find((item) => !known.current.has(item.id));
+-    for (const candidate of candidates) known.current.add(candidate.id);
++    const newest = candidates.find((item) => !known.current!.has(item.id));
++    known.current = retainPresentationIds(known.current!, candidates.map(item => item.id));
+     if (!newest) return;
+     setHeadline(newest.text);
+     if (timer.current !== null) window.clearTimeout(timer.current);

@@ -1,0 +1,28 @@
+--- a/apps/player/src/mobile/build/types.ts
++++ b/apps/player/src/mobile/build/types.ts
+@@ -1,6 +1,6 @@
+ import type { CardinalDirection, GridPoint, RoomOrientation } from "@gamify-surgery/game-domain";
+ 
+-export interface BuildValidation { valid: boolean; reason: string | null; cost: number }
++export interface BuildValidation { valid: boolean; reason: string | null; cost: number; warning?: string }
+ export type DoorRequest = { kind: "add"; roomId: string; side: CardinalDirection; offset: number } |
+   { kind: "remove"; doorId: string };
+ export interface HallwayCell extends GridPoint { status: "build" | "existing" | "blocked" }
+@@ -17,7 +17,7 @@
+   previewPlacement: (x: number, y: number, orientation?: RoomOrientation) => BuildValidation;
+   previewHallway: (cells: readonly GridPoint[]) => HallwayPreview;
+   previewDoor: (request: DoorRequest) => BuildValidation;
+-  commitHallway: (cells: readonly GridPoint[]) => boolean;
++  commitHallway: (cells: readonly GridPoint[]) => boolean | Promise<boolean>;
+ }
+ export interface DoorSection {
+   id: string;
+@@ -26,6 +26,8 @@
+   offset: number;
+   request: DoorRequest;
+   validation: BuildValidation;
++  /** Separate from removal permission: an invalid saved door is still removable. */
++  connectionInvalid?: boolean;
+ }
+ export type MobileBuildIntent = { kind: "ghost"; point: GridPoint } |
+   { kind: "hallway"; cells: readonly GridPoint[] } | { kind: "door"; id: string | null };

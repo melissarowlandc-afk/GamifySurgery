@@ -1,0 +1,133 @@
+--- a/packages/clinical-content/src/index.ts
++++ b/packages/clinical-content/src/index.ts
+@@ -39,6 +39,22 @@
+ export * from "./approved-data/men2a-clinic-batch";
+ export * from "./approved-data/phyllodes-pathology-follow-up";
+ export * from "./approved-data/trauma-vka-emergency-reversal";
++export * from "./question-quality-pilot-20261028";
++export * from "./question-quality-batch1-20261102";
++export * from "./question-quality-adversarial-20261102";
++export * from "./question-quality-adversarial-r3-20261102";
++export * from "./question-quality-adversarial-r4-20261102";
++export * from "./question-quality-adversarial-r5-20261102";
++export * from "./question-quality-adversarial-r6-20261102";
++export * from "./question-quality-adversarial-r7-20261102";
++export * from "./question-flags-20261104";
++export * from "./question-flags-round2-20261104";
++export * from "./question-flags-round2-evidence-20261104";
++export * from "./question-bank-batch2a-20261104";
++export * from "./question-bank-batch2a-evidence-20261104";
++export * from "./question-flags-round3-20261104";
++export * from "./question-flags-round3-evidence-20261104";
++export * from "./question-quality-round3-batch1-evidence-20261102";
+ export * from "./development-batch/2026-09-09/twenty-concept-batch";
+ export * from "./development-batch/2026-09-10/surgery-center-batch";
+ export * from "./development-batch/2026-09-11/board-expansion-batch";
+@@ -74,3 +90,107 @@
+   WITHHELD_TOPICS as VARIETY3_WITHHELD_TOPICS,
+   EXCLUDED_SOURCE_CHECKS as VARIETY3_EXCLUDED_SOURCE_CHECKS,
+ } from "./development-batch/2026-10-10-variety-3/variety3-batch";
++
++// BEGIN N1 append — new-content lane, independent of existing-question rewrites.
++export * from "./question-new-n1-20261104";
++// END N1 append.
++
++// BEGIN N2 append — separate new-content lane; N1 versions remain frozen.
++export * from "./question-new-n2-20261104";
++// END N2 append.
++export * from "./question-bank-batch2a-round2-20261104";
++export * from "./question-bank-batch2a-round2-evidence-20261104";
++
++// BEGIN N1 ROUND2 append — original N1 and independently reviewed N2 remain intact.
++export * from "./question-new-n1-round2-20261104";
++// END N1 ROUND2 append.
++
++export * from "./question-bank-batch2b-20261104";
++
++// BEGIN N2 ROUND2 append — separate draft versions; N1 and two N2 PASS versions retained.
++export * from "./question-new-n2-round2-20261104";
++// END N2 ROUND2 append.
++
++// BEGIN BATCH2A ROUND3 exports
++export * from "./question-bank-batch2a-round3-20261104";
++export * from "./question-bank-batch2a-round3-evidence-20261104";
++// END BATCH2A ROUND3 exports
++
++// BEGIN N1 ROUND3 append — 31 returned versions; nine exact PASS and N2 frozen.
++export * from "./question-new-n1-round3-20261104";
++// END N1 ROUND3 append.
++
++export * from "./question-bank-batch2b-round2-20261104";
++
++// BEGIN N2 ROUND3 and ship-gate exports
++export * from "./question-new-n2-round3-20261104";
++export * from "./question-ship-manifest";
++export * from "./question-ship-projection";
++// END N2 ROUND3 and ship-gate exports
++
++// BEGIN FLAGS2 retained candidates - no ship-manifest or gate changes.
++export * from "./question-flags2-20261105";
++// END FLAGS2 retained candidates.
++
++// BEGIN N3 explicit draft exports; no default-release acceptance.
++export * from "./question-new-n3-20261105";
++// END N3 explicit draft exports.
++
++// BEGIN FLAGS2 round2 retained candidates and exact G06 integration 20261105
++export * from "./question-flags2-round2-20261105";
++export { withAcceptedQuestionFlags2Concepts } from "./question-flags2-accepted-20261105";
++// END FLAGS2 round2 retained candidates and exact G06 integration 20261105
++
++// BEGIN FLAGS2 round3 retained candidates - no manifest acceptance.
++export * from "./question-flags2-round3-20261105";
++// END FLAGS2 round3 retained candidates.
++
++// BEGIN N3 ROUND2 exports - review drafts only; no manifest acceptance.
++export * from "./question-new-n3-round2-20261105";
++// END N3 ROUND2 exports.
++
++// BEGIN N3 ROUND3 explicit candidate exports - no default projection change.
++export * from "./question-new-n3-round3-20261105";
++export * from "./question-new-n3-round3-source-20261105";
++// END N3 ROUND3 explicit candidate exports.
++
++// BEGIN FLAGS2 whole-case accepted integration 20261105
++export * from "./question-flags2-whole-case-accepted-20261105";
++// END FLAGS2 whole-case accepted integration 20261105
++
++// BEGIN FLAGS3 ACCEPTED EXPORTS 20261107
++export * from "./question-flags3-20261107";
++export * from "./question-flags3-accepted-20261107";
++// END FLAGS3 ACCEPTED EXPORTS 20261107
++
++// BEGIN STATS1 accepted and retained source exports 20261108
++export * from "./question-stats1-20261108";
++export * from "./question-stats1-accepted-20261108";
++// END STATS1 accepted and retained source exports 20261108
++
++// BEGIN FLAGS4 accepted and retained source exports 20261108
++export * from "./question-flags4-20261108";
++export * from "./question-flags4-accepted-20261108";
++// END FLAGS4 accepted and retained source exports 20261108
++
++// BEGIN HARDEN1 / N3R4 exact manager acceptance 20261110
++export * from "./question-harden1-n3r4-accepted-20261110";
++export * from "./question-new-n3-round4-20261110";
++// END HARDEN1 / N3R4 exact manager acceptance 20261110
++
++// Manager-directed N4 exact PASS sources, provenance and accepted-only metadata.
++export * from "./question-n4-accepted-20261110";
++
++// Exact accepted-only topic archive; topic authoring modules are not imported.
++export * from "./question-program-batch1-accepted-20261111";
++
++export * from "./question-program-batch2-accepted-20261111";
++
++export * from "./question-program-batch3-accepted-20261111";
++
++export * from "./question-program-batch4-accepted-20261111";
++
++export * from "./question-program-batch5-accepted-20261111";
++
++export * from "./question-program-batch6-accepted-20261112";
++export {QUESTION_PROGRAM_BATCH6_RUNTIME_FAMILY_CONTEXTS as PEDIATRIC_CLINIC_FAMILY_CONTEXTS} from "./question-program-batch6-accepted-20261112";

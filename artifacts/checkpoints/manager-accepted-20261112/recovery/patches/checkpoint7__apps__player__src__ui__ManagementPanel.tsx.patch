@@ -1,0 +1,57 @@
+--- a/apps/player/src/ui/ManagementPanel.tsx
++++ b/apps/player/src/ui/ManagementPanel.tsx
+@@ -2,6 +2,8 @@
+ import { StaffPanel } from "./StaffPanel";
+ import { ServiceIncomePanel } from "./ServiceIncomePanel";
+ import { MoneyPanel } from "./MoneyPanel";
++import { ClinicCompetitionPanel } from "../competition/ClinicCompetitionPanel";
++import { CompetitionTutorialTip } from "../competition/CompetitionTutorialTip";
+ import type {
+   ServiceIncomeView,
+   ServiceSetupActionView,
+@@ -11,6 +13,7 @@
+ 
+ interface ManagementPanelProps {
+   managementMode: boolean;
++  competitionTutorial?: { campaignId: string; enabled: boolean };
+   showInactiveTrigger?: boolean;
+   roles: StaffRoleGroupView[];
+   staffTraining?: StaffTrainingOverviewView | null;
+@@ -30,17 +33,19 @@
+   onSetupAction?: (action: ServiceSetupActionView) => void;
+ }
+ 
+-type ManagementTab = "employees" | "services" | "money";
++type ManagementTab = "employees" | "services" | "money" | "competition";
+ 
+ const TABS: { id: ManagementTab; label: string }[] = [
+   { id: "employees", label: "Employees" },
+   { id: "services", label: "Services" },
+   { id: "money", label: "Money" },
++  { id: "competition", label: "Clinic Competition" },
+ ];
+ 
+ /** Desk-owned staff, services and money views shown while facility time is paused. */
+ export function ManagementPanel({
+   managementMode,
++  competitionTutorial,
+   showInactiveTrigger = true,
+   roles,
+   staffTraining = null,
+@@ -108,6 +113,7 @@
+           </button>
+         ))}
+       </div>
++      {competitionTutorial ? <CompetitionTutorialTip {...competitionTutorial} onShowBoard={() => setActiveTab("competition")} /> : null}
+       {activeTab === "employees" ? (
+         <StaffPanel
+           roles={roles}
+@@ -128,6 +134,8 @@
+           onStartLaboratoryProcessing={onStartLaboratoryProcessing}
+           onSetupAction={onSetupAction}
+         />
++      ) : activeTab === "competition" ? (
++        <ClinicCompetitionPanel />
+       ) : (
+         <MoneyPanel serviceIncome={serviceIncome} />
+       )}

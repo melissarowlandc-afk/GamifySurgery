@@ -1,0 +1,1076 @@
+--- a/docs/execplans/accounts-playtime-release-20261012.md
++++ b/docs/execplans/accounts-playtime-release-20261012.md
+@@ -1416,3 +1416,1073 @@
+ - Release approval: owner said "I don't want to ok every update." Recorded as a **standing approval for the manager to publish tested updates** after the manager's release checks pass. The manager will still confirm once in chat immediately before the very first public Beta 1 publication (first exposure + beta->main move); after that, updates ship without per-update approval. Owner may revoke at any time.
+ - Supabase setup: owner will do it from the desktop computer (planned for the evening of 2026-10-14).
+ - "Push to GitHub" requested for the Beta 1 work.
++
++## Owner decisions and setup progress (2026-10-14 evening)
++
++- Supabase account: the owner's account email (separate from the ergonomics account). Manager created free org **Stitchin Time** and filled the project form; owner generated/saved the DB password and created project **stitchin-time-beta** (ref ocrhhvmddamaqnozgeal, https://ocrhhvmddamaqnozgeal.supabase.co, ca-central-1, Healthy). Data API on; automatic table exposure off.
++- Manager configured Auth (verified after reload): public sign-up OFF, anonymous OFF, confirm email ON; Site URL https://melissarowlandc-afk.github.io/GamifySurgery/; redirect allow-list = that URL, http://127.0.0.1:4173/, http://127.0.0.1:5184/.
++- **Owner reverses ADR 0009's 15-character baseline: minimum password length is 8** (Supabase updated to 8 by the manager; game client must match).
++- **Invites: Option A** - no SMTP/email provider. A local owner-run tool generates one-time Supabase invite links (and password-reset links) using the service_role key from an ignored local env file; the owner emails links from personal Outlook. Forgotten passwords: owner generates a reset link with the tool and emails it (automatic reset emails would require SMTP; deferred unless the owner opts in later).
++
++## Beta 1 invite tool - Sol worker handoff (2026-10-14)
++
++Status: **implemented and locally validated; manager diff/SQL/hosted acceptance
++pending**. One bounded Sol worker milestone for the Claude Code manager; no
++sub-agents. The evening owner decisions immediately above are binding and
++supersede the historical 15-character/SMTP guidance elsewhere in this plan.
++No Git, network, installs, secrets, live project/SQL operations, email sending,
++browser/storage operations, commits, pushes, deployment or publication occurred.
++No clinical content, concept/FSRS identity, gameplay rules or save format changed.
++
++### Files changed
++
++New local owner tool (uses already installed `@supabase/supabase-js` 2.57.4;
++package manifests/lockfile unchanged):
++
++- `scripts/beta-invites/beta-invites.mjs`
++- `scripts/beta-invites/BETA_INVITES.cmd`
++- `scripts/beta-invites/beta-admin.env.example` (both values empty)
++- `scripts/beta-invites/beta-invites.test.mjs`
++
++New SQL only; both existing migrations are byte-unchanged:
++
++- `supabase/migrations/20261014000100_beta1_owner_invite_admin.sql`
++- `supabase/tests/beta1_owner_invite_admin.sql`
++- `supabase/tests/README.md` (append-only verification instructions)
++
++Client, documentation and handoff:
++
++- `apps/player/src/auth/AuthGate.tsx`
++- `apps/player/src/auth/AuthGate.test.tsx`
++- `apps/player/src/auth/authPasswordFlow.test.ts`
++- `docs/setup/BETA1_SUPABASE_SETUP.md`
++- `docs/adr/0009-verified-email-passphrase-auth.md` (owner amendment appended)
++- `docs/execplans/accounts-playtime-release-20261012.md` (this handoff appended)
++- `docs/handoffs/CURRENT_THREAD_HANDOFF.md` (bounded task summary appended)
++
++`.gitignore` is byte-unchanged and already ignores `.local-dev/`, including
++`.local-dev/beta-admin.env`. Tests check that rule and the empty example. No
++real env file was created or read, and no keys, real links or tester roster were
++put in the repository/logs. Source/config baseline and the actual filesystem
++diff/logs are under ignored `.local-dev/beta1-invite-tool/`. The initial snapshot
++covered 1,690 paths; **1,682 protected source/config paths outside eight owned
++preexisting files were byte-unchanged**. All 14 final task files are UTF-8
++without BOM and LF; the final audit/diff includes the appended handoffs.
++
++### Implementation and security review
++
++- CLI commands are `invite <email> [--owner]`, `reset <email>`, `list` and
++  `revoke <email>`. The double-click wrapper delegates email/command/owner prompts
++  to Node readline rather than interpolating email into a shell command. The
++  env file path is anchored to the script, so the wrapper works from any cwd.
++- Credentials are read only from the ignored owner file; no CLI secret,
++  frontend setting or process-env secret is used. Admin client session
++  persistence, token refresh and URL-session detection are off. The URL must
++  be the hosted project's HTTPS `*.supabase.co` origin. Requests time out after
++  30 seconds. Raw SDK/provider errors, request headers/config and stacks are
++  never printed; output also redacts the loaded key and its encoded form.
++- Auth admin `generateLink` creates `invite`/`recovery` links without sending
++  email. Both request and returned link must use exactly
++  `https://melissarowlandc-afk.github.io/GamifySurgery/`. Returned Auth identity,
++  invite provenance, verification type and link origin are checked before any
++  message is printed. Admission must finish before printing an invite. The
++  message includes the game URL, 8-character rule, device-local save explanation
++  and unapproved demonstration/not-medical-advice note, ready for Outlook.
++- New `public.beta1_admin_members(text,uuid,boolean)` is SECURITY INVOKER; its
++  SECURITY DEFINER body stays in unexposed `gamify_private`, with an empty
++  search path. Both functions revoke EXECUTE from PUBLIC/anon/authenticated and
++  grant it only to service_role. The body additionally checks the server JWT's
++  service_role claim; no user-editable metadata or player claims grant access.
++  An admin key has no player `auth.uid()`, so this is explicitly an admin-only
++  role check, not a player-authorized definer. No private table/player grants,
++  new exposed tables, RLS edits, or existing migration edits were introduced.
++- Admission accepts only provider-invited, nonanonymous, nondeleted, unbanned
++  identities, locks the membership and uses ON CONFLICT DO NOTHING. It never
++  clears consent/revocation/deletion markers. `--owner` adds only the reviewed
++  owner allowlist; existing verified-email/AAL2 MFA checks remain. The runbook
++  includes an alternative reviewed SQL insert for an already confirmed member.
++- Revocation **logically removes access** with a durable `revoked_at` marker
++  rather than deleting the safeguard. It takes the same membership lock as
++  uploads/deletion, clears consent and removes usage_owners first, then uses
++  Auth admin `ban_duration: '876000h'` (100 years) and checks the returned ban.
++  The marker denies server usage/flags to stale JWTs and beyond that finite ban.
++  It preserves local saves and is not the separate data/account deletion flow.
++  If Auth disabling fails after SQL succeeds, the tool reports partial
++  completion and instructs a safe retry of `revoke`; repeat revocation works.
++- Reset requires existing active membership and never creates/readmits an
++  account. Invite/reset reject revoked, banned and deletion-requested members.
++  Confirmed accounts use reset; a pending invite can be retried. If an invite
++  was generated but SQL admission fails, its link is withheld and a setup/retry
++  action is printed. The manager must verify real pending-invite retry/recovery.
++- Client setup/reset enforce 8, preserve 128 maximum, spaces/paste/password
++  managers and gate play until password update succeeds. Mocked desktop and
++  phone acceptance tests reject 7 and accept exactly 8, with recovery callback
++  cleanup retaining `/GamifySurgery/?layout=...`. Existing implicit invite/
++  recovery URL handling remains; Forgot password only shows inviter-contact
++  instructions. No runtime `resetPasswordForEmail` call remains; its test spy
++  explicitly asserts no email-sending request.
++- Runbook removes SMTP/provider/quota setup, documents Project Settings > API
++  Keys and local-only secret handling, the new migration, commands/owner setup,
++  Outlook template, resets, revocation/retry and optional later automatic mail.
++  It also aligns the release policy with the binding 2026-10-14 owner decision.
++
++### Exact validation commands and observed output
++
++Offline tool tests (all fetch calls mocked through the installed SDK):
++
++```powershell
++node --test --test-isolation=none --test-reporter=spec scripts/beta-invites/beta-invites.test.mjs
++```
++
++Exit **0**. Verbatim summary:
++
++```text
++ℹ tests 45
++ℹ suites 2
++ℹ pass 45
++ℹ fail 0
++ℹ cancelled 0
++ℹ skipped 0
++ℹ todo 0
++ℹ duration_ms 70.6615
++```
++
++The initial default Node test invocation was blocked by `spawn EPERM` before
++any test executed. `node --help` confirmed `--test-isolation=none`; the same
++45 assertions passed in-process. This is a sandbox limitation, not a filtered
++test result. `node scripts/beta-invites/beta-invites.mjs --help` also exited 0
++without reading credentials or calling a service.
++
++Player checks use the existing narrow net-use EPERM preload:
++
++```powershell
++$env:NODE_OPTIONS = '--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/auth
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
++```
++
++Both exited **0**. Verbatim focused summary:
++
++```text
++ Test Files  3 passed (3)
++      Tests  30 passed (30)
++   Start at  18:44:58
++   Duration  2.12s (transform 1.48s, setup 0ms, import 2.04s, tests 51ms, environment 0ms)
++```
++
++Verbatim **FULL player** summary (no excludes/filter, no failures):
++
++```text
++ Test Files  241 passed (241)
++      Tests  2105 passed (2105)
++   Start at  18:47:53
++   Duration  72.78s (transform 15.91s, setup 0ms, import 122.99s, tests 146.99s, environment 13ms)
++```
++
++`npm.cmd run typecheck` exited **0** for all seven workspaces. Exact command
++lines from output:
++
++```text
++> gamify-surgery@0.0.1 typecheck
++> npm run typecheck --workspaces --if-present
++> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
++> @gamify-surgery/player@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++> @gamify-surgery/balance-config@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++> @gamify-surgery/clinical-authoring@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++> @gamify-surgery/clinical-content@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++> @gamify-surgery/clinical-research@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++> @gamify-surgery/game-domain@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++```
++
++Pages build used blank public auth settings, bypass `false`, the exact base and
++an isolated output override; the normal owner's `apps/player/dist` was untouched:
++
++```powershell
++$env:NODE_OPTIONS = '--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
++$env:VITE_SUPABASE_URL = ''
++$env:VITE_SUPABASE_ANON_KEY = ''
++$env:VITE_ENABLE_LOCAL_PROTOTYPE_BYPASS = 'false'
++npm.cmd run build --workspace @gamify-surgery/player -- --base=/GamifySurgery/ --outDir=../../.local-dev/beta1-invite-tool/pages-artifact/apps/player/dist
++```
++
++Exit **0**, output `✓ built in 4.50s`. Existing large-chunk/plugin-timing and
++intentional outside-project-output warnings are nonfatal. From cwd
++`C:/Users/rowla/Projects/GamifySurgery/.local-dev/beta1-invite-tool/pages-artifact`:
++
++```powershell
++node C:/Users/rowla/Projects/GamifySurgery/scripts/verify-pages-build.mjs /GamifySurgery/
++```
++
++Exit **0**, verbatim output:
++
++```text
++Verified 4 Pages asset reference(s) and 3283 public build file(s) under /GamifySurgery/.
++```
++
++The static safety audit also confirmed the owner RPC/env/tool-message markers
++are absent from public JS bundles. Complete raw output lives in
++`tool-tests.log`, `auth-focused.log`, `full-player.log`, `typecheck.log`,
++`pages-build.log` and `pages-verifier.log` under the ignored evidence directory;
++full-player/typecheck/Pages exit records are beside them. `review.diff` is the
++actual filesystem comparison against pre-edit owned copies; `safety-audit.json`
++records encoding/secret-pattern/protected-path checks. No Git inspection was
++used, so current branch/dirty status/remote contents are not worker claims.
++
++### Exact owner commands and manager next action
++
++After manager SQL review and disposable acceptance, personally apply
++`supabase/migrations/20261014000100_beta1_owner_invite_admin.sql` **after** the
++two existing migrations in the separate game project. Keep `gamify_private`
++unexposed. SQL/psql/Supabase CLI was unavailable here; the new migration was
++authored directly without an install or hosted query. Run
++`supabase/tests/beta1_owner_invite_admin.sql` and existing checks on a disposable
++database, and provider security/performance advisors. The new script's expected
++PASS row is documented as a recipe, not an observed SQL PASS.
++
++From `C:\Users\rowla\Projects\GamifySurgery`, prepare the local file only if it
++does not already exist:
++
++```powershell
++New-Item -ItemType Directory -Force .local-dev | Out-Null
++Copy-Item scripts/beta-invites/beta-admin.env.example .local-dev/beta-admin.env
++```
++
++Paste the URL and secret/service_role key privately **only into this ignored
++file**, from **Project Settings > API Keys**. Do not paste the secret into
++GitHub, chat, Vite/game files or a command line. Replace these example addresses
++with the intended owner/tester address, then run:
++
++```powershell
++node scripts/beta-invites/beta-invites.mjs invite your-email@example.com --owner
++node scripts/beta-invites/beta-invites.mjs invite tester@example.com
++node scripts/beta-invites/beta-invites.mjs list
++node scripts/beta-invites/beta-invites.mjs reset tester@example.com
++node scripts/beta-invites/beta-invites.mjs revoke tester@example.com
++```
++
++Or double-click `scripts\beta-invites\BETA_INVITES.cmd`. Email the printed
++invite/reset message personally from Outlook; Supabase sends no email. Confirm
++reset requests with the known invitee and send to their known address. Use only
++the owner's account and manager-approved disposable testers before first
++release acceptance. The runbook includes the Outlook text and reviewed SQL
++alternative for promoting an already confirmed owner.
++
++Manager: inspect the actual diff and raw logs, rerun your permitted default
++checks, review/apply SQL, verify Auth generation/confirmation/recovery and ban
++with disposable accounts, and check desktop/physical phone Pages callbacks.
++Specifically confirm the exact Pages redirect when SMTP is absent, pending
++invite retry/recovery, 7/8 provider boundaries, key-type gateway behavior,
++expired/single-use links and mail scanners, owner MFA, grants/RLS, concurrent
++revoke versus uploads, and stale-token denial/partial retry. Offline mocks do
++not establish these hosted facts. Existing notice/contact/retention/deletion
++and first-publication acceptance remain the manager's release lane.
++
++Opening pathways unchanged: **START_GAME.cmd -> http://127.0.0.1:4173** in the
++intended persistent profile (`location.origin = http://127.0.0.1:4173`); private
++phone via **START_PRIVATE_GAME.cmd -> https://melissadesktop.taile197db.ts.net/**;
++remote **https://melissarowlandc-afk.github.io/GamifySurgery/**
++(`location.origin = https://melissarowlandc-afk.github.io`). Generated auth links
++intentionally land at that remote URL. Local/remote/private origins, profiles
++and devices keep separate saves; Beta 1 login does not move campaigns.
++
++**LOCAL ONLY checkpoint:** this milestone has no new GitHub backup from the
++worker. The manager owns acceptance and the audited checkpoint under the
++owner's existing 2026-10-14 **"push to GitHub"** direction; no worker Git or
++publication is authorized. This bounded task is complete for handoff; live
++release acceptance is the next manager action.
++
++## Owner requests queued for Beta 1 (2026-10-14 evening)
++
++- **Stay signed in (confirmed existing behavior):** sessions persist per browser and auto-refresh until Sign out. Follow-up fix: a transient network failure during the startup `getUser` check must retry/keep the cached session instead of dropping the player to sign-in; real auth errors (revoked/banned/expired) still sign out. The invite email template advises iPhone testers to add the game to the Home Screen (Safari clears site storage, including local saves, after about 7 days without a visit).
++- **Tester comment box:** a "Send feedback" entry in the game menu (desktop and phone) where a signed-in tester types a free-text comment (up to 1000 characters) and sends it any time. Stored in Supabase (`public.tester_feedback`, RLS: insert own / read own; owner reads all; included in delete-my-data; rate limited). Auto-attached context: release version, level, desktop/phone shell, timestamp; no save contents.
++- **Owner-controlled review (binding, comment box):** comments (and, for context, question flags) flow automatically to the manager via a local compile tool that writes a digest to ignored `.local-dev/tester-feedback/` (never committed; contains tester emails). The manager compiles and summarizes only. The owner reads and decides each comment with the manager; the manager does not fix, reply to, or close comments on its own. Question flags keep the earlier owner rule (manager triage/fix with owner escalation). Status values (new / discussed / planned / done / won't do) change only after an owner decision.
++
++
++### Manager acceptance - Beta 1 invite tool (2026-10-14)
++
++Accepted after diff review of the tool, migration 20261014000100 (service_role-only, private definer body, no RLS/table grant changes) and AuthGate changes. Manager reran: tool tests (node --test, default isolation) all pass; player `src/auth` 30/30. Manager edits: removed the guessed signature name from the Outlook template and the runbook; runbook intro uses "the game owner"; added the iPhone Home Screen tip (Home Screen web apps keep separate storage, so testers set the password first, then sign in from the icon). Next: the feedback-box worker; owner runs three migrations; Auth email OTP expiry raised to 24h so invite links survive overnight.
++
++## Owner decisions (2026-10-14, late evening) - invites
++
++- **Link only:** the invite tool outputs only the link (no email template); the owner writes the email (manager helps draft it outside the tool).
++- **Manager runs the tool:** the owner sends tester emails to the manager in chat and the manager generates links on the owner's PC. Tester emails are never written to the repository.
++- **Invites must not expire.** Supabase one-time links last at most 24 hours, and work-email link scanners (e.g. Microsoft Safe Links) can consume one-time links before the tester clicks. Manager direction: replace provider invite links with **personal setup links** - a long random code in the URL fragment opens the game's "Set up your account" screen (email prefilled, choose an 8+ character password); nothing is consumed by opening the page; the code is single-use, bound to one email, stored only as a hash, valid until used or cancelled with the tool, attempt-limited. A Supabase Edge Function (service role from the function environment, never the client) verifies the code, creates/confirms the account with the chosen password and admits membership. Password resets use the same mechanism (a new setup link).
++
++
++## Beta 1 feedback box - Sol worker handoff (2026-10-14)
++
++Status: **implemented and locally validated; manager SQL, real-provider and
++desktop/physical-phone acceptance remain**. One bounded Sol worker milestone
++for the Claude Code manager; no sub-agents. No Git, installs, network, live SQL,
++secrets/real env reads, external messages, browser/storage operations, commits,
++pushes, deployment or publication. Clinical content, concept/FSRS identity,
++frozen saves and gameplay rules are unchanged.
++
++The manager concurrently appended **Owner decisions (2026-10-14, late evening)
++- invites** while this worker ran. That section is preserved. Personal setup
++links/Edge Function and link-only invite output belong to the next invite lane;
++this feedback milestone does not implement or reverse that new direction. The
++Home Screen tip is retained and tested in the existing, now legacy, Outlook
++template/runbook, with an explicit warning that Safari campaigns do not move
++into the Home Screen app's separate storage. The current feedback commands
++still share the existing local admin credential/client. Integrate them when
++the invite tool is revised rather than replacing the whole tool file.
++
++### Files changed
++
++New SQL (the three prior migrations are byte-unchanged):
++
++- `supabase/migrations/20261014000200_beta1_tester_feedback.sql`
++- `supabase/tests/beta1_tester_feedback.sql`
++- `supabase/tests/README.md`
++
++Client and tests:
++
++- `apps/player/src/feedback/feedbackTransport.ts`
++- `apps/player/src/feedback/feedbackTransport.test.ts`
++- `apps/player/src/feedback/TesterFeedback.tsx`
++- `apps/player/src/feedback/TesterFeedback.test.tsx`
++- `apps/player/src/AppShell.tsx`
++- `apps/player/src/mobile/MobileShell.tsx`
++- `apps/player/src/mobile/navigation.ts`
++- `apps/player/src/ui/betaAccount.css`
++- `apps/player/src/ui/AccountMenu.tsx`
++- `apps/player/src/playtime/usageTypes.ts`
++- `apps/player/src/auth/AuthGate.tsx`
++- `apps/player/src/auth/AuthGate.test.tsx`
++- `apps/player/src/auth/supabaseAuth.ts`
++
++Owner tool/docs and appended handoff:
++
++- `scripts/beta-invites/beta-feedback.mjs`
++- `scripts/beta-invites/beta-feedback.test.mjs`
++- `scripts/beta-invites/beta-invites.mjs`
++- `scripts/beta-invites/beta-invites.test.mjs`
++- `docs/setup/BETA1_SUPABASE_SETUP.md`
++- `docs/execplans/accounts-playtime-release-20261012.md`
++- `docs/handoffs/CURRENT_THREAD_HANDOFF.md`
++
++23 delivered paths; eight are new and 15 preexisting paths are edited. No
++package/lockfile, original question-flag code, original migration, base desktop
++layout CSS or game-domain/content change. The plan also includes the preserved
++concurrent manager append described above. `.gitignore` is unchanged: its
++`.local-dev/` rule covers both `.local-dev/beta-admin.env` and the digest directory.
++Tests assert that rule; no real tester email/digest or admin env was created/read.
++
++### Implementation and review
++
++- `tester_feedback` has a UUID ID, `user_id default auth.uid()` with Auth delete
++  cascade, a trimmed 1–1000-character comment, `release_version`/`app_version`,
++  facility `level`, `shell` (desktop/phone), server `created_at`, `status`
++  (`new/discussed/planned/done/wont_do`, default new) and nullable `owner_note`.
++  The whitespace set matches JavaScript trim, including Unicode whitespace.
++  New private guard/RPC functions use empty search paths; the exposed RPC is
++  SECURITY INVOKER. Player identity, time, initial status and owner note cannot
++  be forged. No campaign or answer contents accompany a general comment.
++- Current verified/invited membership is required for insertion/read-own.
++  Voluntary feedback is permitted even after Later on usage consent; it does
++  not turn recording on. The guard calls `require_usage_player(false)` and
++  takes the same membership lock as usage/flags/deletion/revocation. The quota
++  is 20 new comments per player per rolling 24 hours, enforced for direct
++  inserts too. An unchanged UUID retry acknowledges the immutable original
++  before the quota, avoiding duplicates after a lost acknowledgement. Changed
++  retry payloads or another player's ID fail.
++- RLS gives members own-row reads/inserts, and `is_usage_owner` (allowlist +
++  AAL2) reads/updates all within the flags-style retained view. Authenticated
++  UPDATE grants cover only status/note, and players have no update policy.
++  The trusted owner tool's service role has SELECT and UPDATE(status,owner_note)
++  only on the new table, without original-comment/identity mutation grants.
++- Feedback mirrors question flags' Auth cascade, immediate delete-my-data
++  transaction and 90-day retention. The new migration replaces the existing
++  private deletion/purge bodies, adding only the feedback delete statements;
++  audit compares the remaining bodies against migration 001. The existing
++  public deletion wrapper, consent/tombstone behavior and Cron target persist.
++  Downloaded private digests require owner cleanup; they are not server-purged.
++- Desktop footer/game controls include Send feedback; phone More opens the
++  existing bottom-sheet pattern. Both have a textarea/counter, Send/Cancel,
++  owner/privacy note and `Sent - thank you` only after a validated server ack.
++  Failed sends retain text; retry reuses the original UUID and captured context.
++  The transport pins the account token and rejects account switches. Local
++  prototypes/missing backend hide the item and create no feedback transport or
++  network request. A pending or confirmed deletion stops further client sends,
++  including a persisted stop marker when a later access refresh is unavailable.
++  Feedback does not issue pause, answer, level-up or other gameplay commands.
++- `feedback [--all]` extends the existing owner CLI/double-click prompts. It
++  uses only the same ignored env file, no new credential location or frontend
++  secret. Default scope is new feedback/open flags; --all reads all statuses.
++  Both tables are paginated with exact counts and actual page lengths, including
++  provider caps below 1000; failures/inconsistent pages withhold a digest. The
++  local dated Markdown file groups by member email, includes feedback time,
++  level/shell/version and flags' question/variant/concept IDs/comments. Existing
++  flags have no level/shell: the digest explicitly says not recorded.
++- Counts/path are printed without dumping the digest/emails. Comments and all
++  metadata are escaped/quoted as untrusted text. Loaded keys and their encoded
++  forms are redacted **before** Markdown escaping, including reflected values.
++  Files are written UTF-8 with exclusive creation under the ignored directory;
++  disk failures do not claim success. No scheduler, automated fix/reply or
++  external manager notification is installed. The manager compiles/summarizes
++  only; the owner decides each feedback item. Existing flag triage rules remain.
++- `feedback-status <id> <status> [note]` updates only the selected feedback
++  disposition/note and validates its acknowledgement. Omitted note preserves
++  the old note; explicit empty note clears it. Docs/prompts require an owner
++  decision first. The worker ran no real compile or disposition update.
++- AuthGate keeps the cached candidate pending on getUser transport/5xx/timeout/
++  rate-limit failures. Retry delays are 1, 2, 4, 8, 16 then at most 30 seconds,
++  and online triggers an immediate retry. Startup remains `Checking your
++  sign-in…`; an already admitted same-account clinic survives a transient
++  refresh check. 401/403/terminal auth codes, missing/not-invited/unconfirmed/
++  mismatched/deleted/banned identities clear the gate and local Auth session.
++  Sign-out/account change/unmount cancel retries; late checks cannot replace
++  the newer account. Existing invite/recovery and 8-character behavior pass.
++- The shared short notice, full privacy/deletion notice and runbook disclose
++  feedback storage, context, retention, retries, deletion and owner-controlled
++  review. New clinical content was not authored or promoted.
++
++### Exact validation commands and observed output
++
++All external fetch and digest disk writes in owner-tool tests are mocked:
++
++```powershell
++node --test --test-isolation=none --test-reporter=spec scripts/beta-invites/beta-invites.test.mjs scripts/beta-invites/beta-feedback.test.mjs
++```
++
++Exit **0**, exact summary:
++
++```text
++ℹ tests 71
++ℹ suites 4
++ℹ pass 71
++ℹ fail 0
++ℹ cancelled 0
++ℹ skipped 0
++ℹ todo 0
++ℹ duration_ms 104.1625
++```
++
++`node scripts/beta-invites/beta-invites.mjs --help` also exits **0**, displays
++the two feedback commands/statuses and reads no credential or service.
++
++Player uses the existing narrow net-use EPERM preload and threads:
++
++```powershell
++$env:NODE_OPTIONS = '--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/auth src/feedback src/playtime src/session/hostedQuestionFlags.test.ts src/ui/QuestionFlagControl.test.tsx src/mobile/navigation.test.ts
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
++```
++
++Both exit **0**. Exact focused output:
++
++```text
++ Test Files  15 passed (15)
++      Tests  129 passed (129)
++   Start at  19:22:12
++   Duration  5.75s (transform 9.29s, setup 0ms, import 17.64s, tests 2.87s, environment 1ms)
++```
++
++Exact **FULL player** output (no filters/excludes, zero failures):
++
++```text
++ Test Files  243 passed (243)
++      Tests  2138 passed (2138)
++   Start at  19:22:43
++   Duration  95.17s (transform 15.50s, setup 0ms, import 147.62s, tests 206.31s, environment 18ms)
++```
++
++`npm.cmd run typecheck` exits **0** for all seven workspaces (rerun after the
++final client change). Exact command lines from final output:
++
++```text
++> gamify-surgery@0.0.1 typecheck
++> npm run typecheck --workspaces --if-present
++> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json
++> @gamify-surgery/player@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++> @gamify-surgery/balance-config@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++> @gamify-surgery/clinical-authoring@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++> @gamify-surgery/clinical-content@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++> @gamify-surgery/clinical-research@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++> @gamify-surgery/game-domain@0.0.1 typecheck
++> tsc --noEmit -p tsconfig.json
++```
++
++Pages build uses the unchanged production options/plugins through an ignored
++config that overrides only `envDir: false`, avoiding real env-file reads. It
++sets whitespace public auth settings/bypass false and isolates output; the
++owner's usual `apps/player/dist` is untouched. Root build:pages was not run
++because its boundary verifier invokes Git, forbidden by this brief.
++
++```powershell
++$env:NODE_OPTIONS = '--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
++$env:VITE_SUPABASE_URL = ' '
++$env:VITE_SUPABASE_ANON_KEY = ' '
++$env:VITE_ENABLE_LOCAL_PROTOTYPE_BYPASS = 'false'
++npm.cmd run build --workspace @gamify-surgery/player -- --config=../../.local-dev/beta1-feedback-box/vite-pages.config.mts --base=/GamifySurgery/ --outDir=../../.local-dev/beta1-feedback-box/pages-artifact-final/apps/player/dist
++```
++
++Exit **0**; exact build summary `✓ built in 4.19s`. Existing chunk/plugin-timing
++and intentional outside-project-output warnings are nonfatal. From cwd
++`C:/Users/rowla/Projects/GamifySurgery/.local-dev/beta1-feedback-box/pages-artifact-final`:
++
++```powershell
++node C:/Users/rowla/Projects/GamifySurgery/scripts/verify-pages-build.mjs /GamifySurgery/
++```
++
++Exit **0**; exact output:
++
++```text
++Verified 4 Pages asset reference(s) and 3283 public build file(s) under /GamifySurgery/.
++```
++
++Source/config baseline has 1,729 paths. **1,714 protected paths outside the
++15 preexisting owned paths are byte-unchanged**, including all prior migrations,
++clinical/game-domain source, manifests and `.gitignore`. Delivered text is
++UTF-8 without BOM, LF. The safety audit checks credential-like patterns,
++ignored digest coverage, exact deletion/purge body preservation and absence of
++owner RPC/credential/digest markers from public JS bundles. No Git status/diff
++was used; no branch/remote/dirty-tree claim is made.
++
++Evidence is under ignored `.local-dev/beta1-feedback-box/`: `review.diff`,
++`safety-audit.json`, baseline/copies, `tool-tests.log`, `focused-player.log`,
++`full-player.log`, `typecheck-final.log`, `pages-build.log` and
++`pages-verifier.log`. Initial checks caught a Windows module basename/casing
++collision (transport renamed to feedbackTransport) and an existing privacy-text
++assertion (original sentence retained before the new feedback sentence); both
++were fixed. Initial failed logs remain as `focused-player-initial.log` and
++`typecheck-initial.log`. Final review added a persisted-deletion-marker guard
++and regression: transient access refresh failures cannot re-enable feedback
++after an offline deletion request. Focused/FULL/typecheck/Pages were rerun
++after that correction; the earlier green logs are archived with the
++`before-marker-guard` suffix. Final FULL suite/typecheck/build are green.
++
++### Manager next action and limits
++
++Inspect the actual diff/logs, then run the new migration/check script and the
++earlier SQL checks against a disposable DB, provider advisors and concurrent
++quota/insert/revoke/deletion checks. No PostgreSQL, psql or Supabase CLI is
++available here, and network/installs are prohibited. SQL files are prepared
++checks, **not an observed database PASS**. Verify current membership/read-own,
++AAL2 owner updates, direct API quota/status bypass denial, idempotent retry at
++quota, purge and stale-JWT deletion behavior before applying the fourth
++migration to the game project. Never apply it to the ergonomics project.
++
++Check actual desktop and physical-phone layout, text retention/retry/receipt,
++keyboard/safe areas, real Auth offline startup/return-online/revocation and
++account switches. Browser UI/hosted delivery were not run in this offline
++worker lane. Reconcile the concurrent newer invite design with its own bounded
++worker before release; do not present the legacy email/invite flow as the
++accepted final new setup-link flow.
++
++After SQL acceptance, the owner asks **"Compile tester feedback"**; the manager
++uses `node scripts/beta-invites/beta-invites.mjs feedback` (or --all) and reads
++the private digest with the owner. Use feedback-status only after the owner's
++decision. Do not commit private digests/emails or infer approval to fix/reply.
++Private copies must honor 90-day/player-deletion cleanup.
++
++Opening pathways are unchanged: **START_GAME.cmd -> http://127.0.0.1:4173** in
++the intended persistent profile (`location.origin = http://127.0.0.1:4173`),
++private phone **START_PRIVATE_GAME.cmd -> https://melissadesktop.taile197db.ts.net/**,
++and remote **https://melissarowlandc-afk.github.io/GamifySurgery/**
++(`location.origin = https://melissarowlandc-afk.github.io`). Origins/profiles/
++devices retain separate saves; Beta 1 login does not move campaigns. No owner
++origin, launcher, live dist or campaign was substituted for QA.
++
++**LOCAL ONLY checkpoint:** no worker GitHub backup or publication. The manager
++owns acceptance and the audited checkpoint under the owner's existing
++**"push to GitHub"** direction. This bounded worker task is complete for
++handoff; SQL/provider/browser acceptance and the next invite lane are manager work.
++
++### Manager acceptance - Beta 1 feedback box (2026-10-14)
++
++Accepted after review of migration 20261014000200 (RLS, insert guard/quota, idempotent submit RPC; replaced deletion/retention functions match the originals plus tester_feedback) and the client/tool diff. Manager reran (default configs): tool tests all pass; FULL player suite 243 files / 2138 tests passed; workspace typecheck clean. Note: feedback rows follow 90-day retention; the local digest is the durable copy. Browser acceptance with a live project follows the migrations. Next: Beta 1 setup links worker. A concurrent docs-only stats/ethics review worker writes only docs/reviews/stats-ethics-round2-20261014.md (disjoint lane).
++
++
++## Beta 1 setup links - Sol worker handoff (2026-10-14)
++
++Status: **implemented and locally validated; manager SQL/hosted/browser acceptance
++remains**. One bounded Sol worker milestone for the Claude Code manager; no
++sub-agents. The late-evening invite decisions are binding: link-only output,
++manager-run tool, owner-written personal email and no expiry before use/cancel.
++This supersedes historical provider-generation/template/OTP-expiry instructions.
++The feedback-box changes and concurrent stats/ethics review are preserved.
++No Git, network, installs, real env/secret/tester-email reads, real Auth/SQL,
++external messages, live browser/storage operations, commit, push, deployment or
++publication. No clinical content, gameplay rules, saves or FSRS identity changed.
++
++### Files changed
++
++17 delivered paths: nine preexisting files and eight new files.
++
++- `supabase/migrations/20261014000300_beta1_setup_links.sql` (new)
++- `supabase/functions/claim-setup-link/index.ts` (new, complete single-file function)
++- `supabase/tests/beta1_setup_links.sql` (new, prepared disposable checks)
++- `supabase/tests/README.md`
++- `scripts/beta-invites/beta-invites.mjs`
++- `scripts/beta-invites/beta-invites.test.mjs`
++- `scripts/beta-invites/setup-link.test.mjs` (new, imports exact Edge file under Node)
++- `apps/player/src/auth/AuthGate.tsx`
++- `apps/player/src/auth/supabaseAuth.ts`
++- `apps/player/src/auth/setupLink.ts` (new)
++- `apps/player/src/auth/setupLink.test.ts` (new)
++- `apps/player/src/auth/SetupAccountForm.tsx` (new)
++- `apps/player/src/auth/AuthGateSetup.test.tsx` (new)
++- `docs/setup/BETA1_SUPABASE_SETUP.md`
++- `docs/adr/0009-verified-email-passphrase-auth.md`
++- `docs/execplans/accounts-playtime-release-20261012.md` (this handoff appended)
++- `docs/handoffs/CURRENT_THREAD_HANDOFF.md` (bounded-task summary appended)
++
++No manifest/lockfile, frontend env example, launcher, existing migration, shell
++layout/CSS, feedback module/test, usage/flag UI or clinical/game-domain edit.
++`AuthGate.test.tsx` is byte-unchanged, including the feedback milestone's startup
++retry regressions. `docs/reviews/stats-ethics-round2-20261014.md` was not edited.
++
++### Implementation and reviewed limits
++
++- Private `setup_codes` stores UUID, lowercase email, unique SHA-256 hex hash,
++  invite/reset purpose, created/used/cancelled times, 0–10 failed attempts,
++  nullable Auth UUID and the deferred explicit owner-grant request. No plaintext
++  code/password or expiry column. RLS is enabled; PUBLIC/anon/authenticated have
++  no table/RPC rights. Service-only public INVOKER wrappers call private DEFINER
++  bodies with empty search paths and verified service-role claims.
++- A partial unique index allows one active code per email. Issuance, claim,
++  cancellation, finalization and admin revocation share a per-email advisory
++  lock. Reissue cancels earlier codes across purposes, including an in-flight
++  consumed code; finalization rechecks cancellation. Wrong-code attempts update
++  the current email's row and RETURN a generic failure, so the counter commits;
++  attempt ten cancels. Lookup is service-only. The used error is returned only
++  after a matching secret, avoiding an account-status oracle.
++- Claim reserves by atomically setting used_at **before** the separate Auth
++  HTTP call. Only one request may create/update a password. A provider failure,
++  crash or lost response after reservation never reactivates the code. Ask the
++  manager for a new link, or sign in normally if the password change succeeded.
++  Auth HTTP and SQL are separate transactions; cancellation cannot roll back an
++  already completed password change. Membership/ban/revocation/deletion checks
++  remain authoritative, including a recheck under the membership lock at finish.
++- Invite creates/confirms through Auth admin with the chosen password, or updates
++  a bound pending identity, then admits membership. New Auth identities carry
++  trusted `gamify_setup_pending: true` until admission. It grants no client
++  access, but allows a fresh invite to recover Auth creation whose admission
++  failed, including a pending identity created after a replacement was issued.
++  Unrelated confirmed accounts cannot be invited over. Finish removes pending
++  and writes trusted `gamify_setup_admitted: true`; no invented invited_at.
++  Three existing identity guards now accept that marker OR a legacy provider
++  invite, with all independent membership/consent/ban/deletion checks unchanged.
++  `isInvitedVerifiedUser` accepts only the boolean in server app_metadata,
++  never user_metadata. Reset requires active membership and never readmits.
++- `--owner` remains single-invite only, applied at finish; owner AAL2/MFA is
++  unchanged. Admin revoke cancels codes in the same transaction as membership
++  revocation/owner removal, before the existing Auth ban. Revoke before an Auth
++  identity exists cancels the pending links. The existing ban retry remains.
++  Cancel alone leaves existing account access intact.
++- The Edge file uses built-in SUPABASE_URL/SUPABASE_SERVICE_ROLE_KEY, Web Crypto,
++  fetch and Deno.serve, with no imports or logging. Fixed 64-iteration hash
++  comparison, 8–128 password validation, bounded JSON bodies, safe generic
++  provider errors, no redirects, no-store responses and exact CORS allowlist:
++  Pages origin, 127.0.0.1:4173 and 127.0.0.1:5184. GET/OPTIONS cannot claim.
++  Node imports start no server or environment read. Deploy as **claim-setup-link**
++  by pasting the complete file into Dashboard Edge Functions editor; **JWT
++  verification OFF** is required because testers have no session. No extra
++  custom secret or local module is needed. The runbook documents this.
++- Tool invite/reset generates 32 random bytes, prints only the exact Pages
++  fragment link and sends only its hash to SQL. No generateLink/template path
++  remains. --local intentionally selects http://127.0.0.1:4173/. Batch validates
++  all 1–1000 unique email lines before issuance, then prints email<TAB>link.
++  Lists stay outside the repository. If sequential issuance partly fails, no
++  batch links are printed; rerun all after fixing the cause to replace unprinted
++  rows. List shows member status and pending/used/cancelled setup metadata,
++  without hashes/codes. Feedback/feedback-status retain their existing behavior,
++  credential location, pagination/privacy and owner-decision-only workflow.
++- Both shells use the same outer AuthGate. Setup fragment capture/scrubbing
++  precedes hosted Auth construction, session refresh or any setup request. The
++  form remains first even with a remembered session, including React StrictMode.
++  Read-only email, password/confirm, Create account or the local reset-label
++  toggle, explicit submission only. Source purpose always comes from SQL. After
++  success, sign in with the chosen password, clear legacy password-flow markers
++  and continue. A sign-in retry after successful claim does not claim again.
++  No code is written to browser storage. Used/invalid errors match the requested
++  strings; used/invalid blocks re-submission and offers Return to sign in.
++- Pending rows never expire, even in retention. Only used/cancelled records are
++  purged after 90 days by the existing Cron target; earlier purge statements are
++  unchanged. Bound rows cascade on Auth deletion. Owner deletion administration
++  must also remove any unbound setup email history; the runbook calls this out.
++
++### Exact validation commands and observed output
++
++All HTTP/tool filesystem operations in tests use mocks; examples use example.org.
++
++```powershell
++node --test --test-isolation=none --test-reporter=spec scripts/beta-invites/beta-invites.test.mjs scripts/beta-invites/beta-feedback.test.mjs scripts/beta-invites/setup-link.test.mjs
++```
++
++Exit **0** (`tool-tests.log`), exact summary:
++
++```text
++ℹ tests 93
++ℹ suites 6
++ℹ pass 93
++ℹ fail 0
++ℹ cancelled 0
++ℹ skipped 0
++ℹ todo 0
++ℹ duration_ms 157.2555
++```
++
++`node scripts/beta-invites/beta-invites.mjs --help` exits **0** without reading
++credentials or fetching; the help includes cancel, --local, --file and feedback.
++
++Player checks use the existing narrow net-use EPERM preload and threads. The
++ignored config imports the actual production config and changes **only envDir:
++false**, preventing reads of any populated env file; test options/plugins remain.
++
++```powershell
++$env:NODE_OPTIONS = '--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
++npm.cmd run test --workspace @gamify-surgery/player -- --config=../../.local-dev/beta1-setup-links/vite-pages.config.mts --pool=threads src/auth
++npm.cmd run test --workspace @gamify-surgery/player -- --config=../../.local-dev/beta1-setup-links/vite-pages.config.mts --pool=threads
++```
++
++Both exit **0**. Exact focused summary (`auth-focused.log`):
++
++```text
++ Test Files  5 passed (5)
++      Tests  70 passed (70)
++   Start at  19:44:26
++   Duration  2.67s (transform 3.81s, setup 0ms, import 5.14s, tests 165ms, environment 0ms)
++```
++
++Exact **FULL player**, no filters/exclusions, final summary
++(`full-player-final.log`):
++
++```text
++ Test Files  245 passed (245)
++      Tests  2163 passed (2163)
++   Start at  19:44:38
++   Duration  73.47s (transform 14.03s, setup 0ms, import 123.61s, tests 147.95s, environment 14ms)
++```
++
++`npm.cmd run typecheck` exits **0** for all seven workspaces (`typecheck.log`).
++Separate typecheck of the actual Edge module also exits **0**, no diagnostics:
++
++```powershell
++node node_modules/typescript/bin/tsc --noEmit --strict --skipLibCheck --target ES2022 --module ESNext --moduleResolution bundler --lib ES2022,DOM supabase/functions/claim-setup-link/index.ts
++```
++
++Pages uses actual production options/plugins, no populated env reads and an
++isolated output; the owner's apps/player/dist is untouched. Root build:pages
++was not run because its boundary check invokes Git, forbidden by this brief.
++
++```powershell
++$env:NODE_OPTIONS = '--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
++$env:VITE_SUPABASE_URL = ' '
++$env:VITE_SUPABASE_ANON_KEY = ' '
++$env:VITE_ENABLE_LOCAL_PROTOTYPE_BYPASS = 'false'
++npm.cmd run build --workspace @gamify-surgery/player -- --config=../../.local-dev/beta1-setup-links/vite-pages.config.mts --base=/GamifySurgery/ --outDir=../../.local-dev/beta1-setup-links/pages-artifact/apps/player/dist
++```
++
++Exit **0** (`pages-build.log`), exact build summary `✓ built in 2.57s`.
++Existing large-chunk/outside-project-output warnings are nonfatal. From cwd
++`C:/Users/rowla/Projects/GamifySurgery/.local-dev/beta1-setup-links/pages-artifact`:
++
++```powershell
++node C:/Users/rowla/Projects/GamifySurgery/scripts/verify-pages-build.mjs /GamifySurgery/
++```
++
++Exit **0** (`pages-verifier.log`), exact output:
++
++```text
++Verified 4 Pages asset reference(s) and 3283 public build file(s) under /GamifySurgery/.
++```
++
++Filesystem baseline covers 1,737 source/config paths; **1,727 protected paths
++outside the ten initially assigned preexisting paths are byte-unchanged**. One
++assigned existing test was not edited. The concurrent review is explicitly
++excluded. All 17 delivered files are UTF-8 without BOM, LF. The actual filesystem
++diff is `review.diff`; `safety-audit.json` checks encoding, added example emails,
++secret patterns, prior migration preservation, three exact guard-body copies
++except the new marker predicate, exact admin changes except marker/lock/cancel,
++and exact prior retention except terminal setup cleanup. Public JS contains no
++service-role env name, privileged setup RPC, owner credential path or pending
++admission marker. No Git status/diff/branch or remote state is claimed.
++
++Evidence lives in ignored `.local-dev/beta1-setup-links/`, including baseline
++copies, audit script/output, actual diff, tool/focused/full/typecheck/Edge/Pages
++logs and this complete handoff. The earlier green full suite is retained in
++`full-player.log`; final suite above was rerun after legacy-flow cleanup and the
++two final UI regressions. Audit development caught case-sensitive example-domain
++comparison and two Windows pipe-replaced Unicode punctuation characters in the
++runbook; both were corrected. No failing product test was left or excluded.
++
++### Manager next action and remaining acceptance
++
++Inspect the actual diff/logs. Review/apply **only the new fifth migration after
++the four existing migrations**, first on a disposable Supabase DB, and run
++`supabase/tests/beta1_setup_links.sql` plus all prior checks and advisors. The SQL
++script is a prepared recipe, **not an observed database PASS**. PostgreSQL/psql,
++Supabase CLI and Deno are unavailable here; network and installs are prohibited.
++Verify schema exposure/grants, transaction counters, two-session claims,
++issue/cancel/revoke/delete races and pending-Auth recovery. The trusted marker
++changes must be included with the frontend/function; a function alone is not a
++complete rollout. Keep the separate ergonomics project untouched.
++
++Deploy the single file as **claim-setup-link**, **JWT verification OFF**, using
++built-in env only. Check a real unauthenticated disposable create/reset, no email
++calls, 8/128 boundaries, email confirmation, immediate sign-in/marker visibility,
++wrong/cancelled/used errors, tenth-attempt commit, reissue after partial Auth
++failure, lost response and exact CORS. Check actual desktop/physical-phone layout,
++password-manager/keyboard behavior and scanner-style page opens with no request.
++Offline Auth/RPC models and TypeScript do not establish hosted behavior.
++
++Default remote opening remains
++**https://melissarowlandc-afk.github.io/GamifySurgery/**
++(`location.origin = https://melissarowlandc-afk.github.io`). Optional --local setup
++links intentionally select **START_GAME.cmd -> http://127.0.0.1:4173/** in the
++intended profile with hosted auth deliberately configured
++(`location.origin = http://127.0.0.1:4173`). The private phone launcher remains
++unchanged; its origin is not in setup CORS. Origins/profiles/devices and unowned
++versus signed-in accounts retain separate saves; Beta 1 does not move campaigns.
++No actual owner origin, launcher, profile, campaign or live dist was changed.
++
++**LOCAL ONLY checkpoint:** no worker GitHub backup or publication. The manager
++owns acceptance, the audited GitHub checkpoint/reminder (**"push to GitHub"**,
++under the owner's existing direction) and the separate first-publication gate.
++This bounded implementation is complete for handoff; remaining hosted/browser
++acceptance and deployment belong to the manager/owner.
++
++### Manager acceptance - Beta 1 setup links (2026-10-14)
++
++Accepted after review of the Edge Function (origin allow-list, bounded body, constant-time digest compare, atomic claim before Auth, no logging) and migration 20261014000300 (service_role-only setup code RPCs; membership guards extended to the trusted `gamify_setup_admitted` app-metadata marker). Manager reran: beta tool + setup-link tests 93 pass / 0 fail; FULL player 245 files / 2163 tests passed; typecheck clean; no tester emails in the repository. Accepted risk: anyone who knows a tester's email can burn that tester's pending link with 10 bad attempts; the owner simply reissues. Live verification (secret-key behavior in the Edge runtime, CORS, phone) follows deployment.
++
++### Live project SQL state (2026-10-14, manager)
++
++Applied in the SQL editor of stitchin-time-beta (each verified byte-identical to the repository file by SHA-256 before running; each reported Success): 20261013000100, 20261013000200 (cron job `gamify-beta1-retention` scheduled), 20261014000100, 20261014000300. **Not yet applied: 20261014000200 (tester feedback)** - the run was blocked for owner confirmation, and 0300 ran before it. To finish in order-safe form: apply 0200, then re-apply the `create or replace function gamify_private.purge_beta1_retained_data()` block from 0300 (0200's copy omits setup-code retention). Until then the nightly purge would error on the missing tester_feedback table. Edge Function not yet deployed.
++- 2026-10-15 update: 20261014000200 applied with owner OK, then the 0300 purge function re-applied. Verified live: RLS on all 8 tables; purge runs cleanly and covers setup_codes + tester_feedback; deletion covers tester_feedback; cron job present; anon/authenticated cannot execute admin/setup RPCs. Edge Function `claim-setup-link` deployed from a byte-identical copy (SHA-256 checked). **Pending owner:** turn "Verify JWT with legacy secret" OFF for the function (the auto-mode safety check reserves that auth change for the owner), and paste the secret key into ignored `.local-dev/beta-admin.env` (created with URL filled, key empty).
++- 2026-10-15: owner turned "Verify JWT with legacy secret" OFF for claim-setup-link (manager verified switch state after reload). Smoke test: allowed origin + fake code -> 400 invalid_link with ACAO echoed (proves the function runs and its service-role RPCs succeed in the Edge runtime); disallowed origin -> 403. Remaining owner steps: secret key into .local-dev/beta-admin.env (home PC); GitHub Actions secrets for the build.
++- 2026-10-16: owner completed the live test on the local hosted preview (http://127.0.0.1:5184, built with the public project URL/publishable key from ignored .local-dev/beta-hosted-preview.env): setup link -> account, play, comment, persistent sign-in all worked. Owner account the owner's account email is confirmed + owner; the setup link shows "used". Found: (1) service_role lacked SELECT on player_usage_days/question_flags (the project does not auto-grant), so the feedback digest failed -> new migration 20261016000100_beta1_owner_tool_reads.sql (owner to run; manager's pane lost its dashboard sign-in); (2) reopening an already-used setup link while signed in shows the setup form; "Return to sign in" then admits the existing session -> UX fix dispatched.
++
++### Beta 1 setup link while signed in (2026-10-16)
++
++Changed files: `apps/player/src/auth/AuthGate.tsx`, `apps/player/src/auth/AuthGate.test.tsx`, `apps/player/src/auth/AuthGateSetup.test.tsx`, and this exec plan. AuthGate still captures and removes the setup fragment before hosted-auth initialization. A setup link now waits for session restoration and server verification; an admitted session with a case-insensitive matching email enters the game without a claim request. A different or absent session gets the setup form, and the gate does not sign out a different account. Desktop and phone use the shared gate. Existing no-session setup tests now reflect the auth session check.
++
++Validation (all exit 0):
++
++```text
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads src/auth
++Test Files  5 passed (5)
++     Tests  73 passed (73)
++```
++
++```text
++npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads
++Test Files  245 passed (245)
++     Tests  2166 passed (2166)
++```
++
++```text
++npm.cmd run typecheck
++All seven workspace typechecks passed with no diagnostics.
++```
++
++Player tests used the existing `.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs` preload through `NODE_OPTIONS`. No installs, network calls or Git operations were run.
++- Manager acceptance (2026-10-16): setup-link-while-signed-in fix accepted; manager reran FULL player suite 245 files / 2166 passed. Local hosted preview rebuilt and restarted on 127.0.0.1:5184. Codex CLI path re-pointed to bin/9614f1d9b40d9c4f in AGENTS.md and .claude/settings.local.json after the Codex app update.
++
++## Owner publication approval (2026-10-16)
++
++Owner in chat: "You have my okay to publish." This is the one-time confirmation before the first public Beta 1 publication. Finding: the beta branch holds recovery ARCHIVES (1.38 GB under artifacts/checkpoints) rather than real-path files; origin/main (02ab585f, about 194 MB) predates Levels 4-5, mobile and Beta 1, so Pages serves an old build. Merging beta into main would add the archives to every Pages checkout. Decision: build a clean real-path release commit on top of origin/main (worker-prepared manifest, manager-verified clean checkout: npm ci/npm test/build:pages), push it as a release branch, then fast-forward main to deploy. beta keeps its archive history.
++
++## Owner request queued (2026-10-16): colleague name pool
++
++Owner asked to add the surgery department's attending and resident names (plus playtesters) to the generated name pool at a low random rate. Owner decision via question: **"Anywhere, any role"** (patients with any diagnosis and any role, including ethics scenarios). Attendings = middle-aged profiles; residents = young-adult profiles; owner supplied sex for pronouns. Names only (no emails) may enter the repository; the list is held privately by the manager until dispatch. Manager defaults: about 1 in 20 generated names, age/sex-consistent with the case, constrained profiles (interpreter, pediatric, fixed identities) unchanged, separate editorial weight. Dispatch after the first Beta 1 publication so it does not mix into the release commit. Playtesters added (2026-10-16): four residents, owner-supplied sex. Final list: 81 names (46 attendings, 35 residents).
++- 2026-10-16 release: clean real-path commit f2c8dab3 on branch release/beta1-20261016 (worktree C:/Users/rowla/Projects/GS-release, parent origin/main 02ab585f; 3,528 staged + 153 removed; manager secret/privacy scan clean). Clean worktree CI: npm ci OK; npm test OK (boundaries 5,488 paths; launcher contract; player 2166, game-domain 4226+2 skipped, clinical 635, others green); build:pages OK (3,283 files verified). Push of the release branch and fast-forward of main was blocked by the auto-mode safety check pending explicit owner confirmation of that specific push.
++- **2026-10-16 PUBLISHED.** Owner confirmed "Push the release to main". origin/main = release/beta1-20261016 = 73fb5e69 (f2c8dab3 release + three CI-timing commits: job cap 75 min; CI-only 60 s default test timeout; CI-only 10x scaling of explicit long test deadlines in 28 files; no test skipped). Pages run 38971037540 succeeded (26 min). Live check (fresh Chromium): https://melissarowlandc-afk.github.io/GamifySurgery/ shows invitation-only sign-in, no page errors; a throwaway example.org setup link opened "Set up your account" on a 390 px viewport with the fragment scrubbed, then was cancelled. Five tester setup links were generated privately (not in the repository). Release worktree: C:/Users/rowla/Projects/GS-release. Note: the live working tree carries the same CI-timing edits.
++
++## Colleague name pool (2026-10-16)
++
++Bounded Sol worker implementation for the Claude Code manager. Owner decision
++"Anywhere, any role" is implemented for compatible newly generated identities.
++No sub-agents, Git, installs, network, external messages, browser/owner storage,
++publication or deployment were used.
++
++Files changed:
++
++- `packages/game-domain/src/colleagueNames.ts`: all 81 exact owner-provided
++  given/family/sex/group records (46 attendings, 35 residents), marked as
++  owner-requested Easter eggs; no contact data. Separate cosmetic/editorial
++  `COLLEAGUE_NAME_EDITORIAL_WEIGHT = 0.05`; independent seed-derived
++  `colleague_names.editorial.v1` stream.
++- `packages/game-domain/src/namePresentationProfiles.ts`: existing adult art
++  age/sex metadata and 38 exact staff profiles from accepted roster metadata.
++  Thirteen original employee20 briefs explicitly describe young/middle-aged
++  staff; their authored visual bands permit compatible staff names without
++  inventing exact ages. Other unknown/older art and the four named radiologists
++  retain the ordinary pool. Explicit chart ages always override visual bands.
++- `packages/game-domain/src/appearance.ts`: opt-in context on the two legacy
++  name functions; cross-role active-name reservations; common shopper/companion
++  creation helper. Default low-level calls and save-load name repair retain
++  the old deterministic output.
++- `packages/game-domain/src/reducer.ts`: new compatible patient and staff draws;
++  frozen demographics/selected art determine eligibility. Explicit/authored
++  identities, pediatric families, Spanish interpreter profiles and fixed art
++  keep their existing selection path. No diagnosis is excluded otherwise.
++- `packages/game-domain/src/retail-operations.ts`: all five generated shopper/
++  companion creation paths use the common helper.
++- `packages/game-domain/src/service-operations.ts` and `gift-retail.ts`: service
++  visitors and gift shoppers use their existing demographic/art profile.
++- `packages/game-domain/src/index.ts`: exports the new name/presentation helpers.
++- `packages/game-domain/tests/colleague-names.test.ts`: 18 meaningful cases,
++  including rate/sex/age boundaries, legacy seeded names and tutorial appearance,
++  constrained identities, pool exhaustion, cross-role reservations, actual
++  hires/service visits/gift demand, and saved normal/colleague name retention.
++- `packages/game-domain/tests/employee-discussions.test.ts`: a colleague NP host
++  keeps the employee's name, sex-compatible art, discussion text and saved state.
++- `docs/execplans/accounts-playtime-release-20261012.md` and
++  `docs/handoffs/CURRENT_THREAD_HANDOFF.md`: appended this milestone/handoff.
++
++Selection is 5% per compatible generated name. Attendings match ages 40-65;
++residents match 25-35; children, outside ages and unknown profiles fall back.
++Staff without a chart age can use only an explicitly authored matching visual
++band. Exact ages outside the bands cannot be overridden by that fallback.
++Sex labels select the corresponding pool after clinical case/demographics have
++already been frozen; no race/ethnicity field or disease-selection input is added.
++Names never change clinical content, concept IDs, answer order or FSRS history.
++
++The independent 10,000-seed measurement selected **515 / 10,000 = 5.15%** for
++each sex/group combination. It reached all 13 female/22 male resident names and
++all 7 female/39 male attending names. The configured rate is still exactly 0.05;
++this sample's deviation is ordinary sampling variation. Occupied names are
++reserved across founder, hired/departing staff, visible encounters, service
++visitors, shoppers (including gift-only shoppers) and parents/companions. An
++exhausted compatible pool falls back to the existing normal generator.
++
++Discussion hosts are existing employees and inherit their frozen identity.
++Inspectors currently have a fixed "Inspector" role label, not a generated
++personal-name path; their presentation is unchanged. No persisted schema or
++migration is added. Existing frozen encounters and saved employees are not
++reselected. Tests assert the original eight patient/staff seeded pairs and the
++original tutorial name/demographics/appearance.
++
++Evidence is ignored `.local-dev/colleague-name-pool/`: before copies/baseline
++hashes, actual `review.diff`, final source audit, exact raw logs, seeded-before
++receipt, rate measurement and Level 5 provenance mismatch report. Source/test
++UTF-8/no-BOM/LF and contact-string scans pass. No clinical source/provenance,
++clinical-content data, save-schema, RNG-contract, character catalog, launcher,
++workflow or player source was changed. New names are cosmetic owner-approved
++content; no clinical-review status is promoted.
++
++Opening paths are unchanged: `START_GAME.cmd` -> exact
++`http://127.0.0.1:4173` in the intended persistent profile
++(`location.origin = http://127.0.0.1:4173`). Remote remains
++`https://melissarowlandc-afk.github.io/GamifySurgery/` with its separate saves.
++No build or owner opening pathway was substituted. This is LOCAL ONLY;
++manager owns acceptance and the audited GitHub checkpoint/reminder
++**"push to GitHub"** under the owner's existing direction.
++
++Validation (final source; no filters on either full suite):
++
++All commands used PowerShell with the existing preload:
++
++```powershell
++$env:NODE_OPTIONS='--import=file:///C:/Users/rowla/Projects/GamifySurgery/.local-dev/alerts-events-validation/ignore-net-use-eperm.mjs'
++```
++
++1. `npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=1`
++   **Exit 1**, with this exact summary:
++
++```text
++ Test Files  1 failed | 156 passed | 1 skipped (158)
++      Tests  1 failed | 4244 passed | 2 skipped (4247)
++   Start at  18:25:28
++   Duration  900.95s (transform 4.56s, setup 0ms, import 66.92s, tests 823.08s, environment 7ms)
++```
++
++The sole failure is
++`tests/level-five-integration.test.ts:47`, "binds the actual run to its current
++game, balance, clinical and driver inputs and reconciles cash". It pins the
++byte hashes in `tools/qa/level-five-integration-results-20261012.json`, so this
++feature's intentional source changes invalidate its historical binding:
++
++```text
++AssertionError: packages/game-domain/src/appearance.ts
++Expected: "26af78ca27eb78a9749590d2b84d546ec7f9f5654f339493820a2ebfcfd659c9"
++Received: "bef418db571fcef7a6f8a4b082e04eade2cdb6d80f5b68b6ee4a87c22da19ebb"
++```
++
++All other 35 tests in that integration file pass. The mismatch report identifies
++six intentionally edited pinned inputs: appearance, gift-retail, index, reducer,
++retail-operations and service-operations. These hashes matched at task start;
++this is a consequence of this feature, not a pre-existing failure. The worker
++has not softened/skipped the assertion, replaced expected hashes, or changed
++any existing evidence/checkpoint fixture. The two existing skips are unchanged.
++An earlier exploratory full-domain run was interrupted after the final staff
++band support was added; its incomplete log is retained separately. The summary
++above is the completed run started against the final source.
++
++2. `npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads`
++   **Exit 0**, exact summary:
++
++```text
++ Test Files  245 passed (245)
++      Tests  2166 passed (2166)
++   Start at  18:25:00
++   Duration  75.76s (transform 14.09s, setup 0ms, import 126.96s, tests 153.90s, environment 14ms)
++```
++
++3. `npm.cmd run typecheck` **Exit 0**. All seven workspace TypeScript checks
++   completed: clinical-context-workbench (client + server), player,
++   balance-config, clinical-authoring, clinical-content, clinical-research and
++   game-domain. Exact unabridged output is `typecheck.log` in the evidence folder.
++
++4. Additional focused command:
++   `npm.cmd run test --workspace @gamify-surgery/game-domain -- tests/colleague-names.test.ts tests/employee-discussions.test.ts --pool=threads --maxWorkers=1`
++   **Exit 0**, exact summary:
++
++```text
++ Test Files  2 passed (2)
++      Tests  26 passed (26)
++   Start at  18:24:44
++   Duration  4.53s (transform 2.53s, setup 0ms, import 3.99s, tests 392ms, environment 0ms)
++```
++
++Final independent audit also verifies all **38 exact staff age/sex profiles**
++and **13 authored staff bands** against their original local roster/design
++sources. All ten owned source/test file hashes stayed unchanged throughout the
++final validation run; all 1,872 other baseline source/config/docs paths were
++byte-unchanged before the two authorized documentation appends.
++
++Manager next action / acceptance limitation:
++
++- Inspect the actual filesystem diff, name data, source audits and full logs in
++  `.local-dev/colleague-name-pool/`. The naming milestone is implemented and its
++  scoped tests pass; full-domain acceptance is pending fresh Level 5 evidence.
++- Dispatch a separate evidence-refresh lane after accepting the final source.
++  The existing ordered runner commands are
++  `node tools/qa/level-five-integration-run.mjs --write`, followed by
++  `node tools/qa/level-five-integration-lower.mjs`. They regenerate actual reducer
++  evidence and checkpoints; review their output and retain historical frozen
++  fixtures appropriately. Do not replace hashes without a fresh run. Rerun the
++  full required suites/typecheck after accepting that evidence. These commands
++  were read, not executed by this worker, because the current lane preserves
++  existing frozen encounters, saves and fixtures.
++- Review/backup/publication remain the manager's lane. LOCAL ONLY: no GitHub
++  backup or publication of the colleague pool exists yet. Manager owns the
++  **"push to GitHub"** reminder/checkpoint under the owner's existing direction.
++- 2026-10-16: colleague name pool published. origin/main = c08e9bff (accepted name pool + Level 5 evidence rebind 2; manager reran game-domain 4245 passed/2 skipped, player 2166 passed, typecheck clean, Level 5 e2e 100 + 8 rerun after QA-server warm-up). Pages run 38982127152 succeeded; live site shows invitation-only sign-in without page errors.
++- 2026-10-16 owner: colleague names should be "more of a treat" -> manager sets COLLEAGUE_NAME_EDITORIAL_WEIGHT to 0.01. Owner closed both test items (feedback 2974dcf7 -> done). Closing the test question flag failed: service_role lacks EXECUTE on the flag-validation function `valid_flag_choices` (fold a grant into the next owner-run SQL).
++- 2026-10-17: round 3 stats/ethics content + colleague names at 1% published. origin/main = 14ed058b. Release-copy validation: npm test exit 0 (player 2166, game-domain 4245 + 2 skipped, clinical 638, others green); Level 5 e2e 104/104 with no retries. Pages run 39002455167 succeeded; live sign-in page loads without page errors.
++- 2026-10-17: published b3b24bd6 (P2-E pairings, DEFECT-M9-1 fix + bounded M9-2, Level 5 garden/offsite save-load fix and inspector route determinism, evidence rebind 5, flag-validation grant migration file (not yet applied live), Beta 2 plan). Release-copy npm test exit 0 (player 2166, game-domain 4271, clinical 698, others green); Level 5 e2e 104/104 no retries. Pages run 39045354337 succeeded; live sign-in loads without page errors. GitHub now holds the full real-path source on main/release (backup).
++
++### Tester flag fix a09b77ff (2026-10-17)
++
++- Before: “Which entry misses the thiamine precaution in this patient's high-risk restart?” Key: “Withhold thiamine until new symptoms appear.”
++- After: “Which revision should replace that checklist entry for this patient's high-risk restart?” Key: “Give thiamine before nutrition restarts.”
++- Scoped to `plan-entry-audit` v4 wording and rationale; concept, claims, ID, slug, age range and clinician-review status stay the same. Level 5 evidence was not changed.
++- 2026-10-17: published 1865337f (tester-flag fix a09b77ff, Beta 2 inactive groundwork; cloud client modules and save-path session edits deliberately withheld until B2.4/B2.5 acceptance). npm test exit 0 in release copy (game-domain 4292, player 2166, clinical 698); Level 5 e2e 104/104. Pages run 39069621342 succeeded. Flag a09b77ff to be marked fixed once 20261017000100 (service_role EXECUTE on valid_flag_choices) is applied live.

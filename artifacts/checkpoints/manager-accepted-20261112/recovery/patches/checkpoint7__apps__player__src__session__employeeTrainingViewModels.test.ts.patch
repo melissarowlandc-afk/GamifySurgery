@@ -1,0 +1,47 @@
+--- a/apps/player/src/session/employeeTrainingViewModels.test.ts
++++ b/apps/player/src/session/employeeTrainingViewModels.test.ts
+@@ -1,3 +1,10 @@
++import { beforeProgramBatch3AcceptanceRelease } from "../../../../packages/clinical-content/src/question-program-batch3-acceptance-test-support";
++import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
++
++// Historical chart fixtures freeze the hash-verified pre-batch3 release.
++// Following commands and view projections still use the current runtime.
++const historicalTopicContext = { ...PROTOTYPE_DOMAIN_CONTEXT,
++  clinicalRelease: beforeProgramBatch3AcceptanceRelease(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease) };
+ import { describe, expect, it } from "vitest";
+ import {
+   createInitialGameState,
+@@ -45,6 +52,15 @@
+ }
+ 
+ describe("employee training presentation", () => {
++  it("shows future tier5 pricing while retaining a legacy queued payment", () => {
++    const state = createInitialGameState(); state.facilityLevel = 2;
++    const employee = addEmployee(state, "staff.receptionist", 4);
++    expect(createEmployeeTrainingView(state, employee.id)).toMatchObject({ nextLevel: 5, cost: 420, costLabel: "$420" });
++    employee.training = { ...session("queued"), targetLevel: 5, paidAmount: 300,
++      roomInstanceId: null, placeId: null, startedAtFacilityTick: null, lastProgressAtFacilityTick: 0 };
++    expect(createEmployeeTrainingView(state, employee.id)).toMatchObject({ nextLevel: 5, cost: 300, costLabel: "$300", statusLabel: "Queued · working" });
++  });
++
+   it.each([[1, 60], [2, 54], [3, 48], [4, 42], [5, 36]] as const)(
+     "shows the saved Level %s room session duration after upgrade and reload", (level, duration) => {
+       const state = createInitialGameState(); state.facilityLevel = 2; state.facilityTick = 20;
+@@ -122,7 +138,7 @@
+       currentBenefitLabel: "Adds $10 per consult",
+       nextBenefitLabel: "Adds $15 per consult",
+       incrementBenefitLabel: "Adds $5 per consult",
+-      costLabel: "$450",
++      costLabel: "$540",
+     });
+     employee.trainingLevel = 5;
+     expect(createEmployeeTrainingView(state, employee.id)).toMatchObject({
+@@ -194,7 +210,7 @@
+     state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
+     state = gameReducer(state, { type: "ADMIT_PATIENT", operationId: "training-eta.admit",
+       encounterId: "encounter.training-eta", caseId: "case.iron-deficiency.adult-man-fatigue",
+-      patientDisplayName: "Timing Test", arrivalClass: "routine" });
++      patientDisplayName: "Timing Test", arrivalClass: "routine" }, historicalTopicContext);
+     expect(state.operationReceipts["training-eta.admit"]?.status).toBe("applied");
+     let encounter = state.encounters["encounter.training-eta"]!;
+     encounter.lifecycle = "active_action_required";

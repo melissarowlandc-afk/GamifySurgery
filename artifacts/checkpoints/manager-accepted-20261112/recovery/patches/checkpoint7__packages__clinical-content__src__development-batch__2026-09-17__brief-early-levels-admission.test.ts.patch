@@ -1,0 +1,22 @@
+--- a/packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts
++++ b/packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts
+@@ -4,8 +4,8 @@
+ import { resolve } from "node:path";
+ import { fileURLToPath } from "node:url";
+ import { syntheticClinicalCaseSchema } from "../../schema";
+-import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from "../../synthetic-content";
+-// Keep this historical batch's inventory proof scoped to its original bank.
++import { QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE as releaseWithLevel3 } from "../../synthetic-content";
++// Keep this historical batch's inventory proof before the additive clinical-objective versions.
+ // Later-batch admission/protected-intake checks live in their own tests.
+ const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,
+   concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith("concept.gs028g.")&&!c.id.startsWith("concept.pediatric-clinic.")&&!c.id.startsWith("concept.variety3.")),
+@@ -19,7 +19,7 @@
+     expect([concepts, questions, cases, reviews, timings].map((items) => items.length)).toEqual([20, 80, 48, 48, 80]);
+     expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(331);
+     expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(1008);
+-    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1295);
++    expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes)).toHaveLength(1303);
+     for (const clinicalCase of cases) expect(syntheticClinicalCaseSchema.parse(clinicalCase)).toEqual(clinicalCase);
+   });
+   it("keeps provenance, review status, concise presentations, and parallel choices", () => {

@@ -1,0 +1,316 @@
+--- a/apps/player/src/auth/AuthGate.test.tsx
++++ b/apps/player/src/auth/AuthGate.test.tsx
+@@ -4,8 +4,9 @@
+ import { AuthGate } from "./AuthGate";
+ import { useAuthAccountId } from "./AuthAccountContext";
+ import { createLocalPrototypeSession } from "./prototypeAuth";
+-import { cleanupPhoneTests, phoneTestDom } from "../mobile/screenTestUtils";
++import { allElements, cleanupPhoneTests, phoneTestDom } from "../mobile/screenTestUtils";
+ import { testElementProps } from "../mobile/testDom";
++import { CLOUD_CHECK_TIMEOUT_MS } from "../session/cloud/checkDeadline";
+ 
+ const mock = vi.hoisted(() => ({
+   configured: true, bypass: false, local: null as ReturnType<typeof createLocalPrototypeSession> | null,
+@@ -63,7 +64,12 @@
+ }
+ async function setup(hash = "", layout = "desktop", stored = new Map<string, string>()) {
+   const env = phoneTestDom();
+-  Object.assign(env.browser.location, { origin: "https://melissarowlandc-afk.github.io", hash, search: `?layout=${layout}` });
++  Object.assign(env.browser.location, { origin: "https://melissarowlandc-afk.github.io", hash, search: `?layout=${layout}`,
++    href: `https://melissarowlandc-afk.github.io/GamifySurgery/?layout=${layout}${hash}` });
++  Object.assign(env.browser.history, { replaceState: (_state: unknown, _title: string, next: string) => {
++    const url = new URL(next, "https://melissarowlandc-afk.github.io");
++    Object.assign(env.browser.location, { href: url.href, hash: url.hash, search: url.search });
++  } });
+   Object.assign(env.browser.localStorage, {
+     getItem: (key: string) => stored.get(key) ?? null,
+     setItem: (key: string, value: string) => stored.set(key, value),
+@@ -86,21 +92,66 @@
+   vi.stubEnv("BASE_URL", "/GamifySurgery/");
+ });
+ afterEach(async () => {
++  vi.restoreAllMocks();
+   expect(mock.network).not.toHaveBeenCalled();
+   await cleanupPhoneTests(); vi.unstubAllEnvs();
+ });
+ 
+ describe("invite-only shared auth gate", () => {
+-  it.each(["desktop", "phone"])("accepts an invitation and sets a 15+ character password before mounting %s play", async layout => {
++  it.each(["phone", "desktop"])("adds the welcome entrance without hiding %s sign-in fields, notices or actions", async layout => {
++    const env = await setup("", layout);
++    expect(allElements(env.element, node => node.tagName === "PICTURE" && node.attributes["data-welcome-art"] === "spring-morning-01b")).toHaveLength(1);
++    expect(allElements(env.element, node => node.tagName === "MAIN" && node.attributes.class?.includes("welcome-entrance") === true)).toHaveLength(1);
++    expect(allElements(env.element, node => node.tagName === "FORM")).toHaveLength(1);
++    expect(allElements(env.element, node => node.attributes["data-testid"] === "intro-tagline")).toHaveLength(1);
++    expect(env.find(node => node.tagName === "PICTURE").attributes["data-welcome-composition"]).toBe("entrance-wide");
++    expect(allElements(env.element, node => node.tagName === "INPUT").map(node => testElementProps(node).autoComplete)).toEqual(["email", "current-password"]);
++    expect(env.element.textContent).toContain("Demonstration content");
++    expect(env.element.textContent).toContain("Email is used only for invitations");
++    expect(env.button("Sign in").attributes.disabled).toBeUndefined();
++    expect(env.button("Forgot password?").attributes.disabled).toBeUndefined();
++  });
++  it.each([
++    ["same email", "account-a@example.invalid", true],
++    ["different email", "other@example.invalid", false],
++  ])("handles a setup link with a restored session (%s)", async (_label, email, admitted) => {
++    const remembered = session();
++    mock.getSession.mockResolvedValue({ data: { session: remembered }, error: null });
++    const hash = `#setup=${"s".repeat(43)}&email=${encodeURIComponent(email)}`;
++    const env = await setup(hash);
++    expect((env.browser.location as { hash?: string }).hash).toBe("");
++    expect(mock.network).not.toHaveBeenCalled();
++    if (admitted) {
++      expect(env.element.textContent).toContain("Clinic account-a");
++      expect(env.element.textContent).not.toContain("Set up your account");
++      expect(mock.mounts).toHaveBeenCalledExactlyOnceWith("account-a");
++    } else {
++      expect(env.element.textContent).toContain("Set up your account");
++      expect(mock.mounts).not.toHaveBeenCalled();
++    }
++  });
++
++  it("shows setup form without a session and scrubs its fragment", async () => {
++    const hash = `#setup=${"s".repeat(43)}&email=account-a%40example.invalid`;
++    const env = await setup(hash);
++    expect((env.browser.location as { hash?: string }).hash).toBe("");
++    expect(env.element.textContent).toContain("Set up your account");
++    expect(mock.mounts).not.toHaveBeenCalled();
++    expect(mock.network).not.toHaveBeenCalled();
++  });
++
++  it.each(["desktop", "phone"])("accepts an invitation and sets an 8-character password before mounting %s play", async layout => {
+     mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
+     const env = await setup("#type=invite&access_token=synthetic", layout);
+     expect(env.element.textContent).toContain("Set Your Password");
+     expect(mock.mounts).not.toHaveBeenCalled();
+-    await input(env, "password", "short"); await submit(env);
++    const passwordProps = testElementProps(env.find(node => node.tagName === "INPUT" && testElementProps(node).type === "password"));
++    expect(passwordProps).toMatchObject({ minLength: 8, maxLength: 128, autoComplete: "new-password" });
++    await input(env, "password", "seven77"); await submit(env);
+     expect(mock.update).not.toHaveBeenCalled();
+-    expect(env.element.textContent).toContain("at least 15 characters");
+-    await input(env, "password", "a long synthetic passphrase"); await submit(env);
+-    expect(mock.update).toHaveBeenCalledWith({ password: "a long synthetic passphrase" });
++    expect(env.element.textContent).toContain("at least 8 characters");
++    await input(env, "password", "eight888"); await submit(env);
++    expect(mock.update).toHaveBeenCalledWith({ password: "eight888" });
+     expect(mock.mounts).toHaveBeenCalledExactlyOnceWith("account-a");
+     expect(env.element.textContent).toContain("Sign out");
+   });
+@@ -127,22 +178,43 @@
+     expect(env.element.textContent).toContain("Clinic account-a");
+   });
+ 
+-  it("detects a direct recovery callback before session initialization", async () => {
+-    mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
+-    const env = await setup("#type=recovery&access_token=synthetic", "phone");
++  it.each(["desktop", "phone"])("finishes a direct recovery callback on the Pages base before mounting %s play", async layout => {
++    mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
++    const env = await setup("#type=recovery&access_token=synthetic", layout);
++    const replaceState = vi.spyOn(env.browser.history, "replaceState");
+     expect(env.element.textContent).toContain("Choose New Password");
+     expect(mock.mounts).not.toHaveBeenCalled();
+-  });
+-
+-  it("has no sign-up action and gives recovery the canonical Pages root redirect", async () => {
+-    const env = await setup();
++    await input(env, "password", "seven77"); await submit(env);
++    expect(mock.update).not.toHaveBeenCalled();
++    await input(env, "password", "eight888"); await submit(env);
++    expect(mock.update).toHaveBeenCalledExactlyOnceWith({ password: "eight888" });
++    expect(replaceState).toHaveBeenCalledWith(null, "", `/GamifySurgery/?layout=${layout}`);
++    expect(env.element.textContent).toContain("Clinic account-a");
++  });
++
++  it.each(["desktop", "phone"])("gives manual reset instructions on %s sign-in without sending email", async layout => {
++    const env = await setup("", layout);
+     expect(env.element.textContent).not.toContain("Create invited account");
+     expect(env.element.textContent).toContain("Cloud saves come in Beta 2");
+-    await env.click("Forgot password?"); await input(env, "email", " tester@example.invalid "); await submit(env);
+-    expect(mock.recover).toHaveBeenCalledExactlyOnceWith("tester@example.invalid", {
+-      redirectTo: "https://melissarowlandc-afk.github.io/GamifySurgery/",
+-    });
+-    expect(env.element.textContent).toContain("If that invited account exists");
++    await env.click("Forgot password?");
++    expect(env.element.textContent).toContain("Contact the person who invited you");
++    expect(env.element.textContent).toContain("email you a password-reset link");
++    expect(env.element.textContent).not.toContain("Send recovery email");
++    expect(env.element.textContent).toContain("Sign In");
++    expect(mock.recover).not.toHaveBeenCalled(); expect(mock.signIn).not.toHaveBeenCalled();
++  });
++
++  it.each(["desktop", "phone"])("keeps the same %s sign-in copy when the cloud build flag is on", async layout => {
++    const signInCopy = (env: Harness) => env.element.textContent.replace(
++      env.find(node => node.attributes["data-testid"] === "intro-tagline").textContent, "");
++    vi.stubEnv("VITE_CLOUD_SAVES_ENABLED", "false");
++    const baseline = await setup("", layout), copy = signInCopy(baseline);
++    await cleanupPhoneTests();
++    vi.stubEnv("VITE_CLOUD_SAVES_ENABLED", "true");
++    const enabledBuild = await setup("", layout);
++    expect(signInCopy(enabledBuild)).toBe(copy);
++    expect(enabledBuild.element.textContent).not.toContain("accept the cloud notice");
++    expect(mock.network).not.toHaveBeenCalled();
+   });
+ 
+   it("signs in, signs out, then remounts under another account without retaining the first clinic", async () => {
+@@ -190,6 +262,150 @@
+     expect(env.element.textContent).toContain("Sign in again");
+   });
+ 
++  it.each(["desktop", "phone"])("keeps a cached %s session pending through transport failures and retries with backoff", async layout => {
++    vi.useFakeTimers();
++    vi.spyOn(Math, "random").mockReturnValue(1);
++    mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
++    mock.getUser.mockRejectedValueOnce(new TypeError("Synthetic failed fetch"))
++      .mockResolvedValueOnce({ data: { user: null }, error: { name: "AuthRetryableFetchError", status: 0 } });
++    const env = await setup("", layout);
++    expect(env.doc.body.textContent).toContain("Your sign-in could not be verified");
++    expect(mock.mounts).not.toHaveBeenCalled(); expect(mock.signOut).not.toHaveBeenCalled();
++    await act(async () => { await vi.advanceTimersByTimeAsync(999); });
++    expect(mock.getUser).toHaveBeenCalledTimes(1);
++    await act(async () => { await vi.advanceTimersByTimeAsync(1); });
++    expect(mock.getUser).toHaveBeenCalledTimes(2);
++    expect(env.doc.body.textContent).toContain("Your sign-in could not be verified");
++    await act(async () => { await vi.advanceTimersByTimeAsync(1999); });
++    expect(mock.getUser).toHaveBeenCalledTimes(2);
++    await act(async () => { await vi.advanceTimersByTimeAsync(1); });
++    expect(mock.getUser).toHaveBeenCalledTimes(3);
++    expect(env.element.textContent).toContain("Clinic account-a");
++    expect(mock.mounts).toHaveBeenCalledExactlyOnceWith("account-a");
++    expect(mock.signOut).not.toHaveBeenCalled();
++  });
++
++  it("caps repeated service failures at a five-minute retry delay", async () => {
++    vi.useFakeTimers();
++    vi.spyOn(Math, "random").mockReturnValue(1);
++    mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
++    mock.getUser.mockResolvedValue({ data: { user: null }, error: { status: 503 } });
++    const env = await setup();
++    let calls = 1;
++    for (const delay of [1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000, 256000, 300000, 300000]) {
++      await act(async () => { await vi.advanceTimersByTimeAsync(delay - 1); });
++      expect(mock.getUser).toHaveBeenCalledTimes(calls);
++      await act(async () => { await vi.advanceTimersByTimeAsync(1); });
++      expect(mock.getUser).toHaveBeenCalledTimes(++calls);
++    }
++    expect(env.doc.body.textContent).toContain("Your sign-in could not be verified");
++    expect(mock.signOut).not.toHaveBeenCalled(); expect(mock.mounts).not.toHaveBeenCalled();
++  });
++
++  it("coalesces connectivity bursts within the retry budget and recovers at its deadline", async () => {
++    vi.useFakeTimers();
++    vi.spyOn(Math, "random").mockReturnValue(1);
++    mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
++    mock.getUser.mockRejectedValueOnce(new TypeError("Synthetic offline"));
++    const env = await setup();
++    await act(async () => { for (let i = 0; i < 100; i++) env.browser.dispatchEvent(new Event("online")); });
++    expect(mock.getUser).toHaveBeenCalledTimes(1);
++    await act(async () => { await vi.advanceTimersByTimeAsync(1_000); });
++    expect(mock.getUser).toHaveBeenCalledTimes(2);
++    expect(env.element.textContent).toContain("Clinic account-a");
++    await act(async () => { await vi.advanceTimersByTimeAsync(60_000); });
++    expect(mock.getUser).toHaveBeenCalledTimes(2); expect(mock.signOut).not.toHaveBeenCalled();
++  });
++
++  it.each([{ status: 401 }, { status: 403 }, { status: 400, code: "bad_jwt" },
++    { code: "session_not_found" }, { code: "user_banned" }, { code: "not_invited" }])(
++    "clears rejected credentials without retrying (%j)", async error => {
++      vi.useFakeTimers();
++      mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
++      mock.getUser.mockResolvedValue({ data: { user: null }, error });
++      const env = await setup();
++      expect(env.element.textContent).toContain("Sign in again");
++      expect(mock.signOut).toHaveBeenCalledExactlyOnceWith({ scope: "local" });
++      await act(async () => { await vi.advanceTimersByTimeAsync(60_000); });
++      expect(mock.getUser).toHaveBeenCalledTimes(1); expect(mock.mounts).not.toHaveBeenCalled();
++    });
++
++  it.each([{ deleted_at: "2026-10-13T00:00:00Z" }, { banned_until: "2199-01-01T00:00:00Z" }])(
++    "denies a disabled server identity (%j)", async fields => {
++      mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
++      mock.getUser.mockResolvedValue({ data: { user: { ...session().user, ...fields } }, error: null });
++      await setup(); expect(mock.mounts).not.toHaveBeenCalled();
++      expect(mock.signOut).toHaveBeenCalledWith({ scope: "local" });
++    });
++
++  it("cancels pending retries on sign-out and on unmount", async () => {
++    vi.useFakeTimers();
++    mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
++    mock.getUser.mockRejectedValue(new TypeError("Synthetic offline"));
++    const env = await setup();
++    await emit("SIGNED_OUT", null);
++    await act(async () => { await vi.advanceTimersByTimeAsync(60_000); env.browser.dispatchEvent(new Event("online")); });
++    expect(mock.getUser).toHaveBeenCalledTimes(1); expect(mock.mounts).not.toHaveBeenCalled();
++    await emit("SIGNED_IN", session());
++    await act(async () => { env.root.unmount(); });
++    await act(async () => { await vi.advanceTimersByTimeAsync(60_000); env.browser.dispatchEvent(new Event("online")); });
++    expect(mock.getUser).toHaveBeenCalledTimes(2);
++  });
++
++  it("does not let an old account's retry or late check replace a newer account", async () => {
++    vi.useFakeTimers();
++    let resolve!: (value: unknown) => void;
++    mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
++    mock.getUser.mockImplementationOnce(() => new Promise(done => { resolve = done; }));
++    const env = await setup();
++    await emit("SIGNED_IN", session("account-b"));
++    await act(async () => { resolve({ data: { user: null }, error: { status: 401 } }); });
++    expect(env.element.textContent).toContain("Clinic account-b");
++    expect(mock.signOut).not.toHaveBeenCalled();
++    await act(async () => { await vi.advanceTimersByTimeAsync(60_000); });
++    expect(mock.getUser).toHaveBeenCalledTimes(2);
++  });
++
++  it("preserves an admitted clinic while a refresh check has a temporary service failure", async () => {
++    vi.useFakeTimers();
++    mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
++    const env = await setup();
++    mock.getUser.mockResolvedValueOnce({ data: { user: null }, error: { status: 502 } });
++    await emit("TOKEN_REFRESHED", session());
++    expect(env.element.textContent).toContain("Clinic account-a");
++    expect(mock.cleanups).not.toHaveBeenCalled();
++    await act(async () => { await vi.advanceTimersByTimeAsync(1000); });
++    expect(mock.mounts).toHaveBeenCalledTimes(1); expect(mock.signOut).not.toHaveBeenCalled();
++  });
++
++  it("bounds a missing remembered session and ignores its late reply", async () => {
++    vi.useFakeTimers(); let resolve!: (value: unknown) => void;
++    mock.getSession.mockImplementation(() => new Promise(done => { resolve = done; }));
++    const env = await setup(); expect(env.doc.body.textContent).toBe("");
++    await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS); });
++    expect(env.element.textContent).toContain("Sign In"); expect(mock.mounts).not.toHaveBeenCalled();
++    await act(async () => { resolve({ data: { session: session() }, error: null }); });
++    expect(env.element.textContent).toContain("Sign In"); expect(mock.mounts).not.toHaveBeenCalled();
++    expect(mock.signOut).not.toHaveBeenCalled();
++  });
++
++  it("bounds a missing server verification, explains recovery and ignores the late result after retry", async () => {
++    vi.useFakeTimers(); let resolve!: (value: unknown) => void;
++    mock.getSession.mockResolvedValue({ data: { session: session() }, error: null });
++    mock.getUser.mockImplementationOnce(() => new Promise(done => { resolve = done; }));
++    const env = await setup();
++    await act(async () => { await vi.advanceTimersByTimeAsync(CLOUD_CHECK_TIMEOUT_MS); });
++    expect(env.doc.body.textContent).toContain("Your sign-in could not be verified");
++    expect(allElements(env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Try again")).toHaveLength(1);
++    expect(mock.mounts).not.toHaveBeenCalled(); expect(mock.signOut).not.toHaveBeenCalled();
++    await act(async () => { env.browser.dispatchEvent(new Event("online")); });
++    expect(mock.getUser).toHaveBeenCalledTimes(1);
++    await act(async () => { await vi.advanceTimersByTimeAsync(1_000); });
++    expect(env.element.textContent).toContain("Clinic account-a");
++    await act(async () => { resolve({ data: { user: null }, error: { status: 401 } }); });
++    expect(env.element.textContent).toContain("Clinic account-a"); expect(mock.signOut).not.toHaveBeenCalled();
++  });
++
+   it("does not let a late remembered-session response undo sign-out", async () => {
+     let resolve!: (value: unknown) => void;
+     mock.getSession.mockImplementation(() => new Promise(done => { resolve = done; }));
+@@ -204,8 +420,7 @@
+     mock.signIn.mockRejectedValue(new Error("private provider details"));
+     await input(env, "password", "synthetic sign-in passphrase"); await submit(env);
+     expect(env.element.textContent).toContain("Sign-in could not be completed");
+-    await env.click("Forgot password?");
+-    mock.recover.mockResolvedValue({ error: { status: 429, message: "private provider details" } }); await submit(env);
++    mock.signIn.mockResolvedValue({ error: { status: 429, message: "private provider details" }, data: { session: null } }); await submit(env);
+     expect(env.element.textContent).toContain("Wait a few minutes");
+     await emit("PASSWORD_RECOVERY", session());
+     mock.update.mockResolvedValue({ error: { code: "weak_password", message: "private provider details" } });

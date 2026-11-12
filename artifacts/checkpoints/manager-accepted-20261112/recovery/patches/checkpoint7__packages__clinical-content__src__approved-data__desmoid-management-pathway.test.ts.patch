@@ -1,0 +1,28 @@
+--- a/packages/clinical-content/src/approved-data/desmoid-management-pathway.test.ts
++++ b/packages/clinical-content/src/approved-data/desmoid-management-pathway.test.ts
+@@ -1,6 +1,7 @@
+ import { describe, expect, it } from "vitest";
+ import { validateSyntheticClinicalRelease } from "../schema";
+-import { SYNTHETIC_CLINICAL_RELEASE } from "../synthetic-content";
++import { SYNTHETIC_CLINICAL_RELEASE as currentRelease } from "../synthetic-content";
++import {beforeProgramBatch4AcceptanceRelease} from "../question-program-batch4-acceptance-test-support";
+ import {
+   ROW_048_CASES,
+   ROW_048_CLINICAL_APPROVAL,
+@@ -9,6 +10,7 @@
+   ROW_048_EVIDENCE_CLAIMS,
+   ROW_048_SOURCES,
+ } from "./desmoid-management-pathway";
++const SYNTHETIC_CLINICAL_RELEASE=beforeProgramBatch4AcceptanceRelease(currentRelease);
+ 
+ describe("owner row 48 approved desmoid management pathway", () => {
+   it("records the exact two-concept Level 0 approval", () => {
+@@ -182,7 +184,7 @@
+     }
+   });
+ 
+-  it("admits the exact reviewed variants to the active development release", () => {
++  it("retains the exact reviewed variants in their verified pre-topic release", () => {
+     expect(() =>
+       validateSyntheticClinicalRelease(SYNTHETIC_CLINICAL_RELEASE),
+     ).not.toThrow();

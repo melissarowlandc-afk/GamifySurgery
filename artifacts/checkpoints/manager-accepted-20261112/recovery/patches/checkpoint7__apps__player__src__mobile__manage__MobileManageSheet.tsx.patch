@@ -1,0 +1,31 @@
+--- a/apps/player/src/mobile/manage/MobileManageSheet.tsx
++++ b/apps/player/src/mobile/manage/MobileManageSheet.tsx
+@@ -1,6 +1,7 @@
+-import { useEffect, useRef, type ReactNode } from "react";
++import { createContext, useContext, useEffect, useRef, type ReactNode } from "react";
+ 
+ export type ManageBackRegistration = (handler: (() => void) | null) => void;
++export const MobileManageCloseContext = createContext<(() => void) | undefined>(undefined);
+ 
+ /** A presentation-only detail sheet inside Manage; clock and tabs remain reachable. */
+ export function MobileManageSheet({ title, backLabel, onBack, onEscape = onBack, onDetailBackChange, children }: {
+@@ -8,6 +9,7 @@
+   onDetailBackChange?: ManageBackRegistration; children: ReactNode;
+ }) {
+   const back = useRef(onEscape);
++  const closeMenu = useContext(MobileManageCloseContext);
+   back.current = onEscape;
+   const button = useRef<HTMLButtonElement>(null);
+   useEffect(() => {
+@@ -25,7 +27,10 @@
+   }, [onDetailBackChange]);
+   return <section className="mobile-manage-detail" role="dialog" aria-label={title}>
+     <header className="mobile-sheet-heading"><h2>{title}</h2>
+-      <button ref={button} type="button" onClick={onBack} aria-label={backLabel}>Back</button>
++      <div className="mobile-sheet-heading-actions">
++        <button ref={button} type="button" onClick={onBack} aria-label={backLabel}>Back</button>
++        {closeMenu ? <button type="button" onClick={closeMenu} aria-label="Close Manage">Close</button> : null}
++      </div>
+     </header>
+     <div className="mobile-manage-detail-body">{children}</div>
+   </section>;

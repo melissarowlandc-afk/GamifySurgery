@@ -1,0 +1,54 @@
+--- a/apps/player/src/facility/types.ts
++++ b/apps/player/src/facility/types.ts
+@@ -141,6 +141,10 @@
+   side: CardinalDirection;
+   offset: number;
+   exterior: boolean;
++  /** Current domain validation, never persisted; invalid saved doors remain repairable. */
++  connectionValid?: boolean;
++  adjacentRoomInstanceId?: string | null;
++  blockedReason?: string;
+ }
+ 
+ export type BuildDoorTool = "place" | "remove" | null;
+@@ -304,6 +308,13 @@
+   zoom: number;
+   panX: number;
+   panY: number;
++  /** Desktop UI only: stable sizing/origin, independent of the desk splitter. */
++  desktopViewport?: {
++    width: number;
++    height: number;
++    /** Retains a bottom-edge translation when an oversized pane is covered. */
++    maxHeight: number;
++  };
+ }
+ 
+ /**
+@@ -384,7 +395,7 @@
+   tileX: number,
+   tileY: number,
+   orientation?: RoomOrientation,
+-) => boolean;
++) => boolean | Promise<boolean>;
+ export type SelectRoomRequest = (roomInstanceId: string) => void;
+ export type PlaceDoorRequest = (
+   roomInstanceId: string,
+@@ -395,8 +406,8 @@
+ export type RequestRoomUpgrade = (roomInstanceId: string) => void;
+ export type CollectLitterRequest = (litterId: string) => void;
+ export type RefillWaterCoolerRequest = () => void;
+-export type SeatFounderAtFrontDeskRequest = () => boolean;
+-export type SeatFounderInChairRequest = (roomInstanceId: string, location: GridPoint, seatId?: string) => boolean;
++export type SeatFounderAtFrontDeskRequest = () => boolean | Promise<boolean>;
++export type SeatFounderInChairRequest = (roomInstanceId: string, location: GridPoint, seatId?: string) => boolean | Promise<boolean>;
+ 
+ /** A character on the map the player clicked to see what they are doing. */
+ export interface FacilityCharacterRef {
+@@ -413,5 +424,5 @@
+   character: FacilityCharacterRef,
+ ) => FacilityCharacterDescription | null;
+ export type PraiseEmployeeRequest = (employeeId: string) => void;
+-export type MoveFounderRequest = (destination: GridPoint) => boolean;
++export type MoveFounderRequest = (destination: GridPoint) => boolean | Promise<boolean>;
+ export type FacilityCameraChangeRequest = (camera: FacilityCameraView) => void;

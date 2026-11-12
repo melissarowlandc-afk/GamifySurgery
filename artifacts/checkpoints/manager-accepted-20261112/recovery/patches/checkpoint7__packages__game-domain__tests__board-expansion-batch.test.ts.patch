@@ -1,0 +1,57 @@
+--- a/packages/game-domain/tests/board-expansion-batch.test.ts
++++ b/packages/game-domain/tests/board-expansion-batch.test.ts
+@@ -1,12 +1,21 @@
+ import { describe, expect, it } from "vitest";
+ import { BOARD_EXPANSION_CASES } from "@gamify-surgery/clinical-content";
+-import { createInitialGameState, createPatientPixelAppearance, deserializeGameState, gameReducer, getCurrentQuestion, serializeGameState, type GameState } from "../src";
++import { PROTOTYPE_DOMAIN_CONTEXT, createPatientPixelAppearance, getCurrentQuestion, serializeGameState, type GameState } from "../src";
++import {beforeProgramBatch2AcceptanceRelease} from "../../clinical-content/src/question-program-batch2-acceptance-test-support";
++import {createClinicalAuthorStage} from "../../../tests/fixtures/clinical-author-stage";
++
++// This historical gate suite retains the complete pre-topic source. Current
++// admission and all retired saves are exercised by the batch2 acceptance tests.
++const SYNTHETIC_CLINICAL_RELEASE = beforeProgramBatch2AcceptanceRelease(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease);
++const {createInitialGameState, gameReducer, deserializeGameState} = createClinicalAuthorStage(SYNTHETIC_CLINICAL_RELEASE);
+ 
+ function prepared(seed: string): GameState {
+   const state = createInitialGameState(undefined, { campaignId: `campaign.board.${seed}`, campaignSeed: seed, createdAtRealMs: 0 });
+   state.facilityLevel = 1;
+   state.encounters = {};
+   state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
++  state.rooms.push({ id: "room.board.examination", roomDefinitionId: "room.examination", x: 34, y: 26, orientation: 0, doorSide: "south", upgradeLevel: 1, cleanliness: 100 });
++  state.doors.push({ id: "door.board.examination", roomId: "room.board.examination", side: "south", offset: 1, exterior: false });
+   return state;
+ }
+ function ready(state: GameState, encounterId: string, prefix: string): GameState {
+@@ -29,8 +38,11 @@
+   return gameReducer(state, { type: "ACKNOWLEDGE_DECISION_FEEDBACK", operationId, encounterId, decisionNodeId: encounter.steps[encounter.currentNodeIndex]!.decisionNodeId });
+ }
+ 
++// Current admission uses revised result prose; historical definitions are
++// preserved separately. Keep the same concepts, due ticks and reducer checks.
++const liveCases = BOARD_EXPANSION_CASES.map(source => SYNTHETIC_CLINICAL_RELEASE.cases.find(c => c.id === source.id)!);
+ describe("September 11 board-expansion production flows", () => {
+-  it.each(BOARD_EXPANSION_CASES.map((clinicalCase, index) => [index, clinicalCase] as const))("runs case %s through its real gate with one review per concept", (index, clinicalCase) => {
++  it.each(liveCases.map((clinicalCase, index) => [index, clinicalCase] as const))("runs case %s through its real gate with one review per concept", (index, clinicalCase) => {
+       const encounterId = `encounter.board.${index}`;
+       let state = prepared(`all-${index}`);
+       state = gameReducer(state, { type: "ADMIT_PATIENT", operationId: `board.${index}.admit`, encounterId, caseId: clinicalCase.id, patientDisplayName: `Board Patient ${index}`, arrivalClass: "routine" });
+@@ -39,6 +51,18 @@
+       const first = getCurrentQuestion(state, encounterId)!;
+       expect(first.node.primaryConceptId).toBe(clinicalCase.decisionNodes[0]!.primaryConceptId);
+       state = correct(state, encounterId, `board.${index}.first.answer`, index + 1);
++      if(clinicalCase.id==="case.asymptomatic-phpt.incidental-calcium"){
++        // Manager-accepted G05 replaces this entire fresh encounter. The old
++        // two-node gate is exercised by frozen snapshot/journal completion tests.
++        expect(clinicalCase.decisionNodes).toHaveLength(1);
++        expect(first.node.questionVariantId).toBe("question.asymptomatic-phpt.age-based-surgery.v1.r3");
++        expect(clinicalCase.decisionNodes[0]!.resultGateAfter).toBeNull();
++        expect(state.encounters[encounterId]!).toMatchObject({lifecycle:"resolved_summary_available",resolutionReason:"completed",pendingResult:null});
++        expect(state.encounters[encounterId]!.answers).toHaveLength(1);
++        expect(state.learningHistories[first.node.primaryConceptId]?.reviews).toHaveLength(1);
++        expect(getCurrentQuestion(state,encounterId)).toBeNull();
++        return;
++      }
+       expect(state.encounters[encounterId]!.steps[0]!.status).toBe("feedback_pending");
+       state = ack(state, encounterId, `board.${index}.first.ack`);
+       const pending = state.encounters[encounterId]!.pendingResult!;

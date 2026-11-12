@@ -1,0 +1,17 @@
+--- a/packages/balance-config/src/level-five-executive.test.ts
++++ b/packages/balance-config/src/level-five-executive.test.ts
+@@ -7,12 +7,12 @@
+ describe("M4 approved Executive contracts", () => {
+   it("keeps the optional hire on option B pay with one Level 5 desk and no workload", () => {
+     const role = PROTOTYPE_BALANCE_RELEASE.facility.staffRoleDefinitions.find(role => role.id === "staff.executive")!;
+-    expect(role).toMatchObject({ unlockFacilityLevel: 5, hiringCost: 600, salaryPerExpenseInterval: 45,
++    expect(role).toMatchObject({ unlockFacilityLevel: 5, hiringCost: 720, salaryPerExpenseInterval: 45,
+       minimumSalaryPerExpenseInterval: 35, maximumSalaryPerExpenseInterval: 65, salaryAdjustmentStep: 2,
+       baseMorale: 75, moralePerSalaryStep: 5, maximumEmployees: 1, workloadLimitContribution: 0,
+       requiredRoomDefinitionIds: ["room.executive_office"], capabilityIds: [] });
+     expect(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel).toBe(5);
+-    expect([2, 3, 4, 5].map(level => getEmployeeTrainingCost(role.id, level))).toEqual([100, 200, 300, 400]);
++    expect([2, 3, 4, 5].map(level => getEmployeeTrainingCost(role.id, level))).toEqual([100, 200, 360, 560]);
+   });
+   it("uses every mild tier once and ceils the office/independent paperwork quotes once", () => {
+     expect([1, 2, 3, 4, 5].map(getExecutiveTrainingEffects)).toEqual([1, 1.25, 1.5, 1.75, 2].map(m => ({

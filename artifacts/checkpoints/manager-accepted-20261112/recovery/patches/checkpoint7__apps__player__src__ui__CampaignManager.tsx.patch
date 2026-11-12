@@ -1,0 +1,26 @@
+--- a/apps/player/src/ui/CampaignManager.tsx
++++ b/apps/player/src/ui/CampaignManager.tsx
+@@ -3,6 +3,7 @@
+ import type { CampaignListItemView } from "./types";
+ 
+ interface CampaignManagerProps {
++  accountMode?: boolean;
+   campaigns: CampaignListItemView[];
+   onCreateCampaign: () => void;
+   onSwitchCampaign: (campaignId: string) => void;
+@@ -16,6 +17,7 @@
+ }
+ 
+ export function CampaignManager({
++  accountMode = false,
+   campaigns,
+   onCreateCampaign,
+   onSwitchCampaign,
+@@ -28,6 +30,7 @@
+   const archivedCampaigns = campaigns.filter(
+     (campaign) => campaign.status === "archived",
+   );
++  if (accountMode) return <button className="text-button" type="button" onClick={onCreateCampaign}>Account campaigns</button>;
+ 
+   return (
+     <>

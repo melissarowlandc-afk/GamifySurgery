@@ -1,0 +1,121 @@
+--- a/apps/player/src/mobile/performance/roomAssets.ts
++++ b/apps/player/src/mobile/performance/roomAssets.ts
+@@ -1,4 +1,3 @@
+-import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
+ import {
+   APPROVED_GS015_ROOM_ATLASES, APPROVED_LEVEL5_BITMAP_ASSETS, ENVIRONMENT_ATLAS_V1, FRONTAGE_V2_ASSETS,
+   LANDSCAPING_ATLAS_V1, ROOM_FIXTURE_ATLASES, type BitmapAssetDescriptor,
+@@ -6,6 +5,8 @@
+ import { getApprovedRoomPresentation, resolveApprovedRoomDrawRecords } from "../../facility/approvedRoomPresentation";
+ import { getRoomTouchup, isTouchupFileSprite, ROOM_TOUCHUP_DECOR_ASSETS, TOUCHUP_SPRITES,
+   type TouchupSpriteName } from "../../facility/roomTouchups";
++import { phoneMemoryProfile } from "./phoneMemoryPolicy";
++import { BitmapDecodeQueue, PHONE_ART_BACKGROUND } from "./bitmapDecodeQueue";
+ 
+ /** Exact original eager set/order. Only the phone selector uses a subset. */
+ export const DESKTOP_FACILITY_ASSETS: readonly BitmapAssetDescriptor[] = [
+@@ -55,10 +56,10 @@
+   mobile: boolean; facilityLevel: number; builtRoomIds: readonly string[]; previewRoomIds?: readonly string[];
+ }): readonly BitmapAssetDescriptor[] {
+   if (!input.mobile) return input.facilityLevel >= 5 ? allFacilityAssets : DESKTOP_FACILITY_ASSETS;
++  // Opening a clinic needs its built art, not every room unlocked at its level.
++  // Explicit preview requests and first placement load their own dependencies.
+   const rooms = new Set([
+-    ...PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions
+-      .filter(room => room.unlockFacilityLevel <= input.facilityLevel && (room.buildable || room.id === "room.front_desk"))
+-      .map(room => room.id),
++    "room.hallway", // Corridor decor is also used outside placed room footprints.
+     ...input.builtRoomIds, ...(input.previewRoomIds ?? []),
+   ]);
+   const ids = new Set([
+@@ -74,23 +75,80 @@
+ 
+ /** Shared phone image/decoded-source cache for the map and catalog thumbnails. */
+ export class MobileBitmapCache {
++  private decodes = new BitmapDecodeQueue();
++  private promotions = new Map<string, (priority: number) => void>();
+   private requests = new Map<string, Promise<HTMLImageElement | null>>();
+-  constructor(private createImage: () => HTMLImageElement = () => new Image()) {}
++  private owners = new Set<(id: string) => HTMLImageElement | null>();
++  private completed = new Map<string, { weak?: { deref(): HTMLImageElement | undefined }; image?: HTMLImageElement; failed?: boolean; bytes: number }>();
++  private strongBytes = 0;
++  constructor(private createImage: () => HTMLImageElement = () => new Image(),
++    private limits = () => ({ bytes: (phoneMemoryProfile().mode === "reduced" ? 2 : 8) * 1024 * 1024, count: 256 }),
++    // Old Safari has no WeakRef: keep only a small strong LRU in that case.
++    private weakImage: ((image: HTMLImageElement) => { deref(): HTMLImageElement | undefined }) | null =
++      typeof WeakRef === "function" ? image => new WeakRef(image) : null) {}
+ 
+-  load(asset: BitmapAssetDescriptor, url: string): Promise<HTMLImageElement | null> {
++  get health() {
++    this.trim();
++    return { pending: this.requests.size, completed: this.completed.size, strongBytes: this.strongBytes,
++      maxStrongBytes: this.limits().bytes, weak: this.weakImage !== null, owners: this.owners.size,
++      ...this.decodes.health };
++  }
++
++  /** A mounted map already owns its images. Consult it before a new decode,
++   * including when old Safari's small fallback LRU evicts a large live atlas. */
++  connectSource(read: (id: string) => HTMLImageElement | null): () => void {
++    this.owners.add(read); return () => { this.owners.delete(read); };
++  }
++
++  prioritize(ids: ReadonlySet<string>, priority: number): void {
++    for (const id of ids) this.promotions.get(id)?.(priority);
++  }
++
++  private trim() {
++    const limit = this.limits();
++    while (this.completed.size > limit.count || this.strongBytes > limit.bytes) {
++      const key = this.completed.keys().next().value; if (key === undefined) break;
++      this.strongBytes -= this.completed.get(key)!.bytes; this.completed.delete(key);
++    }
++  }
++
++  load(asset: BitmapAssetDescriptor, url: string, priority = PHONE_ART_BACKGROUND): Promise<HTMLImageElement | null> {
+     const existing = this.requests.get(asset.id);
+-    if (existing) return existing;
+-    const promise = new Promise<HTMLImageElement | null>(resolve => {
+-      const image = this.createImage();
+-      image.decoding = "async";
+-      image.onload = () => resolve(image);
+-      image.onerror = () => resolve(null);
+-      image.src = url;
++    if (existing) { this.promotions.get(asset.id)?.(priority); return existing; }
++    for (const read of this.owners) {
++      try { const image = read(asset.id); if (image) return Promise.resolve(image); }
++      catch { /* A disposing owner must not prevent another source/fallback. */ }
++    }
++    const cached = this.completed.get(asset.id);
++    if (cached) {
++      const image = cached.image ?? cached.weak?.deref();
++      if (image || cached.failed) {
++        this.completed.delete(asset.id); this.completed.set(asset.id, cached); this.trim();
++        return Promise.resolve(image ?? null);
++      }
++      this.completed.delete(asset.id);
++    }
++    const { promise, promote } = this.decodes.load(this.createImage, url, priority);
++    this.promotions.set(asset.id, promote);
++    this.requests.set(asset.id, promise);
++    void promise.then(image => {
++      this.promotions.delete(asset.id);
++      this.requests.delete(asset.id);
++      const row = !image ? { failed: true, bytes: 0 } : this.weakImage ? { weak: this.weakImage(image), bytes: 0 }
++        : { image, bytes: (image.naturalWidth || image.width || asset.nativeWidth) * (image.naturalHeight || image.height || asset.nativeHeight) * 4 };
++      this.completed.set(asset.id, row); this.strongBytes += row.bytes; this.trim();
+     });
+-    this.requests.set(asset.id, promise);
+     return promise;
+   }
+ }
+ 
++const facilityTextureKeys = new Set(allFacilityAssets.map(asset => `stitchin-time-art:${asset.id}`));
++/** Run at a settled layout change after obsolete display objects are removed,
++ * never during a camera gesture. Live sources/character textures stay owned. */
++export function trimPhoneFacilityTextures(manager: { getTextureKeys(): string[]; remove(key: string): unknown },
++  required: ReadonlySet<string>, used: ReadonlySet<string>): void {
++  for (const key of manager.getTextureKeys()) if (facilityTextureKeys.has(key) && !required.has(key) && !used.has(key)) manager.remove(key);
++}
++
+ export const mobileBitmapCache = new MobileBitmapCache();
+ export const mobileAssetById = (id: string): BitmapAssetDescriptor | undefined => byId.get(id);

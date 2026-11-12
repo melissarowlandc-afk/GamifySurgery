@@ -1,0 +1,89 @@
+--- a/packages/game-domain/src/retail-operations.ts
++++ b/packages/game-domain/src/retail-operations.ts
+@@ -3,7 +3,7 @@
+ import { giftAisleIsBusy, giftCheckoutContact, giftContactFree, giftContactPath, giftNativeExitPath, releaseGiftCheckout, scheduleGiftRetailDemand } from "./gift-retail";
+ import { getEmployeeRoleTrainingPercent, getEmployeeTrainingMoney } from "./employee-training-effects";
+ import { bindRoomUpgradeRevenueQuote, createRoomUpgradeRevenueQuote, getRoomUpgradeQuotedFee } from "./room-upgrades";
+-import { createPatientDisplayName, createPatientPixelAppearance, getPatientAppearanceSelectionContext, getPresentPatientDisplayNames } from "./appearance";
++import { createGeneratedPatientActorIdentity } from "./appearance";
+ import { getDoorCells } from "./doors";
+ import {
+   encounterHasActiveServiceOperation,
+@@ -30,6 +30,7 @@
+ import { findCareAwareFacilityPath } from "./care-room-access";
+ import { recordLevelThreeRoomUse } from "./level-three-support";
+ import { advanceProcedureCompanion, createProcedureCompanionState, planProcedureCompanionWait, reconcileProcedureCompanions } from "./procedure-companions";
++import { planRestroomRecovery, restroomAtPoint } from "./restroom-recovery";
+ 
+ function facilityRoute(state: GameState, context: DomainContext, start: GridPoint, goal: GridPoint, allowedRoomIds: ReadonlySet<string> = new Set()): GridPoint[] {
+   const ordinary = findCareAwareFacilityPath(state, context, start, goal, allowedRoomIds);
+@@ -216,7 +217,7 @@
+     !state.retailOperations.some((operation) => ["walking_to_outlet", "queued", "purchasing"].includes(operation.status) && operation.servingEmployeeId === id) &&
+     !state.environment.glp1AutomationSlots.some((slot) => slot.employeeId === id)));
+   // A seat the player chose holds until they move the founder or open a chart (owner rule, 2026-10-07).
+-  if (kind === "founder") return (state.environment.founderActivity === null || ["attend_encounter", "return_to_front_desk", "wander_facility", "sit_in_chair", "visit_bathroom"].includes(state.environment.founderActivity.kind)) &&
++  if (kind === "founder") return (state.environment.founderActivity === null || ["return_to_front_desk", "wander_facility", "sit_in_chair", "visit_bathroom"].includes(state.environment.founderActivity.kind)) &&
+     state.environment.founderActivity?.explicitSeat !== true && !clinical.founderReserved && !founderHasActiveServiceOperation(state);
+   if (kind === "encounter") return isWaitingEncounterEligible(state, id, line.retail?.category === "food_drink");
+   if (kind === "service_visitor") {
+@@ -379,7 +380,7 @@
+     if (!context || state.retailExternalActors.filter((actor) => actor.kind === "retail_visitor" && !actor.giftOnlyVisit && actor.lifecycle !== "departed").length >= MAX_EXTERNAL_RETAIL_ACTORS) return false;
+     const entry = entrance(state, context);
+     if (!entry) return false;
+-    state.retailExternalActors.push({ id: actorId, kind: "retail_visitor", displayName: createPatientDisplayName(state.campaignSeed, actorId, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, actorId, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: null, linkedEncounterId: null, lifecycle: "arriving", location: streetArrivalPoint(state, context, actorId) ?? { ...entry.outside }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
++    state.retailExternalActors.push({ id: actorId, kind: "retail_visitor", ...createGeneratedPatientActorIdentity(state, actorId), linkedServiceOperationId: null, linkedEncounterId: null, lifecycle: "arriving", location: streetArrivalPoint(state, context, actorId) ?? { ...entry.outside }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
+   }
+   state.retailOrders.push({ id: orderId, actorKind: kind, actorId, incomeLineId: lineId, allowance: Math.max(1, Math.floor(allowance)), fulfilledQuantity: 0, createdAtFacilityTick: state.facilityTick });
+   return true;
+@@ -568,7 +569,7 @@
+   const id = `retail-visitor.${opportunity}`;
+   const entry = entrance(state, context);
+   if (!entry) return;
+-  const actor: RetailExternalActorState = { id, kind: "retail_visitor", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: null, linkedEncounterId: null, lifecycle: "arriving", location: streetArrivalPoint(state, context, id) ?? { ...entry.outside }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null };
++  const actor: RetailExternalActorState = { id, kind: "retail_visitor", ...createGeneratedPatientActorIdentity(state, id), linkedServiceOperationId: null, linkedEncounterId: null, lifecycle: "arriving", location: streetArrivalPoint(state, context, id) ?? { ...entry.outside }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null };
+   state.retailExternalActors.push(actor);
+   const product = candidates[deterministicInteger(state.campaignSeed, "environment", `retail-product.${opportunity}`, candidates.length)]!;
+   if (!startRetailPurchase(state, product.id, "retail_visitor", id, context)) actor.lifecycle = "departed";
+@@ -777,7 +778,7 @@
+     if (isPeriopBedFlowOperation(operation) && COMPANION_VISIT_POLICIES[operation.incomeLineId as keyof typeof COMPANION_VISIT_POLICIES].kind === "procedure") {
+       const start = streetArrivalPoint(state, context, id);
+       if (!start) continue;
+-      const actor: RetailExternalActorState = { id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: operation.id, linkedEncounterId: operation.actorKind === "encounter" ? operation.actorId : null, lifecycle: "arriving", location: { ...start }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null, procedureCompanion: createProcedureCompanionState() };
++      const actor: RetailExternalActorState = { id, kind: "companion", ...createGeneratedPatientActorIdentity(state, id), linkedServiceOperationId: operation.id, linkedEncounterId: operation.actorKind === "encounter" ? operation.actorId : null, lifecycle: "arriving", location: { ...start }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null, procedureCompanion: createProcedureCompanionState() };
+       const periopPlan = planProcedureCompanionWait(state, context, actor, operation, (origin, target, roomId) => procedureCompanionRoute(state, context, origin, target, roomId));
+       if (periopPlan) actor.procedureCompanion!.waitingReservation = periopPlan.reservation;
+       const plan = periopPlan ?? choosePeriopCompanionPublicTarget(state, context, start, id);
+@@ -792,7 +793,7 @@
+     const fromStreet = operation.actorKind === "encounter";
+     const location = fromStreet ? streetArrivalPoint(state, context, id) : operation.location;
+     if (!location) continue;
+-    state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: operation.id, linkedEncounterId: operation.actorKind === "encounter" ? operation.actorId : null, lifecycle: fromStreet ? "arriving" : "onsite", location: { ...location }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
++    state.retailExternalActors.push({ id, kind: "companion", ...createGeneratedPatientActorIdentity(state, id), linkedServiceOperationId: operation.id, linkedEncounterId: operation.actorKind === "encounter" ? operation.actorId : null, lifecycle: fromStreet ? "arriving" : "onsite", location: { ...location }, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
+     created.add(id);
+   }
+   for (const encounter of Object.values(state.encounters)) {
+@@ -808,7 +809,7 @@
+     const id = `companion.${state.companionSequence++}`;
+     const start = streetArrivalPoint(state, context, id);
+     if (!start) continue;
+-    state.retailExternalActors.push({ id, kind: "companion", displayName: createPatientDisplayName(state.campaignSeed, id, undefined, getPresentPatientDisplayNames(state)), appearance: createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)), linkedServiceOperationId: null, linkedEncounterId: encounter.id, lifecycle: "arriving", location: start, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
++    state.retailExternalActors.push({ id, kind: "companion", ...createGeneratedPatientActorIdentity(state, id), linkedServiceOperationId: null, linkedEncounterId: encounter.id, lifecycle: "arriving", location: start, path: [], pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, activeRetailOperationId: null });
+     created.add(id);
+   }
+   return created;
+@@ -818,6 +819,15 @@
+   for (const actor of state.retailExternalActors.filter((candidate) => candidate.lifecycle !== "departed")) {
+     if (actor.pediatricFamilyId) continue;
+     if (actor.activeRetailOperationId) continue;
++    // Legacy companions have no amenity clock. A saved stationary restroom
++    // position without a procedure excursion must not become a permanent wait.
++    if (!actor.procedureCompanion && restroomAtPoint(state, context, actor.location)) {
++      const recovery = planRestroomRecovery(state, context, { kind: "encounter", id: actor.id, location: actor.location });
++      if (recovery?.reservation) {
++        actor.location = { ...recovery.reservation.location }; actor.path = [{ ...actor.location }]; actor.pathIndex = 0;
++        actor.lastMovedAtFacilityTick = state.facilityTick;
++      }
++    }
+     const service = actor.linkedServiceOperationId ? state.serviceOperations.find((operation) => operation.id === actor.linkedServiceOperationId) : null;
+     const encounter = actor.linkedEncounterId ? state.encounters[actor.linkedEncounterId] : null;
+     if (service && advanceProcedureCompanion(state, context, actor, service, createdThisTick.has(actor.id),

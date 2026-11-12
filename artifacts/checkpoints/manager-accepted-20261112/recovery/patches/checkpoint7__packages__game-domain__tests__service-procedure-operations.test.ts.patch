@@ -1,0 +1,104 @@
+--- a/packages/game-domain/tests/service-procedure-operations.test.ts
++++ b/packages/game-domain/tests/service-procedure-operations.test.ts
+@@ -1,12 +1,12 @@
++import {beforeProgramBatch3AcceptanceRelease} from "../../clinical-content/src/question-program-batch3-acceptance-test-support";
++import {createClinicalAuthorStage} from "../../../tests/fixtures/clinical-author-stage";
+ import { describe, expect, it } from "vitest";
++import {QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE, QUESTION_BANK_PRE_BATCH2B_RELEASE, QUESTION_NEW_N2_ROUND2_PRE_RELEASE} from "@gamify-surgery/clinical-content";
+ import {
+-  PROTOTYPE_DOMAIN_CONTEXT,
++  PROTOTYPE_DOMAIN_CONTEXT as actualPrototype,
+   advanceServiceOperations,
+-  createInitialGameState,
+-  deserializeGameState,
+   encounterHasActiveServiceOperation,
+   findDeterministicRoomPath,
+-  gameReducer,
+   getCurrentQuestion,
+   getCurrentCapabilities,
+   getAnswerChoiceServicePreview,
+@@ -23,9 +23,13 @@
+   startEncounterProcedureOperation,
+   startServiceOperation,
+   type GameState,
++  
+ } from "../src";
+ 
+ let sequence = 0;
++
++// Original gated/procedural contracts use the verified retained source epoch.
++const {context:PROTOTYPE_DOMAIN_CONTEXT,createInitialGameState,gameReducer,deserializeGameState}=createClinicalAuthorStage(beforeProgramBatch3AcceptanceRelease(actualPrototype.clinicalRelease));
+ 
+ function minorProcedureState(): GameState {
+   const state = createInitialGameState(undefined, {
+@@ -201,7 +205,7 @@
+   return state;
+ }
+ 
+-function prepareQuestion(state: GameState, caseId: string, conceptId: string, markerless = true): GameState {
++function prepareQuestion(state: GameState, caseId: string, conceptId: string, markerless = true, context = PROTOTYPE_DOMAIN_CONTEXT): GameState {
+   let next = gameReducer(state, {
+     type: "ADMIT_PATIENT",
+     operationId: `procedure.admit.${sequence++}`,
+@@ -209,7 +213,7 @@
+     caseId,
+     patientDisplayName: "Procedure Patient",
+     arrivalClass: "routine",
+-  });
++  }, context);
+   expect(next.operationReceipts[Object.keys(next.operationReceipts).at(-1)!]?.status).toBe("applied");
+   const encounter = next.encounters["procedure-patient"]!;
+   // These scenarios exercise the saved, markerless operation contract. A
+@@ -286,10 +290,16 @@
+     ["case.breast-cyst.under-30-painful-simple", "concept.breast-cyst.symptomatic-simple-aspiration", "income.procedure.breast_cyst_aspiration.v2", 150, 15],
+     ["case.bread-butter.cutaneous-abscess.forearm-redness", "concept.cutaneous-abscess.incision-drainage", "income.procedure.cutaneous_abscess_drainage.v2", 100, 15],
+     ["case.bread-butter.superficial-incisional-ssi.purulent-staple-line", "concept.superficial-incisional-ssi.open-drain", "income.procedure.superficial_incisional_infection_drainage.v2", 200, 15],
+-    ["case.bread-butter.perianal-abscess.tender-perianal-lump", "concept.perianal-abscess.prompt-drainage", "income.procedure.perianal_abscess_drainage", 200, 15],
++    ["case.bread-butter.perianal-abscess.tender-perianal-lump", "concept.perianal-abscess.source-control-and-antibiotic-selection.v1", "income.procedure.perianal_abscess_drainage", 200, 15],
+     ["case.internal-hemorrhoids.commute", "concept.internal-hemorrhoids.office-banding-selection", "income.procedure.office_internal_hemorrhoid_banding", 200, 30],
+   ])("performs %s only after the exact final correct action", (caseId, conceptId, incomeLineId, fee, workMinutes) => {
+-    let state = prepareQuestion(minorProcedureState(), caseId, conceptId);
++    // Exercise the new perianal version with its complete current timing group;
++    // other rows retain the markerless procedure-contract setup.
++    let state = prepareQuestion(minorProcedureState(), caseId, conceptId,
++      conceptId !== "concept.perianal-abscess.source-control-and-antibiotic-selection.v1",
++      conceptId === "concept.perianal-abscess.source-control-and-antibiotic-selection.v1"
++        ? { ...PROTOTYPE_DOMAIN_CONTEXT, clinicalRelease: QUESTION_NEW_N2_ROUND2_PRE_RELEASE }
++        : PROTOTYPE_DOMAIN_CONTEXT);
+     const cashBefore = state.cash;
+     state = submit(state, true);
+     expect(state.serviceIncomeReceipts).toEqual([]);
+@@ -533,6 +543,8 @@
+       minorProcedureState(),
+       "case.bread-butter.perianal-abscess.tender-perianal-lump",
+       "concept.perianal-abscess.prompt-drainage",
++      true,
++      { ...PROTOTYPE_DOMAIN_CONTEXT, clinicalRelease: QUESTION_BANK_PRE_BATCH2B_RELEASE },
+     );
+     expect(startEncounterProcedureOperation(
+       state,
+@@ -599,6 +611,9 @@
+       minorProcedureState(),
+       "case.pigmented-skin-lesion.changing-back-lesion",
+       "concept.pigmented-skin-lesion.complete-diagnostic-biopsy",
++      true,
++      // Admit an actual retained version for this saved pre-rewrite contract.
++      {...PROTOTYPE_DOMAIN_CONTEXT, clinicalRelease: QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE},
+     );
+     placePatientInTestExam(state);
+     const encounter = state.encounters["procedure-patient"]!;
+@@ -695,11 +710,13 @@
+       providerReservation: null,
+       timingPhases: [{ durationTicks: 60, resourceBound: true }, { durationTicks: 120, resourceBound: false }],
+     });
+-    expect(state.environment.founderActivity).toBeNull();
++    expect(state.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: encounter.id });
+     expect(state.employees[0]!.facilityTask).toMatchObject({ kind: "perform_imaging" });
+     state = deserializeGameState(serializeGameState(state));
+     expect(state.encounters[encounter.id]!.pendingResult?.approvedProcedureTimingVersion).toBe(1);
+     state = acknowledgeDecisionFeedback(state);
++    expect(state.environment.founderActivity?.kind).not.toBe("attend_encounter");
++    expect(state.openChartEncounterId).not.toBe(encounter.id);
+     const pending = state.encounters[encounter.id]!.pendingResult!;
+     const work = pending.timingPhases!.find((phase) => phase.resourceBound)!;
+     expect(pending.onsiteReturn).toMatchObject({

@@ -1,0 +1,65 @@
+--- a/packages/game-domain/tests/companions.test.ts
++++ b/packages/game-domain/tests/companions.test.ts
+@@ -8,6 +8,7 @@
+   deserializeGameState,
+   getRoomCompanionSeats,
+   getRoomDefinition,
++  getRoomNavigationAnchor,
+   findDeterministicFacilityPath,
+   retireFinishedRetailHistory,
+   serializeGameState,
+@@ -148,6 +149,22 @@
+ });
+ 
+ describe("procedure companion phases", () => {
++  it("repairs a legacy companion stranded in a bathroom with no trip clock on the next tick", () => {
++    let state = fixture();
++    const operation = addOperation(state, "income.minor_procedure_simple");
++    const front = state.rooms[0]!;
++    state.rooms.push({ id: "bathroom.legacy", roomDefinitionId: "room.bathroom", x: front.x + 5, y: front.y + 1,
++      orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
++    const bathroom = state.rooms.find(room => room.id === "bathroom.legacy")!;
++    const inside = getRoomNavigationAnchor(bathroom, getRoomDefinition(bathroom.roomDefinitionId)!);
++    state.retailExternalActors.push({ id: "companion.legacy", kind: "companion", displayName: "Legacy Companion", appearance: state.founder.appearance,
++      linkedServiceOperationId: operation.id, linkedEncounterId: null, lifecycle: "onsite", location: inside, path: [inside],
++      pathIndex: 0, lastMovedAtFacilityTick: 0, activeRetailOperationId: null });
++    state = deserializeGameState(serializeGameState(state));
++    tick(state);
++    expect(state.retailExternalActors.find(actor => actor.id === "companion.legacy")?.location).not.toEqual(inside);
++  });
++
+   it("walks into the patient's Periop room, waits through PACU and follows the physical discharge", () => {
+     const { state, operation } = procedureFixture();
+     tick(state);
+@@ -242,6 +259,31 @@
+     operation.phaseIndex = 1;
+     tick(state, context);
+     expect(actor.procedureCompanion).toMatchObject({ phase: "waiting_in_periop", amenityRoomInstanceId: null, amenityDecisionPhaseIndex: 1 });
++  });
++
++  it.each(["unavailable_home", "blocked_bathroom_exit", "terminal_visit"] as const)("exits a bathroom with %s after snapshot reopen", failure => {
++    let { state, operation } = procedureFixture();
++    const actor = settleCompanion(state);
++    const front = state.rooms[0]!;
++    state.rooms.push({ id: "bathroom.qa", roomDefinitionId: "room.bathroom", x: front.x + 5, y: front.y + 1,
++      orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
++    state.doors.push({ id: "bathroom.qa.west", roomId: "bathroom.qa", side: "west", offset: 1, exterior: false });
++    const inside = { x: front.x + 6, y: front.y + 2 };
++    actor.location = inside; actor.path = [inside]; actor.pathIndex = 0;
++    Object.assign(actor.procedureCompanion!, { phase: "using_amenity", amenityRoomInstanceId: "bathroom.qa",
++      amenityDwellEndsAtFacilityTick: state.facilityTick, amenityDecisionPhaseIndex: 1 });
++    operation.phaseIndex = 1;
++    if (failure === "unavailable_home") {
++      state.rooms = state.rooms.filter(room => room.id !== "periop.qa");
++      state.doors = state.doors.filter(door => door.roomId !== "periop.qa");
++    }
++    if (failure === "blocked_bathroom_exit") state.doors = state.doors.filter(door => door.id !== "bathroom.qa.west");
++    if (failure === "terminal_visit") { operation.status = "cancelled"; state.doors = state.doors.filter(door => door.id !== "bathroom.qa.west"); }
++    state = deserializeGameState(serializeGameState(state));
++    for (let i = 0; i < 80; i++) tick(state);
++    const saved = state.retailExternalActors.find(candidate => candidate.id === actor.id)!;
++    expect(saved.location).not.toEqual(inside);
++    expect(saved.procedureCompanion?.amenityRoomInstanceId).toBeNull();
+   });
+ 
+   it("returns after the amenity dwell even while the procedure continues", () => {

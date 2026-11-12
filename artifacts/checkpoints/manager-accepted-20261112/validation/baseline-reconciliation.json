@@ -1,0 +1,2460 @@
+{
+  "status": "PASS",
+  "baseCommit": "3436c8bbd8359c64c49b082f21e88a8985f594f7",
+  "priorAcceptedTargets": 8271,
+  "changedPriorTargets": [
+    {
+      "path": "AGENTS.md",
+      "baselineSha256": "cca0a467dc4d71f610cdf251dbe0798bc1a29a84073d31e4401eaff7098fccdc",
+      "sha256": "1290a51fa5e98a61711369a8c65a904b55f47ff7e5fbddea437f5c04ed7c0241",
+      "bytes": 13067,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/index.html",
+      "baselineSha256": "08d828eab27212c42706ee22faa2a09e08fad6a6bc04df8b93469590a077774b",
+      "sha256": "2eb970728bbca193cd9ed42d386d3ba830b40029a232019d096541745a6a3eb5",
+      "bytes": 1411,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/PrototypeShell.tsx",
+      "baselineSha256": "716f8f9c362916db001aad7e1ef7dede3939b94d3f592ba33b297e135ac0e7b2",
+      "sha256": "62c2ffff75c07da577372715b3782e4fdfca189cb3a47be7949afcb4450d52fd",
+      "bytes": 986,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/facility/ClinicMapPins.tsx",
+      "baselineSha256": "773d7ac41acf3b65c91ff291917a30e1939884f1bdc9fa673196147aad26d3bb",
+      "sha256": "bbe1f6fd6bccafd6d39cc994fe4fbb227d8212a8a4ee6bd77ef557db6552bd87",
+      "bytes": 1079,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/facility/FacilityCanvas.tsx",
+      "baselineSha256": "1e35740aab514e99a51dc327abc808b7b38e074c6bec2f65a27ba72234a94453",
+      "sha256": "cf09a4c72740f41a9bb2151547138c044fa2bc9567cbc9e5548bfe54bca09dea",
+      "bytes": 23750,
+      "capturedInAssignedScope": false,
+      "liveOnlyReason": "concurrent_worker_modified_during_run_live_only"
+    },
+    {
+      "path": "apps/player/src/facility/FacilityScene.ts",
+      "baselineSha256": "78ffac33d7ca7af016f6458b9122962b57c282cb67c5ca2447c3901dd08c7438",
+      "sha256": "e97e822dd212df5fbbe0d97dd5218ea0408a324a57bb12295394d1264c685d3d",
+      "bytes": 399088,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/facility/approvedLevel5Rooms.test.ts",
+      "baselineSha256": "f8bae10eb1a03fceda4af977bb78d1f9c10d8e247340ce964478b18ff507e878",
+      "sha256": "1d7d63d8fbaccf9a4de03c9b0dd5a4a133dd039218e7e773cd10cc5e3cb56555",
+      "bytes": 8461,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.test.ts",
+      "baselineSha256": "a832ddd989ee22658eb122b4729033e121c8f66a30a8ab7e1f177b787dfffcca",
+      "sha256": "4b7b9578ca1ee63be0df01119a97fbe589a637609327b5ccd8b3952c67ee0764",
+      "bytes": 37166,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomPresentation.ts",
+      "baselineSha256": "ea08793d45fa2c62a25bed986797a0cab6a127f584bd316b31abf505e84332e4",
+      "sha256": "418e0286e75d1025fbcf3b7ec822278522f0a364e7be09340747668ac8318a88",
+      "bytes": 85874,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomRenderer.test.ts",
+      "baselineSha256": "4953f1cffab2973013f1042811cfa09bbbc083788f6e79945bd66e93b248e36e",
+      "sha256": "4e8c5067248a629608b8711c817431561ea2971a81353a6bda5ca912c01aef16",
+      "bytes": 13041,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/facility/approvedRoomRenderer.ts",
+      "baselineSha256": "aa9f8c1ae5b3703e1d19f356643dc97003baca97c5d7ccd5639dacca24d7ce06",
+      "sha256": "bb3236514c0ff9f3317fcd8ac6f9d87ecdea42d802a2cd0b0e92a235bb7926c3",
+      "bytes": 21075,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/facility/backlessRollingStools.test.ts",
+      "baselineSha256": "03729e7838562236a0c75b5c4236288b903cb25b02deefb2df18b1ac61295092",
+      "sha256": "d7723980a35e4bf22149033816d37e529725f020d0bacc71ced81b038ee98356",
+      "bytes": 16309,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/facility/furnitureSeatLayering.test.ts",
+      "baselineSha256": "beffc8917fe5f9753b478c34a34a1890721488aa662abddef14ffba024b585c8",
+      "sha256": "4d76e266a633dc27b28d60fe231f75d70fb4f482010a4d8e4034636db3764383",
+      "bytes": 15122,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/facility/inspectionActors.test.ts",
+      "baselineSha256": "e29a2dc2d8625ceb725ba1f2f0795f926f7aeb539143b3107e524b7b69cd9f92",
+      "sha256": "269650f7de0c4f1ade8c1e6fa96d450818f79c44ba3ea084fdf48858ec4ba5c6",
+      "bytes": 7518,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/facility/levelFiveGiftRouteMotion.test.ts",
+      "baselineSha256": "a8ca4f635bce64e1d1f466dfe183bbef0fdbe380809fa223be606556ebba1da3",
+      "sha256": "35b5df04940993b18458d36dec47303c51ffc7f5a13443a14520fd6fa0b45284",
+      "bytes": 8425,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/facility/staffIdleSupports.test.ts",
+      "baselineSha256": "d2840a97b2fd13603449a1cb7336a12f8df7f83797ba6bf9e852612b65ecc1ee",
+      "sha256": "0dad84857c8d4930c174e7ab1a8fc15fbdfeda2d248035a3b2147becf5d8f73e",
+      "bytes": 2042,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/facility/types.ts",
+      "baselineSha256": "b32c6f38a91fe9b9ba5c0044a4ae4a88a0d111d86c0a1dd42da46c344441375f",
+      "sha256": "326cac4855a1d1a36a5c41784054461f7695eb321cdf8b962de1a3d276d59995",
+      "bytes": 14454,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/main.tsx",
+      "baselineSha256": "4d2fbc8f7368248656fbe55bafd35d7312c7286536adb9417bdcc895ebfcf30c",
+      "sha256": "eb8a6810c3321a861e79087cf9fd180df5d7f5d8b748618c3f791137987351eb",
+      "bytes": 542,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/MobileGoals.tsx",
+      "baselineSha256": "9582ae05d857dd1c3cfd1d5fe117d9e92324f5b9efd613949b12939eada28eac",
+      "sha256": "4b8f3ff20706b1289de1c76c876f9ab49affbd4e5a08e099554a1eb54c7c8694",
+      "bytes": 5167,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/MobileInspectorSheet.tsx",
+      "baselineSha256": "0354a13582c4a4578acd78e7e118e08cb015071d6dcd3c55088c2da98a81fdd6",
+      "sha256": "7b391859f5394029e5da3480e1e42637f9a48a0bd751f6025899064584dccf15",
+      "bytes": 4227,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/MobileQuickControls.tsx",
+      "baselineSha256": "46f6d99e5d249af20946e3ccaa2d8e811128ad7357d033e631261b2c1505733e",
+      "sha256": "22e35c307cba53f7a82f754f8dd91b0e5c1020e06541c574e57307c6596c2541",
+      "bytes": 3911,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/MobileScreens.test.tsx",
+      "baselineSha256": "a83842af1ce6da892eb7cce7b8ba7fc778b1c6d70851cd9b7dd155271dadd238",
+      "sha256": "67869090a26b958b0e079ed3f7e7618f4b4cae639cd4d6a67adc4300e4d37daf",
+      "bytes": 14583,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/MobileSheet.tsx",
+      "baselineSha256": "78798c8acc9c261d9749ca0ad0da084d09a52b91f2c02107258f48eae5e17a7b",
+      "sha256": "36f055e9933963bad99ffc772e8dbd025029de146db5f5259fe875493e5765b9",
+      "bytes": 846,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/MobileShell.test.tsx",
+      "baselineSha256": "6a5eb409687de47ff27e76ba3c5cf88bf820bd27112eae85351f357cce19d397",
+      "sha256": "2bc3f9d986c3f6bef3452475585b49614641c4c2e85ce4a05970e5ac3d79737b",
+      "bytes": 19376,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/MobileTutorialCoach.test.tsx",
+      "baselineSha256": "f3698dd205b494b26a3b64f0c4d1fd2752d14fd0925951aecd516bc380e3796e",
+      "sha256": "d03f247f427a4231df46ca724a41129c1fcc9d3273d06acaf88c547412dea5b6",
+      "bytes": 7068,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/MobileTutorialCoach.tsx",
+      "baselineSha256": "cc443b9f87f29e1d7cf853b45837f974fa19f18a22d380bf40a6fee73d18fe8e",
+      "sha256": "bca837eef8f5c4d4a9952d088a6f58f0af83db9acfa27506066005b28d491b4f",
+      "bytes": 6115,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/build/MobileBuild.test.tsx",
+      "baselineSha256": "cfcbf60a2c0acb981b209caee2bc1ae23f50cd1edd78bcc3b181e5f6bf6ac42c",
+      "sha256": "5d7a0f6627b3883655e626843178c3d2852ed098007c0ee7f28c9eaeb365786c",
+      "bytes": 38058,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/build/MobileBuildCatalog.tsx",
+      "baselineSha256": "3c16ef0663e6ed5eafdcfc5a0d6caa6c3447d1f6df28166f2ea10914ecbe1bcf",
+      "sha256": "13fb4f9e28a6caf1057b41f3c5f955b144ebe34a82bdccc2387a0bf93154753c",
+      "bytes": 9604,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/build/MobileBuildControls.tsx",
+      "baselineSha256": "ce696abe21f21331170c6d3284ddf613e62dfb05c87a0a9f1baf96a3ab1a47e4",
+      "sha256": "cdc6713be1994256b148cda202e9ffbd4856c0736f41d7cf6c6835188b768797",
+      "bytes": 4670,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/build/MobileBuildRoom.tsx",
+      "baselineSha256": "f32dbaa3c69b36e9ba2ced1b9899f30c2c57b5071d2dabaeaa9476764a81e630",
+      "sha256": "628e84ad1fe1dbd64d94bf715e8499d057ddd61f14496b71177d1bb46d6c7305",
+      "bytes": 4453,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/build/RoomThumbnail.tsx",
+      "baselineSha256": "6c944c17953d1b719171a0eb7bee4e98633c6e8cb3a1ab6f34e9be0508070e5d",
+      "sha256": "f51ec7a54621402e7ca4047d2bdfead3933cbef935796bb44b528f632fa6267c",
+      "bytes": 360,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/build/buildSession.test.ts",
+      "baselineSha256": "dc10e16a2cf01efa742eac7efc672bdcec950d1088e4f6f67b159d2cc5ef300c",
+      "sha256": "e275886a897c8726d202de522e955374fba5f5d985046dc275e2a6116586fd55",
+      "bytes": 11818,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/build/buildSession.ts",
+      "baselineSha256": "20dbb0d5da8aa631591f53ed15e43ad7997305024fbb2d7f5c690f6afba019e4",
+      "sha256": "8c8c2fa8888ed3aa8d0b401f5376543b211cc6cb8f2e872c68f7470d4e31c5e4",
+      "bytes": 5030,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/build/doorSections.ts",
+      "baselineSha256": "d7e4f57363bfe8e3d54149de3f19d86004b698361aa4f109fd7b5d57e7ed8114",
+      "sha256": "ca034294db7a2fda9c44b6ab5f273178d19d628095f51cca4d41238d328693a6",
+      "bytes": 2390,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/build/level5RoomThumbnails.test.tsx",
+      "baselineSha256": "c80bc8e5210ca0f5113efacde3b702598d63a1b6cd047093da56ab37cde1135e",
+      "sha256": "106c03d47fd50b323873f1781b346c55d5be8d2c7a078d8c0830144a6926d066",
+      "bytes": 1976,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/build/mobileBuild.css",
+      "baselineSha256": "8a629453d1b813c44d8c264d64e76b64010b49d59c2e4a5f1ac0123785abb2ef",
+      "sha256": "62b8be40ac29ada446dc0b926b2d5aafa4559079b5155a1aa6540404a740bf7d",
+      "bytes": 4944,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/build/types.ts",
+      "baselineSha256": "bb77fb7383e035e181ed3efd328969d003b819c2a23a0f095f328f6bf2c10c77",
+      "sha256": "6a381b42a5f57fddc19e94c310252c740bf031b88573cd25f62f99feb0ed843a",
+      "bytes": 2040,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/build/useMobileBuild.ts",
+      "baselineSha256": "5c254080c8757a1d896ca6a6b017f3f317d88378f55e87db6cc12fbe9ec6d60e",
+      "sha256": "595d9dcf26af4ead7e5f977a0f32429af86afc27d05dbe2385714210fc561ebb",
+      "bytes": 7755,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/levelFiveGoals.test.tsx",
+      "baselineSha256": "6ae72fda7b0e8174cfa19dee1c0595568759476e89dbe2599c638774091b5993",
+      "sha256": "ed5e81cf3cd8f2e7d66ed3f32594195ee37d481f7f799e57838a45539f1d0b08",
+      "bytes": 6817,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/manage/MobileEmployees.tsx",
+      "baselineSha256": "901d1d32600d1fa1b0b914b1a32f2d19fb95e02b26d103cf40bec4a617312084",
+      "sha256": "6f1843c4ae4650a1d9b0a693610c435e36207e73a2bb676bb2e5da2ff2a5565b",
+      "bytes": 17757,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/manage/MobileManage.tsx",
+      "baselineSha256": "1376b5d6143c012013e8956ea6733b07981ead4d8608169ff0d5c19466291e05",
+      "sha256": "a26cf41bef900e85036510e5a70c726fd26104a4f527e62fe6c6dd511f9cfcb7",
+      "bytes": 4768,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/manage/MobileManageSheet.tsx",
+      "baselineSha256": "79960fc72d1a443c262a9215860bd0db8765aac6d52acb96bc01b7c7f2dce3d7",
+      "sha256": "4bc592cd0bbe5382846970b29bd48d998fd3f4ec83df7a10d835774124280ddb",
+      "bytes": 1814,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/manage/manageSessionFlows.test.tsx",
+      "baselineSha256": "05d83f536e434a98682f6f35beb4986ea38e282e26f0a3855cae76b44c6b645c",
+      "sha256": "f56d915dae979ffe6fdddd94d487d3f53ccc46b3078fdd1ddc116b0e77be86bc",
+      "bytes": 9252,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/manage/mobileManage.css",
+      "baselineSha256": "60d6cc83fd2eff0caef934b064ca2da816251062b4b95bc58b69aa57f3b1a4f3",
+      "sha256": "5b02fab26072348bd90ef4e0579d0be49d8e9ec60539c586ea81359b2b17e23f",
+      "bytes": 9773,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/map/cameraPreference.ts",
+      "baselineSha256": "1726c69224eae2ea69bdea93a6149acb77d8f5a5720603561100e291ac2b4502",
+      "sha256": "e80eef3062f0dffadba231b1b3526632cbc56db6e93cbc99c888879ff1e432fc",
+      "bytes": 1565,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/map/selection.ts",
+      "baselineSha256": "a4e0988a136a7b84a403560a8b5704a666d0b462324abda35bab216fb52c7e9c",
+      "sha256": "5b267122dc85fd99bffdc183121c1e3f92914ec664e090eb62eb2a3f9070cb97",
+      "bytes": 4824,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/mobileEntry.css",
+      "baselineSha256": "89af4f6b6f5d2324953d6a8d18950d374ea2b3f9245feb7fcb521b211e4730e7",
+      "sha256": "16ee049dfd66eb029dccff87491150da9903edc6e64a449114088f96fa27db2f",
+      "bytes": 3016,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/mobileEntryIntegration.test.tsx",
+      "baselineSha256": "d031df24f82004830f47f8ec53b0239192bfe90a83c800b77be122698c619f13",
+      "sha256": "ac6acb4c0a3c7201220cc478fd8efd2417253e9db05c9dcccf5db4398cce5784",
+      "bytes": 7545,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/mobileOwnerRound2.test.tsx",
+      "baselineSha256": "1b22175f1d107ad2475c09cb819d6ea0a33fc17e8e02c9cb2573a96a889bf059",
+      "sha256": "b850a942b3a091ce363bb4b19f5aebf9002a11ec101cf44542a694b2ffc8924d",
+      "bytes": 15695,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/mobilePolish.css",
+      "baselineSha256": "42eed4a5b19eeb400812883548682a2e2bdffcd970b778d87fdeb8f9198c0965",
+      "sha256": "673b2ea4f41cca65e9b7f9991d1632d134a2a855c06cbe456b0c90fd41628f3a",
+      "bytes": 4964,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/mobileScreens.css",
+      "baselineSha256": "3f8e827702115446e147b9779ecd294e9f760d1aff4f005d94ef03030cea1091",
+      "sha256": "65cd06babbcc2964e2a7f798c310e8898e4c8b2b2b4bbd32d48a1b2e9ab8b797",
+      "bytes": 13803,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/mobileShell.css",
+      "baselineSha256": "df2bfc6a23a6153409ed1fec4246f32174f44b57ed531103263eb192f8e0bb6c",
+      "sha256": "a21ca71d226bf5ba850ac174298072414fa06aa95e4f67d86f5ce8d637d993bf",
+      "bytes": 15002,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/navigation.ts",
+      "baselineSha256": "0e54f15efb570f8a5758db9ebc1f8d867ec135f91edf68bd61af064370777a2d",
+      "sha256": "410fa8707ccc4053a8a5d70023748399f404700eed5af302d81ece39d82f8a52",
+      "bytes": 5699,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/performance/canvasResolution.test.ts",
+      "baselineSha256": "3c1331439fcb9396b5e3e2599c6e604273dce9da688a5da13a5d029cda14ec18",
+      "sha256": "89a3efb96eaae89212af2340e56aa1a7642c70996e12d459157079af932e6ed7",
+      "bytes": 2823,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/performance/lazyArt.test.tsx",
+      "baselineSha256": "fd8f446be7cf3f70a7aa23b669fef80b2c0ef48d9f34bdf41fff397757a2c96a",
+      "sha256": "1b43f249116520faa384ea52acd65471dfb0dd097f67b2bdd1b79df3ca048e13",
+      "bytes": 8737,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/performance/presentationPolicy.test.ts",
+      "baselineSha256": "6e7327bd529ccbe14137b736facb983f587889818172765291096f765cc05901",
+      "sha256": "a84b5d06e6c7c23da9e8c0b35cd0f405a34feed17b1364a5d542504a00a2c57c",
+      "bytes": 7539,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/performance/presentationPolicy.ts",
+      "baselineSha256": "246858dd0409fe4689ccb67a747da7278b7fd0075de25865948180e0277073f0",
+      "sha256": "3152f9471f57187902e068a5b1d19d1142a4d7442aad044a13be4fa244defc08",
+      "bytes": 1910,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/performance/roomAssets.test.ts",
+      "baselineSha256": "614b7ff0859a9308e4dc16f059836064a67f95576020031249a69cd278f4b467",
+      "sha256": "71f07ceb59df5cb51b7308735b0ec38340f4f647642ad63a97b0b40eb9ff5284",
+      "bytes": 13533,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/performance/roomAssets.ts",
+      "baselineSha256": "aad43a7e970de73c7ddd6872f0a0851cd14478ad027ef2d8ef2287c081fa57b5",
+      "sha256": "dc78326654a92653d91ba673d305f221b6d6fd3706f5b0ddc6e5c5a095eff1c3",
+      "bytes": 8263,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/phonePolish.test.tsx",
+      "baselineSha256": "48302c595431e22695fa5637ec7a1eb83c4b5a4af7e81d4452a8b463df69f27e",
+      "sha256": "c981d67f7da1802a5639687e80e1c9eb3aa9626a0dc2c1854a26a2b4f60b0404",
+      "bytes": 7230,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/screenTestUtils.tsx",
+      "baselineSha256": "94b1f18d82c081d70154cd75cc15daa5a2a629e439eb5b73e0a617417eb5d637",
+      "sha256": "6fa5b8ed00c7e4d3f93a773d7b0a204c54a49ab9cfb8490fb0f5754d4b07bbaa",
+      "bytes": 1123,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/tutorialTargets.test.tsx",
+      "baselineSha256": "80fdc272db0db24072723bb56cb47b7d8258d03830671da1569957df5a776b5c",
+      "sha256": "7b1a13fa4a494b779dbd2b853ff217e713f8fc3e353d92e3314583f3f705dfb3",
+      "bytes": 8846,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/tutorialTargets.ts",
+      "baselineSha256": "71b0de74e12e0895871d8a538b18465abba9a98f9a9f745e49f536a949ac5d63",
+      "sha256": "dd6915e6e8e1a4e37e3d9d85389a028e92c356d4c68875f1cb8864502d7e3ae9",
+      "bytes": 6200,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/buildModePresentation.test.ts",
+      "baselineSha256": "cf1e992abf5c0ba9e87aee31f3097d556afa2340d25259058a7ee4a34d349488",
+      "sha256": "144b15557c4946e0ded6000dd141615e2f315b374b564bcdebb60cc2a3c2aa5a",
+      "bytes": 6629,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/buildModePresentation.ts",
+      "baselineSha256": "58c3135f37e0eb8a1b3f3107811ba3bede73f00c3c162096e8b8f4ca648c9036",
+      "sha256": "626a1875fd8ff06e770c049f4e61c96947c1270da1883e9380e57abe61994e15",
+      "bytes": 14664,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/buildViewModels.test.ts",
+      "baselineSha256": "ffc41c91e969f4f201b4ed6aa5a44f5a795a9e0716fd4bd2222e95fa40adf14f",
+      "sha256": "101f9a318826a3a0139d93fbe8eec5e1a6f88bf3ee1798ba0f21aeb5717b68da",
+      "bytes": 20574,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/chartFeedbackPresentation.test.tsx",
+      "baselineSha256": "65b128f0414b3cb7e7cd4ccd6c6274520127dd58d4430e098dd3102f55b5c779",
+      "sha256": "d18893ea68acc13fc730d7c2f7666bf5c2d7cd0e240d2ca0f1606d64b6d8c43b",
+      "bytes": 11049,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/chartStructuredFields.test.tsx",
+      "baselineSha256": "da378158e9d9432f3b2bb10cdab0fc44e4126d258eadf2dae61cac83525f20ef",
+      "sha256": "c52d26a24c8ba04b592566848b8ac4b049c48115c68f4080056fe57d7b45451a",
+      "bytes": 7579,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/clinicAlertActions.ts",
+      "baselineSha256": "3198ae735863129226199c00284fb19c2cdb18a6ac206a23ffc409679ae05bd9",
+      "sha256": "5f55dfcc53877ffe2b1e1148db703032e2c28ac9e17df3f745eed1d797b70124",
+      "bytes": 13044,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/diagnosticTimingViewModels.test.ts",
+      "baselineSha256": "fb3bb9328277b30f62aa068aaf0ae2194aa444b7dee73f84238c32978f4bfbd8",
+      "sha256": "d5a6655bfbf60918c1a677816f806c27efc391d9dd598713a102d5ac1c6e2e22",
+      "bytes": 17896,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/employeeTrainingViewModels.test.ts",
+      "baselineSha256": "0fd3c56c7cc1e3e349fe98c860c9bf57a879544fbe93480a8d9ff58dda1c4166",
+      "sha256": "434d670ea810da553e1435fbecb99404ae40ce2a80fa69ac61e225dc42bf72b3",
+      "bytes": 13764,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/facilityCameraPreference.test.ts",
+      "baselineSha256": "d920c2460901079d177477e40f29347be710fa4098d724d3641a53680428f8f3",
+      "sha256": "e2b554dcd7645259b8de674e9847b11798c77861b792e6106e1bbd8984a6dd2c",
+      "bytes": 11742,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/facilityCameraPreference.ts",
+      "baselineSha256": "e69ef9ce66a139911e5b31f19350a11147db2eada3efeb98a1757236842ec7e9",
+      "sha256": "32cd7bb6c87cc1cb29290b9ba0360afe76da5fcd687733caf6ec7acaa7b9fed6",
+      "bytes": 4885,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/finishedGameFlow.test.tsx",
+      "baselineSha256": "c7e3ec67958747428495cd3a7a2d66b08326d4dd6e59eba53f59136e888a5ed9",
+      "sha256": "93de88c56c2fe4b0e694a5b19fab2d3723d1959dc38d95251bccd04f5b182ee9",
+      "bytes": 14221,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/levelFiveEconomyQa.test.tsx",
+      "baselineSha256": "23f850eca1bd4c743a72098304014a620e1a1b7b77a41fe880c14a74f7d7da38",
+      "sha256": "1fca909afbe3041f5755732d299dafc494197b15e6b682eb179c676b9951d362",
+      "bytes": 6174,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/levelFiveGiftRetailViewModels.test.tsx",
+      "baselineSha256": "b8f158887e494d30248801199c304ff8b5cad33bf41f65746aaea5ff9e879ed7",
+      "sha256": "71e3d4f4a27d91b23d73501995eb44090e6a8a251f7d96879d5aaf1657edc9ca",
+      "bytes": 9065,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/levelFiveLaunch.test.tsx",
+      "baselineSha256": "edbaea8192c59d0b8799c14e7b1245e92d1680dd32ff57721d8b02bed91fc7f0",
+      "sha256": "4a6927544200bd9081aee78636b8985e51ed4eefae7a60bd04eef938da2df710",
+      "bytes": 7370,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/levelFiveProgressionView.ts",
+      "baselineSha256": "52c6060e61eeaf86e6beee71d5ecd79a347f32d1cd97ef8379518d1019583b5f",
+      "sha256": "8e37743892db23b99c323c13881e5f8d2b48fdda3efef42df6c911dcde5851c8",
+      "bytes": 2442,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/levelFiveProgressionViews.test.tsx",
+      "baselineSha256": "d49161127591fa319bf15727ba5e6255ef32f5440521b5ee635b4cb800cf221e",
+      "sha256": "11d16aacb5548ac9e0d982d6e239703a6aa238d319e74751953d582e9f4711a3",
+      "bytes": 7940,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/levelFiveReportQa.test.ts",
+      "baselineSha256": "b2c874fb6b911f87c2d63f39b6fd05af73788b3e8cf9c77788f61b13e37107ad",
+      "sha256": "1f6f2193700e56e379a7c66da356ff2e2cf63c3f282458ad9eb754c5c1ced9d1",
+      "bytes": 3205,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/levelFiveRoomsViewModels.test.tsx",
+      "baselineSha256": "400c84dc8c1941a5a1c32572a494ed2c2f745ad4f2642cb4e3a3962b00fb8f91",
+      "sha256": "53380a14b23fd92571c5281e49e5cbede5f1e6e3f9e1b3056edc0bfd23cdfac2",
+      "bytes": 6849,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/levelFiveSupportViewModels.test.tsx",
+      "baselineSha256": "06b067d07ab90dbbfd73e83344e71883951cbdbbd7fa992e478ab15ba8c2c575",
+      "sha256": "45e0161214b5b7700eacbcb2474f4daef4160418112d8325f01072d07b702611",
+      "bytes": 9507,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/levelFourIntegration.test.ts",
+      "baselineSha256": "5b32957b273fa44be7e5406932053a494d6aa6d1673e073f49f0d10bc8bd9dee",
+      "sha256": "a79a45595a61441234634b647ffd04cb3b65a4cfc43ffe8e22cc61d3402c967c",
+      "bytes": 6989,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/levelFourProgressionViews.test.tsx",
+      "baselineSha256": "e33d30d0cfe16876778f0df83efc2c66bc2de5f81b3916fcd41847ef0a84e2d2",
+      "sha256": "aaa02e089d32d202e8c72c2410fa18fa84df75288453e73a334888b2d7f0afe4",
+      "bytes": 6925,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/levelFourRoomsViewModels.test.ts",
+      "baselineSha256": "8b173aa70c10e25a8dc48b465ecf46f1021b7b9e960f389f810a8ed4ccc8988c",
+      "sha256": "70dc36fd6e573c3ad8e9a60864a9584ff404846b56308d4379b02f765e383ce7",
+      "bytes": 3821,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/pediatricChartsViewModels.test.ts",
+      "baselineSha256": "7e1a62d8af326beda73d95d1d53a1b52c70600bafb187e4957d67694398ec4d2",
+      "sha256": "a85d4596757fcc4bed9e623006df218f66debd9d249178bbcb49630168daba73",
+      "bytes": 4881,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/periopNurseOwnerSave.test.ts",
+      "baselineSha256": "e8b1290ef6ecbc8506322f935a6efd5b2e5044ceade8f19ade65aea925ec21f1",
+      "sha256": "d32f951a0fef29f8adabb57924e4ab835dc2b9d4507e6b92dc7c36e6654ab1a9",
+      "bytes": 4981,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/periopNurseRealVisit.test.ts",
+      "baselineSha256": "d878d0f6fddcb902da27accb7bebd890bad80be0de4f9e41185a43dbc5a64c6c",
+      "sha256": "17dcd7681c7081edce9bb78bc315e1c126dfefb51e0c4d4a86f8620da1203887",
+      "bytes": 6600,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/periopStuckOwnerSave.test.ts",
+      "baselineSha256": "e969c354d4b9e4527baa15ffc0d7fc7ab851a8d8cb1ddb5ada8611964beaa0d5",
+      "sha256": "5fcb0fe8c1a81459a9b5a5f4093922d901df8d44150e9f86eae39877de6fe6bd",
+      "bytes": 5813,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/proceduralStaffingPresentation.test.ts",
+      "baselineSha256": "4b5f413c53a4eefd0bb768dc0dbd7079d79c540e052cfff2ca811ecc1b1d3c65",
+      "sha256": "e11ca4197dcedc1394964e05e32274d80e9cf2c859127b6e56bd72a5dc4caed4",
+      "bytes": 4243,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/tutorialGuidance.test.ts",
+      "baselineSha256": "88f6450d50a67d99cf9c6f71a5b124f8535e0cbfce1fc87f121cb3b1316c81a4",
+      "sha256": "6b9589f3a451ce2934f08c0d54af3472acc4c330a4507c46d14c0eaf2dd99f36",
+      "bytes": 2325,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/tutorialTiming.ts",
+      "baselineSha256": "2f03e12505daed3e31b206c4237a894384f349575d5f2d27e86182288258758d",
+      "sha256": "8cac71996b0dfd7d0ef8f387ff43072c853203f2b7eb5f85d3f57a07b63e5ef9",
+      "bytes": 1434,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/tutorialViewModels.test.ts",
+      "baselineSha256": "30dfd4a980c3bdf9de3e812283b52b2e6f09aa6f70954d8ebc34ee9a3f554a63",
+      "sha256": "ba1ae0912cca195e3eb73bb64607127a5e7e96c039ed72efff7ed0039215616a",
+      "bytes": 28529,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/tutorialViewModels.ts",
+      "baselineSha256": "6b234748943e465fd1c2ecfdbaa935fc3a9b487405286aa986ef404d59f1d46b",
+      "sha256": "aa5766ca6fd63cbef3f91dc5064a9269c1a004b7b02f1c22cf20d22e249b6b03",
+      "bytes": 20835,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/variety3ChartsViewModels.test.ts",
+      "baselineSha256": "8ac606603ca7b8d181e46f30b7d44788b3bcc9e4468e17ae370ff25d5c66b004",
+      "sha256": "f1fddd40180ef1fa69d1e80b685e69fdaf4e6a7abe5f97495b338b7127338865",
+      "bytes": 3747,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/shellPresentation.ts",
+      "baselineSha256": "13c9dcfe9121f71367999bc0379897cce16c63f9ed67418de74c49976088ab0e",
+      "sha256": "1a1590b3c77a2cd095bd3e141168006659ace3771757a485129259d32734cab7",
+      "bytes": 2755,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/styles/clinicPresentation.test.ts",
+      "baselineSha256": "df5156d30ca41adadbf880e908119dd2674c27070161ea44baabe5a1f19425cd",
+      "sha256": "7ef70f66c565ad7b46cae1609ab276cc689e5d66cdb31a4616e2afb33c0a0f27",
+      "bytes": 11072,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/styles/global.css",
+      "baselineSha256": "f8e6902b50922cbee213b750049f75b5b32846c704e5d03820c47b2e79c1240d",
+      "sha256": "1c9b48c3f4a184230c39ec2eb572e0300788c2f175bbe9e4346a84a5cd4e3dfc",
+      "bytes": 180488,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/ClinicHeadline.tsx",
+      "baselineSha256": "1887db3e4c70eedaba9fde5125084b564db8ee71636fe8d9911275e5ac021cf0",
+      "sha256": "bac5988e40f54c0d183db2a509ebd01b0329b11a01f4e8fe9d2b197f4bf4b650",
+      "bytes": 1982,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/EventMessageBoard.tsx",
+      "baselineSha256": "8052e50e803546433a001cc1433b9f063fca3836552693f54a0f35aac3886302",
+      "sha256": "2ab0b4d48cbc08079c7543f67ad79c3b211e6e3559067b478ee9a3e2ff7ea298",
+      "bytes": 14924,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/GoalsPanel.test.tsx",
+      "baselineSha256": "dcf80e5175628d149cf78d96d2ccd7dc0e3a43b3c8a356326b21ebda22c13cb2",
+      "sha256": "0d705d7e04cd725289d5a2af0e7bba6d9bc7c922332c59bfee6abddd4390b563",
+      "bytes": 3020,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/GoalsPanel.tsx",
+      "baselineSha256": "3e8ac9bd11d2047ad8258fff44f393951f2af664abef8b9279f4ca42e6084856",
+      "sha256": "2fcc60a1442c9b38861767a5af1900b9c69f34f214f3c6042bda3ff10094649b",
+      "bytes": 4795,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/ManagementPanel.test.tsx",
+      "baselineSha256": "89cd68fd5a2ab1810350b4d9a3b6557f4b77b15215058a6c2286de2a8235d6b9",
+      "sha256": "ecec345061e715d764408a9f7b4742c82aa0ec6c45ee7bd7dbfbbabab7898fc8",
+      "bytes": 3540,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/ManagementPanel.tsx",
+      "baselineSha256": "3dbbeff9d9f5153c404c16c1f89e8179c25f5fcace43e7b6f713bebc59d75d1c",
+      "sha256": "45fc033e5c8a9ca6eeb1e16b9d672e5d31f49a0e1f59349241ee45f01ac2ca8d",
+      "bytes": 4849,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/OpeningSequence.css",
+      "baselineSha256": "f620036896e99ce788ce66873851ac6c22a0719e210cd4b003c9ed89b97538bc",
+      "sha256": "c250a516a9e9caaf6b3c76bc7c6b6955c8181df727f683aca2dc2a9c010682a0",
+      "bytes": 6752,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/ResourceBar.tsx",
+      "baselineSha256": "a2da4447e4247b08449f6a74c484eac510f05d7caed1124d9970dece93bce402",
+      "sha256": "3bf40bb3c44e2e3ab2a790a6a5bd8b9dede23c0b5067a1bb4faed2c27d906aba",
+      "bytes": 8969,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/StaffPanel.tsx",
+      "baselineSha256": "7291cbb4528c075b5a8541d58fa2b93abe3468a7834343161e0ddf0189ad6947",
+      "sha256": "d1fe2d5f0e2444b15db914d100a577b6cb2cbfac852e493847277e6d0af2a9ea",
+      "bytes": 18415,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/TutorialCoach.input.test.tsx",
+      "baselineSha256": "37bbd64182d442cb75b2950ab93d868668e0b60aad884b30a56f52bc427d5c41",
+      "sha256": "6265ff003f4a5c7ab7cd46bcec21031f5510dd93d0693b32a76a151e99a3bfa7",
+      "bytes": 4739,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/TutorialCoach.tsx",
+      "baselineSha256": "9f995116498b76b3362522aabed69e261291a67fb14096bf58091760d1ef46af",
+      "sha256": "3450925c268c2385d5b5bd9bc571f14b2c189b33c24e111416c0b15267cf362f",
+      "bytes": 24204,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/chartPlacement.test.ts",
+      "baselineSha256": "5a455256442e56bfa489cd68dab601e19d2296a022c428852da70fe4af03d4c5",
+      "sha256": "a3e86917ac94a5f158f52926fe9466e1500d4282d7815ae27bcd088fd5ab5776",
+      "bytes": 2917,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/finishedGamePage.css",
+      "baselineSha256": "ad7048acb0bd7cfbf52ba985b54c464fb35bfa7374b7146ca66622e7f8e3778c",
+      "sha256": "4be6db283078db12977097871ef4bcaa535c8965f7dcc6afa8f4956cbd62c7f2",
+      "bytes": 3293,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/goalsPanel.css",
+      "baselineSha256": "7e84ae2bbb2a8820b94f32c7ef9e1224198389919ce43fc38d899491394ab506",
+      "sha256": "4d5388f09d1dd8b075f9117b796f7ea2784947650bf2e5b634c3f0c1b3a6244b",
+      "bytes": 2770,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md",
+      "baselineSha256": "e2fc441d5c162fa37fd5108204d68e4d8fb3377c9320ff908e7299038405469f",
+      "sha256": "c1ee05ee2a65d96b79e813e555bc6472323e7aad16533674c91789e6e978b04e",
+      "bytes": 296009,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "docs/execplans/level4-launch-plan-20261008.md",
+      "baselineSha256": "1f5bce2c1a053cb3945751429392d18b351eb599432d3cd653a8595df23af0e6",
+      "sha256": "1318daebca93da13282fd65a0094c31de244af03021eaa1a2d17a1298471857f",
+      "bytes": 335044,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/app-role.test.ts",
+      "baselineSha256": "2846a1c619efb3889fef1cb560dde862aabc20e4d4241bd285a134b7b55f08e6",
+      "sha256": "caa3d3ca874cc82e2d442ea59c160f83bf2f13c24cd1750b67aeeb1078a31a46",
+      "bytes": 2281,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/diagnostic-timing.test.ts",
+      "baselineSha256": "749de1c76ce395dc007700dae0fc2f5f6e950e653aeb7dff07ee328cba696a18",
+      "sha256": "6473e7085e79fa3118bf6a38007a4485527392d340252070d05480cb46c6c7a8",
+      "bytes": 12500,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/employee-training.test.ts",
+      "baselineSha256": "258db657d1ef7fd1e019e6fd7f7b40e504833f793ef57ab543ebdc545708c8c7",
+      "sha256": "b5c2aee163252e78073f0fa27d066806e7fbb53c5c17be09e2b9ddbd81c74730",
+      "bytes": 3360,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/employee-training.ts",
+      "baselineSha256": "9daacd4783b15e7fa5ee85c1348a313e6454bae4710e003d5494f3b890d899d5",
+      "sha256": "2d2886b1b2f3615a2513b98f892c33939448959cee30789af30534582123923b",
+      "bytes": 6215,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/guidance-tips.ts",
+      "baselineSha256": "044e6242578d5282081998aa3b42d87923eca848b1d88af6d4ea5a65732b4836",
+      "sha256": "a7316be91248b68b7dd92ceb6d9db817a45df09779bc04fd8622e780a0218422",
+      "bytes": 15423,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/index.ts",
+      "baselineSha256": "249ea512e15e84f7fbb91f490f2e30372543253a6218a11a37e3f75c889a6d13",
+      "sha256": "8078a8d81bb84453842ca0abcb1aafdf65b3f6a2bac389343ea5a90e8fadfe84",
+      "bytes": 1018,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/level-five-executive.test.ts",
+      "baselineSha256": "2b67701bd3baac89ce20f6ea018661b75fac1aa194c305f243680465f14f7464",
+      "sha256": "822339b6ade94322506ac223c54f8b0737458508c6c6c64f0a253d0d16f39ab9",
+      "bytes": 2350,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/level-five-executive.ts",
+      "baselineSha256": "3dbe4720c3506ab7128a7ced5aca5c877ac13be0705aae0763b81484042d4148",
+      "sha256": "2b55f314fcf594c16bd64cc47fce372a5d0828005d9f94790608737df7f37606",
+      "bytes": 1210,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/level-five-gift-retail.test.ts",
+      "baselineSha256": "35c4d6fba3b5e281ace9eceba8b9321e7ce5db67f6ac93abed15e7bd88dc3a42",
+      "sha256": "0a27dcdb88079d2a6d16bd93f384d3658029a1c0937fca1d8b217a7a73f8ca7a",
+      "bytes": 2591,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/level-five-progression.test.ts",
+      "baselineSha256": "ca1814f1c1a8d7db5229d24ea48c99f5ac0fece6c188e9f90c35fd994b3dafe2",
+      "sha256": "8afb16046eecdd041babff3aa7889e0b3d75650d65e2dc1a6b5adfdbfbd2599f",
+      "bytes": 1896,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/level-five-progression.ts",
+      "baselineSha256": "2567589a0cfe11d81a1d259b21b31867920b73494511997a08a70c53f69e933d",
+      "sha256": "8bd7fd778839087a6a60fd65512d02db0a19c0c9c8d5b05575248b3d28cc4f9a",
+      "bytes": 1133,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/level-five-rooms.test.ts",
+      "baselineSha256": "06f3e43d3150ef52aadbb0a3663b0c072a1891d96304d016805c84e8ea2629eb",
+      "sha256": "e19a80e6ba0138164d63958133fb19de6a549c7b771c970c4c1f2dc46887d6cb",
+      "bytes": 3251,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/level-five-rooms.ts",
+      "baselineSha256": "0fa030ab68bca84b9cbc771a50c6950f056c3d86d6fe3cad4a24bafd28552892",
+      "sha256": "f5874882d3bd22ba03e5b96a3dda7f26d1d3c119feb3cff2a06dcf5823121004",
+      "bytes": 1282,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/level-five-support.ts",
+      "baselineSha256": "6fed24fb78531c2dbbab8a589ed7ce574e0d8f4249bc6c94eb9d2f851000c239",
+      "sha256": "9c4715b0a3288a113218041b31fdfae9574608868a093cc008d2a2f9bac7124a",
+      "bytes": 301,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/level-four-rooms.test.ts",
+      "baselineSha256": "fcbc3ed9dbca79c31239df9df050bc50576d53650c45cb71aa542717770e7dc2",
+      "sha256": "4a226cd2324aa493c07997e80b5f28ddff8c73630b76e8eef4cd643f8e570f4e",
+      "bytes": 4963,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/prototype-balance.test.ts",
+      "baselineSha256": "25a36075d7a2523ce18a3d761291f723ef31ec84420e353a3f8e50d7c6e1ba6e",
+      "sha256": "3197a1c29b8e1ed86e61a4d322063d1de2bfd1487f098f9054cd984864c07f3a",
+      "bytes": 25981,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/prototype-balance.ts",
+      "baselineSha256": "6d93b7092e6145ec88180c38d004cd7d5d99206d8c0fe5165b133d9e9ddde186",
+      "sha256": "c3c80e2a4fcbe7e1497f26062d3c2383c97e01cdc80c019c39deb0d389a11197",
+      "bytes": 98694,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/room-upgrades.test.ts",
+      "baselineSha256": "f07ef040fea1fc271035f27568c8382d078536d9f414677175d104a10712592d",
+      "sha256": "1794d7257f5199af632c7fe49e08cb600e513d73a7de6e250e4ce334369a41ba",
+      "bytes": 12306,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/room-upgrades.ts",
+      "baselineSha256": "c8ad82d81330b36690213254c4ecd030bae45035f5b9301a7cc2819d39c3c260",
+      "sha256": "eefe8c48fc7a2f059276c40958929e181b7b2e9e442325816ec7993189686964",
+      "bytes": 13210,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/schema.ts",
+      "baselineSha256": "2f3732a177017b1ed7a6f29f454ec6f383a97718f144bf41b4474e880acb5713",
+      "sha256": "1df248c96b0ad9902d05f32d543ce9951d8b7f6469ce6bdc1699ae0485cf98d4",
+      "bytes": 50537,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/balance-config/src/service-income-catalog.ts",
+      "baselineSha256": "0fd2e7a817f9b438b44a056446bcbd472c3e5c7bd2784b0672ed089fd114aa9b",
+      "sha256": "203ca6e8d08cc06d13c881136cf6d06978fb3deca5b088bb0c4581f344bfe22f",
+      "bytes": 26163,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "baselineSha256": "ad821c697ca2c8f6553ea03affd0cb868db65b56418c29e1c000307e771358eb",
+      "sha256": "c1149f878874858589737930b2c458173cdf2bb98a41a4b51fe18f486260c027",
+      "bytes": 199028,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/approved-data/breast-cyst-pathway.test.ts",
+      "baselineSha256": "c0e6e2186d08ef4a9c2add62f2347da2bf17b236d689e2b6fbabb2caf919cfac",
+      "sha256": "164be3a2c95696dc5e0bbc7fecbbb75e0b2dce5dfddd9e060504637bc4f09c87",
+      "bytes": 12494,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-11/board-expansion-admission.test.ts",
+      "baselineSha256": "ffac270dd3d272dd096f13a6364b2242b5f14df928190f49ef5aafd0853f2ed4",
+      "sha256": "aa2500aab7ad265ff5f23b8d96c914c584d9ccb04318b177893880a5e3606c20",
+      "bytes": 7143,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-12/board-expansion-admission.test.ts",
+      "baselineSha256": "ba7f7d21e596c122c0f908d70503bcbe6031d179c8c3c77ec799d525784d8967",
+      "sha256": "aab767f90df3ad221dd50173727985136a23cfa97b99f3edd60b654f1b1be5bf",
+      "bytes": 7712,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-13/early-levels-admission.test.ts",
+      "baselineSha256": "dd0fd3933a852b798400daa220c9c1a1088b05990814f4e2175252f7f732f2f3",
+      "sha256": "61a3637c891728cb7d58b4fa69f39d67b26947f81e22dbc613883785320016c7",
+      "bytes": 6809,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts",
+      "baselineSha256": "c64119921e7a519505f8ea8bc657bb41f25958d47de65799b223ac31857378bc",
+      "sha256": "a44baf048a1363c74ac29aac9c33347145e07d461f14b3417b1d761de9d9da61",
+      "bytes": 7291,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-17/brief-early-levels-admission.test.ts",
+      "baselineSha256": "ac9a9eef2bf586c6dee9f51cac7ad44b5cff7c319c08402fdb28e2f69b139cb1",
+      "sha256": "7911616cd8f5cbfb47972469ff146bfb0fec182c56bdd5b3f59bfea1b4762e47",
+      "bytes": 5644,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/ethics.test.ts",
+      "baselineSha256": "807425b61d3552aa6cdc5b4be8c04cd68481fc472c836b47b48553aade7f2a1e",
+      "sha256": "dac05eeb1bb4a6270e07ac9f7f1e027cef5233cdf777ebb106c0b4b62e711e1e",
+      "bytes": 7293,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/ethics.ts",
+      "baselineSha256": "691b338edff5aa56215ee2c6a7cbd6cfd777b713d0ad4c9fc03b41612662b420",
+      "sha256": "68e3d38198b0c4b0a718e1746d1c9a42e48b7333f015948049d2124df2bb5317",
+      "bytes": 121684,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/runtime-flow.test.ts",
+      "baselineSha256": "6d9120e8b56d293b1da5a3301f03e16d030de42531bd8c5d0fa016be81a03b5c",
+      "sha256": "85f4f95c7c3759a3ce0b4ba5a718b38050a5b802b33e8f054e9d0ae8dea3b041",
+      "bytes": 15282,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/statistics-ethics-admission.test.ts",
+      "baselineSha256": "d3274a1aa76e88d713f37a3542d1d87d1b89f90ff26e32285d141704e66e1e9a",
+      "sha256": "d5e98d7e2d37f654296a0a2e39019db2d8a676418a27176162c41bf6e075f11e",
+      "bytes": 9822,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/statistics-ethics-batch.ts",
+      "baselineSha256": "097b988ad066520ae70c2e35b05ffa28fe7678bc1f7d2fcb1ae4cd53fb761f32",
+      "sha256": "ccbc2a61360c4afed75090460f867bda9ba382354c2617cc49be9e10a8f0d50c",
+      "bytes": 2513,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/statistics-qi.test.ts",
+      "baselineSha256": "db1aa7b2dc4260ff49bb066d4aefed650672041fde8c1b479d06f0e81224c2dc",
+      "sha256": "cb8227514888e299be4d81c3651db7a04e5fab98e22529e4ce29043749d10009",
+      "bytes": 12593,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/statistics-qi.ts",
+      "baselineSha256": "7e5ff2e1a5188babf35926ff4a757ff34e22ebe158d3da0e887dd5f2a0e02958",
+      "sha256": "633d689ae0d607077b13b738872c4ef5d94db0ef1fa0f2c0b8a9198ee3e18058",
+      "bytes": 23114,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-09-29-statistics-ethics/statistics-variants.ts",
+      "baselineSha256": "05930f006da2b398b441d4a98276ff737d2e6e92bb0928d4585a3d1ce3aae544",
+      "sha256": "8c4800f35615f4c16e889799048973b83e3ca823de0822467ae5908b10befaca",
+      "bytes": 265630,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts",
+      "baselineSha256": "c644c713c12a5004c4d497dfeb9417153892f187b29adf4a6ac5030248ec85ba",
+      "sha256": "e7e395d9ff08a8423a48df1df62d4825878674dd97d2c1e377d68236dde25b4a",
+      "bytes": 8766,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-10-07-variety-2/variety-admission.test.ts",
+      "baselineSha256": "3eeff4f8f217da962b3d6a3afcb20fe8f22c77b1cb79e8b314bdd903773d7ab5",
+      "sha256": "e130aff2108b0037ffdd4f0ce6adb2c726492e4133e905573ab376c0d4b76f65",
+      "bytes": 3992,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-10-07-variety/variety-admission.test.ts",
+      "baselineSha256": "85578b548837573985243a2bde1c8792a87ec4f1fd449f12812ea7a72e9e04b1",
+      "sha256": "e9241cde82a02602b601b9bf9e26dedc8717a7f807ad88aec09424acfb210837",
+      "bytes": 6209,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-10-08-pediatric-clinic/assent.ts",
+      "baselineSha256": "2586313a0443541d5ddf31d8c8ee20b8e3d7e90d565481fbbbfb3f8dfc9a9f5c",
+      "sha256": "abac4e8559876ff47443ebe595f15330fb0a5b7fffa908fac3557629eca21a94",
+      "bytes": 10683,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-10-08-pediatric-clinic/pediatric-admission.test.ts",
+      "baselineSha256": "f7a20276f025367bd024276f9b7d66cf51ee6e9b8f7a29f739bef1193b9ecc9f",
+      "sha256": "7883a1cfa33256a17e76289d0b16d9d4997ef3f3d848819f980783235de11c67",
+      "bytes": 18183,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-10-10-variety-3/batch-content.test.ts",
+      "baselineSha256": "dd9544310c8634b330eddea0835f729dd48a69604f24add03e2e40250711fd2a",
+      "sha256": "194ea628d97449ab1f6eedfbef00e30c33283132fb56a78680baa7939634fa03",
+      "bytes": 16609,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-10-10-variety-3/draft-runtime-guard.test.ts",
+      "baselineSha256": "5c746663ac1310b56348b4a844891c5c1ccc7ee69c1696036079d766dfc88845",
+      "sha256": "4ee9d286e1e5b0d4c4f6488df3e94e5ecd21991f5381eb7a39edf6b127f3167b",
+      "bytes": 5059,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/development-batch/2026-10-10-variety-3/variety3-admission.test.ts",
+      "baselineSha256": "cdf6d4df653424df6381bc1859216f0cf5915410f2dae53ce74ed0ef700f5e83",
+      "sha256": "b0da041dbb33d72c9b4e2a56126a8f23310578da2519a8227766d1d71858569f",
+      "bytes": 5176,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "baselineSha256": "dbb342121a1e49279c8977f2fcdb1106a9b4a228894fbc54b2b2cd27546a5223",
+      "sha256": "485749eb369c0f499b0e34a9ae616f803e22ce4e81d500dc056abf2f0dea8ba1",
+      "bytes": 9397,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+      "baselineSha256": "e5ef077050cfa703295671e59c3a21045ff3b2f9960490fadb07d9d6284c6d9d",
+      "sha256": "0b8b930277de9faffac2951bf3b845ba7591bcae88edb8a2051cd1d8a44c7b16",
+      "bytes": 9014,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/schema.ts",
+      "baselineSha256": "43f23113bf7ed0830d995afdb018f5b8b9c46aeb76bedadf952a92646ffbcc6a",
+      "sha256": "c4d1640ba549c49b6a3dc7bfdf9155504611dd04c756865bc9f5fa0fd40015c7",
+      "bytes": 29034,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "baselineSha256": "09d9797f7c659d6f3e7bd4ac5e0f4b72d79fff83f2bc64ed3ccf996ae7f2bc16",
+      "sha256": "73ebbee54704c8cc86d0bba3851844ff7674c6033a8e493f39c41bce52227a83",
+      "bytes": 74467,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/app-appointments.ts",
+      "baselineSha256": "9053ef12e1024cdb87865de85d190bb9dc649976d927b345039f278e67dc0f1e",
+      "sha256": "72e1168893dfdcb4f2dc0c0a9a598340f1f59f3a76c8f2098d78218912713dac",
+      "bytes": 9190,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/appearance.ts",
+      "baselineSha256": "26af78ca27eb78a9749590d2b84d546ec7f9f5654f339493820a2ebfcfd659c9",
+      "sha256": "bef418db571fcef7a6f8a4b082e04eade2cdb6d80f5b68b6ee4a87c22da19ebb",
+      "bytes": 29964,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/care-room-access.ts",
+      "baselineSha256": "c521512b8f72fa12a9813055b685cb78313e590cfa51996df3b8d5ec7e8b332b",
+      "sha256": "ee355fdece91d18d1278c704a2dfce235a99ab00c7630ddfe14b9e971437a56d",
+      "bytes": 3157,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/clinical-case-eligibility.ts",
+      "baselineSha256": "92238a6416d765813e7e154e4bc4173a5bd19c89ecbad1a9a9769cde0f3c73a8",
+      "sha256": "c55d0d3ad2ba1d1074b911265a9fe3b385a5c871d415d5db811cc29d1960e4a7",
+      "bytes": 5088,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/diagnostic-orders.ts",
+      "baselineSha256": "47f5e470ab5777fafa0f119ca74ecbd4c12adbefa8a1d05bf3380b0e6eafd4aa",
+      "sha256": "8719c7aa390425630d77465fe67861f9d895d375c83b057a546c68f2725f8644",
+      "bytes": 17381,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/diagnostic-timing.ts",
+      "baselineSha256": "6d81945e698917387df0017d6469e0ccbb3d8d537249d4da02346f3ba5b7c647",
+      "sha256": "499e069e78d1755c1f23e6ab6b29052ee072896248d792c019a1336301334d2b",
+      "bytes": 133708,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/employee-training.ts",
+      "baselineSha256": "de0617dfceb32216c84964d251ccf4686d4304cd8869d65c234c2f38d543f0b5",
+      "sha256": "8f04b3f1f748047b8e71466b0070bccef4ea045682904f3c9fef7ccd2a4eef43",
+      "bytes": 35189,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/gift-retail.ts",
+      "baselineSha256": "bcabcce2ddfd206de8db03bb56eb4afb264e8051db4a380e9fcc77cb11db433b",
+      "sha256": "aeb94dc7ea1e6931ce9d03d6d7c1d48a2e68cce8a9bbdffd72e4f5f4a652946c",
+      "bytes": 16071,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/guidance-progression.ts",
+      "baselineSha256": "f6c4d618bfb0d9ec162c7954f9b8e5a4bc11ac3d7c98759ff6efc8a46facf9a7",
+      "sha256": "d54c7c2c74f7174a8be9cc939d013cb214aa1a288ad3ab38b928bd036d0039a1",
+      "bytes": 8603,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/guidance-tips.ts",
+      "baselineSha256": "af1052becf169c39cd36ef734fec89bba81e315cbc811ca5704dd0aa76c23915",
+      "sha256": "cedc98f3298947e51fed2acc6f078e9369fe9607bae1b7940d11093011e8d3a5",
+      "bytes": 71682,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/index.ts",
+      "baselineSha256": "54d11f5d506212abce8ecaf5ba2c9519a5fe59e0b20f8aebcba5169a6c971ed5",
+      "sha256": "5345cf8dd064a3f073f5e5c9fc436261c0ac31d159f3a9e1aa207489acf7c258",
+      "bytes": 2656,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/inspection-presentation.ts",
+      "baselineSha256": "d153e1ba5f09b54653660f332e974745effa5afd864a3250ca669a707e6649ec",
+      "sha256": "94f0fb0fa980e841ff8c89b08cf126134bb957c61c69c392745ac5d6861f05e6",
+      "bytes": 22725,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/level-five-state.ts",
+      "baselineSha256": "71fad192a2eff539551d37fae80f02ae35d078e4a654864871ba39607f076295",
+      "sha256": "ff5d3f728e24ada576dc53aefd62f05f46109425a38c6fbdad4c1017d4eaa67a",
+      "bytes": 33903,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/level-five-types.ts",
+      "baselineSha256": "27de0ca03a500e0227dfec2c2d15411da074be972ee7b3cdc757bd1ec7caed93",
+      "sha256": "6790fb29c21d816068f4d16e30a4da0e2d57be459bd1631efeec1c7ceb12f53b",
+      "bytes": 10291,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/level-three-support.ts",
+      "baselineSha256": "9fc3ad536c6847099f92f19c03b5d7d35e67971cd3fa1c7b4aa25a3100fd7136",
+      "sha256": "6348071b39894d312737929d0d67cefae8bcd0717357ee34ce019159cab35739",
+      "bytes": 30262,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/patient-amenities.ts",
+      "baselineSha256": "bb68111e2ad99087f7cafa2c0d04331221d9c449dbc58acbbb8ac93af1886f1d",
+      "sha256": "60d6031577039452e49218ff02f484c69d8d381cbe384fd5eaa59ed8763836d8",
+      "bytes": 35519,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/pediatric-family.ts",
+      "baselineSha256": "66e551d9bd3a665acfe2c879ecc7a8f6ddcf63f91baed86b85f62f98d5d34790",
+      "sha256": "369acb35e7bae1fd612f793cd877dc456036a381cfb58bca25f51eed231be0c0",
+      "bytes": 31162,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/persistence.ts",
+      "baselineSha256": "4c818dc6b813864543c967754905567a8ebc6ba5b01cadec9f887bff15b134bc",
+      "sha256": "68356819d6d574f07d30c7f93a4ceb71c98c5fbbf41a63ac5beba42e8b1d1e92",
+      "bytes": 236965,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/procedure-companions.ts",
+      "baselineSha256": "b14f513d5cf95215a4f4dd753e6ff785ad08c3e4809947e736b822c745ba5f7d",
+      "sha256": "eef7ed35ad3963276a08c539968912ad9d4e99e6d964cd07ab10be94e9791bbb",
+      "bytes": 20224,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/reducer.ts",
+      "baselineSha256": "93d5aaed766fd61e9af616d368478669ed98973b577e11a6b28e290b07659bd5",
+      "sha256": "6a4afa344c1c1df7b284e4c0947b0831d4ba268333546ad5e969a84cb00ca916",
+      "bytes": 434865,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/retail-operations.ts",
+      "baselineSha256": "b6d0686be7e077f8dcae425745f8755287cac889d265bb66b15b4fd60f1d4f1c",
+      "sha256": "df28ac34a4ecc4b032ec9c79aef3f521cec0b3f6e0e07f2925ee39ced78e4f92",
+      "bytes": 69963,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/room-upgrade-support.ts",
+      "baselineSha256": "98d9602cb2a1f54a40b2b06b033d7f06ffc92801ed836b773ab44dff0c190524",
+      "sha256": "f06e77056974b39fd8f4712ab6a72a9f08553c1ec816b055c20b3929d5a025b5",
+      "bytes": 9900,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/routine-patient-availability.ts",
+      "baselineSha256": "53ccb6442e59df1449c7c4b467b73a2506b1569eef713d54bb2385d7b7018732",
+      "sha256": "1c4eb483c4d6a8ca8807e4470f91c88718c9ba772bbb16d6a470a5355fb8a112",
+      "bytes": 5336,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/selectors.ts",
+      "baselineSha256": "b58929fbf08ee88a45074336ec6614639a8565ac88148bf665c20a69ef8023fb",
+      "sha256": "fc01be3ce35fa0007bb48e7c88e5283f2546a7b93ff627dcc7e58e244e2c5e88",
+      "bytes": 84896,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/service-operations.ts",
+      "baselineSha256": "9b0c8232faccc272ae3d17d3457980d14594cdd2a24cd7ad5ffa090c7db8712e",
+      "sha256": "fa467ce6cfe910fb9b82b165f1dabd7ab8c0fb70f413e6a6cddbc7d66864b10d",
+      "bytes": 170386,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/spatial.ts",
+      "baselineSha256": "978cbbedc761f9e039eb3931eef166a3ba623cbc9928d38084a167524fee5da7",
+      "sha256": "b5ac30130bf0c1a03aaf2bf255f948e9a56bf3df123c8b03262cd728e1071791",
+      "bytes": 45024,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/staff.ts",
+      "baselineSha256": "01a84bae18dc72b353840a526944e98a72e5ab9a1fe8dc18dcebc6637a1c0260",
+      "sha256": "b950beb1673b38ab456cf6ddfb55f931aac1ff4b15a8bf1951af9572d87cc931",
+      "bytes": 31382,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "baselineSha256": "c7ddaea75d35c7f8da695d1c9e2f9a84027530563a61d8b227d3bd45a9338b00",
+      "sha256": "793450bed94248300965c719be76fd068d35b3f59ba899450568ddbe73f502fe",
+      "bytes": 119104,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/src/types.ts",
+      "baselineSha256": "452324bbc85ef83005a817f0f2ca748f5c3889b47c14dff598f3b76bb4e5c86e",
+      "sha256": "3382d8f3fcf425ee116f1c3b56beda360eaea6e501ca629eedfe7ae8485afbaf",
+      "bytes": 72049,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/app-appointments.test.ts",
+      "baselineSha256": "81823d2ba71c2b3f546f03993220db0cf70a272a1cf37005e4ceabb518568aca",
+      "sha256": "095e1e2930e7b7901fc1c81ddf7e05ef3b9f5965889ec673fd98509db987ed9b",
+      "bytes": 20430,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+      "baselineSha256": "3ec439977b7e31b67c90ba83d8e92846629668669f9d76203597ba066ab9f5dd",
+      "sha256": "192d7f712c3fd848ab2fdc43a087c522963e1d9ea60ce6f33a34e5523384ce52",
+      "bytes": 18924,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/approved-room-geometry-migration.test.ts",
+      "baselineSha256": "2e51e58524b838c6096b31ea136d4971379468a613af46f2768df7595ed76244",
+      "sha256": "a5580244f60183d14849745d39544c8e4a95d71b64f2683e5494746bd5c43db6",
+      "bytes": 31645,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/clinical-content-withdrawal.test.ts",
+      "baselineSha256": "155825789cd64e2d6b5d067c7be13c8b7d7e7f5ae1e906f50ea81e87f2b6a5ea",
+      "sha256": "a8d1c17c7fda6aeda953d17b9ffeda484be782d4ba215efc473069b8c5f0a1f7",
+      "bytes": 7674,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/companions.test.ts",
+      "baselineSha256": "cde38133a269fc920890b3a7881e8e4e7f9e63c78c58f6c1ac5ed89a1db8d0f6",
+      "sha256": "bd7f9f6650cfe87ebf0efd2c4adcbe575cbb117b74d85e6351135ca40659b746",
+      "bytes": 24747,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostic-orders.test.ts",
+      "baselineSha256": "36dcccba1f41209c54730d25ba740b1a7cd0ad76ba9753c2d00b5b5f60c0ab96",
+      "sha256": "032d4f57b17550be0f190fe2b1e5643edf5e7f1ac04e272b2746d77a02ced60b",
+      "bytes": 19614,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostic-service-operations.test.ts",
+      "baselineSha256": "75ff44f06630a7f806d62c4e96799b981e43c069ddb7151a557a3e6e90c52d2b",
+      "sha256": "fc2a707c42a17d6e9cf64199bb047a82d493234932564567f76c8ae31f10ee9e",
+      "bytes": 30553,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/diagnostics/patient-supply.test.ts",
+      "baselineSha256": "b1a003cb2ff129d7babd19e309511e32b5fd355ba6c921255cd1a9fa090dfc97",
+      "sha256": "0ba46a64b9b8c6868b36ff7d7797810e244a742159e1da5f4692729ee54e9017",
+      "bytes": 21143,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/employee-training-benefits.test.ts",
+      "baselineSha256": "6bd563a1a5207ab92af965753b056df772a7167cdcb3e3c17dc2b6e260207a57",
+      "sha256": "297ef8862e1fe5d7a0da38cb9c23b1d103c087a7372d02176eeae1ed13514fd4",
+      "bytes": 55071,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/facility-inspection-integration.test.ts",
+      "baselineSha256": "3a534dece7250d0eda3aacf6ec6e67f6b89ef03925bbd420b39be36cc01129f1",
+      "sha256": "fa6033895d5c35cd4f2fb9688b29d56cc73d15994ab1b99631a3b8752a0fdde7",
+      "bytes": 10861,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/game-domain.test.ts",
+      "baselineSha256": "5ed24e353624265659b65cdcf7043ff0f51cf117e19036a79561043c2fcd7faa",
+      "sha256": "fa79f6264b8d5f91b2ed03ebc64e2faee0bddfbdc455596f2265a1ea068efb0c",
+      "bytes": 29073,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261003-batch.test.ts",
+      "baselineSha256": "4f92c165d4cd40cdc78824f6f03f5340c338f98e37e7cff65d1ee3991cabed5d",
+      "sha256": "fc86807987ce2e088408ba220a869da3666904fbf32a627d1069aa48a5fa607e",
+      "bytes": 36824,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-batch.test.ts",
+      "baselineSha256": "a073b0e504c62295ce68ef2979bd824cc9dbfbac4743520312853c5fde647c2e",
+      "sha256": "c94fc634a89d110ec1e5b0d0265ce453a28fcb2fc70ef71d873d4a8a1db88904",
+      "bytes": 33477,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts",
+      "baselineSha256": "02f16f38d953966972ca025e952375b5340e818a98b0abb120b5a2f6fd241545",
+      "sha256": "3eba081f4880be99791f22771a2881e7589a14644782f204d0e1137f9d2c98f8",
+      "bytes": 47323,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/gs028-statistics-ethics-batch.test.ts",
+      "baselineSha256": "98c8d53951a299249acfe71698ffc5c6d3ea97b52b9e4f3f34c999f59222a86a",
+      "sha256": "894a434e969fcf5c256f003397e60cb31f7b83668747c50d90aaed07739eea0d",
+      "bytes": 12301,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/inspection-presentation.test.ts",
+      "baselineSha256": "519ca39539bfba66aaef1d519684ff4add047a9f88a526e7b4822ade375e7cef",
+      "sha256": "7a107dbe1838b6279d8130e9b4418a615a8b974ab66e1398e4e838e79c6c65ef",
+      "bytes": 20949,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-economy.test.ts",
+      "baselineSha256": "1685c9fc1b8dae242c800f3e3989da11396259fb3ed70723dadcf7dec1d2eb69",
+      "sha256": "94249a74fee19498f5cd61e3a114c75f07e29994f920f71a2264d589c8a617bb",
+      "bytes": 4489,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-executive.test.ts",
+      "baselineSha256": "91771fd9b18742b62eaf63edd0d5213833693ee5c9cc0a88b41574287163b5b9",
+      "sha256": "c4b9a2e4bdde55a34e7248c16b8e75f396dce8c3e0edf8f991f05033008617bb",
+      "bytes": 20830,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-gift-demand-integration.test.ts",
+      "baselineSha256": "137988ae88a68082bef77a88b2d2c6ee2b3afd1d9b7f42cc968ae7d91bd7c6d5",
+      "sha256": "de620c8baa8de72a751638368b97b9b5049896214dcfef43d17fc5ce55a2d257",
+      "bytes": 6195,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-gift-retail.test.ts",
+      "baselineSha256": "b613d8bdf3d709522218da07eee4e822a417efe859694bb946840bc022b025d7",
+      "sha256": "3d2be9ad51a6c3af8a0d31171b31131bd32ade5b02e791fa4a007e0f5f73f46a",
+      "bytes": 20242,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-integration.test.ts",
+      "baselineSha256": "4ecdd7af27700089168f29ce6b150f11a4df242d8bd053c111879ac6f30e08e8",
+      "sha256": "812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909",
+      "bytes": 14974,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-launch.test.ts",
+      "baselineSha256": "2de96292c928ea836d49c506324923f413e34ed7e827608d693591649e40f973",
+      "sha256": "104f6d4dd2bb432529d4c8b118b26b8ef713f8e052793a2b9a6be84f676acfd5",
+      "bytes": 6169,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-progression.test.ts",
+      "baselineSha256": "8fd7a194e4ec2ca5ec4d6819f7587a30e5fad2c21aac8776e1349095f1c2e652",
+      "sha256": "fdc230187622f03d7cca3fa0c682879b67f279ce82b8a4efeedf1a0abaef2f9c",
+      "bytes": 14817,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-rooms.test.ts",
+      "baselineSha256": "55877fa3a534e236664e6c8997a94446fc579dfe9587f9162c4a87cfeb4972e5",
+      "sha256": "f38bdf577a75e15518aaa6cbf57ad1f7c229fe2d017bb601b8a750b1f7c92f83",
+      "bytes": 6135,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-state-persistence.test.ts",
+      "baselineSha256": "821dd346f161d3d4227220cc471aeb667b901acd7a996128c5ca9b61dc2ae2f8",
+      "sha256": "f5d2930c2a0a547d5b9e37bc79a66c4fc3d55dd1126a3a4266f17bb6bf8d90e0",
+      "bytes": 21731,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-five-support.test.ts",
+      "baselineSha256": "adcf4e10e01fe5a30f87b4096b2ddbbbaa1da80a0ea00cd378d1d01829c4ff90",
+      "sha256": "8530e5a1a06230c7538a51147dc74ccebd9165dcaaa55710da23c6984db7d96f",
+      "bytes": 27541,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-four-economy.test.ts",
+      "baselineSha256": "c85c942ee61215c19fa665309444589ab36aaf8768a8c49b5d0a1b0bb7bc5561",
+      "sha256": "ce927bdb9517811ebb34af1eb638b45af7e1054ef10378045eb9bef8ea87e6a7",
+      "bytes": 3594,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-four-integration-defects.test.ts",
+      "baselineSha256": "3f249a25a6083439ef2d8bdebe366642c435a1b474ea70db99ce8e607c84937c",
+      "sha256": "b2996c9a3405f762c084e404bbd1527fe9a1a8adf64ad8933f59be8a7b9d0d65",
+      "bytes": 2861,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-four-integration-reload.test.ts",
+      "baselineSha256": "9b334e1e8c51aea5cc3cb7aeb3ca5b3b29a03d783ade72b390f32e3715c9a374",
+      "sha256": "91e6f1a7f6ebe0448d04259635222159fa7c91a98ec7cf26dc624ad97f6d8cd4",
+      "bytes": 11032,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-four-integration.test.ts",
+      "baselineSha256": "052b28c445fbfefb25d033e9b20719953096cf3c67e718fbc092ff53af0c3236",
+      "sha256": "b7d51dbd9e77fb24247c3365020daf4c95996790e7a6abd00db3ac84fc702816",
+      "bytes": 42999,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-four-progression.test.ts",
+      "baselineSha256": "e77b460c9e6b5c28421bc5695ace6393599d96e87ff0c71c02f8637c0c60faa3",
+      "sha256": "f70b09b1d1dba7338cc519abd3b188915a19e53bfd006fa2541e661ff096e000",
+      "bytes": 10124,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/level-two-endoscopy.test.ts",
+      "baselineSha256": "b31c4ecf1272a3f7dd504a4675ecd7325c0771afb744df2bc7c54ab941f06afa",
+      "sha256": "83e813bf6b71a2cc532def8b54090f8558d4e2aebf8133f8e79385c1e49f0d1b",
+      "bytes": 33627,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/patient-supply.test.ts",
+      "baselineSha256": "d6707bd19cf78e61c62e10c2b2beecf6d165529befec1fceb51409cb44f91fc7",
+      "sha256": "2238b774f112c286eedff63cbc50991db63256d434dffce1f2626993d34a28fb",
+      "bytes": 27775,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/pediatric-appointments.test.ts",
+      "baselineSha256": "55f9ec9867a40774e31dcf3e072504b97207a9de784d2ac07b83f3fcc3d66c50",
+      "sha256": "74552020c2bd52164578e48950b78b37d378a6d213874421796edde9fdb44845",
+      "bytes": 16030,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/pediatric-clinic-admission.test.ts",
+      "baselineSha256": "7fe11ea72459e8f76e9afbe4f735450832284c312a14b91f508b657a1e6eb4f3",
+      "sha256": "1b1359ed2575133c9dda8a923569e1d3686542814ac17d02605a28ba56d5af52",
+      "bytes": 19076,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/periop-nurse-real-visit-fixture.ts",
+      "baselineSha256": "8ffa8d9edf5693b3171f6c08ef103dd108379083393cd7187e97ddab7867a28c",
+      "sha256": "40e18d1ae9a1de69bc15cfaf4ce494d3a79274e8f18b5314768483b06bee1f42",
+      "bytes": 4045,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/periop-nurse-real-visit.test.ts",
+      "baselineSha256": "acd12eb81ab80539312247a7cf3a84a0c7878ef8cb114fe83ca0c90d0fd9375e",
+      "sha256": "4bb9a48701e84fee7b9868221fed000876c3d37b0d3b8a5002b78513378e0027",
+      "bytes": 11399,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/periop-stuck-owner-save.test.ts",
+      "baselineSha256": "0ccfb883727ad433d1f9e344b0b5cd8b4e4f01fbae06532b511c99468a0e43ad",
+      "sha256": "56f2b1d5fe32d1bae9f8a2e176ae85c5dd77779e98162858555e775fde7be898",
+      "bytes": 13488,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/procedural-staffing.test.ts",
+      "baselineSha256": "676fc0d0cf1c259881dbe04e1ed57d46b0e0d3b1928d336d22f7b0bd314f8e6a",
+      "sha256": "6b2ad171a6e339e5bf9ef5092a78c96a96b643d6d94a0072f891f3c6fca57f53",
+      "bytes": 16216,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/receptionist-water-refill.test.ts",
+      "baselineSha256": "93fa2ad0e66644698f6f64d54bec6e61d387f8e65217c1bbcd76de54a821d430",
+      "sha256": "8a506e313772b6fd4ad0996e1308c6f95e34a7bb7232d3ac89989ad6de324361",
+      "bytes": 15747,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/retail-operations.test.ts",
+      "baselineSha256": "eb07f1ccf21c1d4eb0d96de7ba0c009ebf00eed002cc38ef2ec16595be2ee562",
+      "sha256": "63de2941d397db42b5a0ef96f2ce75e49d96b6bf263d8143bd817c24c8e0d8cf",
+      "bytes": 38560,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/room-upgrade-support.test.ts",
+      "baselineSha256": "64fd93638484f5dc48561ace6ce6065cba067ae9eb020ce6d65f7b0dfce7b48a",
+      "sha256": "d7b62d6fc7ebec463852961473ba0e07dc5ec3687afdbe1d6dab294867c725de",
+      "bytes": 35206,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/service-operations.test.ts",
+      "baselineSha256": "14d82f94b813c8b17c33d7ed02ff1c24a440ff561bc348d7d4243aec42190707",
+      "sha256": "5cd6fa261c215b480972e51ea6dedb252fe810ac8d6fafbb3cacc6884f9abfac",
+      "bytes": 78911,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/service-procedure-operations.test.ts",
+      "baselineSha256": "5132241ff267d16394fbafc2c97873d868abe2f50d69e5575baa2cd20d8d15ff",
+      "sha256": "240e2b1594dd859237571c3a6d27e6834145b9df4e21ca18431fd9cd1e287782",
+      "bytes": 91335,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/staff-dispatch-fairness.test.ts",
+      "baselineSha256": "f2c9f378466c96f7e273ce559aabc63bc9a439495954078a6ce694209fcafe90",
+      "sha256": "9d5fa690b7b8cc55b52c2d1416d0ac3ba5d2e2901505df616765fb0b78f8e05f",
+      "bytes": 31883,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/surgery-center-batch.test.ts",
+      "baselineSha256": "a2f992919893bee5ba5b84cfc1d059020e51e075139f93e97eb1590034375bfe",
+      "sha256": "11e3e8e51cc6c4d3ecb787108ad6a447e38e385e6bff2ce37fd2acb956994571",
+      "bytes": 19110,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "baselineSha256": "d84b3b533429603398028aa6ebdefea8617a9052aaa0035e3888ee98b992bbea",
+      "sha256": "0ad5916f4a81dc90fcb624c41435ee1634c69a254784cdf43f9bf9fff4297b80",
+      "bytes": 23458,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/timing-encounters.test.ts",
+      "baselineSha256": "9fa6500b2cdd44fe1343eaca4ef9abe3ef307dd9924f3d5879493911b96cc9fc",
+      "sha256": "1da988ce042ecd4b29ed0a842fd9079d22e4e08eabf8e4d59d0ec7c52b0c2262",
+      "bytes": 69116,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/ultrasound-first-imaging.test.ts",
+      "baselineSha256": "a608b263df16106090982f4f9cdacba83fb0666717196b00838a4404f68ed735",
+      "sha256": "d54cea3b91ef28e9e0cb5c5ba948f16fd17eec3da6277a119c09ad4f3a887582",
+      "bytes": 49479,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/variety3-admission.test.ts",
+      "baselineSha256": "c8dee25e5f261f310f0e70ffb29d8e881df604300a84376223b1a08e7a981e09",
+      "sha256": "5e1051147329feed42ccbeb6f81e638b7a1c52e14f278c6bac89dd4ab79df944",
+      "bytes": 14709,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/tests/wound-ostomy-services.test.ts",
+      "baselineSha256": "e76cf96fefe379fcb29902e869cefaae3c8499765164b877839901b956bc28eb",
+      "sha256": "93939ab4de1d39657d67384fd51c6d68c546e80bc92d54bb0cee4072c16de04d",
+      "bytes": 15185,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "packages/game-domain/vitest.config.ts",
+      "baselineSha256": "aa50ac9a4b3d427b21b3eec1ee5b2080a1fe2d5030d0aa6b03b5d3d2ccc0d063",
+      "sha256": "837b45e5f32015a706731d023f178cc2addafcc5e007af60c12fe25eeefebb7c",
+      "bytes": 429,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "tests/e2e/helpers.ts",
+      "baselineSha256": "8d79ee82af58d86c386746388b2c2ec3f9884d64d656e7798e25945fbfe4e4b4",
+      "sha256": "8b3c733abec34051124f6de3d6ddc5d3fe3d8789c5dd398d9cdb124b6dedb805",
+      "bytes": 21458,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "tests/e2e/level-five.spec.ts",
+      "baselineSha256": "8697e951007e63caa70325c8ef18f19334c1ed8e31543acd4295cb941bb4e459",
+      "sha256": "68397c4cd96e68ace93a6990c5a9293620e66e64a9572163d39aabe58cb941d5",
+      "bytes": 15280,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "tests/e2e/level-three-goals.spec.ts",
+      "baselineSha256": "f0fa933eb3e218b0c000e082127b79cedab70fef766301f4401112d1fd4fa29c",
+      "sha256": "34106319347ad3186d2a07eebfa5aedd2c87594f6cc72e1d288aadb85340c281",
+      "bytes": 7850,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "tests/e2e/ui-density.spec.ts",
+      "baselineSha256": "ff2d71402f4dcdf6032c68b3fa9b9fdf653b3ced402ab2f4ceb5b25eda20afc4",
+      "sha256": "6ff0cdbd13ccef59413e7a9dbb79e9293760651b937995b1d45042260e3785a9",
+      "bytes": 16101,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "tests/fixtures/level-five-inspection.ts",
+      "baselineSha256": "17e4b646f25f63f439db7d3383d8d3bf97834f8f76712a126a50923971ab070d",
+      "sha256": "2e339ec995bf72023af4fc4e9656af4bbfd0bf6dac57a29089c7ed7837b76c51",
+      "bytes": 6681,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "tests/fixtures/level-five-inspectors.ts",
+      "baselineSha256": "f2bce1d99141bd8b46dd9c34ae11ab09f08c9c68237bc68076067573dda63db2",
+      "sha256": "86f09bf4e124197e9b1bec453105d7da7713f46bd6eb5956f9e01e0bd49dab6a",
+      "bytes": 2148,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "tests/fixtures/level-five-integration-checkpoints-20261012.json",
+      "baselineSha256": "c037c779f004100fd5040ac0f058f85a002402031ed03308d422a8f55bec9d6a",
+      "sha256": "10322f2f3d58be7c211cdd3efd25915f01832f5af0f03a8e32a09397469b0346",
+      "bytes": 12639739,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "tests/fixtures/level-five-launch.ts",
+      "baselineSha256": "0fc5996627f37cce8dcc607e4ac8882f3fcfd8259cce48655ae9027fc495166e",
+      "sha256": "1d3476407157f4473b11d4921a652c85a5689bcf150bb0be5b8c7c6a37b8375d",
+      "bytes": 2537,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "tests/fixtures/level-five-legacy-behavior-20261012.json",
+      "baselineSha256": "3e53f6823564416b371e611778d4f264aeddae10fa5272f3ed3656dcd00fd516",
+      "sha256": "421e564f86cb502cb3dda02c84c5a19352c575ab89a4236654ef7d0cb249491e",
+      "bytes": 1506282,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "tests/fixtures/level-five-progression.ts",
+      "baselineSha256": "b5d160fcc78c2a11b997711e2ff323980bdc7bc0d2b86f636fa9b83c07e29cce",
+      "sha256": "5b8c5ebefc826da7c8dcdc2d89529147fec50fd7c53d6cbba28e5f43fe0bb873",
+      "bytes": 7114,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "tests/fixtures/level-five-state.ts",
+      "baselineSha256": "5978e3ebb96481103c6aa23e5664404629dcc536f36049c40ec4e3c44c1ca78a",
+      "sha256": "f806cc7f11a8c82b76e67b1649bd16e1c118787c666f31eb9afb635c44039f02",
+      "bytes": 17675,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "tests/fixtures/level-four-progression.ts",
+      "baselineSha256": "da3a9f689de721d913d45c245afc0ff68e0acd74ac2f7304c58adda91336bc27",
+      "sha256": "77fb33d421cc6992196bb8f7da10449f055786fb15cda45120619b727e6c4b9c",
+      "bytes": 6492,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "tests/fixtures/pediatric-charts.ts",
+      "baselineSha256": "231049d16b9124e439860c24bb31f6ebf06325ac36ddb119fec75cd4d9e1af85",
+      "sha256": "72caba1b7340ad0b3d609707d32bc45ff19eceb70b3adaabc8e9412eb7274f24",
+      "bytes": 3239,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "tools/qa/level-five-integration-results-20261012.json",
+      "baselineSha256": "e1d628ab50c9522896564043d72facc7580570185038e64e0116c494bc4e3ff2",
+      "sha256": "dead50020355be0bc328ff4557cd40199763097a8aa01baa3f8944d22492a8d5",
+      "bytes": 967829,
+      "capturedInAssignedScope": false,
+      "liveOnlyReason": "regenerable_tool_test_or_analysis_output"
+    },
+    {
+      "path": "tools/qa/level-five-launch-bootstrap.ts",
+      "baselineSha256": "6a32952b3b17d7cf80efdf14e930d0be16fcf8c18d7e0297e31bd5675966b79e",
+      "sha256": "406a302b3bdc3c94b39ab2e28ebe963b90a4c183d90888c29b0293e127dab95c",
+      "bytes": 2568,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "baselineSha256": "1ce896b0d094ea62c231a2f45ef452468d64c9db2edf72f2a3d016c4e6f96ec2",
+      "sha256": "c29d3603ff0af7c6ebb3494dac6f29fd519367bc59cc94e90b6252290ac7c65b",
+      "bytes": 1776,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/App.tsx",
+      "baselineSha256": "a8b0f8c639af4f4ef8ce5e914c6b36e13d5307409c738c1cc2ca35ef5f227acb",
+      "sha256": "c91141465a69ddd807be112126f39e91bdd8fa2c36488cfd119f790e9da672b6",
+      "bytes": 38539,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/AppShell.tsx",
+      "baselineSha256": "191457b669563681271b4017a3f552769d6d34741bca6394f5552ee1e37099b5",
+      "sha256": "d602922bce21debc9dc2e1529dce79da0203c98ab8f12ce1321736b30fd4a1ea",
+      "bytes": 44206,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/appVersion.tsx",
+      "baselineSha256": "89faf70669290c3f90c5319f73733dc98544443419362bd504b9dc435c63a2da",
+      "sha256": "1fd84662f1cdd0fd7066a78340b5205a2de63355bbd5327c4d39ffb4a69cee63",
+      "bytes": 277,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/auth/AuthAccountContext.tsx",
+      "baselineSha256": "3ddd89b1d7b607fb77ce1eaa51a88479696c37d5d221937a86cc62bdc4330a2f",
+      "sha256": "3b27d3f58355f49c4736e08104ae66ab93ee17b9e449ef07a33ef11562d03fa9",
+      "bytes": 887,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.test.tsx",
+      "baselineSha256": "ac132180905d16b299f1538d857d091a4184cdeaf576d81a29198b8a95c2239f",
+      "sha256": "ec707395865f18c2c490cee2d269bd09b8d24650c8c8a451fe72540a99e4e739",
+      "bytes": 27600,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.tsx",
+      "baselineSha256": "0f48bf760984e4592b06b151eab9bd303d076deb9d4e3e310d6f656da10a59a9",
+      "sha256": "9e64d2f0ce78a07638020441e5a7ae256a3a90e5bf047affd691e7b00a128886",
+      "bytes": 16731,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/auth/authPasswordFlow.test.ts",
+      "baselineSha256": "70aeab7fc4002b5d62756cb1501e27d5ff84521f7438336d9727f958db3e2731",
+      "sha256": "e34fe1a267eb0615e8bcface15b8597ee6c230241ae1b0fec06ff94b31435624",
+      "bytes": 1526,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/auth/supabaseAuth.ts",
+      "baselineSha256": "0be61ee34a833dbeb394c1deeb2fe7f770e9f5eb6a484bc4a6a530298c3759b4",
+      "sha256": "a437172fb756557bb34f383b73be1db76446c8de6c18eccb34a3a2796ef2ff01",
+      "bytes": 3054,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/MobileChart.tsx",
+      "baselineSha256": "548ee9f44e51c5a7dcc731f7377de946301171f2cb3ff542dc4b1e66eef1b4e4",
+      "sha256": "c0bae9eba5b0b64de7f043c5884f07bcf67a36e42bd63129f1e2cf59e527341e",
+      "bytes": 16119,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/MobileShell.tsx",
+      "baselineSha256": "5b2867c6cef841edb8d93690fccffb206b030d071c52120ce964a1659bff0be1",
+      "sha256": "be2a3fb3bd3fecfde894c0e67afb8e47d4a9c18c255e167cb3f693982b1aaf00",
+      "bytes": 40318,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/mobile/MobileTopBar.tsx",
+      "baselineSha256": "c75b72e99cd757029c4dd3894bce888abe98fdbb7e73278ef1f3824168e85685",
+      "sha256": "f1e2d651d5107eb8b3f66c7942baf85cba7a15d3b6474e8b41d684a79bf23b50",
+      "bytes": 5421,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/playtime/UsageProvider.test.tsx",
+      "baselineSha256": "1abc14b7b0077188be9d6370afdf69d22e46ce6162c471045096e4dbabc3f49b",
+      "sha256": "c9a484be688dc81895e153aba3f0a0eaddeb9efbc3ce43762a611606ed60b33f",
+      "bytes": 2376,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/playtime/UsageProvider.tsx",
+      "baselineSha256": "63338de27b31134b6736bd64cf3f526e24f7c315d540cc8fc8efa8e6f47ec556",
+      "sha256": "3e7d10a94e299c5713724a3fe304a3162fca768ca5c573da14c9def3b2f5f046",
+      "bytes": 4871,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/playtime/beta1Integration.test.tsx",
+      "baselineSha256": "6eacf120704a67e75b232a6be9fb3e3dd7041a0a08e8a27ebd4ec57671d761cc",
+      "sha256": "647c3c0fe9bec87f76cf5e1fab39544c1ba96a5b7ea458bc4f573c8fa49f9e47",
+      "bytes": 21412,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/playtime/browserUsage.test.ts",
+      "baselineSha256": "8f85e1a50374d1366231277a001aa6abbdb289eecd0a06eea6d166ebe53c7942",
+      "sha256": "e7f5cd0163114fe577c9b44357c7ce86c63c38698c4620aa177d6357c666d3eb",
+      "bytes": 6755,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/playtime/browserUsage.ts",
+      "baselineSha256": "892c6134d287f33567d8329d4788bc44cbddfa1a63b92c9cf063beb283b693c5",
+      "sha256": "4049b6d9c6f03e24ab74b96f7d02f906b4a9cd58e0d0acae2f51ec2e42c94dd1",
+      "bytes": 3022,
+      "capturedInAssignedScope": false,
+      "liveOnlyReason": "concurrent_worker_modified_during_run_live_only"
+    },
+    {
+      "path": "apps/player/src/playtime/playtimeTracker.test.ts",
+      "baselineSha256": "5a0ffd5d77e16273500fd543c3ff6f9091006e6bbefa48bab90bdf9e238ad21b",
+      "sha256": "fd8844a2a5f01bdd4a7f4527e14c73dc237cc48b4b88c8e7f07796d9bc8f7e05",
+      "bytes": 22766,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/playtime/playtimeTracker.ts",
+      "baselineSha256": "1d912ffe87fee0c91022010062a615be430f44e001d33cafdde500d5287153f6",
+      "sha256": "3843fb0186ef44da21e5d926266158ae42c83cec4e20e6d936358b68558e4a40",
+      "bytes": 12473,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/playtime/supabaseUsage.test.ts",
+      "baselineSha256": "17875cd400610f80e817471cd4daec310ce7ce2464c92fa55869f4fdb260727e",
+      "sha256": "fb740e97a6dddaceb12902e3bfa58204c517fd8ba85215ffcc5bcde1998ed600",
+      "bytes": 4925,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/playtime/supabaseUsage.ts",
+      "baselineSha256": "38d6f96bc0a432f87cd2aabe9754375bf67c0212c56ead120937a1b58284bdf2",
+      "sha256": "bf1db15c70ab232b306a68d446312313967847447d078ad1a49a7d539ea9c008",
+      "bytes": 4307,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/playtime/usageOutbox.ts",
+      "baselineSha256": "74c72e064ead085a5b23dbd73590f55d1e222b3ab3c500b45058020865310b7e",
+      "sha256": "ac22949bb65414ef5a50b8c92a970d59328a1f6e2ce001d0fbde07c07579861b",
+      "bytes": 3090,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/playtime/usageSessionIntegration.test.tsx",
+      "baselineSha256": "103130df6b1560d3e582b9e28d385298016f0b4e55f4700873198216aa3641dd",
+      "sha256": "b281d3b54f495de4d8b011633e4ab565ff5a06d73dc470012d04b87054c45a83",
+      "bytes": 8347,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/playtime/usageTypes.ts",
+      "baselineSha256": "7023c3d63277cd040b2134e69fa355c29092ad5b92e62f374e2e8a28b5c54e2e",
+      "sha256": "3c56c22743fffc614502d101f7837025cd980423ebab616532f54f34a181c891",
+      "bytes": 4592,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/QuestionFlagProvider.tsx",
+      "baselineSha256": "a5fef8e501315cfb7888bfb879db169faf3878abab605407fd86d6f5ba52eb9a",
+      "sha256": "ca9111e876ced42e4c34afb2d020d980eb1cacab29d768def8799e6c9d25bcca",
+      "bytes": 2578,
+      "capturedInAssignedScope": false,
+      "liveOnlyReason": "concurrent_worker_modified_during_run_live_only"
+    },
+    {
+      "path": "apps/player/src/session/accountStorageKey.ts",
+      "baselineSha256": "de578495268e4f5c6ca0c7923a3db305e7575aadb6af67eac30b923051c36b48",
+      "sha256": "52182ceb922ae7ddb6b9207c96be8b945aa8cbf674182a3cea9429a9f0cc8c96",
+      "bytes": 807,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/hostedQuestionFlags.test.ts",
+      "baselineSha256": "4bed454ab58a2df48b8f33cc6d3b86d96dea44eca2c9162c04b8d01d67543e6c",
+      "sha256": "fda34dd1b80d5e84b5ddae8747777d0c8c5b41f35fea05ac8cc6ce4fc304950c",
+      "bytes": 11220,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/hostedQuestionFlags.ts",
+      "baselineSha256": "315ffc8be9ceae1a8c97af9148a9622682ffbbe424b42193403541f38092aaa7",
+      "sha256": "f1f293ecb6e6ac79413a03264f93e9e1c43c656964086887824aa71c914bf9bd",
+      "bytes": 15376,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/prototypeStorage.ts",
+      "baselineSha256": "301a5ae0e83180742dec70f14a8b663224cd37079093a37af7220fa1f45fcb82",
+      "sha256": "b507eba29e7156f8dd6a692169e46410a6805b5d0bba9b745c4b74ee590ce6a4",
+      "bytes": 23884,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/questionReviewFlags.ts",
+      "baselineSha256": "a44833d07baa4293d86f8188cab3123ee2b41d1510d4aefdfb41b2dcafe3245a",
+      "sha256": "9ba009855c0a64a9f886afec557773414204ad492c148039d4f6534d10202994",
+      "bytes": 13705,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/surgeryCenterServicePreviews.test.ts",
+      "baselineSha256": "72386e682465d02325a0dc19e21eabb51db39871f06933d4198c504c4c40e0b5",
+      "sha256": "31434a6c17f2fea95179c49f15cd6173d534ea1618527c2a4373a80b3a4027f4",
+      "bytes": 37755,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/session/usePrototypeSession.ts",
+      "baselineSha256": "256f356cb7b62b2b23591bda0761860d8ec764720f4acb683b0c58c09979d1bf",
+      "sha256": "4d268f1f78d82d72d98c0a50d98bc553a0899507145d6d89f3e147d74b0b97ce",
+      "bytes": 110528,
+      "capturedInAssignedScope": false,
+      "liveOnlyReason": "concurrent_worker_modified_during_run_live_only"
+    },
+    {
+      "path": "apps/player/src/session/viewModels.ts",
+      "baselineSha256": "4f00cad4421632e557fdcd1145043f11a214352d41a554b5b545e4490edab7fa",
+      "sha256": "19557061dc2f49fb0bd1b6453e157ff706d9d0af1b8139d5ad360cd45f3aaece",
+      "bytes": 147820,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/AccountMenu.tsx",
+      "baselineSha256": "758a75265c82451bb3bab34b70915d795c329163196405eb38800d0e54095620",
+      "sha256": "894e5b6a753b2f6587c4979e2e5522271c9932fff563a4a1f9c981c38e8c316a",
+      "bytes": 19111,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/ChartPanel.tsx",
+      "baselineSha256": "83d9fa574e079a505b49b891943c9671117da3aa197dcdf666098e93dee5084b",
+      "sha256": "3d7bb25bb0a53ea5e486decb566999f070cef3dd4cb293e5ad4b329c06d18408",
+      "bytes": 36611,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/EmployeeDiscussionPanel.tsx",
+      "baselineSha256": "bf072bb640ebb57f129a298d78a88b83e4d9afa382f55709e0f98ab7c63a06e5",
+      "sha256": "9a3344bfdd51181963de3c9335eeacab3c110fbcbcdd6801b8992de8e3862acb",
+      "bytes": 3049,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/HelpDialog.tsx",
+      "baselineSha256": "1937191bdfe2a97f72ec70c6234c0fe968665f0a69e47f25659e41dc76af373a",
+      "sha256": "a12f89e9b2d47da8a3fe8fd909ac1068fefedd2e1f480cba24aef3e218777672",
+      "bytes": 6308,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/OpeningSequence.tsx",
+      "baselineSha256": "537945bb78aa955fd363d2a4a42123dc6cb5e16fb9d7c12912034c45d852f74e",
+      "sha256": "2cda3f55f46e3f6a056ae0667e44150fe898fa206c92fff971f14b0b1531b9ad",
+      "bytes": 10819,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/QuestionFlagControl.tsx",
+      "baselineSha256": "3e5e161b226e54f099821e56f39d1e81814fd87caa7a363edd065c12d1e67fb3",
+      "sha256": "1a6ebabc91dd55d71de416af30b1d15acb889ad01590583f5a29f0f2316676d3",
+      "bytes": 5741,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/betaAccount.css",
+      "baselineSha256": "dfcc2940857325eb6040045a74bf9293b934d76f9db746ea7336eb5f9681c251",
+      "sha256": "139e3f354ced342c23dddd66e4c83ae0308093cffe6b3ecb4f5686d9f4f13a3d",
+      "bytes": 3504,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/src/ui/types.ts",
+      "baselineSha256": "d8ed7fa7131138eb5e18d91433909236efc21ada653e708a1572c5dedbbab97f",
+      "sha256": "3c6ff78f4d65f321e8d35be30117725e1e19e0e02906ce3291c9096ddef6783d",
+      "bytes": 24185,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "apps/player/vite.config.ts",
+      "baselineSha256": "4aab2d70e60b0fe978746698fdb976710f59b2cd19308eb33075620ebacdee18",
+      "sha256": "f7d8b21f53f26464a387bd915c0f24c5f13d3101fe293975a7a7be639d28213e",
+      "bytes": 972,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "docs/execplans/accounts-playtime-release-20261012.md",
+      "baselineSha256": "cfab516ee7fd320a6cb460fe907435e736b5a209a0d238db80bba70844a9f16f",
+      "sha256": "ee047b990b4391de94e5ce58c1e35b4b36dd4745c8cd145be6302c50b57f2f0e",
+      "bytes": 216753,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+      "baselineSha256": "7128d8e7edee4da1295ae3b7ee0b12dd78030e997b78dae63fea6f8008911f95",
+      "sha256": "10c5f5a4f6cd657208effea75e805d43b1e0cf3a64dc677c49c9dfacdafe2685",
+      "bytes": 990731,
+      "capturedInAssignedScope": false,
+      "liveOnlyReason": "concurrent_worker_modified_during_run_live_only"
+    },
+    {
+      "path": "docs/setup/BETA1_SUPABASE_SETUP.md",
+      "baselineSha256": "1f900de4904e24c91224c8eeec9ed7748054be166f05d6939c10e6b70043f6a8",
+      "sha256": "1ca869e2d05a2aaf545d417a0769e6d2dd3161244335ad8ad70c9a6c5030c9e0",
+      "bytes": 31813,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    },
+    {
+      "path": "supabase/tests/README.md",
+      "baselineSha256": "a34ceca05b4ab54505dafc461796e7a4a8ab11a0b7b0a38b471a3138782192d5",
+      "sha256": "cab59d363f8ba99b95daf3348e5a1ffda18b8011a6633ed4a7dc824fbed7a87b",
+      "bytes": 22488,
+      "capturedInAssignedScope": true,
+      "liveOnlyReason": null
+    }
+  ],
+  "unchangedPriorTargets": 3270,
+  "capturedTargets": 2938,
+  "excludedPlannedTargets": [
+    "apps/player/src/competition/useCompetition.tsx",
+    "apps/player/src/diagnostics/problemDiagnostics.ts",
+    "apps/player/src/facility/FacilityCanvas.tsx",
+    "apps/player/src/playtime/browserUsage.ts",
+    "apps/player/src/session/QuestionFlagProvider.tsx",
+    "apps/player/src/session/cloud/codecCompression.ts",
+    "apps/player/src/session/cloud/codecJson.ts",
+    "apps/player/src/session/cloud/gameSession.ts",
+    "apps/player/src/session/cloud/operationalEngineClient.ts",
+    "apps/player/src/session/cloud/operationalSessionEngine.ts",
+    "apps/player/src/session/localJournal.ts",
+    "apps/player/src/session/storagePressure.test.ts",
+    "apps/player/src/session/storagePressure.ts",
+    "apps/player/src/session/usePrototypeSession.ts",
+    "docs/handoffs/CURRENT_THREAD_HANDOFF.md"
+  ],
+  "unaccountedPlannedTargets": [],
+  "olderOutOfLaneComparison": "Checkpoint-six exclusion path/size plus pre-baseline modification time; metadata comparison, not an invented historical hash."
+}

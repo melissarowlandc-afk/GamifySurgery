@@ -1,0 +1,16 @@
+--- a/packages/balance-config/src/level-five-progression.ts
++++ b/packages/balance-config/src/level-five-progression.ts
+@@ -4,8 +4,11 @@
+ export const LEVEL_FIVE_STAGE_DEFINITION = facilityStageDefinitionSchema.parse({
+   level: 5,
+   displayName: "Level 5 - Optimized ASC / Prestige",
+-  minimumClinicalXp: 2000,
+-  minimumCompletedEncounters: 0,
++  // Editorial campaign pacing; existing inspection unlocks remain earned.
++  minimumClinicalXp: 2300,
++  // Editorial clinic-volume requirement for an established satisfaction record.
++  // Completed encounters advance once regardless of their scored-node count.
++  minimumCompletedEncounters: 330,
+   satisfactionMustBeGreaterThan: 90,
+   minimumAverageStaffMorale: 85,
+   requiredRoomDefinitionIds: [],

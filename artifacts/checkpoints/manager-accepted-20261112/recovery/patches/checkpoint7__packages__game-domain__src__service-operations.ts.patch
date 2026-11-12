@@ -1,0 +1,459 @@
+--- a/packages/game-domain/src/service-operations.ts
++++ b/packages/game-domain/src/service-operations.ts
+@@ -1,12 +1,18 @@
++import { procedureConsultPresentations, serviceConsultBlocksPhase } from "./founder-consults";
++import { bindRoutineClinicWork } from "./clinic-work";
++import { clinicConsultPresentations } from "./clinic-consults";
++import { pediatricConsultPresentations } from "./clinic-consult-topics";
+ import { observeInspectionReceipt } from "./facility-inspection";
+ import {
+   PROCEDURAL_SPECIALIST_SHORT_WAIT_MINUTES,
++  FOUNDER_CONSULT_POLICY,
+   SERVICE_INCOME_CATALOG,
+   getServiceIncomeLine,
+   type ServiceIncomeLine,
+   type ServiceOperationPhase,
+ } from "@gamify-surgery/balance-config";
+-import { createPatientDisplayName, createPatientPixelAppearance, getPatientAppearanceSelectionContext, getPresentPatientDisplayNames } from "./appearance";
++import { createPatientDisplayName, createPatientPixelAppearance, getPatientAppearanceSelectionContext, getPresentPatientDisplayNames, getPresentColleagueDisplayNames } from "./appearance";
++import { getNamePresentationProfile } from "./namePresentationProfiles";
+ import { releaseGiftCheckout } from "./gift-retail";
+ import { getDoorCells } from "./doors";
+ import {
+@@ -45,6 +51,7 @@
+ import { bindServiceOperationRecoveryExperience, cloneRoomUpgradeRecoveryQuote, completeServiceOperationRecoveryExperience, completeWaitingRoomExperience, createRoomUpgradeRecoveryQuote } from "./room-upgrade-experience";
+ import { getProcedureStaffStandingSpots, getProceduralSpecialistReadyAt, isProceduralSpecialistRole, usesApprovedProcedureStaffSpots } from "./procedural-staffing";
+ import { compareStaffHomePreference, hasQueuedHomeRoomWork } from "./staff-dispatch";
++import { chooseWaitingAreaDestination, serviceWaitingPointKind } from "./waiting-destinations";
+ import { APP_APPOINTMENT_INCOME_LINE_ID, APP_APPOINTMENT_INCOME_LINE_IDS, PEDIATRIC_APPOINTMENT_INCOME_LINE_ID,
+   appAppointmentKind, appAppointmentRoomDefinitionId, bindAppAppointmentRevenue, getAppAppointmentHomes, getScoredExaminationRoomIds,
+   isAppAppointment, pendingAppClinicService, recordWoundOstomyVisitCompletion, scoredPatientNeedsExamRoom } from "./app-appointments";
+@@ -546,6 +553,9 @@
+     const sharedCapabilityIds = new Set([
+       "capability.ambulatory_or",
+       "capability.periop_recovery",
++      // Installed OR-nurse capacity is already proved above. A nurse walking
++      // or on another task must queue the visit, not erase its arrival clock.
++      "capability.staff.or_nurse",
+     ]);
+     const installedCapabilities = getCurrentCapabilities(state, context);
+     return line.requiredCapabilityIds
+@@ -572,7 +582,7 @@
+ }
+ 
+ function isCapacityScaledScheduledOperation(operation: ServiceOperationState): boolean {
+-  return operation.actorKind === "visitor" &&
++  return (operation.actorKind === "visitor" || Boolean(operation.consultEncounterId)) &&
+     (SCHEDULED_ENDOSCOPY_LINE_IDS.has(operation.incomeLineId) ||
+       SCHEDULED_AMBULATORY_OPERATION_LINE_IDS.has(operation.incomeLineId));
+ }
+@@ -587,7 +597,7 @@
+       (operation) =>
+         active(operation) &&
+         operation.status !== "leaving" &&
+-        operation.actorKind === "visitor" &&
++        (operation.actorKind === "visitor" || Boolean(operation.consultEncounterId)) &&
+         (isScheduledEndoscopyLine(line)
+           ? SCHEDULED_ENDOSCOPY_LINE_IDS.has(operation.incomeLineId)
+           : operation.incomeLineId === line.id),
+@@ -611,6 +621,7 @@
+   const generalWaiting = state.serviceOperations.filter(
+     (operation) =>
+       operation.actorKind === "visitor" &&
++      !isAppAppointment(operation) &&
+       !isCapacityScaledScheduledOperation(operation) &&
+       (operation.status === "arriving" ||
+         operation.status === "waiting_for_resources"),
+@@ -698,11 +709,22 @@
+   return usable.length <= (clinical.roomDefinitionCounts.get(phase.roomDefinitionId) ?? 0);
+ }
+ 
++function periopBedConnectsToEndoscopy(state: GameState, operation: ServiceOperationState, roomId: string, point: GridPoint, context: DomainContext): boolean {
++  // Installed geometry only: occupied suites and temporarily busy staff still
++  // queue. Accepted diagnostic choices retain their separate frozen contract.
++  if (operation.diagnosticPhysicalWork || operation.phaseIndex !== 0 || operation.phaseFlowVersion !== 1 ||
++      operation.frozenOperationPhases?.[0]?.roomStationId !== "periop_preparation" || !SCHEDULED_ENDOSCOPY_LINE_IDS.has(operation.incomeLineId)) return true;
++  return state.rooms.some(room => room.roomDefinitionId === "room.endoscopy" && isRoomOperationalForFacilityWork(state, room.id, context) &&
++    findRouteFromDisplacedLocationToPoint(state, context, point,
++      getRoomNavigationAnchor(room, getRoomDefinition(room.roomDefinitionId, context)!), new Set([roomId, room.id])).length > 0);
++}
++
+ function availablePeriopBedReservation(
+   state: GameState,
+   operation: ServiceOperationState,
+   context: DomainContext,
+   blockedRoomIds: ReadonlySet<string>,
++  repairProcedureAccess = false,
+ ): NonNullable<ServiceOperationState["periopBedReservation"]> | null {
+   const preferred = operation.diagnosticPhysicalWork?.phaseBindings[operation.phaseIndex]?.resource;
+   if (operation.periopBedReservation) {
+@@ -712,6 +734,13 @@
+       ? getRoomCareStations(room, definition, state.doors, state.rooms, (id) => getRoomDefinition(id, context))
+         .find((candidate) => candidate.id === operation.periopBedReservation!.bedId)
+       : null;
++    if (repairProcedureAccess && operation.status === "waiting_for_next_phase" && station && room &&
++        !periopBedConnectsToEndoscopy(state, operation, room.id, station.patientAnchor, context) &&
++        availablePeriopBedReservation(state, { ...operation, periopBedReservation: undefined }, context, blockedRoomIds)) {
++      // Reuse the existing invalid-bed repair on the next simulation tick.
++      // Keep the old bed if no connected replacement is currently free.
++      return null;
++    }
+     return station && samePoint(station.patientAnchor, operation.periopBedReservation.endpoint) &&
+       isRoomOperationalForFacilityWork(state, room!.id, context)
+       ? operation.periopBedReservation
+@@ -744,6 +773,8 @@
+     );
+     for (const station of stations) {
+       if (station.kind !== "periop_bed" || (preferred && station.id !== preferred.stationId) || occupied.has(`${room.id}:${station.id}`)) continue;
++      if (!periopBedConnectsToEndoscopy(state, operation, room.id, station.patientAnchor, context) ||
++          state.serviceOperations.some(other => other.id !== operation.id && active(other) && samePoint(operationLocation(state, other), station.patientAnchor))) continue;
+       const actorLocation = operationLocation(state, operation);
+       if (!actorLocation || findRouteFromDisplacedLocationToPoint(
+         state, context, actorLocation, station.patientAnchor, new Set([room.id]),
+@@ -873,7 +904,7 @@
+   // Accepted room/employee choices remain frozen. Unbound work tries every
+   // reachable room/team rather than abandoning the first unusable ID pair.
+   if (preferred) return tryReserveInRooms(state, operation, line, context, movementStatus);
+-  if (isAppAppointment(operation) && scoredPatientNeedsExamRoom(state, operation.incomeLineId)) {
++  if (isAppAppointment(operation) && scoredPatientNeedsExamRoom(state, operation.incomeLineId, operation.consultEncounterId)) {
+     operation.resourceWaitReason = "Waiting while the founder sees a scored patient";
+     return false;
+   }
+@@ -881,7 +912,7 @@
+   const reservationPhases = operation.phaseFlowVersion === 1 ? phases.slice(operation.phaseIndex, operation.phaseIndex + 1) : phases;
+   const clinical = getClinicalResourceReservations(state, context);
+   const usedEmployees = getActiveServiceOperationEmployeeIds(state);
+-  const scoredRooms = isAppAppointment(operation) ? getScoredExaminationRoomIds(state, context) : new Set<string>();
++  const scoredRooms = isAppAppointment(operation) ? getScoredExaminationRoomIds(state, context, operation.consultEncounterId) : new Set<string>();
+   let combinations: GameState["rooms"][] = [[]];
+   for (const definitionId of requiredRoomDefinitions(reservationPhases)) {
+     const available = state.rooms.filter(room => room.roomDefinitionId === definitionId &&
+@@ -975,7 +1006,9 @@
+     const targets = procedureNurse && usesApprovedProcedureStaffSpots(room, definition)
+       ? getProcedureStaffStandingSpots(room, definition, state.doors, "nurse").map(spot => spot.anchor) : [fallback];
+     for (const target of targets) {
+-      const allowed = new Set([room.id]);
++      // The operation retains its own periop bed through the procedure. Staff
++      // movement already authorizes that room; route acquisition must agree.
++      const allowed = new Set([room.id, ...(operation.periopBedReservation ? [operation.periopBedReservation.roomInstanceId] : [])]);
+       const supportRoom = state.facilityLevel >= 5 ? getLevelFiveSupportRoomAt(state, employee.location) : null;
+       if (supportRoom) return findLevelFiveSupportExitPath(state, supportRoom, employee.location, target, context, allowed);
+       const ordinary = findCareAwareFacilityPath(state, context, employee.location, target, allowed);
+@@ -1024,7 +1057,7 @@
+       ? getProcedureStaffStandingSpots(room, definition, state.doors, actor).map((spot) => spot.anchor)
+       : [fallback];
+     for (const target of targets) {
+-      const roomIds = new Set([room.id]);
++      const roomIds = new Set([room.id, ...(operation.periopBedReservation ? [operation.periopBedReservation.roomInstanceId] : [])]);
+       const supportRoom = state.facilityLevel >= 5 ? getLevelFiveSupportRoomAt(state, location) : null;
+       if (supportRoom) return findLevelFiveSupportExitPath(state, supportRoom, location, target, context, roomIds);
+       const ordinary = findCareAwareFacilityPath(state, context, location, target, roomIds);
+@@ -1036,13 +1069,18 @@
+   let provider: ServiceOperationState["providerReservation"] = null;
+   let providerEmployeePlan: { employee: GameState["employees"][number]; path: GridPoint[] } | null = null;
+   if (providerPhase) {
++    // A continuous clinic queue must not steal the first free tick from paid
++    // training. Only a presently reachable, available training place wins.
++    const trainingDepartures = isAppAppointment(operation)
++      ? new Set(getQueuedEmployeeTrainingDepartures(state, context).map(row => row.employeeId)) : new Set<string>();
+     const specialistPriority = providerPhase.providerRoleDefinitionIds?.some(isProceduralSpecialistRole);
+     const candidates = state.employees
+       .filter((candidate) => providerPhase.providerRoleDefinitionIds?.includes(candidate.staffRoleDefinitionId) &&
+         (specialistPriority || !preferred || preferred.provider?.kind === "employee" && preferred.provider.employeeId === candidate.id) &&
+-        !isEmployeeAwayForTraining(candidate) && !selectedEmployees.includes(candidate.id) &&
++        !isEmployeeAwayForTraining(candidate) && !trainingDepartures.has(candidate.id) && !selectedEmployees.includes(candidate.id) &&
+         (specialistPriority || operation.diagnosticPhysicalWork || candidate.staffRoleDefinitionId === "staff.app" ? isEmployeeAssignedToOperationalRoom(state, candidate.id, context) : isEmployeeOperational(state, candidate.id, context)))
+-      .filter(employee => preferred || employee.homeRoomInstanceId === (isAppAppointment(operation)
++      .filter(employee => preferred || isAppAppointment(operation) && operation.clinicVisit?.requestedRoomInstanceId &&
++        !state.rooms.some(room => room.id === operation.clinicVisit!.requestedRoomInstanceId) || employee.homeRoomInstanceId === (isAppAppointment(operation)
+         ? operation.clinicVisit?.requestedRoomInstanceId : providerRoom.id) || !hasQueuedHomeRoomWork(state, employee, operation.id))
+       .map((employee) => ({ employee, path: staffPath(employee.location, providerRoom, "provider", providerTarget) }))
+       .filter((candidate) => candidate.path.length > 0)
+@@ -1109,6 +1147,7 @@
+   if (family && familyPlan) commitPediatricPairPlan(family, familyPlan);
+   operation.reservedEmployeeIds = selectedEmployees;
+   operation.providerReservation = provider;
++  bindRoutineClinicWork(state, operation);
+   freezeExecutiveComfort(state, operation, context);
+   bindServiceOperationTraining(state, operation, reservationPhases.map((_, index) => operation.phaseFlowVersion === 1 ? operation.phaseIndex : index));
+   operation.path = actorPath;
+@@ -1247,6 +1286,40 @@
+         destinationRoomInstanceId: destination.roomId,
+       }
+     : null;
++}
++
++/** Waiting paths reserve visitor seats just as waitingDestination does for encounters. */
++function routeQueuedServiceActorToWaiting(state: GameState, operation: ServiceOperationState, context: DomainContext): void {
++  if (operation.actorKind === "remote" || operation.reservedRoomInstanceIds.length > 0 || operation.periopBedReservation) return;
++  const encounter = operation.actorKind === "encounter" ? state.encounters[operation.actorId] : undefined;
++  if (operation.actorKind === "encounter" && (!encounter || encounter.patientMovement !== null)) return;
++  const kind = encounter ? "encounter" : "service_visitor";
++  const id = encounter?.id ?? operation.id;
++  const family = pediatricFamilyForActor(state, kind, id);
++  const familyWaiting = family?.reservation && ["room.pediatric_waiting", "room.waiting"].includes(
++    state.rooms.find((room) => room.id === family.reservation!.roomInstanceId)?.roomDefinitionId ?? "");
++  const endpoint = encounter?.waitingDestination?.location ?? operation.path.at(-1);
++  const currentKind = familyWaiting ? family.reservation!.childSeatId ? "chair" : "standing"
++    : serviceWaitingPointKind(state, context, endpoint);
++  if (currentKind === "chair") return;
++  // Selection may commit a pediatric pair plan. Keep a speculative standing
++  // alternative from replacing the family's current in-flight reservation.
++  const plannedFamily = family ? { ...family } : undefined;
++  const planningState = plannedFamily ? { ...state, pediatricFamilies: { ...state.pediatricFamilies, [plannedFamily.id]: plannedFamily } } : state;
++  const destination = chooseWaitingAreaDestination(planningState, context, { kind, id, location: encounter?.patientLocation ?? operation.location }, true);
++  if (!destination.reservation || destination.path.length === 0 || (currentKind && destination.reservation.kind !== "chair")) return;
++  if (family && plannedFamily) { family.reservation = plannedFamily.reservation; family.movement = plannedFamily.movement; }
++  if (encounter) {
++    encounter.waitingDestination = destination.reservation;
++    encounter.assignedRoomInstanceId = destination.path.length === 1 ? destination.roomId : null;
++    encounter.queuedCareRoomInstanceId = null;
++    encounter.patientMovement = destination.path.length > 1 ? {
++      kind: "walking_to_waiting", path: destination.path, pathIndex: 0,
++      lastMovedAtFacilityTick: state.facilityTick, destinationRoomInstanceId: destination.roomId,
++    } : null;
++  } else {
++    setOperationPath(state, operation, destination.path, "waiting_for_resources");
++  }
+ }
+ 
+ function startResolvedEncounterDeparture(
+@@ -1486,7 +1559,7 @@
+ /** Load/tick watchdog: repair missing physical journeys without restarting an
+  * accepted phase or charging/crediting work. MAX_SAFE_INTEGER is a legitimate
+  * resource queue deadline, never proof that care is complete. */
+-export function reconcileServiceOperationFlow(state: GameState, context: DomainContext): void {
++export function reconcileServiceOperationFlow(state: GameState, context: DomainContext, repairProcedureAccess = false): void {
+   for (const operation of state.serviceOperations) {
+     if (!active(operation)) continue;
+     const line = operationIncomeLine(operation);
+@@ -1523,7 +1596,7 @@
+       holdResolvedEncounterForActiveOperation(state, operation);
+       const location = operationLocation(state, operation);
+       const previousBed = operation.periopBedReservation;
+-      const validBed = availablePeriopBedReservation(state, operation, context, new Set());
++      const validBed = availablePeriopBedReservation(state, operation, context, new Set(), repairProcedureAccess);
+       const path = location && validBed
+         ? findRouteFromDisplacedLocationToPoint(state, context, location, validBed.endpoint, new Set([validBed.roomInstanceId])) : [];
+       if (!validBed || !path.length) {
+@@ -1672,6 +1745,7 @@
+   if (state.serviceOperations.some(operation => isAppAppointment(operation) && operation.status === "waiting_for_resources" &&
+     operation.pathIndex < operation.path.length - 1)) return;
+   const operation = state.serviceOperations.filter(operation => isAppAppointment(operation) && operation.incomeLineId === lineId &&
++    !operation.consultEncounterId &&
+     ["walking_to_service", "in_service"].includes(operation.status) &&
+     operation.reservedRoomInstanceIds.some(id => !scoredRoomIds.has(id)))
+     .sort((a, b) => a.createdAtFacilityTick - b.createdAtFacilityTick || a.id.localeCompare(b.id))[0];
+@@ -2144,6 +2218,11 @@
+   context: DomainContext,
+   departurePlanner?: EncounterDeparturePlanner,
+ ): void {
++  if (serviceConsultBlocksPhase(state, operation)) {
++    operation.resourceWaitReason = "Waiting for the founder consult to be answered and its chart closed.";
++    return;
++  }
++  if (operation.consultEncounterId) operation.resourceWaitReason = null;
+   if (operation.diagnosticPhysicalWork) {
+     const witness = operation.diagnosticPhysicalWork.phaseWitnesses[operation.phaseIndex];
+     if (witness) witness.completedAtFacilityTick = state.facilityTick;
+@@ -2171,7 +2250,10 @@
+     }
+     operation.completedAtFacilityTick = operation.diagnosticPhaseWork?.readingUpgradeWork ? operation.phaseEndsAtFacilityTick : state.facilityTick;
+     applyExecutiveComfort(state, operation);
+-    if (operation.diagnosticPhysicalWork) {
++    if (isAppAppointment(operation) && operation.consultEncounterId) {
++      operation.status = "completed";
++      startResolvedEncounterDeparture(state, operation, context, departurePlanner);
++    } else if (operation.diagnosticPhysicalWork) {
+       operation.status = "completed";
+     } else if (operation.actorKind === "visitor") {
+       const family = pediatricFamilyForActor(state, "service_visitor", operation.id);
+@@ -2244,23 +2326,37 @@
+     phases: frozenPhases.map((phase) => ({ phaseId: phase.id, baselineMinutes: phase.durationMinutes, boundPercent: null })),
+   };
+   const appointment = actorKind === "visitor" && APP_APPOINTMENT_INCOME_LINE_IDS.includes(line.id);
++  if (appointment && frozenPhases[0]) frozenPhases[0].durationMinutes = FOUNDER_CONSULT_POLICY.routineClinicWorkMinutes;
+   const mri = actorKind === "visitor" && line.id === "income.mri";
+   // Editorial presentation selection, independent of clinical/disease demand.
++  const pediatricProfiles = appointment && line.id === PEDIATRIC_APPOINTMENT_INCOME_LINE_ID && context
++    ? pediatricConsultPresentations(state, context).filter(profile => !excludedDisplayNames.includes(profile.childName)) : [];
++  const pediatricPresentation = pediatricProfiles.length
++    ? pediatricProfiles[deterministicInteger(state.campaignSeed, RANDOM_STREAMS.patientIdentity, `${id}:family-presentation.v1`, pediatricProfiles.length)] : undefined;
+   const childStill = appointment && line.id === PEDIATRIC_APPOINTMENT_INCOME_LINE_ID
+     ? PEDIATRIC_CHARACTER_STILLS[deterministicInteger(state.campaignSeed, RANDOM_STREAMS.patientIdentity, `${id}:child-presentation.v1`, PEDIATRIC_CHARACTER_STILLS.length)] : undefined;
+-  const childDemographics = childStill ? { sexLabel: childStill.compatibleSexLabel, ageYears: childStill.intendedVisualAge } : undefined;
+-  const appearance = encounter?.patientAppearance ?? (actorKind === "visitor" ? createPatientPixelAppearance(state.campaignSeed, actualActorId, childDemographics ?? {}, "patient", getPatientAppearanceSelectionContext(state)) : null);
++  const childDemographics = pediatricPresentation?.prototypeDemographics ?? (childStill ? { sexLabel: childStill.compatibleSexLabel, ageYears: childStill.intendedVisualAge } : undefined);
++  const procedureProfiles = actorKind === "visitor" && context ? [...procedureConsultPresentations(state, context, line.id), ...clinicConsultPresentations(state, context, line.id)] : [];
++  const procedureDemographics = procedureProfiles.length ? procedureProfiles[deterministicInteger(state.campaignSeed, RANDOM_STREAMS.patientIdentity, `${id}:procedure-presentation.v1`, procedureProfiles.length)] : undefined;
++  const appearance = encounter?.patientAppearance ?? (actorKind === "visitor" ? createPatientPixelAppearance(state.campaignSeed, actualActorId, childDemographics ?? procedureDemographics ?? {}, "patient", getPatientAppearanceSelectionContext(state)) : null);
++  if (appearance && pediatricPresentation) appearance.stillId = pediatricPresentation.childStillId;
+   const still = characterStillCatalogEntryById(appearance?.stillId);
+-  const demographics = childDemographics ?? ((appointment || mri) && still?.category === "patient" ? { sexLabel: still.compatibleSexLabel,
++  const demographics = childDemographics ?? (appointment ? procedureDemographics : undefined) ?? ((appointment || mri) && still?.category === "patient" ? { sexLabel: still.compatibleSexLabel,
+     ageYears: still.intendedAge ?? (still.ageBand === "young_adult" ? 24 : still.ageBand === "adult" ? 38 : still.ageBand === "middle_aged" ? 54 : 70) } : undefined);
+   if ((appointment || mri) && !demographics) return null;
+-  const operation: ServiceOperationState = { periopNurseAttention: periopPhases ? createPeriopNurseAttention(state, frozenPhases, trainingTiming?.categoryPercents["staff.periop_nurse"]) : undefined, roomUpgradeRecovery: actorKind === "encounter" ? createRoomUpgradeRecoveryQuote(state, frozenPhases) : undefined, id, incomeLineId: line.id, catalogVersion: 1, actorKind, actorId: actualActorId, displayName: encounter?.patientDisplayName ?? (actorKind === "visitor" ? createPatientDisplayName(state.campaignSeed, actualActorId, demographics?.sexLabel, excludedDisplayNames) : line.displayName), appearance, status: actorKind === "visitor" ? "arriving" : "waiting_for_resources", createdAtFacilityTick: state.facilityTick, waitDeadlineFacilityTick: state.facilityTick + WAIT_TIMEOUT_MINUTES, startedAtFacilityTick: null, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: actorKind === "visitor" ? line.scheduledVisitorFee ?? line.fee : line.fee, roomUpgradeRevenue: createRoomUpgradeRevenueQuote(state, actorKind === "visitor" ? line.scheduledVisitorFee ?? line.fee : line.fee, frozenPhases.map((phase) => phase.roomDefinitionId)), phaseIndex: 0, phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null, location: actorKind === "visitor" ? endpoint : encounter?.patientLocation ?? entrance?.outside ?? null, path: arrivalPath, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, cancellationReason: null, frozenOperationPhases: frozenPhases, trainingTiming, ...(actorKind === "visitor" && endpoint ? { visitorTravel: { version: "service-visitor-travel.v1" as const, offscreenEndpoint: endpoint, arrivedAtFacilityTick: null } } : {}), ...(actorKind === "encounter" ? { resourceQueueVersion: 1 as const } : {}), ...(periopPhases ? { phaseFlowVersion: 1 as const, periopBedFlowVersion: 1 as const, nextPhaseReadyAtFacilityTick: null, transitionHeldRoomInstanceIds: [] } : {}) };
++  const operation: ServiceOperationState = { periopNurseAttention: periopPhases ? createPeriopNurseAttention(state, frozenPhases, trainingTiming?.categoryPercents["staff.periop_nurse"]) : undefined, roomUpgradeRecovery: actorKind === "encounter" ? createRoomUpgradeRecoveryQuote(state, frozenPhases) : undefined, id, incomeLineId: line.id, catalogVersion: 1, actorKind, actorId: actualActorId, displayName: encounter?.patientDisplayName ?? (actorKind === "visitor" ? createPatientDisplayName(state.campaignSeed, actualActorId, (demographics ?? procedureDemographics)?.sexLabel, excludedDisplayNames, { ...(demographics ?? procedureDemographics ?? getNamePresentationProfile(appearance)), occupiedDisplayNames: getPresentColleagueDisplayNames(state) }) : line.displayName), appearance, status: actorKind === "visitor" ? "arriving" : "waiting_for_resources", createdAtFacilityTick: state.facilityTick, waitDeadlineFacilityTick: state.facilityTick + WAIT_TIMEOUT_MINUTES, startedAtFacilityTick: null, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: actorKind === "visitor" ? line.scheduledVisitorFee ?? line.fee : line.fee, roomUpgradeRevenue: createRoomUpgradeRevenueQuote(state, actorKind === "visitor" ? line.scheduledVisitorFee ?? line.fee : line.fee, frozenPhases.map((phase) => phase.roomDefinitionId)), phaseIndex: 0, phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null, location: actorKind === "visitor" ? endpoint : encounter?.patientLocation ?? entrance?.outside ?? null, path: arrivalPath, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, cancellationReason: null, frozenOperationPhases: frozenPhases, trainingTiming, ...(actorKind === "visitor" && endpoint ? { visitorTravel: { version: "service-visitor-travel.v1" as const, offscreenEndpoint: endpoint, arrivedAtFacilityTick: null } } : {}), ...(actorKind === "encounter" ? { resourceQueueVersion: 1 as const } : {}), ...(periopPhases ? { phaseFlowVersion: 1 as const, periopBedFlowVersion: 1 as const, nextPhaseReadyAtFacilityTick: null, transitionHeldRoomInstanceIds: [] } : {}) };
+   if (demographics) {
+     operation.clinicVisit = { version: "clinic-visit.v1", kind: mri ? "mri" : appAppointmentKind(line.id)!, demographics };
+-    if (childDemographics) createPediatricFamily(state, operation, "service_visitor");
++    if (pediatricPresentation) operation.displayName = pediatricPresentation.childName;
++    if (childDemographics) createPediatricFamily(state, operation, "service_visitor", pediatricPresentation
++      ? { displayName: pediatricPresentation.parentName, sexLabel: pediatricPresentation.parentRelationship === "mother" ? "Female" : "Male" } : undefined);
+     operation.phaseFlowVersion = 1;
+     operation.resourceQueueVersion = 1;
+     operation.waitDeadlineFacilityTick = Number.MAX_SAFE_INTEGER;
++  }
++  if (appointment) {
++    operation.trainingTiming = undefined;
++    operation.clinicWork = { version: "clinic-work.v1", baselineMinutes: FOUNDER_CONSULT_POLICY.routineClinicWorkMinutes, binding: null };
+   }
+   if (mri && context && entrance) {
+     const quote = planDiagnosticOrder(state, { orderId: `diagnostic.${id}`, encounterId: id,
+@@ -2313,7 +2409,7 @@
+     if (sameLine.length >= 2 || sameLine.some((operation) => operation.status === "arriving" || operation.status === "waiting_for_resources")) return null;
+     if (
+       actorKind === "visitor" &&
+-      state.serviceOperations.filter((operation) => operation.actorKind === "visitor" && (operation.status === "arriving" || operation.status === "waiting_for_resources")).length >= MAX_EXTERNAL_WAITING
++      state.serviceOperations.filter((operation) => operation.actorKind === "visitor" && !isAppAppointment(operation) && (operation.status === "arriving" || operation.status === "waiting_for_resources")).length >= MAX_EXTERNAL_WAITING
+     ) return null;
+   }
+   const operation = createOperation(state, line, actorKind, undefined, undefined, context);
+@@ -2522,9 +2618,9 @@
+       (state.nextServiceAppointmentTicks[line.id] ?? Number.MAX_SAFE_INTEGER) >
+         state.facilityTick + cadence
+     ) {
+-      // Old saves can carry the former 300-minute first appointment. Clamp
+-      // only future endoscopy timers so the new staffed-room cadence applies
+-      // promptly without delaying an appointment that is already sooner.
++      // Old saves can carry a longer first procedure appointment. Clamp only
++      // future timers to the current staffed-room cadence without delaying
++      // an appointment that is already sooner.
+       state.nextServiceAppointmentTicks[line.id] = state.facilityTick + cadence;
+     }
+     const due = state.nextServiceAppointmentTicks[line.id];
+@@ -2632,12 +2728,21 @@
+   scheduleArrivals(state, context);
+   advanceOutsideRadiologyReads(state, context, false);
+   advanceDiagnosticReading(state, context);
+-  reconcileServiceOperationFlow(state, context);
++  reconcileServiceOperationFlow(state, context, true);
+   advancePeriopNurseAttention(state, context);
+   for (const operation of state.serviceOperations) {
+     const line = operationIncomeLine(operation);
+     if (!line?.operation) continue;
+     if (operation.status === "completed" || operation.status === "cancelled") continue;
++    const consult = operation.consultEncounterId ? state.encounters[operation.consultEncounterId]?.consult : undefined;
++    if (isAppAppointment(operation) && consult?.serviceOperationId === operation.id && consult.closedAtFacilityTick !== null &&
++        operation.startedAtFacilityTick !== null && operation.cancelledAtFacilityTick === null && operation.phaseIndex === consult.phaseIndex) {
++      // This patient already received staffed care before the founder handoff.
++      // A later room interruption must not restart a finished, filed visit.
++      operation.phaseEndsAtFacilityTick = state.facilityTick;
++      moveToNextPhase(state, operation, line, context, departurePlanner);
++      continue;
++    }
+     if (operation.diagnosticPhaseWork?.kind === "interpretation") continue;
+     if (operation.diagnosticPhaseWork) {
+       const resource = operation.diagnosticPhaseWork.resource;
+@@ -2696,9 +2801,9 @@
+         operation.path = operation.location ? [{ ...operation.location }] : [];
+         operation.pathIndex = 0;
+         operation.lastMovedAtFacilityTick = state.facilityTick;
+-        const family = pediatricFamilyForActor(state, "service_visitor", operation.id);
+-        const waiting = family && planPediatricWaiting(state, context, family);
+-        if (family && waiting) operation.path = commitPediatricPairPlan(family, waiting);
++        // Pediatric appointments already wait together after check-in; retain
++        // that two-lane journey before admitting the family to its exam room.
++        if (pediatricFamilyForActor(state, "service_visitor", operation.id)) routeQueuedServiceActorToWaiting(state, operation, context);
+       }
+       continue;
+     }
+@@ -2802,21 +2907,17 @@
+       continue;
+     }
+     if (operation.status === "waiting_for_resources") {
++      if (operation.actorKind === "visitor" && state.retailOperations.some((trip) =>
++        trip.actorKind === "service_visitor" && trip.actorId === operation.id &&
++        trip.status !== "completed" && trip.status !== "cancelled" && trip.status !== "abandoned")) continue;
++      // Legacy saves and new queues both acquire a public waiting endpoint on
++      // the first failed dispatch. Advance that walk without changing queue state.
++      const walkingToWaiting = operation.pathIndex < operation.path.length - 1;
++      if (operation.actorKind === "visitor") advanceActorMovement(state, operation, context);
+       const waitingPhase = operationPhases(operation, line)[operation.phaseIndex];
+       if (isAppAppointment(operation)) {
+         const pediatric = operation.clinicVisit?.kind === "pediatric_consult";
+-        const family = pediatricFamilyForActor(state, "service_visitor", operation.id);
+         const roomDefinitionId = appAppointmentRoomDefinitionId(operation.incomeLineId);
+-        const waitingLocation = operation.location;
+-        if (!pediatric && operation.saleTransfer && operation.pathIndex >= operation.path.length - 1 && waitingLocation &&
+-          state.rooms.some(room => room.roomDefinitionId === roomDefinitionId && pointInsideRoom(state, waitingLocation, room.id, context))) {
+-          const entrance = getEntrance(state, context);
+-          const path = entrance ? findRouteFromDisplacedLocationToPoint(state, context, waitingLocation, entrance.inside) : [];
+-          if (path.length > 1) {
+-            operation.path = path; operation.pathIndex = 0; operation.lastMovedAtFacilityTick = state.facilityTick;
+-            operation.resourceWaitReason = "Returning to the public area while waiting for an APP";
+-          }
+-        }
+         const hasProvider = state.employees.some(employee => employee.staffRoleDefinitionId === "staff.app" &&
+           state.rooms.some(room => room.id === employee.homeRoomInstanceId));
+         if (!hasProvider || !state.rooms.some(room => room.roomDefinitionId === roomDefinitionId &&
+@@ -2826,33 +2927,16 @@
+             : "Clinic appointments need an APP and a reachable Examination Room.", context, departurePlanner);
+           continue;
+         }
+-        if (operation.pathIndex < operation.path.length - 1) {
+-          advanceActorMovement(state, operation, context);
+-          continue;
+-        }
+-        if (family && (operation.saleTransfer && family.reservation &&
+-          state.rooms.find(room => room.id === family.reservation!.roomInstanceId)?.roomDefinitionId === roomDefinitionId ||
+-          !family.reservation)) {
+-          const waiting = planPediatricWaiting(state, context, family);
+-          if (waiting) {
+-            operation.path = commitPediatricPairPlan(family, waiting);
+-            operation.pathIndex = 0; operation.lastMovedAtFacilityTick = state.facilityTick;
+-            if (operation.path.length > 1) continue;
+-          }
+-        }
++        if (pediatric && walkingToWaiting) continue;
+       }
+       operation.resourceWaitReason = null;
+       if (!isAppAppointment(operation) && !operation.diagnosticTiming && (operation.actorKind !== "encounter" || operation.resourceQueueVersion !== 1) && state.facilityTick >= operation.waitDeadlineFacilityTick) { cancel(state, operation, "The visitor could not start within 60 minutes.", context, departurePlanner); continue; }
+-      if (operation.actorKind === "visitor" && state.retailOperations.some((trip) =>
+-        trip.actorKind === "service_visitor" && trip.actorId === operation.id &&
+-        trip.status !== "completed" && trip.status !== "cancelled" && trip.status !== "abandoned",
+-      )) continue;
+       if (operation.actorKind === "visitor" && operation.phaseFlowVersion !== 1 && state.serviceOperations.some((candidate) =>
+         candidate.id !== operation.id &&
+         candidate.actorKind === "visitor" &&
+         candidate.incomeLineId === operation.incomeLineId &&
+         (candidate.status === "walking_to_service" || candidate.status === "walking_between_phases" || candidate.status === "in_service"),
+-      )) continue;
++      )) { routeQueuedServiceActorToWaiting(state, operation, context); continue; }
+       if (
+         operation.actorKind === "encounter" &&
+         state.encounters[operation.actorId]?.patientMovement !== null
+@@ -2867,12 +2951,7 @@
+         operation.resourceWaitReason = "Waiting for equipment repair.";
+         operation.waitDeadlineFacilityTick = state.facilityTick + WAIT_TIMEOUT_MINUTES;
+       }
+-      if (!reserved && operation.actorKind === "encounter" && waitingPlanner) {
+-        const encounter = state.encounters[operation.actorId];
+-        if (encounter && encounter.patientMovement === null && !encounter.waitingDestination) {
+-          routeResolvedEncounterToWaiting(state, encounter, waitingPlanner);
+-        }
+-      }
++      if (!reserved) routeQueuedServiceActorToWaiting(state, operation, context);
+       continue;
+     }
+     if (operation.status === "waiting_for_next_phase") {
+@@ -2967,7 +3046,7 @@
+         : null;
+     }
+   }
+-  reconcileServiceOperationFlow(state, context);
++  reconcileServiceOperationFlow(state, context, true);
+   advancePeriopNurseAttention(state, context);
+   advanceOutsideRadiologyReads(state, context, true);
+   reconcilePediatricFamilies(state, context);

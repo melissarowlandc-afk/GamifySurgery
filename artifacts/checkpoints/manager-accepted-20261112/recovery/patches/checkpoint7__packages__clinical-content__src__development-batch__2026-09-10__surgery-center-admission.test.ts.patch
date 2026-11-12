@@ -1,0 +1,33 @@
+--- a/packages/clinical-content/src/development-batch/2026-09-10/surgery-center-admission.test.ts
++++ b/packages/clinical-content/src/development-batch/2026-09-10/surgery-center-admission.test.ts
+@@ -1,5 +1,6 @@
++import {beforeProgramBatch3AcceptanceRelease} from "../../question-program-batch3-acceptance-test-support";
+ import { describe, expect, it } from "vitest";
+-import { SYNTHETIC_CLINICAL_RELEASE } from "../../synthetic-content";
++import { SYNTHETIC_CLINICAL_RELEASE as actualLive } from "../../synthetic-content";
+ import {
+   SURGERY_CENTER_BATCH_MANIFEST,
+   SURGERY_CENTER_CASES,
+@@ -27,6 +28,8 @@
+   "packages/clinical-content/src/development-batch/2026-09-10/pilonidal-disease.ts",
+   "packages/clinical-content/src/development-batch/2026-09-10/surgery-center-batch.ts",
+ ] as const;
++
++const SYNTHETIC_CLINICAL_RELEASE=beforeProgramBatch3AcceptanceRelease(actualLive);
+ 
+ describe("September 10 surgery-center batch admission", () => {
+   it("admits the complete unapproved batch exactly once with its authored boundaries", () => {
+@@ -61,9 +64,12 @@
+     expect(SURGERY_CENTER_SERVICE_CONTRACTS.filter((item) => item.delivery === "new_external_contract_required").map((item) => item.serviceId).sort()).toEqual([
+       "service.anoscopy",
+       "service.esophageal_manometry",
+-      "service.skin_excisional_biopsy",
+       "service.thyroid_fna",
+     ]);
++    expect(SURGERY_CENTER_SERVICE_CONTRACTS.find((item) => item.serviceId === "service.skin_excisional_biopsy")).toMatchObject({
++      delivery: "existing_balance_contract",
++      allowedRouteIds: ["route.skin_excisional_biopsy.in_house", "route.skin_excisional_biopsy.outsourced"],
++    });
+   });
+ 
+   it("binds exactly the finalized twelve production content files to the owner-delegated receipt", () => {

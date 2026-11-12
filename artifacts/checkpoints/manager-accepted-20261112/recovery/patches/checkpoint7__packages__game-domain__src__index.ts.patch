@@ -1,0 +1,25 @@
+--- a/packages/game-domain/src/index.ts
++++ b/packages/game-domain/src/index.ts
+@@ -1,4 +1,6 @@
+ export * from "./appearance";
++export * from "./colleagueNames";
++export * from "./namePresentationProfiles";
+ export * from "./alert-cadence";
+ export * from "./guidance-tip-types";
+ export * from "./guidance-tips";
+@@ -12,6 +14,7 @@
+ export * from "./routine-patient-availability";
+ export * from "./context";
+ export * from "./doors";
++export * from "./endoscopy-setup";
+ export * from "./employee-discussions";
+ export * from "./employee-idle-spots";
+ export * from "./employee-training";
+@@ -63,3 +66,7 @@
+ export * from "./procedural-staffing";
+ export * from "./rolling-income";
+ export * from "./app-appointments";
++export * from "./game-evidence";
++
++export { withSettledStateQueries } from "./settledStateQueries";
++export * from "./founder-consults";

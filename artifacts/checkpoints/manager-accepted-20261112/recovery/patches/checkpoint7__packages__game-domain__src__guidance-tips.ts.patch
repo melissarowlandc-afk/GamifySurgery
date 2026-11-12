@@ -1,0 +1,73 @@
+--- a/packages/game-domain/src/guidance-tips.ts
++++ b/packages/game-domain/src/guidance-tips.ts
+@@ -1,3 +1,5 @@
++import { withSettledStateQueries } from "./settledStateQueries";
++import { getEndoscopySetupAccess } from "./endoscopy-setup";
+ import { getEmployeeEffectiveMorale } from "./level-five-support";
+ import {
+   GUIDANCE_TIP_CATALOG, GUIDANCE_TIP_POLICY, SERVICE_INCOME_CATALOG,
+@@ -181,6 +183,10 @@
+ /** Pure catalog predicates. Delivery clocks are handled separately below. */
+ export function evaluateGuidanceTipCandidates(state: GameState, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+   asOfRealMs = state.createdAtRealMs + state.facilityTick * 60_000): GuidanceTipCandidate[] {
++  return withSettledStateQueries(state, () => evaluateSettledGuidanceTipCandidates(state, context, asOfRealMs));
++}
++function evaluateSettledGuidanceTipCandidates(state: GameState, context: DomainContext,
++  asOfRealMs: number): GuidanceTipCandidate[] {
+   const candidates: GuidanceTipCandidate[] = [];
+   const W = waitingPatients(state);
+   const work = demand(state);
+@@ -282,7 +288,7 @@
+     };
+     if (futureDurationSubjects[effect.effectKind]) benefit = `${futureDurationSubjects[effect.effectKind]} with ${effect.amountPerUpgrade}% less baseline time`;
+     if (effect.effectKind === "daily_coffee_morale_points") benefit = `+${effect.amountPerUpgrade} staff morale points at the next daily coffee award`;
+-    if (effect.effectKind === "break_morale_points") benefit = `+${effect.amountPerUpgrade} staff morale points on future breaks`;
++    if (effect.effectKind === "break_morale_points" || effect.effectKind === "gym_morale_points") benefit = `+${effect.amountPerUpgrade} staff morale points on future completed breaks and +${context.balanceRelease.environment.levelThreeSupport.staffRoomMoraleBonusPerUpgrade} daily morale from the best operational staff room`;
+     if (effect.effectKind === "cleanliness_decay_reduction_percent") benefit += " on future use";
+     add(id, room.id, simple({ kind: "upgrade_room", roomId: room.id, expectedCost: cost }, `Upgrade ${definition.displayName} · ${money(cost)} (+${money(definition.upkeepPerUpgradeLevel)}/hour)`, rootKey),
+       { speaker: definition.displayName, values: { room: definition.displayName, benefit }, priority: 1, optional: true,
+@@ -412,7 +418,18 @@
+     ["tip.endoscopy.setup", "room.endoscopy", "staff.endoscopy_nurse", "progression.endoscopy_completion"],
+     ["tip.surgery.setup", "room.ambulatory_or", "staff.or_nurse", "progression.ambulatory_operation_completion"],
+   ] as const) if ((built(roomId).length || tip === "tip.surgery.setup" && unmetGoal(goal)) && (work.services.some(({ operation, queued }) => queued && serviceIsFor(operation, roomId)) || unmetGoal(goal))) {
+-    const remedy = careChain(roomId, nurse).map((req) => missingSetupRemedy(state, req, context)).find(Boolean);
++    let remedy = careChain(roomId, nurse).map((req) => missingSetupRemedy(state, req, context)).find(Boolean);
++    if (!remedy && roomId === "room.endoscopy" && state.facilityLevel === 2) {
++      const access = getEndoscopySetupAccess(state, context);
++      const blockedRoomId = access.roomIssues.keys().next().value ?? access.providerAccessRoomId;
++      if (blockedRoomId) {
++        const name = getRoomDefinition(state.rooms.find(room => room.id === blockedRoomId)!.roomDefinitionId, context)!.displayName;
++        remedy = { action: { kind: "restore_access", roomId: blockedRoomId },
++          actionLabel: `Fix ${name} hallway access`,
++          fix: `Connect ${name} to the Front Desk with hallway doors, without crossing another treatment room`,
++          rootKey: `room:${blockedRoomId}`, lastFixTick: latestEvent(state, ["room_placed", "room_moved", "room_rotated", "room_sold", "door_placed", "door_removed"]) };
++      }
++    }
+     add(tip, roomId, remedy ?? null, { rootKey: `care-chain:${roomId}`,
+       priority: work.services.some(({ operation, queued }) => queued && serviceIsFor(operation, roomId)) ? 0 : 2 });
+   }
+@@ -462,16 +479,21 @@
+       room.roomDefinitionId === "room.coffee_kiosk" && unhappy.length > 0;
+     if (attributed) upgrade("tip.room.other-upgrade", room);
+   }
+-  const availability = getRoutinePatientAvailability({ ...state, paused: false }, asOfRealMs, context).reason;
++  // Preserve timestamp validation, but scan the clinical pool only when one of
++  // the advertising candidates actually needs its read-only availability.
++  if (!Number.isSafeInteger(asOfRealMs) || asOfRealMs < 0)
++    getRoutinePatientAvailability({ ...state, paused: false }, asOfRealMs, context);
++  let availabilityReason: ReturnType<typeof getRoutinePatientAvailability>["reason"] | undefined;
++  const availability = () => availabilityReason ??= getRoutinePatientAvailability({ ...state, paused: false }, asOfRealMs, context).reason;
+   const adTier = context.balanceRelease.advertising.levels.find((tier) => tier.level === state.advertisingLevel);
+   if (state.advertisingLevel === 0 && guidanceIntroductoryEncountersComplete(state) && state.alertHumor.lastPatientArrivalTick !== null &&
+     state.facilityTick - state.alertHumor.lastPatientArrivalTick > GUIDANCE_TIP_POLICY.quietArrivalsMinutes &&
+-    !getWorkloadSnapshot(state, context).atRoutineCapacity && ["available", "arrival_scheduled"].includes(availability)) {
++    !getWorkloadSnapshot(state, context).atRoutineCapacity && ["available", "arrival_scheduled"].includes(availability())) {
+     const tier = context.balanceRelease.advertising.levels.find((tier) => tier.level === state.advertisingLevel + 1);
+     if (tier && optionalPurchaseAllowed({ ...state, advertisingLevel: tier.level }, 0, context)) add("tip.advertising.increase", "advertising", simple({ kind: "set_advertising", level: tier.level, fromLevel: state.advertisingLevel }, `Raise advertising · ${money(tier.hourlyCost)}/hour`, "advertising"),
+       { speaker: "Front Desk", priority: 1, optional: true, lastFixTick: latestEvent(state, ["advertising_level_changed"]) });
+   }
+-  if (state.advertisingLevel > 0 && (adTier?.hourlyCost ?? 0) > 0 && (getWorkloadSnapshot(state, context).atRoutineCapacity || ["reviews_not_due", "content_unavailable"].includes(availability) || upcomingOperatingPostingIsUnderfunded(state, context))) {
++  if (state.advertisingLevel > 0 && (adTier?.hourlyCost ?? 0) > 0 && (getWorkloadSnapshot(state, context).atRoutineCapacity || ["reviews_not_due", "content_unavailable"].includes(availability()) || upcomingOperatingPostingIsUnderfunded(state, context))) {
+     const tier = context.balanceRelease.advertising.levels.find((tier) => tier.level === state.advertisingLevel - 1);
+     if (tier) add("tip.advertising.reduce", "advertising", simple({ kind: "set_advertising", level: tier.level, fromLevel: state.advertisingLevel }, `Lower advertising · saves ${money((adTier?.hourlyCost ?? 0) - tier.hourlyCost)}/hour`, "advertising"),
+       { speaker: "Finance", lastFixTick: latestEvent(state, ["advertising_level_changed"]) });

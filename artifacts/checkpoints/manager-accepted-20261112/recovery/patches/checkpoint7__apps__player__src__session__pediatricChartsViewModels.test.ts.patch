@@ -1,0 +1,28 @@
+--- a/apps/player/src/session/pediatricChartsViewModels.test.ts
++++ b/apps/player/src/session/pediatricChartsViewModels.test.ts
+@@ -1,3 +1,4 @@
++import { beforeProgramBatch4AcceptanceRelease } from "../../../../packages/clinical-content/src/question-program-batch4-acceptance-test-support";
+ import { afterAll, beforeAll, describe, expect, it } from "vitest";
+ import { PEDIATRIC_CLINIC_CASES, PEDIATRIC_CLINIC_FAMILY_CONTEXTS } from "@gamify-surgery/clinical-content";
+ import { gameReducer, getAnswerChoiceServicePreview, pediatricFamilyForActor, pediatricPairAtReservation,
+@@ -6,13 +7,18 @@
+ import { createPediatricChartsQaState, PEDIATRIC_CHARTS_QA_ENCOUNTER_ID as encounterId } from "../../../../tests/fixtures/pediatric-charts";
+ import { createPrototypePlayerView } from "./viewModels";
+ 
+-const context = createLevelFourRoomsQaContext();
++const currentContext = createLevelFourRoomsQaContext();
++const context = { ...currentContext,
++  clinicalRelease: beforeProgramBatch4AcceptanceRelease(currentContext.clinicalRelease) };
++// Frozen M7 chart fixtures use the complete hash-verified pre-batch4 bank.
++// Current reducer, presentation and every named-family assertion remain.
++const cases = PEDIATRIC_CLINIC_CASES.map(original => context.clinicalRelease.cases.find(c => c.id === original.id)!);
+ const originalBalance = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease;
+ beforeAll(() => { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = context.balanceRelease; });
+ afterAll(() => { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = originalBalance; });
+ 
+ describe("M7 scored pediatric chart presentation", () => {
+-  it.each(PEDIATRIC_CLINIC_CASES.map(clinicalCase => [clinicalCase.id, clinicalCase] as const))
++  it.each(cases.map(clinicalCase => [clinicalCase.id, clinicalCase] as const))
+     ("projects the exact named family, age/sex, prose and no-test choices for %s", (_id, clinicalCase) => {
+       const state = createPediatricChartsQaState(context, clinicalCase.id);
+       const child = state.encounters[encounterId]!;

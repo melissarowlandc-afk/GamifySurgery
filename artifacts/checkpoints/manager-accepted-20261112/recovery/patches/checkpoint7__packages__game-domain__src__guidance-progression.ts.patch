@@ -1,0 +1,37 @@
+--- a/packages/game-domain/src/guidance-progression.ts
++++ b/packages/game-domain/src/guidance-progression.ts
+@@ -1,7 +1,7 @@
+ import { evaluateFacilityExperienceConditions } from "./facility-experience";
+ import { guidanceOwnsCondition } from "./guidance-tip-suppression";
+ import { getRetiredEndedSatisfactionSamples } from "./retired-encounters";
+-import { getClinicSatisfaction, getDisplayedClinicSatisfaction, getRoomDefinition, getStaffRoleDefinition } from "./selectors";
++import { getClinicSatisfaction, getCompletedEncounterCount, getDisplayedClinicSatisfaction, getRoomDefinition, getStaffRoleDefinition } from "./selectors";
+ import type { GuidanceTipAction } from "./guidance-tip-types";
+ import type { DomainContext, GameState } from "./types";
+ 
+@@ -43,8 +43,15 @@
+     : "Hire staff to establish an average morale, then reach at least 85. The Founder is not an employee in this goal.";
+   if (goal.id !== "progression.satisfaction") return null;
+   const stage = context.balanceRelease.facility.stageDefinitions.find((entry) => entry.level === state.facilityLevel)!;
+-  const current = getDisplayedClinicSatisfaction(state, context);
++  const current = state.facilityLevel >= 4 ? goal.current : getDisplayedClinicSatisfaction(state, context);
+   const target = stage.satisfactionMustBeGreaterThan;
++  if (state.facilityLevel === 5 && !state.levelFive?.progress.inspectionUnlocked) {
++    const completed = getCompletedEncounterCount(state);
++    if (completed < stage.minimumCompletedEncounters) {
++      const remainingEncounters = stage.minimumCompletedEncounters - completed;
++      return `Complete ${remainingEncounters} more ${remainingEncounters === 1 ? "encounter" : "encounters"} to establish the ${stage.minimumCompletedEncounters}-encounter satisfaction goal. Recent patient satisfaction is ${current}% (goal above ${target}%).`;
++    }
++  }
+   if (getClinicSatisfaction(state, context) === null) return `Provisional satisfaction is ${current}% (goal: above ${target}%); complete patient visits to record a rating.`;
+   const largest = evaluateFacilityExperienceConditions(state, context).conditions.sort((a, b) => b.penalty - a.penalty)[0];
+   const roomName = (id: string) => getRoomDefinition(id, context)?.displayName ?? id;
+@@ -81,5 +88,7 @@
+     };
+     lever = cause && recordedLevers[cause] || "complete patient visits with short waits and working amenities to improve the rolling rating";
+   }
+-  return `Satisfaction is ${current}% (goal: above ${target}%); ${lever}.`;
++  return state.facilityLevel >= 4
++    ? `Recent patient satisfaction is ${current}% (goal above ${target}%). For future visits, ${lever}.`
++    : `Satisfaction is ${current}% (goal: above ${target}%); ${lever}.`;
+ }

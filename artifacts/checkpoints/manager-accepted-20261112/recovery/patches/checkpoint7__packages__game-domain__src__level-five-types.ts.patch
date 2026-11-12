@@ -1,0 +1,10 @@
+--- a/packages/game-domain/src/level-five-types.ts
++++ b/packages/game-domain/src/level-five-types.ts
+@@ -78,6 +78,7 @@
+   earnedAtFacilityTick: number;
+   /** Frozen simultaneous goal evidence; later conditions cannot rewrite it. */
+   clinicalXp: number;
++  /** Percentage displayed for the earned satisfaction goal. Older records used the HUD measure. */
+   displayedSatisfaction: number;
+   averageStaffMorale: number;
+   employedStaffCount: number;

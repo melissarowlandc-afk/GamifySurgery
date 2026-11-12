@@ -1,0 +1,37 @@
+--- a/apps/player/src/facility/approvedRoomPresentation.ts
++++ b/apps/player/src/facility/approvedRoomPresentation.ts
+@@ -3,6 +3,7 @@
+ import { APPROVED_PROCEDURE_STAFF_SPOTS, APPROVED_ROOM_NAVIGATION_CONTRACTS } from "@gamify-surgery/balance-config";
+ import type { FacilityActorSupportRole } from "./types";
+ import { getApprovedRollingStoolSource } from "./backlessRollingStools";
++import { applyPhlebotomyActorPresentation, applyPhlebotomyDrawPresentation } from "./phlebotomyPresentation";
+ import {
+   getApprovedSideChairMask,
+   type ApprovedSideChairLayerBinding,
+@@ -990,7 +991,9 @@
+       return [bindSideChairSupport(
+         definitionId,
+         orientation,
+-        support(`${id}:${role === "phlebotomy-patient" ? "patient" : "clinician"}`, role, "seated", cardinal(fixture?.facing), seat, ground, ownGround),
++        draw ? applyPhlebotomyActorPresentation(orientation,
++          support(`${id}:${role === "phlebotomy-patient" ? "patient" : "clinician"}`, role, "seated", cardinal(fixture?.facing), seat, ground, ownGround), draw)
++          : support(`${id}:${role === "phlebotomy-patient" ? "patient" : "clinician"}`, role, "seated", cardinal(fixture?.facing), seat, ground, ownGround),
+         draws,
+       )];
+     });
+@@ -1202,7 +1205,7 @@
+       assetId.endsWith(":window") ? `window-${count}` : `${assetId.replace(/[^a-z0-9]+/gi, "-")}-${count}`;
+     drawEntries.push({ id, draw: { x: x!, y: y!, w: w!, h: h!, supplementalAssetId: assetId } });
+   }
+-  return drawEntries.flatMap(({ id, draw }) => {
++  const records = drawEntries.flatMap(({ id, draw }) => {
+     const width = (typeof draw.w === "number" ? draw.w : draw.width) as number;
+     const height = (typeof draw.h === "number" ? draw.h : draw.height) as number;
+     const x = draw.x as number;
+@@ -1291,4 +1294,5 @@
+       depthPolicy: (ground ? "ground-contact" : isWall ? "wall" : "authored-layer") as ApprovedRoomDrawRecord["depthPolicy"],
+     }];
+   }).sort((left, right) => left.depthKey - right.depthKey || left.id.localeCompare(right.id));
+-}
++  return definitionId === "room.phlebotomy" ? applyPhlebotomyDrawPresentation(orientation, records) : records;
++}

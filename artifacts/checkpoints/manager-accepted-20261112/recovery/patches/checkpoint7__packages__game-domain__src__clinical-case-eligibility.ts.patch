@@ -1,0 +1,32 @@
+--- a/packages/game-domain/src/clinical-case-eligibility.ts
++++ b/packages/game-domain/src/clinical-case-eligibility.ts
+@@ -6,6 +6,7 @@
+ import { pediatricCaseHasCompatibleIdentity } from "./pediatric-eligibility";
+ import { pediatricStillEligibleEntries } from "./characterStillCatalog";
+ import { getCurrentCapabilities, isRoomOperationalForFacilityWork } from "./selectors";
++import { getExactTestChoiceOrderRecordForCase } from "./test-choice-orders";
+ import type { DomainContext, GameState } from "./types";
+ 
+ /** Exact editorial identities, never an input to disease selection or FSRS. */
+@@ -35,9 +36,18 @@
+   return clinicalCase.decisionNodes.every(node => {
+     const timing = ANSWER_CHOICE_TIMING_REGISTRY.find(row => row.caseId === clinicalCase.id &&
+       row.nodeId === node.id && row.questionVariantId === node.questionVariantId);
+-    // Existing synthetic M5 fixtures may omit registry metadata. Admitted
+-    // pediatric variants must have an explicit, complete no-test declaration.
+-    return timing ? timing.classification.kind === "no_test" : !pediatricRelease;
++    // Preserve old synthetic fixtures, but require complete exact metadata for
++    // admitted children. Planning-only estimates do not enact pediatric testing.
++    if (!timing) return !pediatricRelease;
++    const classification = timing.classification;
++    if (classification.kind === "no_test") return true;
++    return classification.choices.length === node.answerChoices.length && node.answerChoices.every(choice => {
++      const declared = classification.choices.find(row => row.choiceId === choice.id && row.choiceLabel === choice.label);
++      if (!declared) return false;
++      if (declared.timing.kind === "no_test") return true;
++      const order = getExactTestChoiceOrderRecordForCase(clinicalCase.id, node, choice.id);
++      return order?.disposition.kind === "not_executed" && order.disposition.reason === "future_planned";
++    });
+   });
+ }
+ 

@@ -1,0 +1,76 @@
+--- a/packages/game-domain/src/types.ts
++++ b/packages/game-domain/src/types.ts
+@@ -759,6 +759,8 @@
+ }
+ 
+ export interface ServiceOperationState {
++  /** A routine visitor may become this scored consult without a second actor. */
++  consultEncounterId?: string;
+   executiveComfort?: import("./level-five-types").ExecutiveComfortQuote;
+   /** Once-only actual garden-rest witness; omitted on older visits. */
+   gardenVisitBenefit?: GardenVisitBenefit;
+@@ -775,6 +777,20 @@
+   appearance: PixelAppearanceDescriptor | null;
+   /** Frozen unscored clinic visit; omission retains legacy operation semantics. */
+   clinicVisit?: ClinicVisitState;
++  /** Optional editorial work quote for new autonomous clinic visits. */
++  clinicWork?: {
++    version: "clinic-work.v1";
++    baselineMinutes: number;
++    binding: null | {
++      providerEmployeeId: string;
++      trainingLevel: RoomUpgradeLevel;
++      trainingReductionPercent: number;
++      roomInstanceId: string;
++      roomUpgradeLevel: RoomUpgradeLevel;
++      roomReductionPercent: number;
++      durationMinutes: number;
++    };
++  };
+   /** Optional, provider-specific payment contract for new adult APP visits. */
+   appAppointmentRevenue?: {
+     version: "app-appointment-revenue.v1";
+@@ -1095,7 +1111,19 @@
+   lastTripAtFacilityTick: number | null;
+ }
+ 
++export interface FounderConsultState {
++  version: "founder-consult.v1";
++  kind: "endoscopy" | "operation" | "app" | "pediatric" | "wound_ostomy";
++  serviceOperationId: string;
++  roomInstanceId: string;
++  phaseIndex: number;
++  providerEmployeeId: string | null;
++  /** Null holds the source work. Closing an unanswered procedure never sets it. */
++  closedAtFacilityTick: number | null;
++}
++
+ export interface EncounterState {
++  consult?: FounderConsultState;
+   executiveComfort?: import("./level-five-types").ExecutiveComfortQuote;
+   /** Once-only actual garden-rest witness; omitted on older visits. */
+   gardenVisitBenefit?: GardenVisitBenefit;
+@@ -1676,6 +1704,14 @@
+   };
+ }
+ 
++export interface LateProgressionState {
++  version: "late-progression.v1";
++  preservedClinicalXpGoal: {
++    facilityLevel: 3 | 4 | 5;
++    minimumClinicalXp: number;
++  } | null;
++}
++
+ export interface GameState {
+   schemaVersion: 8 | 9;
+   /** Present only when an older campaign required the approved-room geometry migration. */
+@@ -1698,6 +1734,8 @@
+   salaryEconomyVersion?: "room-economy-b.v1";
+   schedulerPins: SchedulerPins;
+   facilityLevel: FacilityLevel;
++  /** Level 3+ only: retain earned legacy XP goals without lowering future goals. */
++  lateProgression?: LateProgressionState;
+   /** Omission means no families or earned witnesses; preserve old save bytes. */
+   pediatricFamilies?: Record<string, PediatricFamilyState>;
+   levelFourCompletion?: LevelFourCompletionState;

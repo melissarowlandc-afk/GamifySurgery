@@ -1,0 +1,27 @@
+--- a/apps/player/src/mobile/build/MobileBuildControls.tsx
++++ b/apps/player/src/mobile/build/MobileBuildControls.tsx
+@@ -18,7 +18,7 @@
+     return () => observer.disconnect();
+   }, [build.setControlsHeight]);
+   const price = placement ? props.roomOptions.find(option => option.id === placement.definitionId)?.costLabel : null;
+-  return <aside ref={ref} className="mobile-build-controls" aria-label="Build actions" data-phone-build-controls="true">
++  return <aside ref={ref} className={`mobile-build-controls${!placement && !hallway && !doors ? " is-idle" : ""}`} aria-label="Build actions" data-phone-build-controls="true">
+     <div className="mobile-build-persistent">
+       <button type="button" data-phone-anchor="build-catalog" onClick={onCatalog}>Room catalog</button>
+       <button type="button" disabled={!props.buildUndoCount} onClick={build.undo} title={props.buildUndoLabel ?? undefined}>Undo{props.buildUndoCount ? ` (${props.buildUndoCount})` : ""}</button>
+@@ -28,6 +28,7 @@
+       <p className={build.validation.valid ? "mobile-build-valid" : "mobile-build-reason"} role="status">
+         {placement.displayName} · {placement.width} × {placement.height} · {build.validation.valid ? "Ready to place" : build.validation.reason}
+       </p>
++      {build.validation.warning ? <p className="room-access-warning" role="status">{build.validation.warning}</p> : null}
+       <p className="mobile-build-hint">Drag the ghost with one finger. Use two fingers to pan or pinch.</p>
+       <div className="mobile-build-confirm">
+         <button type="button" data-phone-anchor="place" data-phone-build-confirm="placement" disabled={!build.ghost || !build.validation.valid} onClick={build.confirmPlacement}>✓ {props.movingRoomInstanceId ? "Move" : "Place"} · {props.movingRoomInstanceId ? "$0" : price}</button>
+@@ -53,6 +54,7 @@
+   return <MobileSheet title="Finish room access" kind="bottom" onClose={onClose}>
+     <p role="status">{props.buildExitBlockedReason}</p>
+     {props.buildExitBlockedIssues.length ? <ul>{props.buildExitBlockedIssues.map((issue, index) => <li key={`${index}:${issue}`}>{issue}</li>)}</ul> : null}
++    <p>Open Doors on the named room and tap the specified wall section. A red × marks a door that does not connect.</p>
+     <button type="button" onClick={onClose}>Continue Renovating</button>
+   </MobileSheet>;
+ }

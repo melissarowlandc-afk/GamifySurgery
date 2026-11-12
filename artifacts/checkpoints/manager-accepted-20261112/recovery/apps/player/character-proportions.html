@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Character proportion QA</title>
+    <style>
+      body{margin:20px;background:#eee9da;color:#26352d;font:14px system-ui,sans-serif}
+      h1{font-size:22px;margin:0 0 8px}p{max-width:1100px}label{display:inline-flex;gap:6px;margin:8px 16px 8px 0;align-items:center}
+      canvas{display:block;image-rendering:pixelated;max-width:none;border:1px solid #657966;margin-top:10px}
+      #error{color:#9b2929;white-space:pre-wrap}select,input{font:inherit}a{color:#234d73}
+    </style>
+  </head>
+  <body>
+    <h1>Character proportions — developer QA</h1>
+    <p>Shared world scale, founder.14 reference at right in each cell. Green = floor;
+      blue = authored seat plane; red tick = visible head. Before uses the former South cap and smooth sampling.
+      After uses measured bounds and nearest sampling. No campaign or storage is loaded.</p>
+    <div id="controls"></div><p id="status" role="status">Loading…</p><pre id="error"></pre><div id="stage"></div>
+    <p>Beds / OR / recovery: no individual lying pose exists in this registry. Endoscopy and OR occupied art contains a covered
+      patient; recovery supports use the authored seated pose. Inspect the actual furniture composites and occlusion
+      in the live game as specified in the audit README. The blue support proxy here verifies contact math, not furniture artwork.</p>
+    <script type="module" src="/src/art/characterProportionsQa.ts"></script>
+  </body>
+</html>

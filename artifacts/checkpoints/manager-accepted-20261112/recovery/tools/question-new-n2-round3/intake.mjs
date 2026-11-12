@@ -1,0 +1,24 @@
+import '../economy-audit/source-loader.mjs';
+import fs from 'node:fs';
+import {createHash} from 'node:crypto';
+import assert from 'node:assert/strict';
+const n2=await import('../../packages/clinical-content/src/question-new-n2-round2-20261104.ts');
+const n1=await import('../../packages/clinical-content/src/question-new-n1-round3-20261104.ts');
+const content=await import('../../packages/clinical-content/src/index.ts');
+const {collectAuthoredMetadata}=await import('../question-quality/bank.mjs');
+const dir='.local-dev/question-new-n2-round3-ship-gate-20261104';
+const hash=x=>createHash('sha256').update(Buffer.isBuffer(x)?x:JSON.stringify(x)).digest('hex');
+const out=(name,data)=>{assert.ok(!fs.existsSync(`${dir}/${name}.json`),'Immutable intake exists');fs.writeFileSync(`${dir}/${name}.json`,JSON.stringify(data,null,2)+'\n');};
+const prior=JSON.parse(fs.readFileSync('docs/research/question-new-n2-review2-20261104.json'));
+assert.equal(prior.filter(r=>r.verdict==='PASS').length,12);
+const rows=n2.QUESTION_NEW_N2_ROUND2_ITEMS.map((item,i)=>{
+ const review=prior.find(r=>r.id===n2.QUESTION_NEW_N2_ROUND2_CASE_REVIEWS[i].id);assert.ok(review);
+ return {item,review,case:n2.QUESTION_NEW_N2_ROUND2_CASES[i],question:n2.QUESTION_NEW_N2_ROUND2_QUESTIONS[i],concept:n2.QUESTION_NEW_N2_ROUND2_AUTHORING_CONCEPTS[i]};
+});
+out('intake-items',rows);out('frozen-pass',rows.filter(r=>r.review.verdict==='PASS').map(r=>({id:r.review.id,caseId:r.case.id,questionVariantId:r.question.id,conceptId:r.question.conceptId,caseSha256:hash(r.case),questionSha256:hash(r.question),conceptSha256:hash(r.concept)})));
+const baseline=JSON.parse(fs.readFileSync(`${dir}/baseline.json`));
+out('frozen-n1-files',Object.fromEntries(Object.entries(baseline.files).filter(([p])=>/question-new-n1|question-new-n1-r[23]-/.test(p))));
+const metadata=collectAuthoredMetadata(content);out('recorded-catalog',{claims:[...metadata.claims.values()],sources:[...metadata.sources.values()]});
+out('n1-current',n1.QUESTION_NEW_N1_ROUND3_CASES.map((cs,i)=>({caseId:cs.id,questionVariantId:cs.decisionNodes[0].questionVariantId,caseSha256:hash(cs),questionSha256:hash(n1.QUESTION_NEW_N1_ROUND3_QUESTIONS[i])})));
+out('registered-release-before',content.SYNTHETIC_CLINICAL_RELEASE);
+console.log({items:rows.length,returned:rows.filter(r=>r.review.verdict!=='PASS').length,frozen:12,claims:metadata.claims.size,sources:metadata.sources.size});

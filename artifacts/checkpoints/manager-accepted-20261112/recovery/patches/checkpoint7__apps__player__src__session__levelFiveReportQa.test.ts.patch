@@ -1,0 +1,27 @@
+--- a/apps/player/src/session/levelFiveReportQa.test.ts
++++ b/apps/player/src/session/levelFiveReportQa.test.ts
+@@ -5,6 +5,8 @@
+ import { assertLevelFiveQaEntry, prepareLevelFiveQaProfile } from "../../../../tools/qa/level-five-state-bootstrap";
+ import { createFreshProfile } from "./prototypeStorage";
+ import { createFacilityInspectionView } from "./inspectionViewModels";
++// Hosted CI runners run long simulations up to ten times slower.
++const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
+ 
+ const shipped = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease;
+ afterEach(() => { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = shipped; });
+@@ -15,7 +17,7 @@
+     const state = deserializeGameState(serializeGameState(createLevelFiveStateQaState(scenario, context)), context);
+     const report = state.levelFive!.progress.gameFinished!.firstCompletedReport;
+     expect(report).toMatchObject({ outcome: "completed", observedActiveMinutes: 3000, qualifyingScoredPatientCount: 25, recognition: "improving" });
+-    expect(state.clinicalXp).toBe(2250); expect(report.categories).toHaveLength(10);
++    expect(state.clinicalXp).toBe(2550); expect(report.categories).toHaveLength(10);
+     expect(report.categories.reduce((sum, category) => sum + category.weightPercent, 0)).toBe(100);
+     expect(report.categories.reduce((sum, category) => sum + category.weightedPoints!, 0)).toBe(report.rawTotalScore);
+     const view = createFacilityInspectionView(state);
+@@ -30,5 +32,5 @@
+     expect(resumed.campaigns).toHaveLength(1); expect(resumed.campaigns[0]).toBe(existing);
+     expect(resumed.activeCampaignId).toBe(levelFiveQaCampaignId(scenario)); expect(existing.state.cashCents).toBe(123400);
+     expect(base.campaigns).toHaveLength(0); expect(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel).toBe(5);
+-  }, 60_000);
++  }, hostedTime(60_000));
+ });

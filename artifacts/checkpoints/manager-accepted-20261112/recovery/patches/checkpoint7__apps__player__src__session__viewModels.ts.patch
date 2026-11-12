@@ -1,0 +1,392 @@
+--- a/apps/player/src/session/viewModels.ts
++++ b/apps/player/src/session/viewModels.ts
+@@ -1,22 +1,30 @@
++import { diagnosticChoicePreviews } from "./diagnosticChoicePreviews";
++import { withSettledStateQueries } from "@gamify-surgery/game-domain";
+ import { questionReviewContext } from "./questionReviewContext";
++import { createLearningDevelopmentView } from "./learningDevelopmentView";
++import { createFacilityDoorViews } from "./buildViewModels";
++import { visibleQuestionChoices } from "./questionChoices";
+ import { gardenRestActorSupport } from "./levelFiveSupportPresentation";
+ import { createExecutiveManagementView } from "./executiveViewModels";
+ import { createGiftShopView, giftShopFee } from "./giftShopViewModels";
+ import { createInspectionUnlockView, levelFiveGoalView } from "./levelFiveProgressionView";
++import { withGoalDisplayLabel } from "./goalDisplayLabels";
+ import { createFacilityInspectionView } from "./inspectionViewModels";
+ import { createInspectionActorViews } from "./inspectionActorViewModels";
+ import { giftContactAtLocation } from "@gamify-surgery/game-domain";
+ import { describeRetailTrip } from "./characterActivityPresentation";
+ import { getExecutiveDeskLocation, quoteExecutiveStock } from "@gamify-surgery/game-domain";
+ import { getEmployeeEffectiveMorale } from "@gamify-surgery/game-domain";
++import { getRoomAccessWarning, missingHireRoomMessage } from "../ui/roomAccessFeedback";
+ import {
+   getProcedureStaffSupportId,
++  pediatricSupportLocation,
++  getEndoscopySetupAccess,
+   PROTOTYPE_DOMAIN_CONTEXT,
+   TUTORIAL_ENCOUNTER_ID,
+   getFounderBreakSeatClaim,
+   isFounderSeatOccupied,
+   listFounderSeats,
+-  getAnswerChoiceServicePreview,
+   getDiagnosticOrderTiming,
+   getDisplayedClinicSatisfaction,
+   getFacilityAccessValidation,
+@@ -193,11 +201,13 @@
+ ): ProcedureSetupRequirementView[] | undefined {
+   const endoscopy = procedure === "endoscopy";
+   if (state.facilityLevel !== (endoscopy ? 2 : 3)) return undefined;
++  const access = endoscopy ? getEndoscopySetupAccess(state, PROTOTYPE_DOMAIN_CONTEXT) : null;
+   const roomRequirement = (id: string): ProcedureSetupRequirementView => {
+     const definition = getRoomDefinition(id)!;
+     const existing = state.rooms.filter((room) => room.roomDefinitionId === id);
+     const met = existing.some((room) =>
+-      room.roomDefinitionId === id && isRoomOperationalForFacilityWork(state, room.id),
++      room.roomDefinitionId === id && isRoomOperationalForFacilityWork(state, room.id) &&
++        (!access || (id === "room.periop_recovery" ? access.recoveryRoomIds : access.procedureRoomIds).has(room.id)),
+     );
+     return {
+       id: `${procedure}.setup.${id}`,
+@@ -205,7 +215,7 @@
+       detail: met
+         ? `$${definition.constructionCost.toLocaleString()} build · $${definition.upkeepPerExpenseInterval.toLocaleString()}/hr upkeep`
+         : existing.length > 0
+-          ? "Built, but needs a reachable valid layout before it can operate."
++          ? existing.map(room => access?.roomIssues.get(room.id)).find(Boolean) ?? "Built, but needs a reachable valid layout before it can operate."
+           : `$${definition.constructionCost.toLocaleString()} build · $${definition.upkeepPerExpenseInterval.toLocaleString()}/hr upkeep`,
+       met,
+       ...(!met && existing.length === 0 ? { action: { label: "Build" as const, target: "room" as const, id } } : {}),
+@@ -217,7 +227,8 @@
+       employee.staffRoleDefinitionId === id,
+     );
+     const met = hired.some((employee) =>
+-      employee.staffRoleDefinitionId === id && isEmployeeAssignedToOperationalRoom(state, employee.id),
++      employee.staffRoleDefinitionId === id && isEmployeeAssignedToOperationalRoom(state, employee.id) &&
++        (!access || (id === "staff.periop_nurse" ? access.periopNurseIds : access.endoscopyNurseIds).has(employee.id)),
+     );
+     return {
+       id: `${procedure}.setup.${id}`,
+@@ -225,7 +236,7 @@
+       detail: met
+         ? `$${definition.hiringCost.toLocaleString()} hire · $${definition.salaryPerExpenseInterval.toLocaleString()}/hr salary`
+         : hired.length > 0
+-          ? "Hired, but their home room needs a reachable valid layout before they can operate."
++          ? "Hired, but their home room needs a reachable valid layout and a hallway route to the care room before they can operate."
+           : `$${definition.hiringCost.toLocaleString()} hire · $${definition.salaryPerExpenseInterval.toLocaleString()}/hr salary`,
+       met,
+       ...(!met && hired.length === 0 ? { action: { label: "Hire" as const, target: "staff" as const, id } } : {}),
+@@ -237,6 +248,10 @@
+       isEmployeeAssignedToOperationalRoom(state, employee.id),
+   );
+   return [
++    ...(endoscopy && !state.serviceAppointmentsEnabled ? [{
++      id: `${procedure}.setup.appointments`, label: "Scheduled appointments", met: false,
++      detail: "Turn on Scheduled appointments in Manage > Services. Booked procedure visitors do not arrive while it is off.",
++    }] : []),
+     roomRequirement(endoscopy ? "room.endoscopy" : "room.ambulatory_or"),
+     roomRequirement("room.periop_recovery"),
+     staffRequirement(endoscopy ? "staff.endoscopy_nurse" : "staff.or_nurse"),
+@@ -244,12 +259,14 @@
+     {
+       id: `${procedure}.setup.provider`,
+       label: `${provider.displayName} or founder`,
+-      detail: hiredProvider
++      detail: access?.providerAccessRoomId
++        ? "The founder cannot reach Endoscopy without crossing another treatment room. Connect Endoscopy to the hallway, or hire an endoscopist with a connected home room."
++        : hiredProvider
+         ? `${provider.displayName} hired.`
+         : endoscopy
+-          ? `Founder can perform endoscopy. Hire an endoscopist to keep yourself available for clinic patients. $${provider.hiringCost.toLocaleString()} hire · $${provider.salaryPerExpenseInterval.toLocaleString()}/hr salary.`
++          ? `Founder can perform endoscopy; visitors wait while the founder is busy. Hire an endoscopist to keep yourself available for clinic patients. $${provider.hiringCost.toLocaleString()} hire · $${provider.salaryPerExpenseInterval.toLocaleString()}/hr salary.`
+           : `Founder can perform ambulatory operations. Hire a surgeon to keep yourself available for clinic patients. $${provider.hiringCost.toLocaleString()} hire · $${provider.salaryPerExpenseInterval.toLocaleString()}/hr salary.`,
+-      met: true,
++      met: !access?.providerAccessRoomId,
+     },
+   ];
+ }
+@@ -678,7 +695,12 @@
+     const room = encounter?.assignedRoomInstanceId
+       ? state.rooms.find((candidate) => candidate.id === encounter.assignedRoomInstanceId)
+       : undefined;
+-    return room ? clinicianSupportRoleForRoom(room.roomDefinitionId) : undefined;
++    const definition = room && getRoomDefinition(room.roomDefinitionId);
++    return room && definition && ["room.examination", "room.pediatric_examination", "room.wound_ostomy", "room.endoscopy", "room.ambulatory_or"].includes(room.roomDefinitionId) &&
++      (samePoint(state.environment.founderLocation, room.roomDefinitionId === "room.pediatric_examination"
++        ? pediatricSupportLocation(room, "stool:clinician") : getRoomCareAnchor(room, definition, "clinician")) ||
++        getProcedureStaffSupportId(room, definition, state.environment.founderLocation, "provider"))
++      ? clinicianSupportRoleForRoom(room.roomDefinitionId) : undefined;
+   }
+   if (activity?.kind === "sit_in_chair") {
+     if (getFounderBreakSeatClaim(state)) return "staff-break-seat";
+@@ -731,10 +753,8 @@
+ }
+ 
+ function formatLearningCardStatus(
+-  state: GameState,
+-  conceptId: string,
++  history: GameState["learningHistories"][string] | undefined,
+ ): string {
+-  const history = state.learningHistories[conceptId];
+   const latestReview = history?.reviews.at(-1);
+   if (!history || !latestReview) {
+     return "New · no campaign review";
+@@ -812,7 +832,7 @@
+   };
+ }
+ 
+-export function employeeDiscussionView(state: GameState, flags: readonly QuestionReviewFlag[] = []): EmployeeDiscussionView | null {
++export function employeeDiscussionView(state: GameState, flags: readonly QuestionReviewFlag[] = [], casualMode: boolean | null = false): EmployeeDiscussionView | null {
+   const discussion = state.openEmployeeDiscussionId
+     ? state.employeeDiscussions?.[state.openEmployeeDiscussionId] : undefined;
+   if (!discussion || ["resolved", "cancelled", "waiting_unopened"].includes(discussion.lifecycle)) return null;
+@@ -837,8 +857,10 @@
+     question: node.stem,
+     exhibit: node.exhibit,
+     teachingPoint: answer ? node.teachingPoint : undefined,
+-    // The key is revealed only after an answer exists, as on patient charts.
+-    choices: node.answerChoices.map((choice) => ({
++    answerChoicesPending: casualMode === null,
++    // Standard play reveals the key only after submission. Casual play filters
++    // the presentation while retaining the exact IDs used by normal scoring.
++    choices: visibleQuestionChoices(node.answerChoices, casualMode).map((choice) => ({
+       id: choice.id, label: choice.label, selected: choice.id === answer?.answerChoiceId, disabled: !answerable,
+       ...(answer ? {revealedCorrect: choice.isCorrect} : {}),
+       ...(answer && choice.rationale ? { rationale: choice.rationale } : {}),
+@@ -930,10 +952,12 @@
+   encounterId: string | null,
+   summaryVisible: boolean,
+   questionReviewFlags: readonly QuestionReviewFlag[],
++  casualMode: boolean | null,
+ ): ChartView | null {
+   if (encounterId === null) {
+     return null;
+   }
++  const choicePreview = diagnosticChoicePreviews(state);
+   const encounter = state.encounters[encounterId];
+   if (!encounter) {
+     return null;
+@@ -1135,14 +1159,10 @@
+           : undefined,
+         exhibit: questionIsVisible ? node.exhibit : undefined,
+         teachingPoint: answer ? node.teachingPoint : undefined,
+-        answerChoices: questionIsVisible ? node.answerChoices.map((choice) => {
++        answerChoices: questionIsVisible ? visibleQuestionChoices(node.answerChoices, casualMode).map((choice) => {
+           const preview =
+             isCurrent && answer === null
+-              ? getAnswerChoiceServicePreview(
+-                  state,
+-                  encounter.id,
+-                  choice.id,
+-                )
++              ? choicePreview(encounter.id, choice.id)
+               : null;
+           return {
+             id: choice.id,
+@@ -1379,14 +1399,10 @@
+         ).question
+       : undefined,
+     answerChoices:
+-      question?.node.answerChoices.map((choice) => {
++      (question ? visibleQuestionChoices(question.node.answerChoices, casualMode) : []).map((choice) => {
+         const preview =
+           answerForQuestion === undefined
+-            ? getAnswerChoiceServicePreview(
+-                state,
+-                encounter.id,
+-                choice.id,
+-              )
++            ? choicePreview(encounter.id, choice.id)
+             : null;
+         return {
+           id: choice.id,
+@@ -1399,7 +1415,8 @@
+           ...diagnosticChoiceTimingPresentation(preview, state.facilityTick, formatFacilityDuration),
+           ...(answerForQuestion && choice.rationale ? { rationale: choice.rationale } : {}),
+         };
+-      }) ?? [],
++      }),
++    answerChoicesPending: casualMode === null,
+     feedbackTitle,
+     feedbackBody,
+     terminalOutcomeTitle: terminalConsequence ? "What happened" : undefined,
+@@ -1465,7 +1482,7 @@
+   return newest;
+ }
+ 
+-export function createPrototypePlayerView(
++function derivePrototypePlayerView(
+   state: GameState,
+   selectedEncounterId: string | null,
+   summaryVisible: boolean,
+@@ -1479,7 +1496,9 @@
+     panY: 0,
+   },
+   questionReviewFlags: readonly QuestionReviewFlag[] = [],
++  casualMode: boolean | null = false,
+ ): PrototypePlayerView {
++  const learningDevelopment = createLearningDevelopmentView(state, PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts, formatLearningCardStatus);
+   const lists = getPatientLists(state);
+   // One pass over service history instead of one pass per resolved patient.
+   const encounterIdsWithActiveServiceOperation = new Set(
+@@ -1494,6 +1513,13 @@
+   );
+   const workload = getWorkloadSnapshot(state);
+   const progressionStatus = getFacilityProgressionStatus(state);
++  const progressionGoals = progressionStatus.requirements.map((requirement) => withGoalDisplayLabel(state.facilityLevel === 5
++    ? levelFiveGoalView(state, requirement) : {
++      id: requirement.id,
++      label: requirement.label,
++      complete: requirement.met,
++      progressLabel: `${Math.min(requirement.current, requirement.required)}/${requirement.required}`,
++    }));
+   const facilityBalance =
+     PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility;
+   const usedStaffStills = new Set([...state.employees, ...(state.departingEmployees ?? [])].map(employee => employee.appearance.stillId));
+@@ -1889,7 +1915,7 @@
+ 
+   return {
+     employeeDiscussionRows: employeeDiscussionRows(state),
+-    employeeDiscussion: employeeDiscussionView(state, questionReviewFlags),
++    employeeDiscussion: employeeDiscussionView(state, questionReviewFlags, casualMode),
+     emergencyGlp1: {
+       // A built but inaccessible/unstaffed suite cannot replace the founder.
+       visible: glp1AutomationCapacity === 0,
+@@ -1976,16 +2002,7 @@
+         explanation: finances.incomeWindowExplanation,
+       },
+       dayTimeLabel: clock.displayLabel,
+-      goals: progressionStatus.requirements.map((requirement) => state.facilityLevel === 5
+-        ? levelFiveGoalView(state, requirement) : ({
+-        id: requirement.id,
+-        label: requirement.label,
+-        complete: requirement.met,
+-        progressLabel: `${Math.min(
+-          requirement.current,
+-          requirement.required,
+-        )}/${requirement.required}`,
+-      })),
++      goals: progressionGoals,
+       contentNoticeLabel:
+         "DEMONSTRATION CONTENT ONLY — not clinically approved or medical advice.",
+     },
+@@ -1995,6 +2012,7 @@
+       selectedEncounterId,
+       summaryVisible,
+       questionReviewFlags,
++      casualMode,
+     ),
+     facility: {
+       facilityTitle: progressionStatus.displayName,
+@@ -2094,7 +2112,15 @@
+         }),
+         seated:
+           founderIsIdleAtUnstaffedFrontDesk(state) ||
+-          ((state.environment.founderActivity?.kind === "attend_encounter" || state.environment.founderActivity?.kind === "sit_in_chair") &&
++          ((state.environment.founderActivity?.kind === "sit_in_chair" ||
++            state.environment.founderActivity?.kind === "attend_encounter" && (() => {
++              const encounter = state.encounters[state.environment.founderActivity.targetId];
++              const room = state.rooms.find(room => room.id === encounter?.assignedRoomInstanceId);
++              const definition = room && getRoomDefinition(room.roomDefinitionId);
++              return Boolean(room && definition && ["room.examination", "room.pediatric_examination", "room.wound_ostomy"].includes(room.roomDefinitionId) &&
++                samePoint(state.environment.founderLocation, room.roomDefinitionId === "room.pediatric_examination"
++                  ? pediatricSupportLocation(room, "stool:clinician") : getRoomCareAnchor(room, definition, "clinician")));
++            })()) &&
+             state.environment.founderActivity.pathIndex >=
+               state.environment.founderActivity.path.length - 1),
+         ...(() => {
+@@ -2391,13 +2417,7 @@
+             ]
+           : [];
+       }),
+-      doors: state.doors.map((door) => ({
+-        instanceId: door.id,
+-        roomInstanceId: door.roomId,
+-        side: door.side,
+-        offset: door.offset,
+-        exterior: door.exterior,
+-      })),
++      doors: createFacilityDoorViews(state),
+       staff: [
+         ...state.employees,
+         ...(state.departingEmployees ?? []),
+@@ -2570,22 +2590,13 @@
+         progressionStatus.nextFacilityLevel === null
+           ? null
+           : `Level ${progressionStatus.nextFacilityLevel}`,
+-      goals: progressionStatus.requirements.map((requirement) => state.facilityLevel === 5
+-        ? levelFiveGoalView(state, requirement) : ({
+-        id: requirement.id,
+-        label: requirement.label,
+-        complete: requirement.met,
+-        progressLabel: `${Math.min(
+-          requirement.current,
+-          requirement.required,
+-        )}/${requirement.required}`,
+-      })),
+-      ...(state.facilityLevel >= 3 ? { secondaryGoals: [{
++      goals: progressionGoals,
++      ...(state.facilityLevel >= 3 ? { secondaryGoals: [withGoalDisplayLabel({
+         id: "secondary.level_three_first_qi_review",
+         label: "Complete the first administrative quality review",
+         complete: levelThreeSupport.completedQiReviewCount > 0,
+         progressLabel: `${Math.min(levelThreeSupport.completedQiReviewCount, 1)}/1`,
+-      }] } : {}),
++      })] } : {}),
+       canLevelUp: progressionStatus.eligible,
+       prototypeComplete: progressionStatus.terminalComplete,
+       ...(state.facilityLevel === 5 ? { inspectionUnlock: createInspectionUnlockView(state), inspection: createFacilityInspectionView(state) } : {}),
+@@ -2735,7 +2746,7 @@
+             ? "Build a Reading Room to add four radiologist positions."
+           : role.id === "staff.imaging_technician"
+             ? `Build an ${imagingCapacityRooms} Room to add imaging technician capacity.`
+-            : "Build a compatible room to add hiring capacity."
++            : missingHireRoomMessage(state, role.id) ?? "Build a compatible room to add hiring capacity."
+           : atMaximum
+             ? `Maximum ${roomCapacity.capacity} hired for the rooms you have built.`
+           : !requirementsMet
+@@ -2797,7 +2808,7 @@
+             ? "Build a Reading Room to add four radiologist positions."
+           : role.id === "staff.imaging_technician"
+             ? `Build an ${imagingCapacityRooms} Room to add imaging technician capacity.`
+-            : "Build a compatible room to add hiring capacity."
++            : missingHireRoomMessage(state, role.id) ?? "Build a compatible room to add hiring capacity."
+           : atMaximum
+             ? `Maximum ${roomCapacity.capacity} hired for the rooms you have built.`
+           : !requirementsMet
+@@ -2920,6 +2931,7 @@
+         ...(benefit ? { benefit } : {}),
+         canMove: !protectedRoom,
+         accessProblem: buildUnreachableRoomIds.has(room.id),
++        ...(buildMode ? { accessWarning: getRoomAccessWarning(state, room.id) ?? undefined } : {}),
+         nextUpgradeLevel,
+         upgradeCostLabel:
+           upgradeCost === null
+@@ -2950,22 +2962,17 @@
+         state.campaignId.length > 20
+           ? `${state.campaignId.slice(0, 17)}…`
+           : state.campaignId,
+-      learningHistoryLabel: `${Object.values(
+-        state.learningHistories,
+-      ).filter((history) => history.reviews.length > 0).length} reviewed / ${
+-        Object.keys(state.learningHistories).length
+-      } available`,
++      learningHistoryLabel: learningDevelopment.learningHistoryLabel,
+       reviewCountLabel: `${state.reviewIntents.length} scored`,
+       fastForwardLabel: `Fast-forward ${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.development.fastForwardTickCount} min`,
+       addMoneyLabel: `Add $${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.development.addMoneyAmount}`,
+-      learningCards:
+-        PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.map((concept) => ({
+-          conceptId: concept.id,
+-          conceptLabel: concept.displayName,
+-          statusLabel: formatLearningCardStatus(state, concept.id),
+-        })),
++      learningCards: learningDevelopment.learningCards,
+     },
+     workloadStatus,
+     patientAvailabilityGuidance: createPatientAvailabilityGuidance(state, Date.now()),
+   };
+ }
++
++export function createPrototypePlayerView(...args: Parameters<typeof derivePrototypePlayerView>): PrototypePlayerView {
++  return withSettledStateQueries(args[0], () => derivePrototypePlayerView(...args));
++}

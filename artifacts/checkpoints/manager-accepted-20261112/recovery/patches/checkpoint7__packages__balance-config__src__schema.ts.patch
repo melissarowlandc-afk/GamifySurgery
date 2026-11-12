@@ -1,0 +1,36 @@
+--- a/packages/balance-config/src/schema.ts
++++ b/packages/balance-config/src/schema.ts
+@@ -729,6 +729,10 @@
+           breakDurationMinutes: z.number().int().positive(),
+           breakMoraleGain: z.number().int().positive().max(25),
+           breakCooldownMinutes: z.number().int().positive(),
++          breakHighMoraleThreshold: z.number().int().positive().max(99),
++          breakHighMoraleCooldownMultiplier: z.number().int().positive(),
++          staffRoomMoraleBonusPerDay: z.number().int().nonnegative().max(25),
++          staffRoomMoraleBonusPerUpgrade: z.number().int().nonnegative().max(5),
+           maintenanceUseThreshold: z.number().int().positive(),
+           maintenanceGraceMinutes: z.number().int().positive(),
+           repairDurationMinutes: z.number().int().positive(),
+@@ -776,6 +780,22 @@
+         firstArrivalMaximumMinutes: z.number().int().positive(),
+         routineBaseIntervalMinutes: z.number().int().positive(),
+         routineVariationMinutes: z.number().int().nonnegative(),
++        levelOneRoutineCadence: z
++          .object({
++            baseIntervalMinutes: z.number().int().positive(),
++            variationMinutes: z.number().int().nonnegative(),
++          })
++          .strict()
++          .superRefine((cadence, context) => {
++            if (cadence.variationMinutes >= cadence.baseIntervalMinutes) {
++              context.addIssue({
++                code: "custom",
++                message: "Arrival variation must be smaller than the base interval.",
++                path: ["variationMinutes"],
++              });
++            }
++          })
++          .optional(),
+       })
+       .strict()
+       .superRefine((arrivals, context) => {

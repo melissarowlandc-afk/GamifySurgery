@@ -1,0 +1,36 @@
+const main = {
+  'esophagus-motility-achalasia': 'borderline-aperistalsis-study.v1 botulinum-rescue-risk.v1 egjoo-supportive-study.v2 flip-after-failed-assistance.v2 recurrent-clearance-test.v2 salvage-before-resection.v1',
+  'esophagus-gerd-barrett-hiatal': 'inconclusive-wireless-study.v2 indefinite-inflamed-biopsies.v1 informed-hernia-observation.v2 irregular-z-surveillance-boundary.v1 limited-negative-sampling.v2 negative-reflux-medication.v1 off-therapy-after-normal-egd.v1 proven-gerd-on-therapy.v1 repair-with-reflux-control.v1 residual-barrett-after-resection.v1 surveillance-from-primary-record.v2 symptomatic-hernia-anemia.v1 unproven-reflux.v2 visible-lesion-first.v1',
+  'surgical-infection-antibiotics': 'adequate-control-duration.v2 anaerobic-coverage.v2 closure-prophylaxis.v2 culture-directed-narrowing.v2 invasive-candida-treatment.v2 mrsa-prophylaxis.v2 old-drain-colonization.v2 pelvic-source-route.v2 postdrain-antibiotic-need.v2',
+  'colon-diverticular-lower-bleeding': 'continue-secondary-aspirin.v1 failed-abscess-source-control.v2 first-episode-with-urinary-symptoms.v1 first-presentation-ct.v1 flat-vascular-lesion-treatment.v2 high-risk-hartmann.v1 immunosuppressed-antibiotic-decision.v2 large-accessible-abscess.v1 localized-surgical-rescue.v2 ongoing-bleeding-cta.v1 positive-cta-embolization.v1 post-recovery-alarm-colonoscopy.v2 rebleed-after-clipping.v1 stable-primary-reconstruction.v2',
+  'trauma-head-spine-extremities': 'acute-sdh-evacuation.v1 focal-change-ct.v2 limb-normal-abi-disposition.v2 limb-shunt-before-fixation.v1 limb-vascular-imaging.v1',
+  'statistics': 'allocation-concealment.v1 confidence-level.v2 detect-smaller-effect.v1 discordant-pairs.v1 effect-modification.v1 equivalence-interval.v2 incidence-proportion.v1 intention-to-treat.v1 interval-width-sample-size.v1 kaplan-meier-step.v1 lead-time-bias.v1 length-time-bias.v2 logistic-model.v1 multiplicity.v1 number-needed-to-harm.v1 paired-binary-test.v1 person-time-rate.v1 point-prevalence.v1 positive-likelihood-ratio.v1 post-test-probability.v1 right-censoring.v1 standard-error.v1 standardized-risk.v1 stratified-confounding.v2',
+  'pancreas-acute-pancreatitis': 'deteriorating-early-necrosis.v1.r2 enteral-before-parenteral.v1.r2 failed-drainage-vard.v1.r2 fluid-overload.v1 gastric-intolerance.v1.r2 moderate-resuscitation.v1.r2 refractory-compartment.v1 responding-infected-necrosis.v1.r2 sterile-necrosis-antibiotics.v1.r2',
+  'bowel-ibd-malabsorption-short-bowel': 'celiac-panel.v1 crohn-abscess.v1 crohn-fistula-stricture.v1 crohn-strictureplasty.v1 crohn-surveillance.v2 jejunal-gist-resection.v2 pouch-localize.v2 uc-staged-colectomy.v2 uc-visible-dysplasia.v1',
+  'fluids-electrolytes-acid-base': 'current-corrected-gap.v2 dka-potassium-sequence.v2 dka-resolution-transition.v1 gastric-chloride-replacement.v2 hhs-tonicity-response.v2 hyponatraemia-loss-replacement.v2 potassium-provenance.v1 siad-fluid-plan.v1',
+  'hematology-transfusion-coagulation': 'anemia-gi-evaluation.v1 antigen-compatible-rbc.v2 cholestasis-correction.v2 hit-functional-confirmation.v2 hit-initial-action.v2 marrow-reassessment.v2 platelet-product.v2 taco-next-transfusion.v2 transfusion-calcium.v2 vka-factor-replacement.v2 vwd-major-plan.v2',
+  'parathyroid-calcium': 'n02.v1 n05.v1 n07.v1 n11.v2 n14.v2 n16.v2 n17.v2 n18.v1 r02.v1 r04.v1',
+  'nutrition-support-metabolism': 'durable-enteral-access.v1 enteral-medication-review.v2 gastric-aspiration-route.v1 oral-escalation.v1 postoperative-route-after-swallow.v2 preop-nutrition-timing.v1 renal-formula-reference-budget.v1 renal-protein-reference.v1 swallow-versus-gut.v2 zinc-copper-assessment.v2',
+  'vascular-limb-mesenteric-arterial': 'ami-cta-aki.v2 ami-cta-normal-lactate.v1 bowel-staging.v1 cfa-procedure.v1 cmi-after-duplex.v2 exercise-exposure.v2 inflow-first.v1 initial-abi.v1 mvt-heparin.v1 nomi-operative-change.v1 pad-antiplatelet.v2 peritonitis-exploration.v1 response-defer.v2',
+  'stomach-ulcer-bleeding-motility': 'confounded-scan.v1 cure-calendar.v1 failed-endoscopy-embolization.v2 late-meal-acarbose.v1 perforation-imaging.v1 prokinetic-reaction.v1 recurrent-bleeding-repeat.v1 salvage-eradication.v2 secondary-prevention-aspirin.v1 unstable-perforation-access.v1 valid-cure-antibody.v1',
+  'adrenal-men-endocrine': 'avs-contralateral-nodule.v1 avs-technical-failure.v1 benign-imaging-followup.v2 bilateral-pa-medical.v2 classify-before-localizing.v1 confirm-cortisol-autonomy.v2 indeterminate-growth-action.v1 men2-operative-priority.v1 post-cortisol-replacement.v2 suspected-acc-pathway.v2 unilateral-overt-cortisol.v2',
+  'breast-cancer': 'benign-sample-discordance.v1 dcis-positive-shave.v1 diffuse-malignant-residual.v2 her2-neoadjuvant-sequence.v2 inflammatory-initial-sequence.v1 initial-fixed-nodes-alnd.v1 invasive-with-dcis-margin.v1 marker-target-reconciliation.v1 residual-her2-adjuvant.v1',
+  'melanoma-cutaneous-cancer': 'mcc-negative-imaging-slnb.v2 positive-sln-observation.v1 stage-ii-adjuvant.v1 thick-primary-margin.v2',
+  'gallbladder-duct-stones': 'active-cardiac-gallbladder-source.v2 acute-filling-protocol.v1 antibiotics-after-source-control.v1 bleeding-risk-drainage-first.v1 conversion-does-not-identify-ducts.v1 duct-before-ercp.v1 eus-after-negative-mrcp.v1 failed-clearance-drainage-bridge.v2 high-risk-not-unfit.v1 large-balloon-stricture-boundary.v1 neck-stone-proximal-dilation.v1 remnant-anatomy-workup.v1 stent-not-permanent-clearance.v2 symptoms-beyond-seventy-two-hours.v2 unstable-drainage-extent.v1',
+  'hernia-groin': 'acute-reduction-selection.v2 anterior-recurrence-plane.v2 gross-spillage-tissue-repair.v1 local-anesthesia-selection.v2 marked-femoral-repair.v2 new-component-ultrasound.v2 partial-wall-urgency.v1 selected-observation.v1',
+};
+const salvage = {
+  'critical-respiratory-ventilation': 'copd-planned-extubation.v1 sbt-readiness.v2 sbt-fio2.v2 copd-niv.v2',
+  'critical-shock-resuscitation': 'inotrope-after-pressure-restored.v1 lactate-perfusion-discordance.v1 vasopressin-escalation.v2',
+  'critical-renal-organ-support': 'congestion-directed-oliguria.v1 rrt-treatment-response.v1 rrt-refractory-pulmonary-fluid.v1',
+  'trauma-initial-abdomen': 'liver-delayed-arterial-bleeding.v1 renal-isolated-urine-leak.v1',
+  'small-bowel-obstruction-ileus': 'contrast-assessment.v2',
+  'appendix-appendicitis': 'persistent-pain-exploration.v1 invasive-adenocarcinoma-resection.v2 post-abscess-interval-appendectomy.v1',
+  'vascular-aorta': 'growing-sac-source.v1 residual-static-branch.v1 stable-branch-flow.v1',
+  'pancreas-chronic-cysts-neoplasia': 'chronic-failed-stenting.v1 ipmn-high-risk-plan.v1 mcn-large-symptomatic.v2 net-growth-duct-proximity.v1 postop-vomiting-inflammation.v1',
+  'trauma-thoracic': 'aortic-repair-sequence.20261111.v1',
+};
+export const TOPIC_BATCH3_CONFIG = [
+  ...Object.entries(main).map(([slug,list]) => ({slug, salvage:false, suffixes:list.split(' ')})),
+  ...Object.entries(salvage).map(([slug,list]) => ({slug, salvage:true, suffixes:list.split(' ')})),
+];

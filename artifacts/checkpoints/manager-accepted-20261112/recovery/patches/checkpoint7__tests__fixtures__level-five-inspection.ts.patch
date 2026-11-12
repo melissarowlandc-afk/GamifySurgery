@@ -1,0 +1,11 @@
+--- a/tests/fixtures/level-five-inspection.ts
++++ b/tests/fixtures/level-five-inspection.ts
+@@ -45,7 +45,7 @@
+   let state = createLevelFiveStateQaState(scenario === "inspection-executive" ? "executive" : "pre-goal", context);
+   state.campaignId = `${LEVEL_FIVE_INSPECTION_QA_PREFIX}.${scenario}`;
+   state.campaignSeed = `level-five-inspection-m7a.${scenario}`;
+-  state.clinicalXp = 2000; // Explicit unlock-boundary fixture; not a zero-XP playthrough.
++  state.clinicalXp = context.balanceRelease.facility.stageDefinitions.find(stage => stage.level === 5)!.minimumClinicalXp; // Explicit unlock-boundary fixture; not a zero-XP playthrough.
+   if (scenario === "inspection-executive") {
+     const employee = state.employees.find(employee => employee.staffRoleDefinitionId === "staff.executive")!;
+     state = inspectionQaApply(state, context, { type: "SET_EMPLOYEE_SALARY", employeeId: employee.id, salaryPerExpenseInterval: 49 }, "m7a.qa.executive.pay");

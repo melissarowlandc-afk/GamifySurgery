@@ -1,0 +1,37 @@
+--- a/packages/game-domain/tests/ultrasound-first-imaging.test.ts
++++ b/packages/game-domain/tests/ultrasound-first-imaging.test.ts
+@@ -16,6 +16,7 @@
+   type GameState,
+ } from "../src";
+ import { describe, expect, it } from "vitest";
++import {QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE} from "@gamify-surgery/clinical-content";
+ 
+ function stateAt(level: 0 | 1 | 2): GameState {
+   const state = createInitialGameState(undefined, {
+@@ -508,7 +509,7 @@
+ 
+   it("uses the staffed reachable CT route for every frozen colon-staging gate", () => {
+     const state = withReachableCt(withOrdinaryDoorUltrasound(stateAt(2)));
+-    const colonCases = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(
++    const colonCases = QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE.cases.filter(
+       (clinicalCase) => clinicalCase.id.startsWith("case.colon-cancer."),
+     );
+     expect(colonCases).toHaveLength(4);
+@@ -517,6 +518,17 @@
+       expect(getEligibleServiceRoute(
+         state, gate.resultTypeId, gate.allowedServiceRouteIds,
+       )).toMatchObject({ route: { id: "route.ct.in_house" } });
++    }
++  });
++
++  it("keeps the revised liver-MRI staging gate distinct from the three current CT gates",()=>{
++    const state=withReachableCt(withOrdinaryDoorUltrasound(stateAt(2)));
++    const cases=PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.filter(c=>c.id.startsWith("case.colon-cancer."));
++    expect(cases).toHaveLength(4);
++    for(const clinicalCase of cases){const gate=clinicalCase.decisionNodes[0]!.resultGateAfter!;
++      const liver=clinicalCase.id==="case.colon-cancer.sigmoid-referral";
++      expect(gate.resultTypeId).toBe(liver?"service.liver_mri":"service.ct");
++      expect(getEligibleServiceRoute(state,gate.resultTypeId,gate.allowedServiceRouteIds)).toMatchObject({route:{id:liver?"route.liver_mri.outsourced":"route.ct.in_house"}});
+     }
+   });
+ 

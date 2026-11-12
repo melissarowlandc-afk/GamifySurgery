@@ -1,0 +1,230 @@
+--- a/packages/game-domain/src/diagnostic-timing.ts
++++ b/packages/game-domain/src/diagnostic-timing.ts
+@@ -1,3 +1,8 @@
++import type { PlacedRoom } from "./types";
++import type { RoomDefinition } from "@gamify-surgery/balance-config";
++import { preferAvailableHomeStaff } from "./diagnosticCandidatePriority";
++import { facilityDefinitionReader } from "./facilityNavigation";
++import { hasSettledStateQueries, settledStateQuery, withSettledStateQueries } from "./settledStateQueries";
+ import {
+   DIAGNOSTIC_READING_WORKSTATIONS,
+   DIAGNOSTIC_TIMING_RESOURCES,
+@@ -28,7 +33,7 @@
+ import { getOutsideReadPriorityEnd } from "./radiologist-read-income";
+ import { isEmployeeAwayForTraining } from "./employee-training";
+ import { getProcedureStaffStandingSpots, isProceduralSpecialistRole, usesApprovedProcedureStaffSpots } from "./procedural-staffing";
+-import { hasQueuedHomeRoomWork, staffHomeMismatchCount } from "./staff-dispatch";
++import { hasQueuedHomeRoomWork as computeQueuedHomeRoomWork, staffHomeMismatchCount as computeStaffHomeMismatchCount } from "./staff-dispatch";
+ import { pediatricServiceIsUnsupported } from "./pediatric-eligibility";
+ import {
+   getRoomDefinition,
+@@ -183,9 +188,8 @@
+   return (calendar.actors.get(actorId) ?? []).filter((interval) => interval.ends <= atTick).sort((a, b) => b.ends - a.ends)[0]?.destination ?? fallback;
+ }
+ 
+-function firstSlot(calendar: Calendar, resource: DiagnosticResourceChoice, ready: number, minutes: number): number {
++function firstSlot(intervals: readonly Interval[], ready: number, minutes: number): number {
+   let starts = ready;
+-  const intervals = availabilityKeys(calendar, resource).flatMap((key) => calendar.intervals.get(key) ?? []).sort((a, b) => a.starts - b.starts || a.ends - b.ends);
+   for (const interval of intervals) {
+     if (starts + minutes <= interval.starts) continue;
+     if (starts < interval.ends && starts + minutes > interval.starts) starts = interval.ends;
+@@ -221,7 +225,23 @@
+   return [...plans.values()].sort((a, b) => a.createdAtTick - b.createdAtTick || a.orderId.localeCompare(b.orderId));
+ }
+ 
++const queuedHomeQuery = Symbol("diagnostic-home-queue"), mismatchQuery = Symbol("diagnostic-home-mismatch");
++function hasQueuedHomeRoomWork(state: GameState, context: DomainContext, employee: GameState["employees"][number], ownerId?: string) {
++  return settledStateQuery(state, context, queuedHomeQuery, JSON.stringify([employee.id, ownerId ?? null]), () => computeQueuedHomeRoomWork(state, employee, ownerId));
++}
++function staffHomeMismatchCount(state: GameState, context: DomainContext, resource: DiagnosticResourceChoice) {
++  return settledStateQuery(state, context, mismatchQuery, resource, () => computeStaffHomeMismatchCount(state, resource));
++}
++const procedureSpotQuery = Symbol("diagnostic-procedure-spots");
++function procedureSpotsFor(state: GameState, context: DomainContext, room: PlacedRoom, definition: RoomDefinition, actor: "provider" | "nurse") {
++  return settledStateQuery(state, context, procedureSpotQuery, JSON.stringify([room.id, actor]),
++    () => getProcedureStaffStandingSpots(room, definition, state.doors, actor));
++}
++const resourceQuery = Symbol("diagnostic-resources");
+ function resourceCandidates(state: GameState, context: DomainContext, requirement: DiagnosticResourceRequirement): DiagnosticResourceChoice[] {
++  return settledStateQuery(state, context, resourceQuery, JSON.stringify(requirement), () => computeResourceCandidates(state, context, requirement));
++}
++function computeResourceCandidates(state: GameState, context: DomainContext, requirement: DiagnosticResourceRequirement): DiagnosticResourceChoice[] {
+   const candidates: DiagnosticResourceChoice[] = [];
+   for (const room of [...state.rooms].sort((a, b) => a.id.localeCompare(b.id))) {
+     if (room.roomDefinitionId !== requirement.roomDefinitionId || !roomAvailable(state, context, room.id)) continue;
+@@ -267,13 +287,13 @@
+       continue;
+     }
+     const stations = requirement.stationKind === "periop_bed"
+-      ? getRoomCareStations(room, definition, state.doors, state.rooms, (id) => getRoomDefinition(id, context)).map((station) => ({ id: station.id, anchor: station.patientAnchor }))
++      ? getRoomCareStations(room, definition, state.doors, state.rooms, facilityDefinitionReader(context)).map((station) => ({ id: station.id, anchor: station.patientAnchor }))
+       : [{ id: null, anchor: room.roomDefinitionId === "room.phlebotomy" ? getRoomCareAnchor(room, definition, "patient") : getRoomNavigationAnchor(room, definition, "primary") }];
+     for (const group of groups) for (const provider of providers) for (const station of stations) {
+       if (provider?.kind === "employee" && group.includes(provider.employeeId)) continue;
+       const procedureSpots = provider && requirement.providerRoleDefinitionIds.some(isProceduralSpecialistRole) && usesApprovedProcedureStaffSpots(room, definition);
+-      const providerSpot = procedureSpots ? getProcedureStaffStandingSpots(room, definition, state.doors, "provider")[0] : null;
+-      if (procedureSpots && (!providerSpot || !getProcedureStaffStandingSpots(room, definition, state.doors, "nurse").length)) continue;
++      const providerSpot = procedureSpots ? procedureSpotsFor(state, context, room, definition, "provider")[0] : null;
++      if (procedureSpots && (!providerSpot || !procedureSpotsFor(state, context, room, definition, "nurse").length)) continue;
+       candidates.push({ roomInstanceId: room.id, roomDefinitionId: room.roomDefinitionId, stationId: station.id,
+         employeeIds: group, provider, patientAnchor: station.anchor, staffAnchor: requirement.stationKind === "periop_bed" ? getRoomSharedStaffAnchor(room, definition) :
+           providerSpot?.anchor ?? (room.roomDefinitionId === "room.phlebotomy" && requirement.staffRoleDefinitionIds.includes("staff.phlebotomist") ? getRoomCareAnchor(room, definition, "clinician") : getRoomNavigationAnchor(room, definition, "staff")) });
+@@ -296,8 +316,13 @@
+     stationKind: kind === "interpretation" ? "reading" : null };
+ }
+ 
++const diagnosticPathQuery = Symbol("diagnostic-route");
+ function path(state: GameState, context: DomainContext, origin: GridPoint, destination: GridPoint, roomId?: string): GridPoint[] {
+-  return findCareAwareFacilityPath(state, context, origin, destination, new Set(roomId ? [roomId] : []));
++  const route = settledStateQuery(state, context, diagnosticPathQuery, JSON.stringify([origin.x, origin.y, destination.x, destination.y, roomId ?? null]),
++    () => findCareAwareFacilityPath(state, context, origin, destination, new Set(roomId ? [roomId] : [])));
++  // Private read-only routes are shared while ranking candidates. Only the
++  // winning forecast publishes independent point arrays below.
++  return route;
+ }
+ 
+ function containingRoomId(state: GameState, context: DomainContext, point: GridPoint): string | undefined {
+@@ -329,13 +354,18 @@
+   const choices = draft.requirement ? resourceCandidates(state, context, draft.requirement).filter((resource) =>
+     (preferred || sharedPeriop(resource) || [...resource.employeeIds, ...(resource.provider?.kind === "employee" ? [resource.provider.employeeId] : [])].every(id => {
+       const employee = state.employees.find(candidate => candidate.id === id)!;
+-      return employee.homeRoomInstanceId === resource.roomInstanceId || !hasQueuedHomeRoomWork(state, employee, ownerId);
++      return employee.homeRoomInstanceId === resource.roomInstanceId || !hasQueuedHomeRoomWork(state, context, employee, ownerId);
+     })) &&
+     !heldByAnother(calendar, resource, ownerId) && (!preferred || (resource.roomInstanceId === preferred.roomInstanceId && resource.stationId === preferred.stationId &&
+       (preferredStationOnly || resource.employeeIds.join(":") === preferred.employeeIds.join(":") && JSON.stringify(resource.provider) === JSON.stringify(preferred.provider)))))
+     .map((resource) => preferred && !preferredStationOnly ? copy(preferred) : resource) : [null];
++  // Calendar reservations change only after selecting a winner, not while
++  // ranking candidates. Retry bounds and interval order are identical for all.
++  const availabilityChanges = [...calendar.intervals.values(), ...calendar.actors.values()].reduce((total, intervals) => total + intervals.length, 0);
++  const maximumAttempts = 2 * (availabilityChanges + 2);
+   const reachableOptions = choices.flatMap((resource) => {
+     const workMinutes = initialTiming ? initialTiming(resource) : remaining;
++    const availability = resource ? availabilityKeys(calendar, resource).flatMap(key => calendar.intervals.get(key) ?? []).sort((a, b) => a.starts - b.starts || a.ends - b.ends) : [];
+     const patientPath = !workHasArrived && draft.patientPresent && resource ? path(state, context, patientOrigin, resource.patientAnchor, resource.roomInstanceId) : [];
+     if (!workHasArrived && draft.patientPresent && resource && patientPath.length === 0) return [];
+     const employeeIds = resource ? [...resource.employeeIds, ...(resource.provider?.kind === "employee" ? [resource.provider.employeeId] : [])] : [];
+@@ -345,23 +375,21 @@
+       draft.readingUpgradeWork.acceptedAtTick <= handoff.atTick && draft.readingUpgradeWork.executionEnabledAtTick <= handoff.atTick &&
+       (draft.readingUpgradeWork.readyAtTick ?? ready) <= handoff.atTick;
+     let starts = canInherit ? Math.min(ready, handoff.atTick) : ready;
+-    // A release and its rounded boundary each need an availability pass.
+-    const availabilityChanges = [...calendar.intervals.values(), ...calendar.actors.values()].reduce((total, intervals) => total + intervals.length, 0);
+-    const maximumAttempts = 2 * (availabilityChanges + 2);
++
+     for (let attempt = 0; attempt < maximumAttempts; attempt++) {
+       const employeePaths = employeeIds.map((employeeId) => {
+         const employee = state.employees.find((entry) => entry.id === employeeId)!;
+         const room = state.rooms.find((entry) => entry.id === resource!.roomInstanceId)!;
+         const definition = getRoomDefinition(room.roomDefinitionId, context)!;
+         const isProcedureNurse = employee.staffRoleDefinitionId === "staff.endoscopy_nurse" || employee.staffRoleDefinitionId === "staff.or_nurse";
+-        const anchor = isProcedureNurse ? getProcedureStaffStandingSpots(room, definition, state.doors, "nurse")[0]?.anchor ?? resource!.staffAnchor : resource!.staffAnchor;
++        const anchor = isProcedureNurse ? procedureSpotsFor(state, context, room, definition, "nurse")[0]?.anchor ?? resource!.staffAnchor : resource!.staffAnchor;
+         return { employeeId, path: workHasArrived ? [anchor] : path(state, context, actorOrigin(calendar, employeeId, starts, employee.location), anchor, resource!.roomInstanceId) };
+       });
+       if (employeePaths.some((entry) => entry.path.length === 0)) return [];
+       const founderPath = resource?.provider?.kind === "founder" ? workHasArrived ? [resource.staffAnchor] : path(state, context, actorOrigin(calendar, "founder", starts, state.environment.founderLocation), resource.staffAnchor, resource.roomInstanceId) : [];
+       if (resource?.provider?.kind === "founder" && founderPath.length === 0) return [];
+       const walkingMinutes = Math.max(0, ...[patientPath, founderPath, ...employeePaths.map((entry) => entry.path)].map((entry) => Math.ceil(Math.max(0, entry.length - 1) / tilesPerTick)));
+-      const slot = resource ? firstSlot(calendar, resource, starts, walkingMinutes + workMinutes) : starts;
++      const slot = resource ? firstSlot(availability, starts, walkingMinutes + workMinutes) : starts;
+       if (slot !== starts) { starts = slot; continue; }
+       const continuous = canInherit && walkingMinutes === 0 && starts === handoff!.atTick;
+       const observedStart = continuous ? starts : Math.ceil(Math.max(state.facilityTick, starts));
+@@ -375,17 +403,14 @@
+         if (!onward.length || ends + Math.ceil(Math.max(0, onward.length - 1) / tilesPerTick) > next.starts) afterNext = Math.max(afterNext, next.ends);
+       }
+       if (afterNext !== starts) { starts = afterNext; continue; }
+-      return [{ resource, homeMismatch: resource ? staffHomeMismatchCount(state, resource) : 0, starts, patientPath, employeePaths, founderPath, walkingMinutes, workMinutes }];
++      return [{ resource, homeMismatch: resource ? staffHomeMismatchCount(state, context, resource) : 0, starts, patientPath, employeePaths, founderPath, walkingMinutes, workMinutes }];
+     }
+     return [];
+   });
+   // At a given room, equally available home staff win before travel speed.
+   // A busy home team can still be covered by a spare; other rooms retain their
+   // independent queue/travel ranking. Frozen saved choices are never replaced.
+-  const options = reachableOptions.filter(option => !option.resource || sharedPeriop(option.resource) || !reachableOptions.some(other => other.resource &&
+-    other.resource.roomInstanceId === option.resource!.roomInstanceId && other.resource.stationId === option.resource!.stationId &&
+-    other.resource.provider?.kind === option.resource!.provider?.kind && other.starts <= option.starts &&
+-    other.homeMismatch < option.homeMismatch))
++  const options = preferAvailableHomeStaff(reachableOptions, sharedPeriop)
+     .sort((a, b) => (a.starts + a.walkingMinutes + (initialTiming ? a.workMinutes : 0)) - (b.starts + b.walkingMinutes + (initialTiming ? b.workMinutes : 0)) ||
+     (a.resource?.roomInstanceId ?? "").localeCompare(b.resource?.roomInstanceId ?? "") ||
+     (a.resource?.stationId ?? "").localeCompare(b.resource?.stationId ?? "") ||
+@@ -413,7 +438,9 @@
+   return { ...copy(draft), resource: option.resource ? copy(option.resource) : null,
+     ...(initialTiming ? { durationMinutes: option.workMinutes } : {}),
+     forecast: { readyAtTick: forecastReady, startsAtTick, endsAtTick, queueMinutes: option.starts - forecastReady, walkingMinutes: option.walkingMinutes,
+-      patientPath: option.patientPath, employeePaths: option.employeePaths, founderPath: option.founderPath, tilesPerTick },
++      patientPath: option.patientPath.map(point => ({ ...point })),
++      employeePaths: option.employeePaths.map(entry => ({ employeeId: entry.employeeId, path: entry.path.map(point => ({ ...point })) })),
++      founderPath: option.founderPath.map(point => ({ ...point })), tilesPerTick },
+     status: "pending", remainingMinutes: option.workMinutes, startedAtTick: null, completedAtTick: null, serviceOperationId: null, operationPhaseId: null };
+ }
+ 
+@@ -717,7 +744,16 @@
+   }
+ }
+ 
++const calendarQuery = Symbol("diagnostic-calendar");
+ function calendarFor(state: GameState, context: DomainContext, ignoredOrderId: string, encounterId: string): Calendar {
++  if (!hasSettledStateQueries()) return buildCalendar(state, context, ignoredOrderId, encounterId);
++  // Preview order IDs do not exist in the queue. All choices for one encounter
++  // can share the same baseline, but each simulation receives a private calendar.
++  const ignored = getDiagnosticOrderPlans(state).some(plan => plan.orderId === ignoredOrderId) ? ignoredOrderId : null;
++  return cloneCalendar(settledStateQuery(state, context, calendarQuery, JSON.stringify([ignored, encounterId]),
++    () => buildCalendar(state, context, ignoredOrderId, encounterId)));
++}
++function buildServiceCalendar(state: GameState, context: DomainContext, encounterId: string): Calendar {
+   const calendar: Calendar = { intervals: new Map(), actors: new Map(), heldResources: new Map(), operationCompletions: new Map(), readingHandoffs: new Map(), readingProjection: null };
+   const now = state.facilityTick;
+   const operations = state.serviceOperations.filter(activeOperation).sort((a, b) =>
+@@ -781,7 +817,9 @@
+   const founder = state.environment.founderActivity;
+   const preemptibleFounderKinds = ["return_to_front_desk", "wander_facility", "sit_in_chair", "visit_bathroom"];
+   // Enact Plan releases attendance for this chart; it is not another queue item.
+-  if (founder && !(founder.kind === "attend_encounter" && founder.targetId === encounterId) &&
++  // Older clinics decremented the indefinite encounter-attendance hold. Such
++  // counters are not work durations, including when another chart is quoted.
++  if (founder && founder.kind !== "attend_encounter" && founder.kind !== "attend_employee_discussion" &&
+     !preemptibleFounderKinds.includes(founder.kind) && !trackedIds.has(founder.targetId)) {
+     reserveFiniteWork("founder", founder.path, founder.pathIndex, founder.workMinutesRemaining);
+   }
+@@ -951,6 +989,14 @@
+       if (scheduled) { ready = scheduled.forecast.endsAtTick; origin = scheduled.resource?.patientAnchor ?? origin; }
+     }
+   }
++  return calendar;
++}
++
++const serviceCalendarQuery = Symbol("diagnostic-service-calendar");
++function buildCalendar(state: GameState, context: DomainContext, ignoredOrderId: string, encounterId: string): Calendar {
++  const founderKey = state.environment.founderActivity?.kind === "attend_encounter" ? encounterId : null;
++  const calendar = cloneCalendar(settledStateQuery(state, context, serviceCalendarQuery, founderKey,
++    () => buildServiceCalendar(state, context, encounterId)));
+   for (const plan of getDiagnosticOrderPlans(state).filter((entry) => entry.orderId !== ignoredOrderId)) {
+     forecastFrozenPlan(state, plan, context, calendar);
+   }
+@@ -1064,8 +1110,10 @@
+ }
+ 
+ /** Dynamic ETA from frozen inputs; status, choices, IDs and reached clocks stay intact. */
++const forecastQuery = Symbol("diagnostic-forecast");
+ export function forecastDiagnosticOrderPlan(state: GameState, frozenPlan: DiagnosticOrderPlan, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT): DiagnosticOrderForecast {
+-  return forecastFrozenPlan(state, frozenPlan, context, calendarFor(state, context, frozenPlan.orderId, frozenPlan.encounterId));
++  return withSettledStateQueries(state, () => structuredClone(settledStateQuery(state, context, forecastQuery, frozenPlan,
++    () => forecastFrozenPlan(state, frozenPlan, context, calendarFor(state, context, frozenPlan.orderId, frozenPlan.encounterId)))));
+ }
+ 
+ function milestone(phases: DiagnosticOrderPhase[], ids: string[], now: number): DiagnosticOrderMilestone {
+@@ -1085,6 +1133,9 @@
+ 
+ /** One calculation for a quote and the frozen accepted order; never writes state. */
+ export function planDiagnosticOrder(state: GameState, request: DiagnosticTimingRequest, context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT): DiagnosticTimingQuote {
++  return withSettledStateQueries(state, () => computeDiagnosticOrder(state, request, context));
++}
++function computeDiagnosticOrder(state: GameState, request: DiagnosticTimingRequest, context: DomainContext): DiagnosticTimingQuote {
+   if (state.encounters[request.encounterId]?.frozenCase.pediatricProfile &&
+     [request, ...(request.components ?? [])].some(component => pediatricServiceIsUnsupported(component.serviceId ?? component.timingProfileId ?? "") ||
+       component.allowedRouteIds?.some(id => pediatricServiceIsUnsupported(id)))) {

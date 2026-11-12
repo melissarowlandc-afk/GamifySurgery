@@ -1,0 +1,24 @@
+--- a/apps/player/src/ui/chartPlacement.test.ts
++++ b/apps/player/src/ui/chartPlacement.test.ts
+@@ -38,4 +38,21 @@
+     expect(heights.map((height) => place(height).top)).toEqual([450, "auto", 450]);
+     expect(heights.map((height) => place(height).bottom)).toEqual(["auto", 50, "auto"]);
+   });
++
++  it("keeps its preferred floating width instead of filling a wide yielded desk", () => {
++    expect(place(250, { ...desk, left: 200, width: 1280 })).toEqual({
++      left: 320, width: 1040, top: 450, bottom: "auto", maxHeight: 762,
++    });
++  });
++
++  it.each([300, 500, 1200])("tracks growing/shrinking desk bounds with %i px of unchanged chart content", contentHeight => {
++    const sizes = [desk, { ...desk, top: 270, height: 580 }, { ...desk, top: 610, height: 240 }, desk];
++    const placements = sizes.map(bounds => place(contentHeight, bounds));
++    for (const placement of placements) {
++      expect(placement).toMatchObject({ left: 420, width: 1040, maxHeight: 762 });
++      expect(placement).not.toHaveProperty("height");
++    }
++    expect(placements.map(placement => placement.top)).toEqual(sizes.map(bounds => contentHeight < bounds.height ? bounds.top : "auto"));
++    expect(placements.map(placement => placement.bottom)).toEqual(sizes.map(bounds => contentHeight < bounds.height ? "auto" : 50));
++  });
+ });

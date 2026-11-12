@@ -1,0 +1,14 @@
+--- a/packages/clinical-content/src/approved-data/obstructive-jaundice-vitamin-k.test.ts
++++ b/packages/clinical-content/src/approved-data/obstructive-jaundice-vitamin-k.test.ts
+@@ -1,7 +1,10 @@
++import {beforeProgramBatch3AcceptanceRelease} from "../question-program-batch3-acceptance-test-support";
+ import { describe, expect, it } from "vitest";
+ import { validateSyntheticClinicalRelease } from "../schema";
+-import { SYNTHETIC_CLINICAL_RELEASE } from "../synthetic-content";
++import { SYNTHETIC_CLINICAL_RELEASE as actualLive } from "../synthetic-content";
+ import { ROW_115_CASES, ROW_115_CONCEPT, ROW_115_EVIDENCE_CLAIMS, ROW_115_QUESTION_VARIANTS, ROW_115_SOURCES } from "./obstructive-jaundice-vitamin-k";
++const SYNTHETIC_CLINICAL_RELEASE=beforeProgramBatch3AcceptanceRelease(actualLive);
++
+ describe("owner row 115 obstructive jaundice vitamin K package",()=>{
+  it("records one concept and four exact active variants",()=>{expect(ROW_115_CONCEPT.id).toBe("concept.obstructive-jaundice.vitamin-k-coagulopathy");expect(ROW_115_CASES).toHaveLength(4);expect(ROW_115_QUESTION_VARIANTS).toHaveLength(4);});
+  it("keeps the approved vitamin-only labels and lab boundary",()=>{expect(ROW_115_QUESTION_VARIANTS[0]?.answerChoices.map(c=>c.label)).toEqual(["Vitamin K","Vitamin D","Vitamin A"]);expect(ROW_115_QUESTION_VARIANTS[2]?.stem).not.toMatch(/fat-soluble|absorption/i);});

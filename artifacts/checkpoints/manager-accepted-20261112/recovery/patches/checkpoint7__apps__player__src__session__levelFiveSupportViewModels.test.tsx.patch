@@ -1,0 +1,41 @@
+--- a/apps/player/src/session/levelFiveSupportViewModels.test.tsx
++++ b/apps/player/src/session/levelFiveSupportViewModels.test.tsx
+@@ -27,19 +27,22 @@
+     expect(view.serviceIncome.levelThreeSupport!.staffOnBreakCount).toBe(2);
+     for (const mobile of [false, true]) {
+       const markup = renderToStaticMarkup(<LevelFiveSupportFacts support={support} mobile={mobile} />);
+-      for (const label of ["Founder", "Indoor Garden", "Staff Gym", "once per visit", "240-minute", "Per upgrade"]) expect(markup).toContain(label);
++      for (const label of ["Founder", "Indoor Garden", "Staff Gym", "once per visit", "480-minute", "daily morale", "Per upgrade"]) expect(markup).toContain(label);
+     }
+     expect(renderToStaticMarkup(<LevelFiveSupportFacts support={undefined} />)).toBe("");
+   });
+   it.each([
+-    ["room.founder_office", 2, "Ownership"], ["room.indoor_garden", 2, "Adult visitors"], ["room.staff_gym", 5, "Completed"],
++    ["room.founder_office", 2, "Ownership"], ["room.indoor_garden", 2, "Adult visitors"], ["room.staff_gym", 5, "Staff below"],
+   ])("shows the real base, four increments and current upgrade purchases for %s on both room sheets", (id, base, note) => {
+     const state = fixture(), room = state.rooms.find(room => room.roomDefinitionId === id)!;
+     for (const tier of [1, 2, 3, 4, 5] as const) {
+       room.upgradeLevel = tier;
+       const benefit = describeRoomUpgradeBenefit({ roomDefinitionId: id, upgradeLevel: tier, maxUpgradeLevel: 5, upkeepPerLevel: 0 })!;
+-      expect(benefit.currentLabel).toBe(`+${Number(base) + 2 * (tier - 1)} points`); expect(benefit.note).toContain(String(note));
+-      expect(benefit.nextLabel).toBe(tier === 5 ? undefined : `+${Number(base) + 2 * tier} points`);
++      const label = (level: number) => id === "room.staff_gym"
++        ? `+${Number(base) + 2 * (level - 1)} morale per completed break; +${level} daily morale (best operational staff room)`
++        : `+${Number(base) + 2 * (level - 1)} points`;
++      expect(benefit.currentLabel).toBe(label(tier)); expect(benefit.note).toContain(String(note));
++      expect(benefit.nextLabel).toBe(tier === 5 ? undefined : label(tier + 1));
+       const view = createPrototypePlayerView(state, null, false, null, true, room.id);
+       const phone = renderToStaticMarkup(<MobileBuildRoom props={phoneFixture(view)} room={view.selectedRoomBuild!} onMove={noop} onDoors={noop} />);
+       expect(phone).toContain(benefit.currentLabel); expect(phone).toContain(String(note));
+@@ -77,6 +80,11 @@
+     }
+     expect(observedGardenSeats).toBe(true);
+     const staffState = fixture(); staffState.encounters = {}; staffState.patientAmenityTrips = [];
++    for (const employee of staffState.employees) {
++      employee.morale = 60; employee.facilityTask = null;
++      employee.path = [{ ...employee.location }]; employee.pathIndex = 0;
++    }
++    advanceLevelThreeSupport(staffState, context);
+     for (let i = 0; i < 80 && staffState.employees.some(employee => employee.pathIndex < employee.path.length - 1); i++) {
+       staffState.facilityTick++; advanceLevelThreeSupport(staffState, context); advanceEmployeeMovement(staffState, context);
+     }

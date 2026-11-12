@@ -1,0 +1,455 @@
+{
+  "authorizedOn": "2026-11-12",
+  "authorization": "Manager-approved slow-runner timing edits only. openingUploadLarge 240_000 to 600_000 plus its exact comment; automaticResolution 400 to 5_000 ms plus its exact comment; App.cloudLifecycle manual-marker Resume waitFor timeout 5_000.",
+  "files": [
+    {
+      "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+      "beforeSha256": "e1169711f0874b57db8eb3d3527af554ce5133dc95c23f8685b8a60534320568",
+      "afterSha256": "731639dde746461929a9ad0b58af102d4fe1e2e4f558a1df0416630b2d2a48a1",
+      "beforeText": "import { mkdirSync, writeFileSync } from \"node:fs\";\nimport { expect, it, vi } from \"vitest\";\nimport { applyGameEvidenceCommand } from \"@gamify-surgery/game-domain\";\nimport { largeEntryFixture } from \"./entryPerformanceTestSupport\";\nimport { encodeCloudEvidenceCheckpoint, loadCloudEvidenceCheckpoint } from \"./codecEvidence\";\nimport { decompressCloudText } from \"./codecCompression\";\nimport { verifiedEvidenceText, VerifiedEvidenceTextCache } from \"./verifiedEvidenceText\";\nimport { VerifiedCopyCache } from \"./verifiedCopyCache\";\nimport { prepareCloudWire } from \"./codecWire\";\nimport { type CloudCandidate, type CloudCommitRequest } from \"./transport\";\nimport { CloudCodecWorker } from \"./codecWorker\";\nimport { MessageChannelCloudCodecWorker } from \"./codecWorkerMessageTestSupport\";\nimport { FakeCloudServer } from \"./fakeTransport\";\nimport { MemoryCloudCache } from \"./cache\";\nimport { MemoryCloudEntryStore } from \"./entryStorage\";\nimport { openAutomaticCloudCampaign } from \"./automaticResolution\";\nimport { CloudGameSession } from \"./gameSession\";\nimport { deferred, TestCloudClock } from \"./syncTestSupport\";\nimport { cloudEntryTimings } from \"./entryTimings\";\n\nit(\"opens ~9k immutable records without an upload barrier and prepares only a verified suffix\", async () => {\n  const f = await largeEntryFixture(3_200, false), count = f.copy.evidence.records.length;\n  expect(count).toBeGreaterThan(8_500); expect(count).toBeLessThan(9_500);\n  const checkpoint = applyGameEvidenceCommand(f.prepared.checkpoint,\n    { type: \"SET_SIMULATION_SPEED\", speed: 4, operationId: \"large.open.delta\" }).checkpoint;\n  const measurements: Record<string, unknown> = { records: count, copyBytes: Buffer.byteLength(JSON.stringify(f.copy)) };\n  const read = vi.spyOn(verifiedEvidenceText, \"read\");\n  let candidate!: CloudCandidate;\n  try {\n    for (const reuse of [false, true]) {\n      let decompressions = 0, reads = 0;\n      const decode = async (value: Parameters<typeof decompressCloudText>[0]) => { decompressions++; return decompressCloudText(value); };\n      const cache = new VerifiedEvidenceTextCache(decode), timings: Record<string, number> = {}, work: Record<string, number> = {};\n      read.mockImplementation(value => { reads++; return reuse ? cache.read(value) : decode(value); });\n      const step = async <T>(name: string, run: () => Promise<T>) => {\n        const started = performance.now(), before = decompressions;\n        const value = await run(); timings[name] = performance.now() - started; work[name] = decompressions - before; return value;\n      };\n      const accountInput = { ...f.copy, expectedRevision: \"1\", expectedCampaignId: f.copy.campaignId, expectedBaselineId: f.copy.baselineId };\n      await step(\"accountVerify\", () => loadCloudEvidenceCheckpoint(accountInput));\n      const encoded = await step(\"deltaEncode\", () => encodeCloudEvidenceCheckpoint({ checkpoint, campaign: f.prepared.envelope.campaign,\n        source: f.provenance, operationId: \"large.pending\", expectedRevision: \"1\", reuseEvidence: f.copy.evidence,\n        acknowledgedEvidence: { headerSha256: f.copy.evidence.header.uncompressedSha256, records: count } }));\n      const evidence = encoded.request.evidence;\n      if (typeof evidence.headerSha256 !== \"string\") throw new Error(\"Expected immutable evidence suffix\");\n      candidate = { campaign: f.prepared.envelope.campaign, snapshot: encoded.snapshot, evidence: { ...evidence, headerSha256: evidence.headerSha256 }, usageQuestions: [] };\n      expect(evidence.fromRecord).toBe(count); expect(evidence.toRecord).toBe(count + 2); expect(evidence.records).toHaveLength(2);\n      expect(encoded.packedEvidence.records.slice(0, count)).toEqual(f.copy.evidence.records);\n      const proof = new VerifiedCopyCache(), candidateInput = { ...accountInput, snapshot: encoded.snapshot, evidence: encoded.packedEvidence };\n      await step(\"candidateVerify\", () => proof.read(candidateInput));\n      const request: CloudCommitRequest = { ...candidate, campaignId: f.copy.campaignId, expectedRevision: \"1\", protocolVersion: 2,\n        operationId: \"large.pending\", writerGeneration: \"1\", writerToken: \"synthetic-proof\" };\n      const wire = await step(\"wireSuffix\", () => prepareCloudWire(request, 1_800_000_000_000));\n      const body = JSON.parse(wire.text);\n      expect(body.evidence.fromRecord).toBe(count); expect(body.evidence.toRecord).toBe(count + 2);\n      expect(body.evidence.header).toBeUndefined(); expect(body.evidence.pages).toHaveLength(1);\n      await step(\"receiptVerifyCached\", () => proof.read({ ...candidateInput, revision: \"2\", expectedRevision: \"2\" }));\n      const cloneStarted = performance.now(); structuredClone({ candidate, confirmed: f.copy }); timings.candidateClone = performance.now() - cloneStarted;\n      measurements[reuse ? \"after\" : \"before\"] = { timingsMs: timings, immutableDecompressions: work, reads, decompressions,\n        uploadRecords: evidence.records.length, uploadBytes: Buffer.byteLength(wire.text) };\n      if (reuse) { expect(work.deltaEncode).toBe(0); expect(work.candidateVerify).toBe(2); expect(work.receiptVerifyCached).toBe(0); }\n    }\n    read.mockRestore();\n    const native = new MessageChannelCloudCodecWorker(), codec = new CloudCodecWorker(() => native), clock = new TestCloudClock();\n    const scope = { backendId: \"large-pending-open\", accountId: \"large-pending-open\", campaignId: f.copy.campaignId };\n    const cache = new MemoryCloudCache(), entryStore = new MemoryCloudEntryStore(), server = new FakeCloudServer(() => clock.wall);\n    server.seed(scope.accountId, f.copy);\n    await cache.write({ schemaVersion: 1, scope, confirmed: f.copy, recovery: { baseRevision: \"1\", writerGeneration: \"1\",\n      inFlight: null, following: candidate } }, null);\n    const transport = server.transport(scope.accountId), held = deferred(), commitStarted = deferred(), commit = transport.commit;\n    transport.commit = async operation => { commitStarted.resolve(); await held.promise; return commit(operation); };\n    const tasks = vi.spyOn(codec, \"run\"); let session: CloudGameSession | null = null;\n    const opening = performance.now();\n    try {\n      session = await CloudGameSession.create(await openAutomaticCloudCampaign({ runtime: { ...scope, region: \"test\", cache, entryStore, transport },\n        campaignId: scope.campaignId, codec, clock }));\n      expect(session.canExecute).toBe(true); expect(session.state.paused).toBe(true); expect(session.state.simulationSpeed).toBe(4);\n      expect(server.operationCount(scope.accountId)).toBe(0);\n      measurements.openPlayableMs = performance.now() - opening;\n      const preparingUpload = performance.now(), upload = session.checkpointNow(\"ordinary\"); await commitStarted.promise;\n      measurements.uploadReadyMs = performance.now() - preparingUpload;\n      expect(session.canExecute).toBe(true); expect(session.syncView.pending).toBe(true);\n      const acknowledging = performance.now(); held.resolve(); expect(await upload).toBe(true);\n      measurements.uploadAcknowledgeMs = performance.now() - acknowledging;\n      measurements.uploadTimings = cloudEntryTimings.health.timings.filter(row => typeof row[0] === \"string\" && row[0].startsWith(\"upload-\"));\n      expect(session.canExecute).toBe(true); expect(session.needsReload).toBe(false);\n      const stored = await transport.load(scope.campaignId);\n      expect(stored.evidence.records.slice(0, count)).toEqual(f.copy.evidence.records);\n      expect(stored.evidence.records.slice(count)).toEqual(candidate.evidence.records);\n      expect(server.operationCount(scope.accountId)).toBe(1); expect(codec.health.restarts).toBe(0);\n      measurements.tasks = tasks.mock.calls.reduce((rows, [task]) => ({ ...rows, [task.kind]: (rows[task.kind] ?? 0) + 1 }), {} as Record<string, number>);\n      measurements.workerRestarts = codec.health.restarts;\n      expect(tasks.mock.calls.filter(([task]) => task.kind === \"encode\")).toHaveLength(0);\n    } finally { held.resolve(); session?.dispose(); codec.dispose(); }\n    if (process.env.GAMIFY_OPEN_UPLOAD_MEASURE === \"1\") {\n      const folder = new URL(\"../../../../../.local-dev/open-with-pending-upload-20261102/\", import.meta.url); mkdirSync(folder, { recursive: true });\n      writeFileSync(new URL(\"measurements.json\", folder), JSON.stringify(measurements, null, 2));\n    }\n  } finally { read.mockRestore(); }\n}, 240_000);\n",
+      "changes": [
+        {
+          "before": "}, 240_000);",
+          "after": "}, 600_000); // Includes building 3,200 real reducer actions, outside all timed steps; slow CI runners took >220s."
+        }
+      ],
+      "batch6ObservedSha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e",
+      "batch6ObservedMatches": false,
+      "codecReceiptSha256": null
+    },
+    {
+      "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+      "beforeSha256": "09726190a2b74f2c10864ea2b97bb1d3ac5d451365beddd5d66864b850ef482a",
+      "afterSha256": "65e47a749ca545ea166250bf3299d5ac5d2f9dac3f305717257c7d541c439790",
+      "beforeText": "import { describe, expect, it, vi } from \"vitest\";\nimport { PROTOTYPE_DOMAIN_CONTEXT, deserializeGameState, serializeGameState } from \"@gamify-surgery/game-domain\";\nimport { MemoryCloudCache } from \"./cache\";\nimport { CloudCacheError } from \"./codecCache\";\nimport { MemoryCloudEntryStore } from \"./entryStorage\";\nimport { CloudGameSession } from \"./gameSession\";\nimport { CloudSyncCoordinator } from \"./coordinator\";\nimport { openAutomaticCloudCampaign } from \"./automaticResolution\";\nimport { cloudCopyFamily } from \"./copySelection\";\nimport { discoverClinicCopies, protectClinicCopy } from \"./retainedCopies\";\nimport { runCloudCodecTask, type CloudCodecExecutor } from \"./codecTasks\";\nimport { deferred, syncFixture, syncHarness } from \"./syncTestSupport\";\nimport { encodeCloudEvidenceCheckpoint } from \"./codecEvidence\";\nimport { CloudCodecError, logicalJsonText, sha256Utf8 } from \"./codecJson\";\nimport { accountStorageKey, cloudCampaignStorageKey } from \"../accountStorageKey\";\nimport { PROTOTYPE_PROFILE_KEY } from \"../prototypeStorage\";\nimport { CLOUD_RENEW_MS, CloudSyncError } from \"./transport\";\nimport { listOlderClinicCopies, exportOlderClinicCopy, restoreOlderClinicCopy } from \"./olderCopies\";\nimport { importSeparateCloudCampaign } from \"./importCampaigns\";\n\nconst codec = { run: runCloudCodecTask };\nasync function rig(cache?: MemoryCloudCache) {\n  const h = await syncHarness({ cache }), entryStore = new MemoryCloudEntryStore();\n  const runtime = { ...h.scope, region: \"test\", cache: h.cache, entryStore, transport: h.server.transport(h.scope.accountId) };\n  const resolve = (campaignId = h.scope.campaignId) => openAutomaticCloudCampaign({ runtime, campaignId, clock: h.clock, codec });\n  return { ...h, runtime, entryStore, resolve };\n}\nasync function localBranch(h: Awaited<ReturnType<typeof rig>>, ticks: number, speed: 2 | 4 = 2) {\n  const coordinator = new CloudSyncCoordinator({ ...h.runtime, scope: h.scope, clock: h.clock, enabled: true });\n  expect(await coordinator.open()).toBe(true); expect(await coordinator.startWriter(true)).toBe(true); expect(coordinator.resume()).toBe(true);\n  const session = await CloudGameSession.create(coordinator);\n  session.execute({ type: \"SET_PAUSED\", paused: false, operationId: `start.${speed}` }, PROTOTYPE_DOMAIN_CONTEXT);\n  session.execute({ type: \"SET_SIMULATION_SPEED\", speed, operationId: `speed.${speed}` }, PROTOTYPE_DOMAIN_CONTEXT);\n  for (let index = 0; index < ticks; index++) session.execute({ type: \"ADVANCE_TICK\", advancedAtRealMs: index, operationId: `tick.${speed}.${index}` }, PROTOTYPE_DOMAIN_CONTEXT);\n  expect(await session.durable()).toBe(true);\n  // These compatibility fixtures explicitly exercise the older encoded cache\n  // candidates. Ordinary play now needs only the small journal commit.\n  expect(await session.prepareRecoveryCopy()).toBe(true);\n  return { coordinator, session };\n}\nasync function divergent(h: Awaited<ReturnType<typeof rig>>, localTicks: number, accountTicks: number) {\n  const local = await localBranch(h, localTicks);\n  const otherCache = new MemoryCloudCache();\n  const otherRig = { ...h, runtime: { ...h.runtime, cache: otherCache, entryStore: new MemoryCloudEntryStore() } };\n  const remote = await localBranch(otherRig, accountTicks, 4);\n  expect(await remote.session.checkpointNow(\"purchase\")).toBe(true);\n  local.session.dispose(); remote.session.dispose();\n  return { local, remote };\n}\n\ndescribe(\"automatic verified clinic progress selection\", () => {\n  it(\"returns a locally durable playable descendant before its slow background upload\", async () => {\n    const h = await rig(), local = await localBranch(h, 2), expected = local.session.state;\n    local.session.dispose();\n    const gate = deferred(), original = h.runtime.transport.commit, commit = vi.spyOn(h.runtime.transport, \"commit\");\n    commit.mockImplementation(async operation => { await gate.promise; return original(operation); });\n    const opening = h.resolve(); let session: CloudGameSession | null = null;\n    try {\n      const outcome = await Promise.race([opening.then(coordinator => ({ coordinator })),\n        new Promise<null>(resolve => setTimeout(() => resolve(null), 400))]);\n      expect(outcome, \"opening must not wait for an account upload once local play is authorized\").not.toBeNull();\n      session = await CloudGameSession.create(outcome!.coordinator);\n      expect(session.canExecute).toBe(true); expect(session.state).toEqual(expected);\n      expect(commit).not.toHaveBeenCalled();\n      const uploading = session.checkpointNow(\"ordinary\");\n      await vi.waitFor(() => expect(commit).toHaveBeenCalledTimes(1));\n      expect(session.execute({ type: \"SET_SIMULATION_SPEED\", speed: 4, operationId: \"play.during.open-upload\" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();\n      expect(session.state.simulationSpeed).toBe(4);\n      gate.resolve(); expect(await uploading).toBe(true);\n      expect(session.canExecute).toBe(true); expect(session.needsReload).toBe(false);\n    } finally { gate.resolve(); (await opening).dispose(); session?.dispose(); commit.mockRestore(); }\n  });\n  it(\"reconciles an already-committed first upload before open without replaying it\", async () => {\n    const h = await rig(), local = await localBranch(h, 2), expected = local.session.state;\n    h.server.faults.push({ method: \"commit\", at: \"after\", error: new CloudSyncError(\"network\") });\n    expect(await local.session.checkpointNow(\"purchase\")).toBe(false);\n    const request = local.coordinator.recoveryEntry!.recovery!.inFlight!;\n    local.session.dispose();\n    const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);\n    try {\n      expect(session.canExecute).toBe(true); expect(session.state).toEqual(expected);\n      expect(coordinator.view.pending).toBe(false); expect(coordinator.confirmedRevision).toBe(\"2\");\n      expect(h.server.calls.filter(row => row.method === \"commit\")).toHaveLength(1);\n      expect(h.server.calls.some(row => row.method === \"operation\" && row.operationId === request.operationId)).toBe(true);\n      expect(h.server.operationCount(h.scope.accountId)).toBe(1);\n    } finally { session.dispose(); }\n  });\n  describe.each([true, false])(\"durably paused winning branch (local newer=%s)\", localNewer => {\n    it.each([true, false])(\"keeps the exact paused projection with free slot=%s\", async freeSlot => {\n      const h = await rig(), local = await localBranch(h, localNewer ? 3 : 1);\n      expect(local.session.execute({ type: \"SET_PAUSED\", paused: true, operationId: \"local.paused.fixture\" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();\n      expect(await local.session.durable()).toBe(true); const localState = local.session.state;\n      const remoteRuntime = { ...h.runtime, cache: new MemoryCloudCache(), entryStore: new MemoryCloudEntryStore() };\n      const remote = await localBranch({ ...h, runtime: remoteRuntime }, localNewer ? 1 : 3, 4);\n      expect(remote.session.execute({ type: \"SET_PAUSED\", paused: true, operationId: \"remote.paused.fixture\" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();\n      expect(await remote.session.checkpointNow(\"purchase\")).toBe(true); const remoteState = remote.session.state;\n      local.session.dispose(); remote.session.dispose();\n      if (!freeSlot) {\n        const other = await syncFixture(\"unrelated.paused-slot\");\n        const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: other.prepared.checkpoint,\n          campaign: { ...other.prepared.envelope.campaign, name: \"Unrelated archived clinic\", status: \"archived\" },\n          source: { sha256: other.prepared.sourceRecovery.sha256, utf8Bytes: other.prepared.sourceRecovery.utf8Bytes,\n            schemaVersion: other.prepared.sourceRecovery.schemaVersion }, expectedRevision: \"1\", operationId: \"unrelated.paused.fixture\" });\n        h.server.seed(h.scope.accountId, { ...other.confirmed, snapshot: encoded.snapshot });\n      }\n      const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);\n      try {\n        const expected = localNewer ? localState : remoteState;\n        expect(session.canExecute).toBe(true); expect(session.state.paused).toBe(true);\n        expect(session.state).toEqual({ ...expected, campaignId: session.state.campaignId });\n        expect(await session.checkpointNow(\"ordinary\")).toBe(true);\n        const opened = await h.resolve();\n        try { expect((await CloudGameSession.create(opened)).state).toEqual(session.state); }\n        finally { opened.dispose(); }\n      } finally { session.dispose(); }\n    });\n  });\n  describe.each([\"current\", \"retained import\"] as const)(\"a newer %s copy\", source => {\n    it.each([\"worker_data_clone\", \"worker_payload\"])(\"never skips it after %s to choose an older account head\", async code => {\n      const h = await rig(), local = await localBranch(h, 2), entry = local.coordinator.recoveryEntry!;\n      try {\n        const following = entry.recovery!.following!, failure = new CloudCodecError(code, \"Invalid worker input\");\n        if (source === \"retained import\") {\n          const requestText = JSON.stringify({ ...h.confirmed, snapshot: following.snapshot,\n            evidence: { header: h.confirmed.evidence.header, records: [...h.confirmed.evidence.records, ...following.evidence.records] } });\n          await h.entryStore.create(\"import:worker-boundary\", { operation: { requestText, requestSha256: await sha256Utf8(requestText) } });\n        }\n        const original = await h.entryStore.entries(), cached = await h.cache.read(h.scope);\n        const failedCodec: CloudCodecExecutor = { run(task) {\n          if (task.kind === \"inspectCopy\" && task.input.snapshot.uncompressedSha256 === following.snapshot.uncompressedSha256) return Promise.reject(failure);\n          return runCloudCodecTask(task);\n        } };\n        await expect(discoverClinicCopies({ scope: h.scope, family: await cloudCopyFamily(h.scope.campaignId), codec: failedCodec,\n          store: h.entryStore, entries: source === \"current\" ? [entry] : [], account: [h.confirmed] })).rejects.toBe(failure);\n        expect(await h.entryStore.entries()).toEqual(original); expect(await h.cache.read(h.scope)).toEqual(cached);\n        expect(await h.runtime.transport.load(h.scope.campaignId)).toEqual(h.confirmed);\n      } finally { local.session.dispose(); }\n    });\n  });\n  it(\"resumes a pending descendant, uploads once, and keeps its immutable rows\", async () => {\n    const h = await rig(), local = await localBranch(h, 2), expected = local.session.state.facilityTick;\n    const rows = local.coordinator.pendingCandidate!.evidence.records;\n    local.session.dispose();\n    const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);\n    expect(session.canExecute).toBe(true); expect(session.state.facilityTick).toBe(expected);\n    expect(await session.checkpointNow(\"ordinary\")).toBe(true);\n    const account = await h.runtime.transport.load(h.scope.campaignId);\n    expect(account.evidence.records.slice(-rows.length)).toEqual(rows);\n    expect((await h.runtime.transport.list())).toHaveLength(1);\n    session.dispose();\n  });\n  it.each([true, false])(\"automatically keeps both divergent copies (local newer: %s)\", async localNewer => {\n    const h = await rig(); const branches = await divergent(h, localNewer ? 3 : 1, localNewer ? 1 : 3);\n    const expected = Math.max(branches.local.session.state.facilityTick, branches.remote.session.state.facilityTick);\n    const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);\n    expect(session.canExecute).toBe(true); expect(session.state.facilityTick).toBe(expected);\n    expect(session.metadata.name).toBe(h.prepared.envelope.campaign.name);\n    const summaries = await h.runtime.transport.list();\n    expect(summaries).toHaveLength(2);\n    expect(summaries.filter(row => row.status === \"archived\")).toMatchObject([{ name: expect.stringContaining(\"(older copy)\") }]);\n    const again = await h.resolve();\n    expect((await CloudGameSession.create(again)).state.facilityTick).toBe(expected);\n    session.dispose(); again.dispose();\n  });\n  it(\"automatically fences a visible other writer; its old writer cannot commit or release\", async () => {\n    const h = await rig(), local = await localBranch(h, 0);\n    const secondRuntime = { ...h.runtime, cache: new MemoryCloudCache(), entryStore: new MemoryCloudEntryStore() };\n    const opened = await openAutomaticCloudCampaign({ runtime: secondRuntime, campaignId: h.scope.campaignId, clock: h.clock, codec });\n    expect(opened.view.canExecute).toBe(true);\n    expect(await local.session.checkpointNow(\"ordinary\")).toBe(false);\n    expect(local.coordinator.view.failure).toBe(\"writer\");\n    expect(await local.coordinator.saveAndClose()).toBe(false);\n    expect(opened.view.canExecute).toBe(true);\n    local.session.dispose(); opened.dispose();\n  });\n  it(\"finds a newer protected copy even when the current cache points to older progress\", async () => {\n    const h = await rig(), local = await localBranch(h, 5), expected = local.session.state.facilityTick;\n    const family = await cloudCopyFamily(h.scope.campaignId);\n    const copies = await discoverClinicCopies({ scope: h.scope, family, codec, store: h.entryStore,\n      entries: [local.coordinator.recoveryEntry!], account: [h.confirmed] });\n    await protectClinicCopy(h.entryStore, family, copies[0]!, \"previous recovery\");\n    local.session.dispose();\n    const cached = await h.cache.read(h.scope); await h.cache.write({ schemaVersion: 1, scope: h.scope, confirmed: h.confirmed, recovery: null }, cached!.cacheRevision);\n    const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);\n    expect(session.state.facilityTick).toBe(expected); expect(session.canExecute).toBe(true);\n    session.dispose();\n  });\n  it(\"reclaims only the protected older slot when full, retaining its exact bytes locally\", async () => {\n    const h = await rig(); await divergent(h, 3, 1);\n    const unrelated = await syncFixture(\"unrelated.clinic\");\n    const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: unrelated.prepared.checkpoint, campaign: { ...unrelated.prepared.envelope.campaign, name: \"Other clinic\" },\n      source: { sha256: unrelated.prepared.sourceRecovery.sha256, utf8Bytes: unrelated.prepared.sourceRecovery.utf8Bytes,\n        schemaVersion: unrelated.prepared.sourceRecovery.schemaVersion }, expectedRevision: \"1\", operationId: \"other.name\" });\n    unrelated.confirmed = { ...unrelated.confirmed, snapshot: encoded.snapshot };\n    h.server.seed(h.scope.accountId, unrelated.confirmed);\n    const previous = await h.runtime.transport.load(h.scope.campaignId);\n    const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);\n    expect(session.canExecute).toBe(true);\n    expect((await h.runtime.transport.list()).map(row => row.campaignId)).toContain(\"unrelated.clinic\");\n    expect(await h.runtime.transport.load(\"unrelated.clinic\")).toEqual(unrelated.confirmed);\n    const protectedCopies = (await h.entryStore.entries()).filter(row => row.key.startsWith(\"older-copy:\"));\n    expect(protectedCopies.some(row => JSON.stringify((row.value as any).copy) === JSON.stringify(previous))).toBe(true);\n    session.dispose();\n  });\n  it(\"recovers a newer raw Day 2 profile even after enrollment and last-active cache replacement\", async () => {\n    const h = await rig(), local = await localBranch(h, 1);\n    const rawState = { ...local.session.state, facilityTick: 1514, cash: 1131.8, clinicalXp: 72 };\n    const sourceKey = accountStorageKey(PROTOTYPE_PROFILE_KEY, h.scope.accountId);\n    const text = JSON.stringify({ schemaVersion: 2, campaigns: [{ ...local.session.metadata, serializedState: serializeGameState(rawState) }] });\n    await h.entryStore.create(`raw:${sourceKey}:${await sha256Utf8(text)}`, { sourceKey, text, sha256: await sha256Utf8(text) });\n    await h.entryStore.write(`enrolled:${h.scope.campaignId}`, { revision: \"1\" });\n    await h.entryStore.write(\"last-active-campaign\", { campaignId: h.scope.campaignId });\n    local.session.dispose();\n    const cache = await h.cache.read(h.scope);\n    await h.cache.write({ schemaVersion: 1, scope: h.scope, confirmed: h.confirmed, recovery: null }, cache!.cacheRevision);\n    const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);\n    const expected = deserializeGameState(serializeGameState(rawState));\n    expect(session.state).toEqual({ ...expected, campaignId: session.state.campaignId });\n    expect(session.state.facilityTick).toBe(1514);\n    expect(session.canExecute).toBe(true);\n    expect((await h.entryStore.entries()).find(row => row.key.startsWith(`raw:${sourceKey}:`))!.value).toEqual({ sourceKey, text, sha256: await sha256Utf8(text) });\n    session.dispose();\n  });\n  it(\"does not prefer a later device timestamp or a larger balance over clinic time\", async () => {\n    const h = await rig(); await divergent(h, 3, 1);\n    const cache = await h.cache.read(h.scope), original = cache!.entry.recovery!.following!;\n    expect(original.campaign.updatedAtRealMs).toBeGreaterThan(0);\n    const changed = { ...original, campaign: { ...original.campaign, updatedAtRealMs: 0 } };\n    // Metadata time is unrelated to game progress; re-encode its envelope so\n    // the SHA/checkpoint verification is meaningful rather than bypassed.\n    const copy = { ...cache!.entry.confirmed, snapshot: original.snapshot,\n      evidence: { header: cache!.entry.confirmed.evidence.header, records: [...cache!.entry.confirmed.evidence.records, ...original.evidence.records] } };\n    const { loadCloudEvidenceCheckpoint } = await import(\"./codecEvidence\");\n    const loaded = await loadCloudEvidenceCheckpoint({ ...copy, expectedRevision: copy.revision, expectedCampaignId: copy.campaignId, expectedBaselineId: copy.baselineId });\n    const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: loaded.checkpoint, campaign: changed.campaign, source: loaded.source, operationId: \"zero.clock\", expectedRevision: \"1\",\n      acknowledgedEvidence: { headerSha256: h.confirmed.evidence.header.uncompressedSha256, records: h.confirmed.evidence.records.length } });\n    await h.cache.write({ ...cache!.entry, recovery: { ...cache!.entry.recovery!, following: { ...changed, snapshot: encoded.snapshot } } }, cache!.cacheRevision);\n    const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);\n    expect(session.state.facilityTick).toBe(loaded.state.facilityTick); expect(session.canExecute).toBe(true); session.dispose();\n  });\n  it(\"recovers a lost import acknowledgement without a second branch or history replay\", async () => {\n    const h = await rig(); await divergent(h, 3, 1);\n    h.server.faults.push({ method: \"importCampaign\", at: \"after\", error: new CloudSyncError(\"network\") });\n    // A temporary outage may continue verified local play, but the immutable\n    // import receipt is resolved on the next online open.\n    const first = await h.resolve(); first.dispose();\n    const count = h.server.operationCount(h.scope.accountId), coordinator = await h.resolve();\n    expect(coordinator.view.canExecute).toBe(true);\n    expect(h.server.operationCount(h.scope.accountId)).toBe(count);\n    expect(h.server.calls.filter(row => row.method === \"importCampaign\")).toHaveLength(1);\n    expect((await h.runtime.transport.list())).toHaveLength(2);\n    expect(h.server.usageCount(h.scope.accountId)).toBe(0); coordinator.dispose();\n  });\n  it(\"continues verified local progress offline without a server lease, then resolves/upload on reconnect\", async () => {\n    const h = await rig(), local = await localBranch(h, 1); local.session.dispose();\n    const capabilities = h.runtime.transport.capabilities;\n    h.runtime.transport.capabilities = async () => { throw new CloudSyncError(\"network\"); };\n    const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);\n    expect(session.canExecute).toBe(true); expect(coordinator.view.failure).toBe(\"network\"); expect(coordinator.view.pending).toBe(true);\n    expect(session.execute({ type: \"SET_SIMULATION_SPEED\", speed: 4, operationId: \"offline.local\" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();\n    expect(await session.durable()).toBe(true);\n    const count = h.server.operationCount(h.scope.accountId);\n    expect(await session.checkpointNow(\"ordinary\")).toBe(false); expect(h.server.operationCount(h.scope.accountId)).toBe(count);\n    session.dispose(); h.runtime.transport.capabilities = capabilities;\n    const online = await h.resolve(), resumed = await CloudGameSession.create(online);\n    expect(resumed.canExecute).toBe(true); expect(resumed.state.simulationSpeed).toBe(4);\n    expect(await resumed.checkpointNow(\"ordinary\")).toBe(true); resumed.dispose();\n  });\n  it.each([\"revoked\", \"deleted\"] as const)(\"never resurrects a %s account from retained bytes\", async code => {\n    const h = await rig(), local = await localBranch(h, 1); local.session.dispose();\n    h.server.setAccess(h.scope.accountId, { admitted: code !== \"revoked\", deletionRequested: code === \"deleted\" });\n    await expect(h.resolve()).rejects.toMatchObject({ code });\n    h.runtime.transport.capabilities = async () => { throw new CloudSyncError(\"network\"); };\n    await expect(h.resolve()).rejects.toMatchObject({ code: \"network\" });\n  });\n  it(\"never clears/deletes a copy when its protected readback fails\", async () => {\n    const h = await rig(); await divergent(h, 3, 1);\n    const before = structuredClone([...h.server.account(h.scope.accountId).campaigns.values()]);\n    const read = h.entryStore.read.bind(h.entryStore);\n    vi.spyOn(h.entryStore, \"read\").mockImplementation(async key => key.startsWith(\"older-copy:\") ? null : read(key));\n    await expect(h.resolve()).rejects.toMatchObject({ code: \"storage\" });\n    expect([...h.server.account(h.scope.accountId).campaigns.values()]).toEqual(before);\n    expect(h.server.calls.some(row => row.method === \"deleteCampaign\" || row.method === \"importCampaign\")).toBe(false);\n  });\n  it(\"lists and faithfully exports older copies; support restores an independent campaign only when a slot is free\", async () => {\n    const h = await rig(), local = await localBranch(h, 1);\n    const copies = await discoverClinicCopies({ scope: h.scope, family: await cloudCopyFamily(h.scope.campaignId), codec,\n      store: h.entryStore, entries: [local.coordinator.recoveryEntry!], account: [h.confirmed] });\n    const key = await protectClinicCopy(h.entryStore, await cloudCopyFamily(h.scope.campaignId), copies[0]!, \"support\");\n    const listed = await listOlderClinicCopies(h.runtime); expect(listed).toHaveLength(1);\n    expect(listed[0]!.facilityTick).toBe(local.session.state.facilityTick);\n    expect(JSON.parse(await exportOlderClinicCopy(h.runtime, key)).retainedCopy.copy).toEqual(copies[0]!.copy);\n    const id = await restoreOlderClinicCopy(h.runtime, key);\n    expect(id).not.toBe(h.scope.campaignId); expect(await cloudCopyFamily(id)).not.toBe(await cloudCopyFamily(h.scope.campaignId));\n    const loaded = await h.runtime.transport.load(id);\n    expect(logicalJsonText(JSON.parse(JSON.stringify(loaded.evidence.records)))).toBe(logicalJsonText(JSON.parse(JSON.stringify(copies[0]!.copy.evidence.records))));\n    expect(await restoreOlderClinicCopy(h.runtime, key)).toBe(id); local.session.dispose();\n  });\n  it(\"recovers after a kill/lost acknowledgement while reclaiming an older full-account slot\", async () => {\n    const h = await rig(); await divergent(h, 3, 1);\n    const unrelated = await syncFixture(\"unrelated.kill\");\n    const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: unrelated.prepared.checkpoint,\n      campaign: { ...unrelated.prepared.envelope.campaign, name: \"Unrelated clinic\" },\n      source: { sha256: unrelated.prepared.sourceRecovery.sha256, utf8Bytes: unrelated.prepared.sourceRecovery.utf8Bytes,\n        schemaVersion: unrelated.prepared.sourceRecovery.schemaVersion },\n      expectedRevision: \"1\", operationId: \"other.kill\" });\n    h.server.seed(h.scope.accountId, { ...unrelated.confirmed, snapshot: encoded.snapshot });\n    h.server.faults.push({ method: \"deleteCampaign\", at: \"after\", error: new CloudSyncError(\"network\") });\n    const interrupted = await h.resolve(); interrupted.dispose();\n    expect((await h.runtime.transport.list()).map(row => row.campaignId)).toEqual([\"unrelated.kill\"]);\n    const reopened = await h.resolve(), session = await CloudGameSession.create(reopened);\n    expect(session.canExecute).toBe(true); expect(session.state.simulationSpeed).toBe(2);\n    expect(session.metadata.name).toBe(h.prepared.envelope.campaign.name);\n    expect((await h.runtime.transport.list())).toHaveLength(2);\n    expect(h.server.calls.filter(row => row.method === \"deleteCampaign\")).toHaveLength(1);\n    expect(h.server.calls.filter(row => row.method === \"importCampaign\")).toHaveLength(1);\n    session.dispose();\n  });\n  it(\"bounds an opening head check and continues its verified device copy without granting a server lease\", async () => {\n    const h = await rig(), local = await localBranch(h, 1); local.session.dispose();\n    const head = vi.spyOn(h.runtime.transport, \"head\").mockImplementation(() => new Promise(() => {}));\n    vi.useFakeTimers();\n    let pending: Promise<CloudSyncCoordinator>;\n    try {\n      pending = h.resolve();\n      await vi.waitFor(() => expect(head).toHaveBeenCalled(), { timeout: 1_000 });\n      await vi.advanceTimersByTimeAsync(30_001);\n    } finally { vi.useRealTimers(); }\n    const coordinator = await pending!;\n    expect(coordinator.view).toMatchObject({ canExecute: true, failure: \"network\", phase: \"waiting\" });\n    expect(h.server.calls.filter(row => row.method === \"commit\")).toHaveLength(0);\n    coordinator.dispose();\n  });\n  it(\"finds an older release's separate newer campaign using its retained parent proof and makes it discoverable on another device\", async () => {\n    const h = await rig(), local = await localBranch(h, 3), expected = local.session.state.facilityTick;\n    const entry = local.coordinator.recoveryEntry!, family = await cloudCopyFamily(h.scope.campaignId);\n    const copies = await discoverClinicCopies({ scope: h.scope, family, codec, store: h.entryStore, entries: [entry], account: [h.confirmed] });\n    await h.entryStore.create(\"conflict:legacy-upgrade\", { scope: h.scope, device: entry, account: h.confirmed });\n    const legacy = await importSeparateCloudCampaign(copies[0]!.copy, h.runtime.transport, h.entryStore);\n    expect(legacy.marker.campaignId).toMatch(/^branch\\./);\n    // Account list ordering is not a naming/selection guarantee. A newer\n    // legacy import may be listed first in production, unlike fake insertion order.\n    const list = h.runtime.transport.list.bind(h.runtime.transport);\n    vi.spyOn(h.runtime.transport, \"list\").mockImplementation(async () => [...await list()].reverse());\n    local.session.dispose();\n    const cached = await h.cache.read(h.scope);\n    await h.cache.write({ ...entry, recovery: null }, cached!.cacheRevision);\n    // Model the older release faithfully: it predates the incremental journal.\n    // The verified branch and exact old cache have already been retained above.\n    await h.cache.journal!.clear(cloudCampaignStorageKey(h.scope));\n    const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);\n    expect(session.state.facilityTick).toBe(expected); expect(session.metadata.name).toBe(h.prepared.envelope.campaign.name);\n    expect(session.state.campaignId).toMatch(/^auto\\./); expect(session.canExecute).toBe(true);\n    session.dispose();\n    const another = { ...h.runtime, cache: new MemoryCloudCache(), entryStore: new MemoryCloudEntryStore() };\n    const reopened = await openAutomaticCloudCampaign({ runtime: another, campaignId: h.scope.campaignId, clock: h.clock, codec });\n    expect((await CloudGameSession.create(reopened)).state.facilityTick).toBe(expected);\n    reopened.dispose();\n  });\n  it(\"ranks both frozen and following candidates instead of blindly choosing a stale following snapshot\", async () => {\n    const h = await rig(), local = await localBranch(h, 3), expected = local.session.state.facilityTick;\n    const entry = local.coordinator.recoveryEntry!, candidate = entry.recovery!.following!;\n    const requestText = JSON.stringify({ ...candidate, protocolVersion: 2, operationId: \"retained.original-operation\",\n      campaignId: h.scope.campaignId, expectedRevision: \"1\", writerGeneration: \"1\", writerToken: \"stale-writer-proof\" });\n    const operation = { operationId: \"retained.original-operation\", requestText, requestSha256: await sha256Utf8(requestText), createdAtMs: 0 };\n    const older = await h.candidate(h.command(h.prepared.checkpoint, { type: \"SET_SIMULATION_SPEED\", speed: 4, operationId: \"stale.following\" }));\n    local.session.dispose();\n    const cached = await h.cache.read(h.scope);\n    await h.cache.write({ ...entry, recovery: { ...entry.recovery!, inFlight: operation, following: older } }, cached!.cacheRevision);\n    const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);\n    expect(session.state.facilityTick).toBe(expected); expect(session.state.simulationSpeed).toBe(2);\n    expect(session.canExecute).toBe(true);\n    const protectedEntries = (await h.entryStore.entries()).filter(row => row.key.startsWith(\"conflict:\"));\n    expect(protectedEntries.some(row => (row.value as any).device?.recovery?.inFlight?.requestText === requestText)).toBe(true);\n    session.dispose();\n  });\n  it(\"fences a cancelled offline opening even when its final durable write replies late\", async () => {\n    const h = await rig(), local = await localBranch(h, 1); local.session.dispose();\n    h.runtime.transport.capabilities = async () => { throw new CloudSyncError(\"network\"); };\n    const held = deferred(), started = deferred(), write = h.cache.write.bind(h.cache);\n    vi.spyOn(h.cache, \"write\").mockImplementation(async (...args) => { started.resolve(); await held.promise; return write(...args); });\n    let cancelled = false, restoring: CloudSyncCoordinator | null = null;\n    const restore = CloudSyncCoordinator.prototype.restoreVerifiedOffline;\n    vi.spyOn(CloudSyncCoordinator.prototype, \"restoreVerifiedOffline\").mockImplementation(function (this: CloudSyncCoordinator, ...args) { restoring = this; return restore.apply(this, args); });\n    const opening = openAutomaticCloudCampaign({ runtime: h.runtime, campaignId: h.scope.campaignId, clock: h.clock, codec, cancelled: () => cancelled });\n    const rejected = expect(opening).rejects.toMatchObject({ code: \"auth\" });\n    await started.promise; cancelled = true; held.resolve(); await rejected;\n    expect((restoring as CloudSyncCoordinator | null)?.view.canExecute).toBe(false);\n    expect(h.server.operationCount(h.scope.accountId)).toBe(0);\n    vi.restoreAllMocks();\n  });\n  it(\"checks for a restored service in the background without pausing offline play, then selects and uploads\", async () => {\n    const h = await rig(), local = await localBranch(h, 1); local.session.dispose();\n    const capabilities = h.runtime.transport.capabilities;\n    h.runtime.transport.capabilities = async () => { throw new CloudSyncError(\"network\"); };\n    const coordinator = await h.resolve();\n    let session!: CloudGameSession, reconnected: CloudSyncCoordinator | null = null;\n    const select = vi.fn(async () => {\n      session.coordinator.pause(); reconnected = await h.resolve(); return true;\n    });\n    session = await CloudGameSession.create(coordinator, undefined, select);\n    session.execute({ type: \"SET_SIMULATION_SPEED\", speed: 4, operationId: \"background.offline\" }, PROTOTYPE_DOMAIN_CONTEXT);\n    expect(await session.durable()).toBe(true);\n    h.clock.advance(CLOUD_RENEW_MS); await coordinator.pulse();\n    expect(session.canExecute).toBe(true); expect(select).not.toHaveBeenCalled();\n    expect(h.server.operationCount(h.scope.accountId)).toBe(0);\n    h.runtime.transport.capabilities = capabilities;\n    h.clock.advance(CLOUD_RENEW_MS); await coordinator.pulse();\n    expect(select).toHaveBeenCalledOnce();\n    const online = await CloudGameSession.create(reconnected!);\n    expect(online.canExecute).toBe(true); expect(online.state.simulationSpeed).toBe(4);\n    expect(await online.checkpointNow(\"ordinary\")).toBe(true);\n    session.dispose(); online.dispose();\n  });\n  it(\"shows the moved-writer gate when the real transport classifies a reclaimed head as corrupt/missing\", async () => {\n    const h = await rig(); await divergent(h, 3, 1);\n    const unrelated = await syncFixture(\"unrelated.moved\");\n    const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: unrelated.prepared.checkpoint,\n      campaign: { ...unrelated.prepared.envelope.campaign, name: \"Unrelated clinic\" },\n      source: { sha256: unrelated.prepared.sourceRecovery.sha256, utf8Bytes: unrelated.prepared.sourceRecovery.utf8Bytes,\n        schemaVersion: unrelated.prepared.sourceRecovery.schemaVersion },\n      operationId: \"other.moved\", expectedRevision: \"1\" });\n    h.server.seed(h.scope.accountId, { ...unrelated.confirmed, snapshot: encoded.snapshot });\n    const observer = new CloudSyncCoordinator({ ...h.runtime, cache: new MemoryCloudCache(), entryStore: new MemoryCloudEntryStore(), scope: h.scope, enabled: true, clock: h.clock });\n    expect(await observer.open()).toBe(true); expect(await observer.startWriter(true)).toBe(true); observer.resume();\n    const winner = await h.resolve(); expect(winner.view.canExecute).toBe(true);\n    const head = h.runtime.transport.head.bind(h.runtime.transport);\n    h.runtime.transport.head = async id => {\n      try { return await head(id); }\n      catch (error) { if (error instanceof CloudSyncError && error.code === \"deleted\") throw new CloudSyncError(\"corrupt\"); throw error; }\n    };\n    expect(await observer.focus()).toBe(false);\n    expect(observer.view).toMatchObject({ canExecute: false, phase: \"conflict\", failure: \"writer\" });\n    expect(winner.view.canExecute).toBe(true); observer.dispose(); winner.dispose();\n  });\n  it(\"repairs offline quota failure on Retry without uploading an unverified local base\", async () => {\n    class QuotaCache extends MemoryCloudCache {\n      denied = false;\n      override async write(...args: Parameters<MemoryCloudCache[\"write\"]>) {\n        if (this.denied) throw new CloudCacheError(\"quota\");\n        return super.write(...args);\n      }\n    }\n    const cache = new QuotaCache(), h = await rig(cache), local = await localBranch(h, 1); local.session.dispose();\n    h.runtime.transport.capabilities = async () => { throw new CloudSyncError(\"network\"); };\n    const coordinator = await h.resolve(), session = await CloudGameSession.create(coordinator);\n    cache.denied = true;\n    cache.journal.fault = \"before-commit\";\n    expect(session.execute({ type: \"SET_SIMULATION_SPEED\", speed: 4, operationId: \"offline.quota\" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();\n    expect(await session.durable()).toBe(false); expect(session.canExecute).toBe(false);\n    cache.denied = false;\n    expect(await session.reconnect()).toBe(false); // Account authority is still unavailable.\n    expect(session.canExecute).toBe(true); expect(session.state.simulationSpeed).toBe(4);\n    expect(coordinator.view.pending).toBe(true);\n    expect(h.server.calls.some(row => row.method === \"commit\" || row.method === \"importCampaign\")).toBe(false);\n    session.dispose();\n  });\n});\n",
+      "changes": [
+        {
+          "before": "        new Promise<null>(resolve => setTimeout(() => resolve(null), 400))]);",
+          "after": "        // The commit gate holds the upload indefinitely, so a wider window only\n        // tolerates slow runners; a barrier on upload would still never resolve.\n        new Promise<null>(resolve => setTimeout(() => resolve(null), 5_000))]);"
+        }
+      ],
+      "batch6ObservedSha256": "09726190a2b74f2c10864ea2b97bb1d3ac5d451365beddd5d66864b850ef482a",
+      "batch6ObservedMatches": true,
+      "codecReceiptSha256": "09726190a2b74f2c10864ea2b97bb1d3ac5d451365beddd5d66864b850ef482a"
+    },
+    {
+      "path": "apps/player/src/App.cloudLifecycle.test.tsx",
+      "beforeSha256": "c848c2021141cc25d5d67af7b258a634493642e311695a79c2da2bfc6d78fbaf",
+      "afterSha256": "1e9c701b6dbdd5834809218f08760feffd2d5980ee1f7d077a7f9b09715c7b0c",
+      "beforeText": "import { act, StrictMode } from \"react\";\nimport { afterEach, describe, expect, it, vi } from \"vitest\";\nimport { PROTOTYPE_DOMAIN_CONTEXT } from \"@gamify-surgery/game-domain\";\nimport { AccountCampaignRouter } from \"./App\";\nimport { AuthAccountContext } from \"./auth/AuthAccountContext\";\nimport { CompetitionClientContext } from \"./competition/useCompetition\";\nimport { allElements, cleanupPhoneTests, phoneTestDom } from \"./mobile/screenTestUtils\";\nimport { CloudAccountContext, type CloudAccountValue } from \"./session/cloud/CloudAccount\";\nimport { CloudSyncCoordinator } from \"./session/cloud/coordinator\";\nimport { MemoryCloudCache } from \"./session/cloud/cache\";\nimport { MemoryCloudEntryStore } from \"./session/cloud/entryStorage\";\nimport { CloudGameSession } from \"./session/cloud/gameSession\";\nimport { deferred, syncFixture, syncHarness } from \"./session/cloud/syncTestSupport\";\nimport { cloudCodec } from \"./session/cloud/codecWorker\";\nimport { encodeCloudEvidenceCheckpoint } from \"./session/cloud/codecEvidence\";\n\nvi.mock(\"./facility\", () => ({ FacilityCanvas: () => <div>Fixture map</div> }));\nvi.mock(\"./mobile/map/MobileFacilityMap\", () => ({ MobileFacilityMap: () => <div>Fixture map</div> }));\nafterEach(async () => { vi.restoreAllMocks(); await cleanupPhoneTests(); });\n\ndescribe.each([\"phone\", \"desktop\"] as const)(\"%s account campaign reopen\", layout => {\n  it(\"dismisses opening and mounts play while its first durable account upload is still waiting\", async () => {\n    const h = await syncHarness(), entryStore = new MemoryCloudEntryStore(), transport = h.server.transport(h.scope.accountId);\n    const coordinator = new CloudSyncCoordinator({ scope: h.scope, transport, cache: h.cache, entryStore, enabled: true, clock: h.clock });\n    await coordinator.open(); await coordinator.startWriter(); coordinator.resume();\n    const seed = await CloudGameSession.create(coordinator);\n    seed.updateMetadata({ ...seed.metadata, tutorial: { guidance: { version: 2, mode: \"off\", exposedTopicIds: [] },\n      introDismissed: true, dailyRoutineTipAcknowledgments: [], dailyRoutinePause: null } });\n    seed.execute({ type: \"SET_SIMULATION_SPEED\", speed: 2, operationId: \"open.pending.local\" }, PROTOTYPE_DOMAIN_CONTEXT);\n    await seed.prepareRecoveryCopy(); seed.dispose();\n    await entryStore.write(\"last-active-campaign\", { campaignId: h.scope.campaignId });\n    const held = deferred(), started = deferred(), commit = transport.commit;\n    vi.spyOn(transport, \"commit\").mockImplementation(async operation => { started.resolve(); await held.promise; return commit(operation); });\n    const env = phoneTestDom(); env.browser.location.search = `?layout=${layout}`;\n    Object.assign(env.doc, { visibilityState: \"visible\" });\n    Object.assign(env.browser, { setInterval: () => 1, clearInterval: () => {} });\n    let active: CloudGameSession | null = null;\n    const account: CloudAccountValue = {\n      runtime: { ...h.scope, region: \"Synthetic\", transport, cache: h.cache, entryStore }, access: await transport.capabilities(),\n      summaries: await transport.list(), phase: \"available\", error: null, active: null, refresh: vi.fn(async () => {}),\n      acceptNotice: vi.fn(async () => {}), attach: session => { active = session; }, stop: vi.fn(async () => {}), requestDeletion: vi.fn(async () => {}),\n      exportDeviceRecovery: vi.fn(async () => \"\"), clearDevice: vi.fn(async () => {}), showCampaigns: vi.fn(), setCampaignNavigation: vi.fn(),\n    };\n    try {\n      await env.render(<AuthAccountContext.Provider value={h.scope.accountId}><CompetitionClientContext.Provider value={null}>\n        <CloudAccountContext.Provider value={account}><AccountCampaignRouter /></CloudAccountContext.Provider>\n      </CompetitionClientContext.Provider></AuthAccountContext.Provider>);\n      await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });\n      await started.promise;\n      expect(active!.coordinator.view).toMatchObject({ canExecute: true, localDurable: true, pending: true, phase: \"saving\" });\n      expect(allElements(env.doc.body, node => node.attributes[\"aria-label\"] === \"Loading clinic\")).toHaveLength(0);\n      expect(env.find(node => node.tagName === \"DIV\" && node.textContent === \"Fixture map\")).toBeDefined();\n      expect(active!.execute({ type: \"SET_SIMULATION_SPEED\", speed: 4, operationId: \"open.play.while-saving\" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();\n      await act(async () => { held.resolve(); });\n      await vi.waitFor(() => expect(active!.coordinator.confirmedRevision).toBe(\"2\"));\n      expect(active!.canExecute).toBe(true); expect(active!.needsReload).toBe(false);\n    } finally { held.resolve(); (active as CloudGameSession | null)?.dispose(); }\n  });\n  it.each([false, true])(\"keeps the current clinic mounted under a full opening cover (check fails=%s)\", async fails => {\n    const h = await syncHarness(), entryStore = new MemoryCloudEntryStore(), transport = h.server.transport(h.scope.accountId);\n    const prepared = new CloudSyncCoordinator({ scope: h.scope, transport, cache: h.cache, entryStore, enabled: true, clock: h.clock });\n    await prepared.open(); await prepared.startWriter(); prepared.resume();\n    const seed = await CloudGameSession.create(prepared);\n    seed.updateMetadata({ ...seed.metadata, tutorial: { guidance: { version: 2, mode: \"off\", exposedTopicIds: [] },\n      introDismissed: true, dailyRoutineTipAcknowledgments: [], dailyRoutinePause: null } });\n    await seed.checkpointNow(\"purchase\"); seed.dispose();\n    await entryStore.write(\"last-active-campaign\", { campaignId: h.scope.campaignId });\n    const env = phoneTestDom(); env.browser.location.search = `?layout=${layout}`;\n    const timers = new Map<number, () => void>(); let timerId = 0;\n    Object.assign(env.doc, { visibilityState: \"visible\" }); Object.assign(env.browser, {\n      setInterval: (callback: () => void) => { timers.set(++timerId, callback); return timerId; }, clearInterval: (id: number) => timers.delete(id),\n    });\n    let active: CloudGameSession | null = null, open: ((id: string) => Promise<void>) | null = null;\n    const attach = vi.fn((session: CloudGameSession | null) => { active = session; });\n    const account: CloudAccountValue = {\n      runtime: { ...h.scope, region: \"Synthetic\", transport, cache: h.cache, entryStore }, access: await transport.capabilities(),\n      summaries: await transport.list(), phase: \"available\", error: null, active: null, refresh: vi.fn(async () => {}),\n      acceptNotice: vi.fn(async () => {}), attach, stop: vi.fn(async () => {}), requestDeletion: vi.fn(async () => {}),\n      exportDeviceRecovery: vi.fn(async () => \"\"), clearDevice: vi.fn(async () => {}), showCampaigns: vi.fn(), setCampaignNavigation: vi.fn(),\n      setCampaignOpening: callback => { open = callback; },\n    };\n    await env.render(<AuthAccountContext.Provider value={h.scope.accountId}><CompetitionClientContext.Provider value={null}>\n      <CloudAccountContext.Provider value={account}><AccountCampaignRouter /></CloudAccountContext.Provider>\n    </CompetitionClientContext.Provider></AuthAccountContext.Provider>);\n    await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });\n    const original = active!, tick = original.state.facilityTick, attached = attach.mock.calls.length;\n    const pulse = vi.spyOn(original, \"pulse\"), foreground = vi.spyOn(original, \"foreground\"), checkpoint = vi.spyOn(original, \"checkpointNow\");\n    const map = env.find(node => node.tagName === \"DIV\" && node.textContent === \"Fixture map\");\n    const held = deferred(), started = deferred(), head = transport.head.bind(transport);\n    vi.spyOn(transport, \"head\").mockImplementationOnce(async id => { started.resolve(); await held.promise;\n      if (fails) throw new TypeError(\"Synthetic opening failure\"); return head(id); });\n    vi.useFakeTimers({ toFake: [\"setTimeout\", \"clearTimeout\"] });\n    let checking!: Promise<void>;\n    await act(async () => { checking = open!(h.scope.campaignId); await started.promise; });\n    await act(async () => { await vi.advanceTimersByTimeAsync(400); });\n    expect(active).toBe(original); expect(attach.mock.calls).toHaveLength(attached);\n    expect(env.doc.body.contains(map)).toBe(true);\n    const cover = allElements(env.doc.body, node => node.attributes[\"aria-label\"] === \"Loading clinic\");\n    expect(cover).toHaveLength(1); expect(allElements(cover[0]!, node => node.tagName === \"BUTTON\")).toHaveLength(0);\n    expect(original.canExecute).toBe(false);\n    await act(async () => {\n      for (const callback of [...timers.values()]) callback();\n      env.browser.dispatchEvent(new Event(\"focus\")); env.browser.dispatchEvent(new Event(\"pageshow\")); env.doc.dispatchEvent(new Event(\"resume\"));\n      Object.assign(env.doc, { visibilityState: \"hidden\" }); env.doc.dispatchEvent(new Event(\"visibilitychange\")); env.browser.dispatchEvent(new Event(\"pagehide\"));\n      Object.assign(env.doc, { visibilityState: \"visible\" }); env.doc.dispatchEvent(new Event(\"visibilitychange\"));\n    });\n    expect(pulse).not.toHaveBeenCalled(); expect(foreground).not.toHaveBeenCalled(); expect(checkpoint).not.toHaveBeenCalled();\n    vi.useRealTimers();\n    await act(async () => { held.resolve(); await checking; });\n    if (fails) {\n      expect(active).toBe(original); expect(env.doc.body.contains(map)).toBe(true);\n      await env.clickElement(allElements(env.doc.body, node => node.tagName === \"BUTTON\" && node.textContent === \"Return to your clinic\")[0]!);\n      expect(active).toBe(original); expect(env.doc.body.contains(map)).toBe(true);\n    } else {\n      expect(active!.canExecute).toBe(true); expect(active!.state.facilityTick).toBe(tick);\n      expect(allElements(env.doc.body, node => node.attributes[\"aria-label\"] === \"Loading clinic\")).toHaveLength(0);\n    }\n  });\n\n  it.each([true, false])(\"keeps both divergent copies with an available account slot=%s\", async freeSlot => {\n    const h = await syncHarness(), entryStore = new MemoryCloudEntryStore(), transport = h.server.transport(h.scope.accountId);\n    const first = new CloudSyncCoordinator({ scope: h.scope, transport, cache: h.cache, entryStore, enabled: true, clock: h.clock });\n    await first.open(); const local = await CloudGameSession.create(first); await local.reconnect();\n    const noGuidance = { guidance: { version: 2 as const, mode: \"off\" as const, exposedTopicIds: [] }, introDismissed: true,\n      dailyRoutineTipAcknowledgments: [], dailyRoutinePause: null };\n    local.updateMetadata({ ...local.metadata, tutorial: noGuidance });\n    local.execute({ type: \"SET_SIMULATION_SPEED\", speed: 2, operationId: \"app.local-branch\" }, PROTOTYPE_DOMAIN_CONTEXT);\n    local.execute({ type: \"SET_PAUSED\", paused: false, operationId: \"app.local-start\" }, PROTOTYPE_DOMAIN_CONTEXT);\n    local.execute({ type: \"ADVANCE_TICK\", advancedAtRealMs: 0, operationId: \"app.local-tick\" }, PROTOTYPE_DOMAIN_CONTEXT);\n    await local.durable(); local.dispose();\n    const other = new CloudSyncCoordinator({ scope: h.scope, transport, cache: new MemoryCloudCache(), enabled: true, clock: h.clock });\n    await other.open(); await other.startWriter(true); other.resume();\n    const remote = await CloudGameSession.create(other); remote.updateMetadata({ ...remote.metadata, tutorial: noGuidance });\n    remote.execute({ type: \"SET_SIMULATION_SPEED\", speed: 4, operationId: \"app.remote-branch\" }, PROTOTYPE_DOMAIN_CONTEXT);\n    expect(await remote.checkpointNow(\"purchase\")).toBe(true);\n    const accountSave = structuredClone(h.server.account(h.scope.accountId).campaigns.get(h.scope.campaignId)!);\n    if (!freeSlot) {\n      const unrelated = await syncFixture(\"app.other-slot\");\n      const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: unrelated.prepared.checkpoint,\n      campaign: { ...unrelated.prepared.envelope.campaign, name: \"Other clinic\" },\n      source: { sha256: unrelated.prepared.sourceRecovery.sha256, utf8Bytes: unrelated.prepared.sourceRecovery.utf8Bytes,\n        schemaVersion: unrelated.prepared.sourceRecovery.schemaVersion },\n        operationId: \"unrelated.name\", expectedRevision: \"1\" });\n      h.server.seed(h.scope.accountId, { ...unrelated.confirmed, snapshot: encoded.snapshot });\n    }\n    const env = phoneTestDom(); Object.assign(env.browser.location, { search: `?layout=${layout}`, href: `http://127.0.0.1:4173/?layout=${layout}` });\n    Object.assign(env.doc, { visibilityState: \"visible\" }); Object.assign(env.browser, { setInterval: () => 1, clearInterval: vi.fn() });\n    let active: CloudGameSession | null = null;\n    const account: CloudAccountValue = {\n      runtime: { ...h.scope, region: \"Synthetic\", transport, cache: h.cache, entryStore }, access: await transport.capabilities(),\n      summaries: await transport.list(), phase: \"available\", error: null, active: null, refresh: vi.fn(async () => {}),\n      acceptNotice: vi.fn(async () => {}), attach: session => { active = session; }, stop: vi.fn(async () => {}),\n      requestDeletion: vi.fn(async () => {}), exportDeviceRecovery: vi.fn(async () => \"\"), clearDevice: vi.fn(async () => {}),\n      showCampaigns: vi.fn(), setCampaignNavigation: vi.fn(),\n    };\n    await env.render(<AuthAccountContext.Provider value={h.scope.accountId}><CompetitionClientContext.Provider value={null}>\n      <CloudAccountContext.Provider value={account}><AccountCampaignRouter /></CloudAccountContext.Provider>\n    </CompetitionClientContext.Provider></AuthAccountContext.Provider>);\n    await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });\n    expect(active!.coordinator.scope.campaignId).not.toBe(h.scope.campaignId);\n    expect(active!.state.simulationSpeed).toBe(2);\n    expect(active!.metadata.name).toBe(h.prepared.envelope.campaign.name);\n    expect(await entryStore.read(\"last-active-campaign\")).toEqual({ campaignId: active!.state.campaignId });\n    expect(allElements(env.doc.body, node => node.attributes[\"aria-label\"] === \"Clinic status\")).toHaveLength(0);\n    expect(env.element.textContent).not.toContain(\"Keep both\");\n    expect((await entryStore.entries()).some(row => row.key.startsWith(\"conflict:\"))).toBe(true);\n    if (freeSlot) {\n      const archived = h.server.account(h.scope.accountId).campaigns.get(h.scope.campaignId)!;\n      expect(archived.confirmed.evidence).toEqual(accountSave.confirmed.evidence);\n      expect((await transport.list()).find(row => row.campaignId === h.scope.campaignId)).toMatchObject({ status: \"archived\", name: expect.stringContaining(\"(older copy)\") });\n    } else {\n      expect(h.server.account(h.scope.accountId).campaigns.has(h.scope.campaignId)).toBe(false);\n      expect(h.server.account(h.scope.accountId).campaigns.has(\"app.other-slot\")).toBe(true);\n      expect((await entryStore.entries()).filter(row => row.key.startsWith(\"older-copy:\")).some(row =>\n        JSON.stringify((row.value as any).copy.evidence) === JSON.stringify(accountSave.confirmed.evidence))).toBe(true);\n    }\n    expect(h.server.usageCount(h.scope.accountId)).toBe(0);\n  });\n\n  it.each([false, true, \"manual\", \"warmup\"] as const)(\"opens and uploads its newest retained campaign (selection marker=%s)\", async marker => {\n    const h = await syncHarness(), entryStore = new MemoryCloudEntryStore();\n    const selection = deferred(), read = entryStore.read.bind(entryStore); let selectionReads = 0;\n    vi.spyOn(entryStore, \"read\").mockImplementation(async key => {\n      if (key === \"last-active-campaign\") { selectionReads++; if (marker === \"manual\") await selection.promise; }\n      return read(key);\n    });\n    const transport = h.server.transport(h.scope.accountId);\n    const previous = new CloudSyncCoordinator({ scope: h.scope, transport, cache: h.cache, entryStore, enabled: true, clock: h.clock });\n    await previous.open(); const priorSession = await CloudGameSession.create(previous); await priorSession.reconnect();\n    priorSession.updateMetadata({ ...priorSession.metadata, tutorial: { guidance: { version: 2, mode: \"off\", exposedTopicIds: [] },\n      introDismissed: true, dailyRoutineTipAcknowledgments: [], dailyRoutinePause: null } });\n    priorSession.execute({ type: \"SET_SIMULATION_SPEED\", speed: 2, operationId: \"router.pending\" }, PROTOTYPE_DOMAIN_CONTEXT);\n    await priorSession.durable(); priorSession.dispose();\n    if (marker === true) await entryStore.write(\"last-active-campaign\", { campaignId: h.scope.campaignId });\n    const preparation = deferred(), processCodec = cloudCodec.run.bind(cloudCodec);\n    if (marker === \"warmup\") vi.spyOn(cloudCodec, \"run\").mockImplementation(async task => {\n      if (task.kind === \"hash\" && task.input === \"\") await preparation.promise;\n      return processCodec(task);\n    });\n    const env = phoneTestDom(); Object.assign(env.browser.location, { search: `?layout=${layout}`, href: `http://127.0.0.1:4173/?layout=${layout}` });\n    Object.assign(env.doc, { visibilityState: \"visible\" });\n    Object.assign(env.browser, { setInterval: () => 1, clearInterval: vi.fn() });\n    let active: CloudGameSession | null = null;\n    let campaigns: (() => void) | null = null;\n    const account: CloudAccountValue = {\n      runtime: { ...h.scope, region: \"Synthetic\", transport, cache: h.cache, entryStore },\n      access: await transport.capabilities(), summaries: await transport.list(), phase: \"available\", error: null, active: null,\n      refresh: vi.fn(async () => {}), acceptNotice: vi.fn(async () => {}), attach: session => { active = session; },\n      stop: vi.fn(async () => {}), requestDeletion: vi.fn(async () => {}), exportDeviceRecovery: vi.fn(async () => \"\"),\n      clearDevice: vi.fn(async () => {}), showCampaigns: () => campaigns?.(), setCampaignNavigation: callback => { campaigns = callback; },\n    };\n    await env.render(<StrictMode><AuthAccountContext.Provider value={h.scope.accountId}><CompetitionClientContext.Provider value={null}>\n      <CloudAccountContext.Provider value={account}><AccountCampaignRouter /></CloudAccountContext.Provider>\n    </CompetitionClientContext.Provider></AuthAccountContext.Provider></StrictMode>);\n    if (marker === \"warmup\") {\n      // Optional worker warming may stay queued without delaying the actual\n      // verified automatic reopen or its single immutable pending upload.\n      await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });\n      const opened = active;\n      await act(async () => { preparation.resolve(); await preparation.promise; });\n      expect(active).toBe(opened);\n    }\n    if (marker === \"manual\") {\n      await vi.waitFor(() => expect(selectionReads).toBeGreaterThan(0));\n      await env.click(`Resume ${h.prepared.envelope.campaign.name}`);\n    }\n    await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });\n    expect(active!.state.simulationSpeed).toBe(2);\n    await vi.waitFor(() => expect(active!.coordinator.confirmedRevision).toBe(\"2\"));\n    expect(active!.coordinator.view.pending).toBe(false); expect(active!.coordinator.confirmedRevision).toBe(\"2\");\n    expect(allElements(env.doc.body, node => node.tagName === \"DIALOG\" && node.attributes.class?.includes(\"cloud-dialog\") === true)).toHaveLength(0);\n    expect(env.element.textContent).not.toContain(\"Continue on this device?\");\n    expect(await read(\"last-active-campaign\")).toEqual({ campaignId: h.scope.campaignId });\n    expect(h.server.operationCount(h.scope.accountId)).toBe(1);\n    if (marker === \"manual\") {\n      const beforeNavigation = selectionReads;\n      await act(async () => { account.showCampaigns(); });\n      await vi.waitFor(() => expect(env.button(`Resume ${h.prepared.envelope.campaign.name}`).attributes.disabled).toBeUndefined());\n      expect(selectionReads).toBe(beforeNavigation);\n      await act(async () => { selection.resolve(); await selection.promise; });\n      expect(env.button(`Resume ${h.prepared.envelope.campaign.name}`).attributes.disabled).toBeUndefined();\n    }\n  });\n});\n",
+      "changes": [
+        {
+          "before": "      await vi.waitFor(() => expect(env.button(`Resume ${h.prepared.envelope.campaign.name}`).attributes.disabled).toBeUndefined());",
+          "after": "      await vi.waitFor(() => expect(env.button(`Resume ${h.prepared.envelope.campaign.name}`).attributes.disabled).toBeUndefined(), { timeout: 5_000 });"
+        }
+      ],
+      "batch6ObservedSha256": null,
+      "batch6ObservedMatches": null,
+      "codecReceiptSha256": "c848c2021141cc25d5d67af7b258a634493642e311695a79c2da2bfc6d78fbaf"
+    }
+  ],
+  "captures": [
+    {
+      "path": "tools/question-quality/fixtures/batch2b-acceptance-before-20261105.json",
+      "sha256": "de3536908494941dc50ad5b81c5aadc108fa7cb0466342638337ed83545e9c0f",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2a-before-20261104.json",
+      "sha256": "afcfb4cdb331467023c9717c08b348baa15b1c43f6fcd74ae596cd294ba4e046",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/App.cloudLifecycle.test.tsx",
+          "sha256": "a2502292ba11b7eebf2a83e17a17f5374a3d33200fb79289719a925accf2ec2e"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2a-round2-before-20261104.json",
+      "sha256": "7c55d7bce5b87869a509d6a8c775498d7cfa0362343657c16df291779afd3d8d",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/App.cloudLifecycle.test.tsx",
+          "sha256": "a2502292ba11b7eebf2a83e17a17f5374a3d33200fb79289719a925accf2ec2e"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2a-round3-before-20261104.json",
+      "sha256": "3438c017a169bd686cfa060b04bd5dbd3dc62a005cae018112a4f6c893e750d8",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/App.cloudLifecycle.test.tsx",
+          "sha256": "a2502292ba11b7eebf2a83e17a17f5374a3d33200fb79289719a925accf2ec2e"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2b-before-20261104.json",
+      "sha256": "9c26ed58ea01ef718aeadbec783b5c837a32da41fa65698c074231ad42fddbc4",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/App.cloudLifecycle.test.tsx",
+          "sha256": "a2502292ba11b7eebf2a83e17a17f5374a3d33200fb79289719a925accf2ec2e"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-bank-batch2b-round2-before-20261104.json",
+      "sha256": "e9d78b010325a62b8bd9a44d796d32c56d415af906a082ae1ce063d919245e35",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/App.cloudLifecycle.test.tsx",
+          "sha256": "a2502292ba11b7eebf2a83e17a17f5374a3d33200fb79289719a925accf2ec2e"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-before-20261104.json",
+      "sha256": "c8a500d1df1f61952385e6a11f29581bec65b055955875e91f0e36b51f4e2087",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-round2-before-20261104.json",
+      "sha256": "bcb43b76c0864b5f88fb5e55d1846c3eabe794939472354361deb07c7a7c8851",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags-round3-before-20261104.json",
+      "sha256": "251b5f3f1e02580eb7a66ebd3e9b57cb09d8efbef3ae55b019ae816b32bb1114",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/App.cloudLifecycle.test.tsx",
+          "sha256": "a2502292ba11b7eebf2a83e17a17f5374a3d33200fb79289719a925accf2ec2e"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags2-before-20261105.json",
+      "sha256": "4a1ea1155c8404d35ac87fe4e3fda74c5451bd2602fe234e7328efd3987e45b1",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags3-acceptance-before-20261107.json",
+      "sha256": "d94aedc367f17ee764e97cc39ae8e46e0e67af72aefe26740fea7e8c6079437a",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags3-before-20261107.json",
+      "sha256": "a08f2af30a7ae0722a3e6b67a115a29a6cceadb9122689199dc48606782e4204",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-n4-acceptance-before-20261110.json",
+      "sha256": "b9b01bc55840513f8643dab473c535fd913e6a376cbb534a696899ea90cd11ad",
+      "pins": [
+        {
+          "field": "runtimeFiles",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "runtimeFiles",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-new-n3-acceptance-before-20261105.json",
+      "sha256": "d8a4fe75c5f5a36f36f0bad90b8562fe7d9e6c57abc6b1fea7ca9ac74e716c39",
+      "pins": [
+        {
+          "field": "protectedFiles",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "protectedFiles",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-ship-case-replacements-before-20261105.json",
+      "sha256": "b7f6e877ecd9b88248974c0499a90e44be721c007cd65df54c354f3204cd383e",
+      "pins": [
+        {
+          "field": "protectedFiles",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "protectedFiles",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-stats1-acceptance-before-20261108.json",
+      "sha256": "72f97da27e828ad7af89c6b4ef317dc7a110da888810b11100f4f31a592d906b",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-stats1-before-20261108.json",
+      "sha256": "db08238329644147f84d7061327bf959ea679da7cd4b685e85ca5d53bcca2914",
+      "pins": [
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "files",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch1-before-20261111.json",
+      "sha256": "37913f386e5b8fabf2281a5a0160367cb563299def7ac705bafc6d8f6d5532bd",
+      "pins": [
+        {
+          "field": "runtimeFiles",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "runtimeFiles",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch2-before-20261111.json",
+      "sha256": "90982b4521171f7e9dda30c1ff0e8d375fb77358c01279ef8123fb169276222b",
+      "pins": [
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch3-before-20261111.json",
+      "sha256": "225c1f37c7032713c147ceb97ad87c7c9c02b8f90c3c47bbbf8f7672668f981b",
+      "pins": [
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch4-before-20261111.json",
+      "sha256": "3c1ac57759cc658cb3e700f17977a14a84600ec3e962de8e77f7f9f3ead33d85",
+      "pins": [
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "090773dee1e725c0c90a8d49fe7a0127f8583846e6042642a6a1db145b3483a9"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch5-before-20261111.json",
+      "sha256": "7819b9208de299972dea6ccb7bd25efba0b3b30c8e210857406b35b4246fbb38",
+      "pins": [
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "09726190a2b74f2c10864ea2b97bb1d3ac5d451365beddd5d66864b850ef482a"
+        }
+      ]
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-topic-acceptance-batch6-before-20261112.json",
+      "sha256": "e6dbd6bf5997bb82c8c4cf7b0d41ae0c02022df659106aaf5a1e23431d76488e",
+      "pins": [
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/openingUploadLarge.test.ts",
+          "sha256": "9048f1b4489f9e78b3901eaf2b5e79c6a96ce0bd961dc8187ab66e8238c9a40e"
+        },
+        {
+          "field": "observed",
+          "path": "apps/player/src/session/cloud/automaticResolution.test.ts",
+          "sha256": "09726190a2b74f2c10864ea2b97bb1d3ac5d451365beddd5d66864b850ef482a"
+        }
+      ]
+    }
+  ],
+  "codecReceipt": {
+    "path": ".local-dev/codec-string-limit-20261111/source-manifest.json",
+    "sha256": "6696bfea86c36f6485e47a62272ca4ab9eff83c096bf6cdb090f85ae65e5f13e"
+  }
+}

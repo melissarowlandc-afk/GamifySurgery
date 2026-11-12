@@ -1,0 +1,56 @@
+--- a/packages/game-domain/tests/twenty-concept-batch.test.ts
++++ b/packages/game-domain/tests/twenty-concept-batch.test.ts
+@@ -1,3 +1,5 @@
++import {beforeProgramBatch3AcceptanceRelease} from "../../clinical-content/src/question-program-batch3-acceptance-test-support";
++import {createClinicalAuthorStage} from "../../../tests/fixtures/clinical-author-stage";
+ import { describe, expect, it } from "vitest";
+ import {
+   TWENTY_CONCEPT_BATCH_CASES,
+@@ -5,16 +7,17 @@
+   TWENTY_CONCEPT_BATCH_QUESTIONS,
+ } from "@gamify-surgery/clinical-content";
+ import {
+-  PROTOTYPE_DOMAIN_CONTEXT,
+-  createInitialGameState,
++  PROTOTYPE_DOMAIN_CONTEXT as actualPrototype,
+   createPatientPixelAppearance,
+-  deserializeGameState,
+-  gameReducer,
+   getCurrentQuestion,
+   getEligibleServiceRoute,
+   serializeGameState,
+   type GameState,
++  
+ } from "../src";
++
++// Original gated/procedural contracts use the verified retained source epoch.
++const {context:PROTOTYPE_DOMAIN_CONTEXT,createInitialGameState,gameReducer,deserializeGameState}=createClinicalAuthorStage(beforeProgramBatch3AcceptanceRelease(actualPrototype.clinicalRelease));
+ 
+ function emptyState(seed: string, level: 0 | 1 | 2): GameState {
+   const state = createInitialGameState(undefined, {
+@@ -23,6 +26,25 @@
+     createdAtRealMs: 0,
+   });
+   state.facilityLevel = level;
++  // Ordinary-care batch fixtures require a reachable clinical room. Fresh
++  // campaigns intentionally no longer receive this room automatically.
++  state.rooms.push({
++    id: "room.batch.examination",
++    roomDefinitionId: "room.examination",
++    x: 34,
++    y: 26,
++    orientation: 0,
++    doorSide: "south",
++    upgradeLevel: 1,
++    cleanliness: 100,
++  });
++  state.doors.push({
++    id: "door.batch.examination",
++    roomId: "room.batch.examination",
++    side: "south",
++    offset: 1,
++    exterior: false,
++  });
+   state.encounters = {};
+   state.openChartEncounterId = null;
+   state.attendedEncounterId = null;

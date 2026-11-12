@@ -1,0 +1,41 @@
+--- a/apps/player/src/ui/QuestionFlagControl.tsx
++++ b/apps/player/src/ui/QuestionFlagControl.tsx
+@@ -3,6 +3,7 @@
+ import { useUsageTracking } from "../playtime/UsageProvider";
+ import { createHostedQuestionFlag } from "../session/hostedQuestionFlags";
+ import { useQuestionFlags } from "../session/QuestionFlagProvider";
++import { canPollAccount } from "../session/requestBudget";
+ import type { QuestionReviewFlagInput, SubmitQuestionReviewFlag } from "../session/questionReviewFlags";
+ import type { ChartDecisionStepView } from "./types";
+ import "./betaAccount.css";
+@@ -23,10 +24,10 @@
+   const [, redraw] = useState(0);
+   useEffect(() => queue?.subscribe(() => redraw((n) => n + 1)), [queue]);
+   useEffect(() => {
+-    if (step.reviewFlagInput && queue) void queue.refreshStatuses();
+-  }, [queue, step.reviewFlagInput?.clinicalCaseId, step.questionVariantId]);
++    if (step.reviewFlagInput && queue && (!accountId || canPollAccount(accountId))) void queue.refreshStatuses(true);
++  }, [queue, accountId, step.reviewFlagInput?.clinicalCaseId, step.questionVariantId]);
+   const entry = step.reviewFlagInput ? queue?.find(step.reviewFlagInput) : undefined;
+-  const alreadyFlagged = Boolean(entry || (!accountId && step.flaggedForDeveloperReview));
++  const alreadyFlagged = Boolean(entry || step.flaggedForDeveloperReview);
+   const cancel = () => { setCaptured(null); setComment(""); triggerRef.current?.focus(); };
+   const submit = async () => {
+     if (!captured || submittingRef.current) return;
+@@ -39,10 +40,13 @@
+         }
+         const payload = await createHostedQuestionFlag(captured.input, accountId, comment);
+         if (!usage.canRecordQuestions()) throw new Error("Flag submission stopped");
+-        // Preserve the old local review/export path, but only explicit new flags upload.
+-        onSubmit(captured.id, comment, captured.input);
+-        await queue.submit(payload, captured.input);
++        // The account outbox owns delivery independently of the optional local
++        // review/export copy. A slow/lost acknowledgement must not hold the UI.
++        queue.enqueue(payload, captured.input);
++        try { onSubmit(captured.id, comment, captured.input); }
++        catch { /* The queued hosted report remains recoverable on reload. */ }
+         setMessage(""); cancel();
++        void queue.flush();
+       } else {
+         if (captured.input) onSubmit(captured.id, comment, captured.input);
+         else if (comment) onSubmit(captured.id, comment);

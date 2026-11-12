@@ -1,0 +1,2982 @@
+--- a/apps/player/src/facility/FacilityScene.ts
++++ b/apps/player/src/facility/FacilityScene.ts
+@@ -1,5 +1,13 @@
+ import Phaser from "phaser";
+-import { isInspectorBitmapAsset, loadMobileInspectorBitmap } from "../mobile/performance/inspectorAssets";
++import { retainGraphicsViewportBounds } from "./graphicsViewportCulling";
++import { desktopMapShade, facilityCameraSignature } from "./desktopMapShade";
++import { CAMERA_ZOOM_SETTLE_MS, retainedCameraTransform, projectCameraPoint, projectCameraRect, unprojectCameraPoint,
++  type CameraPoint, type CameraRect } from "./retainedCamera";
++import { mapSessionAction } from "../session/sessionActions";
++import { roomThumbnailStage } from "./roomThumbnailCapture";
++import { initializeCanvasRoomLighting } from "./canvasRoomLighting";
++import { serviceVisitorWaitingSupport } from "./serviceVisitorWaitingPresentation";
++import { CharacterTextureBudget } from "../mobile/performance/characterTextureBudget";
+ import { getRoomUpgradeDefinition } from "@gamify-surgery/balance-config";
+ import type {
+   CardinalDirection,
+@@ -67,7 +75,9 @@
+ } from "./earningsPopupPresentation";
+ import {
+   alignCharacterStillSeatToWorld,
++  characterStillVisibleTop,
+   getCharacterStillPresentationMetrics,
++  isCharacterTextureKey,
+ } from "./characterPresentation";
+ import {
+   advanceCharacterHop,
+@@ -153,6 +163,7 @@
+   resolveApprovedRoomActorSupports,
+   resolveApprovedRoomDrawRecords,
+   resolveApprovedRoomProceduralDrawRecords,
++  type ApprovedActorSupport,
+   type ApprovedRoomDrawRecord,
+   type ApprovedRoomShellPresentation,
+   type ApprovedRoomStateVariant,
+@@ -302,7 +313,7 @@
+   getDoorInteractionGeometry,
+   type DoorInteractionGeometry,
+ } from "./doorInteractionGeometry";
+-import { getDoorPresentationOpenings } from "./doorPresentation";
++import { getDoorPresentationOpenings, isDoorPresentationConnected } from "./doorPresentation";
+ import { rasterizeGridLine } from "./hallwayPainting";
+ import { getFacilityWorldSignature } from "./facilityWorldSignature";
+ import { characterRefFromKey, patientChartIdForCharacter, INSPECT_BOX_FADE_MS, INSPECT_BOX_VISIBLE_MS } from "./characterInspect";
+@@ -314,9 +325,13 @@
+ import { PhoneBuildMapInput } from "../mobile/build/mapInput";
+ import { framePhoneGhost, phoneGhostEdgePan } from "../mobile/build/ghostCamera";
+ import type { MobileMapPresentationPolicy } from "../mobile/performance/presentationPolicy";
+-import { mobileBitmapCache, mobileRoomArtReady, selectFacilityAssets } from "../mobile/performance/roomAssets";
++import { mobileBitmapCache, mobileRoomArtReady, selectFacilityAssets, trimPhoneFacilityTextures } from "../mobile/performance/roomAssets";
++import { PHONE_ART_BACKGROUND, PHONE_ART_CHARACTER, PHONE_ART_VISIBLE } from "../mobile/performance/bitmapDecodeQueue";
++import { visiblePhoneAssetIds, visiblePhoneRoomIds } from "../mobile/performance/phoneArtPriority";
+ import { resolvePublicArtAssetUrl } from "../art/bitmapAssetManifest";
+ import { installMobileCanvasResolution } from "../mobile/performance/canvasResolution";
++import { facilityCanvasSurface } from "../mobile/performance/staticCanvasTexture";
++import { drawFacilityAtlasCrop, facilityAtlasClip, installPhoneArtSource, phoneArtSource } from "../mobile/performance/phoneArt";
+ 
+ export interface FacilitySceneBridge {
+   /** Explicit opt-in; desktop never supplies it. */
+@@ -591,6 +606,7 @@
+     Phaser.GameObjects.Text
+   >();
+ 
++  /** Desired screen projection (also used by picking and the shade contract). */
+   private layout: GridLayout = {
+     originX: 0,
+     originY: 0,
+@@ -604,14 +620,62 @@
+     worldBottom: 10 * 24 + 24,
+   };
+ 
++  /** Geometry is retained in this last crisp draw frame while the camera moves. */
++  private renderedLayout?: GridLayout;
++  private renderedCampaignId?: string;
++  private get worldLayout(): GridLayout { return this.renderedLayout ?? this.layout; }
++  private cameraGestureUntil = 0;
++  private crispZoomPending = false;
++  private staticWorldPending = false;
++  private lastProjectionRequest = "";
++  private cameraPreferencePending = false;
++  private lastPublishedCameraRequest = "";
++  private signatureModel?: FacilityViewModel;
++  private staticSignature = "";
++  private frozenCharacterModel?: FacilityViewModel;
++  private frozenCharacterLayout?: GridLayout;
++  private founderActivityAnchor?: [string, string | undefined, number, number];
++
++  private cameraNow(): number { return this.time?.now ?? performance.now(); }
++  public isCameraGestureActive(): boolean {
++    return Boolean(this.dragStart?.dragged || this.mobileGestures?.activeCount || this.cameraNow() < this.cameraGestureUntil);
++  }
++  private screenToWorld(point: CameraPoint): CameraPoint { return unprojectCameraPoint(point, this.worldLayout, this.layout); }
++  private worldToScreen(point: CameraPoint): CameraPoint { return projectCameraPoint(point, this.worldLayout, this.layout); }
++  private toScreenRect(rect: CameraRect): CameraRect { return projectCameraRect(rect, this.worldLayout, this.layout); }
++  private syncRetainedCamera(): void {
++    const transform = retainedCameraTransform(this.worldLayout, this.layout), camera = this.cameras?.main;
++    camera?.setOrigin?.(0, 0);
++    camera?.setZoom(transform.zoom);
++    camera?.setScroll(transform.scrollX, transform.scrollY);
++    // Keep the gesture's sprite placement fractional. The existing Canvas
++    // pixel rounding resumes when the settled world is drawn at native scale.
++    camera?.setRoundPixels?.(transform.zoom === 1);
++  }
++
++  /** Re-express pixel-only seat glides when the crisp draw basis changes. Tile
++   * route/hop/anchor state is already independent of the camera. */
++  private rebaseWorld(): void {
++    const previous = this.renderedLayout;
++    if (previous) this.characterSeatSettles?.forEach((state, key) => {
++      this.characterSeatSettles.set(key, { ...state, drawn: projectCameraPoint(state.drawn, previous, this.layout),
++        ...(state.glide ? { glide: { ...state.glide, from: projectCameraPoint(state.glide.from, previous, this.layout) } } : {}) });
++    });
++    this.renderedLayout = this.layout;
++    this.renderedCampaignId = this.bridge.viewModel.campaignId;
++    this.crispZoomPending = false; this.staticWorldPending = false;
++    this.syncRetainedCamera();
++  }
++
+   private placementGhost: PlacementGhost | null = null;
+   private characterPhase = 0;
++  /** Used only by the isolated developer occupied-room capture hook. */
++  private characterRoomQaBefore = false;
+   /** Real milliseconds of unpaused play; drives breathing, not game speed. */
+   private characterRestClockMilliseconds = 0;
+   private frameDeltaMilliseconds = 0;
+   private characterPresentationWasFrozen = false;
+   private readonly routeMotionTracks = new Map<string, RouteMotionTrack>();
+-  private readonly mobileInspectorStills = new Set<string>();
+   private readonly failedInspectorLocations = new Map<string, GridPoint>();
+   /** Last horizontal render orientation survives a stationary frame without
+    * affecting the domain route or persisted character state. */
+@@ -638,6 +702,7 @@
+     panY: 0,
+   };
+   private lastRequestedCameraSignature = "";
++  private cameraCampaignId?: string;
+   private mobileGestures?: MapTouchGestures;
+   private mobileInputSignature = "";
+   private phoneBuildInput?: PhoneBuildMapInput;
+@@ -667,6 +732,18 @@
+   private landscapingTreeCleanupReady = false;
+   private roomFixtureAtlasesReady = false;
+   private mobileAtlasSignature = "";
++  private mobileRequiredAtlases = new Set<string>();
++  private mobileAtlasPrunePending = false;
++  private readonly mobilePendingAtlases = new Set<string>();
++  private mobileArtRefreshTimer?: ReturnType<typeof setTimeout>;
++  private mobileArtWorldPending = false;
++  private mobileArtCharactersPending = false;
++  private mobileReadyArtSignature = "";
++  private mobileArtStartedAt?: number;
++  private mobileArtFirstTextureAt?: number;
++  private mobileArtFirstRoomAt?: number;
++  private mobileArtSettledAt?: number;
++  private phoneResolutionResize?: () => void;
+   private levelFiveAtlasLoadRequested = false;
+   private mobileAtlasModel?: FacilityViewModel;
+   private mobileAtlasLevel?: number;
+@@ -674,10 +751,66 @@
+   private characterStillLoadRequested = false;
+   private readonly pendingCharacterStills = new Map<string, import("../art/bitmapAssetManifest").BitmapAssetDescriptor>();
+   private readonly failedCharacterStills = new Set<string>();
++  private readonly mobileCharacterTextures = new CharacterTextureBudget();
++  private readonly mobileCharacterUsedTextures = new Set<string>();
++  private readonly mobileCharacterFamilies = new Set<string>();
+ 
+   public constructor(bridge: FacilitySceneBridge) {
+     super({ key: "facility-scene" });
+     this.bridge = bridge;
++  }
++
++  /**
++   * Offline QA hook: draw one save-free room through the exact live room path.
++   * The dedicated thumbnail entry preloads and verifies every source first.
++   * Pausing stops normal layout/actors from overwriting this isolated render;
++   * Phaser continues rendering the paused scene for the browser capture.
++   */
++  public renderRoomThumbnail(): ReturnType<typeof roomThumbnailStage> {
++    if (!import.meta.env.DEV) throw new Error("Room thumbnail capture is development-only");
++    const model = this.bridge.viewModel;
++    const room = model.rooms[0];
++    if (!room || model.rooms.length !== 1 || model.doors?.length || model.staff.length || model.patients?.length ||
++        model.placement || model.buildMode || room.tileX !== 0 || room.tileY !== 0 || room.orientation !== 0) {
++      throw new Error("Thumbnail capture requires one isolated, empty, north-up room");
++    }
++    const stage = roomThumbnailStage(room.width, room.height);
++    if (!this.sys.isPaused()) this.sys.pause();
++    this.scale.resize(stage.width, stage.height);
++    this.renderedLayout = undefined;
++    this.cameras.main.setViewport(0, 0, stage.width, stage.height)
++      .setScroll(0, 0).setZoom(1).setBackgroundColor("rgba(0,0,0,0)");
++    this.cameras.main.setRoundPixels?.(true);
++    this.children.each(child => {
++      (child as Phaser.GameObjects.GameObject & Partial<Phaser.GameObjects.Components.Visible>).setVisible?.(false);
++    });
++    for (const graphics of [this.terrainGraphics, this.worldGraphics, this.architectureGraphics,
++      this.landscapeGraphics, this.locatorGraphics, this.ghostGraphics]) graphics?.clear();
++    this.worldGraphics!.setVisible(true);
++    this.architectureGraphics!.setVisible(true);
++    this.activeFixtureGraphics = new Set();
++    this.activeRoomFixtureGraphics = new Set();
++    this.activeWallDecorGraphics = new Set();
++    this.activeEnvironmentSprites = new Set();
++    this.activeFixtureBitmapImages = new Set();
++    this.activeLandscapingBitmapImages = new Set();
++    this.fixtureStableOrder = 0;
++    this.layout = { originX: stage.originX, originY: stage.originY, tileSize: stage.tileSize,
++      width: room.width * stage.tileSize, height: room.height * stage.tileSize,
++      sidewalkTop: stage.height, sidewalkHeight: 0, setbackTop: stage.height, setbackHeight: 0, worldBottom: stage.height };
++    this.drawRoom(this.worldGraphics!, room, 0);
++    this.reconcileApprovedSideChairLayers();
++    this.removeInactiveGraphics(this.fixtureGraphics, this.activeFixtureGraphics);
++    this.removeInactiveGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics);
++    this.removeInactiveGraphics(this.wallDecorGraphics, this.activeWallDecorGraphics);
++    this.removeInactiveEnvironmentSprites();
++    this.removeInactiveFixtureBitmapImages();
++    this.removeInactiveLandscapingBitmapImages();
++    // The game smooths large downscaled textures. Offline catalog captures
++    // explicitly retain crisp pixels, including derivative chair/tint textures.
++    for (const key of this.textures.getTextureKeys()) this.textures.get(key).setFilter(Phaser.Textures.FilterMode.NEAREST);
++    this.children.depthSort();
++    return stage;
+   }
+ 
+   /**
+@@ -695,7 +828,9 @@
+     displayWidth: number | undefined;
+     displayHeight: number | undefined;
+     originY: number | undefined;
++    groundX: number;
+     groundY: number;
++    depth: number;
+     actorLocalY: number | undefined;
+     visualLift: number;
+     angle: number;
+@@ -718,7 +853,9 @@
+         displayWidth: actor?.displayWidth,
+         displayHeight: actor?.displayHeight,
+         originY: actor?.originY,
++        groundX: container.x,
+         groundY: container.y,
++        depth: container.depth,
+         actorLocalY: actor?.y,
+         visualLift: actor ? -actor.y : 0,
+         angle: actor?.angle ?? 0,
+@@ -732,16 +869,74 @@
+     }));
+   }
+ 
++  /** Exact live room/actor path, without advancing gameplay or routing. */
++  public renderOccupiedCharacterQa(tileSize: number, before = false) {
++    if (!import.meta.env.DEV) throw new Error("Occupied character QA is development-only");
++    const model = this.bridge.viewModel, room = model.rooms[0];
++    if (!room || model.rooms.length !== 1 || model.placement || model.buildMode ||
++        room.tileX !== 0 || room.tileY !== 0 || !Number.isFinite(tileSize) || tileSize < 5 || tileSize > 130) {
++      throw new Error("Occupied QA requires one isolated room and a 5–130px world tile");
++    }
++    const size = orientedSize(room);
++    const stage = { tileSize, originX: tileSize * 1.5, originY: tileSize * 2.5,
++      width: Math.ceil((size.width + 6) * tileSize), height: Math.ceil((Math.max(size.height, 4) + 5) * tileSize) };
++    if (!this.sys.isPaused()) this.sys.pause();
++    this.characterRoomQaBefore = before;
++    this.frameDeltaMilliseconds = 0;
++    this.characterPhase = this.characterRestClockMilliseconds = 0;
++    for (const map of [this.characterMotionSnapshots, this.routeMotionTracks, this.characterHopStates,
++      this.characterStepBounceStates, this.characterSeatSettles]) map.clear();
++    this.scale.resize(stage.width, stage.height);
++    this.renderedLayout = undefined;
++    this.cameras.main.setViewport(0, 0, stage.width, stage.height).setScroll(0, 0).setZoom(1).setBackgroundColor("#eee9da");
++    this.cameras.main.setRoundPixels?.(true);
++    this.children.each(child => (child as Phaser.GameObjects.GameObject & Partial<Phaser.GameObjects.Components.Visible>).setVisible?.(false));
++    for (const graphics of [this.terrainGraphics, this.worldGraphics, this.architectureGraphics,
++      this.landscapeGraphics, this.locatorGraphics, this.ghostGraphics]) graphics?.clear();
++    this.worldGraphics!.setVisible(true); this.architectureGraphics!.setVisible(true);
++    this.activeFixtureGraphics = new Set(); this.activeRoomFixtureGraphics = new Set();
++    this.activeWallDecorGraphics = new Set(); this.activeEnvironmentSprites = new Set();
++    this.activeFixtureBitmapImages = new Set(); this.activeLandscapingBitmapImages = new Set();
++    this.fixtureStableOrder = 0;
++    this.layout = { ...stage, width: size.width * tileSize, height: size.height * tileSize,
++      sidewalkTop: stage.height, sidewalkHeight: 0, setbackTop: stage.height, setbackHeight: 0, worldBottom: stage.height };
++    this.drawRoom(this.worldGraphics!, room, 0);
++    this.drawCharacters(); this.reconcileApprovedSideChairLayers();
++    this.removeInactiveGraphics(this.fixtureGraphics, this.activeFixtureGraphics);
++    this.removeInactiveGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics);
++    this.removeInactiveGraphics(this.wallDecorGraphics, this.activeWallDecorGraphics);
++    this.removeInactiveEnvironmentSprites(); this.removeInactiveFixtureBitmapImages();
++    this.removeInactiveLandscapingBitmapImages(); this.children.depthSort();
++    const figures = Object.entries(this.debugCharacterGaitSnapshot()).filter(([, actor]) => actor.visible).map(([key, actor]) => {
++      const snapshot = this.characterMotionSnapshots.get(key)!;
++      const layers = characterBitmapLayers(snapshot.appearance, snapshot.direction, snapshot.pose, snapshot.rightFacing)!;
++      const registration = characterBitmapRegistration(layers);
++      return { key, stillId: layers.actor.stillId, pose: actor.pose, supportRole: actor.supportRole,
++        source: layers.actor.asset.url, frameHeight: actor.displayHeight!,
++        figureHeight: registration.visibleBounds.height * actor.displayHeight! / 320,
++        figureWidth: registration.visibleBounds.width * actor.displayWidth! / 160,
++        headY: actor.groundY - actor.visualLift - (registration.floorY - registration.visibleBounds.y) * actor.displayHeight! / 320,
++        floorY: actor.groundY, seatY: registration.seatContactY === undefined ? null :
++          actor.groundY - (registration.floorY - registration.seatContactY) * actor.displayHeight! / 320,
++        floorAnchorY: actor.originY, scaleMode: actor.textureScaleMode };
++    });
++    return { stage, figures, room: room.definitionId, orientation: room.orientation, before };
++  }
++
+   public create(): void {
++    initializeCanvasRoomLighting(this.game.renderer);
+     this.cameras.main.setBackgroundColor("#7e8476");
+     this.cameras.main.setRoundPixels(true);
+     this.useSmoothDownscaledTextures();
+     if (this.bridge.mobileInput === true && "gameContext" in this.game.renderer) {
+       const resolution = installMobileCanvasResolution(this.game.canvas, this.game.renderer.gameContext, this.scale);
+       const resize = () => resolution.resize(this.scale.width, this.scale.height, window.devicePixelRatio);
++      this.phoneResolutionResize = resize;
+       resize();
+       this.scale.on(Phaser.Scale.Events.RESIZE, resize);
+       this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
++        this.phoneResolutionResize = undefined;
++        clearTimeout(this.mobileArtRefreshTimer); this.mobileArtRefreshTimer = undefined;
+         this.scale.off(Phaser.Scale.Events.RESIZE, resize); resolution.destroy();
+       });
+     }
+@@ -884,12 +1079,15 @@
+     this.refreshLayout(true);
+   }
+ 
++  /** A phone can cross the large-clinic threshold without remounting its map. */
++  public refreshPhoneMemoryProfile(): void { this.phoneResolutionResize?.(); }
++
+   /**
+    * Dynamic scene construction means the first authored pack starts loading
+    * after `create`. Until the image is decoded, the original procedural world
+    * remains visible; a missing file therefore never blanks an active clinic.
+    */
+-  private ensureEnvironmentAtlas(): void {
++  protected ensureEnvironmentAtlas(): void {
+     if (this.bridge.mobileInput === true) { this.ensureMobileAtlases(); return; }
+     const textureKey = getPhaserTextureKey(ENVIRONMENT_ATLAS_V1);
+     if (this.textures.exists(textureKey) && Object.values(FRONTAGE_V2_ASSETS)
+@@ -932,12 +1130,13 @@
+         (asset) => this.textures.exists(getPhaserTextureKey(asset)),
+       );
+       // Do not modify model state: this only replaces the render payload.
+-      this.drawWorld();
++      this.refreshLayout(true);
+     });
+     this.load.start();
+   }
+ 
+-  /** Phone sources are shared with visible catalog previews; desktop uses its original eager loader. */
++  /** Install each source immediately. Visible rooms must not wait for the last
++   * offscreen atlas, and resolved batches must not retain all decoded images. */
+   private ensureMobileAtlases(): void {
+     if (typeof Image === "undefined") return;
+     const model = this.bridge.viewModel;
+@@ -946,19 +1145,60 @@
+     if (model === this.mobileAtlasModel && level === this.mobileAtlasLevel && previews === this.mobileAtlasPreviews) return;
+     this.mobileAtlasModel = model; this.mobileAtlasLevel = level; this.mobileAtlasPreviews = previews;
+     const builtRoomIds = [...new Set(model.rooms.map(room => room.definitionId))].sort();
+-    const previewRoomIds = [...(previews ?? []), ...(model.placement ? [model.placement.definitionId] : [])];
++    // Catalog previews are offline thumbnail PNGs. Scrolling that catalog must
++    // not decode/retain the full atlas of every room ever seen in the session.
++    const previewRoomIds = model.placement ? [model.placement.definitionId] : [];
+     const signature = JSON.stringify([model.campaignId, level, builtRoomIds, previewRoomIds]);
+     if (signature === this.mobileAtlasSignature) return;
+     this.mobileAtlasSignature = signature;
+-    const assets = selectFacilityAssets({ mobile: true, facilityLevel: level, builtRoomIds, previewRoomIds })
+-      .filter(asset => !this.textures.exists(getPhaserTextureKey(asset)));
+-    Promise.all(assets.map(async asset => ({ asset, image: await mobileBitmapCache.load(asset,
+-      resolvePublicArtAssetUrl(asset.relativePath!)) }))).then(loaded => {
+-      if (!this.sys.isActive() || this.bridge.mobileInput !== true) return;
+-      for (const { asset, image } of loaded) {
++    this.mobileArtStartedAt ??= performance.now(); this.mobileArtSettledAt = undefined;
++    const required = selectFacilityAssets({ mobile: true, facilityLevel: level, builtRoomIds, previewRoomIds });
++    this.mobileRequiredAtlases = new Set(required.map(getPhaserTextureKey)); this.mobileAtlasPrunePending = true;
++    const visible = visiblePhoneAssetIds(visiblePhoneRoomIds(model.rooms,
++      this.calculateLayout(this.scale.width, this.scale.height), this.scale));
++    const priority = (id: string) => visible.has(id) || id === ENVIRONMENT_ATLAS_V1.id || id === LANDSCAPING_ATLAS_V1.id
++      ? PHONE_ART_VISIBLE : PHONE_ART_BACKGROUND;
++    const assets = required.filter(asset => !this.textures.exists(getPhaserTextureKey(asset)))
++      .sort((a, b) => priority(a.id) - priority(b.id));
++    for (const asset of assets) {
++      if (this.mobilePendingAtlases.has(asset.id)) continue;
++      this.mobilePendingAtlases.add(asset.id);
++      const source = phoneArtSource(asset);
++      void mobileBitmapCache.load(asset, resolvePublicArtAssetUrl(source?.path ?? asset.relativePath!), priority(asset.id)).then(image => {
++        this.mobilePendingAtlases.delete(asset.id);
+         const key = getPhaserTextureKey(asset);
+-        if (image && !this.textures.exists(key)) this.textures.addImage(key, image);
+-      }
++        if (!this.sys.isActive() || this.bridge.mobileInput !== true || !this.mobileRequiredAtlases.has(key)) return;
++        if (image && !this.textures.exists(key)) {
++          const texture = this.textures.addImage(key, image);
++          if (texture && source) installPhoneArtSource(texture, source);
++          this.mobileArtFirstTextureAt ??= performance.now();
++        }
++        this.queueMobileArtRefresh(true);
++      });
++    }
++    mobileBitmapCache.prioritize(visible, PHONE_ART_VISIBLE);
++    if (assets.length === 0) this.queueMobileArtRefresh(true);
++  }
++
++  private queueMobileArtRefresh(world = false): void {
++    this.mobileArtWorldPending ||= world; this.mobileArtCharactersPending ||= !world;
++    if (this.mobileArtRefreshTimer !== undefined) return;
++    // Coalesce image completions. Partial/offscreen room packs do not cause a
++    // full-world redraw per texture; the final background completion draws once.
++    this.mobileArtRefreshTimer = setTimeout(() => {
++      this.mobileArtRefreshTimer = undefined;
++      if (this.sys.isActive() && !this.bridge.mobilePresentation?.hidden) this.flushMobileArtRefresh();
++    }, 80);
++  }
++
++  private flushMobileArtRefresh(): void {
++    const visible = visiblePhoneRoomIds(this.bridge.viewModel.rooms, this.layout, this.scale);
++    const ready = visible.filter(id => mobileRoomArtReady(id, asset => this.textures.exists(getPhaserTextureKey(asset))));
++    const signature = JSON.stringify([this.textures.exists(getPhaserTextureKey(ENVIRONMENT_ATLAS_V1)),
++      this.textures.exists(getPhaserTextureKey(LANDSCAPING_ATLAS_V1)),
++      ...Object.values(FRONTAGE_V2_ASSETS).map(asset => this.textures.exists(getPhaserTextureKey(asset))), ready]);
++    if (this.mobileArtWorldPending && (signature !== this.mobileReadyArtSignature || this.mobilePendingAtlases.size === 0)) {
++      this.mobileReadyArtSignature = signature;
+       if (this.textures.exists(getPhaserTextureKey(ENVIRONMENT_ATLAS_V1))) {
+         this.registerEnvironmentAtlasFrames(); this.environmentAtlasReady = true;
+       }
+@@ -966,7 +1206,38 @@
+       this.landscapingAtlasReady = this.textures.exists(getPhaserTextureKey(LANDSCAPING_ATLAS_V1));
+       this.registerRoomFixtureAtlasFrames();
+       this.refreshLayout(true);
+-    });
++      this.trimMobileAtlases();
++    }
++    this.mobileArtWorldPending = false;
++    if (this.mobileArtCharactersPending) { this.mobileArtCharactersPending = false; this.drawCharacters(); }
++    this.recordMobileArtSettled();
++  }
++
++  private recordMobileArtSettled(): void {
++    if (this.mobileArtStartedAt !== undefined && !this.mobilePendingAtlases.size && !this.pendingCharacterStills.size &&
++      !this.mobileArtWorldPending && !this.mobileArtCharactersPending && this.mobileArtRefreshTimer === undefined && !this.crispZoomPending)
++      this.mobileArtSettledAt ??= performance.now();
++  }
++
++  /** Small presentation-only proof/diagnostic; no patient, save or image data. */
++  public phoneArtLoadingStatus() {
++    const elapsed = (at: number | undefined) => at === undefined || this.mobileArtStartedAt === undefined ? null : at - this.mobileArtStartedAt;
++    return { firstTextureMs: elapsed(this.mobileArtFirstTextureAt), firstRoomMs: elapsed(this.mobileArtFirstRoomAt),
++      settledMs: elapsed(this.mobileArtSettledAt), pendingRooms: this.mobilePendingAtlases.size,
++      missingRoomSources: [...this.mobileRequiredAtlases].filter(key => !this.textures.exists(key)).length,
++      pendingCharacters: this.pendingCharacterStills.size, failedCharacters: this.failedCharacterStills.size,
++      painting: this.mobileArtRefreshTimer !== undefined || this.mobileArtWorldPending || this.mobileArtCharactersPending,
++      cache: mobileBitmapCache.health };
++  }
++
++  private trimMobileAtlases(): void {
++    if (!this.mobileAtlasPrunePending || this.bridge.mobileInput !== true || !this.textures.getTextureKeys) return;
++    if (this.bridge.mobilePresentation?.hidden) return;
++    this.mobileAtlasPrunePending = false;
++    const used = new Set<string>();
++    for (const images of [this.fixtureBitmapImages, this.landscapingBitmapImages, this.environmentSprites])
++      for (const image of images.values()) used.add(image.texture.key);
++    trimPhoneFacilityTextures(this.textures, this.mobileRequiredAtlases, used);
+   }
+ 
+   /** Additional approved pack only in Level 5; old eager requests stay exact. */
+@@ -977,7 +1248,7 @@
+     // One request per scene. Decode failure keeps the whole room procedural.
+     this.levelFiveAtlasLoadRequested = true;
+     preloadBitmapAssets(this.load, missing);
+-    this.load.once(Phaser.Loader.Events.COMPLETE, () => { this.drawWorld(); });
++    this.load.once(Phaser.Loader.Events.COMPLETE, () => { this.refreshLayout(true); });
+     this.load.start();
+   }
+ 
+@@ -985,13 +1256,19 @@
+    * Room, landscaping and decor sheets are ~1,250-1,450 px bitmaps drawn at a
+    * small fraction of native size, most of all when zoomed out. `pixelArt`
+    * defaults textures to NEAREST, which keeps one source pixel in 5-14 and
+-   * speckles trees and furniture. Every texture here is smoothed (characters
+-   * already were), and the canvas uses its high-quality mipmapped downscale.
++   * speckles trees and furniture. Room/decor textures are smoothed; character
++   * sources keep nearest sampling and integer, aspect-preserving display sizes.
+    * Canvas resizes reset context state, so the quality is reapplied per frame.
+    */
+   private useSmoothDownscaledTextures(): void {
+     const smooth = (texture: Phaser.Textures.Texture): void => {
+-      texture.setFilter(Phaser.Textures.FilterMode.LINEAR);
++      texture.setFilter(isCharacterTextureKey(texture.key)
++        ? Phaser.Textures.FilterMode.NEAREST
++        : Phaser.Textures.FilterMode.LINEAR);
++      if (this.bridge.mobileInput === true && isCharacterTextureKey(texture.key) && !texture.key.includes("inspector")) {
++        const image = texture.getSourceImage?.() as { width?: number; height?: number } | undefined;
++        this.mobileCharacterTextures.register(texture.key, image?.width ?? 0, image?.height ?? 0);
++      }
+     };
+     for (const key of this.textures.getTextureKeys()) {
+       smooth(this.textures.get(key));
+@@ -1023,7 +1300,7 @@
+   ): boolean {
+     const textureKey = getPhaserTextureKey(asset);
+     if (this.textures.exists(textureKey)) {
+-      this.textures.get(textureKey).setFilter(Phaser.Textures.FilterMode.LINEAR);
++      this.textures.get(textureKey).setFilter(Phaser.Textures.FilterMode.NEAREST);
+       return true;
+     }
+     if (this.failedCharacterStills.has(asset.id)) return false;
+@@ -1035,23 +1312,25 @@
+     assets: readonly import("../art/bitmapAssetManifest").BitmapAssetDescriptor[],
+   ): void {
+     if (this.bridge.mobileInput === true && typeof Image !== "undefined") {
+-      for (const asset of assets.filter(isInspectorBitmapAsset)) {
++      for (const asset of assets) {
+         const textureKey = getPhaserTextureKey(asset);
+-        if (this.textures.exists(textureKey) || this.mobileInspectorStills.has(asset.id)) continue;
+-        this.mobileInspectorStills.add(asset.id);
+-        loadMobileInspectorBitmap(asset).then(image => {
++        if (this.textures.exists(textureKey) || this.failedCharacterStills.has(asset.id) || this.pendingCharacterStills.has(asset.id)) continue;
++        this.pendingCharacterStills.set(asset.id, asset);
++        void mobileBitmapCache.load(asset, resolvePublicArtAssetUrl(asset.relativePath!), PHONE_ART_CHARACTER).then(image => {
++          this.pendingCharacterStills.delete(asset.id);
+           if (!this.sys.isActive()) return;
+           if (image && !this.textures.exists(textureKey)) this.textures.addImage(textureKey, image);
++          if (image) this.mobileArtFirstTextureAt ??= performance.now();
+           if (!image) this.failedCharacterStills.add(asset.id);
+-          this.drawCharacters();
++          this.queueMobileArtRefresh();
+         });
+       }
+-      assets = assets.filter(asset => !isInspectorBitmapAsset(asset));
++      return;
+     }
+     for (const asset of assets) {
+       const textureKey = getPhaserTextureKey(asset);
+       if (this.textures.exists(textureKey)) {
+-        this.textures.get(textureKey).setFilter(Phaser.Textures.FilterMode.LINEAR);
++        this.textures.get(textureKey).setFilter(Phaser.Textures.FilterMode.NEAREST);
+       } else if (!this.failedCharacterStills.has(asset.id)) {
+         this.pendingCharacterStills.set(asset.id, asset);
+       }
+@@ -1064,7 +1343,7 @@
+       this.characterStillLoadRequested = false;
+       for (const pending of requested) {
+         const pendingKey = getPhaserTextureKey(pending);
+-        if (this.textures.exists(pendingKey)) this.textures.get(pendingKey).setFilter(Phaser.Textures.FilterMode.LINEAR);
++        if (this.textures.exists(pendingKey)) this.textures.get(pendingKey).setFilter(Phaser.Textures.FilterMode.NEAREST);
+         else this.failedCharacterStills.add(pending.id);
+         this.pendingCharacterStills.delete(pending.id);
+       }
+@@ -1087,10 +1366,11 @@
+     if (!this.textures.exists(cleanedKey)) {
+       const source = this.textures.get(textureKey).getSourceImage();
+       if (source) {
+-        const cleaned = this.textures.createCanvas(
++        const cleaned = facilityCanvasSurface(this.textures,
+           cleanedKey,
+           LANDSCAPING_ATLAS_V1.nativeWidth,
+           LANDSCAPING_ATLAS_V1.nativeHeight,
++          this.bridge.mobileInput === true,
+         );
+         if (cleaned) {
+           // Phaser may decode this source as an Image, canvas, or ImageBitmap
+@@ -1176,12 +1456,13 @@
+     if (this.textures.exists(key)) return key;
+     const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === stool.assetId);
+     if (!atlas || !this.textures.exists(getPhaserTextureKey(atlas))) return undefined;
+-    const source = this.textures.get(getPhaserTextureKey(atlas)).getSourceImage();
++    const atlasTexture = this.textures.get(getPhaserTextureKey(atlas));
++    const source = atlasTexture.getSourceImage();
+     if (!source) return undefined;
+     const [x, y, width, height] = stool.sourceRect;
+-    const texture = this.textures.createCanvas(key, width, height);
++    const texture = facilityCanvasSurface(this.textures, key, width, height, this.bridge.mobileInput === true);
+     if (!texture) return undefined;
+-    texture.context.drawImage(source as CanvasImageSource, x, y, width, height, 0, 0, width, height);
++    drawFacilityAtlasCrop(texture.context, atlasTexture, x, y, width, height);
+     const pixels = texture.getData(0, 0, width, height);
+     pixels.data.set(deriveBacklessRollingStoolPixels(pixels.data, width, height, stool.derivation));
+     texture.putData(pixels, 0, 0);
+@@ -1198,29 +1479,16 @@
+     const atlas = APPROVED_GS015_ROOM_ATLASES.find((candidate) => candidate.id === mask.assetId);
+     if (!atlas) return undefined;
+     if (this.bridge.mobileInput === true && !this.textures.exists(getPhaserTextureKey(atlas))) return undefined;
+-    const source = this.textures.get(getPhaserTextureKey(atlas)).getSourceImage();
++    const atlasTexture = this.textures.get(getPhaserTextureKey(atlas));
++    const source = atlasTexture.getSourceImage();
+     if (!source) return undefined;
+     const [sourceX, sourceY, width, height] = mask.sourceRect;
+-    const rearTexture = this.textures.exists(rear)
+-      ? this.textures.get(rear) as Phaser.Textures.CanvasTexture
+-      : this.textures.createCanvas(rear, width, height);
+-    const foregroundTexture = this.textures.exists(foreground)
+-      ? this.textures.get(foreground) as Phaser.Textures.CanvasTexture
+-      : this.textures.createCanvas(foreground, width, height);
++    const rearTexture = facilityCanvasSurface(this.textures, rear, width, height, this.bridge.mobileInput === true);
++    const foregroundTexture = facilityCanvasSurface(this.textures, foreground, width, height, this.bridge.mobileInput === true);
+     if (!rearTexture || !foregroundTexture) return undefined;
+     for (const texture of [rearTexture, foregroundTexture]) {
+       texture.context.clearRect(0, 0, width, height);
+-      texture.context.drawImage(
+-        source as CanvasImageSource,
+-        sourceX,
+-        sourceY,
+-        width,
+-        height,
+-        0,
+-        0,
+-        width,
+-        height,
+-      );
++      drawFacilityAtlasCrop(texture.context, atlasTexture, sourceX, sourceY, width, height);
+     }
+     const rearPixels = rearTexture.getData(0, 0, width, height);
+     const foregroundPixels = foregroundTexture.getData(0, 0, width, height);
+@@ -1319,6 +1587,14 @@
+     }));
+   }
+ 
++  /** Read-only geometry for save-free room capture and renderer regressions. */
++  public debugApprovedFixtureSnapshot() {
++    return [...this.fixtureBitmapImages.values()].filter(image => image.visible).map(image => ({
++      id: image.getData("approved-draw-id") as string | undefined,
++      x: image.x, y: image.y, width: image.displayWidth, height: image.displayHeight, depth: image.depth,
++    }));
++  }
++
+   /** Same authoritative starting sample as a reload; never replay a covered route tail or old credits. */
+   private resyncMobilePresentation(): void {
+     this.routeMotionTracks.clear();
+@@ -1335,6 +1611,16 @@
+     this.lastReportedSelectedRoomRect = "";
+   }
+ 
++  public retainedViewModelCount(): number {
++    return new Set([this.bridge.viewModel, this.signatureModel, this.frozenCharacterModel,
++      this.mobileAtlasModel, this.inspectLabelCache?.viewModel].filter(Boolean)).size;
++  }
++
++  public restoreCanvasPresentation(): void {
++    if (this.bridge.mobileInput === true) this.resyncMobilePresentation();
++    this.refreshLayout(true);
++  }
++
+   public update(time: number, delta: number): void {
+     if (this.bridge.mobileInput !== true && this.bridge.viewModel.levelFiveRoomArt) this.ensureLevelFiveAtlases();
+     let mobileResynced = false;
+@@ -1348,10 +1634,13 @@
+         return;
+       }
+       if (frame?.resync) {
++        // A sleeping loop had no hidden frame in which to cancel old contacts.
++        this.mobileGestures?.cancel();
+         this.cameras.main.setVisible(true);
+         this.resyncMobilePresentation();
+         mobileResynced = true;
+       }
++      if (this.mobileArtRefreshTimer === undefined && (this.mobileArtWorldPending || this.mobileArtCharactersPending)) this.flushMobileArtRefresh();
+     }
+     if (this.bridge.mobileInput === true) {
+       this.syncMobileInputMode();
+@@ -1376,11 +1665,22 @@
+ 
+     if (mobileResynced) this.refreshLayout(true);
+     this.refreshLayout();
++    if (this.cameraPreferencePending && !this.isCameraGestureActive()) this.flushCameraChange();
+     if (this.bridge.mobileInput === true) this.drawMobileBuildPreview();
+     this.reportSelectedRoomRect();
+-    this.drawCharacters();
++    if (!motionFrozen || this.frozenCharacterModel !== this.bridge.viewModel || this.frozenCharacterLayout !== this.worldLayout) {
++      this.drawCharacters();
++      this.frozenCharacterModel = motionFrozen ? this.bridge.viewModel : undefined;
++      this.frozenCharacterLayout = motionFrozen ? this.worldLayout : undefined;
++    } else {
++      // Camera transforms move frozen actors already. Keep popup fade/selection
++      // live without resolving every still, route, support and shadow again.
++      this.renderInspectBox();
++      if (this.founderActivityAnchor) this.renderFounderActivityBox(...this.founderActivityAnchor);
++    }
+     this.reportAlertPinPositions();
+     this.drawEarningsPopups(time);
++    if (this.bridge.mobileInput === true) this.recordMobileArtSettled();
+     // Atlas completion callbacks can redraw outside update(). Delta belongs to
+     // this update only, never to a later event-driven redraw.
+     this.frameDeltaMilliseconds = 0;
+@@ -1388,23 +1688,44 @@
+ 
+   private refreshLayout(force = false): void {
+     if (this.bridge.mobileInput === true && this.bridge.mobilePresentation?.hidden) return;
++    const campaignChanged = this.renderedLayout && this.renderedCampaignId !== this.bridge.viewModel.campaignId;
++    if (campaignChanged) {
++      this.dragStart = null;
++      this.mobileGestures?.cancel();
++      this.cameraGestureUntil = 0;
++      this.cameraPreferencePending = false;
++    }
+     const width = Math.max(1, Math.floor(this.scale.width));
+     const height = Math.max(1, Math.floor(this.scale.height));
+-    const signature = getFacilityWorldSignature(this.bridge.viewModel);
+-
+-    if (
+-      !force &&
+-      width === this.lastWidth &&
+-      height === this.lastHeight &&
+-      signature === this.lastModelSignature
+-    ) {
++    // Projections are immutable between state changes; gestures need no repeat
++    // room/door scan. Forced asset/edit redraws still refresh the signature.
++    if (force || this.signatureModel !== this.bridge.viewModel) {
++      this.signatureModel = this.bridge.viewModel;
++      this.staticSignature = getFacilityWorldSignature(this.bridge.viewModel, false);
++    }
++    const signature = `${this.bridge.viewModel.campaignId ?? ""}:${this.staticSignature}`;
++    const request = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(this.bridge.viewModel.camera)}`;
++    const changed = force || width !== this.lastWidth || height !== this.lastHeight || signature !== this.lastModelSignature;
++    const projected = request !== this.lastProjectionRequest;
++    if (!changed && !projected && !this.staticWorldPending && !this.crispZoomPending) return;
++
++    this.layout = this.calculateLayout(width, height);
++    this.lastProjectionRequest = request;
++    if (!campaignChanged && this.renderedLayout && this.layout.tileSize !== this.renderedLayout.tileSize && projected) {
++      this.cameraGestureUntil = this.cameraNow() + CAMERA_ZOOM_SETTLE_MS;
++      this.crispZoomPending = true;
++    }
++    this.syncRetainedCamera();
++    if (this.renderedLayout && this.isCameraGestureActive()) {
++      this.staticWorldPending ||= changed;
+       return;
+     }
++    if (!changed && !this.staticWorldPending && !this.crispZoomPending) return;
+ 
+     this.lastWidth = width;
+     this.lastHeight = height;
+     this.lastModelSignature = signature;
+-    this.layout = this.calculateLayout(width, height);
++    this.rebaseWorld();
+ 
+     if (!this.bridge.viewModel.placement) {
+       this.placementGhost = null;
+@@ -1420,11 +1741,14 @@
+     }
+ 
+     this.drawWorld();
++    if (this.bridge.mobileInput === true && this.mobileArtFirstRoomAt === undefined &&
++      visiblePhoneRoomIds(this.bridge.viewModel.rooms, this.layout, this.scale).some(id => id !== "room.hallway" &&
++        mobileRoomArtReady(id, asset => this.textures.exists(getPhaserTextureKey(asset))))) this.mobileArtFirstRoomAt = performance.now();
+     this.positionText();
+     this.drawPlacementGhost();
+   }
+ 
+-  private calculateLayout(width: number, height: number): GridLayout {
++  protected calculateLayout(width: number, height: number): GridLayout {
+     const columns = positiveGridSize(this.bridge.viewModel.gridColumns, 16);
+     const rows = positiveGridSize(this.bridge.viewModel.gridRows, 10);
+     const usableWidth = Math.max(1, width);
+@@ -1457,22 +1781,31 @@
+       ),
+     );
+     const requestedCamera = this.bridge.viewModel.camera;
+-    const requestedCameraSignature = requestedCamera
+-      ? `${requestedCamera.zoom}:${requestedCamera.panX}:${requestedCamera.panY}`
+-      : "";
++    const requestedCameraSignature = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(requestedCamera)}`;
+     if (
+       requestedCamera &&
+       requestedCameraSignature !== this.lastRequestedCameraSignature
+     ) {
+-      this.cameraView = {
+-        zoom: Math.max(
+-          MINIMUM_CAMERA_ZOOM,
+-          Math.min(MAXIMUM_CAMERA_ZOOM, requestedCamera.zoom),
+-        ),
+-        panX: requestedCamera.panX,
+-        panY: requestedCamera.panY,
+-      };
++      const delayedEcho = this.cameraPreferencePending && requestedCameraSignature === this.lastPublishedCameraRequest;
++      if (!delayedEcho) {
++        this.cameraPreferencePending = false;
++        this.cameraView = {
++          ...(this.bridge.mobileInput !== true && requestedCamera.desktopViewport ? { desktopViewport: requestedCamera.desktopViewport } : {}),
++          zoom: Math.max(
++            MINIMUM_CAMERA_ZOOM,
++            Math.min(MAXIMUM_CAMERA_ZOOM, requestedCamera.zoom),
++          ),
++          panX: requestedCamera.panX,
++          panY: requestedCamera.panY,
++        };
++      }
+       this.lastRequestedCameraSignature = requestedCameraSignature;
++      this.cameraCampaignId = this.bridge.viewModel.campaignId;
++    }
++    if (this.bridge.mobileInput !== true) {
++      const projection = desktopMapShade(this.cameraView, this.bridge.viewModel, { width, height });
++      this.cameraView = projection.camera;
++      return projection.layout;
+     }
+     const normalizedZoom = Math.max(
+       0,
+@@ -1564,7 +1897,7 @@
+     this.architectureGraphics?.clear();
+     this.landscapeGraphics?.clear();
+ 
+-    const { originX, originY, tileSize, width, height } = this.layout;
++    const { originX, originY, tileSize, width, height } = this.worldLayout;
+     const model = this.bridge.viewModel;
+     const columns = positiveGridSize(model.gridColumns, 16);
+     const rows = positiveGridSize(model.gridRows, 10);
+@@ -1607,6 +1940,7 @@
+       );
+     }
+     this.drawBuildDoorHighlights(this.architectureGraphics ?? graphics);
++    this.drawInvalidDoorMarkers();
+     this.drawEnvironment();
+     this.drawExterior(this.architectureGraphics ?? graphics);
+     this.removeInactiveGraphics(
+@@ -1624,14 +1958,20 @@
+     this.removeInactiveEnvironmentSprites();
+     this.removeInactiveFixtureBitmapImages();
+     this.removeInactiveLandscapingBitmapImages();
++    // Canvas otherwise replays offscreen Graphics paths on every camera frame.
++    // Retain conservative bounds after edits, without baking phone textures.
++    for (const graphics of [this.terrainGraphics, this.worldGraphics, this.architectureGraphics, this.landscapeGraphics,
++      ...this.fixtureGraphics.values(), ...this.roomFixtureGraphics.values(), ...this.wallDecorGraphics.values()]) {
++      if (graphics) retainGraphicsViewportBounds(graphics);
++    }
+   }
+ 
+   /** World-anchored turf; build cells never influence these stipples. */
+   private drawContinuousTurf(graphics: Phaser.GameObjects.Graphics): void {
+     const exterior = getWorldExteriorLayout({
+-      originX: this.layout.originX,
+-      originY: this.layout.originY,
+-      tileSize: this.layout.tileSize,
++      originX: this.worldLayout.originX,
++      originY: this.worldLayout.originY,
++      tileSize: this.worldLayout.tileSize,
+       gridColumns: positiveGridSize(this.bridge.viewModel.gridColumns, 16),
+       gridRows: positiveGridSize(this.bridge.viewModel.gridRows, 10),
+     });
+@@ -1646,8 +1986,8 @@
+       positiveGridSize(this.bridge.viewModel.gridRows, 10),
+     )) {
+       this.drawFrontageImage(patch.key, patch.assetId,
+-        left + patch.x * this.layout.tileSize, top + patch.y * this.layout.tileSize,
+-        patch.width * this.layout.tileSize, FACILITY_DEPTH_WORLD - 9.5, patch.alpha);
++        left + patch.x * this.worldLayout.tileSize, top + patch.y * this.worldLayout.tileSize,
++        patch.width * this.worldLayout.tileSize, FACILITY_DEPTH_WORLD - 9.5, patch.alpha);
+       this.landscapingBitmapImages.get(patch.key)
+         ?.setRotation(patch.rotation).setFlip(patch.flipX, patch.flipY);
+     }
+@@ -1655,7 +1995,7 @@
+ 
+   /** A restrained contact shadow grounds rooms without adding any collision. */
+   private drawBuildingGroundShadows(graphics: Phaser.GameObjects.Graphics): void {
+-    const offset = Math.max(2, Math.floor(this.layout.tileSize * 0.09));
++    const offset = Math.max(2, Math.floor(this.worldLayout.tileSize * 0.09));
+     for (const room of this.bridge.viewModel.rooms) {
+       const rectangle = this.toPixels({
+         tileX: room.tileX,
+@@ -1722,6 +2062,7 @@
+         this.approvedSideChairRuntimes.delete(key);
+       }
+     }
++    this.trimMobileAtlases();
+   }
+ 
+   private removeInactiveLandscapingBitmapImages(): void {
+@@ -2024,7 +2365,7 @@
+     rectangle: { x: number; y: number; width: number; height: number },
+     shell: ApprovedRoomShellPresentation,
+   ): void {
+-    const scale = this.layout.tileSize / shell.tilePixels;
++    const scale = this.worldLayout.tileSize / shell.tilePixels;
+     const px = (value: number) => value * scale;
+     const cap = px(shell.sideCapWidthPixels);
+     const rear = px(shell.rearWallHeightPixels);
+@@ -2039,14 +2380,14 @@
+     const expanded = (runs: readonly { offset: number; length: number }[]) => new Set(
+       runs.flatMap((run) => Array.from({ length: run.length }, (_, index) => run.offset + index)),
+     );
+-    const north = expanded(this.exposedBoundaryRuns(room, "north"));
++    const backed = expanded(getOwnedBackedNorthBoundaryRuns(room, this.bridge.viewModel.rooms));
++    const north = new Set([...expanded(this.exposedBoundaryRuns(room, "north")), ...backed]);
+     const west = expanded(getExposedVerticalBoundaryRuns(room, this.bridge.viewModel.rooms, "west"));
+     const east = expanded(getExposedVerticalBoundaryRuns(room, this.bridge.viewModel.rooms, "east"));
+-    const backed = expanded(getOwnedBackedNorthBoundaryRuns(room, this.bridge.viewModel.rooms, openings));
+     const openingAt = (side: "north" | "south" | "west" | "east", offset: number) =>
+       openings.some((opening) => opening.side === side && opening.offset === offset);
+     const paintNorth = (offset: number) => {
+-      const left = rectangle.x + offset * this.layout.tileSize;
++      const left = rectangle.x + offset * this.worldLayout.tileSize;
+       const isLow = backed.has(offset);
+       const height = isLow ? low : rear;
+       const top = rectangle.y - height;
+@@ -2066,29 +2407,29 @@
+         graphics.fillStyle(dark, 1); graphics.fillRect(x - px(1), isLow ? top : top - px(9), width + px(2), px(9));
+         graphics.fillStyle(light, 1); graphics.fillRect(x - px(1), isLow ? top : top - px(9), width + px(2), px(3));
+       };
+-      if (!openingAt("north", offset)) { paint(left, this.layout.tileSize); return; }
+-      paint(left, inset); paint(left + this.layout.tileSize - inset, inset);
++      if (!openingAt("north", offset)) { paint(left, this.worldLayout.tileSize); return; }
++      paint(left, inset); paint(left + this.worldLayout.tileSize - inset, inset);
+       graphics.fillStyle(wood, 1);
+       graphics.fillRect(left + inset - px(5), top, px(5), height);
+-      graphics.fillRect(left + this.layout.tileSize - inset, top, px(5), height);
+-      if (!isLow) graphics.fillRect(left + inset - px(5), top - px(5), this.layout.tileSize - inset * 2 + px(10), px(6));
++      graphics.fillRect(left + this.worldLayout.tileSize - inset, top, px(5), height);
++      if (!isLow) graphics.fillRect(left + inset - px(5), top - px(5), this.worldLayout.tileSize - inset * 2 + px(10), px(6));
+     };
+     north.forEach(paintNorth);
+     for (const side of ["west", "east"] as const) {
+       const offsets = side === "west" ? west : east;
+       for (const offset of offsets) {
+         const left = side === "west" ? rectangle.x - cap : rectangle.x + rectangle.width;
+-        const top = rectangle.y + offset * this.layout.tileSize;
++        const top = rectangle.y + offset * this.worldLayout.tileSize;
+         const opening = openingAt(side, offset);
+         const paint = (y: number, height: number) => {
+           graphics.fillStyle(dark, 1); graphics.fillRect(left, y, cap, height);
+           graphics.fillStyle(light, 1); graphics.fillRect(left + (side === "east" ? 0 : cap - px(3)), y, px(3), height);
+         };
+-        if (!opening) { paint(top, this.layout.tileSize); continue; }
+-        paint(top, inset); paint(top + this.layout.tileSize - inset, inset);
++        if (!opening) { paint(top, this.worldLayout.tileSize); continue; }
++        paint(top, inset); paint(top + this.worldLayout.tileSize - inset, inset);
+         graphics.fillStyle(wood, 1);
+         graphics.fillRect(left - px(2), top + inset - px(3), cap + px(4), px(5));
+-        graphics.fillRect(left - px(2), top + this.layout.tileSize - inset - px(2), cap + px(4), px(5));
++        graphics.fillRect(left - px(2), top + this.worldLayout.tileSize - inset - px(2), cap + px(4), px(5));
+       }
+     }
+   }
+@@ -2106,7 +2447,7 @@
+     const south = this.exposedBoundaryRuns(room, "south");
+     if (south.length === 0) return;
+     const graphics = this.getSortableGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics, `hallway-south:${room.instanceId}`);
+-    const scale = this.layout.tileSize / shell.tilePixels;
++    const scale = this.worldLayout.tileSize / shell.tilePixels;
+     const px = (value: number) => value * scale;
+     const low = px(shell.southHeightPixels);
+     const cap = px(shell.sideCapWidthPixels);
+@@ -2126,13 +2467,13 @@
+     };
+     for (const run of south) {
+       for (let offset = run.offset; offset < run.offset + run.length; offset += 1) {
+-        const left = rectangle.x + offset * this.layout.tileSize;
++        const left = rectangle.x + offset * this.worldLayout.tileSize;
+         const opening = openings.some((door) => door.side === "south" && door.offset === offset);
+-        if (!opening) { paint(left, this.layout.tileSize); continue; }
+-        paint(left, inset); paint(left + this.layout.tileSize - inset, inset);
++        if (!opening) { paint(left, this.worldLayout.tileSize); continue; }
++        paint(left, inset); paint(left + this.worldLayout.tileSize - inset, inset);
+         graphics.fillStyle(wood, 1);
+         graphics.fillRect(left + inset - px(5), southY - px(8), px(5), low + px(8));
+-        graphics.fillRect(left + this.layout.tileSize - inset, southY - px(8), px(5), low + px(8));
++        graphics.fillRect(left + this.worldLayout.tileSize - inset, southY - px(8), px(5), low + px(8));
+       }
+     }
+     // Exposed side walls run down over the short wall's face, as on rooms.
+@@ -2153,7 +2494,7 @@
+     room: FacilityRoomView,
+     side: "north" | "south",
+   ): readonly CanonicalRoomWallRun[] {
+-    const tile = this.layout.tileSize;
++    const tile = this.worldLayout.tileSize;
+     const hallwayAt = (x: number, y: number) => this.bridge.viewModel.rooms.find((candidate) => {
+       const size = orientedSize(candidate);
+       return (candidate.kind === "hallway" || candidate.definitionId === "room.hallway")
+@@ -2181,7 +2522,7 @@
+     room: FacilityRoomView,
+     side: "east" | "west",
+   ): readonly CanonicalRoomWallRun[] {
+-    const tile = this.layout.tileSize;
++    const tile = this.worldLayout.tileSize;
+     const hallwayAt = (x: number, y: number) => this.bridge.viewModel.rooms.find((candidate) => {
+       const size = orientedSize(candidate);
+       return (candidate.kind === "hallway" || candidate.definitionId === "room.hallway")
+@@ -2303,7 +2644,7 @@
+     room: FacilityRoomView,
+     rectangle: { x: number; y: number; width: number; height: number },
+   ): void {
+-    const geometry = getSurgeryCenterArchitectureAtScale(this.layout.tileSize);
++    const geometry = getSurgeryCenterArchitectureAtScale(this.worldLayout.tileSize);
+     const northRuns = this.exposedBoundaryRuns(room, "north");
+     const southRuns = this.exposedBoundaryRuns(room, "south");
+     const isExamination = room.definitionId === "room.examination";
+@@ -2327,7 +2668,7 @@
+       this.drawSurgeryCenterComponentTile(
+         `surgery-center:floor:${room.instanceId}`,
+         "floor", rectangle.x, rectangle.y, rectangle.width, rectangle.height,
+-        FACILITY_DEPTH_WORLD + 5, this.layout.tileSize / (832 / 5), this.layout.tileSize / (622 / 4),
++        FACILITY_DEPTH_WORLD + 5, this.worldLayout.tileSize / (832 / 5), this.worldLayout.tileSize / (622 / 4),
+       );
+     }
+     // Side thickness and trim live outside the logical floor, so an adjacent
+@@ -2337,8 +2678,8 @@
+         const x = side === "west"
+           ? rectangle.x - geometry.sideThickness
+           : rectangle.x + rectangle.width;
+-        const y = rectangle.y + run.offset * this.layout.tileSize;
+-        const height = run.length * this.layout.tileSize;
++        const y = rectangle.y + run.offset * this.worldLayout.tileSize;
++        const height = run.length * this.worldLayout.tileSize;
+         graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
+         graphics.fillRect(x, y, geometry.sideThickness, height);
+         graphics.fillStyle(PIXEL_PALETTE_NUMBER.charcoal, 1);
+@@ -2360,14 +2701,14 @@
+           this.drawSurgeryCenterComponentTile(
+             `surgery-center:side:${room.instanceId}:${side}:${run.offset}`,
+             "side", x, y, geometry.sideThickness, height,
+-            FACILITY_DEPTH_WORLD + 10, this.layout.tileSize / (832 / 5), this.layout.tileSize / (622 / 4),
++            FACILITY_DEPTH_WORLD + 10, this.worldLayout.tileSize / (832 / 5), this.worldLayout.tileSize / (622 / 4),
+           );
+         }
+       }
+     }
+     for (const run of northRuns) {
+-      const x = rectangle.x + run.offset * this.layout.tileSize;
+-      const width = run.length * this.layout.tileSize;
++      const x = rectangle.x + run.offset * this.worldLayout.tileSize;
++      const width = run.length * this.worldLayout.tileSize;
+       const top = rectangle.y - geometry.northEnvelope;
+       graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
+       graphics.fillRect(x, top, width, geometry.northEnvelope);
+@@ -2400,15 +2741,15 @@
+         this.drawSurgeryCenterComponentTile(
+           `surgery-center:north:${room.instanceId}:${run.offset}`,
+           "north", x, top, width, geometry.northEnvelope,
+-          FACILITY_DEPTH_WORLD + 11, this.layout.tileSize / (832 / 5), this.layout.tileSize / (622 / 4),
++          FACILITY_DEPTH_WORLD + 11, this.worldLayout.tileSize / (832 / 5), this.worldLayout.tileSize / (622 / 4),
+         );
+       }
+     }
+     // The foreground crop is present only on exposed south runs: its measured
+     // 20px inset is inside this floor, while its 133px extent projects below.
+     for (const run of southRuns) {
+-      const x = rectangle.x + run.offset * this.layout.tileSize;
+-      const width = run.length * this.layout.tileSize;
++      const x = rectangle.x + run.offset * this.worldLayout.tileSize;
++      const width = run.length * this.worldLayout.tileSize;
+       const y = rectangle.y + rectangle.height - geometry.foregroundInset;
+       graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
+       graphics.fillRect(x, y, width, geometry.foregroundInset + geometry.foregroundOutset);
+@@ -2429,7 +2770,7 @@
+         this.drawSurgeryCenterComponentTile(
+           `surgery-center:front:${room.instanceId}:${run.offset}`,
+           "front", x, y, width, geometry.foregroundInset + geometry.foregroundOutset,
+-          FACILITY_DEPTH_WORLD + 29, this.layout.tileSize / (832 / 5), this.layout.tileSize / (622 / 4),
++          FACILITY_DEPTH_WORLD + 29, this.worldLayout.tileSize / (832 / 5), this.worldLayout.tileSize / (622 / 4),
+         );
+       }
+     }
+@@ -2580,8 +2921,8 @@
+     const phase = getEnvironmentTileLogicalPhase(
+       x,
+       y,
+-      this.layout.originX,
+-      this.layout.originY,
++      this.worldLayout.originX,
++      this.worldLayout.originY,
+       tileScale,
+     );
+     sprite.tilePositionX = phase.x;
+@@ -2627,12 +2968,12 @@
+     this.drawFrontageTile(
+       "environment:sidewalk",
+       "frontage:paving-v2",
+-      this.layout.originX,
+-      this.layout.sidewalkTop,
+-      this.layout.width,
+-      this.layout.sidewalkHeight,
++      this.worldLayout.originX,
++      this.worldLayout.sidewalkTop,
++      this.worldLayout.width,
++      this.worldLayout.sidewalkHeight,
+       FACILITY_DEPTH_WORLD + 5,
+-      this.layout.tileSize / 128,
++      this.worldLayout.tileSize / 128,
+     );
+   }
+ 
+@@ -2674,9 +3015,9 @@
+       .setDisplaySize(width,height).setTileScale(buffer.tileScaleX,buffer.tileScaleY)
+       .setDepth(depth).setVisible(true);
+     // The curb's cap starts at its own world band, not a wrapped turf Y phase.
+-    const materialOriginY = id.startsWith("frontage:curb-") ? y : this.layout.originY;
++    const materialOriginY = id.startsWith("frontage:curb-") ? y : this.worldLayout.originY;
+     const phase = getEnvironmentTileLogicalPhase(x, y,
+-      this.layout.originX, materialOriginY, tileScale, 0.000001);
++      this.worldLayout.originX, materialOriginY, tileScale, 0.000001);
+     sprite.tilePositionX = phase.x;
+     sprite.tilePositionY = phase.y;
+     this.activeEnvironmentSprites.add(key);
+@@ -2713,7 +3054,7 @@
+       rectangle.width,
+       rectangle.height,
+       FACILITY_DEPTH_WORLD + 5,
+-      Math.max(0.04, this.layout.tileSize / 142),
++      Math.max(0.04, this.worldLayout.tileSize / 142),
+     );
+   }
+ 
+@@ -2748,12 +3089,12 @@
+       getExteriorLandscapeCandidates(columns, rows),
+       exclusions,
+       0.12,
+-      this.layout.tileSize,
++      this.worldLayout.tileSize,
+     );
+     for (const candidate of visible) {
+       const isTree = candidate.frameId.startsWith("landscape:tree");
+-      const display = getExteriorLandscapeDisplay(candidate, this.layout.tileSize,
+-        this.layout.originX, this.layout.originY);
++      const display = getExteriorLandscapeDisplay(candidate, this.worldLayout.tileSize,
++        this.worldLayout.originX, this.worldLayout.originY);
+       const { x, y, width, height } = display;
+       const depth = getExteriorLandscapeDepth(candidate.y);
+       const painted = candidate.frameId.startsWith("frontage:")
+@@ -2786,15 +3127,15 @@
+   }
+ 
+   private drawEnvironment(): void {
+-    const pixel = Math.max(1, Math.floor(this.layout.tileSize / 14));
++    const pixel = Math.max(1, Math.floor(this.worldLayout.tileSize / 14));
+     this.litterHighlightText?.setVisible(false);
+     for (const litter of this.bridge.viewModel.litterItems ?? []) {
+       const x =
+-        this.layout.originX +
+-        (litter.location.x + 0.5) * this.layout.tileSize;
++        this.worldLayout.originX +
++        (litter.location.x + 0.5) * this.worldLayout.tileSize;
+       const y =
+-        this.layout.originY +
+-        (litter.location.y + 0.65) * this.layout.tileSize;
++        this.worldLayout.originY +
++        (litter.location.y + 0.65) * this.worldLayout.tileSize;
+       const litterGraphics = this.getSortableGraphics(
+         this.fixtureGraphics,
+         this.activeFixtureGraphics,
+@@ -2813,13 +3154,13 @@
+         "litter",
+         x,
+         y,
+-        this.layout.tileSize * 0.36,
+-        this.layout.tileSize * 0.24,
++        this.worldLayout.tileSize * 0.36,
++        this.worldLayout.tileSize * 0.24,
+       );
+       if (litter.highlighted) {
+         const outlineWidth = Math.max(2, pixel);
+-        const highlightWidth = this.layout.tileSize * 0.54;
+-        const highlightHeight = this.layout.tileSize * 0.42;
++        const highlightWidth = this.worldLayout.tileSize * 0.54;
++        const highlightHeight = this.worldLayout.tileSize * 0.42;
+         litterGraphics.lineStyle(
+           outlineWidth,
+           PIXEL_PALETTE_NUMBER.highlight,
+@@ -2856,11 +3197,11 @@
+       return;
+     }
+     let x =
+-      this.layout.originX +
+-      (cooler.location.x + 0.5) * this.layout.tileSize;
++      this.worldLayout.originX +
++      (cooler.location.x + 0.5) * this.worldLayout.tileSize;
+     const fallbackY =
+-      this.layout.originY +
+-      (cooler.location.y + 0.72) * this.layout.tileSize;
++      this.worldLayout.originY +
++      (cooler.location.y + 0.72) * this.worldLayout.tileSize;
+     const founderRoom = this.bridge.viewModel.rooms.find(
+       (room) => room.definitionId === "room.front_desk",
+     ) ?? this.getFounderRoom();
+@@ -2884,10 +3225,10 @@
+         tileY: founderRoom.tileY,
+         ...orientedSize(founderRoom),
+       });
+-      const left = rectangle.x + approvedCooler.destinationTopLeftTiles[0] * this.layout.tileSize;
+-      const top = rectangle.y + approvedCooler.destinationTopLeftTiles[1] * this.layout.tileSize;
+-      const width = approvedCooler.renderSizeTiles[0] * this.layout.tileSize;
+-      const height = approvedCooler.renderSizeTiles[1] * this.layout.tileSize;
++      const left = rectangle.x + approvedCooler.destinationTopLeftTiles[0] * this.worldLayout.tileSize;
++      const top = rectangle.y + approvedCooler.destinationTopLeftTiles[1] * this.worldLayout.tileSize;
++      const width = approvedCooler.renderSizeTiles[0] * this.worldLayout.tileSize;
++      const height = approvedCooler.renderSizeTiles[1] * this.worldLayout.tileSize;
+       x = left + width / 2;
+       const coolerGraphics = this.getSortableGraphics(
+         this.fixtureGraphics,
+@@ -2929,7 +3270,7 @@
+     // rear-right fixture in the reference composition rather than a tiny icon.
+     const maximumWidth = Math.max(
+       16,
+-      this.layout.tileSize * (
++      this.worldLayout.tileSize * (
+         coolerIsAtFrontDesk
+           ? FRONT_DESK_PRESENTATION.waterCooler.widthInTiles
+           : 0.42
+@@ -2937,7 +3278,7 @@
+     );
+     const maximumHeight = Math.max(
+       24,
+-      this.layout.tileSize * (
++      this.worldLayout.tileSize * (
+         coolerIsAtFrontDesk
+           ? FRONT_DESK_PRESENTATION.waterCooler.heightInTiles
+           : 0.68
+@@ -3109,7 +3450,7 @@
+       );
+       const plankHeight = Math.max(
+         7,
+-        Math.floor(this.layout.tileSize * 0.42),
++        Math.floor(this.worldLayout.tileSize * 0.42),
+       );
+       graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.sage, 0.34);
+       for (
+@@ -3155,10 +3496,10 @@
+         `room-fixtures:${room.instanceId}`,
+       );
+       roomFixtures.setDepth(FACILITY_DEPTH_WORLD + 20);
+-      this.drawRoomFixtures(roomFixtures, room, rectangle, Math.max(5, Math.floor(this.layout.tileSize * 0.14)));
++      this.drawRoomFixtures(roomFixtures, room, rectangle, Math.max(5, Math.floor(this.worldLayout.tileSize * 0.14)));
+       this.drawApprovedSouthForeground(roomFixtures, room, rectangle, approved.shell);
+       if (room.instanceId === this.bridge.viewModel.selectedRoomInstanceId) {
+-        const inset = Math.max(3, Math.floor(this.layout.tileSize * 0.12));
++        const inset = Math.max(3, Math.floor(this.worldLayout.tileSize * 0.12));
+         graphics.lineStyle(2, 0xffffff, 1);
+         graphics.strokeRect(rectangle.x + inset, rectangle.y + inset, rectangle.width - inset * 2, rectangle.height - inset * 2);
+       }
+@@ -3167,7 +3508,7 @@
+     const shade = this.roomFloorColor(room, index);
+     const furnitureInset = Math.max(
+       5,
+-      Math.floor(this.layout.tileSize * 0.14),
++      Math.floor(this.worldLayout.tileSize * 0.14),
+     );
+     const usesFrontDeskV5Architecture = shouldRenderFrontDeskV5Architecture(
+       room.definitionId,
+@@ -3212,7 +3553,7 @@
+       } else {
+         const wallWidth = Math.max(
+           4,
+-          Math.floor(this.layout.tileSize * 0.16),
++          Math.floor(this.worldLayout.tileSize * 0.16),
+         );
+         this.drawRoomShell(graphics, room, rectangle, wallWidth);
+       }
+@@ -3228,7 +3569,7 @@
+     this.drawExaminationV3Foreground(room, rectangle);
+ 
+     if (room.instanceId === this.bridge.viewModel.selectedRoomInstanceId) {
+-      const inset = Math.max(3, Math.floor(this.layout.tileSize * 0.12));
++      const inset = Math.max(3, Math.floor(this.worldLayout.tileSize * 0.12));
+       graphics.lineStyle(2, 0xffffff, 1);
+       graphics.strokeRect(
+         rectangle.x + inset,
+@@ -3261,7 +3602,7 @@
+       getApprovedFloorPrimitives(shell, dimensions.width, dimensions.height, capture?.coordinateSpace.floorOriginPixels),
+       rectangle.x,
+       rectangle.y,
+-      this.layout.tileSize / shell.tilePixels,
++      this.worldLayout.tileSize / shell.tilePixels,
+     );
+     this.drawCleanlinessWear(graphics, room, rectangle);
+     if (getRoomTouchup(room.definitionId)) {
+@@ -3275,7 +3616,7 @@
+         getTouchupFloorPrimitives(room.definitionId, orientation, [dimensions.width, dimensions.height], this.getApprovedBaseWidth(room), openDoorSegments, visible),
+         rectangle.x,
+         rectangle.y,
+-        this.layout.tileSize / TOUCHUP_TILE_PIXELS,
++        this.worldLayout.tileSize / TOUCHUP_TILE_PIXELS,
+       );
+     }
+     this.drawApprovedRoomCaps(graphics, room, rectangle, shell);
+@@ -3326,7 +3667,7 @@
+   }
+ 
+   /** Approved draw records with the owner-approved touch-up rules applied. */
+-  private getTouchupDrawRecords(room: FacilityRoomView): readonly TouchupDrawRecord[] {
++  protected getTouchupDrawRecords(room: FacilityRoomView): readonly TouchupDrawRecord[] {
+     const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
+     return applyRoomTouchupsToRecords(
+       room.definitionId,
+@@ -3378,7 +3719,16 @@
+     for (const primitive of primitives) {
+       const parsed = parseApprovedCssColor(primitive.color);
+       const alpha = parsed.alpha * (primitive.alpha ?? 1);
+-      if (primitive.shape === "line") {
++      if (primitive.shape === "polygon") {
++        const points = primitive.points ?? [];
++        if (points.length < 3) continue;
++        graphics.fillStyle(parsed.color, alpha);
++        graphics.beginPath();
++        graphics.moveTo(originX + points[0]!.x * scale, originY + points[0]!.y * scale);
++        for (const point of points.slice(1)) graphics.lineTo(originX + point.x * scale, originY + point.y * scale);
++        graphics.closePath();
++        graphics.fillPath();
++      } else if (primitive.shape === "line") {
+         graphics.lineStyle(Math.max(.35, scale), parsed.color, alpha);
+         graphics.lineBetween(
+           originX + primitive.x * scale,
+@@ -3408,7 +3758,7 @@
+ 
+   /** Exact proof wall bands and doorway seams, scaled from authored pixels. */
+   private drawApprovedRoomCaps(graphics: Phaser.GameObjects.Graphics, room: FacilityRoomView, rectangle: { x: number; y: number; width: number; height: number }, shell: ApprovedRoomShellPresentation): void {
+-    const scale = this.layout.tileSize / shell.tilePixels;
++    const scale = this.worldLayout.tileSize / shell.tilePixels;
+     const px = (value: number) => value * scale;
+     const cap = px(shell.sideCapWidthPixels);
+     const low = px(shell.southHeightPixels);
+@@ -3427,7 +3777,7 @@
+     const northBaseHeight = px(room.definitionId === "room.front_desk" ? 23 : 23);
+     const touchupAccent = getRoomTouchup(room.definitionId)?.accent;
+     for (let offset = 0; offset < dimensions.width; offset += 1) {
+-      const left = rectangle.x + offset * this.layout.tileSize;
++      const left = rectangle.x + offset * this.worldLayout.tileSize;
+       const isBacked = backed.has(offset);
+       const height = isBacked ? low : rear;
+       const top = rectangle.y - height;
+@@ -3466,15 +3816,15 @@
+       };
+       if (opening) {
+         paintRun(left, inset);
+-        paintRun(left + this.layout.tileSize - inset, inset);
++        paintRun(left + this.worldLayout.tileSize - inset, inset);
+         graphics.fillStyle(wood, 1);
+         graphics.fillRect(left + inset - px(5), top, px(5), height);
+-        graphics.fillRect(left + this.layout.tileSize - inset, top, px(5), height);
+-        if (!isBacked) graphics.fillRect(left + inset - px(5), top - px(5), this.layout.tileSize - inset * 2 + px(10), px(6));
+-      } else paintRun(left, this.layout.tileSize);
++        graphics.fillRect(left + this.worldLayout.tileSize - inset, top, px(5), height);
++        if (!isBacked) graphics.fillRect(left + inset - px(5), top - px(5), this.worldLayout.tileSize - inset * 2 + px(10), px(6));
++      } else paintRun(left, this.worldLayout.tileSize);
+       if (!isBacked) {
+-        graphics.fillStyle(dark, 1); graphics.fillRect(left - px(1), rectangle.y - rear - px(9), this.layout.tileSize + px(2), px(9));
+-        graphics.fillStyle(light, 1); graphics.fillRect(left - px(1), rectangle.y - rear - px(9), this.layout.tileSize + px(2), px(3));
++        graphics.fillStyle(dark, 1); graphics.fillRect(left - px(1), rectangle.y - rear - px(9), this.worldLayout.tileSize + px(2), px(9));
++        graphics.fillStyle(light, 1); graphics.fillRect(left - px(1), rectangle.y - rear - px(9), this.worldLayout.tileSize + px(2), px(3));
+       }
+     }
+     for (const side of ["west", "east"] as const) {
+@@ -3488,8 +3838,8 @@
+       };
+       let cursor = top;
+       for (const opening of sideOpenings) {
+-        const doorTop = rectangle.y + opening.offset * this.layout.tileSize + inset;
+-        const doorHeight = this.layout.tileSize - inset * 2;
++        const doorTop = rectangle.y + opening.offset * this.worldLayout.tileSize + inset;
++        const doorHeight = this.worldLayout.tileSize - inset * 2;
+         paintCap(cursor, doorTop - cursor);
+         graphics.fillStyle(wood, 1);
+         graphics.fillRect(x - px(2), doorTop - px(3), cap + px(4), px(5));
+@@ -3503,8 +3853,9 @@
+       // The room on the south side owns a shared horizontal boundary through
+       // its short north wall. Do not repeat this room's foreground lip.
+       if (backedSouth.has(offset)) continue;
+-      if (room.definitionId === "room.front_desk" && offset === 2) continue;
+-      const left = rectangle.x + offset * this.layout.tileSize;
++      if (room.definitionId === "room.front_desk" && offset === 2 &&
++        openings.some(door => door.side === "south" && door.offset === offset)) continue;
++      const left = rectangle.x + offset * this.worldLayout.tileSize;
+       const opening = openings.some((door) => door.side === "south" && door.offset === offset);
+       const paintSouth = (x: number, width: number) => {
+         graphics.fillStyle(cream, 1); graphics.fillRect(x, southY, width, low);
+@@ -3514,16 +3865,16 @@
+       };
+       if (opening) {
+         paintSouth(left, inset);
+-        paintSouth(left + this.layout.tileSize - inset, inset);
++        paintSouth(left + this.worldLayout.tileSize - inset, inset);
+         graphics.fillStyle(wood, 1);
+         graphics.fillRect(left + inset - px(5), southY - px(8), px(5), low + px(8));
+-        graphics.fillRect(left + this.layout.tileSize - inset, southY - px(8), px(5), low + px(8));
+-      } else paintSouth(left, this.layout.tileSize);
++        graphics.fillRect(left + this.worldLayout.tileSize - inset, southY - px(8), px(5), low + px(8));
++      } else paintSouth(left, this.worldLayout.tileSize);
+     }
+     if (room.definitionId === "room.front_desk") {
+-      const entryLeft = rectangle.x + this.layout.tileSize * 2;
+-      graphics.fillStyle(0xccb783, 1); graphics.fillRect(entryLeft + px(5), southY - px(2), this.layout.tileSize - px(10), px(5));
+-      for (const jambX of [entryLeft - px(12), entryLeft + this.layout.tileSize]) {
++      const entryLeft = rectangle.x + this.worldLayout.tileSize * 2;
++      graphics.fillStyle(0xccb783, 1); graphics.fillRect(entryLeft + px(5), southY - px(2), this.worldLayout.tileSize - px(10), px(5));
++      for (const jambX of [entryLeft - px(12), entryLeft + this.worldLayout.tileSize]) {
+         graphics.fillStyle(cream, 1); graphics.fillRect(jambX, southY - px(13), px(12), px(42));
+         graphics.fillStyle(trim, 1); graphics.fillRect(jambX, southY + px(20), px(12), px(9));
+         graphics.fillStyle(dark, 1); graphics.fillRect(jambX - px(2), southY - px(16), px(16), px(7));
+@@ -3541,13 +3892,13 @@
+       graphics,
+       getApprovedFloorPrimitives(
+         shell,
+-        rectangle.width / this.layout.tileSize,
+-        rectangle.height / this.layout.tileSize,
++        rectangle.width / this.worldLayout.tileSize,
++        rectangle.height / this.worldLayout.tileSize,
+         [room.tileX * shell.tilePixels, room.tileY * shell.tilePixels],
+       ),
+       rectangle.x,
+       rectangle.y,
+-      this.layout.tileSize / shell.tilePixels,
++      this.worldLayout.tileSize / shell.tilePixels,
+     );
+   }
+ 
+@@ -3558,7 +3909,7 @@
+     rectangle: { x: number; y: number; width: number; height: number },
+     shell: ApprovedRoomShellPresentation,
+   ): void {
+-    const scale = this.layout.tileSize / shell.tilePixels;
++    const scale = this.worldLayout.tileSize / shell.tilePixels;
+     const px = (value: number) => value * scale;
+     const low = px(shell.southHeightPixels);
+     const inset = px(shell.doorInsetPixels);
+@@ -3581,23 +3932,25 @@
+       // Match the base-cap ownership rule so the foreground repaint cannot
+       // restore a south lip over the southern room's short north wall.
+       if (backedSouth.has(offset)) continue;
+-      if (room.definitionId === "room.front_desk" && offset === 2) continue;
+-      const left = rectangle.x + offset * this.layout.tileSize;
++      if (room.definitionId === "room.front_desk" && offset === 2 &&
++        openings.some(door => door.side === "south" && door.offset === offset)) continue;
++      const left = rectangle.x + offset * this.worldLayout.tileSize;
+       const opening = openings.some((door) => door.side === "south" && door.offset === offset);
+-      if (!opening) { paint(left, this.layout.tileSize); continue; }
+-      paint(left, inset); paint(left + this.layout.tileSize - inset, inset);
++      if (!opening) { paint(left, this.worldLayout.tileSize); continue; }
++      paint(left, inset); paint(left + this.worldLayout.tileSize - inset, inset);
+       graphics.fillStyle(wood, 1);
+       graphics.fillRect(left + inset - px(5), southY - px(8), px(5), low + px(8));
+-      graphics.fillRect(left + this.layout.tileSize - inset, southY - px(8), px(5), low + px(8));
+-    }
+-    if (room.definitionId === "room.front_desk") {
+-      const entryLeft = rectangle.x + this.layout.tileSize * 2;
++      graphics.fillRect(left + this.worldLayout.tileSize - inset, southY - px(8), px(5), low + px(8));
++    }
++    if (room.definitionId === "room.front_desk" &&
++      openings.some(door => door.side === "south" && door.offset === 2)) {
++      const entryLeft = rectangle.x + this.worldLayout.tileSize * 2;
+       // The entrance threshold is floor, not wall: keep it under everyone
+       // walking through the front door (above only the sidewalk edge line).
+       const threshold = this.getSortableGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics, `front-desk-threshold:${room.instanceId}`);
+-      threshold.fillStyle(0xccb783, 1); threshold.fillRect(entryLeft + px(5), southY - px(2), this.layout.tileSize - px(10), px(5));
++      threshold.fillStyle(0xccb783, 1); threshold.fillRect(entryLeft + px(5), southY - px(2), this.worldLayout.tileSize - px(10), px(5));
+       threshold.setDepth(FACILITY_DEPTH_WORLD + 31);
+-      for (const jambX of [entryLeft - px(12), entryLeft + this.layout.tileSize]) {
++      for (const jambX of [entryLeft - px(12), entryLeft + this.worldLayout.tileSize]) {
+         graphics.fillStyle(cream, 1); graphics.fillRect(jambX, southY - px(13), px(12), px(42));
+         graphics.fillStyle(trim, 1); graphics.fillRect(jambX, southY + px(20), px(12), px(9));
+         graphics.fillStyle(dark, 1); graphics.fillRect(jambX - px(2), southY - px(16), px(16), px(7));
+@@ -3658,7 +4011,7 @@
+     // new resource overlay. Sparse scuffs become more visible as cleanliness
+     // falls while keeping furniture, paths, and click targets unobscured.
+     const markCount = Math.max(2, Math.round(2 + severity * 7));
+-    const inset = Math.max(6, Math.floor(this.layout.tileSize * 0.18));
++    const inset = Math.max(6, Math.floor(this.worldLayout.tileSize * 0.18));
+     const usableWidth = Math.max(1, rectangle.width - inset * 2);
+     const usableHeight = Math.max(1, rectangle.height - inset * 2);
+     graphics.fillStyle(
+@@ -3676,7 +4029,7 @@
+         rectangle.y + inset + ((ySeed % 89) / 89) * usableHeight;
+       const width = Math.max(
+         2,
+-        Math.floor(this.layout.tileSize * (0.06 + (index % 3) * 0.025)),
++        Math.floor(this.worldLayout.tileSize * (0.06 + (index % 3) * 0.025)),
+       );
+       graphics.fillRect(Math.round(x), Math.round(y), width, 1);
+       if (index % 3 === 0) {
+@@ -3694,7 +4047,7 @@
+     if (tier < 2 || !getRoomUpgradeDefinition(room.definitionId)?.appearanceChanges) {
+       return;
+     }
+-    const inset = Math.max(5, Math.floor(this.layout.tileSize * 0.14));
++    const inset = Math.max(5, Math.floor(this.worldLayout.tileSize * 0.14));
+     const secondInset = inset + Math.max(3, Math.floor(inset * 0.55));
+ 
+     // Upgraded rooms receive a cleaner perimeter inlay and brighter finished
+@@ -3715,7 +4068,7 @@
+     );
+ 
+     if (tier >= 3) {
+-      const corner = Math.max(5, Math.floor(this.layout.tileSize * 0.18));
++      const corner = Math.max(5, Math.floor(this.worldLayout.tileSize * 0.18));
+       graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 0.28);
+       const corners: Array<readonly [number, number]> = [
+         [rectangle.x + secondInset, rectangle.y + secondInset],
+@@ -3744,7 +4097,7 @@
+   }): number {
+     return getRearWallFaceHeight(
+       rectangle.height,
+-      this.layout.tileSize,
++      this.worldLayout.tileSize,
+     );
+   }
+ 
+@@ -3808,14 +4161,18 @@
+       tileY: room.tileY,
+       ...orientedSize(room),
+     });
++    // Saved offsets can stop fitting after rotation; marker and removal target
++    // must use the same wall section, including its north-wall height.
++    const safeOffset = Math.max(0, Math.min((side === "north" || side === "south" ? room.width : room.height) - 1,
++      Number.isFinite(offset) ? Math.floor(offset) : 0));
+     return getDoorInteractionGeometry({
+       room: rectangle,
+       side,
+-      offset,
+-      tileSize: this.layout.tileSize,
++      offset: safeOffset,
++      tileSize: this.worldLayout.tileSize,
+       exposedNorthWall:
+         side === "north" &&
+-        this.hasExposedNorthWallAt(room, offset),
++        this.hasExposedNorthWallAt(room, safeOffset),
+       northWallHeight: this.roomWallFaceHeight(rectangle),
+     });
+   }
+@@ -3899,6 +4256,28 @@
+     });
+   }
+ 
++  /** A saved invalid door is a closed wall with a red X, in both play and Build. */
++  private drawInvalidDoorMarkers(): void {
++    const model = this.bridge.viewModel;
++    for (const door of model.doors ?? []) {
++      if (isDoorPresentationConnected(door, model.rooms)) continue;
++      const room = model.rooms.find(candidate => candidate.instanceId === door.roomInstanceId);
++      if (!room) continue;
++      const length = door.side === "north" || door.side === "south" ? room.width : room.height;
++      const offset = Math.max(0, Math.min(length - 1, Number.isFinite(door.offset) ? Math.floor(door.offset) : 0));
++      const { center } = this.getDoorGeometry(room, door.side, offset);
++      const graphics = this.getSortableGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics, `invalid-door:${door.instanceId}`);
++      const size = Math.max(7, this.worldLayout.tileSize * 0.24);
++      graphics.fillStyle(0xfaf1de, 1);
++      graphics.fillRect(center.x - size, center.y - size, size * 2, size * 2);
++      graphics.lineStyle(Math.max(2, this.worldLayout.tileSize * 0.06), 0xb3382c, 1);
++      graphics.strokeRect(center.x - size, center.y - size, size * 2, size * 2);
++      graphics.lineBetween(center.x - size * 0.55, center.y - size * 0.55, center.x + size * 0.55, center.y + size * 0.55);
++      graphics.lineBetween(center.x + size * 0.55, center.y - size * 0.55, center.x - size * 0.55, center.y + size * 0.55);
++      graphics.setDepth(FACILITY_DEPTH_UI - 1);
++    }
++  }
++
+   private drawBuildDoorHighlights(
+     graphics: Phaser.GameObjects.Graphics,
+   ): void {
+@@ -3906,7 +4285,8 @@
+     targets.forEach((target) => {
+       const { hitRegion, center, horizontal } = target.geometry;
+       const place = target.kind === "place";
+-      const outerColor = place
++      const invalid = !place && !isDoorPresentationConnected(target.door, this.bridge.viewModel.rooms);
++      const outerColor = invalid ? 0xb3382c : place
+         ? PIXEL_PALETTE_NUMBER.highlight
+         : PIXEL_PALETTE_NUMBER.ink;
+       const innerColor = place
+@@ -3936,7 +4316,7 @@
+ 
+       // A short crossbar makes the emphasized segment legible as a wall
+       // opening at low zoom without adding any textual wall-position picker.
+-      const crossbar = Math.max(3, Math.min(9, this.layout.tileSize * 0.22));
++      const crossbar = Math.max(3, Math.min(9, this.worldLayout.tileSize * 0.22));
+       graphics.lineStyle(2, innerColor, 1);
+       if (horizontal) {
+         graphics.lineBetween(
+@@ -3959,7 +4339,7 @@
+   private doorInteractionAtPointer(
+     pointer: Phaser.Input.Pointer,
+   ): FacilityDoorInteractionTarget | null {
+-    const point = { x: pointer.x, y: pointer.y };
++    const point = this.screenToWorld(pointer);
+     return (
+       this.getBuildDoorInteractionTargets()
+         .filter((target) =>
+@@ -4026,7 +4406,7 @@
+ 
+     if (room.definitionId === "room.waiting") {
+       // Broad terrazzo chips deliberately avoid construction-grid rhythm.
+-      const step = Math.max(8, Math.floor(this.layout.tileSize * 0.44));
++      const step = Math.max(8, Math.floor(this.worldLayout.tileSize * 0.44));
+       for (let y = top + 5; y < bottom - 2; y += step) {
+         for (let x = left + 5; x < right - 2; x += step) {
+           const offset = (Math.floor((y - top) / step) % 2) * 3;
+@@ -4041,7 +4421,7 @@
+ 
+     if (room.definitionId === "room.bathroom") {
+       // Small waterproof tile with staggered vertical joints.
+-      const tile = Math.max(6, Math.floor(this.layout.tileSize * 0.34));
++      const tile = Math.max(6, Math.floor(this.worldLayout.tileSize * 0.34));
+       graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.sage, 0.42);
+       for (let y = top + tile; y < bottom; y += tile) {
+         graphics.lineBetween(left, y, right, y);
+@@ -4058,52 +4438,52 @@
+     }
+ 
+     if (room.definitionId === "room.ultrasound") {
+-      const band = Math.max(10, Math.floor(this.layout.tileSize * 0.62));
++      const band = Math.max(10, Math.floor(this.worldLayout.tileSize * 0.62));
+       graphics.fillStyle(PIXEL_PALETTE_NUMBER.sage, 0.26);
+       for (let x = left + band; x < right; x += band) graphics.fillRect(x, top, 1, height);
+       return;
+     }
+     if (room.definitionId === "room.ct") {
+-      const tile = Math.max(11, Math.floor(this.layout.tileSize * 0.64));
++      const tile = Math.max(11, Math.floor(this.worldLayout.tileSize * 0.64));
+       graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.deepOlive, 0.22);
+       for (let y = top + tile; y < bottom; y += tile) graphics.lineBetween(left, y, right, y);
+       for (let x = left + tile; x < right; x += tile) graphics.lineBetween(x, top, x, bottom);
+       return;
+     }
+     if (room.definitionId === "room.phlebotomy") {
+-      const strip = Math.max(7, Math.floor(this.layout.tileSize * 0.4));
++      const strip = Math.max(7, Math.floor(this.worldLayout.tileSize * 0.4));
+       graphics.fillStyle(PIXEL_PALETTE_NUMBER.sage, 0.22);
+       for (let y = top + strip; y < bottom; y += strip) graphics.fillRect(left, y, width, 1);
+       return;
+     }
+     if (room.definitionId === "room.evs_closet" || room.definitionId === "room.coffee_kiosk") {
+-      const tile = Math.max(6, Math.floor(this.layout.tileSize * (room.definitionId === "room.evs_closet" ? 0.3 : 0.42)));
++      const tile = Math.max(6, Math.floor(this.worldLayout.tileSize * (room.definitionId === "room.evs_closet" ? 0.3 : 0.42)));
+       graphics.lineStyle(1, room.definitionId === "room.evs_closet" ? PIXEL_PALETTE_NUMBER.deepOlive : PIXEL_PALETTE_NUMBER.paper, 0.3);
+       for (let y = top + tile; y < bottom; y += tile) graphics.lineBetween(left, y, right, y);
+       for (let x = left + tile; x < right; x += tile) graphics.lineBetween(x, top, x, bottom);
+       return;
+     }
+     if (room.definitionId === "room.endoscopy") {
+-      const band = Math.max(12, Math.floor(this.layout.tileSize * 0.74));
++      const band = Math.max(12, Math.floor(this.worldLayout.tileSize * 0.74));
+       graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 0.16);
+       for (let y = top + band; y < bottom; y += band) graphics.fillRect(left, y, width, 2);
+       return;
+     }
+     if (room.definitionId === "room.periop_recovery") {
+-      const plank = Math.max(10, Math.floor(this.layout.tileSize * 0.58));
++      const plank = Math.max(10, Math.floor(this.worldLayout.tileSize * 0.58));
+       graphics.lineStyle(1, PIXEL_PALETTE_NUMBER.sage, 0.25);
+       for (let y = top + plank; y < bottom; y += plank) graphics.lineBetween(left, y, right, y);
+       return;
+     }
+     if (room.definitionId === "room.training") {
+-      const tile = Math.max(9, Math.floor(this.layout.tileSize * 0.5));
++      const tile = Math.max(9, Math.floor(this.worldLayout.tileSize * 0.5));
+       for (let y = top; y < bottom; y += tile) for (let x = left; x < right; x += tile) {
+         if ((Math.floor((x - left) / tile) + Math.floor((y - top) / tile)) % 2 === 0) { graphics.fillStyle(PIXEL_PALETTE_NUMBER.sage, 0.12); graphics.fillRect(x, y, tile, tile); }
+       }
+       return;
+     }
+     if (room.definitionId === "room.glp1_telehealth_suite") {
+-      const tile = Math.max(13, Math.floor(this.layout.tileSize * 0.72));
++      const tile = Math.max(13, Math.floor(this.worldLayout.tileSize * 0.72));
+       graphics.fillStyle(PIXEL_PALETTE_NUMBER.warmGray, 0.24);
+       for (let y = top + tile; y < bottom; y += tile) for (let x = left + tile; x < right; x += tile) graphics.fillRect(x, y, 1, 1);
+       return;
+@@ -4115,7 +4495,7 @@
+     ) {
+       // Darker anti-static sheet flooring with sparse welded seams.
+       graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 0.09);
+-      const band = Math.max(12, Math.floor(this.layout.tileSize * 0.78));
++      const band = Math.max(12, Math.floor(this.worldLayout.tileSize * 0.78));
+       for (let y = top + band; y < bottom; y += band) {
+         graphics.fillRect(left, y, width, 2);
+       }
+@@ -4127,7 +4507,7 @@
+     }
+ 
+     // Examination and procedure rooms use seamless speckled clinical vinyl.
+-    const speckle = Math.max(7, Math.floor(this.layout.tileSize * 0.38));
++    const speckle = Math.max(7, Math.floor(this.worldLayout.tileSize * 0.38));
+     for (let y = top + 5; y < bottom - 2; y += speckle) {
+       for (let x = left + 6; x < right - 2; x += speckle + 2) {
+         graphics.fillStyle(PIXEL_PALETTE_NUMBER.sage, 0.24);
+@@ -4160,7 +4540,7 @@
+   private northCornerShoulderWidth(wallWidth: number): number {
+     return Math.max(
+       wallWidth + 3,
+-      Math.floor(this.layout.tileSize * 0.22),
++      Math.floor(this.worldLayout.tileSize * 0.22),
+     );
+   }
+ 
+@@ -4184,13 +4564,13 @@
+       for (const run of runs) {
+         const y =
+           rectangle.y +
+-          run.offset * this.layout.tileSize +
++          run.offset * this.worldLayout.tileSize +
+           (run.offset === 0 ? 1 : 0);
+         const height = Math.max(
+           1,
+           Math.min(
+             rectangle.y + rectangle.height - y,
+-            run.length * this.layout.tileSize -
++            run.length * this.worldLayout.tileSize -
+               (run.offset === 0 ? 1 : 0),
+           ),
+         );
+@@ -4230,11 +4610,11 @@
+   ): void {
+     const rearWallHeight = this.roomWallFaceHeight(rectangle);
+     const wallCapHeight = getSurgeryCenterArchitectureAtScale(
+-      this.layout.tileSize,
++      this.worldLayout.tileSize,
+     ).outerBorderY;
+     const groundY = rectangle.y;
+     const northRuns = this.exposedBoundaryRuns(room, "north");
+-    const panelGap = Math.max(24, Math.floor(this.layout.tileSize * 1.45));
++    const panelGap = Math.max(24, Math.floor(this.worldLayout.tileSize * 1.45));
+     const cornerReturns = getExposedNorthCornerReturns(
+       room,
+       this.bridge.viewModel.rooms,
+@@ -4252,7 +4632,7 @@
+       const projection = projectRearWallRun(
+         rectangle,
+         run,
+-        this.layout.tileSize,
++        this.worldLayout.tileSize,
+         rearWallHeight,
+         wallCapHeight,
+       );
+@@ -4384,7 +4764,7 @@
+     // cutaway corner without smoothing or consuming additional floor tiles.
+     const shoulderDepth = Math.min(
+       rectangle.height,
+-      Math.max(8, Math.floor(this.layout.tileSize * 0.42)),
++      Math.max(8, Math.floor(this.worldLayout.tileSize * 0.42)),
+     );
+     const faceTop = groundY - rearWallHeight;
+     const stepBottoms = [
+@@ -4494,11 +4874,11 @@
+     graphics.fillStyle(PIXEL_PALETTE_NUMBER.deepOlive, 0.46);
+     for (const run of coveredNorthRuns) {
+       graphics.fillRect(
+-        rectangle.x + run.offset * this.layout.tileSize,
++        rectangle.x + run.offset * this.worldLayout.tileSize,
+         rectangle.y,
+         Math.min(
+-          rectangle.width - run.offset * this.layout.tileSize,
+-          run.length * this.layout.tileSize,
++          rectangle.width - run.offset * this.worldLayout.tileSize,
++          run.length * this.worldLayout.tileSize,
+         ),
+         1,
+       );
+@@ -4539,10 +4919,10 @@
+     // begins immediately south, omitting it prevents a duplicate wall from
+     // breaking the shared floor plane.
+     for (const run of southRuns) {
+-      const runX = rectangle.x + run.offset * this.layout.tileSize;
++      const runX = rectangle.x + run.offset * this.worldLayout.tileSize;
+       const runWidth = Math.min(
+         rectangle.x + rectangle.width - runX,
+-        run.length * this.layout.tileSize,
++        run.length * this.worldLayout.tileSize,
+       );
+       graphics.fillStyle(PIXEL_PALETTE_NUMBER.ink, 1);
+       graphics.fillRect(
+@@ -4575,7 +4955,7 @@
+     columns: number,
+     rows: number,
+   ): void {
+-    const { originX, originY, tileSize, width, height } = this.layout;
++    const { originX, originY, tileSize, width, height } = this.worldLayout;
+     graphics.fillStyle(PIXEL_PALETTE_NUMBER.highlight, 0.055);
+     for (let row = 0; row < rows; row += 1) {
+       for (let column = row % 2; column < columns; column += 2) {
+@@ -4637,7 +5017,7 @@
+   }
+ 
+   private drawExterior(graphics: Phaser.GameObjects.Graphics): void {
+-    const { tileSize, originX, width, sidewalkTop, sidewalkHeight } = this.layout;
++    const { tileSize, originX, width, sidewalkTop, sidewalkHeight } = this.worldLayout;
+     const sidewalkBottom = sidewalkTop + sidewalkHeight;
+     if (!this.textures.exists(getPhaserTextureKey(FRONTAGE_V2_ASSETS["frontage:paving-v2"]))) {
+       graphics.fillStyle(0xc9c6bb, 1);
+@@ -4733,12 +5113,12 @@
+       : graphics;
+     const wallHeight = canonicalShell?.geometry.northHeight ?? this.roomWallFaceHeight(rectangle);
+     const wallCapHeight = getSurgeryCenterArchitectureAtScale(
+-      this.layout.tileSize,
++      this.worldLayout.tileSize,
+     ).outerBorderY;
+     const rearWallRuns = this.exposedBoundaryRuns(room, "north");
+     const wallWidth = Math.max(
+       4,
+-      Math.floor(this.layout.tileSize * 0.16),
++      Math.floor(this.worldLayout.tileSize * 0.16),
+     );
+     const exteriorCorners = getExposedNorthCornerReturns(
+       room,
+@@ -4756,7 +5136,7 @@
+       const face = projectRearWallRun(
+         rectangle,
+         run,
+-        this.layout.tileSize,
++        this.worldLayout.tileSize,
+         wallHeight,
+         wallCapHeight,
+       ).face;
+@@ -4955,7 +5335,7 @@
+       alpha = 1,
+     ) => {
+       if (canonicalShell) {
+-        const largestRun = Math.max(0, ...canonicalShell.northWallFaceRuns.map((run) => run.length / this.layout.tileSize));
++        const largestRun = Math.max(0, ...canonicalShell.northWallFaceRuns.map((run) => run.length / this.worldLayout.tileSize));
+         if (!shouldRenderWorldNorthWallDecor({ binding: "world-north" }, largestRun)) return;
+         const wallInset = Math.max(2, Math.floor(inset * 0.35));
+         const usableWidth = Math.max(8, rectangle.width - wallInset * 2);
+@@ -5007,7 +5387,7 @@
+       const projection = projectRearWallArtwork(
+         rectangle,
+         rearWallRuns,
+-        this.layout.tileSize,
++        this.worldLayout.tileSize,
+         wallHeight,
+         (wallInset + fullWallUsableWidth * centerXRatio) /
+           rectangle.width,
+@@ -5044,7 +5424,7 @@
+         },
+         rectangle,
+         rearWallRuns,
+-        this.layout.tileSize,
++        this.worldLayout.tileSize,
+         wallHeight,
+       );
+       const visibleFragments = exposedFragments.flatMap((fragment) =>
+@@ -5436,7 +5816,7 @@
+     const { openDoorSegments, backedNorthSegments } = this.getApprovedSegmentState(room);
+     const lighting = this.getTouchupRoomLighting(room, presentation.shell, openDoorSegments, backedNorthSegments);
+     const tintTopY = (centerXTiles: number) => lighting
+-      ? rectangle.y + getTouchupTintTopAt(lighting, centerXTiles) * this.layout.tileSize / TOUCHUP_TILE_PIXELS
++      ? rectangle.y + getTouchupTintTopAt(lighting, centerXTiles) * this.worldLayout.tileSize / TOUCHUP_TILE_PIXELS
+       : undefined;
+     let order = 0;
+     for (const record of records) {
+@@ -5451,11 +5831,11 @@
+       const renderFrame = backlessTexture ? undefined : frame;
+       const [leftTiles, topTiles] = record.destinationTopLeftTiles;
+       const [widthTiles, heightTiles] = record.renderSizeTiles;
+-      const left = rectangle.x + leftTiles * this.layout.tileSize;
+-      const top = rectangle.y + topTiles * this.layout.tileSize;
+-      const width = Math.max(1, widthTiles * this.layout.tileSize);
+-      const height = Math.max(1, heightTiles * this.layout.tileSize);
+-      const contactY = rectangle.y + getApprovedDrawPainterGround(record) * this.layout.tileSize;
++      const left = rectangle.x + leftTiles * this.worldLayout.tileSize;
++      const top = rectangle.y + topTiles * this.worldLayout.tileSize;
++      const width = Math.max(1, widthTiles * this.worldLayout.tileSize);
++      const height = Math.max(1, heightTiles * this.worldLayout.tileSize);
++      const contactY = rectangle.y + getApprovedDrawPainterGround(record) * this.worldLayout.tileSize;
+       const key = `approved:${room.instanceId}:${orientation}:${record.id}:${order}`;
+       let image = this.fixtureBitmapImages.get(key);
+       if (!image) {
+@@ -5465,7 +5845,7 @@
+       // North-wall floor furniture kept on a low wall sorts by its own floor
+       // line, so corridor walkers and anything else north of it draw behind.
+       const recordDepth = isTouchupRecordFloorSortedOnLowWall(record, backedNorthSegments)
+-        ? getFacilitySceneDepth(rectangle.y + getTouchupRecordFloorLine(record) * this.layout.tileSize, "fixture", order % 64)
++        ? getFacilitySceneDepth(rectangle.y + getTouchupRecordFloorLine(record) * this.worldLayout.tileSize, "fixture", order % 64)
+         : record.depthPolicy === "wall"
+           ? FACILITY_DEPTH_WORLD + 19
+           : getFacilitySceneDepth(contactY, "fixture", order % 64);
+@@ -5481,7 +5861,12 @@
+         .setData("approved-front-room-id", room.instanceId)
+         .setData("approved-front-base-depth", recordDepth);
+       const clipWidth = getApprovedDrawClipWidth(record);
+-      if (clipWidth !== undefined) image.setCrop(0, 0, clipWidth, record.sourceRect[3]);
++      if (clipWidth !== undefined) {
++        const [cropWidth, cropHeight] = this.bridge.mobileInput === true
++          ? facilityAtlasClip(this.textures.get(textureKey), record.sourceRect, clipWidth)
++          : [clipWidth, record.sourceRect[3]];
++        image.setCrop(0, 0, cropWidth, cropHeight);
++      }
+       else if (image.isCropped) image.setCrop();
+       this.activeFixtureBitmapImages.add(key);
+       if (lighting) {
+@@ -5542,7 +5927,7 @@
+         `approved-procedural:${room.instanceId}:${procedural.id}`,
+       );
+       const proofRect = getApprovedProceduralScreenRect(procedural, presentation.shell.tilePixels);
+-      const scale = this.layout.tileSize / presentation.shell.tilePixels;
++      const scale = this.worldLayout.tileSize / presentation.shell.tilePixels;
+       const left = rectangle.x + proofRect.left * scale;
+       const top = rectangle.y + proofRect.top * scale;
+       const width = proofRect.width * scale;
+@@ -5556,7 +5941,7 @@
+           getTouchupGlassPartitionPrimitives({ left: proofRect.left * k, top: proofRect.top * k, width: proofRect.width * k, height: proofRect.height * k }),
+           rectangle.x,
+           rectangle.y,
+-          this.layout.tileSize / TOUCHUP_TILE_PIXELS,
++          this.worldLayout.tileSize / TOUCHUP_TILE_PIXELS,
+         );
+       } else if (procedural.style.kind === "ct-observation-partition") {
+         graphics.fillStyle(parseApprovedCssColor(procedural.style.body).color, 1);
+@@ -5587,8 +5972,8 @@
+       const depth = procedural.drawPhase === "before-bitmaps"
+         ? FACILITY_DEPTH_WORLD + 18
+         : procedural.drawPhase === "after-scanner-before-console"
+-          ? getFacilitySceneDepth(rectangle.y + procedural.depthKey * this.layout.tileSize, "fixture", 41)
+-          : getFacilitySceneDepth(rectangle.y + procedural.depthKey * this.layout.tileSize, "fixture", 32);
++          ? getFacilitySceneDepth(rectangle.y + procedural.depthKey * this.worldLayout.tileSize, "fixture", 41)
++          : getFacilitySceneDepth(rectangle.y + procedural.depthKey * this.worldLayout.tileSize, "fixture", 32);
+       graphics.setDepth(depth);
+     }
+     for (const item of getVisibleTouchupDecor(room.definitionId, orientation, this.getApprovedBaseWidth(room), openDoorSegments, backedNorthSegments)) {
+@@ -5596,8 +5981,8 @@
+       const placed = this.drawTouchupSprite(
+         key,
+         TOUCHUP_SPRITES[item.sprite],
+-        rectangle.x + item.x * this.layout.tileSize,
+-        item.kind === "wall" ? rectangle.y + (item.top ?? 0) * this.layout.tileSize : rectangle.y + (item.y ?? 0) * this.layout.tileSize,
++        rectangle.x + item.x * this.worldLayout.tileSize,
++        item.kind === "wall" ? rectangle.y + (item.top ?? 0) * this.worldLayout.tileSize : rectangle.y + (item.y ?? 0) * this.worldLayout.tileSize,
+         item.widthTiles,
+         item.kind,
+       );
+@@ -5673,7 +6058,7 @@
+     const texture = this.textures.get(textureKey);
+     const sourceFrame = texture.get(frame);
+     const image = texture.getSourceImage() as CanvasImageSource;
+-    const canvas = this.textures.createCanvas(key, sourceFrame.cutWidth, sourceFrame.cutHeight);
++    const canvas = facilityCanvasSurface(this.textures, key, sourceFrame.cutWidth, sourceFrame.cutHeight, this.bridge.mobileInput === true);
+     if (!canvas) return undefined;
+     const context = canvas.getContext();
+     const draw = () => context.drawImage(image, sourceFrame.cutX, sourceFrame.cutY, sourceFrame.cutWidth, sourceFrame.cutHeight, 0, 0, sourceFrame.cutWidth, sourceFrame.cutHeight);
+@@ -5723,7 +6108,7 @@
+         frame = undefined;
+       }
+     }
+-    const width = widthTiles * this.layout.tileSize;
++    const width = widthTiles * this.worldLayout.tileSize;
+     const height = width * sourceHeight / sourceWidth;
+     const top = kind === "wall" ? y : y - height;
+     let image = this.fixtureBitmapImages.get(key);
+@@ -5756,8 +6141,8 @@
+     shell: ApprovedRoomShellPresentation,
+     lighting: TouchupLighting,
+   ): void {
+-    const scale = this.layout.tileSize / TOUCHUP_TILE_PIXELS;
+-    const southEdge = rectangle.y + rectangle.height + shell.southHeightPixels * this.layout.tileSize / shell.tilePixels;
++    const scale = this.worldLayout.tileSize / TOUCHUP_TILE_PIXELS;
++    const southEdge = rectangle.y + rectangle.height + shell.southHeightPixels * this.worldLayout.tileSize / shell.tilePixels;
+     const tint = this.getSortableGraphics(this.fixtureGraphics, this.activeFixtureGraphics, `touchup-light:${room.instanceId}`);
+     tint.setBlendMode(Phaser.BlendModes.MULTIPLY);
+     this.drawTouchupPrimitives(tint, lighting.regions, rectangle.x, rectangle.y, scale);
+@@ -5786,7 +6171,7 @@
+     const hasNorthWall = exposedNorth && !lowNorth;
+     const tile = { x: room.tileX, y: room.tileY };
+     if (phase === "floor") {
+-      const scale = this.layout.tileSize / TOUCHUP_TILE_PIXELS;
++      const scale = this.worldLayout.tileSize / TOUCHUP_TILE_PIXELS;
+       this.drawTouchupPrimitives(graphics, getTouchupCorridorFloorPrimitives(hasNorthWall), rectangle.x, rectangle.y, scale);
+       this.drawTouchupPrimitives(graphics, getTouchupCorridorRunnerPrimitives(tile, isCorridor), rectangle.x, rectangle.y, scale);
+       return;
+@@ -5810,8 +6195,8 @@
+     items.forEach((item, index) => this.drawTouchupSprite(
+       `touchup-corridor:${room.instanceId}:${index}`,
+       TOUCHUP_SPRITES[item.sprite],
+-      rectangle.x + (item.x - room.tileX) * this.layout.tileSize,
+-      item.kind === "wall" ? rectangle.y + ((item.top ?? 0) - room.tileY) * this.layout.tileSize : rectangle.y + ((item.y ?? 0) - room.tileY) * this.layout.tileSize,
++      rectangle.x + (item.x - room.tileX) * this.worldLayout.tileSize,
++      item.kind === "wall" ? rectangle.y + ((item.top ?? 0) - room.tileY) * this.worldLayout.tileSize : rectangle.y + ((item.y ?? 0) - room.tileY) * this.worldLayout.tileSize,
+       item.widthTiles,
+       item.kind,
+     ));
+@@ -5851,7 +6236,7 @@
+     side: "north" | "east" | "south" | "west",
+     roomShade: number,
+   ): void {
+-    const doorWidth = Math.max(8, this.layout.tileSize);
++    const doorWidth = Math.max(8, this.worldLayout.tileSize);
+     const horizontalX =
+       rectangle.x + Math.floor(rectangle.width / 2 - doorWidth / 2);
+     const verticalY =
+@@ -5953,7 +6338,7 @@
+   }
+ 
+   private characterStepBounceDisplayLift(key: string): number {
+-    return (this.characterStepBounceStates.get(key)?.lift ?? 0) * this.cameraView.zoom;
++    return (this.characterStepBounceStates.get(key)?.lift ?? 0) * this.cameraView.zoom * this.worldLayout.tileSize / this.layout.tileSize;
+   }
+ 
+   private drawCharacterPresentation(
+@@ -5965,13 +6350,16 @@
+     const frozen = this.characterPresentationFrozen()
+       ? this.characterMotionSnapshots.get(key)
+       : undefined;
+-    const identityScale = characterStillScaleForAppearance(candidate.appearance);
++    const identityScale = characterStillScaleForAppearance(candidate.appearance,
++      this.characterRoomQaBefore ? "idle" : candidate.pose);
+     const resolved = resolveCharacterMotionPresentation(
+       frozen,
+       { ...candidate, displayScale: candidate.displayScale * identityScale },
+-      this.layout,
+-    );
+-    const motion = this.characterStepMotion(key, resolved.pose, Boolean(frozen));
++      this.worldLayout,
++    );
++    // A first paused frame has no captured presentation yet. It must not
++    // capture an arbitrary breathing/squash phase as its resting size.
++    const motion = this.characterStepMotion(key, resolved.pose, this.characterPresentationFrozen());
+     const drawn = this.drawPixelPerson(
+       graphics,
+       resolved.centerX,
+@@ -5986,7 +6374,7 @@
+       resolved.representation,
+       Boolean(frozen),
+       resolved.alignSeatContact ?? false,
+-      { ...motion, lift: motion.lift * this.cameraView.zoom },
++      { ...motion, lift: motion.lift * this.cameraView.zoom * this.worldLayout.tileSize / this.layout.tileSize },
+     );
+     if (!frozen) {
+       // Glide onto and off seats and furniture posts instead of snapping.
+@@ -5997,7 +6385,7 @@
+         target,
+         resolved.pose,
+         this.frameDeltaMilliseconds,
+-        this.layout.tileSize,
++        this.worldLayout.tileSize,
+       );
+       this.characterSeatSettles.set(key, settle.state);
+       const dx = Math.round(settle.point.x) - target.x;
+@@ -6009,7 +6397,7 @@
+       }
+       this.characterMotionSnapshots.set(key, captureCharacterMotionPresentation(
+         { ...resolved, baseY: drawn.baseY },
+-        this.layout,
++        this.worldLayout,
+         drawn.representation,
+       ));
+     }
+@@ -6043,6 +6431,7 @@
+     fallbackCenterX: number,
+     fallbackBaseY: number,
+   ): void {
++    this.founderActivityAnchor = [founderKey, label, fallbackCenterX, fallbackBaseY];
+     const text = this.founderActivityText;
+     const box = this.founderActivityBox;
+     const inspected = this.inspectTarget?.kind === "character" && this.inspectTarget.key === founderKey;
+@@ -6063,7 +6452,7 @@
+     // presentation metrics below are the safe fallback when a bitmap is
+     // loading, absent, or intentionally hidden.
+     const centerX = bounds ? bounds.centerX : fallbackCenterX;
+-    const topY = bounds ? bounds.top : fallbackBaseY - Math.max(22, this.layout.tileSize * 0.88);
++    const topY = bounds ? bounds.top : fallbackBaseY - Math.max(22, this.worldLayout.tileSize * 0.88);
+     text.setText(label).setPosition(centerX, topY - 4).setVisible(true);
+     const textBounds = text.getBounds();
+     const insetX = 3;
+@@ -6247,10 +6636,10 @@
+    */
+   private actorBaseY(logicalY: number, baseOffset = 0.72): number {
+     return getActorPresentationBaseY(logicalY, baseOffset, {
+-      originY: this.layout.originY,
+-      tileSize: this.layout.tileSize,
+-      sidewalkTop: this.layout.sidewalkTop,
+-      sidewalkHeight: this.layout.sidewalkHeight,
++      originY: this.worldLayout.originY,
++      tileSize: this.worldLayout.tileSize,
++      sidewalkTop: this.worldLayout.sidewalkTop,
++      sidewalkHeight: this.worldLayout.sidewalkHeight,
+       gridRows: positiveGridSize(this.bridge.viewModel.gridRows, 10),
+     });
+   }
+@@ -6275,9 +6664,9 @@
+         const facing = getApprovedSupportFacing(support.facing);
+         const painterGround = getApprovedSupportPainterGround(support);
+         return {
+-          centerX: bounds.x + support.seat.x * this.layout.tileSize,
+-          baseY: bounds.y + support.seat.y * this.layout.tileSize,
+-          depthBaseY: bounds.y + painterGround.y * this.layout.tileSize,
++          centerX: bounds.x + support.seat.x * this.worldLayout.tileSize,
++          baseY: bounds.y + support.seat.y * this.worldLayout.tileSize,
++          depthBaseY: bounds.y + painterGround.y * this.worldLayout.tileSize,
+           scale: 1,
+           seatTarget: true,
+           supportRole: support.role,
+@@ -6330,13 +6719,8 @@
+         location.y >= candidate.tileY && location.y < candidate.tileY + size.height;
+     });
+     if (!room) return undefined;
+-    const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
+     const support = getNearestApprovedActorSupport(
+-      supportRole === "staff-idle"
+-        ? resolveStaffIdleSupports(room.definitionId, orientation)
+-        : supportRole === "periop-companion-seat"
+-          ? this.getPeriopCompanionChairs(room).map((chair) => chair.support)
+-          : resolveApprovedRoomActorSupports(room.definitionId, orientation, room.upgradeLevel),
++      this.getRoomActorSupports(room, supportRole),
+       { x: location.x - room.tileX, y: location.y - room.tileY },
+       supportRole,
+       supportId,
+@@ -6348,9 +6732,9 @@
+     const facing = getApprovedSupportFacing(support.facing);
+     const painterGround = getApprovedSupportPainterGround(support);
+     return {
+-      centerX: bounds.x + support.seat.x * this.layout.tileSize,
+-      baseY: bounds.y + support.seat.y * this.layout.tileSize,
+-      depthBaseY: bounds.y + painterGround.y * this.layout.tileSize,
++      centerX: bounds.x + support.seat.x * this.worldLayout.tileSize,
++      baseY: bounds.y + support.seat.y * this.worldLayout.tileSize,
++      depthBaseY: bounds.y + painterGround.y * this.worldLayout.tileSize,
+       scale: 1,
+       seatTarget: support.pose !== "standing",
+       hidden,
+@@ -6361,6 +6745,20 @@
+       pose: support.pose === "standing" ? "idle" : support.pose,
+       ...facing,
+     };
++  }
++
++  /** Shared live support path; dev-only room comparisons can substitute a
++   * frozen presentation baseline without changing routes or the game model. */
++  protected getRoomActorSupports(
++    room: FacilityRoomView,
++    role: FacilityActorSupportRole,
++  ): readonly ApprovedActorSupport[] {
++    const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
++    return role === "staff-idle"
++      ? resolveStaffIdleSupports(room.definitionId, orientation)
++      : role === "periop-companion-seat"
++        ? this.getPeriopCompanionChairs(room).map((chair) => chair.support)
++        : resolveApprovedRoomActorSupports(room.definitionId, orientation, room.upgradeLevel);
+   }
+ 
+   private setCharacterSupportPresentation(
+@@ -6400,6 +6798,8 @@
+ 
+   private drawCharacters(): void {
+     if (this.bridge.mobileInput === true && this.bridge.mobilePresentation?.hidden) return;
++    this.mobileCharacterUsedTextures.clear();
++    this.mobileCharacterFamilies.clear();
+     if (this.characterPresentationFrozen()) {
+       // Atlas callbacks may redraw while paused without update() observing the
+       // pause. Mark it so the next update also discards a stale resume delta.
+@@ -6459,7 +6859,10 @@
+         `character:inspector:${actor.instanceId}`, actor.appearance, true,
+       )),
+     ];
+-    this.ensureCharacterStills(prefetchAppearances.flatMap(characterStandingBitmapDescriptors));
++    // Reduced phones evict unused cardinals. Prefetching every cardinal again
++    // on each redraw creates an endless decode/eviction loop even while paused.
++    // The selected render plan below requests its exact live pose on demand.
++    if (this.bridge.mobileInput !== true) this.ensureCharacterStills(prefetchAppearances.flatMap(characterStandingBitmapDescriptors));
+     representedKeys.add(founderKey);
+     const founderPresentation = this.getCharacterRoutePresentation(
+       founderKey,
+@@ -6498,7 +6901,7 @@
+       resolvedFounderPose = founderDisplay?.pose ?? resolvedFounderPose;
+       const founderAtFrontDesk = founderDisplay?.supportRole === "front-desk-staff";
+       const founderCenterX = founderDisplay?.centerX ??
+-        this.layout.originX + (candidateFounderLocation.x + 0.5) * this.layout.tileSize;
++        this.worldLayout.originX + (candidateFounderLocation.x + 0.5) * this.worldLayout.tileSize;
+       const founderBaseY = this.drawCharacterPresentation(graphics, founderKey, {
+         centerX: founderCenterX,
+         baseY: founderDisplay?.baseY ?? this.actorBaseY(
+@@ -6590,10 +6993,10 @@
+           this.bridge.viewModel.rooms,
+         );
+       const employeeCenterX = employeeDisplay?.centerX ??
+-        this.layout.originX +
+-          (employeeLocation.x + 0.5) * this.layout.tileSize +
++        this.worldLayout.originX +
++          (employeeLocation.x + 0.5) * this.worldLayout.tileSize +
+           (founderSeatedAdjacentReceptionist?.centerOffsetTiles ?? 0) *
+-            this.layout.tileSize;
++            this.worldLayout.tileSize;
+       const employeeDisplayBaseY = employeeDisplay?.baseY ?? this.actorBaseY(
+         employeeLocation.y,
+         0.72 +
+@@ -6625,7 +7028,7 @@
+       );
+       this.setCharacterSupportPresentation(key, graphics, employeeDisplay, index + 1);
+       if (employee.discussionActionRequired) {
+-        const unit = this.layout.tileSize / 32;
++        const unit = this.worldLayout.tileSize / 32;
+         const markerY = employeeBaseY - 36 * unit;
+         graphics.fillStyle(0xf7cf52, 1);
+         graphics.fillCircle(employeeCenterX, markerY, 6 * unit);
+@@ -6652,8 +7055,8 @@
+         const pedestrianLocation = presentation.location ?? { x: 0, y: 0 };
+         const graphics = this.getCharacterGraphics(key);
+         const baseY = this.drawCharacterPresentation(graphics, key, {
+-          centerX: this.layout.originX +
+-            (pedestrianLocation.x + 0.5) * this.layout.tileSize,
++          centerX: this.worldLayout.originX +
++            (pedestrianLocation.x + 0.5) * this.worldLayout.tileSize,
+           baseY: this.actorBaseY(pedestrianLocation.y),
+           appearance: pedestrian.appearance,
+           direction: stationaryFloorDirection(presentation.moving, presentation.direction, false),
+@@ -6732,9 +7135,9 @@
+       const location = presentation.location ?? actor.location;
+       const graphics = this.getCharacterGraphics(actorKey);
+       const baseY = this.drawCharacterPresentation(graphics, actorKey, {
+-        centerX: this.layout.originX + (location.x + .5) * this.layout.tileSize,
++        centerX: this.worldLayout.originX + (location.x + .5) * this.worldLayout.tileSize,
+         // The cosmetic routes use the exact approved floor coordinate system.
+-        baseY: this.layout.originY + (location.y + .5) * this.layout.tileSize,
++        baseY: this.worldLayout.originY + (location.y + .5) * this.worldLayout.tileSize,
+         appearance: actor.appearance, direction: presentation.direction,
+         pose: this.characterPose(presentation.moving, presentation.direction, this.characterGaitOffset(actorKey, 300 + index)),
+         rightFacing: presentation.rightFacing, displayScale: 1,
+@@ -6783,12 +7186,23 @@
+       this.activeCharacterGraphics,
+     );
+     this.removeInactiveCharacterBitmapContainers();
++    if (this.bridge.mobileInput === true) {
++      // Pin desired/in-flight poses and any still displayed while its new pose
++      // loads. Trim only after removed actors' containers have been destroyed.
++      for (const asset of this.pendingCharacterStills.values()) this.mobileCharacterUsedTextures.add(getPhaserTextureKey(asset));
++      for (const container of this.characterBitmapContainers.values()) {
++        const actor = container.getByName("actor") as Phaser.GameObjects.Image | null;
++        if (actor?.texture) this.mobileCharacterUsedTextures.add(actor.texture.key);
++      }
++      this.mobileCharacterTextures.trim(this.mobileCharacterUsedTextures, key => { this.textures.remove(key); }, this.mobileCharacterFamilies);
++    }
+     this.reconcileApprovedSideChairLayers();
+     this.renderInspectBox();
+   }
+ 
+   /** Bitmap actor under the pointer; the front-most (highest depth) wins. */
+   private characterAtPointer(pointer: Phaser.Input.Pointer): string | null {
++    const hitPoint = this.screenToWorld(pointer);
+     let best: { key: string; depth: number } | null = null;
+     for (const [key, container] of this.characterBitmapContainers) {
+       if (!container.visible || !characterRefFromKey(key)) continue;
+@@ -6798,8 +7212,8 @@
+       if (bounds.width <= 0 || bounds.height <= 0) continue;
+       // Sprite cells carry side margins; a narrower box avoids picking a neighbour.
+       const insetX = bounds.width * 0.2;
+-      if (pointer.x < bounds.left + insetX || pointer.x > bounds.right - insetX ||
+-        pointer.y < bounds.top || pointer.y > bounds.bottom) continue;
++      if (hitPoint.x < bounds.left + insetX || hitPoint.x > bounds.right - insetX ||
++        hitPoint.y < bounds.top || hitPoint.y > bounds.bottom) continue;
+       if (!best || container.depth > best.depth) best = { key, depth: container.depth };
+     }
+     return best?.key ?? null;
+@@ -6855,14 +7269,14 @@
+     );
+     if (!support) {
+       return {
+-        x: this.layout.originX + (seat.location.x + 0.5) * this.layout.tileSize,
+-        y: this.layout.originY + (seat.location.y + 0.5) * this.layout.tileSize,
++        x: this.worldLayout.originX + (seat.location.x + 0.5) * this.worldLayout.tileSize,
++        y: this.worldLayout.originY + (seat.location.y + 0.5) * this.worldLayout.tileSize,
+       };
+     }
+     const bounds = this.toPixels({ tileX: room.tileX, tileY: room.tileY, ...orientedSize(room) });
+     return {
+-      x: bounds.x + support.seat.x * this.layout.tileSize,
+-      y: bounds.y + support.seat.y * this.layout.tileSize,
++      x: bounds.x + support.seat.x * this.worldLayout.tileSize,
++      y: bounds.y + support.seat.y * this.worldLayout.tileSize,
+     };
+   }
+ 
+@@ -6897,7 +7311,7 @@
+         return;
+       }
+       anchorX = bounds.centerX;
+-      anchorY = bounds.top;
++      anchorY = bounds.top + bounds.height * (actor?.getData("visible-top-ratio") ?? 0);
+     } else {
+       const point = this.founderSeatScreenPoint(target.seat);
+       if (!point) {
+@@ -6906,7 +7320,7 @@
+         return;
+       }
+       anchorX = point.x;
+-      anchorY = point.y - this.layout.tileSize * 0.55;
++      anchorY = point.y - this.worldLayout.tileSize * 0.55;
+       label = target.label;
+     }
+     const pointerSize = 3;
+@@ -7011,7 +7425,7 @@
+           position.x,
+           getEarningsPopupLabelY(
+             position.y,
+-            this.layout.tileSize,
++            this.worldLayout.tileSize,
+             this.earningsPopupState.activePopups
+               .slice(0, popupIndex)
+               .filter(
+@@ -7052,8 +7466,8 @@
+       const location = this.bridge.viewModel.remoteReceiptAnchors?.[actorId];
+       return location
+         ? {
+-            x: this.layout.originX + (location.x + 0.5) * this.layout.tileSize,
+-            y: this.actorBaseY(location.y) - Math.max(18, this.layout.tileSize * 0.8),
++            x: this.worldLayout.originX + (location.x + 0.5) * this.worldLayout.tileSize,
++            y: this.actorBaseY(location.y) - Math.max(18, this.worldLayout.tileSize * 0.8),
+           }
+         : undefined;
+     }
+@@ -7066,7 +7480,7 @@
+         : `character:${actorKind === "employee" ? "staff" : "patient"}:${actorId}`;
+     const snapshot = this.characterMotionSnapshots.get(key);
+     if (!snapshot) return undefined;
+-    const position = replayCharacterMotionPresentation(snapshot, this.layout);
++    const position = replayCharacterMotionPresentation(snapshot, this.worldLayout);
+     return {
+       x: position.centerX,
+       y: this.getEarningsPopupHeadY(snapshot, position.baseY, key),
+@@ -7087,13 +7501,12 @@
+     );
+     if (layers) {
+       const registration = characterBitmapRegistration(layers);
+-      const metrics = getCharacterStillPresentationMetrics(this.layout.tileSize, snapshot.displayScale);
+-      const pixelScale = metrics.height / registration.cell.height;
+-      return baseY - this.characterStepBounceDisplayLift(key) -
+-        (registration.floorY - registration.visibleBounds.y) * pixelScale;
++      const metrics = getCharacterStillPresentationMetrics(this.worldLayout.tileSize, snapshot.displayScale);
++      return characterStillVisibleTop(baseY, registration.floorY, registration.visibleBounds.y,
++        metrics.height, this.characterStepBounceDisplayLift(key), registration.cell.height);
+     }
+     return baseY - this.characterStepBounceDisplayLift(key) -
+-      getCharacterStillPresentationMetrics(this.layout.tileSize, snapshot.displayScale).height * 0.72;
++      getCharacterStillPresentationMetrics(this.worldLayout.tileSize, snapshot.displayScale).height * 0.72;
+   }
+ 
+   private getCharacterBitmapContainer(
+@@ -7120,7 +7533,7 @@
+     const key = "character-contact-shadow";
+     if (this.textures.exists(key)) return key;
+     const size = 64;
+-    const texture = this.textures.createCanvas(key, size, size);
++    const texture = facilityCanvasSurface(this.textures, key, size, size, this.bridge.mobileInput === true);
+     const context = texture?.getContext();
+     if (texture && context) {
+       const gradient = context.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+@@ -7184,7 +7597,7 @@
+       );
+       this.setCharacterSupportPresentation(key, graphics, supportDisplay, index + 16);
+       const renderedScale = this.characterMotionSnapshots.get(key)?.displayScale ??
+-        characterStillScaleForAppearance(patient.appearance);
++        characterStillScaleForAppearance(patient.appearance, renderedPose);
+       this.drawPatientLocator(centerX, baseY, patient, renderedPose, renderedDirection, renderedRightFacing, renderedScale);
+     };
+     const moving = Boolean(patient.moving);
+@@ -7210,7 +7623,7 @@
+       stationaryFloorDirection(moving, direction, destinationPose !== undefined);
+     const renderedRightFacing = approvedSupportDisplay?.rightFacing ?? patient.rightFacing ?? false;
+     const centerX = approvedSupportDisplay?.centerX ??
+-      this.layout.originX + (location.x + 0.5) * this.layout.tileSize;
++      this.worldLayout.originX + (location.x + 0.5) * this.worldLayout.tileSize;
+     const baseY = this.drawCharacterPresentation(
+       graphics,
+       `character:patient:${patient.instanceId}`,
+@@ -7229,7 +7642,7 @@
+     finishCharacter(
+       baseY,
+       frozenPatient
+-        ? replayCharacterMotionPresentation(frozenPatient, this.layout).centerX
++        ? replayCharacterMotionPresentation(frozenPatient, this.worldLayout).centerX
+         : centerX,
+       pose,
+       renderedDirection,
+@@ -7255,8 +7668,10 @@
+     const graphics = this.getCharacterGraphics(key);
+     const moving = Boolean(visitor.moving);
+     const direction = visitor.direction ?? "front";
+-    const supportDisplay = this.getApprovedActorSupportDisplayPosition(location, moving, visitor.supportRole, visitor.supportId, visitor.supportRoomInstanceId);
+-    const centerX = supportDisplay?.centerX ?? this.layout.originX + (location.x + 0.5) * this.layout.tileSize;
++    const waitingSupport = serviceVisitorWaitingSupport(this.bridge.viewModel, visitor);
++    const supportDisplay = this.getApprovedActorSupportDisplayPosition(location, moving, visitor.supportRole ?? waitingSupport?.supportRole,
++      visitor.supportId, visitor.supportRoomInstanceId ?? waitingSupport?.supportRoomInstanceId);
++    const centerX = supportDisplay?.centerX ?? this.worldLayout.originX + (location.x + 0.5) * this.worldLayout.tileSize;
+     const pose = supportDisplay?.pose ?? this.characterPose(moving, direction, this.characterGaitOffset(key, 300 + index));
+     const renderedDirection = supportDisplay?.direction ?? stationaryFloorDirection(moving, direction, false);
+     const baseY = this.drawCharacterPresentation(graphics, key, {
+@@ -7307,7 +7722,7 @@
+       this.characterSeatSettles.delete(key);
+     }
+     const baseY = this.drawCharacterPresentation(graphics, key, {
+-      centerX: supportDisplay?.centerX ?? this.layout.originX + (location.x + 0.5 + (actor.pediatricFamilyId && moving ? .18 : 0)) * this.layout.tileSize,
++      centerX: supportDisplay?.centerX ?? this.worldLayout.originX + (location.x + 0.5 + (actor.pediatricFamilyId && moving ? .18 : 0)) * this.worldLayout.tileSize,
+       baseY: supportDisplay?.baseY ?? this.actorBaseY(location.y), appearance: actor.appearance,
+       direction: supportDisplay?.direction ?? stationaryFloorDirection(moving, direction, false),
+       pose: supportDisplay?.pose ?? this.characterPose(moving, direction, this.characterGaitOffset(key, 400 + index)),
+@@ -7337,7 +7752,7 @@
+     ) {
+       return;
+     }
+-    const pixel = Math.max(2, Math.floor(this.layout.tileSize / 9));
++    const pixel = Math.max(2, Math.floor(this.worldLayout.tileSize / 9));
+     const pulse =
+       this.bridge.viewModel.paused
+         ? 0
+@@ -7349,12 +7764,12 @@
+       rightFacing,
+     );
+     const registration = characterBitmapRegistration(layers);
+-    const metrics = getCharacterStillPresentationMetrics(this.layout.tileSize, displayScale);
++    const metrics = getCharacterStillPresentationMetrics(this.worldLayout.tileSize, displayScale);
+     const visualLift = this.characterStepBounceDisplayLift(
+       `character:patient:${patient.instanceId}`,
+     );
+     const visibleTop = layers
+-      ? baseY - visualLift - (registration.floorY - registration.visibleBounds.y) * (metrics.height / registration.cell.height)
++      ? characterStillVisibleTop(baseY, registration.floorY, registration.visibleBounds.y, metrics.height, visualLift, registration.cell.height)
+       : baseY - visualLift - metrics.height * 0.72;
+     const arrowY = visibleTop - pixel * 4 - pulse;
+     graphics.fillStyle(0x111111, 1);
+@@ -7404,12 +7819,23 @@
+       movingRight,
+     );
+     const registration = characterBitmapRegistration(authoredLayers);
+-    const metrics = getCharacterStillPresentationMetrics(this.layout.tileSize, displayScale);
++    const metrics = getCharacterStillPresentationMetrics(this.worldLayout.tileSize, displayScale);
++    // Keep a paused floor/seat still crisp after a zoom settles. Preserve the
++    // exact frozen mid-hop shape/lift and the live breathing/walking motion.
++    const restingStill = this.characterPresentationFrozen() && motion.lift === 0 &&
++      pose !== "walk-a" && pose !== "walk-neutral" && pose !== "walk-b";
++    const width = metrics.width * (restingStill ? 1 : motion.scaleX);
++    const height = metrics.height * (restingStill ? 1 : motion.scaleY);
+     const adjustedBaseY = authoredLayers && alignSeatContact && !baseIsAdjusted && registration.seatContactY !== undefined
+       ? alignCharacterStillSeatToWorld(baseY, registration.floorY, registration.seatContactY, metrics.height, registration.cell.height)
+       : baseY;
+     if (key && authoredLayers) {
+       const textureKey = getPhaserTextureKey(authoredLayers.actor.atlas);
++      if (this.bridge.mobileInput === true) {
++        this.mobileCharacterUsedTextures.add(textureKey);
++        if (authoredLayers.actor.stillId) this.mobileCharacterFamilies.add(authoredLayers.actor.stillId);
++        this.mobileCharacterTextures.touch(textureKey, authoredLayers.actor.stillId);
++      }
+       const textureReady = this.textures.exists(textureKey) || this.ensureCharacterStill(authoredLayers.actor.atlas);
+       if (!textureReady) {
+         const existing = this.characterBitmapContainers.get(key);
+@@ -7421,7 +7847,7 @@
+           existing.setVisible(true)
+             .setPosition(Math.round(centerX), Math.round(adjustedBaseY))
+             .setDepth(getFacilitySceneDepth(adjustedBaseY, "character", offsetIndex % 64));
+-          actor.setDisplaySize(metrics.width * motion.scaleX, metrics.height * motion.scaleY);
++          actor.setDisplaySize(width, height);
+           actor.y = -visualLift;
+           this.updateCharacterContactShadow(existing, metrics.width, motion);
+           graphics.clear();
+@@ -7434,9 +7860,9 @@
+         const actor = container.getByName("actor") as Phaser.GameObjects.Image;
+         // Origin at the feet, so squash, stretch and breathing keep them planted.
+         actor.setTexture(textureKey)
+-          .setDisplaySize(metrics.width * motion.scaleX, metrics.height * motion.scaleY)
++          .setDisplaySize(width, height)
+           .setPosition(0, -visualLift)
+-          .setOrigin(0.5, registration.floorAnchorY)
++          .setOrigin(registration.floorAnchorX, registration.floorAnchorY)
+           .setFlipX(false);
+         this.updateCharacterContactShadow(container, metrics.width, motion);
+         actor.setData({
+@@ -7446,6 +7872,7 @@
+           "gait-direction": direction,
+           "gait-pose": pose,
+           "gait-still-id": authoredLayers.actor.stillId,
++          "visible-top-ratio": registration.visibleBounds.y / registration.cell.height,
+         });
+         container.setPosition(Math.round(centerX), Math.round(adjustedBaseY))
+           .setDepth(getFacilitySceneDepth(adjustedBaseY, "character", offsetIndex % 64));
+@@ -7456,8 +7883,6 @@
+     }
+     this.characterBitmapContainers.get(key ?? "")?.setVisible(false);
+     graphics.clear();
+-    const width = metrics.width * motion.scaleX;
+-    const height = metrics.height * motion.scaleY;
+     graphics.fillStyle(0x8b9088, 0.9);
+     graphics.fillCircle(0, -height * 0.64, Math.max(2, width * 0.16));
+     graphics.fillRoundedRect(-width * 0.18, -height * 0.48, width * 0.36, height * 0.42, Math.max(2, width * 0.08));
+@@ -7711,18 +8136,18 @@
+   private reportSelectedRoomRect(): void {
+     const model = this.bridge.viewModel;
+     const room =
+-      model.buildMode && model.selectedRoomInstanceId && this.layout
++      model.buildMode && model.selectedRoomInstanceId && this.worldLayout
+         ? model.rooms.find(
+             (candidate) =>
+               candidate.instanceId === model.selectedRoomInstanceId,
+           )
+         : undefined;
+     const rect = room
+-      ? this.toPixels({
++      ? this.toScreenRect(this.toPixels({
+           tileX: room.tileX,
+           tileY: room.tileY,
+           ...orientedSize(room),
+-        })
++        }))
+       : null;
+     const key = rect
+       ? `${Math.round(rect.x)},${Math.round(rect.y)},${Math.round(rect.width)},${Math.round(rect.height)},${this.scale.width},${this.scale.height}`
+@@ -7749,14 +8174,15 @@
+         const room = this.bridge.viewModel.rooms.find((candidate) => candidate.instanceId === pin.target.id);
+         if (!room) return [];
+         const rect = this.toPixels({ tileX: room.tileX, tileY: room.tileY, ...orientedSize(room) });
+-        return [{ id: pin.id, x: Math.round(rect.x + rect.width / 2), y: Math.round(rect.y + Math.min(rect.height / 2, this.layout.tileSize)) }];
++        return [{ id: pin.id, x: rect.x + rect.width / 2, y: rect.y + Math.min(rect.height / 2, this.worldLayout.tileSize) }];
+       }
+       const key = `character:${pin.target.kind === "patient" ? "patient" : "service-visitor"}:${pin.target.id}`;
+       const actor = this.characterMotionSnapshots.get(key);
+       if (!actor || !this.activeCharacterGraphics.has(key)) return [];
+-      return [{ id: pin.id, x: Math.round(this.layout.originX + actor.anchorXInTiles * this.layout.tileSize),
+-        y: Math.round(this.layout.originY + (actor.anchorYInTiles - 1.25 * actor.displayScale) * this.layout.tileSize) }];
+-    }).filter((point) => point.x >= 14 && point.x <= this.scale.width - 14 && point.y >= 14 && point.y <= this.scale.height - 14);
++      return [{ id: pin.id, x: this.worldLayout.originX + actor.anchorXInTiles * this.worldLayout.tileSize,
++        y: this.worldLayout.originY + (actor.anchorYInTiles - 1.25 * actor.displayScale) * this.worldLayout.tileSize }];
++    }).map(point => { const screen = this.worldToScreen(point); return { id: point.id, x: Math.round(screen.x), y: Math.round(screen.y) }; })
++      .filter((point) => point.x >= 14 && point.x <= this.scale.width - 14 && point.y >= 14 && point.y <= this.scale.height - 14);
+     const signature = JSON.stringify(positions);
+     if (signature === this.lastReportedAlertPins) return;
+     this.lastReportedAlertPins = signature;
+@@ -7764,7 +8190,7 @@
+   }
+ 
+   private positionText(): void {
+-    const { originX, originY, width, tileSize } = this.layout;
++    const { originX, originY, width, tileSize } = this.worldLayout;
+     const model = this.bridge.viewModel;
+     const compact = this.scale.width < 520;
+ 
+@@ -7861,7 +8287,7 @@
+       )
+       .setPosition(
+         originX + width / 2,
+-        originY + this.layout.height + Math.max(7, Math.floor(tileSize * 0.18)),
++        originY + this.worldLayout.height + Math.max(7, Math.floor(tileSize * 0.18)),
+       );
+     if (this.bridge.mobileInput === true) this.footerText?.setVisible(false);
+   }
+@@ -7877,17 +8303,13 @@
+       }
+       return;
+     }
+-    const halfWidth = Math.max(70, label.length * 3.5);
+-    this.interactionHintText
+-      ?.setText(label)
+-      .setPosition(
+-        Math.max(
+-          halfWidth,
+-          Math.min(this.scale.width - halfWidth, pointer.x),
+-        ),
+-        Math.max(24, pointer.y - 10),
+-      )
+-      .setVisible(true);
++    if (this.interactionHintText) {
++      const halfWidth = Math.max(70, label.length * 3.5);
++      const position = this.screenToWorld({ x: Math.max(halfWidth, Math.min(this.scale.width - halfWidth, pointer.x)),
++        y: Math.max(24, pointer.y - 10) });
++      this.interactionHintText.setText(label).setPosition(position.x, position.y).setVisible(true);
++      this.interactionHintText.setScale?.(this.worldLayout.tileSize / this.layout.tileSize);
++    }
+     if (this.game?.canvas) {
+       this.game.canvas.style.cursor = "pointer";
+     }
+@@ -8007,6 +8429,7 @@
+   private bindMobileInput(): void {
+     this.mobileGestures = new MapTouchGestures();
+     this.phoneBuildInput = new PhoneBuildMapInput(() => this.bridge.mobileBuild ?? null,
++      // This adapter consumes screen touches, including the ghost's grab offset.
+       () => ({ ...this.layout, columns: positiveGridSize(this.bridge.viewModel.gridColumns, 16),
+         rows: positiveGridSize(this.bridge.viewModel.gridRows, 10) }), () => this.bridge.viewModel.placement, () => this.scale);
+     this.input.addPointer(1);
+@@ -8044,13 +8467,15 @@
+         }
+         if (wasMultiple) this.applyMobileGestures(gestures);
+         else this.mobileGestures!.cancel();
++        if (this.mobileGestures!.activeCount === 0) this.flushCameraChange();
+         return;
+       }
+       this.applyMobileGestures(gestures);
++      if (this.mobileGestures!.activeCount === 0) this.flushCameraChange();
+     });
+     this.input.on("wheel", (pointer: Phaser.Input.Pointer, _objects: unknown[], _x: number, deltaY: number) => {
+       const zoom = Math.round((this.cameraView.zoom + (deltaY > 0 ? -0.1 : 0.1)) * 10) / 10;
+-      this.applyCamera(transformPhoneCamera(this.cameraView, this.bridge.viewModel, this.scale, pointer, pointer, zoom));
++      this.applyCamera(transformPhoneCamera(this.cameraView, this.bridge.viewModel, this.scale, pointer, pointer, zoom), true);
+     });
+     const cancel = () => {
+       this.mobileGestures!.cancel();
+@@ -8060,6 +8485,7 @@
+       this.endHallwayPaint();
+       this.setInteractionHint(null);
+       this.drawPlacementGhost();
++      this.flushCameraChange();
+     };
+     this.input.on("gameout", cancel);
+     this.input.on("pointerupoutside", cancel);
+@@ -8096,12 +8522,12 @@
+         const room = model.rooms.find(candidate => candidate.instanceId === section.roomId);
+         return room ? [{ value: section.id, bounds: this.getDoorGeometry(room, section.side, section.offset).hitRegion }] : [];
+       });
+-      state.onIntent({ kind: "door", id: nearestTouchTarget(point, targets) });
++      state.onIntent({ kind: "door", id: nearestTouchTarget(point, targets.map(target => ({ ...target, bounds: this.toScreenRect(target.bounds) }))) });
+       return;
+     }
+     const room = nearestTouchTarget(point, model.rooms
+       .filter(candidate => candidate.kind !== "hallway" && candidate.definitionId !== "room.hallway")
+-      .map(candidate => ({ value: candidate, bounds: this.toPixels({ tileX: candidate.tileX, tileY: candidate.tileY, ...orientedSize(candidate) }) })));
++      .map(candidate => ({ value: candidate, bounds: this.toScreenRect(this.toPixels({ tileX: candidate.tileX, tileY: candidate.tileY, ...orientedSize(candidate) })) })));
+     if (room) this.bridge.onSelectRoom?.(room.instanceId);
+   }
+ 
+@@ -8129,12 +8555,12 @@
+     if (placement && state.ghost && !this.isHallwayPlacementActive()) {
+       const frameKey = JSON.stringify([ghostKey, placement.width, placement.height, this.scale.width, this.scale.height]);
+       if (frameKey !== this.mobileGhostFrameKey) {
+-        this.mobileGhostFrameKey = frameKey; // applyCamera redraws synchronously.
++        this.mobileGhostFrameKey = frameKey; // applyCamera projects synchronously.
+         this.applyCamera(framePhoneGhost(this.cameraView, model, this.scale, state.ghost, placement));
+       }
+     }
+     const signature = JSON.stringify([state.ghost, state.hallway?.cells, state.doors, state.selectedDoorId,
+-      placement, this.layout.originX, this.layout.originY, this.layout.tileSize]);
++      placement, this.worldLayout.originX, this.worldLayout.originY, this.worldLayout.tileSize]);
+     if (signature === this.mobileBuildDrawSignature) return;
+     this.mobileBuildDrawSignature = signature;
+     graphics.clear(); this.ghostStatusText?.setVisible(false); this.ghostDoorText?.setVisible(false);
+@@ -8150,7 +8576,7 @@
+       const room = model.rooms.find(candidate => candidate.instanceId === section.roomId); if (!room) continue;
+       const rect = this.getDoorGeometry(room, section.side, section.offset).hitRegion;
+       const selected = section.id === state.selectedDoorId;
+-      graphics.lineStyle(selected ? 4 : 2, selected ? 0xf7c960 : section.validation.valid ? 0x3d8650 : 0xc94b43, selected ? 1 : 0.6);
++      graphics.lineStyle(selected ? 4 : 2, section.connectionInvalid ? 0xc94b43 : selected ? 0xf7c960 : section.validation.valid ? 0x3d8650 : 0xc94b43, selected ? 1 : 0.6);
+       graphics.strokeRect(rect.x, rect.y, rect.width, rect.height);
+     }
+   }
+@@ -8162,7 +8588,7 @@
+     const shift = phoneGhostEdgePan(drag.point, this.scale, delta);
+     if (!shift.x && !shift.y) return;
+     this.applyCamera(transformPhoneCamera(this.cameraView, this.bridge.viewModel, this.scale,
+-      { x: 0, y: 0 }, shift));
++      { x: 0, y: 0 }, shift), true);
+     this.phoneBuildInput?.move(drag.id, drag.point);
+   }
+ 
+@@ -8170,7 +8596,7 @@
+     for (const gesture of gestures) {
+       if (gesture.kind === "pan" || gesture.kind === "pinch") {
+         this.applyCamera(transformPhoneCamera(this.cameraView, this.bridge.viewModel, this.scale,
+-          gesture.from, gesture.to, gesture.kind === "pinch" ? this.cameraView.zoom * gesture.scale : this.cameraView.zoom));
++          gesture.from, gesture.to, gesture.kind === "pinch" ? this.cameraView.zoom * gesture.scale : this.cameraView.zoom), true);
+       } else if (!this.bridge.viewModel.buildMode && !this.bridge.viewModel.placement) {
+         this.bridge.onMobileSelection?.(this.mobileSelectionAtPoint(gesture.point));
+       }
+@@ -8198,10 +8624,10 @@
+       if (!graphics.visible || this.characterBitmapContainers.get(key)?.visible || !characterRefFromKey(key)) continue;
+       const motion = this.characterMotionSnapshots.get(key);
+       if (!motion) continue;
+-      const size = this.layout.tileSize * motion.displayScale;
++      const size = this.worldLayout.tileSize * motion.displayScale;
+       details.push({ value: { kind: "character", key }, depth: graphics.depth,
+-        bounds: { x: this.layout.originX + motion.anchorXInTiles * this.layout.tileSize - size * 0.35,
+-          y: this.layout.originY + motion.anchorYInTiles * this.layout.tileSize - size * 1.3, width: size * 0.7, height: size * 1.3 } });
++        bounds: { x: this.worldLayout.originX + motion.anchorXInTiles * this.worldLayout.tileSize - size * 0.35,
++          y: this.worldLayout.originY + motion.anchorYInTiles * this.worldLayout.tileSize - size * 1.3, width: size * 0.7, height: size * 1.3 } });
+     }
+     for (const chair of model.founderChairs ?? []) {
+       const seat = this.founderSeatScreenPoint(chair);
+@@ -8217,7 +8643,7 @@
+     if (model.waterCooler) details.push({ value: { kind: "environment", selection: { kind: "environment", action: "refill-water",
+       name: "Water cooler", status: model.waterCooler.needsRefill ? "Needs refill" : "Water cooler is full" } },
+       bounds: this.toPixels({ tileX: model.waterCooler.location.x, tileY: model.waterCooler.location.y, width: 1, height: 1 }) });
+-    const detail = nearestTouchTarget(point, details);
++    const detail = nearestTouchTarget(point, details.map(target => ({ ...target, bounds: this.toScreenRect(target.bounds) })));
+     if (detail?.kind === "character") {
+       const ref = characterRefFromKey(detail.key);
+       return ref ? describeMobileCharacter(ref, model, this.bridge.onDescribeCharacter, Boolean(this.bridge.onPraiseEmployee)) : null;
+@@ -8230,7 +8656,7 @@
+       if (desk) return { kind: "front-desk", roomId: desk.instanceId };
+     }
+     const room = nearestTouchTarget(point, model.rooms.filter((candidate) => candidate.kind !== "hallway" && candidate.definitionId !== "room.hallway")
+-      .map((candidate) => ({ value: candidate, bounds: this.toPixels({ tileX: candidate.tileX, tileY: candidate.tileY, ...orientedSize(candidate) }) })));
++      .map((candidate) => ({ value: candidate, bounds: this.toScreenRect(this.toPixels({ tileX: candidate.tileX, tileY: candidate.tileY, ...orientedSize(candidate) })) })));
+     const destination = this.walkDestinationAtPointer(pointer);
+     if (room) return { ...describeMobileRoom(room, destination),
+       ...(destination ? { moveAccepted: this.bridge.onMoveFounder?.(destination) ?? false } : {}) };
+@@ -8269,7 +8695,7 @@
+           this.dragStart.panX + deltaX,
+         panY:
+           this.dragStart.panY + deltaY,
+-      });
++      }, true);
+       return;
+     }
+ 
+@@ -8357,6 +8783,7 @@
+     const gesture = this.dragStart;
+     this.dragStart = null;
+     this.endHallwayPaint();
++    if (gesture?.dragged) this.flushCameraChange();
+     if (
+       !gesture ||
+       gesture.dragged ||
+@@ -8384,22 +8811,25 @@
+       const accepted = chair.seatId
+         ? this.bridge.onSeatFounderInChair(chair.roomInstanceId, chair.location, chair.seatId)
+         : this.bridge.onSeatFounderInChair(chair.roomInstanceId, chair.location);
++      void mapSessionAction(accepted, accepted => {
+       if (!accepted) this.showSeatBox(chair, "Seat unavailable");
+       this.setInteractionHint(
+         accepted ? "FOUNDER WALKING TO CHAIR" : "CHAIR UNAVAILABLE",
+         pointer,
+       );
++      });
+       return;
+     }
+     const destination = this.walkDestinationAtPointer(pointer);
+     if (!destination || !this.bridge.onMoveFounder) {
+       return;
+     }
+-    const accepted = this.bridge.onMoveFounder(destination);
++    void mapSessionAction(this.bridge.onMoveFounder(destination), accepted => {
+     this.setInteractionHint(
+       accepted ? "DESTINATION SET" : "NO WALKABLE ROUTE",
+       pointer,
+     );
++    });
+   }
+ 
+   private handlePointerDown(pointer: Phaser.Input.Pointer): void {
+@@ -8514,13 +8944,14 @@
+         this.frontDeskSeatInteractionAtPointer(pointer) &&
+         this.bridge.onSeatFounderAtFrontDesk
+       ) {
+-        const accepted = this.bridge.onSeatFounderAtFrontDesk();
++        void mapSessionAction(this.bridge.onSeatFounderAtFrontDesk(), accepted => {
+         this.setInteractionHint(
+           accepted
+             ? "FOUNDER RETURNING TO FRONT DESK"
+             : "FRONT DESK UNAVAILABLE",
+           pointer,
+         );
++        });
+         return;
+       }
+     }
+@@ -8593,6 +9024,7 @@
+         candidate.y,
+         this.bridge.viewModel.placement?.orientation,
+       );
++      if (placed instanceof Promise) void placed.then(accepted => { if (!accepted) this.hallwayPaintBlocked = true; });
+       if (placed === false) {
+         // Affordability and other domain-only rules can reject a visually
+         // clear square. Stop this stroke so a fast drag does not produce a
+@@ -8640,14 +9072,64 @@
+           Math.round((this.cameraView.zoom + direction * 0.1) * 10) / 10,
+         ),
+       ),
+-    });
+-  }
+-
+-  private applyCamera(camera: FacilityCameraView): void {
++    }, true);
++  }
++
++  private applyCamera(camera: FacilityCameraView, deferPublication = false): void {
++    // A React echo of the previous input may arrive before Phaser's next
++    // update. Consume that request before assigning this newer gesture so
++    // calculateLayout cannot overwrite it with the previous input's camera.
++    this.lastRequestedCameraSignature = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(this.bridge.viewModel.camera)}`;
++    this.cameraCampaignId = this.bridge.viewModel.campaignId;
+     this.cameraView = camera;
++    this.layout = this.calculateLayout(Math.max(1, Math.floor(this.scale.width)), Math.max(1, Math.floor(this.scale.height)));
++    this.cameraGestureUntil = this.cameraNow() + CAMERA_ZOOM_SETTLE_MS;
++    this.crispZoomPending = this.layout.tileSize !== this.worldLayout.tileSize;
++    this.syncRetainedCamera();
++    this.interactionHintText?.setVisible(false);
++    if (this.bridge.viewModel.placement) this.drawPlacementGhost();
++    if (deferPublication) this.cameraPreferencePending = true;
++    else {
++      this.cameraPreferencePending = false;
++      this.publishCameraChange(this.cameraView);
++    }
++  }
++
++  public hasPendingCameraChange(): boolean { return this.cameraPreferencePending; }
++
++  /** Gesture end/quiet wheel and lifecycle capture publish one small preference.
++   * A new campaign or explicit external camera request fences out the old one. */
++  public flushCameraChange(): void {
++    if (!this.cameraPreferencePending) return;
++    this.cameraPreferencePending = false;
++    const camera = this.getCameraPreference();
++    if (camera) this.publishCameraChange(camera);
++    if (this.bridge.mobileInput === true) mobileBitmapCache.prioritize(
++      visiblePhoneAssetIds(visiblePhoneRoomIds(this.bridge.viewModel.rooms, this.layout, this.scale)), PHONE_ART_VISIBLE);
++  }
++
++  public publishCameraChange(camera: FacilityCameraView): void {
++    this.lastPublishedCameraRequest = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(camera)}`;
+     this.bridge.onCameraChange?.(camera);
+-    this.lastModelSignature = "";
+-    this.refreshLayout(true);
++  }
++
++  public cancelCameraGesture(): void {
++    this.dragStart = null;
++    this.pointerDownCharacterKey = null;
++    this.mobileGestures?.cancel();
++    this.phoneBuildInput?.cancel();
++    this.endHallwayPaint();
++    this.flushCameraChange();
++  }
++
++  /** Small presentation preference, normalized by the most recently drawn layout. */
++  public getCameraPreference(): Readonly<FacilityCameraView> | null {
++    // A settled-resize timer may run before the next Phaser frame. Never
++    // publish the old projection over a new campaign or explicit camera input.
++    const requested = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(this.bridge.viewModel.camera)}`;
++    const echoed = this.cameraCampaignId === this.bridge.viewModel.campaignId &&
++      facilityCameraSignature(this.bridge.viewModel.camera) === facilityCameraSignature(this.cameraView);
++    return requested === this.lastRequestedCameraSignature || echoed ? this.cameraView : null;
+   }
+ 
+   private roomAtPointer(
+@@ -8770,7 +9252,7 @@
+       tileY: ghost.tileY,
+       ...size,
+     });
+-    const border = Math.max(2, Math.floor(this.layout.tileSize * 0.1));
++    const border = Math.max(2, Math.floor(this.worldLayout.tileSize * 0.1));
+     const roomShade = ghost.valid ? 0xffffff : 0xc5c5c0;
+ 
+     // Always draw the entire proposed footprint. A translucent fill keeps the
+@@ -8804,7 +9286,7 @@
+ 
+       const centerX = rectangle.x + rectangle.width / 2;
+       const centerY = rectangle.y + rectangle.height / 2;
+-      const inset = Math.max(8, Math.floor(this.layout.tileSize * 0.62));
++      const inset = Math.max(8, Math.floor(this.worldLayout.tileSize * 0.62));
+       const doorPoint =
+         doorSide === "north"
+           ? { x: centerX, y: rectangle.y + inset }
+@@ -8822,7 +9304,7 @@
+       graphics.lineStyle(Math.max(2, border), 0x111111, 1);
+       graphics.lineBetween(centerX, centerY, doorPoint.x, doorPoint.y);
+       graphics.fillStyle(0x111111, 1);
+-      const arrow = Math.max(5, Math.floor(this.layout.tileSize * 0.22));
++      const arrow = Math.max(5, Math.floor(this.worldLayout.tileSize * 0.22));
+       if (doorSide === "north") {
+         graphics.fillTriangle(
+           doorPoint.x,
+@@ -8896,7 +9378,7 @@
+         doorSide === "north"
+           ? {
+               x: centerX,
+-              y: rectangle.y + Math.max(11, this.layout.tileSize * 0.32),
++              y: rectangle.y + Math.max(11, this.worldLayout.tileSize * 0.32),
+             }
+           : doorSide === "south"
+             ? {
+@@ -8904,18 +9386,18 @@
+                 y:
+                   rectangle.y +
+                   rectangle.height -
+-                  Math.max(11, this.layout.tileSize * 0.32),
++                  Math.max(11, this.worldLayout.tileSize * 0.32),
+               }
+             : doorSide === "west"
+               ? {
+-                  x: rectangle.x + Math.max(24, this.layout.tileSize * 0.6),
++                  x: rectangle.x + Math.max(24, this.worldLayout.tileSize * 0.6),
+                   y: centerY,
+                 }
+               : {
+                   x:
+                     rectangle.x +
+                     rectangle.width -
+-                    Math.max(24, this.layout.tileSize * 0.6),
++                    Math.max(24, this.worldLayout.tileSize * 0.6),
+                   y: centerY,
+                 };
+       this.ghostDoorText
+@@ -8965,22 +9447,19 @@
+     const statusMessage = ghost.valid
+       ? "✓ SPACE CLEAR — CLICK TO BUILD"
+       : `✕ ${invalidMessage}`;
+-    const statusAbove = rectangle.y > 54;
++    const screenRectangle = this.toScreenRect(rectangle);
++    const statusAbove = screenRectangle.y > 54;
+     const statusX = Math.max(
+       110,
+-      Math.min(this.scale.width - 110, rectangle.x + rectangle.width / 2),
+-    );
++      Math.min(this.scale.width - 110, screenRectangle.x + screenRectangle.width / 2),
++    );
++    const statusPoint = this.screenToWorld({ x: statusX, y: statusAbove ? screenRectangle.y - 5 : screenRectangle.y + screenRectangle.height + 5 });
+     this.ghostStatusText
+       ?.setText(
+         `${placement.displayName.toUpperCase()} • ${size.width}×${size.height} • ${placement.orientation ?? 0}°\n${statusMessage}`,
+       )
+       .setOrigin(0.5, statusAbove ? 1 : 0)
+-      .setPosition(
+-        statusX,
+-        statusAbove
+-          ? rectangle.y - 5
+-          : rectangle.y + rectangle.height + 5,
+-      )
++      .setPosition(statusPoint.x, statusPoint.y)
+       .setVisible(true);
+ 
+     this.footerText?.setText(
+@@ -8996,6 +9475,7 @@
+   private frontDeskSeatInteractionAtPointer(
+     pointer: Phaser.Input.Pointer,
+   ): boolean {
++    const hitPoint = this.screenToWorld(pointer);
+     const room = this.bridge.viewModel.rooms.find(
+       (candidate) => candidate.definitionId === "room.front_desk",
+     );
+@@ -9010,8 +9490,8 @@
+         })
+         .map(([, image]) => image.getBounds());
+       if (renderedTargets.some((bounds) =>
+-        pointer.x >= bounds.left && pointer.x <= bounds.right &&
+-        pointer.y >= bounds.top && pointer.y <= bounds.bottom
++        hitPoint.x >= bounds.left && hitPoint.x <= bounds.right &&
++        hitPoint.y >= bounds.top && hitPoint.y <= bounds.bottom
+       )) return true;
+     }
+     const rectangle = this.toPixels({
+@@ -9033,10 +9513,10 @@
+         const width = bounds.width * fixture.width;
+         const height = bounds.height * fixture.height;
+         return (
+-          pointer.x >= centerX - width / 2 &&
+-          pointer.x <= centerX + width / 2 &&
+-          pointer.y >= contactY - height &&
+-          pointer.y <= contactY
++          hitPoint.x >= centerX - width / 2 &&
++          hitPoint.x <= centerX + width / 2 &&
++          hitPoint.y >= contactY - height &&
++          hitPoint.y <= contactY
+         );
+       });
+   }
+@@ -9044,6 +9524,7 @@
+   private ordinaryChairAtPointer(
+     pointer: Phaser.Input.Pointer,
+   ): FacilityFounderChairView | null {
++    const hitPoint = this.screenToWorld(pointer);
+     for (const room of this.bridge.viewModel.rooms) {
+       if (room.definitionId !== "room.waiting") continue;
+       const orientation: RoomOrientation = room.orientation === 270 ? 270 : 0;
+@@ -9078,28 +9559,28 @@
+         );
+         if (candidates.length === 0) continue;
+         const imageBounds = image.getBounds();
+-        if (pointer.x < imageBounds.left || pointer.x > imageBounds.right ||
+-          pointer.y < imageBounds.top || pointer.y > imageBounds.bottom) continue;
++        if (hitPoint.x < imageBounds.left || hitPoint.x > imageBounds.right ||
++          hitPoint.y < imageBounds.top || hitPoint.y > imageBounds.bottom) continue;
+         return candidates
+           .map(({ chair, support }) => ({
+             chair,
+             distance:
+-              (pointer.x - (bounds.x + support.seat.x * this.layout.tileSize)) ** 2 +
+-              (pointer.y - (bounds.y + support.seat.y * this.layout.tileSize)) ** 2,
++              (hitPoint.x - (bounds.x + support.seat.x * this.worldLayout.tileSize)) ** 2 +
++              (hitPoint.y - (bounds.y + support.seat.y * this.worldLayout.tileSize)) ** 2,
+           }))
+           .sort((left, right) => left.distance - right.distance)[0]!.chair;
+       }
+     }
+     // Front Desk public chair and Break Room seats: nearest seat contact
+     // within half a tile (break seats can share one logical tile).
+-    const reach = this.layout.tileSize * 0.5;
++    const reach = this.worldLayout.tileSize * 0.5;
+     const nearby = (this.bridge.viewModel.founderChairs ?? [])
+       .filter((chair) => chair.kind === "front_desk_public" || chair.kind === "break")
+       .flatMap((chair) => {
+         const seat = this.founderSeatScreenPoint(chair);
+         if (!seat) return [];
+         // The seat contact is at hip height; accept clicks on the seat back above it too.
+-        const distance = Math.hypot(pointer.x - seat.x, Math.max(0, Math.abs(pointer.y - (seat.y - reach * 0.4)) - reach * 0.4));
++        const distance = Math.hypot(hitPoint.x - seat.x, Math.max(0, Math.abs(hitPoint.y - (seat.y - reach * 0.4)) - reach * 0.4));
+         return distance <= reach ? [{ chair, distance }] : [];
+       })
+       .sort((left, right) => left.distance - right.distance)[0];
+@@ -9118,10 +9599,10 @@
+     height: number;
+   } {
+     return {
+-      x: this.layout.originX + rectangle.tileX * this.layout.tileSize,
+-      y: this.layout.originY + rectangle.tileY * this.layout.tileSize,
+-      width: rectangle.width * this.layout.tileSize,
+-      height: rectangle.height * this.layout.tileSize,
++      x: this.worldLayout.originX + rectangle.tileX * this.worldLayout.tileSize,
++      y: this.worldLayout.originY + rectangle.tileY * this.worldLayout.tileSize,
++      width: rectangle.width * this.worldLayout.tileSize,
++      height: rectangle.height * this.worldLayout.tileSize,
+     };
+   }
+ }

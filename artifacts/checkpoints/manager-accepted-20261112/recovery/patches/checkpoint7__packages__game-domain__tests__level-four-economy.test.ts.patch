@@ -1,0 +1,40 @@
+--- a/packages/game-domain/tests/level-four-economy.test.ts
++++ b/packages/game-domain/tests/level-four-economy.test.ts
+@@ -2,6 +2,8 @@
+ import { writeFileSync } from "node:fs";
+ import { createEarlyLevelFourEconomyState, simulateEarlyLevelFourEconomy } from "../../../tools/economy-audit/level-four-simulation";
+ import { gameReducer, getEmergencyGlp1Status, type GameState } from "../src";
++// Hosted CI runners run long simulations up to ten times slower.
++const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
+ 
+ describe("Level 4 real simulation economy and arrivals", () => {
+   it("covers each specialty's base rent and staff through ordinary appointments, with real shared overhead", () => {
+@@ -18,9 +20,9 @@
+       new URL("../../../tools/economy-audit/level-four-results-20261009.json", import.meta.url),
+       `${JSON.stringify(report, null, 2)}\n`, "utf8",
+     );
+-  }, 120_000);
++  }, hostedTime(120_000));
+ 
+-  it("adds all APP streams beside the same normal scored arrivals without rewarding learning", () => {
++  it("adds APP demand beside the same scored arrivals; unanswered consults hold their source without rewarding learning", () => {
+     let withAppointments = createEarlyLevelFourEconomyState("level-four-arrival-fairness-m8");
+     withAppointments.nextRoutineArrivalTick = 1;
+     let withoutAppointments = structuredClone(withAppointments);
+@@ -38,9 +40,12 @@
+     expect([...arrivalsWith]).toEqual([...arrivalsWithout]);
+     expect(withAppointments.learningHistories).toEqual(withoutAppointments.learningHistories);
+     expect(withAppointments.clinicalXp).toBe(withoutAppointments.clinicalXp);
+-    expect(withAppointments.serviceIncomeReceipts.some((receipt) => receipt.incomeLineId === "income.pediatric_consult")).toBe(true);
+-    expect(withAppointments.serviceIncomeReceipts.some((receipt) => receipt.incomeLineId === "income.app_consult")).toBe(true);
+-    expect(withAppointments.serviceIncomeReceipts.some((receipt) => receipt.incomeLineId === "income.wound_care")).toBe(true);
++    for (const line of ["income.pediatric_consult", "income.app_consult", "income.wound_care"]) {
++      const held = withAppointments.serviceOperations.find(op => op.incomeLineId === line && op.consultEncounterId &&
++        withAppointments.encounters[op.consultEncounterId]?.consult?.closedAtFacilityTick === null);
++      expect(withAppointments.serviceIncomeReceipts.some(receipt => receipt.incomeLineId === line) || Boolean(held), line).toBe(true);
++      if (held) { expect(held.status).toBe("in_service"); expect(held.completedAtFacilityTick).toBeNull(); }
++    }
+     expect(getEmergencyGlp1Status(withAppointments).payment).toBe(50);
+-  }, 120_000);
++  }, hostedTime(120_000));
+ });

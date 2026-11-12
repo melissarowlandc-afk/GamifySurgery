@@ -1,0 +1,20 @@
+--- a/packages/clinical-content/src/approved-data/level-two-runtime.test.ts
++++ b/packages/clinical-content/src/approved-data/level-two-runtime.test.ts
+@@ -1,6 +1,7 @@
++import {beforeProgramBatch3AcceptanceRelease} from "../question-program-batch3-acceptance-test-support";
+ import { describe, expect, it } from "vitest";
+ import { validateSyntheticClinicalRelease } from "../schema";
+-import { SYNTHETIC_CLINICAL_RELEASE } from "../synthetic-content";
++import { SYNTHETIC_CLINICAL_RELEASE as actualLive } from "../synthetic-content";
+ import {
+   LEVEL_TWO_ROUTINE_CASE_IDS,
+   LEVEL_TWO_RUNTIME_CASES,
+@@ -46,6 +47,8 @@
+   ["case.l2.peptic-ulcer-bleeding.visible-vessel-modality-principle.v1", ["question.peptic-ulcer-bleeding.visible-vessel-modality-principle.v1"]],
+   ["case.l2.distal-cholangiocarcinoma.deferred-eus-ercp-to-resection", ["question.distal-cholangiocarcinoma.workup-a.v1", "question.distal-cholangiocarcinoma.management-a.v1"]],
+ ] as const;
++
++const SYNTHETIC_CLINICAL_RELEASE=beforeProgramBatch3AcceptanceRelease(actualLive);
+ 
+ describe("Level 2 approved runtime adapter", () => {
+   it("admits only exact approved Level 2 cases with bounded decisions and provenance", () => {

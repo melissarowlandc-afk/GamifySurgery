@@ -1,0 +1,47 @@
+--- a/packages/game-domain/src/procedure-companions.ts
++++ b/packages/game-domain/src/procedure-companions.ts
+@@ -3,6 +3,7 @@
+ import { deterministicInteger, RANDOM_STREAMS } from "./randomness";
+ import { getRoomDefinition, isRoomOperationalForFacilityWork } from "./selectors";
+ import { getOccupiedTiles, getRoomCareStations, getRoomCompanionSeats, getRoomNavigableTiles, getRoomNavigationAnchor, getRoomSharedStaffAnchor } from "./spatial";
++import { planRestroomRecovery, restroomAtPoint } from "./restroom-recovery";
+ import type { DomainContext, GameState, GridPoint, ProcedureCompanionState, RetailExternalActorState, ServiceOperationState } from "./types";
+ 
+ type CompanionRoute = (start: GridPoint, target: GridPoint, periopRoomId: string | null) => GridPoint[];
+@@ -188,6 +189,17 @@
+ ): boolean {
+   const flow = actor.procedureCompanion;
+   if (!flow || !actor.location) return false;
++  if (flow.phase === "using_amenity" && restroomAtPoint(state, context, actor.location)) {
++    flow.amenityDwellEndsAtFacilityTick = Math.min(flow.amenityDwellEndsAtFacilityTick ?? state.facilityTick,
++      actor.lastMovedAtFacilityTick + context.balanceRelease.environment.idleActionMaximumMinutes);
++  }
++  const recoverRestroom = () => {
++    if (!restroomAtPoint(state, context, actor.location)) return;
++    const recovery = planRestroomRecovery(state, context, { kind: "encounter", id: actor.id, location: actor.location });
++    if (!recovery?.reservation) return;
++    if (recovery.relocated) actor.location = { ...recovery.reservation.location };
++    walk(state, context, actor, recovery.relocated ? [actor.location!] : recovery.path, createdThisTick);
++  };
+   const patient = operation.actorKind === "encounter" ? state.encounters[operation.actorId]?.patientLocation ?? null : operation.location;
+   const home = state.rooms.find((room) => room.id === flow.periopRoomInstanceId);
+   const homeDefinition = home ? getRoomDefinition(home.roomDefinitionId, context) : null;
+@@ -207,7 +219,7 @@
+     const path = followPatient ? route(actor.location, patient, flow.periopRoomInstanceId) : exitRoute(actor.location);
+     actor.movementWaitReason = path.length ? null : "Waiting for a connected exit route";
+     if (path.length) walk(state, context, actor, path, createdThisTick);
+-    else actor.lastMovedAtFacilityTick = state.facilityTick;
++    else { recoverRestroom(); actor.lastMovedAtFacilityTick = state.facilityTick; }
+     actor.lifecycle = "departing";
+     const { gridWidth, gridHeight } = context.balanceRelease.facility;
+     // A walking companion disappears only at its off-map endpoint. A patient
+@@ -255,6 +267,9 @@
+ 
+   const plan = planProcedureCompanionWait(state, context, actor, operation, route);
+   if (!plan) {
++    // A missing/full/disconnected Periop room must not turn the toilet into
++    // the companion's waiting room. Use public overflow until home reopens.
++    recoverRestroom();
+     actor.movementWaitReason = flow.periopRoomInstanceId ? "Waiting for a free, reachable companion seat" : null;
+     actor.lastMovedAtFacilityTick = state.facilityTick;
+     return flow.periopRoomInstanceId !== null;

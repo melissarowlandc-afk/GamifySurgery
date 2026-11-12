@@ -1,0 +1,30 @@
+--- a/packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts
++++ b/packages/clinical-content/src/development-batch/2026-10-07-level3/level3-content.test.ts
+@@ -1,10 +1,11 @@
++// Historical batch proof uses the pre-2026-10-28 assembly. Live pilot isolation/versioning is checked in question-quality-pilot.test.ts.
+ /// <reference types="node" />
+ import {createHash} from "node:crypto";
+ import {writeFileSync,mkdirSync} from "node:fs";
+ import {resolve} from "node:path";
+ import {describe,expect,it} from "vitest";
+ import {syntheticClinicalCaseSchema,testedConceptSchema,answerChoiceTimingRegistryEntrySchema} from "../../schema";
+-import {SYNTHETIC_CLINICAL_RELEASE as release,PEDIATRIC_CLINIC_PROTOTYPE_ADMISSION_MANIFEST as pediatricAdmission} from "../../synthetic-content";
++import {QUESTION_QUALITY_SOURCE_RELEASE as release,PEDIATRIC_CLINIC_PROTOTYPE_ADMISSION_MANIFEST as pediatricAdmission} from "../../synthetic-content";
+ import {ANSWER_CHOICE_TIMING_REGISTRY} from "../../answer-choice-timing";
+ import {
+  GS028_20261007_LEVEL3_CASES as cases,GS028_20261007_LEVEL3_TESTED_CONCEPTS as concepts,
+@@ -44,8 +45,12 @@
+   // Exclude exactly that documented lane, never arbitrary differing records.
+   const protectedIntake={...old,concepts:old.concepts.filter(c=>!c.id.startsWith("concept.statistics-ethics.")&&c.id!=="concept.quality-improvement.pdsa-act-and-iterate"),cases:old.cases.filter(c=>!c.id.startsWith("case.gs028se."))};
+   expect([protectedIntake.concepts.length,protectedIntake.cases.length,protectedIntake.cases.flatMap(c=>c.decisionNodes).length]).toEqual([303,900,1183]);
+-  expect(sha(protectedIntake)).toBe("a5108ca54c38353b8f226075880da9b7ba97fe78b625eef2a87ade5033f8482a");
+-  expect([priorRelease.concepts.length,priorRelease.cases.length,priorRelease.cases.flatMap(c=>c.decisionNodes).length]).toEqual([351,1070,1375]);
++  // Round 3 full pass: restoring only the four RCA/FMEA cases
++  // reproduces a5108ca5...; all unrelated records retain cf76b84d....
++  // Tester-flag fix 2026-10-17: only nutrition refeeding-thiamine v4 wording changed
++  // (release copy with the prior nutrition.ts passes 284dc7a2...).
++  expect(sha(protectedIntake)).toBe("af009e5f25adeae51e9900ad8978eb03ef821e3bd0cd97e460909c5af6be377a");
++  expect([priorRelease.concepts.length,priorRelease.cases.length,priorRelease.cases.flatMap(c=>c.decisionNodes).length]).toEqual([351,1070,1383]);
+  });
+  it("has unique IDs, reciprocal atomic claims/sources and explicit evidence limitations",()=>{
+   for(const records of [concepts,cases,questions,claims,sources])expect(new Set(records.map(x=>x.id)).size).toBe(records.length);

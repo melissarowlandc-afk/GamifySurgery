@@ -1,0 +1,2341 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "tileSize": 52,
+    "seatedHeight": 75.1875,
+    "adultBand": [
+      0.95,
+      1.05
+    ],
+    "strictTileRange": [
+      26,
+      130
+    ],
+    "maximumSafePoseScaleChange": 0.1,
+    "method": "median of 80 human-founder seated cardinals; smallest factor satisfying all integer tiles/cardinals; >10% pose-size jumps held for regeneration"
+  },
+  "identities": {
+    "patient.adult.001": {
+      "correction": 0.97657814,
+      "requiredCorrection": 0.97657814,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 78.6
+    },
+    "patient.adult.002": {
+      "correction": 0.93400694,
+      "requiredCorrection": 0.93400694,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 82.55625
+    },
+    "patient.adult.003": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 77.934375
+    },
+    "patient.adult.004": {
+      "correction": 0.97118864,
+      "requiredCorrection": 0.97118864,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 80.925
+    },
+    "patient.adult.005": {
+      "correction": 0.94887051,
+      "requiredCorrection": 0.94887051,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 80.25
+    },
+    "patient.adult.006": {
+      "correction": 0.96869165,
+      "requiredCorrection": 0.96869165,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 80.2375
+    },
+    "patient.adult.007": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 75
+    },
+    "patient.adult.008": {
+      "correction": 0.99666955,
+      "requiredCorrection": 0.99666955,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 78.50625
+    },
+    "patient.adult.009": {
+      "correction": 0.92727581,
+      "requiredCorrection": 0.92727581,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 82.8125
+    },
+    "patient.adult.010": {
+      "correction": 1.09427824,
+      "requiredCorrection": 1.09427824,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.5625
+    },
+    "patient.adult.011": {
+      "correction": 0.92635056,
+      "requiredCorrection": 0.92635056,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 83.9125
+    },
+    "patient.adult.012": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 75.4
+    },
+    "patient.adult.013": {
+      "correction": 0.94290303,
+      "requiredCorrection": 0.94290303,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 81.3
+    },
+    "patient.adult.014": {
+      "correction": 0.93494574,
+      "requiredCorrection": 0.93494574,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 82.2
+    },
+    "patient.adult.015": {
+      "correction": 0.91992564,
+      "requiredCorrection": 0.91992564,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 84.0625
+    },
+    "patient.adult.016": {
+      "correction": 0.96299922,
+      "requiredCorrection": 0.96299922,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 81.003125
+    },
+    "patient.adult.017": {
+      "correction": 1.08411749,
+      "requiredCorrection": 1.08411749,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.7625
+    },
+    "patient.adult.018": {
+      "correction": 1.03489415,
+      "requiredCorrection": 1.03489415,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.45
+    },
+    "patient.adult.019": {
+      "correction": 0.91506176,
+      "requiredCorrection": 0.91506176,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 84.984375
+    },
+    "patient.adult.020": {
+      "correction": 0.91746195,
+      "requiredCorrection": 0.91746195,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 85.05
+    },
+    "patient.adult.021": {
+      "correction": 0.91136688,
+      "requiredCorrection": 0.91136688,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 85.15
+    },
+    "patient.adult.022": {
+      "correction": 0.93810065,
+      "requiredCorrection": 0.93810065,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 82.55625
+    },
+    "patient.adult.023": {
+      "correction": 0.91652972,
+      "requiredCorrection": 0.91652972,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 84.21875
+    },
+    "patient.adult.024": {
+      "correction": 1.06933724,
+      "requiredCorrection": 1.06933724,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.96875
+    },
+    "patient.adult.025": {
+      "correction": 0.92877108,
+      "requiredCorrection": 0.92877108,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 82.228125
+    },
+    "patient.adult.026": {
+      "correction": 0.98488624,
+      "requiredCorrection": 0.98488624,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 78.8375
+    },
+    "patient.adult.027": {
+      "correction": 0.95281135,
+      "requiredCorrection": 0.95281135,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 81.46875
+    },
+    "patient.adult.028": {
+      "correction": 0.98400517,
+      "requiredCorrection": 0.98400517,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 79.0625
+    },
+    "patient.adult.029": {
+      "correction": 0.93642883,
+      "requiredCorrection": 0.93642883,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 82.6875
+    },
+    "patient.adult.030": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 78.325
+    },
+    "patient.adult.031": {
+      "correction": 0.95578985,
+      "requiredCorrection": 0.95578985,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 80.165625
+    },
+    "patient.adult.032": {
+      "correction": 0.95442234,
+      "requiredCorrection": 0.95442234,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 80.49375
+    },
+    "patient.adult.033": {
+      "correction": 0.94344557,
+      "requiredCorrection": 0.94344557,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 81.9
+    },
+    "patient.adult.034": {
+      "correction": 0.948916,
+      "requiredCorrection": 0.948916,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 82.35
+    },
+    "patient.adult.035": {
+      "correction": 0.95092529,
+      "requiredCorrection": 0.95092529,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 81.46875
+    },
+    "patient.adult.036": {
+      "correction": 0.99948052,
+      "requiredCorrection": 0.99948052,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 77.015625
+    },
+    "patient.adult.037": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 74.278125
+    },
+    "patient.adult.038": {
+      "correction": 0.97644761,
+      "requiredCorrection": 0.97644761,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 79.625
+    },
+    "patient.adult.039": {
+      "correction": 0.95992895,
+      "requiredCorrection": 0.95992895,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 80.825
+    },
+    "patient.adult.040": {
+      "correction": 1.07225554,
+      "requiredCorrection": 1.07225554,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.90625
+    },
+    "patient.adult.041": {
+      "correction": 0.9316141,
+      "requiredCorrection": 0.9316141,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 83.0375
+    },
+    "patient.adult.042": {
+      "correction": 0.95075156,
+      "requiredCorrection": 0.95075156,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 82.6875
+    },
+    "patient.adult.043": {
+      "correction": 0.92491292,
+      "requiredCorrection": 0.92491292,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 83.86875
+    },
+    "patient.adult.044": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 75.19375
+    },
+    "patient.adult.045": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 77.18125
+    },
+    "patient.adult.046": {
+      "correction": 0.94942335,
+      "requiredCorrection": 0.94942335,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 81.640625
+    },
+    "patient.adult.047": {
+      "correction": 0.92208832,
+      "requiredCorrection": 0.92208832,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 83.19375
+    },
+    "patient.adult.048": {
+      "correction": 1.0663962,
+      "requiredCorrection": 1.0663962,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.2375
+    },
+    "patient.adult.049": {
+      "correction": 1.00033157,
+      "requiredCorrection": 1.00033157,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 73.03125
+    },
+    "patient.adult.050": {
+      "correction": 0.94830805,
+      "requiredCorrection": 0.94830805,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 81.81875
+    },
+    "founder.01": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 76.3125
+    },
+    "founder.02": {
+      "correction": 1.03752115,
+      "requiredCorrection": 1.03752115,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.328125
+    },
+    "founder.03": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 76.95
+    },
+    "founder.04": {
+      "correction": 0.96910585,
+      "requiredCorrection": 0.96910585,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 80.1625
+    },
+    "founder.05": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 73.38125
+    },
+    "founder.06": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 73.45
+    },
+    "founder.07": {
+      "correction": 1.02237002,
+      "requiredCorrection": 1.02237002,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.5
+    },
+    "founder.08": {
+      "correction": 1.01585295,
+      "requiredCorrection": 1.01585295,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 72.05625
+    },
+    "founder.09": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 76.5
+    },
+    "founder.10": {
+      "correction": 0.97834938,
+      "requiredCorrection": 0.97834938,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 77.79375
+    },
+    "founder.11": {
+      "correction": 0.97474928,
+      "requiredCorrection": 0.97474928,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 79.625
+    },
+    "founder.12": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 76.5625
+    },
+    "founder.13": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 76.5625
+    },
+    "founder.14": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 73.80625
+    },
+    "founder.15": {
+      "correction": 1.08411749,
+      "requiredCorrection": 1.08411749,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.06875
+    },
+    "founder.16": {
+      "correction": 0.98068205,
+      "requiredCorrection": 0.98068205,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 78.859375
+    },
+    "founder.17": {
+      "correction": 1.01870601,
+      "requiredCorrection": 1.01870601,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.65
+    },
+    "founder.18": {
+      "correction": 0.98756459,
+      "requiredCorrection": 0.98756459,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 78
+    },
+    "founder.19": {
+      "correction": 1.06242513,
+      "requiredCorrection": 1.06242513,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.8125
+    },
+    "founder.20": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 73.346875
+    },
+    "founder.21": {
+      "correction": 1,
+      "status": "nonhuman-preserved"
+    },
+    "founder.22": {
+      "correction": 1,
+      "status": "nonhuman-preserved"
+    },
+    "founder.23": {
+      "correction": 1,
+      "status": "nonhuman-preserved"
+    },
+    "founder.24": {
+      "correction": 1,
+      "status": "nonhuman-preserved"
+    },
+    "founder.25": {
+      "correction": 1,
+      "status": "nonhuman-preserved"
+    },
+    "founder.26": {
+      "correction": 1,
+      "status": "nonhuman-preserved"
+    },
+    "founder.27": {
+      "correction": 1,
+      "status": "nonhuman-preserved"
+    },
+    "founder.28": {
+      "correction": 1,
+      "status": "nonhuman-preserved"
+    },
+    "founder.29": {
+      "correction": 1,
+      "status": "nonhuman-preserved"
+    },
+    "founder.30": {
+      "correction": 1,
+      "status": "nonhuman-preserved"
+    },
+    "retained.reference.038fac25": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 77.48125
+    },
+    "retained.gray-braid": {
+      "correction": 0.96062386,
+      "requiredCorrection": 0.96062386,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 81.28125
+    },
+    "retained.reference.54c78cba": {
+      "correction": 1.00864541,
+      "requiredCorrection": 1.00864541,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 72.428125
+    },
+    "retained.reference.6ee80949": {
+      "correction": 0.98589569,
+      "requiredCorrection": 0.98589569,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 79.31875
+    },
+    "mixed-20260910-patient-01": {
+      "correction": 1,
+      "requiredCorrection": 1.14478734,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 64.3125
+    },
+    "mixed-20260910-patient-02": {
+      "correction": 1.06318241,
+      "requiredCorrection": 1.06318241,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.446875
+    },
+    "mixed-20260910-receptionist-01": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 75.3375
+    },
+    "mixed-20260910-nurse-01": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 74.1
+    },
+    "gs022-new-employee-001": {
+      "correction": 0.97772168,
+      "requiredCorrection": 0.97772168,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 78.6375
+    },
+    "gs022-new-employee-002": {
+      "correction": 1.06260569,
+      "requiredCorrection": 1.06260569,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.1875
+    },
+    "gs022-new-employee-003": {
+      "correction": 1.04572408,
+      "requiredCorrection": 1.04572408,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.921875
+    },
+    "gs022-new-employee-004": {
+      "correction": 1.00667872,
+      "requiredCorrection": 1.00667872,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.7625
+    },
+    "gs022-new-employee-005": {
+      "correction": 1.05732872,
+      "requiredCorrection": 1.05732872,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.33125
+    },
+    "gs022-new-employee-006": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 77.2875
+    },
+    "gs022-new-employee-007": {
+      "correction": 1.02179439,
+      "requiredCorrection": 1.02179439,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.15625
+    },
+    "gs022-new-employee-008": {
+      "correction": 1.01083762,
+      "requiredCorrection": 1.01083762,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 72.35625
+    },
+    "gs022-new-employee-009": {
+      "correction": 1.03920548,
+      "requiredCorrection": 1.03920548,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.43125
+    },
+    "gs022-new-employee-010": {
+      "correction": 1.0232079,
+      "requiredCorrection": 1.0232079,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.46875
+    },
+    "gs022-new-employee-011": {
+      "correction": 1.00918555,
+      "requiredCorrection": 1.00918555,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.4
+    },
+    "gs022-new-employee-012": {
+      "correction": 1.02773424,
+      "requiredCorrection": 1.02773424,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.71875
+    },
+    "gs022-new-employee-013": {
+      "correction": 1.04547487,
+      "requiredCorrection": 1.04547487,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.5625
+    },
+    "gs022-new-employee-014": {
+      "correction": 1.02840921,
+      "requiredCorrection": 1.02840921,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.5625
+    },
+    "gs022-new-employee-015": {
+      "correction": 1.08068672,
+      "requiredCorrection": 1.08068672,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.55
+    },
+    "gs022-new-employee-016": {
+      "correction": 1.05460813,
+      "requiredCorrection": 1.05460813,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.234375
+    },
+    "gs022-new-employee-017": {
+      "correction": 1.01666186,
+      "requiredCorrection": 1.01666186,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.5375
+    },
+    "gs022-new-employee-018": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 73.45
+    },
+    "gs022-new-employee-019": {
+      "correction": 0.99461844,
+      "requiredCorrection": 0.99461844,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 76.4875
+    },
+    "gs022-new-employee-020": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 73.85
+    },
+    "gs022-new-person-001": {
+      "correction": 1.04572408,
+      "requiredCorrection": 1.04572408,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.09375
+    },
+    "gs022-new-person-002": {
+      "correction": 1.03323819,
+      "requiredCorrection": 1.03323819,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.390625
+    },
+    "gs022-new-person-003": {
+      "correction": 1.04547487,
+      "requiredCorrection": 1.04547487,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.225
+    },
+    "gs022-new-person-004": {
+      "correction": 1.04574817,
+      "requiredCorrection": 1.04574817,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.953125
+    },
+    "gs022-new-person-005": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 72.99375
+    },
+    "gs022-new-person-006": {
+      "correction": 1.0663962,
+      "requiredCorrection": 1.0663962,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.403125
+    },
+    "gs022-new-person-007": {
+      "correction": 1.00621369,
+      "requiredCorrection": 1.00621369,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.71875
+    },
+    "gs022-new-person-008": {
+      "correction": 1.06296551,
+      "requiredCorrection": 1.06296551,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.5625
+    },
+    "gs022-new-person-009": {
+      "correction": 1,
+      "requiredCorrection": 1.14156501,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 63.26875
+    },
+    "gs022-new-person-010": {
+      "correction": 1.04038307,
+      "requiredCorrection": 1.04038307,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.2
+    },
+    "gs022-new-person-011": {
+      "correction": 1.04348365,
+      "requiredCorrection": 1.04348365,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.89375
+    },
+    "gs022-new-person-012": {
+      "correction": 1.08274559,
+      "requiredCorrection": 1.08274559,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.61875
+    },
+    "gs022-new-person-013": {
+      "correction": 1.01331061,
+      "requiredCorrection": 1.01331061,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.21875
+    },
+    "gs022-new-person-014": {
+      "correction": 1,
+      "requiredCorrection": 1.19889771,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 60.61875
+    },
+    "gs022-new-person-015": {
+      "correction": 1.00901772,
+      "requiredCorrection": 1.00901772,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 74.53125
+    },
+    "gs022-new-person-016": {
+      "correction": 1.00552719,
+      "requiredCorrection": 1.00552719,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 72.875
+    },
+    "gs022-new-person-017": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 76.3125
+    },
+    "gs022-new-person-018": {
+      "correction": 0.99760904,
+      "requiredCorrection": 0.99760904,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 76.65625
+    },
+    "gs022-new-person-019": {
+      "correction": 0.99465384,
+      "requiredCorrection": 0.99465384,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 75.95
+    },
+    "gs022-new-person-020": {
+      "correction": 1.00365596,
+      "requiredCorrection": 1.00365596,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 72.875
+    },
+    "gs026-employee-001": {
+      "correction": 1.02965942,
+      "requiredCorrection": 1.02965942,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.78125
+    },
+    "gs026-employee-002": {
+      "correction": 1,
+      "requiredCorrection": 1.11928267,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 65.1
+    },
+    "gs026-employee-003": {
+      "correction": 1.05675568,
+      "requiredCorrection": 1.05675568,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.0625
+    },
+    "gs026-employee-004": {
+      "correction": 1.07627618,
+      "requiredCorrection": 1.07627618,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.6
+    },
+    "gs026-employee-005": {
+      "correction": 1.03901826,
+      "requiredCorrection": 1.03901826,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.35
+    },
+    "gs026-employee-006": {
+      "correction": 1.06742993,
+      "requiredCorrection": 1.06742993,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.375
+    },
+    "gs026-employee-007": {
+      "correction": 1.05675568,
+      "requiredCorrection": 1.05675568,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.234375
+    },
+    "gs026-employee-008": {
+      "correction": 1.05875197,
+      "requiredCorrection": 1.05875197,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.775
+    },
+    "gs026-employee-009": {
+      "correction": 1.0232079,
+      "requiredCorrection": 1.0232079,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.5
+    },
+    "gs026-employee-010": {
+      "correction": 1.0232079,
+      "requiredCorrection": 1.0232079,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.15625
+    },
+    "gs026-employee-011": {
+      "correction": 1.02353225,
+      "requiredCorrection": 1.02353225,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.15625
+    },
+    "gs026-employee-012": {
+      "correction": 1.02965942,
+      "requiredCorrection": 1.02965942,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.15625
+    },
+    "gs026-employee-013": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 73.5625
+    },
+    "gs026-employee-014": {
+      "correction": 1.03901826,
+      "requiredCorrection": 1.03901826,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.35
+    },
+    "gs026-employee-015": {
+      "correction": 1.06578781,
+      "requiredCorrection": 1.06578781,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.234375
+    },
+    "gs026-employee-016": {
+      "correction": 1.08365519,
+      "requiredCorrection": 1.08365519,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.6
+    },
+    "gs026-employee-017": {
+      "correction": 1.01050035,
+      "requiredCorrection": 1.01050035,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 72.53125
+    },
+    "gs026-employee-018": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 72.1875
+    },
+    "gs026-employee-019": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 72.015625
+    },
+    "gs026-employee-020": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 72.703125
+    },
+    "gs026-employee-021": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 74.9375
+    },
+    "gs026-employee-022": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 72.53125
+    },
+    "gs026-employee-023": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 73.21875
+    },
+    "gs026-employee-024": {
+      "correction": 1.01696874,
+      "requiredCorrection": 1.01696874,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 72.1
+    },
+    "gs026-employee-025": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 73.390625
+    },
+    "level3-roster-v2.001": {
+      "correction": 1.09925118,
+      "requiredCorrection": 1.09925118,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.15
+    },
+    "level3-roster-v2.002": {
+      "correction": 1.03117233,
+      "requiredCorrection": 1.03117233,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.4375
+    },
+    "level3-roster-v2.003": {
+      "correction": 1.03896514,
+      "requiredCorrection": 1.03896514,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.09375
+    },
+    "level3-roster-v2.004": {
+      "correction": 1.01050035,
+      "requiredCorrection": 1.01050035,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.328125
+    },
+    "level3-roster-v2.005": {
+      "correction": 1.05709067,
+      "requiredCorrection": 1.05709067,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.0625
+    },
+    "level3-roster-v2.006": {
+      "correction": 1.04842743,
+      "requiredCorrection": 1.04842743,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70
+    },
+    "level3-roster-v2.007": {
+      "correction": 1.05675568,
+      "requiredCorrection": 1.05675568,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.0625
+    },
+    "level3-roster-v2.008": {
+      "correction": 1.03117233,
+      "requiredCorrection": 1.03117233,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.609375
+    },
+    "level3-roster-v2.009": {
+      "correction": 1,
+      "requiredCorrection": 1.10599514,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 64.96875
+    },
+    "level3-roster-v2.010": {
+      "correction": 1.06742993,
+      "requiredCorrection": 1.06742993,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.890625
+    },
+    "level3-roster-v2.011": {
+      "correction": 1.03474163,
+      "requiredCorrection": 1.03474163,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.7
+    },
+    "level3-roster-v2.012": {
+      "correction": 1.03896514,
+      "requiredCorrection": 1.03896514,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.4375
+    },
+    "level3-roster-v2.013": {
+      "correction": 1.07569392,
+      "requiredCorrection": 1.07569392,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.03125
+    },
+    "level3-roster-v2.014": {
+      "correction": 1.05709067,
+      "requiredCorrection": 1.05709067,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.40625
+    },
+    "level3-roster-v2.015": {
+      "correction": 1.03117233,
+      "requiredCorrection": 1.03117233,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.78125
+    },
+    "level3-roster-v2.016": {
+      "correction": 1.09143984,
+      "requiredCorrection": 1.09143984,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.2
+    },
+    "level3-roster-v2.017": {
+      "correction": 1.03474163,
+      "requiredCorrection": 1.03474163,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.525
+    },
+    "level3-roster-v2.018": {
+      "correction": 1.04539269,
+      "requiredCorrection": 1.04539269,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.09375
+    },
+    "level3-roster-v2.019": {
+      "correction": 1.09589478,
+      "requiredCorrection": 1.09589478,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 65.65625
+    },
+    "level3-roster-v2.020": {
+      "correction": 1.03896514,
+      "requiredCorrection": 1.03896514,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.4375
+    },
+    "level3-roster-v2.021": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "young-child",
+      "beforeHeight52": 54.65625
+    },
+    "level3-roster-v2.022": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "young-child",
+      "beforeHeight52": 53.28125
+    },
+    "level3-roster-v2.023": {
+      "correction": 1.02998582,
+      "requiredCorrection": 1.02998582,
+      "status": "corrected",
+      "group": "young-child",
+      "beforeHeight52": 51.5625
+    },
+    "level3-roster-v2.024": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "young-child",
+      "beforeHeight52": 56.375
+    },
+    "level3-roster-v2.025": {
+      "correction": 1.04926035,
+      "requiredCorrection": 1.04926035,
+      "status": "corrected",
+      "group": "school-child",
+      "beforeHeight52": 58.609375
+    },
+    "level3-roster-v2.026": {
+      "correction": 1.0677683,
+      "requiredCorrection": 1.0677683,
+      "status": "corrected",
+      "group": "school-child",
+      "beforeHeight52": 58.4375
+    },
+    "level3-roster-v2.027": {
+      "correction": 1.04240882,
+      "requiredCorrection": 1.04240882,
+      "status": "corrected",
+      "group": "school-child",
+      "beforeHeight52": 58.953125
+    },
+    "level3-roster-v2.028": {
+      "correction": 1.04240882,
+      "requiredCorrection": 1.04240882,
+      "status": "corrected",
+      "group": "school-child",
+      "beforeHeight52": 59.125
+    },
+    "level3-roster-v2.029": {
+      "correction": 1.08994935,
+      "requiredCorrection": 1.08994935,
+      "status": "corrected",
+      "group": "teen",
+      "beforeHeight52": 63.59375
+    },
+    "level3-roster-v2.030": {
+      "correction": 1,
+      "requiredCorrection": 1.13840533,
+      "status": "regeneration-required-size-jump",
+      "group": "teen",
+      "beforeHeight52": 61.015625
+    },
+    "level3-roster-v2.031": {
+      "correction": 1.06612566,
+      "requiredCorrection": 1.06612566,
+      "status": "corrected",
+      "group": "teen",
+      "beforeHeight52": 64.796875
+    },
+    "level3-roster-v2.032": {
+      "correction": 1,
+      "requiredCorrection": 1.12471593,
+      "status": "regeneration-required-size-jump",
+      "group": "teen",
+      "beforeHeight52": 61.1875
+    },
+    "patient-women20-v3.001": {
+      "correction": 1.07569392,
+      "requiredCorrection": 1.07569392,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.859375
+    },
+    "patient-women20-v3.002": {
+      "correction": 1,
+      "requiredCorrection": 1.11190274,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 64.96875
+    },
+    "patient-women20-v3.003": {
+      "correction": 1.00457016,
+      "requiredCorrection": 1.00457016,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.84375
+    },
+    "patient-women20-v3.004": {
+      "correction": 1.06362189,
+      "requiredCorrection": 1.06362189,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.0625
+    },
+    "patient-women20-v3.005": {
+      "correction": 1,
+      "requiredCorrection": 1.11748873,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 64.453125
+    },
+    "patient-women20-v3.006": {
+      "correction": 1.08587126,
+      "requiredCorrection": 1.08587126,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.2
+    },
+    "patient-women20-v3.007": {
+      "correction": 1.05675568,
+      "requiredCorrection": 1.05675568,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.234375
+    },
+    "patient-women20-v3.008": {
+      "correction": 1.08509777,
+      "requiredCorrection": 1.08509777,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.6875
+    },
+    "patient-women20-v3.009": {
+      "correction": 1.05709067,
+      "requiredCorrection": 1.05709067,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.0625
+    },
+    "patient-women20-v3.010": {
+      "correction": 1.06742993,
+      "requiredCorrection": 1.06742993,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.921875
+    },
+    "patient-women20-v3.011": {
+      "correction": 1.05675568,
+      "requiredCorrection": 1.05675568,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.0625
+    },
+    "patient-women20-v3.012": {
+      "correction": 1.06612566,
+      "requiredCorrection": 1.06612566,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.234375
+    },
+    "patient-women20-v3.013": {
+      "correction": 1.0630907,
+      "requiredCorrection": 1.0630907,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.95
+    },
+    "patient-women20-v3.014": {
+      "correction": 1.04539269,
+      "requiredCorrection": 1.04539269,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.09375
+    },
+    "patient-women20-v3.015": {
+      "correction": 1,
+      "requiredCorrection": 1.10599514,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 65.3125
+    },
+    "patient-women20-v3.016": {
+      "correction": 1,
+      "requiredCorrection": 1.10599514,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 65.3125
+    },
+    "patient-women20-v3.017": {
+      "correction": 1.01554856,
+      "requiredCorrection": 1.01554856,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.8125
+    },
+    "patient-women20-v3.018": {
+      "correction": 1.04539269,
+      "requiredCorrection": 1.04539269,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.265625
+    },
+    "patient-women20-v3.019": {
+      "correction": 1,
+      "requiredCorrection": 1.14053144,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 63.7
+    },
+    "patient-women20-v3.020": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 72.53125
+    },
+    "patient-demographics20-v4.001": {
+      "correction": 1.09589478,
+      "requiredCorrection": 1.09589478,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 65.828125
+    },
+    "patient-demographics20-v4.002": {
+      "correction": 1.02965942,
+      "requiredCorrection": 1.02965942,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.78125
+    },
+    "patient-demographics20-v4.003": {
+      "correction": 1,
+      "requiredCorrection": 1.10191619,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 65.484375
+    },
+    "patient-demographics20-v4.004": {
+      "correction": 1.07603491,
+      "requiredCorrection": 1.07603491,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.6875
+    },
+    "patient-demographics20-v4.005": {
+      "correction": 1,
+      "requiredCorrection": 1.13068508,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 63.59375
+    },
+    "patient-demographics20-v4.006": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 74.59375
+    },
+    "patient-demographics20-v4.007": {
+      "correction": 1.05675568,
+      "requiredCorrection": 1.05675568,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.0625
+    },
+    "patient-demographics20-v4.008": {
+      "correction": 1.09030347,
+      "requiredCorrection": 1.09030347,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.34375
+    },
+    "patient-demographics20-v4.009": {
+      "correction": 1.09589478,
+      "requiredCorrection": 1.09589478,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.171875
+    },
+    "patient-demographics20-v4.010": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 72.875
+    },
+    "patient-demographics20-v4.011": {
+      "correction": 1.04842743,
+      "requiredCorrection": 1.04842743,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.65
+    },
+    "patient-demographics20-v4.012": {
+      "correction": 1.03929449,
+      "requiredCorrection": 1.03929449,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.4375
+    },
+    "patient-demographics20-v4.013": {
+      "correction": 1.0527068,
+      "requiredCorrection": 1.0527068,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.75
+    },
+    "patient-demographics20-v4.014": {
+      "correction": 1.0527068,
+      "requiredCorrection": 1.0527068,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.75
+    },
+    "patient-demographics20-v4.015": {
+      "correction": 1.03474163,
+      "requiredCorrection": 1.03474163,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.7
+    },
+    "patient-demographics20-v4.016": {
+      "correction": 1,
+      "requiredCorrection": 1.1774646,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 62.3
+    },
+    "patient-demographics20-v4.017": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 72.53125
+    },
+    "patient-demographics20-v4.018": {
+      "correction": 1.01761658,
+      "requiredCorrection": 1.01761658,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.5
+    },
+    "patient-demographics20-v4.019": {
+      "correction": 1,
+      "requiredCorrection": 1.13573182,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 63.421875
+    },
+    "patient-demographics20-v4.020": {
+      "correction": 1.08509777,
+      "requiredCorrection": 1.08509777,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.34375
+    },
+    "future-roster20-v5.001": {
+      "correction": 1.03327217,
+      "requiredCorrection": 1.03327217,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.4375
+    },
+    "future-roster20-v5.002": {
+      "correction": 1.06578781,
+      "requiredCorrection": 1.06578781,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.0625
+    },
+    "future-roster20-v5.003": {
+      "correction": 1.06489958,
+      "requiredCorrection": 1.06489958,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.95
+    },
+    "future-roster20-v5.004": {
+      "correction": 1.02965942,
+      "requiredCorrection": 1.02965942,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.125
+    },
+    "future-roster20-v5.005": {
+      "correction": 1,
+      "requiredCorrection": 1.11155038,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 64.96875
+    },
+    "future-roster20-v5.006": {
+      "correction": 1.01082068,
+      "requiredCorrection": 1.01082068,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.328125
+    },
+    "future-roster20-v5.007": {
+      "correction": 1,
+      "requiredCorrection": 1.12385125,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 64.28125
+    },
+    "future-roster20-v5.008": {
+      "correction": 1.03327217,
+      "requiredCorrection": 1.03327217,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.78125
+    },
+    "future-roster20-v5.009": {
+      "correction": 1.04114305,
+      "requiredCorrection": 1.04114305,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.525
+    },
+    "future-roster20-v5.010": {
+      "correction": 1,
+      "requiredCorrection": 1.1498797,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 62.90625
+    },
+    "future-roster20-v5.011": {
+      "correction": 1.05675568,
+      "requiredCorrection": 1.05675568,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.0625
+    },
+    "future-roster20-v5.012": {
+      "correction": 1.0232079,
+      "requiredCorrection": 1.0232079,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.8125
+    },
+    "future-roster20-v5.013": {
+      "correction": 1.05460813,
+      "requiredCorrection": 1.05460813,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.75
+    },
+    "future-roster20-v5.014": {
+      "correction": 1.06362189,
+      "requiredCorrection": 1.06362189,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.40625
+    },
+    "future-roster20-v5.015": {
+      "correction": 1.02756693,
+      "requiredCorrection": 1.02756693,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.46875
+    },
+    "future-roster20-v5.016": {
+      "correction": 1.02756693,
+      "requiredCorrection": 1.02756693,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.78125
+    },
+    "future-roster20-v5.017": {
+      "correction": 1.03327217,
+      "requiredCorrection": 1.03327217,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.78125
+    },
+    "future-roster20-v5.018": {
+      "correction": 1,
+      "requiredCorrection": 1.11294601,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 65.975
+    },
+    "future-roster20-v5.019": {
+      "correction": 1.0084468,
+      "requiredCorrection": 1.0084468,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.5
+    },
+    "future-roster20-v5.020": {
+      "correction": 1.04539269,
+      "requiredCorrection": 1.04539269,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.4375
+    },
+    "patient-gapfill-v6a.001": {
+      "correction": 1.05709067,
+      "requiredCorrection": 1.05709067,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.75
+    },
+    "patient-gapfill-v6a.002": {
+      "correction": 1.04539269,
+      "requiredCorrection": 1.04539269,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.75
+    },
+    "patient-gapfill-v6a.003": {
+      "correction": 1,
+      "requiredCorrection": 1.13804457,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 63.25
+    },
+    "patient-gapfill-v6a.004": {
+      "correction": 1.01761658,
+      "requiredCorrection": 1.01761658,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.984375
+    },
+    "patient-gapfill-v6a.005": {
+      "correction": 1.03327217,
+      "requiredCorrection": 1.03327217,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.78125
+    },
+    "patient-gapfill-v6a.006": {
+      "correction": 1,
+      "requiredCorrection": 1.10191619,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 65.3125
+    },
+    "patient-gapfill-v6a.007": {
+      "correction": 1.0677683,
+      "requiredCorrection": 1.0677683,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.546875
+    },
+    "patient-gapfill-v6a.008": {
+      "correction": 1.09030347,
+      "requiredCorrection": 1.09030347,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66
+    },
+    "patient-gapfill-v6a.009": {
+      "correction": 1.02965942,
+      "requiredCorrection": 1.02965942,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.8125
+    },
+    "patient-gapfill-v6a.010": {
+      "correction": 1.08365519,
+      "requiredCorrection": 1.08365519,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.2
+    },
+    "patient-gapfill-v6a.011": {
+      "correction": 1.0714328,
+      "requiredCorrection": 1.0714328,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.203125
+    },
+    "patient-gapfill-v6a.012": {
+      "correction": 1.07569392,
+      "requiredCorrection": 1.07569392,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.546875
+    },
+    "patient-gapfill-v6a.013": {
+      "correction": 1.07177244,
+      "requiredCorrection": 1.07177244,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.375
+    },
+    "patient-gapfill-v6a.014": {
+      "correction": 1.08544174,
+      "requiredCorrection": 1.08544174,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.515625
+    },
+    "patient-gapfill-v6a.015": {
+      "correction": 1.0232079,
+      "requiredCorrection": 1.0232079,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.984375
+    },
+    "patient-gapfill-v6a.016": {
+      "correction": 1.09925118,
+      "requiredCorrection": 1.09925118,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.15
+    },
+    "patient-gapfill-v6a.017": {
+      "correction": 1.03896514,
+      "requiredCorrection": 1.03896514,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.4375
+    },
+    "patient-gapfill-v6a.018": {
+      "correction": 1.06742993,
+      "requiredCorrection": 1.06742993,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.375
+    },
+    "patient-gapfill-v6a.019": {
+      "correction": 1.02965942,
+      "requiredCorrection": 1.02965942,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.125
+    },
+    "patient-gapfill-v6a.020": {
+      "correction": 1.07569392,
+      "requiredCorrection": 1.07569392,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.375
+    },
+    "patient-gapfill-v6b.001": {
+      "correction": 1.03359971,
+      "requiredCorrection": 1.03359971,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.4375
+    },
+    "patient-gapfill-v6b.002": {
+      "correction": 1,
+      "requiredCorrection": 1.13821578,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 64.75
+    },
+    "patient-gapfill-v6b.003": {
+      "correction": 1.09030347,
+      "requiredCorrection": 1.09030347,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.34375
+    },
+    "patient-gapfill-v6b.004": {
+      "correction": 1.02965942,
+      "requiredCorrection": 1.02965942,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.296875
+    },
+    "patient-gapfill-v6b.005": {
+      "correction": 1.03929449,
+      "requiredCorrection": 1.03929449,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.4375
+    },
+    "patient-gapfill-v6b.006": {
+      "correction": 1.0951971,
+      "requiredCorrection": 1.0951971,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.9
+    },
+    "patient-gapfill-v6b.007": {
+      "correction": 1.01488946,
+      "requiredCorrection": 1.01488946,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 72.275
+    },
+    "patient-gapfill-v6b.008": {
+      "correction": 1,
+      "requiredCorrection": 1.11748873,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 65.828125
+    },
+    "patient-gapfill-v6b.009": {
+      "correction": 1,
+      "requiredCorrection": 1.13819415,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 63.7
+    },
+    "patient-gapfill-v6b.010": {
+      "correction": 1.05304051,
+      "requiredCorrection": 1.05304051,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.578125
+    },
+    "patient-gapfill-v6b.011": {
+      "correction": 1.04572408,
+      "requiredCorrection": 1.04572408,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.4375
+    },
+    "patient-gapfill-v6b.012": {
+      "correction": 1.02112852,
+      "requiredCorrection": 1.02112852,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.640625
+    },
+    "patient-gapfill-v6b.013": {
+      "correction": 1,
+      "requiredCorrection": 1.12385125,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 64.109375
+    },
+    "patient-gapfill-v6b.014": {
+      "correction": 1,
+      "requiredCorrection": 1.10191619,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 66.34375
+    },
+    "patient-gapfill-v6b.015": {
+      "correction": 1.02353225,
+      "requiredCorrection": 1.02353225,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.15625
+    },
+    "patient-gapfill-v6b.016": {
+      "correction": 1.03359971,
+      "requiredCorrection": 1.03359971,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.609375
+    },
+    "patient-gapfill-v6b.017": {
+      "correction": 1,
+      "requiredCorrection": 1.1310435,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 63.59375
+    },
+    "patient-gapfill-v6b.018": {
+      "correction": 1.02965942,
+      "requiredCorrection": 1.02965942,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.125
+    },
+    "patient-gapfill-v6b.019": {
+      "correction": 1.04572408,
+      "requiredCorrection": 1.04572408,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.921875
+    },
+    "patient-gapfill-v6b.020": {
+      "correction": 1.00252866,
+      "requiredCorrection": 1.00252866,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.84375
+    },
+    "patient-gapfill-v6c.001": {
+      "correction": 1.06489958,
+      "requiredCorrection": 1.06489958,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.95
+    },
+    "patient-gapfill-v6c.002": {
+      "correction": 1,
+      "requiredCorrection": 1.15478225,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 63.35
+    },
+    "patient-gapfill-v6c.003": {
+      "correction": 1.05056747,
+      "requiredCorrection": 1.05056747,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.40625
+    },
+    "patient-gapfill-v6c.004": {
+      "correction": 1.05460813,
+      "requiredCorrection": 1.05460813,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.234375
+    },
+    "patient-gapfill-v6c.005": {
+      "correction": 1.06578781,
+      "requiredCorrection": 1.06578781,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.71875
+    },
+    "patient-gapfill-v6c.006": {
+      "correction": 1.02547374,
+      "requiredCorrection": 1.02547374,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.4
+    },
+    "patient-gapfill-v6c.007": {
+      "correction": 1,
+      "requiredCorrection": 1,
+      "status": "within-band",
+      "group": "adult",
+      "beforeHeight52": 72.015625
+    },
+    "patient-gapfill-v6c.008": {
+      "correction": 1.03327217,
+      "requiredCorrection": 1.03327217,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.46875
+    },
+    "patient-gapfill-v6c.009": {
+      "correction": 1.06612566,
+      "requiredCorrection": 1.06612566,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.0625
+    },
+    "patient-gapfill-v6c.010": {
+      "correction": 1.05460813,
+      "requiredCorrection": 1.05460813,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.0625
+    },
+    "patient-gapfill-v6c.011": {
+      "correction": 1.07177244,
+      "requiredCorrection": 1.07177244,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.71875
+    },
+    "patient-gapfill-v6c.012": {
+      "correction": 1.08808774,
+      "requiredCorrection": 1.08808774,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.171875
+    },
+    "patient-gapfill-v6c.013": {
+      "correction": 1.05460813,
+      "requiredCorrection": 1.05460813,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.234375
+    },
+    "patient-gapfill-v6c.014": {
+      "correction": 1.0714328,
+      "requiredCorrection": 1.0714328,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.0625
+    },
+    "patient-gapfill-v6c.015": {
+      "correction": 1.04816451,
+      "requiredCorrection": 1.04816451,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 69.3
+    },
+    "patient-gapfill-v6c.016": {
+      "correction": 1.06578781,
+      "requiredCorrection": 1.06578781,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.40625
+    },
+    "patient-gapfill-v6c.017": {
+      "correction": 1.01793916,
+      "requiredCorrection": 1.01793916,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.984375
+    },
+    "patient-gapfill-v6c.018": {
+      "correction": 1.07186444,
+      "requiredCorrection": 1.07186444,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.725
+    },
+    "patient-gapfill-v6c.019": {
+      "correction": 1.07350787,
+      "requiredCorrection": 1.07350787,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.375
+    },
+    "staff-gapfill-v6d.001": {
+      "correction": 1.09743678,
+      "requiredCorrection": 1.09743678,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.5
+    },
+    "staff-gapfill-v6d.002": {
+      "correction": 1,
+      "requiredCorrection": 1.10929147,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 64.96875
+    },
+    "staff-gapfill-v6d.003": {
+      "correction": 1,
+      "requiredCorrection": 1.12420752,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 64.28125
+    },
+    "staff-gapfill-v6d.004": {
+      "correction": 1,
+      "requiredCorrection": 1.11748873,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 64.453125
+    },
+    "staff-gapfill-v6d.005": {
+      "correction": 1,
+      "requiredCorrection": 1.19094683,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 60.328125
+    },
+    "staff-gapfill-v6d.006": {
+      "correction": 1.06612566,
+      "requiredCorrection": 1.06612566,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.890625
+    },
+    "staff-gapfill-v6d.007": {
+      "correction": 1,
+      "requiredCorrection": 1.1504815,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 62.21875
+    },
+    "staff-gapfill-v6d.008": {
+      "correction": 1.0677683,
+      "requiredCorrection": 1.0677683,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.71875
+    },
+    "staff-gapfill-v6d.009": {
+      "correction": 1.02998582,
+      "requiredCorrection": 1.02998582,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.125
+    },
+    "staff-gapfill-v6d.010": {
+      "correction": 1.09967686,
+      "requiredCorrection": 1.09967686,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 65.3125
+    },
+    "staff-gapfill-v6d.011": {
+      "correction": 1.09143984,
+      "requiredCorrection": 1.09143984,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.2
+    },
+    "staff-gapfill-v6d.012": {
+      "correction": 1,
+      "requiredCorrection": 1.13068508,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 63.59375
+    },
+    "staff-gapfill-v6d.013": {
+      "correction": 1.02353225,
+      "requiredCorrection": 1.02353225,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 71.15625
+    },
+    "staff-gapfill-v6d.014": {
+      "correction": 1.05709067,
+      "requiredCorrection": 1.05709067,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.40625
+    },
+    "app-gapfill-v6e.001": {
+      "correction": 1,
+      "requiredCorrection": 1.10191619,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 66.34375
+    },
+    "app-gapfill-v6e.002": {
+      "correction": 1.09589478,
+      "requiredCorrection": 1.09589478,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 65.65625
+    },
+    "app-gapfill-v6e.003": {
+      "correction": 1,
+      "requiredCorrection": 1.11190274,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 64.96875
+    },
+    "app-gapfill-v6e.004": {
+      "correction": 1,
+      "requiredCorrection": 1.17986803,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 60.671875
+    },
+    "app-gapfill-v6e.005": {
+      "correction": 1.09967686,
+      "requiredCorrection": 1.09967686,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 65.65625
+    },
+    "app-gapfill-v6e.006": {
+      "correction": 1.02756693,
+      "requiredCorrection": 1.02756693,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 70.296875
+    },
+    "app-gapfill-v6e.007": {
+      "correction": 1.0527068,
+      "requiredCorrection": 1.0527068,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.75
+    },
+    "app-gapfill-v6e.008": {
+      "correction": 1.07177244,
+      "requiredCorrection": 1.07177244,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.375
+    },
+    "inspector-v6f.001": {
+      "correction": 1.0714328,
+      "requiredCorrection": 1.0714328,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.03125
+    },
+    "inspector-v6f.002": {
+      "correction": 1,
+      "requiredCorrection": 1.13804457,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 63.59375
+    },
+    "inspector-v6f.003": {
+      "correction": 1.07603491,
+      "requiredCorrection": 1.07603491,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.6875
+    },
+    "inspector-v6f.004": {
+      "correction": 1,
+      "requiredCorrection": 1.14754289,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 62.90625
+    },
+    "inspector-v6f.005": {
+      "correction": 1,
+      "requiredCorrection": 1.17454517,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 61.359375
+    },
+    "inspector-v6f.006": {
+      "correction": 1,
+      "requiredCorrection": 1.10634574,
+      "status": "regeneration-required-size-jump",
+      "group": "adult",
+      "beforeHeight52": 66
+    },
+    "inspector-v6f.007": {
+      "correction": 1.04572408,
+      "requiredCorrection": 1.04572408,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 68.75
+    },
+    "inspector-v6f.008": {
+      "correction": 1.08509777,
+      "requiredCorrection": 1.08509777,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 66.34375
+    },
+    "inspector-v6f.009": {
+      "correction": 1.06742993,
+      "requiredCorrection": 1.06742993,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.546875
+    },
+    "inspector-v6f.010": {
+      "correction": 1.06578781,
+      "requiredCorrection": 1.06578781,
+      "status": "corrected",
+      "group": "adult",
+      "beforeHeight52": 67.71875
+    }
+  }
+}

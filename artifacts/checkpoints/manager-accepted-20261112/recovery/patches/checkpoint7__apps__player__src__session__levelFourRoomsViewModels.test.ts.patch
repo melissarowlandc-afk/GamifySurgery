@@ -1,0 +1,17 @@
+--- a/apps/player/src/session/levelFourRoomsViewModels.test.ts
++++ b/apps/player/src/session/levelFourRoomsViewModels.test.ts
+@@ -25,10 +25,10 @@
+     const state = createLevelFourRoomsQaState();
+     const view = createPrototypePlayerView(state, null, false, null, true);
+     const expected = [
+-      ["room.mri", "diagnostics", "$2,400", "$8 upkeep / hr", "4 × 4 tiles", "0 / 1 built"],
+-      ["room.pediatric_waiting", "patient", "$600", "$1 upkeep / hr", "4 × 4 tiles", "0 / 2 built"],
+-      ["room.pediatric_examination", "patient", "$600", "$2 upkeep / hr", "3 × 3 tiles", "0 / 4 built"],
+-      ["room.wound_ostomy", "services", "$1,000", "$2 upkeep / hr", "3 × 3 tiles", "0 / 2 built"],
++      ["room.mri", "diagnostics", "$2,760", "$8 upkeep / hr", "4 × 4 tiles", "0 / 1 built"],
++      ["room.pediatric_waiting", "patient", "$690", "$1 upkeep / hr", "4 × 4 tiles", "0 / 2 built"],
++      ["room.pediatric_examination", "patient", "$690", "$2 upkeep / hr", "3 × 3 tiles", "0 / 4 built"],
++      ["room.wound_ostomy", "services", "$1,150", "$2 upkeep / hr", "3 × 3 tiles", "0 / 2 built"],
+     ] as const;
+     for (const [id, category, costLabel, upkeepLabel, footprintLabel, builtCountLabel] of expected) {
+       expect(view.roomOptions.find((room) => room.id === id)).toMatchObject({ category, costLabel, upkeepLabel, footprintLabel, builtCountLabel, enabled: true });

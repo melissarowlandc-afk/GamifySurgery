@@ -1,0 +1,31 @@
+--- a/packages/game-domain/tests/employee-training-benefits.test.ts
++++ b/packages/game-domain/tests/employee-training-benefits.test.ts
+@@ -7,12 +7,12 @@
+   getEmployeeTrainingHomeLocation, getEmployeeTrainingWorkMinutes, getNewPeriopServiceOperationPhases, getPendingResultEta,
+   getServiceOperationTrainingMinutes, interruptServiceOperationsForEmployeeDismissal, normalizeDiagnosticOrderPlan,
+   planDiagnosticOrder, PROTOTYPE_DOMAIN_CONTEXT, requestEmployeeTraining, requeueDiagnosticPhase, serializeGameState,
+-  selectWaitingDestinationForTesting,
+   startDiagnosticAcquisitionOperation, startDiagnosticProcessingOperation, startRetailPurchase, startServiceOperation,
+   type DiagnosticOrderPlan, type DiagnosticTimingRequest, type DomainContext, type GameState, type ServiceOperationState,
+ } from "../src";
+ import { addTrainingEmployee, advanceTrainingMinutes, reachTrainingStage, trainingFixture } from "./employee-training-fixtures";
+ import { pending, timingFixture } from "./diagnostic-timing-fixtures";
++import { chooseWaitingAreaDestination } from "../src/waiting-destinations";
+ 
+ type Fixture = ReturnType<typeof timingFixture>;
+ let sequence = 0;
+@@ -102,7 +102,13 @@
+   return state;
+ }
+ function placeInWaiting(fixture: Fixture): void {
+-  const destination = selectWaitingDestinationForTesting(fixture.state, fixture.context, fixture.encounter.id)!;
++  // The open-room timing fixture gives every definition a staff post. Restore
++  // the real Hallway's public standing semantics for service-queue waits.
++  const hallway = fixture.context.balanceRelease.facility.roomDefinitions.find((definition) => definition.id === "room.hallway")!;
++  hallway.navigation!.staffAnchor = null;
++  hallway.navigation!.publicWaitingArea = true;
++  const destination = chooseWaitingAreaDestination(fixture.state, fixture.context,
++    { kind: "encounter", id: fixture.encounter.id, location: fixture.encounter.patientLocation }, true);
+   expect(destination.reservation).not.toBeNull();
+   fixture.encounter.patientLocation = { ...destination.reservation!.location };
+   fixture.encounter.waitingDestination = destination.reservation;

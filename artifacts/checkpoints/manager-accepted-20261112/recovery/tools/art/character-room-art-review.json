@@ -1,0 +1,20 @@
+{
+  "method": "Worker visual review of the numbered 66-candidate contact sheet at equal rendered height; rank is editorial, not an automatic anatomical score. Preserve identity, age and natural build if the owner chooses regeneration.",
+  "topTen": [
+    { "id": "patient-gapfill-v6b.020", "reason": "Broad, rounded head and face over a compact torso/shorter legs; reads as a different caricature style beside the slimmer founder.", "priority": "high" },
+    { "id": "patient-gapfill-v6c.004", "reason": "Large rounded head/hair silhouette and compact lower body; the head-to-limb balance remains visibly different after height matching.", "priority": "high" },
+    { "id": "patient-gapfill-v6a.015", "reason": "Wide head/hair mass and short lower-body silhouette. Hair contributes to the automated estimate, but the whole silhouette difference is visible.", "priority": "high" },
+    { "id": "patient-women20-v3.006", "reason": "Wide squared head/bob and compressed neck/torso proportions give a more chibi silhouette than the founder.", "priority": "high" },
+    { "id": "future-roster20-v5.007", "reason": "Rounded oversized head and shorter leg-to-torso balance; distinguish this stylistic issue from preserving a naturally broad build.", "priority": "high" },
+    { "id": "level3-roster-v2.003", "reason": "Broad, round head with compact torso/legs; reads as a different batch style at the same full height.", "priority": "medium" },
+    { "id": "gs022-new-person-008", "reason": "Small realistic head on a long torso/leg silhouette; the opposite proportion mismatch from the large-head batches.", "priority": "high" },
+    { "id": "gs022-new-person-003", "reason": "Relatively small head and broad torso/shoulders. Similar to the reported red-sweater X-ray occupant; height normalization alone does not narrow this silhouette.", "priority": "high" },
+    { "id": "gs022-new-employee-004", "reason": "Green-scrub imaging technician has a broad torso and smaller head-to-body balance than the founder; directly relevant to the X-ray comparison.", "priority": "high" },
+    { "id": "gs022-new-employee-009", "reason": "Small realistic head above a broad torso; height-fringe repair fixes size but leaves the batch's head/body style difference.", "priority": "medium" }
+  ],
+  "bakedPeople": [
+    { "room": "room.endoscopy", "orientation": 0, "assetId": "gs015:endoscopy:south", "crop": [1965, 0, 479, 943], "axis": "y", "coverBounds": [43, 56, 395, 698], "headBounds": [133, 55, 196, 150], "annotationTolerancePixels": 8, "replacementCanvas": [479, 943], "disposition": "regeneration-review", "limitation": "Side-lying patient plus blanket is inseparable from the bed. Projected cover length is not anatomical standing height; do not resize the furniture to force a band." },
+    { "room": "room.endoscopy", "orientation": 270, "assetId": "gs015:endoscopy:east", "crop": [1848, 0, 953, 517], "axis": "x", "coverBounds": [111, 33, 798, 256], "headBounds": [114, 53, 164, 163], "annotationTolerancePixels": 8, "replacementCanvas": [953, 517], "disposition": "regeneration-review", "limitation": "Side-lying patient is baked into the occupied bed. A pose-specific transparent patient overlay would need new art; all bed pixels and contacts must be retained." },
+    { "room": "room.ambulatory_or", "orientation": 0, "assetId": "level3:ambulatory-or:tableOccupied.webp", "crop": [0, 0, 215, 465], "axis": "y", "coverBounds": [16, 20, 183, 364], "headBounds": null, "annotationTolerancePixels": 8, "replacementCanvas": [215, 465], "disposition": "occluded-regeneration-review", "limitation": "Head and feet are covered; only a drape extent and abdominal window are visible. Full figure height cannot be measured or certified from this asset. Never shrink the entire OR table." }
+  ]
+}

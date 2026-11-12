@@ -1,0 +1,11 @@
+--- a/packages/game-domain/tests/level-five-state-persistence.test.ts
++++ b/packages/game-domain/tests/level-five-state-persistence.test.ts
+@@ -82,7 +82,7 @@
+     expect(eligible.employees[0]!.staffRoleDefinitionId).not.toBe("staff.executive");
+     expect(eligible.rooms.some(room => context.balanceRelease.facility.roomDefinitions.find(def => def.id === room.roomDefinitionId)?.unlockFacilityLevel === 5)).toBe(false);
+     expect(getDisplayedClinicSatisfaction(eligible, context)).toBeGreaterThan(90);
+-    expect(eligible.levelFive!.progress.inspectionUnlocked).toMatchObject({ clinicalXp: 2000, averageStaffMorale: 85, employedStaffCount: 1 });
++    expect(eligible.levelFive!.progress.inspectionUnlocked).toMatchObject({ clinicalXp: 2300, averageStaffMorale: 85, employedStaffCount: 1 });
+     expect(eligible.levelFive!.progress.gameFinished).toBeNull();
+     const finished = createLevelFiveStateQaState("finish").levelFive!;
+     expect(finished.progress.gameFinished!.firstCompletedReport.rawTotalScore).toBe(12);

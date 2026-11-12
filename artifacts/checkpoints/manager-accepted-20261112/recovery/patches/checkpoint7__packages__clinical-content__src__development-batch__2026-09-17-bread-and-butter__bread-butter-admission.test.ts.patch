@@ -1,0 +1,21 @@
+--- a/packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts
++++ b/packages/clinical-content/src/development-batch/2026-09-17-bread-and-butter/bread-butter-admission.test.ts
+@@ -1,7 +1,7 @@
+ import { describe, expect, it } from "vitest";
+ import { syntheticClinicalCaseSchema } from "../../schema";
+-import { SYNTHETIC_CLINICAL_RELEASE as releaseWithLevel3 } from "../../synthetic-content";
+-// Keep this historical batch's inventory proof scoped to its original bank.
++import { QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE as releaseWithLevel3 } from "../../synthetic-content";
++// Keep this historical batch's inventory proof before the additive clinical-objective versions.
+ // Later-batch admission/protected-intake checks live in their own tests.
+ const SYNTHETIC_CLINICAL_RELEASE = { ...releaseWithLevel3,
+   concepts: releaseWithLevel3.concepts.filter(c=>!c.id.startsWith("concept.gs028g.")&&!c.id.startsWith("concept.pediatric-clinic.")&&!c.id.startsWith("concept.variety3.")),
+@@ -56,7 +56,7 @@
+     expect(SYNTHETIC_CLINICAL_RELEASE.concepts).toHaveLength(331);
+     expect(SYNTHETIC_CLINICAL_RELEASE.cases).toHaveLength(1008);
+     expect(SYNTHETIC_CLINICAL_RELEASE.cases.flatMap((item) => item.decisionNodes))
+-      .toHaveLength(1295);
++      .toHaveLength(1303);
+ 
+     for (const clinicalCase of cases) {
+       expect(syntheticClinicalCaseSchema.parse(clinicalCase)).toEqual(clinicalCase);

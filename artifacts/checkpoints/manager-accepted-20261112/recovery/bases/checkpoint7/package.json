@@ -1,0 +1,43 @@
+{
+  "name": "gamify-surgery",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Private prototype for a detailed limited-palette surgery-management learning game.",
+  "packageManager": "npm@11.16.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace @gamify-surgery/player",
+    "build": "npm run test:boundaries && npm run typecheck && npm run build --workspace @gamify-surgery/player",
+    "build:pages": "npm run test:boundaries && npm run typecheck && npm run build --workspace @gamify-surgery/player -- --base=/GamifySurgery/ && node scripts/verify-pages-build.mjs /GamifySurgery/",
+    "test": "npm run test:boundaries && npm run test --workspaces --if-present",
+    "test:boundaries": "node scripts/verify-app-boundaries.mjs && node scripts/verify-launcher-contract.mjs",
+    "test:e2e": "node scripts/run-e2e.mjs",
+    "test:watch": "npm run test:watch --workspace @gamify-surgery/game-domain",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "clinical:context": "npm run dev --workspace @gamify-surgery/clinical-context-workbench",
+    "clinical:context:test": "npm run test --workspace @gamify-surgery/clinical-context-workbench",
+    "clinical:research:test": "npm run test --workspace @gamify-surgery/clinical-research",
+    "clinical:validate": "npm run build --workspace @gamify-surgery/clinical-authoring && node packages/clinical-authoring/dist/cli.js",
+    "clinical:validate:example": "npm run build --workspace @gamify-surgery/clinical-authoring && node packages/clinical-authoring/dist/cli.js --public-safe packages/clinical-authoring/examples/synthetic-workspace.json",
+    "clinical:validate:frameworks": "npm run build --workspace @gamify-surgery/clinical-authoring && node packages/clinical-authoring/dist/cli.js --public-safe clinical-data/public/official-frameworks.json",
+    "clinical:validate:template": "npm run build --workspace @gamify-surgery/clinical-authoring && node packages/clinical-authoring/dist/cli.js clinical-data/templates/authoring-workspace.template.json",
+    "clinical:workbook": "npm run build --workspace @gamify-surgery/clinical-authoring && node packages/clinical-authoring/dist/workbook-cli.js",
+    "clinical:workbook:init": "npm run clinical:workbook -- init .clinical-workbench/pilot",
+    "clinical:workbook:compile": "npm run clinical:workbook -- compile .clinical-workbench/pilot .clinical-workbench/compiled-workspace.json",
+    "clinical:fingerprint-source": "npm run build --workspace @gamify-surgery/clinical-authoring && node packages/clinical-authoring/dist/source-fingerprint-cli.js",
+    "clinical:pilot:docs": "node scripts/generate-clinical-pilot-docs.mjs",
+    "clinical:pilot:links": "node scripts/check-clinical-pilot-links.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1",
+    "@types/node": "26.1.1",
+    "typescript": "7.0.2",
+    "vitest": "4.1.10"
+  }
+}

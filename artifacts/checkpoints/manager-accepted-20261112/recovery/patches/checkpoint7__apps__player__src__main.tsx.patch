@@ -1,0 +1,10 @@
+--- a/apps/player/src/main.tsx
++++ b/apps/player/src/main.tsx
+@@ -5,6 +5,7 @@
+ import { App } from "./App";
+ import "./styles/tokens.css";
+ import "./styles/global.css";
++import "./styles/workspaceDensity.css";
+ 
+ const rootElement = document.getElementById("root");
+ if (!rootElement) {

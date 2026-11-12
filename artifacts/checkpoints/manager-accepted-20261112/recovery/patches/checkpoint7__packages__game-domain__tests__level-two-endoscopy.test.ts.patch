@@ -1,0 +1,109 @@
+--- a/packages/game-domain/tests/level-two-endoscopy.test.ts
++++ b/packages/game-domain/tests/level-two-endoscopy.test.ts
+@@ -1,24 +1,28 @@
++import {beforeProgramBatch3AcceptanceRelease} from "../../clinical-content/src/question-program-batch3-acceptance-test-support";
++import {createClinicalAuthorStage} from "../../../tests/fixtures/clinical-author-stage";
+ import { LEGACY_PROTOTYPE_CLINICAL_RELEASE } from "@gamify-surgery/clinical-content";
+ import { describe, expect, it } from "vitest";
+ import {
+-  PROTOTYPE_DOMAIN_CONTEXT,
+-  createInitialGameState,
+-  deserializeGameState,
+-  gameReducer,
++  PROTOTYPE_DOMAIN_CONTEXT as actualPrototype,
+   getCurrentCapabilities,
+   getFacilityProgressionStatus,
+   getEligibleServiceRoute,
+   getCurrentQuestion,
+   getPendingResultEta,
++  getRoomCareAnchor,
+   getRoomDefinition,
+   getRoomNavigationAnchor,
+   serializeGameState,
+   validateDomainContext,
+   type DomainContext,
+   type GameState,
++  
+ } from "../src";
+ 
+ const XRAY_CASE_ID = "case.synthetic.xray-routing";
++
++// Original gated/procedural contracts use the verified retained source epoch.
++const {context:PROTOTYPE_DOMAIN_CONTEXT,createInitialGameState,gameReducer,deserializeGameState}=createClinicalAuthorStage(beforeProgramBatch3AcceptanceRelease(actualPrototype.clinicalRelease));
+ 
+ function createEndoscopyContext(): DomainContext {
+   const release = JSON.parse(JSON.stringify(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease)) as typeof PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease;
+@@ -139,7 +143,7 @@
+     expect(getEligibleServiceRoute(founderFallback, "service.endoscopy")?.providerReservation).toEqual({ kind: "founder" });
+   });
+ 
+-  it("opens a returned Endoscopy question while the founder travels only as a consult", () => {
++  it("escorts both actors to an exam for a returned Endoscopy question and holds through feedback", () => {
+     const state = stateWithEndoscopy({ endoscopist: true });
+     const source = Object.values(createInitialGameState().encounters)[0]!;
+     const multiNodeCase = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find((candidate) => candidate.decisionNodes.length > 1)!;
+@@ -178,12 +182,12 @@
+     expect(opened.operationReceipts["endoscopy.consult.open"]?.status).toBe("applied");
+     const question = getCurrentQuestion(opened, encounter.id)!;
+     expect(opened.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: encounter.id });
+-    const endoscopyRoom = opened.rooms.find((room) => room.id === "room.test.endoscopy")!;
++    const examRoom = opened.rooms.find((room) => room.id === "room.test.exam")!;
+     expect(opened.environment.founderActivity?.path.at(-1)).toEqual(
+-      getRoomNavigationAnchor(endoscopyRoom, getRoomDefinition(endoscopyRoom.roomDefinitionId)!, "staff"),
+-    );
+-    expect(opened.encounters[encounter.id]?.patientMovement).toBeNull();
+-    expect(opened.encounters[encounter.id]?.assignedRoomInstanceId).toBeNull();
++      getRoomCareAnchor(examRoom, getRoomDefinition(examRoom.roomDefinitionId)!, "clinician"),
++    );
++    expect(opened.encounters[encounter.id]?.patientMovement?.destinationRoomInstanceId ??
++      opened.encounters[encounter.id]?.assignedRoomInstanceId).toBe(examRoom.id);
+     expect(opened.encounters[encounter.id]?.pendingResult?.providerReservation).toEqual({
+       kind: "employee", employeeId: "employee.test.endoscopist", staffRoleDefinitionId: "staff.endoscopist",
+     });
+@@ -197,13 +201,13 @@
+       answerChoiceId: question.node.answerChoices[0]!.id,
+       reviewedAtMs: 10_000,
+     });
+-    expect(answered.environment.founderActivity).toBeNull();
++    expect(answered.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: encounter.id });
+     expect(answered.environment.pendingFounderConsult).toBeNull();
+     const advanced = gameReducer(answered, {
+       type: "ADVANCE_TICK",
+       operationId: "endoscopy.consult.tick-after-answer",
+     });
+-    expect(advanced.environment.founderActivity).toBeNull();
++    expect(advanced.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: encounter.id });
+     expect(advanced.environment.pendingFounderConsult).toBeNull();
+     expect(advanced.encounters[encounter.id]?.pendingResult?.providerReservation).toEqual({
+       kind: "employee", employeeId: "employee.test.endoscopist", staffRoleDefinitionId: "staff.endoscopist",
+@@ -494,15 +498,19 @@
+     });
+     const endoscopyRoom = state.rooms.find((room) => room.id === "room.test.endoscopy")!;
+     const endoscopyConsultAnchor = getRoomNavigationAnchor(endoscopyRoom, getRoomDefinition(endoscopyRoom.roomDefinitionId)!, "staff");
++    const examRoom = state.rooms.find((room) => room.id === "room.test.exam")!;
++    const examConsultAnchor = getRoomCareAnchor(examRoom, getRoomDefinition(examRoom.roomDefinitionId)!, "clinician");
+     expect(state.environment.founderActivity).toMatchObject({
+       kind: "attend_encounter",
+       targetId: encounter.id,
+     });
+-    expect(state.environment.founderActivity?.path.at(-1)).toEqual(endoscopyConsultAnchor);
++    expect(state.environment.founderActivity?.path.at(-1)).toEqual(examConsultAnchor);
++    expect(state.encounters[encounter.id]!.patientMovement?.destinationRoomInstanceId ??
++      state.encounters[encounter.id]!.assignedRoomInstanceId).toBe(examRoom.id);
+     expect(state.employees.find((employee) => employee.id === "employee.test.endoscopist")?.facilityTask).toBeNull();
+ 
+     // Another patient's finished in-suite test keeps its last in-room location
+-    // after that patient walks back to wait. It must not block the suite.
++    // after that patient walks back to wait. It must not block exam review.
+     const withStaleFinishedTest = deserializeGameState(serializeGameState(beforeReturnedQuestion));
+     const finished = withStaleFinishedTest.serviceOperations.find((operation) => operation.id === retryOperationId)!;
+     withStaleFinishedTest.serviceOperations.push({
+@@ -517,7 +525,7 @@
+       operationId: "colonoscopy.returned-question.open-with-stale-test",
+       encounterId: encounter.id,
+     });
+-    expect(reopened.environment.founderActivity?.path.at(-1)).toEqual(endoscopyConsultAnchor);
++    expect(reopened.environment.founderActivity?.path.at(-1)).toEqual(examConsultAnchor);
+   });
+ 
+   it("holds both rooms, nurses, and Founder only through the last resource-bound phase", () => {

@@ -1,0 +1,77 @@
+--- a/apps/player/src/ui/EventMessageBoard.tsx
++++ b/apps/player/src/ui/EventMessageBoard.tsx
+@@ -14,6 +14,7 @@
+   NeedsYouItemView,
+ } from "./types";
+ import { NeedsYouTray } from "./NeedsYouTray";
++import { retainPresentationIds } from "../recentPresentationIds";
+ 
+ interface EventMessageBoardProps {
+   items: MessageBoardItemView[];
+@@ -27,6 +28,8 @@
+   onNeedAction?: (item: NeedsYouItemView) => void;
+   failures?: Readonly<Record<string, string>>;
+   compact?: boolean;
++  /** Desktop rail: scroll urgent cards and history together in the panel. */
++  scrollWholePanel?: boolean;
+ }
+ 
+ interface FeedScrollSnapshot {
+@@ -89,11 +92,16 @@
+   onNeedAction,
+   failures,
+   compact = false,
++  scrollWholePanel = false,
+ }: EventMessageBoardProps) {
+-  const feedRef = useRef<HTMLDivElement | null>(null);
++  const feedRef = useRef<HTMLElement | null>(null);
++  const setScrollContainer = useCallback((element: HTMLElement | null) => {
++    feedRef.current = element;
++  }, []);
+   // Seed every supplied ID, including rows outside the current display cap.
+   // A remount therefore treats restored history as history rather than news.
+-  const knownIdsRef = useRef(new Set(items.map((item) => item.id)));
++  const knownIdsRef = useRef<Set<string> | null>(null);
++  if (!knownIdsRef.current) knownIdsRef.current = new Set(items.map(item => item.id));
+   const emphasisTimersRef = useRef(
+     new Map<string, number>(),
+   );
+@@ -233,9 +241,9 @@
+   useLayoutEffect(() => {
+     const currentInputIds = new Set(items.map((item) => item.id));
+     const genuinelyNewIds = [...currentInputIds].filter(
+-      (id) => !knownIdsRef.current.has(id),
++      (id) => !knownIdsRef.current!.has(id),
+     );
+-    for (const id of currentInputIds) knownIdsRef.current.add(id);
++    knownIdsRef.current = retainPresentationIds(knownIdsRef.current!, currentInputIds);
+     const visibleIds = new Set(listItems.map((item) => item.id));
+     const mountedNewIds = genuinelyNewIds.filter((id) => visibleIds.has(id));
+     const priorSnapshot = scrollSnapshotRef.current;
+@@ -302,6 +310,9 @@
+     <aside
+       className={`panel event-message-board is-${mode}${compact ? " is-build-tray" : ""}`}
+       aria-labelledby="event-board-title"
++      ref={scrollWholePanel ? setScrollContainer : undefined}
++      onScroll={scrollWholePanel ? handleFeedScroll : undefined}
++      tabIndex={scrollWholePanel ? 0 : undefined}
+     >
+       <div className="panel-heading">
+         <span id="event-board-title">
+@@ -323,13 +334,13 @@
+       <NeedsYouTray items={needsYou} onAction={onNeedAction} failures={failures} compact={compact} />
+       <div className="clinic-zone-label clinic-feed-label" hidden={compact}><span>Around the clinic</span><small>Newest first</small></div>
+       <div
+-        ref={feedRef}
++        ref={scrollWholePanel ? undefined : setScrollContainer}
+         className="message-board-feed"
+         role="log"
+-        tabIndex={0}
++        tabIndex={scrollWholePanel ? undefined : 0}
+         aria-live="polite"
+         aria-relevant="additions"
+-        onScroll={handleFeedScroll}
++        onScroll={scrollWholePanel ? undefined : handleFeedScroll}
+         hidden={compact}
+       >
+         {listItems.length === 0 ? (

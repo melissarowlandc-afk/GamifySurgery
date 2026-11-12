@@ -1,0 +1,32 @@
+--- a/apps/player/src/facility/inspectionActors.test.ts
++++ b/apps/player/src/facility/inspectionActors.test.ts
+@@ -7,6 +7,8 @@
+ import { getApprovedLevel5RoomTier } from "./approvedLevel5RoomData";
+ vi.mock("phaser", () => ({ default: { Scene: class {} } }));
+ import { FacilityScene, type FacilitySceneBridge } from "./FacilityScene";
++// Hosted CI runners run long simulations up to ten times slower.
++const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
+ 
+ const context = createLevelFiveStateQaContext(), balance = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease;
+ beforeAll(() => { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = context.balanceRelease; });
+@@ -48,7 +50,7 @@
+   }
+   expect(ids.size).toBe(10); expect(samples).toBe(9000); expect(directions).toContain("side"); expect(directions).toContain("back");
+   for (const call of calls) expect(call.mock.results.filter(result => result.type === "throw")).toEqual([]);
+-}, 30_000);
++}, hostedTime(30_000));
+ 
+ it.each([false, true])("draws the separate inspector layer with standard scale/depth and clears it when the run ends (phone=%s)", mobileInput => {
+   const state = createLevelFiveStateQaState("inspectors", context), facility = createPrototypePlayerView(state, null, false, null).facility;
+@@ -66,7 +68,10 @@
+   vi.spyOn(scene, "renderInspectBox").mockImplementation(() => {});
+   scene.drawCharacters();
+   expect(drawn).toHaveBeenCalledTimes(10); expect(depths.every(Number.isFinite)).toBe(true);
+-  expect(prefetched.mock.calls[0]![0]).toHaveLength(40);
++  // Phone rendering requests the selected pose inside the render plan (mocked
++  // here); unused-cardinal prefetch would fight reduced-mode texture eviction.
++  if (mobileInput) expect(prefetched).not.toHaveBeenCalled();
++  else expect(prefetched.mock.calls[0]![0]).toHaveLength(40);
+   for (const [, key, input] of drawn.mock.calls as any[]) {
+     expect(key).toMatch(/^character:inspector:/); expect(input.displayScale).toBe(1); expect(input.pose).not.toBe("seated");
+   }

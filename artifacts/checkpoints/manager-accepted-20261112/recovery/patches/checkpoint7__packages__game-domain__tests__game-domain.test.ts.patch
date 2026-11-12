@@ -1,0 +1,62 @@
+--- a/packages/game-domain/tests/game-domain.test.ts
++++ b/packages/game-domain/tests/game-domain.test.ts
+@@ -241,11 +241,8 @@
+     expect(state.encounters[TUTORIAL_ENCOUNTER_ID]).toMatchObject({
+       lifecycle: "active_action_required",
+     });
+-    expect(
+-      state.encounters[TUTORIAL_ENCOUNTER_ID]?.patientMovement
+-        ?.destinationRoomInstanceId,
+-    ).toBe("room.instance.founder_desk");
+-    expect(state.environment.founderActivity).toBeNull();
++    expect(state.encounters[TUTORIAL_ENCOUNTER_ID]?.patientMovement).toBeNull();
++    expect(state.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: TUTORIAL_ENCOUNTER_ID });
+ 
+     state = completeTutorialCorrectly(state, "front-desk-bridge");
+     expect(state.cash).toBeGreaterThanOrEqual(160);
+@@ -295,7 +292,9 @@
+     expect({
+       facilityTick: state.facilityTick,
+       cash: state.cash,
+-    }).toEqual({ facilityTick: 198, cash: 176.75 });
++    // The bedside stand freezes the check-in waiting leg; the two tutorial
++    // encounters now finish four minutes sooner, with four minutes less upkeep.
++    }).toEqual({ facilityTick: 194, cash: 177 });
+     expect(state.cash).toBeGreaterThanOrEqual(160);
+ 
+     let delayed = deserializeGameState(serializeGameState(state));
+@@ -639,7 +638,7 @@
+     expect(opened.operationReceipts["ordinary.no-exam"]?.status).toBe("applied");
+     expect(opened.openChartEncounterId).toBe("encounter.ordinary");
+     expect(opened.encounters["encounter.ordinary"]?.lifecycle).toBe("active_action_required");
+-    expect(opened.environment.founderActivity?.kind).not.toBe("attend_encounter");
++    expect(opened.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: "encounter.ordinary" });
+ 
+     opened.rooms.push({
+       id: "room.unreachable.examination",
+@@ -706,14 +705,14 @@
+       }),
+       expect.objectContaining({
+         level: 3,
+-        minimumClinicalXp: 500,
++        minimumClinicalXp: 550,
+         requiredRoomDefinitionIds: [],
+         requiredStaffRoleIds: ["staff.pharmacist"],
+         nextFacilityLevel: 4,
+       }),
+       expect.objectContaining({
+         level: 4,
+-        minimumClinicalXp: 750,
++        minimumClinicalXp: 790,
+         requiredRoomDefinitionIds: [],
+         requiredStaffRoleIds: ["staff.app"],
+         requiredCompletionWitnessIds: ["pediatric_visit_with_parent", "wound_ostomy_care_visit"],
+@@ -721,7 +720,7 @@
+       }),
+       expect.objectContaining({
+         level: 5,
+-        minimumClinicalXp: 2000,
++        minimumClinicalXp: 2300,
+         satisfactionMustBeGreaterThan: 90,
+         minimumAverageStaffMorale: 85,
+         requiredRoomDefinitionIds: [],

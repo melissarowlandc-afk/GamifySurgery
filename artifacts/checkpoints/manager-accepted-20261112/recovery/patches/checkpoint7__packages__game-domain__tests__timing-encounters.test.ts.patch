@@ -1,0 +1,22 @@
+--- a/packages/game-domain/tests/timing-encounters.test.ts
++++ b/packages/game-domain/tests/timing-encounters.test.ts
+@@ -1124,7 +1124,9 @@
+     expect(noExam.operationReceipts["atomic.no-exam"]?.status).toBe("applied");
+     expect(noExam.openChartEncounterId).toBe(encounter.id);
+     expect(getCurrentQuestion(noExam, encounter.id)).not.toBeNull();
+-    expect(noExam.environment.founderActivity).toBeNull();
++    expect(noExam.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: encounter.id });
++    const stand = noExam.environment.founderActivity!.path.at(-1)!;
++    expect(Math.abs(stand.x - encounter.patientLocation!.x) + Math.abs(stand.y - encounter.patientLocation!.y)).toBe(1);
+     addWaitingAndExaminationRooms(admitted);
+     admitted.environment.founderActivity = { kind: "collect_litter", targetId: "litter.busy", path: [{ ...admitted.environment.founderLocation }], pathIndex: 0, lastMovedAtFacilityTick: admitted.facilityTick, workMinutesRemaining: 5 };
+     const busy = gameReducer(admitted, { type: "OPEN_CHART", operationId: "atomic.busy-founder", encounterId: encounter.id });
+@@ -1465,7 +1467,7 @@
+       kind: "walking_to_care",
+       destinationRoomInstanceId: "room.test.return-examination",
+     });
+-    expect(intermediate.environment.founderActivity).toBeNull();
++    expect(intermediate.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: encounterId });
+ 
+     let manual = beforeAcknowledgement as GameState;
+     manual.environment.founderActivity = {

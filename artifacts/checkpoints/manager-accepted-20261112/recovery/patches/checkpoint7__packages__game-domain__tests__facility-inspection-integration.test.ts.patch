@@ -1,0 +1,60 @@
+--- a/packages/game-domain/tests/facility-inspection-integration.test.ts
++++ b/packages/game-domain/tests/facility-inspection-integration.test.ts
+@@ -4,6 +4,8 @@
+   serializeGameState, type GameCommand, type GameState } from "../src";
+ import { createLevelFiveStateQaContext, createLevelFiveStateQaState } from "../../../tests/fixtures/level-five-state";
+ import { createLevelFiveInspectionQaState } from "../../../tests/fixtures/level-five-inspection";
++// Hosted CI runners run long simulations up to ten times slower.
++const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
+ 
+ const context = createLevelFiveStateQaContext();
+ const apply = (state: GameState, command: GameCommand) => {
+@@ -20,7 +22,7 @@
+     employee.trainingLevel = level; // Explicit test achieved-tier setup before real round acceptance.
+     state.rooms.find(room => room.roomDefinitionId === "room.executive_office")!.upgradeLevel = 5;
+     state = apply(state, { type: "SET_EMPLOYEE_SALARY", operationId: `prep.salary.${level}`, employeeId: employee.id, salaryPerExpenseInterval: 49 });
+-    state.clinicalXp = 2000; // Unlock boundary setup; normal answer rewards are tested below.
++    state.clinicalXp = context.balanceRelease.facility.stageDefinitions.find(stage => stage.level === 5)!.minimumClinicalXp; // Unlock boundary setup; normal answer rewards are tested below.
+     state = apply(state, { type: "SET_PAUSED", operationId: `prep.play.${level}`, paused: false });
+     for (let minute = 0; minute < 180 && state.levelFive!.management.round?.status !== "completed"; minute++) state = tick(state);
+     expect(state.levelFive!.management.round).toMatchObject({ status: "completed", employeeTrainingLevel: level, durationMinutes: 24 });
+@@ -51,7 +53,7 @@
+     expect(run.accumulators.observedActiveMinutes).toBe(2999);
+     expect(run.accumulators.qualifyingCompletedEncounterIds.length).toBeGreaterThanOrEqual(20);
+     const firstAnswers = run.accumulators.presentedQuestions.filter(q => q.firstAnswer);
+-    expect(state.clinicalXp).toBe(2000 + firstAnswers.length * 10);
++    expect(state.clinicalXp).toBe(2300 + firstAnswers.length * 10);
+     expect(state.levelFive!.progress.gameFinished).toBeNull();
+     expect(state.encounters[run.accumulators.qualifyingCompletedEncounterIds[0]!]).toBeUndefined(); // earlier evidence retired
+     state = deserializeGameState(serializeGameState(state), context);
+@@ -86,7 +88,7 @@
+     state = apply(state, { type: "CANCEL_INSPECTION", operationId: "finish.retry.cancel" });
+     expect(state.levelFive!.inspection.bestCompletedReport).toEqual(first);
+     expect(state.levelFive!.progress.gameFinished).toEqual(finished);
+-  }, 60_000);
++  }, hostedTime(60_000));
+ 
+   it("ends the separate real 3000-minute empty window incomplete without fabricated sample, score or finish", () => {
+     let state = createLevelFiveInspectionQaState("inspection-incomplete", context);
+@@ -98,7 +100,7 @@
+     expect(deserializeGameState(serializeGameState(state), context).levelFive).toEqual(state.levelFive);
+     state = apply(state, { type: "BOOK_INSPECTION", operationId: "incomplete.qa.retry" });
+     expect(state.levelFive!.inspection.status).toBe("preparing");
+-  }, 60_000);
++  }, hostedTime(60_000));
+ 
+   it("keeps real clinical selection, normal first-answer XP/FSRS, cash and receipts equal with the observer on/off", () => {
+     let observed = createLevelFiveInspectionQaState("inspection-running", context);
+@@ -126,10 +128,10 @@
+     const command = { type: "SUBMIT_ANSWER" as const, operationId: "pair.answer", encounterId: patient!.id, decisionNodeId: q.node.id,
+       answerChoiceId: q.node.answerChoices.find(choice => !choice.isCorrect)!.id, reviewedAtMs: 1_791_806_400_000 };
+     observed = apply(observed, command); control = apply(control, command);
+-    expect(observed.clinicalXp - 2000).toBe(2);
++    expect(observed.clinicalXp - 2300).toBe(2);
+     expect(observed.levelFive!.inspection.run!.accumulators.presentedQuestions.some(q => q.firstAnswer?.correct === false)).toBe(true);
+     for (const key of ["campaignSeed", "encounters", "employees", "rooms", "cashCents", "clinicalXp", "learningHistories", "reviewIntents", "serviceIncomeReceipts", "settlements", "events"] as const) {
+       expect(observed[key], key).toEqual(control[key]);
+     }
+-  }, 60_000);
++  }, hostedTime(60_000));
+ });

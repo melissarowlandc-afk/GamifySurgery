@@ -1,0 +1,38 @@
+--- a/packages/game-domain/tests/variety3-admission.test.ts
++++ b/packages/game-domain/tests/variety3-admission.test.ts
+@@ -1,3 +1,4 @@
++import {beforeProgramBatch3AcceptanceRelease} from "../../clinical-content/src/question-program-batch3-acceptance-test-support";
+ import { describe, expect, it } from "vitest";
+ import { VARIETY3_ADULT_CONTEXTS as adults, VARIETY3_CASES as cases,
+   VARIETY3_TESTED_CONCEPTS as concepts, VARIETY3_TIMING_ENTRIES as timings,
+@@ -11,6 +12,7 @@
+ import { EXACT_TEST_CHOICE_ORDER_RECORDS, getExactTestChoiceOrderRecord } from "../src/test-choice-orders";
+ 
+ const context = createLevelFourRoomsQaContext();
++context.clinicalRelease=beforeProgramBatch3AcceptanceRelease(context.clinicalRelease);
+ const NOW = 1_800_000_000_000;
+ const onlyCases = (selected: SyntheticClinicalCase[]): DomainContext => ({ ...context,
+   clinicalRelease: { ...context.clinicalRelease, cases: selected } });
+@@ -44,6 +46,7 @@
+   it.each(cases.map(clinicalCase => [clinicalCase.id, clinicalCase] as const))
+     ("freezes the authored adult/profile/still, shuffled answers and reload for %s", (_id, clinicalCase) => {
+       const adult = adults.find(item => item.caseId === clinicalCase.id)!;
++      const authored = context.clinicalRelease.cases.find(item => item.id === clinicalCase.id)!;
+       const before = vacant(clinicalCase.earliestFacilityStage);
+       const histories = structuredClone(before.learningHistories);
+       const command: GameCommand = { type: "ADMIT_PATIENT", operationId: "variety3.identity", encounterId,
+@@ -55,11 +58,11 @@
+       expect(encounter.patientAppearance.stillId).toBe(adult.patientStillId);
+       expect(encounter.frozenCase).toMatchObject({ patientDisplayName: adult.patientName,
+         prototypeDemographics: adult.prototypeDemographics, selectedInstantiationProfileId: adult.profileId,
+-        chiefComplaint: clinicalCase.chiefComplaint, presentation: clinicalCase.presentation,
++        chiefComplaint: authored.chiefComplaint, presentation: authored.presentation,
+         earliestFacilityStage: clinicalCase.earliestFacilityStage, releasePointId: clinicalCase.releasePointId,
+         requiredClinicalSetting: "clinic", requiredCapabilityIds: [] });
+-      expect(encounter.frozenCase.decisionNodes[0]!.stem).toBe(clinicalCase.decisionNodes[0]!.stem);
+-      expect(sortedChoices(encounter.frozenCase)).toEqual(sortedChoices(clinicalCase));
++      expect(encounter.frozenCase.decisionNodes[0]!.stem).toBe(authored.decisionNodes[0]!.stem);
++      expect(sortedChoices(encounter.frozenCase)).toEqual(sortedChoices(authored));
+       expect(state.learningHistories).toEqual(histories);
+       expect(state.serviceOperations).toEqual([]);
+       const restored = deserializeGameState(serializeGameState(state), context);

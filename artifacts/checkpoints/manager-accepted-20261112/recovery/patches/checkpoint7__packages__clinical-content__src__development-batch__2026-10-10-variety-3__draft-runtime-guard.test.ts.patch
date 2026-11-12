@@ -1,0 +1,34 @@
+--- a/packages/clinical-content/src/development-batch/2026-10-10-variety-3/draft-runtime-guard.test.ts
++++ b/packages/clinical-content/src/development-batch/2026-10-10-variety-3/draft-runtime-guard.test.ts
+@@ -1,6 +1,7 @@
++import {beforeProgramBatch3AcceptanceRelease} from "../../question-program-batch3-acceptance-test-support";
+ import { describe, expect, it } from "vitest";
+-import { PILOT_CLINICAL_RELEASE } from "../../pilot-content";
+-import { SYNTHETIC_CLINICAL_RELEASE } from "../../synthetic-content";
++import { PILOT_CLINICAL_RELEASE as actualPilot,PILOT_REGISTRY } from "../../pilot-content";
++import { SYNTHETIC_CLINICAL_RELEASE as actualLive } from "../../synthetic-content";
+ import { syntheticClinicalReleaseSchema, type SyntheticClinicalCase, type SyntheticClinicalRelease } from "../../schema";
+ import { VARIETY3_CASES, VARIETY3_TESTED_CONCEPTS } from "./variety3-batch";
+ 
+@@ -21,6 +22,21 @@
+   concepts: release.concepts.filter(item => !item.id.startsWith("concept.variety3.")),
+   cases: release.cases.filter(item => !item.id.startsWith("case.variety3.")),
+ });
++
++const SYNTHETIC_CLINICAL_RELEASE=beforeProgramBatch3AcceptanceRelease(actualLive);
++// Reapply the existing canonical-pilot overlay to the verified earlier default.
++// The pilot has its own additional meanings and disclaimer; it is not the
++// canonical default accepted by the complete inverse-hash helper.
++const pilotCaseIds=new Set(PILOT_REGISTRY.encounterTemplates.map(template=>template.id));
++const pilotConceptIds=new Set(PILOT_REGISTRY.concepts.map(concept=>concept.id));
++const canonicalCases=actualPilot.cases.filter(cs=>pilotCaseIds.has(cs.id));
++const canonicalConcepts=actualPilot.concepts.filter(concept=>pilotConceptIds.has(concept.id));
++expect(canonicalCases.map(cs=>cs.id)).toEqual([...pilotCaseIds]);
++expect(actualPilot.cases).toEqual([...actualLive.cases.filter(cs=>!pilotCaseIds.has(cs.id)),...canonicalCases]);
++expect(actualPilot.concepts).toEqual([...actualLive.concepts.filter(concept=>!pilotConceptIds.has(concept.id)),...canonicalConcepts]);
++const PILOT_CLINICAL_RELEASE={...actualPilot,
++  cases:[...SYNTHETIC_CLINICAL_RELEASE.cases.filter(cs=>!pilotCaseIds.has(cs.id)),...canonicalCases],
++  concepts:[...SYNTHETIC_CLINICAL_RELEASE.concepts.filter(concept=>!pilotConceptIds.has(concept.id)),...canonicalConcepts]};
+ 
+ describe("admitted variety-3 against complete release validation and runtime length guard", () => {
+   it("adds no stable-ID, meaning-string or case-ID collision to either existing release", () => {

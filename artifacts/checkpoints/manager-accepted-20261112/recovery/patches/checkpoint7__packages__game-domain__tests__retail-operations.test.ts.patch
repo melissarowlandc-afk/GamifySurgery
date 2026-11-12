@@ -1,0 +1,39 @@
+--- a/packages/game-domain/tests/retail-operations.test.ts
++++ b/packages/game-domain/tests/retail-operations.test.ts
+@@ -5,6 +5,8 @@
+   advanceRetailOperations,
+   deserializeGameState,
+   gameReducer,
++  getRoomNavigationAnchor,
++  getRoomDefinition,
+   PROTOTYPE_DOMAIN_CONTEXT,
+   recordLevelThreeRoomUse,
+   serializeGameState,
+@@ -95,6 +97,27 @@
+ }
+ 
+ describe("retail operations", () => {
++  it("preempts an available founder purchase for an open chart and rejects shopping until close", () => {
++    let state = retailState();
++    addWaitingPatient(state, "encounter.founder-attendance");
++    const patient = state.encounters["encounter.founder-attendance"]!;
++    const front = state.rooms.find(room => room.roomDefinitionId === "room.front_desk")!;
++    patient.checkInStatus = "checked_in"; patient.lifecycle = "active_action_required";
++    patient.pendingResult = null; patient.steps[0]!.result = null; patient.steps[0]!.status = "action_required";
++    patient.patientLocation = getRoomNavigationAnchor(front, getRoomDefinition(front.roomDefinitionId)!, "primary");
++    patient.assignedRoomInstanceId = front.id;
++    state = start(state, "income.coffee", "founder", "founder");
++    expect(state.retailOperations[0]?.status).toBe("walking_to_outlet"); // Positive availability control.
++    state = gameReducer(state, { type: "OPEN_CHART", encounterId: patient.id, operationId: "retail.founder-attendance.open" });
++    expect(state.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: patient.id });
++    expect(state.retailOperations[0]?.status).toBe("cancelled");
++    const count = state.retailOperations.length;
++    state = start(state, "income.coffee", "founder", "founder");
++    expect(state.retailOperations).toHaveLength(count);
++    state.paused = false; state = advance(state, 90);
++    expect(state.environment.founderActivity).toMatchObject({ kind: "attend_encounter", targetId: patient.id });
++  });
++
+   it("opens a waiting chart once and redirects an optional shopper from the live retail tile", () => {
+     let state = retailState();
+     const exam = state.rooms.find((room) => room.id === "room.retail.ultrasound")!;

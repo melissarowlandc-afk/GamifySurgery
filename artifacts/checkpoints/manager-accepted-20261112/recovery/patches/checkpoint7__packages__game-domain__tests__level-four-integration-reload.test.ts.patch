@@ -1,0 +1,124 @@
+--- a/packages/game-domain/tests/level-four-integration-reload.test.ts
++++ b/packages/game-domain/tests/level-four-integration-reload.test.ts
+@@ -1,12 +1,14 @@
+ import { writeFileSync } from "node:fs";
+ import { describe, expect, it } from "vitest";
+-import { PROTOTYPE_DOMAIN_CONTEXT, deserializeGameState, pediatricRoomAtPoint, serializeGameState, type GameState } from "../src";
++import { PROTOTYPE_DOMAIN_CONTEXT, createInitialGameState, deserializeGameState, pediatricRoomAtPoint, serializeGameState, type GameState } from "../src";
+ import { createAppAppointmentsQaState } from "../../../tests/fixtures/app-appointments";
+ import { createPediatricAppointmentsQaState } from "../../../tests/fixtures/pediatric-appointments";
+ import { createMriAppointmentsQaState } from "../../../tests/fixtures/mri-appointments";
+ import { createWoundOstomyAppointmentsQaState } from "../../../tests/fixtures/wound-ostomy-appointments";
+ import { createPediatricChartsQaState, PEDIATRIC_CHARTS_QA_ENCOUNTER_ID } from "../../../tests/fixtures/pediatric-charts";
+ import { m9Apply, m9Minute, m9PumpChart, m9Until } from "../../../tests/fixtures/level-four-integration";
++// Hosted CI runners run long simulations up to ten times slower.
++const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
+ 
+ const services = [
+   ["ordinary APP", "income.app_consult", createAppAppointmentsQaState],
+@@ -29,8 +31,6 @@
+ function compareFuture(initial: GameState, minutes: number, pumpChart = false): GameState {
+   let continuous = structuredClone(initial);
+   let restored = deserializeGameState(serializeGameState(initial));
+-  // Exact root equality is separately reported as DEFECT-M9-1. These active
+-  // checks prove care progress/reservations/fees, not byte-for-byte root equality.
+   const care = (state: GameState) => JSON.parse(JSON.stringify({
+     cashCents: state.cashCents, expenses: state.totalOperatingExpenses, clinicalXp: state.clinicalXp,
+     histories: state.learningHistories, intents: state.reviewIntents, settlements: state.settlements,
+@@ -38,10 +38,12 @@
+     receipts: state.serviceIncomeReceipts, families: state.pediatricFamilies, completion: state.levelFourCompletion,
+     parents: state.retailExternalActors.filter(actor => actor.pediatricFamilyId).map(actor => ({ ...actor, movementWaitReason: actor.movementWaitReason ?? null })),
+   }));
++  expect(restored).toEqual(continuous);
+   expect(care(restored)).toEqual(care(continuous));
+   for (let i = 0; i < minutes; i++) {
+     continuous = m9Minute(continuous); restored = m9Minute(restored);
+     if (pumpChart) { continuous = m9PumpChart(continuous); restored = m9PumpChart(restored); }
++    expect(restored, `full-state reload divergence at ${initial.facilityTick} + ${i + 1}`).toEqual(continuous);
+     expect(care(restored), `care reload divergence at ${initial.facilityTick} + ${i + 1}`).toEqual(care(continuous));
+   }
+   return restored;
+@@ -49,7 +51,7 @@
+ 
+ describe("Level 4 M9 save/reload integration matrix", () => {
+   for (const [name, line, fixture] of services) {
+-    it.each(phases)(`${name}: preserves care/fees through %s reload (root equality: DEFECT-M9-1)`, phase => {
++    it.each(phases)(`${name}: preserves full state and care/fees through %s reload`, phase => {
+       let state = fixture();
+       state = m9Apply(state, { type: "SET_PAUSED", paused: false }, "m9.reload.play");
+       state = m9Until(state, value => value.serviceOperations.some(op => operationReached(op, line, phase)), undefined, 600);
+@@ -62,12 +64,12 @@
+       expect(result.serviceIncomeReceipts.filter(receipt => receipt.incomeLineId === line && receipt.actorId === actorId)).toHaveLength(1);
+       expect(new Set(result.serviceIncomeReceipts.map(receipt => receipt.transactionKey)).size).toBe(result.serviceIncomeReceipts.length);
+       if (process.env.LEVEL_FOUR_M9_REPORT === "1") writeFileSync(new URL(`../../../.local-dev/level4-m9/reload-${line.slice(7)}-${phase.replaceAll(/[^a-z]/g, "-")}.json`, import.meta.url),
+-        `${JSON.stringify({ service: name, phase, checkpointTick: state.facilityTick, operationId: id, careComparedMinutes: 200, rootEquality: "DEFECT-M9-1",
++        `${JSON.stringify({ service: name, phase, checkpointTick: state.facilityTick, operationId: id, careComparedMinutes: 200, rootEquality: "PASS",
+           receipts: result.serviceIncomeReceipts.filter(receipt => receipt.actorId === actorId) }, null, 2)}\n`);
+-    }, 30_000);
++    }, hostedTime(30_000));
+   }
+ 
+-  it("resumes local MRI reading with continuous care and one additive $5 receipt (root equality: DEFECT-M9-1)", () => {
++  it("resumes local MRI reading with continuous full state and one additive $5 receipt", () => {
+     let state = createMriAppointmentsQaState();
+     state = m9Apply(state, { type: "SET_PAUSED", paused: false }, "m9.read.reload.play");
+     state = m9Until(state, value => value.serviceOperations.some(op => op.diagnosticPhaseWork?.kind === "interpretation" && op.status === "in_service"));
+@@ -101,9 +103,9 @@
+       expect(pediatricRoomAtPoint(result, PROTOTYPE_DOMAIN_CONTEXT, childLocation ?? null)?.id).toBe(pediatricRoomAtPoint(result, PROTOTYPE_DOMAIN_CONTEXT, parent.location)?.id);
+     }
+     if (kind === "scored") expect(result.encounters[PEDIATRIC_CHARTS_QA_ENCOUNTER_ID]?.resolutionReason).toBe("completed");
+-  }, 30_000);
++  }, hostedTime(30_000));
+ 
+-  it.skip("DEFECT-M9-1: preserves a real APP's saved idle deadline during an in-care reload", () => {
++  it("DEFECT-M9-1: preserves a real APP's saved idle deadline during an in-care reload", () => {
+     let state = createAppAppointmentsQaState();
+     state = m9Apply(state, { type: "SET_PAUSED", paused: false }, "m9.defect.one.play");
+     state = m9Until(state, value => value.serviceOperations.some(op => op.status === "in_service"));
+@@ -115,4 +117,46 @@
+     expect(restored.employees.map(employee => [employee.id, employee.nextIdleActionAtFacilityTick]))
+       .toEqual(state.employees.map(employee => [employee.id, employee.nextIdleActionAtFacilityTick]));
+   });
++
++  it.each([0, 20, 50, 80, Number.MAX_SAFE_INTEGER])(
++    "DEFECT-M9-1: preserves valid staff, encounter and retail idle deadline %s across repeated reloads",
++    deadline => {
++      let state = createAppAppointmentsQaState();
++      state.facilityTick = 50;
++      const encounter = Object.values(createInitialGameState().encounters)[0]!;
++      state.encounters[encounter.id] = encounter;
++      encounter.nextIdleActionAtFacilityTick = deadline;
++      state.employees[0]!.nextIdleActionAtFacilityTick = deadline;
++      state.retailNextOpportunityTicks["employee:app.0"] = deadline;
++      const frozen = structuredClone(encounter.frozenCase);
++
++      for (let reload = 0; reload < 3; reload++) {
++        state = deserializeGameState(serializeGameState(state));
++        expect(state.encounters[encounter.id]!.nextIdleActionAtFacilityTick).toBe(deadline);
++        expect(state.employees[0]!.nextIdleActionAtFacilityTick).toBe(deadline);
++        expect(state.retailNextOpportunityTicks["employee:app.0"]).toBe(deadline);
++        expect(state.encounters[encounter.id]!.frozenCase).toEqual(frozen);
++      }
++    },
++  );
++
++  it.each([
++    ["missing", undefined], ["null", null], ["negative", -1], ["fractional", 0.5],
++    ["unsafe", Number.MAX_SAFE_INTEGER + 1], ["string", "20"], ["nonfinite", Infinity],
++  ] as const)("DEFECT-M9-1: repairs %s legacy idle deadlines", (_label, deadline) => {
++    const state = createAppAppointmentsQaState();
++    state.facilityTick = 50;
++    const encounter = Object.values(createInitialGameState().encounters)[0]!;
++    state.encounters[encounter.id] = encounter;
++    const raw = JSON.parse(serializeGameState(state));
++    raw.encounters[encounter.id].nextIdleActionAtFacilityTick = deadline;
++    raw.employees[0].nextIdleActionAtFacilityTick = deadline;
++    raw.retailNextOpportunityTicks["employee:app.0"] = deadline;
++
++    const restored = deserializeGameState(JSON.stringify(raw));
++    const fallback = state.facilityTick + PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.environment.idleActionMinimumMinutes;
++    expect(restored.encounters[encounter.id]!.nextIdleActionAtFacilityTick).toBe(fallback);
++    expect(restored.employees[0]!.nextIdleActionAtFacilityTick).toBe(fallback);
++    expect(restored.retailNextOpportunityTicks).not.toHaveProperty("employee:app.0");
++  });
+ });

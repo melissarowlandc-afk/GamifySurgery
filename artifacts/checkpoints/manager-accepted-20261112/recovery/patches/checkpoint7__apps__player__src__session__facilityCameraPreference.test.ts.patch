@@ -1,0 +1,43 @@
+--- a/apps/player/src/session/facilityCameraPreference.test.ts
++++ b/apps/player/src/session/facilityCameraPreference.test.ts
+@@ -1,6 +1,7 @@
+ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+ import { serializeGameState, type FounderIdentity } from "@gamify-surgery/game-domain";
+ import { getInitialFacilityCamera } from "../facility/defaultCamera";
++import { desktopMapShade } from "../facility/desktopMapShade";
+ import {
+   appendLocalCampaign, createFreshProfile, PROTOTYPE_PROFILE_KEY, savePrototypeProfile,
+ } from "./prototypeStorage";
+@@ -33,6 +34,32 @@
+ });
+ 
+ describe("per-campaign facility camera preferences", () => {
++  it("round-trips the desktop shade reference and covered small-world pan without touching campaign storage", () => {
++    const storage = memoryStorage();
++    const model = { gridColumns: 64, gridRows: 40, rooms: [] };
++    const first = desktopMapShade({ zoom: 0.1, panX: 0, panY: 0 }, model, { width: 900, height: 350 });
++    const expanded = desktopMapShade(first.camera, model, { width: 900, height: 550 });
++    const covered = desktopMapShade(expanded.camera, model, { width: 900, height: 250 });
++    const prefs = createFacilityCameraPreferenceSession(storage);
++    prefs.change("shade", covered.camera); prefs.flush();
++    const restored = createFacilityCameraPreferenceSession(storage).restore("shade", defaultCamera);
++    expect(restored).toEqual(covered.camera);
++    expect(desktopMapShade(restored, model, { width: 900, height: 250 })).toEqual(covered);
++    expect([...storage.values.keys()]).toEqual([facilityCameraPreferenceKey("shade")]);
++    // Store a private copy of the small metadata object, not a caller-owned ref.
++    restored.desktopViewport!.height = 999;
++    expect(readFacilityCameraPreference("shade", storage)?.desktopViewport?.height).toBe(350);
++  });
++
++  it.each([null, [], {}, { width: 900, height: 350, maxHeight: 250 },
++    { width: Infinity, height: 350, maxHeight: 550 }, { width: 900, height: 0, maxHeight: 550 }])(
++    "ignores malformed optional desktop metadata without losing the valid camera: %j", desktopViewport => {
++      const storage = memoryStorage();
++      storage.values.set(facilityCameraPreferenceKey("shade"), JSON.stringify({ schemaVersion: 1, camera: { ...cameraA, desktopViewport } }));
++      expect(readFacilityCameraPreference("shade", storage)).toEqual(cameraA);
++      expect(storage.setItem).not.toHaveBeenCalled();
++    });
++
+   it("round-trips both clinics through a new session without changing game or FSRS bytes", () => {
+     const storage = memoryStorage();
+     vi.stubGlobal("window", { localStorage: storage });

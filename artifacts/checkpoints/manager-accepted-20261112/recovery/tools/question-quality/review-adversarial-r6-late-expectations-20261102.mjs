@@ -1,0 +1,13 @@
+import fs from "node:fs";
+import assert from "node:assert/strict";
+import {createHash} from "node:crypto";
+const entry=JSON.parse(fs.readFileSync("tools/question-quality/fixtures/adversarial-r6-late-tests-20261102.json","utf8")),hash=s=>createHash("sha256").update(s).digest("hex"),changes=[];
+for(const file of ["packages/game-domain/tests/gs028-20261007-batch.test.ts","packages/game-domain/tests/gs028-20261007-variety2-batch.test.ts"]){
+ const after=fs.readFileSync(file,"utf8"),pairs=file.includes("variety2")?[[264,266],[281,283],[284,286],[301,303]]:[[244,246],[261,263],[264,266],[281,283]];
+ let restored=after;for(const[a,b]of pairs)restored=restored.replaceAll("concepts: "+b+" }","concepts: "+a+" }");assert.equal(restored,entry.files[file].text,file);
+ changes.push({file,reason:"Three new scored constructs retire one live skin construct, adding two active concept IDs at stage 1/2. Case counts and the historical batch delta of 78 cases/20 concepts are unchanged.",changedCounts:pairs,entryHash:entry.files[file].sha256,currentHash:hash(after),allOtherSourceExactlyRetained:true});
+}
+const file="packages/game-domain/tests/surgery-center-batch.test.ts",after=fs.readFileSync(file,"utf8"),addition='    // Round six retains HRM v2 in two cases and introduces v3 in another.\n    // All four mapped skin contexts now score the explicit v3 construct.\n    expected.add("concept.achalasia.high-resolution-manometry.v3");\n    expected.delete("concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v2");\n    expected.add("concept.pigmented-skin-lesion.complete-diagnostic-biopsy.v3");\n';
+assert.equal(after.replace(addition,""),entry.files[file].text);changes.push({file,reason:"The exact witnessed set retains HRM v2, adds HRM v3, and replaces live skin v2 with v3; all forty two-node encounters, thirty-two gated services, grading and execution assertions remain.",entryHash:entry.files[file].sha256,currentHash:hash(after),allOtherSourceExactlyRetained:true});
+for(const file of ["packages/game-domain/tests/level-five-launch.test.ts","packages/game-domain/tests/level-four-integration.test.ts"])assert.equal(fs.readFileSync(file,"utf8"),entry.files[file].text,file+" must remain unchanged");
+const result={checkedOn:"2026-11-03",status:"passed",scope:"Exactly three stale expectation repairs from the full run. No expectation/driver/semantics change in the ordinary Level 5 launch or Level 4 APP invariance tests.",changes,launchAndL4AssertionsUnchanged:true};fs.writeFileSync("tools/question-quality/adversarial-r6-late-expectation-review-20261102.json",JSON.stringify(result,null,2)+"\n");console.log(JSON.stringify({status:result.status,repairedFiles:changes.length,launchAndL4Unchanged:true}));

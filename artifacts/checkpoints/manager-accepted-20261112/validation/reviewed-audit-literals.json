@@ -1,0 +1,125 @@
+{
+  "status": "PASS",
+  "findings": [
+    {
+      "path": "apps/player/src/auth/AuthGate.test.tsx",
+      "target": "apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "candidate_current",
+      "category": "credential_literal",
+      "line": 154,
+      "valueSha256": "df7039dc507d704789f547b86e291cfa2be23c8215bc2dc3aee1de5037501b05",
+      "disposition": "REVIEW_REQUIRED",
+      "reviewDisposition": "mocked_auth_fixture_literal_not_real_credential"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGate.test.tsx",
+      "target": "apps/player/src/auth/AuthGate.test.tsx",
+      "kind": "candidate_current",
+      "category": "credential_literal",
+      "line": 190,
+      "valueSha256": "df7039dc507d704789f547b86e291cfa2be23c8215bc2dc3aee1de5037501b05",
+      "disposition": "REVIEW_REQUIRED",
+      "reviewDisposition": "mocked_auth_fixture_literal_not_real_credential"
+    },
+    {
+      "path": "apps/player/src/auth/AuthGateSetup.test.tsx",
+      "target": "apps/player/src/auth/AuthGateSetup.test.tsx",
+      "kind": "candidate_current",
+      "category": "credential_literal",
+      "line": 87,
+      "valueSha256": "df7039dc507d704789f547b86e291cfa2be23c8215bc2dc3aee1de5037501b05",
+      "disposition": "REVIEW_REQUIRED",
+      "reviewDisposition": "mocked_auth_fixture_literal_not_real_credential"
+    },
+    {
+      "path": "apps/player/src/auth/SetupAccountForm.tsx",
+      "target": "apps/player/src/auth/SetupAccountForm.tsx",
+      "kind": "candidate_current",
+      "category": "credential_literal",
+      "line": 73,
+      "valueSha256": "96d7b94c0436f5161aa62a2fd59c22aa03cb3ec94ef5c6dd7edad756a340ecca",
+      "disposition": "REVIEW_REQUIRED",
+      "reviewDisposition": "UI_ternary_expression_not_credential_assignment"
+    },
+    {
+      "path": "apps/player/src/auth/setupLink.test.ts",
+      "target": "apps/player/src/auth/setupLink.test.ts",
+      "kind": "candidate_current",
+      "category": "credential_literal",
+      "line": 38,
+      "valueSha256": "df7039dc507d704789f547b86e291cfa2be23c8215bc2dc3aee1de5037501b05",
+      "disposition": "REVIEW_REQUIRED",
+      "reviewDisposition": "mocked_auth_fixture_literal_not_real_credential"
+    },
+    {
+      "path": "apps/player/src/competition/supabaseCompetition.test.ts",
+      "target": "apps/player/src/competition/supabaseCompetition.test.ts",
+      "kind": "candidate_current",
+      "category": "credential_literal",
+      "line": 9,
+      "valueSha256": "eb3410584dc2785ee606130109a182d8a03818d29dfa09b652fa0499f65741b0",
+      "disposition": "REVIEW_REQUIRED",
+      "reviewDisposition": "mocked_auth_fixture_literal_not_real_credential"
+    },
+    {
+      "path": "docs/execplans/accounts-playtime-release-20261012.md",
+      "target": "docs/execplans/accounts-playtime-release-20261012.md",
+      "kind": "candidate_current",
+      "category": "project_URL",
+      "line": 1422,
+      "valueSha256": "6ff17ae9d324b2399b80dd3f91859a0396abfa79bea07dd5cccce23a5134c17b",
+      "disposition": "REVIEW_REQUIRED",
+      "reviewDisposition": "documented_public_project_origin_no_credential"
+    },
+    {
+      "path": "docs/setup/BETA1_SUPABASE_SETUP.md",
+      "target": "docs/setup/BETA1_SUPABASE_SETUP.md",
+      "kind": "candidate_current",
+      "category": "project_URL",
+      "line": 14,
+      "valueSha256": "6ff17ae9d324b2399b80dd3f91859a0396abfa79bea07dd5cccce23a5134c17b",
+      "disposition": "REVIEW_REQUIRED",
+      "reviewDisposition": "documented_public_project_origin_no_credential"
+    },
+    {
+      "path": "scripts/beta-backup/beta-backup.test.mjs",
+      "target": "scripts/beta-backup/beta-backup.test.mjs",
+      "kind": "candidate_current",
+      "category": "project_URL",
+      "line": 12,
+      "valueSha256": "f57380ccb8a890aaee0b7ed23d28899cbc497870bcd3a9d4ee7abd08ffd97c0e",
+      "disposition": "REVIEW_REQUIRED",
+      "reviewDisposition": "explicit_mock_project_URL_in_isolated_test"
+    },
+    {
+      "path": "scripts/beta-backup/beta-backup.test.mjs",
+      "target": "scripts/beta-backup/beta-backup.test.mjs",
+      "kind": "candidate_current",
+      "category": "project_URL",
+      "line": 94,
+      "valueSha256": "831111d0102c552d464620dd38d226c273d0873624959f2efefc403b2796e749",
+      "disposition": "REVIEW_REQUIRED",
+      "reviewDisposition": "explicit_mock_project_URL_in_isolated_test"
+    },
+    {
+      "path": "scripts/beta-invites/setup-link.test.mjs",
+      "target": "scripts/beta-invites/setup-link.test.mjs",
+      "kind": "candidate_current",
+      "category": "credential_literal",
+      "line": 7,
+      "valueSha256": "0d27b2fe9acbdc29ff422e9748ec6b5cdf01e9d0bb584756e89d0a7e468c075c",
+      "disposition": "REVIEW_REQUIRED",
+      "reviewDisposition": "mocked_auth_fixture_literal_not_real_credential"
+    },
+    {
+      "path": "tools/art/room-thumbnail-options.test.mjs",
+      "target": "tools/art/room-thumbnail-options.test.mjs",
+      "kind": "candidate_current",
+      "category": "credential_url",
+      "line": 13,
+      "valueSha256": "a49d01192168f961287c368c54c18f776286d3521cd2ece454c76e50af60e496",
+      "reviewDisposition": "negative_URL_parser_fixture_with_dummy_userinfo"
+    }
+  ],
+  "review": "Each exact path/category/matched-string digest inspected in local source; no general credential bypass."
+}

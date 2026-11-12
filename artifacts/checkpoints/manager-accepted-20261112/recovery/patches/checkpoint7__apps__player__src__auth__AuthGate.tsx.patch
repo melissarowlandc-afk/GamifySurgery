@@ -1,0 +1,311 @@
+--- a/apps/player/src/auth/AuthGate.tsx
++++ b/apps/player/src/auth/AuthGate.tsx
+@@ -6,6 +6,9 @@
+   type FormEvent,
+   type ReactNode,
+ } from "react";
++import { LoadingScreen } from "../ui/LoadingScreen";
++import { OpeningBrand } from "../ui/OpeningBrand";
++import { WelcomeArtwork, welcomeSurfaceStyle } from "../ui/WelcomeArtwork";
+ import type { Session } from "@supabase/supabase-js";
+ import {
+   createLocalPrototypeSession,
+@@ -17,21 +20,28 @@
+ import {
+   getSupabaseAuthClient,
+   isInvitedVerifiedUser,
++  isTransientAuthFailure,
+   loadHostedSession,
+   subscribeToHostedAuth,
+ } from "./supabaseAuth";
+ import { AuthAccountActionsContext, AuthAccountContext } from "./AuthAccountContext";
+ import { ClinicalContentNotice } from "../ui/ClinicalContentNotice";
++import { cloudCheckDeadline } from "../session/cloud/checkDeadline";
+ import { clearAuthCallback, loadAuthPasswordFlow, readAuthCallback, saveAuthPasswordFlow } from "./authPasswordFlow";
++import { takeSetupLink } from "./setupLink";
++import { RequestBackoff, requestDocumentVisible } from "../session/requestBudget";
++import { SetupAccountForm } from "./SetupAccountForm";
+ import "../ui/OpeningSequence.css";
+ 
+ interface AuthGateProps {
+   children: ReactNode;
+ }
+ 
+-type AuthScreen = "sign_in" | "invite" | "recovery" | "reset";
++type AuthScreen = "sign_in" | "invite" | "reset";
++const MIN_PASSWORD_LENGTH = 8;
+ const SIGN_IN_ERROR = "Sign-in could not be completed. Check your email and password, or contact the owner for an invitation.";
+-const LINK_ERROR = "This invitation or recovery link is invalid or has expired. Request a new recovery email, or ask the owner for a fresh invitation.";
++const LINK_ERROR = "This invitation or recovery link is invalid or has expired. Contact the person who invited you for a new link.";
++const RECOVERY_HELP = "Contact the person who invited you and ask them to email you a password-reset link. Open that link to choose a new password.";
+ const SESSION_ERROR = "Your account session could not be verified. Sign in again, or try later if the account service is unavailable.";
+ 
+ function requestError(error: unknown): string {
+@@ -40,15 +50,23 @@
+     return "Too many requests. Wait a few minutes before trying again.";
+   }
+   if (details?.code === "weak_password") {
+-    return "Choose a less common password or passphrase of at least 15 characters.";
++    return `Choose a less common password or passphrase of at least ${MIN_PASSWORD_LENGTH} characters.`;
+   }
+   return "That request could not be completed. Try again, or contact the owner if it continues.";
+ }
+ 
+ export function AuthGate({ children }: AuthGateProps) {
++  // Capture/scrub before mounting hosted-auth code so no request can start
++  // while the setup token is still present in the URL.
++  const [setupLink, setSetupLink] = useState(takeSetupLink);
++  return <HostedAuthGate setupLink={setupLink} clearSetupLink={() => setSetupLink(null)}>{children}</HostedAuthGate>;
++}
++
++function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps & { setupLink: ReturnType<typeof takeSetupLink>; clearSetupLink: () => void }) {
+   // Supabase clears the callback fragment during initialization.
+   const callback = useMemo(readAuthCallback, []);
+   const callbackFlowRef = useRef(callback.hasError ? null : callback.flow);
++  const signOutGuard = useRef<(() => Promise<void>) | null>(null);
+   const hostedConfiguration = useMemo(hostedAuthConfiguration, []);
+   const authClient = useMemo(() => getSupabaseAuthClient(hostedConfiguration), [hostedConfiguration]);
+   const bypassEnabled = localPrototypeBypassEnabled();
+@@ -56,12 +74,14 @@
+   const [candidateSession, setCandidateSession] = useState<Session | null>(null);
+   const [hostedSession, setHostedSession] = useState<Session | null>(null);
+   const [checkingSession, setCheckingSession] = useState(authClient !== null);
++  const [sessionCheckUnavailable, setSessionCheckUnavailable] = useState(false);
+   const [screen, setScreen] = useState<AuthScreen>(callback.hasError ? "sign_in" : callback.flow ?? "sign_in");
+   const [linkErrorBlocking, setLinkErrorBlocking] = useState(callback.hasError);
+   const [email, setEmail] = useState("");
+   const [password, setPassword] = useState("");
+   const [pending, setPending] = useState(false);
+   const [message, setMessage] = useState<string | null>(callback.hasError ? LINK_ERROR : null);
++  const [shellOwnsSignOut, setShellOwnsSignOut] = useState(false);
+ 
+   useEffect(() => {
+     if (!authClient) return;
+@@ -91,7 +111,7 @@
+       }
+       // Never await/call another auth API inside this provider callback.
+     });
+-    void loadHostedSession(authClient).then((session) => {
++    void cloudCheckDeadline(loadHostedSession(authClient)).then((session) => {
+       if (!active || authEventReceived) return;
+       setCandidateSession(session);
+       if (!session) {
+@@ -108,7 +128,12 @@
+ 
+   useEffect(() => {
+     if (!authClient || !candidateSession) return;
++    setSessionCheckUnavailable(false);
+     let active = true;
++    let finished = false;
++    let inFlight = false;
++    const retryBudget = new RequestBackoff(1_000, 5 * 60_000);
++    let timer: ReturnType<typeof setTimeout> | undefined;
+     const flow = callbackFlowRef.current ?? loadAuthPasswordFlow(candidateSession.user.id);
+     callbackFlowRef.current = null;
+     if (flow) {
+@@ -117,24 +142,58 @@
+     }
+     // getSession is only a browser cache. Check the user with the Auth server
+     // before admission, including restored sessions, expiration and bans.
+-    void authClient.auth.getUser(candidateSession.access_token).then(({ data, error }) => {
+-      if (!active) return;
+-      if (error || !data.user || !isInvitedVerifiedUser(data.user) || data.user.id !== candidateSession.user.id) {
+-        setHostedSession(null);
+-        setCandidateSession(null);
+-        setMessage(SESSION_ERROR);
+-      } else {
+-        setHostedSession({ ...candidateSession, user: data.user });
+-      }
+-      setCheckingSession(false);
+-    }).catch(() => {
+-      if (!active) return;
++    const rejectSession = () => {
++      finished = true;
+       setHostedSession(null);
+       setCandidateSession(null);
+       setCheckingSession(false);
+       setMessage(SESSION_ERROR);
+-    });
+-    return () => { active = false; };
++      // Clear rejected credentials from the browser as well as the gate.
++      void authClient.auth.signOut({ scope: "local" }).catch(() => {});
++    };
++    const retry = () => {
++      if (!active || finished) return;
++      setSessionCheckUnavailable(true);
++      setCheckingSession(true);
++      timer = setTimeout(() => { timer = undefined; void verify(); },
++        retryBudget.fail());
++    };
++    const verify = async () => {
++      if (!active || finished || inFlight || !requestDocumentVisible()) return;
++      inFlight = true;
++      try {
++        const { data, error } = await cloudCheckDeadline(authClient.auth.getUser(candidateSession.access_token));
++        if (!active) return;
++        if (error && isTransientAuthFailure(error)) { retry(); return; }
++        if (error || !data.user || !isInvitedVerifiedUser(data.user) || data.user.id !== candidateSession.user.id) {
++          rejectSession();
++        } else {
++          finished = true;
++          setSessionCheckUnavailable(false);
++          setHostedSession({ ...candidateSession, user: data.user });
++          setCheckingSession(false);
++        }
++      } catch (error) {
++        if (!active) return;
++        if (isTransientAuthFailure(error)) retry(); else rejectSession();
++      } finally { inFlight = false; }
++    };
++    const online = () => {
++      if (!requestDocumentVisible()) return;
++      if (timer !== undefined && !retryBudget.ready()) return;
++      if (timer !== undefined) clearTimeout(timer);
++      timer = undefined;
++      void verify();
++    };
++    window.addEventListener("online", online);
++    document.addEventListener("visibilitychange", online);
++    void verify();
++    return () => {
++      active = false;
++      if (timer !== undefined) clearTimeout(timer);
++      window.removeEventListener("online", online);
++      document.removeEventListener("visibilitychange", online);
++    };
+   }, [authClient, candidateSession]);
+ 
+   const signOut = async () => {
+@@ -142,31 +201,35 @@
+     setPending(true);
+     setMessage(null);
+     try {
++      await signOutGuard.current?.();
+       const { error } = await authClient.auth.signOut({ scope: "local" });
+-      if (error) { setMessage(requestError(error)); return; }
++      if (error) { setMessage(requestError(error)); return false; }
+       if (hostedSession) saveAuthPasswordFlow(hostedSession.user.id, null);
+       setHostedSession(null);
+       setCandidateSession(null);
+       setCheckingSession(false);
+       setScreen("sign_in");
+       setPassword("");
++      return true;
+     } catch (error) {
+       setMessage(requestError(error));
++      return false;
+     } finally { setPending(false); }
+   };
+ 
+   const passwordScreen = screen === "invite" || screen === "reset";
+   const admittedSession = hostedSession && hostedSession.user.id === candidateSession?.user.id ? hostedSession : null;
++  const setupLinkMatchesSession = Boolean(setupLink && admittedSession?.user.email?.trim().toLowerCase() === setupLink.email);
+   // Password callbacks take precedence over an authenticated session. A
+   // remembered local access flag is honored only when bypass is still enabled.
+-  if ((!passwordScreen && !linkErrorBlocking && admittedSession) || (!authClient && !hostedConfiguration && bypassEnabled && localSession)) {
++  if ((!passwordScreen && !linkErrorBlocking && admittedSession && (!setupLink || setupLinkMatchesSession)) || (!authClient && !hostedConfiguration && bypassEnabled && localSession && !setupLink)) {
+     return (
+       <AuthAccountContext.Provider key={admittedSession?.user.id ?? "local_prototype"} value={admittedSession?.user.id ?? null}>
+         <AuthAccountActionsContext.Provider value={authClient && admittedSession ? {
+-          email: admittedSession.user.email ?? "", signOut, pending, message,
++          email: admittedSession.user.email ?? "", signOut, signOutGuard, pending, message, setShellOwnsSignOut,
+         } : null}>
+         {children}
+-        {authClient && admittedSession ? (
++        {authClient && admittedSession && !shellOwnsSignOut ? (
+           <>
+             <button className="auth-signout-button" type="button" disabled={pending} onClick={() => void signOut()}>
+               {pending ? "Signing out…" : "Sign out"}
+@@ -179,23 +242,23 @@
+     );
+   }
+ 
++  // A setup fragment is already scrubbed before HostedAuthGate mounts. Let a
++  // restored session finish server verification before deciding whether to
++  // admit it or show the setup form. A different account remains untouched.
++  if (setupLink && !checkingSession && !setupLinkMatchesSession) {
++    return <SetupAccountForm link={setupLink} onComplete={clearSetupLink} onReturn={clearSetupLink} />;
++  }
++
+   const submit = async (event: FormEvent<HTMLFormElement>) => {
+     event.preventDefault();
+     if (!authClient || pending) return;
+     setPending(true);
+     setMessage(null);
+     try {
+-      if (screen === "recovery") {
+-        const { error } = await authClient.auth.resetPasswordForEmail(email.trim(), {
+-          redirectTo: `${window.location.origin}${import.meta.env.BASE_URL}`,
+-        });
+-        setMessage(error ? requestError(error) : "If that invited account exists, a recovery email is on its way. Check your inbox and spam folder.");
+-        return;
+-      }
+       if (passwordScreen) {
+         if (!admittedSession) { setMessage(LINK_ERROR); return; }
+-        if (password.length < 15) {
+-          setMessage("Use a password or passphrase of at least 15 characters.");
++        if (password.length < MIN_PASSWORD_LENGTH) {
++          setMessage(`Use a password or passphrase of at least ${MIN_PASSWORD_LENGTH} characters.`);
+           return;
+         }
+         const { error } = await authClient.auth.updateUser({ password });
+@@ -223,36 +286,32 @@
+   };
+ 
+   if (checkingSession && !linkErrorBlocking) {
+-    return (
+-      <main className="opening-screen auth-gate-screen">
+-        <section className="founder-creator auth-gate-card" role="status">
+-          <span className="opening-wordmark">Stitchin&apos; Time</span><h1>Checking account…</h1>
+-          <ClinicalContentNotice />
+-        </section>
+-      </main>
+-    );
++    return <AuthAccountContext.Provider value={candidateSession?.user.id ?? null}>
++      <LoadingScreen status="Connecting to your account…" stage="connecting"
++        failure={sessionCheckUnavailable ? "Your sign-in could not be verified. Check your connection and try again." : null}
++        onRetry={() => window.location.reload()} />
++    </AuthAccountContext.Provider>;
+   }
+ 
+   return (
+-    <main className="opening-screen auth-gate-screen">
+-      <section className="founder-creator auth-gate-card">
+-        <span className="opening-wordmark">Stitchin&apos; Time</span>
++    <main className="opening-screen auth-gate-screen welcome-surface welcome-entrance" style={welcomeSurfaceStyle}>
++      <WelcomeArtwork className="welcome-entrance-art" entrance="wide" />
++      <section className="founder-creator auth-gate-card welcome-entrance-panel">
++        <OpeningBrand />
+         <ClinicalContentNotice />
+-        <h1>{screen === "invite" ? "Set Your Password" : screen === "recovery" ? "Recover Password" : screen === "reset" ? "Choose New Password" : authClient ? "Sign In" : "Local Prototype"}</h1>
++        <h1>{screen === "invite" ? "Set Your Password" : screen === "reset" ? "Choose New Password" : authClient ? "Sign In" : "Local Prototype"}</h1>
+         {authClient ? (
+           <form className="auth-form" onSubmit={submit}>
+             <p>Access is by owner invitation. Open your invitation email to set your first password.</p>
+             {!passwordScreen ? (
+               <label>Email<input type="email" autoComplete="email" required value={email} onChange={(event) => setEmail(event.target.value)} /></label>
+             ) : null}
+-            {screen !== "recovery" ? (
+-              <label>Password<input type="password" autoComplete={screen === "sign_in" ? "current-password" : "new-password"}
+-                minLength={passwordScreen ? 15 : undefined} maxLength={128} required value={password} onChange={(event) => setPassword(event.target.value)} /></label>
+-            ) : null}
+-            {passwordScreen ? <small>Use at least 15 characters. Spaces, paste and password managers are welcome.</small> : null}
++            <label>Password<input type="password" autoComplete={screen === "sign_in" ? "current-password" : "new-password"}
++              minLength={passwordScreen ? MIN_PASSWORD_LENGTH : undefined} maxLength={128} required value={password} onChange={(event) => setPassword(event.target.value)} /></label>
++            {passwordScreen ? <small>Use at least {MIN_PASSWORD_LENGTH} characters. Spaces, paste and password managers are welcome.</small> : null}
+             {message ? <p className="auth-message" role="alert">{message}</p> : null}
+             <button className="opening-choice opening-choice-primary" type="submit" disabled={pending || (passwordScreen && !admittedSession)}>
+-              {pending ? "Working…" : screen === "invite" ? "Set password" : screen === "recovery" ? "Send recovery email" : screen === "reset" ? "Update password" : "Sign in"}
++              {pending ? "Working…" : screen === "invite" ? "Set password" : screen === "reset" ? "Update password" : "Sign in"}
+             </button>
+             <div className="auth-mode-links">
+               {screen !== "sign_in" ? (
+@@ -261,7 +320,7 @@
+                   setScreen("sign_in"); setMessage(null); setPassword("");
+                 }}>Return to sign in</button>
+               ) : (
+-                <button className="text-button" type="button" disabled={pending} onClick={() => { setScreen("recovery"); setMessage(null); setPassword(""); }}>Forgot password?</button>
++                <button className="text-button" type="button" disabled={pending} onClick={() => { setMessage(RECOVERY_HELP); setPassword(""); }}>Forgot password?</button>
+               )}
+             </div>
+             <small>Email is used only for invitations, verification, sign-in, recovery, security notices and duplicate-account control. It is not used for advertising or marketing.</small>

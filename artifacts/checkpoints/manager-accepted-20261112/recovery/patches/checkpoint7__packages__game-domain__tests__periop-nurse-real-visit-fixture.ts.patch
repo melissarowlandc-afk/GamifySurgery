@@ -1,0 +1,28 @@
+--- a/packages/game-domain/tests/periop-nurse-real-visit-fixture.ts
++++ b/packages/game-domain/tests/periop-nurse-real-visit-fixture.ts
+@@ -1,5 +1,7 @@
+ import { deserializeGameState, gameReducer, getCurrentQuestion, PROTOTYPE_DOMAIN_CONTEXT, serializeGameState, type GameCommand } from "../src";
+ import { periopFlowFixture } from "./periop-nurse-flow-fixture";
++import {beforeProgramBatch4AcceptanceRelease} from "../../clinical-content/src/question-program-batch4-acceptance-test-support";
++const context={...PROTOTYPE_DOMAIN_CONTEXT,clinicalRelease:beforeProgramBatch4AcceptanceRelease(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease)};
+ 
+ /** Shipped Level-2 rooms/doors and actual hires; all patient work below uses
+  * the same commands as the chart UI. No edited steps, timers or task records.
+@@ -8,7 +10,7 @@
+   let state = periopFlowFixture(2, 2, { amenities: true }).state;
+   let sequence = 0;
+   const dispatch = (command: GameCommand) => {
+-    state = gameReducer(state, command, PROTOTYPE_DOMAIN_CONTEXT);
++    state = gameReducer(state, command, context);
+     return state;
+   };
+   const commandId = () => `periop.real.${sequence++}`;
+@@ -45,7 +47,7 @@
+       dispatch({ type: "OPEN_CHART", operationId: commandId(), encounterId: id });
+       return;
+     }
+-    const question = getCurrentQuestion(state, id);
++    const question = getCurrentQuestion(state, id, context);
+     if (question && state.attendedEncounterId === id) dispatch({ type: "SUBMIT_ANSWER", operationId: commandId(),
+       encounterId: id, decisionNodeId: question.node.id, answerChoiceId: question.node.answerChoices.find((choice) => choice.isCorrect)!.id,
+       reviewedAtMs: 10000 + sequence });

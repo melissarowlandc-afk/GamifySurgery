@@ -1,0 +1,31 @@
+--- a/packages/game-domain/tests/app-appointments.test.ts
++++ b/packages/game-domain/tests/app-appointments.test.ts
+@@ -208,6 +208,8 @@
+ 
+   it("reroutes after firing and selling, then sends visitors home if the final APP is fired", () => {
+     let state = until(fixture(), value => visits(value).filter(operation => operation.status === "in_service").length === 2);
++    // Isolate reroute/final dismissal from the denser autonomous queue.
++    state.serviceAppointmentsEnabled = false;
+     const preview = getRoomSalePreview(state, "room.app.0", context)!;
+     expect(preview.dismissedEmployees.map(employee => employee.id)).toEqual(["app.0"]);
+     expect(getRoomStaffCapacity({ ...state, rooms: state.rooms.filter(room => room.id !== "room.app.0") }, "staff.app").capacity).toBe(1);
+@@ -234,7 +236,7 @@
+     expect(() => deserializeGameState(serializeGameState(state), context)).toThrow("APP appointment revenue");
+   });
+ 
+-  it("takes real morale-restoring breaks without free wages or lost visitors", () => {
++  it("preempts an APP break for care without free wages, partial credit or lost visitors", () => {
+     let state = fixture();
+     state.serviceAppointmentsEnabled = false;
+     state = gameReducer(state, { type: "PLACE_ROOM", operationId: "app.break.room", roomId: "room.app.break",
+@@ -249,7 +251,9 @@
+     expect(wageDifference).toBe(-60);
+     const id = startServiceOperation(state, "income.app_consult", "visitor", context)!;
+     expect(id).toBeTruthy();
+-    state = until(state, value => value.employees.find(row => row.id === employee.id)!.morale > morale, 100);
++    state = until(state, value => value.employees.find(row => row.id === employee.id)!.facilityTask?.kind !== "take_break", 100);
++    expect(state.employees.find(row => row.id === employee.id)!.morale).toBe(morale);
++    expect(state.employees.find(row => row.id === employee.id)!.lastBreakAtFacilityTick).not.toBeNull();
+     state = until(state, value => visits(value).find(row => row.id === id)?.completedAtFacilityTick !== null, 150);
+     expect(visits(state).find(row => row.id === id)?.cancelledAtFacilityTick).toBeNull();
+   });

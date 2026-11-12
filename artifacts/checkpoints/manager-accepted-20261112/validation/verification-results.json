@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "strictVerification": {
+    "status": "PASS",
+    "manifestedFiles": 3342,
+    "archiveFiles": 3343,
+    "archiveBytes": 1151859323,
+    "patchContracts": 350,
+    "forwardReverseReapply": 350,
+    "recoveredTargets": 2938,
+    "wholeOwnedTargets": 2588,
+    "stagePaths": 3343,
+    "liveStageSourcesChecked": 0,
+    "liveRecoveryTargetsChecked": 9007,
+    "priorArchivePayloadsChecked": 8520,
+    "historicalPatchBasesChecked": 350,
+    "liveClinicalSourcesChecked": 422,
+    "filesOver50MB": [],
+    "totalOver1GB": true,
+    "sizeFlagRecorded": true,
+    "gitMutations": 0,
+    "workingTreeWrites": 0
+  },
+  "dryRunRestore": {
+    "status": "PASS",
+    "dryRun": true,
+    "recoveredFiles": 2938,
+    "recoveredBytes": 1012705329,
+    "gitMutations": 0,
+    "requiresAllSixPriorArchivesAndCompatibleEarlierDependencies": true
+  },
+  "diskRoundtripRecoveredFiles": 2938,
+  "reproduceFromPatches": 350,
+  "negativeGuardChecks": 27,
+  "fullSafetyAudit": "validation/safety-audit.json",
+  "finalSafetySeal": "validation/final-safety-seal.json",
+  "sizeFlag": "TOTAL_OVER_1_GB_SPLIT_PROPOSED",
+  "gameplayBuildOrDBTestsRerun": false,
+  "exactOutputs": [
+    "validation/strict-verification-output.txt",
+    "validation/restore-dry-run-output.txt",
+    "validation/restore-roundtrip-output.txt"
+  ],
+  "commands": [
+    "python artifacts/checkpoints/manager-accepted-20261112/verify_archive.py --check-live-stage-files --check-live-recovery-files",
+    "python artifacts/checkpoints/manager-accepted-20261112/restore_recovery.py --dry-run",
+    "python artifacts/checkpoints/manager-accepted-20261112/safety_audit.py",
+    "python artifacts/checkpoints/manager-accepted-20261112/seal_safety_audit.py",
+    "python artifacts/checkpoints/manager-accepted-20261112/verify_restore_guards.py --guards-only",
+    "python artifacts/checkpoints/manager-accepted-20261112/verify_restore_guards.py"
+  ]
+}

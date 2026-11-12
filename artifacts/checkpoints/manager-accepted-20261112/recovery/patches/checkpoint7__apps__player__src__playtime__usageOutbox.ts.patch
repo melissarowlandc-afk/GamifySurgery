@@ -1,0 +1,26 @@
+--- a/apps/player/src/playtime/usageOutbox.ts
++++ b/apps/player/src/playtime/usageOutbox.ts
+@@ -1,4 +1,5 @@
+ import { accountStorageKey } from "../session/accountStorageKey";
++import { setAuxiliaryItem } from "../session/storagePressure";
+ import { boundUsageReceipts, isUsageReceipt, USAGE_BATCH_SIZE, type UsageReceipt } from "./usageTypes";
+ 
+ export const USAGE_OUTBOX_KEY = "gamify-surgery.usage.outbox.v1";
+@@ -12,7 +13,7 @@
+   private deleting = false;
+   readonly key: string;
+ 
+-  constructor(accountId: string, private storage: UsageStorage | null, private now: () => number) {
++  constructor(readonly accountId: string, private storage: UsageStorage | null, private now: () => number) {
+     this.key = accountStorageKey(USAGE_OUTBOX_KEY, accountId);
+     this.memory = this.read();
+     // Prune persisted expired entries even when admission/consent blocks uploads.
+@@ -40,7 +41,7 @@
+     this.memory = bounded.receipts;
+     try {
+       if (!this.storage) throw new Error("Storage unavailable");
+-      this.storage.setItem(this.key, JSON.stringify(this.memory));
++      setAuxiliaryItem(this.storage, this.key, JSON.stringify(this.memory));
+       this.storageOk = true;
+       return true;
+     } catch {

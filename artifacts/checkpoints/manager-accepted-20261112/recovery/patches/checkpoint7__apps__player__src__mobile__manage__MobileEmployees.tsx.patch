@@ -1,0 +1,13 @@
+--- a/apps/player/src/mobile/manage/MobileEmployees.tsx
++++ b/apps/player/src/mobile/manage/MobileEmployees.tsx
+@@ -99,8 +99,9 @@
+       <div className="mobile-manage-card-heading"><h3>{selectedRole.displayName}</h3><strong>{selectedRole.currentCount}/{selectedRole.maximumCount}</strong></div>
+       <div className="mobile-manage-hire"><span>Hire price <b>{selectedRole.hiringCostLabel}</b></span>
+         <button type="button" className="mobile-primary" data-phone-anchor="hire" aria-label={`Hire ${selectedRole.displayName}`} data-staff-role-hire
++          aria-describedby={!selectedRole.canHire && selectedRole.blockedReason ? `mobile-hire-reason-${selectedRole.id}` : undefined}
+           disabled={!selectedRole.canHire} onClick={() => props.onHireStaff(selectedRole.id)}>Hire {selectedRole.hiringCostLabel}</button></div>
+-      {!selectedRole.canHire && selectedRole.blockedReason ? <p className="mobile-manage-blocked" role="note">{selectedRole.blockedReason}</p> : null}
++      {!selectedRole.canHire && selectedRole.blockedReason ? <p id={`mobile-hire-reason-${selectedRole.id}`} className="staff-role-hire-reason" role="note">{selectedRole.blockedReason}</p> : null}
+       <p>{selectedRole.currentCount} staffed · {selectedRole.maximumCount} positions in built rooms.</p>
+       {selectedRole.id === "staff.executive" ? <>
+         <p className="mobile-manage-note">One Executive · $45/hr. Daily morale, comfort, inspection preparation and 1–2% off stock/upkeep. Training strengthens all four.</p>

@@ -1,0 +1,37 @@
+--- a/apps/player/src/session/clinicalServiceLabels.test.ts
++++ b/apps/player/src/session/clinicalServiceLabels.test.ts
+@@ -1,3 +1,10 @@
++import { beforeProgramBatch3AcceptanceRelease } from "../../../../packages/clinical-content/src/question-program-batch3-acceptance-test-support";
++import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
++
++// Historical chart fixtures freeze the hash-verified pre-batch3 release.
++// Following commands and view projections still use the current runtime.
++const historicalTopicContext = { ...PROTOTYPE_DOMAIN_CONTEXT,
++  clinicalRelease: beforeProgramBatch3AcceptanceRelease(PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease) };
+ import { describe, expect, it } from "vitest";
+ import {
+   createInitialGameState,
+@@ -21,7 +28,7 @@
+     caseId: "case.celiac.chronic-diarrhea",
+     patientDisplayName: "Service Label Patient",
+     arrivalClass: "routine",
+-  });
++  }, historicalTopicContext);
+   const encounter = state.encounters[ENCOUNTER_ID]!;
+   encounter.lifecycle = "active_action_required";
+   encounter.patientMovement = null;
+@@ -44,12 +51,12 @@
+     expect(
+       chart(available).answerChoices.find((choice) => choice.id === CORRECT_CHOICE_ID)
+         ?.detailLabel,
+-    ).toBe("Estimated test wait (game time)");
++    ).toContain("Estimated total (game time; includes queues and walking).");
+     expect(
+       currentStep(available).answerChoices.find(
+         (choice) => choice.id === CORRECT_CHOICE_ID,
+       )?.detailLabel,
+-    ).toBe("Estimated test wait (game time)");
++    ).toContain("Estimated total (game time; includes queues and walking).");
+ 
+     const unavailable = structuredClone(available);
+     const choice = unavailable.encounters[ENCOUNTER_ID]!.frozenCase

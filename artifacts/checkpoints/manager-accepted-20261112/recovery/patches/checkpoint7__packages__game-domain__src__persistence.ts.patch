@@ -1,0 +1,209 @@
+--- a/packages/game-domain/src/persistence.ts
++++ b/packages/game-domain/src/persistence.ts
+@@ -1,7 +1,10 @@
++import { normalizeFounderConsult } from "./founder-consults";
++import { normalizeRoutineClinicWork } from "./clinic-work";
+ import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
+ import { syntheticClinicalCaseSchema } from "@gamify-surgery/clinical-content";
+ import { normalizeGuidanceTipsState } from "./guidance-tip-persistence";
+ import { readLevelFiveState } from "./level-five-state";
++import { readLateProgressionState } from "./late-progression";
+ import { normalizeExecutiveComfort, normalizeExecutiveStock, validateExecutiveTaskReservations } from "./executive-management";
+ import { normalizeGiftCheckout, normalizeGiftOnlyVisit, normalizeGiftRetailDemand, validateGiftRetailReservations } from "./gift-retail";
+ import { reconcileGiftRetailTrips } from "./retail-operations";
+@@ -15,6 +18,7 @@
+ import { employeeDepartureRiskCadenceGroup } from "./departure-risk-alerts";
+ import {
+   getServiceIncomeLine,
++  LEGACY_STAFF_BREAK_DURATION_MINUTES,
+   DIAGNOSTIC_READING_WORKSTATIONS,
+   PROTOTYPE_ALERT_SCHEDULING,
+   PROTOTYPE_AMBIENT_ALERT_DEFINITIONS,
+@@ -69,7 +73,8 @@
+ import { normalizeRetiredServiceHistory } from "./retired-service-history";
+ import { normalizeProcedureCompanionState, reconcileProcedureCompanions } from "./procedure-companions";
+ import { reconcileServiceOperationFlow } from "./service-operations";
+-import { normalizeDiagnosticOrderPlan, normalizeDiagnosticPhaseWork, normalizeDiagnosticPhysicalWork } from "./diagnostic-timing";
++import { getDiagnosticOrderPlans, normalizeDiagnosticOrderPlan, normalizeDiagnosticPhaseWork, normalizeDiagnosticPhysicalWork } from "./diagnostic-timing";
++import { replaceDiagnosticOrderPlan } from "./diagnostic-orders";
+ import { isReadingWorkMinute, readingMinutesEqual } from "./room-upgrade-reading";
+ import { normalizeOutsideRadiologyReads, normalizeRadiologistReadIncome } from "./radiologist-read-income";
+ import { getDefaultDoorOffset } from "./doors";
+@@ -140,7 +145,9 @@
+   } as const;
+   if (!hasContractKeys(value, ["version", "kind", "demographics", "pediatricFamilyId", "requestedRoomInstanceId"]) ||
+       value.version !== "clinic-visit.v1" || typeof value.kind !== "string" || !(value.kind in incomeByKind) ||
+-      operation.incomeLineId !== incomeByKind[value.kind as keyof typeof incomeByKind] || operation.actorKind !== "visitor" ||
++      operation.incomeLineId !== incomeByKind[value.kind as keyof typeof incomeByKind] ||
++      !(operation.actorKind === "visitor" || value.kind !== "mri" && operation.actorKind === "encounter" &&
++        typeof operation.consultEncounterId === "string" && operation.consultEncounterId === operation.actorId) ||
+       !isPixelAppearance(operation.appearance) ||
+       !hasContractKeys(value.demographics, ["ageYears", "sexLabel"]) ||
+       typeof value.demographics.ageYears !== "number" || !Number.isSafeInteger(value.demographics.ageYears) ||
+@@ -273,7 +280,9 @@
+   }
+   for (const operation of state.serviceOperations) {
+     const familyId = operation.clinicVisit?.pediatricFamilyId;
+-    if (familyId !== undefined && (families[familyId]?.child.kind !== "service_visitor" || families[familyId]?.child.id !== operation.id)) {
++    if (familyId !== undefined && !(families[familyId]?.child.kind === "service_visitor" && families[familyId]?.child.id === operation.id ||
++        operation.actorKind === "encounter" && operation.consultEncounterId === operation.actorId &&
++        families[familyId]?.child.kind === "encounter" && families[familyId]?.child.id === operation.actorId)) {
+       throw new Error("The saved pediatric visit has an orphan family link.");
+     }
+   }
+@@ -989,6 +998,10 @@
+   if (!Array.isArray(candidate)) return [];
+   const activePeriopBeds = new Set<string>();
+   return candidate.flatMap((raw) => {
++    if (isRecord(raw) && raw.consultEncounterId !== undefined &&
++        (typeof raw.consultEncounterId !== "string" || !raw.consultEncounterId || raw.actorKind !== "encounter" || raw.actorId !== raw.consultEncounterId)) {
++      throw new Error("The saved service consult link is invalid.");
++    }
+     const gardenVisitBenefit = isRecord(raw) ? normalizeGardenVisitBenefit(raw.gardenVisitBenefit, facilityTick) : undefined;
+     const executiveComfort = isRecord(raw) ? normalizeExecutiveComfort(raw.executiveComfort, facilityTick) : undefined;
+     const clinicVisit = isRecord(raw) ? readClinicVisit(raw.clinicVisit, raw) : undefined;
+@@ -1186,6 +1199,7 @@
+       throw new Error("The saved diagnostic physical phase witness is invalid.");
+     }
+     const trainingTiming = normalizeServiceOperationTraining(raw.trainingTiming, frozenOperationPhases);
++    const clinicWork = normalizeRoutineClinicWork(raw.clinicWork, raw, frozenOperationPhases);
+     const periopNurseAttention = normalizePeriopNurseAttention(raw.periopNurseAttention, frozenOperationPhases);
+     const roomUpgradeRevenue = normalizeRoomUpgradeRevenueQuote(raw.roomUpgradeRevenue, appAppointmentRevenue?.baseFee ?? raw.quoteFee,
+       frozenOperationPhases.map((phase) => phase.roomDefinitionId));
+@@ -1282,6 +1296,7 @@
+       displayName: raw.displayName,
+       appearance: isPixelAppearance(raw.appearance) ? raw.appearance : null,
+       ...(clinicVisit ? { clinicVisit } : {}),
++      ...(typeof raw.consultEncounterId === "string" ? { consultEncounterId: raw.consultEncounterId } : {}),
+       ...(gardenVisitBenefit ? { gardenVisitBenefit } : {}),
+       ...(executiveComfort ? { executiveComfort } : {}),
+       ...(appAppointmentRevenue ? { appAppointmentRevenue } : {}),
+@@ -1305,11 +1320,14 @@
+       pathIndex: path.length > 0 ? Math.max(0, Math.min(path.length - 1, raw.pathIndex)) : 0,
+       lastMovedAtFacilityTick: raw.lastMovedAtFacilityTick,
+       cancellationReason: typeof raw.cancellationReason === "string" ? raw.cancellationReason : null,
+-      resourceWaitReason: typeof raw.resourceWaitReason === "string" ? raw.resourceWaitReason : null,
++      ...(raw.resourceWaitReason !== undefined
++        ? { resourceWaitReason: typeof raw.resourceWaitReason === "string" ? raw.resourceWaitReason : null }
++        : {}),
+       ...(visitorTravel ? { visitorTravel } : {}),
+       resourceQueueVersion: raw.resourceQueueVersion === 1 ? 1 : undefined,
+       phaseFlowVersion,
+       ...(trainingTiming ? { trainingTiming } : {}),
++      ...(clinicWork ? { clinicWork } : {}),
+       periopBedFlowVersion,
+       ...(periopNurseAttention ? { periopNurseAttention } : {}),
+       ...(isRecord(raw.saleTransfer) &&
+@@ -1413,7 +1431,8 @@
+       linkedEncounterId: typeof raw.linkedEncounterId === "string" ? raw.linkedEncounterId : null, lifecycle: raw.lifecycle, location: isGridPoint(raw.location) ? { ...raw.location } : null,
+       path, pathIndex: path.length ? Math.min(path.length - 1, Math.max(0, raw.pathIndex)) : 0, lastMovedAtFacilityTick: raw.lastMovedAtFacilityTick,
+       activeRetailOperationId: typeof raw.activeRetailOperationId === "string" ? raw.activeRetailOperationId : null,
+-      ...(typeof raw.movementWaitReason === "string" ? { movementWaitReason: raw.movementWaitReason } : {}),
++      ...(typeof raw.movementWaitReason === "string" || raw.movementWaitReason === null
++        ? { movementWaitReason: raw.movementWaitReason } : {}),
+       ...(pediatricFamilyId ? { pediatricFamilyId } : {}),
+       ...(procedureCompanion ? { procedureCompanion } : {}) } satisfies RetailExternalActorState];
+   });
+@@ -2327,7 +2346,6 @@
+   campaignSeed: string,
+   facilityTick: number,
+   context: DomainContext,
+-  preserveOverdueIdleClocks = false,
+ ): EncounterState | null {
+   if (!isRecord(candidate.frozenCase)) {
+     return null;
+@@ -2861,6 +2879,7 @@
+ 
+   return {
+     ...(candidate as unknown as EncounterState),
++    ...(candidate.consult !== undefined ? { consult: normalizeFounderConsult(candidate.consult, facilityTick) } : {}),
+     frozenCase:
+       frozenCase as unknown as EncounterState["frozenCase"],
+     lifecycle: normalizedLifecycle,
+@@ -2977,7 +2996,8 @@
+     nextIdleActionAtFacilityTick:
+       typeof candidate.nextIdleActionAtFacilityTick === "number" &&
+       Number.isSafeInteger(candidate.nextIdleActionAtFacilityTick) &&
+-      candidate.nextIdleActionAtFacilityTick >= (preserveOverdueIdleClocks ? 0 : facilityTick)
++      // Occupied actors can legitimately retain an overdue idle action.
++      candidate.nextIdleActionAtFacilityTick >= 0
+         ? candidate.nextIdleActionAtFacilityTick
+         : facilityTick +
+           context.balanceRelease.environment.idleActionMinimumMinutes,
+@@ -3235,7 +3255,7 @@
+     retailOrders,
+     retailActorLedgers: normalizeRetailActorLedgers(parsed.retailActorLedgers),
+     retailNextOpportunityTicks: isRecord(parsed.retailNextOpportunityTicks)
+-      ? Object.fromEntries(Object.entries(parsed.retailNextOpportunityTicks).filter(([, tick]) => typeof tick === "number" && Number.isSafeInteger(tick) && tick >= parsedFacilityTick)) as Record<string, number>
++      ? Object.fromEntries(Object.entries(parsed.retailNextOpportunityTicks).filter(([, tick]) => typeof tick === "number" && Number.isSafeInteger(tick) && tick >= 0)) as Record<string, number>
+       : {},
+     nextExternalRetailOpportunityTick: typeof parsed.nextExternalRetailOpportunityTick === "number" && Number.isSafeInteger(parsed.nextExternalRetailOpportunityTick) && parsed.nextExternalRetailOpportunityTick > parsedFacilityTick ? parsed.nextExternalRetailOpportunityTick : parsedFacilityTick + 120,
+     externalRetailSequence: typeof parsed.externalRetailSequence === "number" && Number.isSafeInteger(parsed.externalRetailSequence) && parsed.externalRetailSequence >= 0 ? parsed.externalRetailSequence : 0,
+@@ -3322,7 +3342,6 @@
+             campaignSeed,
+             next.facilityTick,
+             context,
+-            next.facilityLevel === 5,
+           )
+         : null;
+       return normalized ? [[encounterId, normalized]] : [];
+@@ -3375,7 +3394,30 @@
+     throw new Error("The saved outside radiology read sequence is invalid.");
+   }
+   next.patientAmenityTrips = next.patientAmenityTrips.filter((trip) => {
+-    if (trip.amenityKind === "garden") return validateSavedGardenRest(next, trip);
++    if (trip.amenityKind === "garden") {
++      const encounter = trip.actorKind === "encounter" ? next.encounters[trip.actorId] : null;
++      if (trip.status === "returning" && encounter?.patientMovement?.kind === "departing_for_offsite_testing") {
++        const plan = getDiagnosticOrderPlans(next).find(plan => plan.encounterId === encounter.id &&
++          plan.phases.some(phase => phase.kind === "patient_departure" && phase.status === "active"));
++        const raw = rawEncounters[encounter.id];
++        if (plan && isRecord(raw) && isGridPoint(raw.patientLocation)) {
++          // Legacy diagnostic walks could start during an amenity return. The
++          // live amenity wrote the saved location last; validate that owner
++          // before yielding the conflicting walk, never inventing a cursor.
++          encounter.patientLocation = { ...raw.patientLocation };
++          if (!validateSavedGardenRest(next, trip)) return false;
++          encounter.patientMovement = null;
++          const queued = structuredClone(plan);
++          for (const phase of queued.phases) if (phase.kind === "patient_departure" && phase.status === "active") {
++            phase.status = "queued";
++            phase.startedAtTick = null;
++          }
++          replaceDiagnosticOrderPlan(encounter, queued);
++          return true;
++        }
++      }
++      return validateSavedGardenRest(next, trip);
++    }
+     const operation = next.serviceOperations.find((candidate) =>
+       trip.actorKind === "encounter"
+         ? candidate.actorKind === "encounter" && candidate.actorId === trip.actorId && candidate.status !== "completed" && candidate.status !== "cancelled"
+@@ -3507,7 +3549,7 @@
+     if (roomUpgradeBreakBenefit?.roomDefinitionId === "room.staff_gym" && (!rawFacilityTask ||
+       next.facilityLevel < 5 || (rawFacilityTask.seatId !== "benchSeat" && rawFacilityTask.seatId !== "stretchSpot") ||
+       typeof rawFacilityTask.supportDoorId !== "string" || !rawFacilityTask.supportDoorId ||
+-      typeof rawFacilityTask.workMinutesRemaining !== "number" || rawFacilityTask.workMinutesRemaining > context.balanceRelease.environment.levelThreeSupport.breakDurationMinutes ||
++      typeof rawFacilityTask.workMinutesRemaining !== "number" || rawFacilityTask.workMinutesRemaining > Math.max(LEGACY_STAFF_BREAK_DURATION_MINUTES, context.balanceRelease.environment.levelThreeSupport.breakDurationMinutes) ||
+       typeof candidate.lastBreakAtFacilityTick === "number" && candidate.lastBreakAtFacilityTick >= (rawFacilityTask.startedAtFacilityTick as number))) throw new Error("The saved gym break contract is invalid.");
+     if ((roomUpgradeWork || roomUpgradeBreakBenefit) && (!rawFacilityTask ||
+       typeof rawFacilityTask.startedAtFacilityTick !== "number" || !Number.isSafeInteger(rawFacilityTask.startedAtFacilityTick) ||
+@@ -3621,7 +3663,7 @@
+       nextIdleActionAtFacilityTick:
+         typeof candidate.nextIdleActionAtFacilityTick === "number" &&
+         Number.isSafeInteger(candidate.nextIdleActionAtFacilityTick) &&
+-        candidate.nextIdleActionAtFacilityTick >= (next.facilityLevel === 5 ? 0 : next.facilityTick)
++        candidate.nextIdleActionAtFacilityTick >= 0
+           ? candidate.nextIdleActionAtFacilityTick
+           : next.facilityTick +
+             context.balanceRelease.environment.idleActionMinimumMinutes,
+@@ -4725,6 +4767,9 @@
+   if (parsed.levelFive !== undefined) {
+     migrated.levelFive = readLevelFiveState(parsed.levelFive, migrated.facilityTick, migrated.facilityLevel);
+   }
++  const lateProgression = readLateProgressionState(parsed.lateProgression, migrated);
++  if (lateProgression) migrated.lateProgression = lateProgression;
++  else delete migrated.lateProgression;
+   validateExecutiveTaskReservations(migrated);
+   if (migrated.employees.some((employee) => isEmployeeAwayForTraining(employee) && employee.facilityTask)) {
+     throw new Error("The saved employee has conflicting training and work assignments.");

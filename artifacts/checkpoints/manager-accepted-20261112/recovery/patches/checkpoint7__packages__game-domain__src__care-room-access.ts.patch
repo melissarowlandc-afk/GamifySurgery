@@ -1,0 +1,56 @@
+--- a/packages/game-domain/src/care-room-access.ts
++++ b/packages/game-domain/src/care-room-access.ts
+@@ -1,5 +1,5 @@
+-import { getRoomDefinition } from "./selectors";
+-import { findDeterministicFacilityPath, getOccupiedTiles } from "./spatial";
++import { createFacilityNavigationCache, facilityDefinitionReader } from "./facilityNavigation";
++import { findDeterministicFacilityPath, getFacilityRoomAtPoint } from "./spatial";
+ import type { DomainContext, GameState, GridPoint, PlacedRoom } from "./types";
+ 
+ const PROTECTED_CARE_ROOM_DEFINITION_IDS = new Set([
+@@ -31,15 +31,10 @@
+   context: DomainContext,
+   point: GridPoint,
+ ): PlacedRoom | null {
+-  return state.rooms.find((room) => {
+-    if (!isProtectedCareRoom(room)) return false;
+-    const definition = getRoomDefinition(room.roomDefinitionId, context);
+-    return Boolean(definition && getOccupiedTiles(room, definition).some(
+-      (tile) => tile.x === point.x && tile.y === point.y,
+-    ));
+-  }) ?? null;
++  return getFacilityRoomAtPoint(point, state.rooms, state.doors, facilityDefinitionReader(context), isProtectedCareRoom);
+ }
+ 
++const careMasks = createFacilityNavigationCache<Map<string, Set<string>>>();
+ export function findCareAwareFacilityPath(
+   state: GameState,
+   context: DomainContext,
+@@ -52,17 +47,21 @@
+       (start.x !== goal.x || start.y !== goal.y)) {
+     return [];
+   }
+-  const blocked = new Set(
+-    state.rooms
+-      .filter((room) => isProtectedCareRoom(room) && !allowedProtectedRoomInstanceIds.has(room.id))
+-      .map((room) => room.id),
+-  );
++  const reader = facilityDefinitionReader(context);
++  const masks = careMasks(state.rooms, state.doors, reader, () => new Map<string, Set<string>>());
++  const allowedKey = JSON.stringify([...allowedProtectedRoomInstanceIds].sort());
++  let blocked = masks.get(allowedKey);
++  if (!blocked) {
++    blocked = new Set(state.rooms.filter(room => isProtectedCareRoom(room) && !allowedProtectedRoomInstanceIds.has(room.id)).map(room => room.id));
++    masks.set(allowedKey, blocked);
++    if (masks.size > 256) masks.delete(masks.keys().next().value!);
++  }
+   return findDeterministicFacilityPath(
+     start,
+     goal,
+     state.rooms,
+     state.doors,
+-    (definitionId) => getRoomDefinition(definitionId, context),
++    facilityDefinitionReader(context),
+     { blockedRoomInstanceIds: blocked },
+   );
+ }

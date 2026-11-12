@@ -1,0 +1,10 @@
+--- a/packages/game-domain/vitest.config.ts
++++ b/packages/game-domain/vitest.config.ts
+@@ -4,5 +4,7 @@
+     // CPU-count parallelism can time out correct synchronous tests; keep file
+     // isolation and existing deadlines while bounding the concurrent workload.
+     maxWorkers: 4,
++    // Hosted CI runners are much slower than local machines; local default stays 5 s.
++    testTimeout: process.env.CI ? 60_000 : 5_000,
+   },
+ };

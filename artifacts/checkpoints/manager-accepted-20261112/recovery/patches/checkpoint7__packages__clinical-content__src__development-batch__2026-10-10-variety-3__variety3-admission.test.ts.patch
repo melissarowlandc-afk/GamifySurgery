@@ -1,0 +1,48 @@
+--- a/packages/clinical-content/src/development-batch/2026-10-10-variety-3/variety3-admission.test.ts
++++ b/packages/clinical-content/src/development-batch/2026-10-10-variety-3/variety3-admission.test.ts
+@@ -1,7 +1,8 @@
++// Historical batch proof uses the pre-2026-10-28 assembly. Live pilot isolation/versioning is checked in question-quality-pilot.test.ts.
+ import { createHash } from "node:crypto";
+ import { describe, expect, it } from "vitest";
+ import { ANSWER_CHOICE_TIMING_REGISTRY } from "../../answer-choice-timing";
+-import { SYNTHETIC_CLINICAL_RELEASE as release, VARIETY3_PROTOTYPE_ADMISSION_MANIFEST as admission } from "../../synthetic-content";
++import { QUESTION_QUALITY_SOURCE_RELEASE as release, VARIETY3_PROTOTYPE_ADMISSION_MANIFEST as admission } from "../../synthetic-content";
+ import { VARIETY3_ADULT_CONTEXTS as adults, VARIETY3_BATCH_MANIFEST as draft,
+   VARIETY3_CASES as cases, VARIETY3_TESTED_CONCEPTS as concepts, VARIETY3_TIMING_ENTRIES as timings } from "./variety3-batch";
+ 
+@@ -12,10 +13,14 @@
+     const prior = { ...release, concepts: release.concepts.filter(item => !conceptIds.has(item.id)),
+       cases: release.cases.filter(item => !caseIds.has(item.id)) };
+     expect([prior.concepts.length, prior.cases.length, prior.cases.flatMap(item => item.decisionNodes).length])
+-      .toEqual([360, 1090, 1395]);
+-    // Independently captured from filesystem intake modules before integration.
++      .toEqual([360, 1090, 1403]);
++    // P2-E adds eight clinical continuations. Restoring only those eight cases
++    // reproduces a559b47f... exactly; every unrelated release record is
++    // unchanged. Full restoration/hash receipt: GS-028 plan, 2026-10-17.
+     expect(createHash("sha256").update(`${JSON.stringify(prior, null, 2)}\n`).digest("hex"))
+-      .toBe("e590b21ff0dbfbbae7fba9d36659c5126a3d5dcee2abf12501eedf797a2e3866");
++      // Tester-flag fix 2026-10-17: only nutrition refeeding-thiamine v4 wording changed
++      // (release copy with the prior nutrition.ts passes 94898aae...).
++      .toBe("182e919202f58a3a4d178da34e9bce384bb973483cc1d54e72a8c12c5460dafb");
+   });
+ 
+   it("registers exact concepts, cases and identities once at their declared earliest levels and settings", () => {
+@@ -27,7 +32,7 @@
+     expect(draft.assemblyAuthorized).toBe(false);
+     expect(release.publicationStatus).toBe("synthetic_unapproved_prototype");
+     expect([release.concepts.length, release.cases.length, release.cases.flatMap(item => item.decisionNodes).length])
+-      .toEqual([370, 1110, 1415]);
++      .toEqual([370, 1110, 1423]);
+     expect(admission.conceptIds).toEqual(concepts.map(item => item.id));
+     expect(admission.variants.map(item => item.caseId)).toEqual(cases.map(item => item.id));
+     expect([1, 2, 3].map(level => concepts.filter(item => item.earliestFacilityStage === level).length)).toEqual([4, 4, 2]);
+@@ -48,7 +53,7 @@
+     let timedChoices = 0;
+     for (const clinicalCase of cases) {
+       const node = clinicalCase.decisionNodes[0]!;
+-      const entries = ANSWER_CHOICE_TIMING_REGISTRY.filter(item => item.caseId === clinicalCase.id);
++      const entries = ANSWER_CHOICE_TIMING_REGISTRY.filter(item => item.caseId === clinicalCase.id && item.questionVariantId === node.questionVariantId);
+       expect(entries).toEqual(timings.filter(item => item.caseId === clinicalCase.id));
+       expect(entries).toHaveLength(1);
+       expect(entries[0]).toMatchObject({ nodeId: node.id, questionVariantId: node.questionVariantId });

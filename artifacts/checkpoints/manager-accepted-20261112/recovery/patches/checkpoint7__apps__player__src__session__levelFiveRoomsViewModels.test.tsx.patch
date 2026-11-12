@@ -1,0 +1,14 @@
+--- a/apps/player/src/session/levelFiveRoomsViewModels.test.tsx
++++ b/apps/player/src/session/levelFiveRoomsViewModels.test.tsx
+@@ -54,7 +54,10 @@
+       const active = true;
+       expect(owned).toMatchObject({ upgradeable: active, maxUpgradeLevel: 5, canUpgrade: active, accessProblem: false });
+       if (!active) expect(owned.benefit?.note).toContain("not active");
+-      else expect(owned.benefit?.note).toMatch(/Ownership|Completed|Adult visitors|Daily seated management|revenue|sales/);
++      else if (site.roomDefinitionId === "room.staff_gym") {
++        expect(owned.benefit?.note).toMatch(/^Staff below 90 morale take 15-minute gym breaks for \+5 morale, plus \+2 per upgrade\./);
++        expect(owned.benefit?.note).toContain("All staff gain +1 daily morale, plus +1 per upgrade");
++      } else expect(owned.benefit?.note).toMatch(/Ownership|Completed|Adult visitors|Daily seated management|revenue|sales/);
+       expect(view.selectedRoomBuild).toMatchObject({ canUpgrade: active, canSell: true, canMove: true, accessProblem: false });
+       expect(view.selectedRoomBuild!.resaleValueLabel).toMatch(/refund/);
+       const markup = renderToStaticMarkup(<MobileBuildRoom props={phoneFixture(view)} room={view.selectedRoomBuild!} onMove={noop} onDoors={noop} />);

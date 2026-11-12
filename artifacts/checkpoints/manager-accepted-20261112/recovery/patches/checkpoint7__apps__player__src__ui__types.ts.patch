@@ -1,0 +1,42 @@
+--- a/apps/player/src/ui/types.ts
++++ b/apps/player/src/ui/types.ts
+@@ -109,6 +109,7 @@
+   /** Short authored topic shown in the chart's chief-complaint slot. */
+   topicLabel?:string;
+   presentation:string; reviewStatus:string; question?:string; choices?:AnswerChoiceView[];
++  answerChoicesPending?: boolean;
+   feedbackTitle?:"Correct"|"Incorrect"; feedback?:string; correctAnswerText?:string;
+   exhibit?: CaseExhibit;
+   teachingPoint?: string;
+@@ -206,6 +207,8 @@
+ }
+ 
+ export interface ChartView {
++  /** Account access is pending; choices remain hidden until mode is known. */
++  answerChoicesPending?: boolean;
+   id: string;
+   /** Team discussions reuse the chart sheet; omitted means a patient chart. */
+   subjectKind?: "patient" | "team_discussion";
+@@ -503,6 +506,8 @@
+ }
+ 
+ export interface SelectedRoomBuildView {
++  /** Care-aware public/staff access explanation, separate from physical connectivity. */
++  accessWarning?: string;
+   id: string;
+   roomDefinitionId: string;
+   displayName: string;
+@@ -611,9 +616,13 @@
+ 
+ export interface ProgressionGoalView {
+   id: string;
++  /** Full objective, retained as the accessible description and tooltip. */
+   label: string;
++  displayLabel?: string;
+   complete: boolean;
+   progressLabel: string;
++  /** Compact progress; the full progressLabel remains available to assistive technology. */
++  displayProgressLabel?: string;
+ }
+ 
+ export interface ProcedureSetupRequirementView {

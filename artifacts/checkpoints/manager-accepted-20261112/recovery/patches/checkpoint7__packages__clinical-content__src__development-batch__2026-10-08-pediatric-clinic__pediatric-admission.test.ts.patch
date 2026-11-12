@@ -1,0 +1,57 @@
+--- a/packages/clinical-content/src/development-batch/2026-10-08-pediatric-clinic/pediatric-admission.test.ts
++++ b/packages/clinical-content/src/development-batch/2026-10-08-pediatric-clinic/pediatric-admission.test.ts
+@@ -1,8 +1,9 @@
++// Historical batch proof uses the pre-2026-10-28 assembly. Live pilot isolation/versioning is checked in question-quality-pilot.test.ts.
+ import { readFileSync, readdirSync } from "node:fs";
+ import { describe, expect, it } from "vitest";
+ import { answerChoiceTimingRegistryEntrySchema, testedConceptSchema } from "../../schema";
+ import { ANSWER_CHOICE_TIMING_REGISTRY } from "../../answer-choice-timing";
+-import { PEDIATRIC_CLINIC_PROTOTYPE_ADMISSION_MANIFEST, SYNTHETIC_CLINICAL_RELEASE } from "../../synthetic-content";
++import { PEDIATRIC_CLINIC_PROTOTYPE_ADMISSION_MANIFEST, QUESTION_QUALITY_SOURCE_RELEASE as SYNTHETIC_CLINICAL_RELEASE } from "../../synthetic-content";
+ import { PRIMARY_MIDLINE_HERNIA_TESTED_CONCEPTS } from "../2026-09-28-pre-endoscopy/primary-midline-hernia";
+ import { BATCH_CONTENT_VERSION, CHECKED_ON, PEDIATRIC_ART_PROFILES, pediatricDraftCaseSchema } from "./batch-helpers";
+ import {
+@@ -230,7 +231,7 @@
+       expect(admission.variants.find(candidate => candidate.caseId === item.id)).toEqual({ caseId: item.id,
+         questionVariantId: node.questionVariantId, conceptId: node.primaryConceptId,
+         familyContextId: family.id, profileId: family.profileId });
+-      expect(ANSWER_CHOICE_TIMING_REGISTRY.filter(candidate => candidate.caseId === item.id)).toEqual(timings.filter(candidate => candidate.caseId === item.id));
++      expect(ANSWER_CHOICE_TIMING_REGISTRY.filter(candidate => candidate.caseId === item.id && candidate.questionVariantId === node.questionVariantId)).toEqual(timings.filter(candidate => candidate.caseId === item.id));
+     }
+     for (const concept of tested) expect(SYNTHETIC_CLINICAL_RELEASE.concepts.filter(candidate => candidate.id === concept.id)).toEqual([concept]);
+   });
+@@ -238,12 +239,32 @@
+   it("keeps the read-through exact to exports, key-first labelled, safe-linked and UTF-8 without BOM", () => {
+     const samplesUrl = new URL("docs/handoffs/PEDIATRIC_BATCH_SAMPLES.md", root);
+     const samples = readFileSync(samplesUrl, "utf8");
+-    expect(samples).toBe(renderPediatricSamples());
++    // The round-2 wording brief owns assent and its new whole-bank read-through.
++    // Keep every other historical sample and the attribution/withheld text exact.
++    const withoutAssent = (text: string) => text.split(/(?=^## )/m)
++      .filter((section) => !section.includes("Concept: `concept.pediatric-clinic.developmental-assent-discussion`"))
++      .join("");
++    expect(withoutAssent(samples)).toBe(withoutAssent(renderPediatricSamples()));
++    const round2Url = new URL("docs/reviews/stats-ethics-round2-full-20261015.md", root);
++    const round2 = readFileSync(round2Url, "utf8");
++    expect(round2).toContain("KEY FIRST FOR REVIEW ONLY");
++    for (const question of questions.filter((item) => item.conceptId === "concept.pediatric-clinic.developmental-assent-discussion")) {
++      const section = round2.split(/(?=^### `question\.)/m).find((item) => item.startsWith(`### \`${question.id}\``))!;
++      expect(section, question.id).toBeDefined();
++      expect(section).toContain(question.patientPresentation);
++      expect(section).toContain(question.stem);
++      expect(section).toContain(question.teachingPoint!);
++      expect(section).toContain(question.explanation);
++      for (const choice of question.answerChoices) {
++        expect(section).toContain(choice.label);
++        expect(section).toContain(choice.rationale!);
++      }
++    }
+     expect((samples.match(/KEY FIRST FOR REVIEW/g) ?? []).length).toBe(10);
+     expect(samples).toContain("Runtime nodes randomize all answer choices");
+     expect(samples).toContain('target="_blank" rel="noopener noreferrer"');
+     const files = readdirSync(new URL("./", import.meta.url)).filter((name) => /\.(ts|mjs|md)$/.test(name)).map((name) => new URL(name, import.meta.url));
+-    for (const file of [...files, samplesUrl]) {
++    for (const file of [...files, samplesUrl, round2Url]) {
+       const bytes = readFileSync(file);
+       expect(bytes.subarray(0, 3).equals(Buffer.from([0xef, 0xbb, 0xbf]))).toBe(false);
+       expect(bytes.toString("utf8")).not.toContain("\uFFFD");

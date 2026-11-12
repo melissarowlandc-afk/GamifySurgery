@@ -1,0 +1,191 @@
+--- a/apps/player/src/ui/AccountMenu.tsx
++++ b/apps/player/src/ui/AccountMenu.tsx
+@@ -1,11 +1,17 @@
+-import { useEffect, useState } from "react";
++import { useEffect, useState, type ReactNode } from "react";
+ import { useAuthAccountActions, useAuthAccountId } from "../auth/AuthAccountContext";
+ import { VersionLabel } from "../appVersion";
+ import { useUsageTracking } from "../playtime/UsageProvider";
+ import { USAGE_NOTICE_TEXT, USAGE_NOTICE_VERSION } from "../playtime/usageTypes";
++import { COMPETITION_PRIVACY_NOTICE } from "../competition/types";
+ import { useQuestionFlags } from "../session/QuestionFlagProvider";
+ import { saveQuestionReviewFlags } from "../session/questionReviewFlags";
++import { accountStorageKey } from "../session/accountStorageKey";
++import { clearArchivedReviewFlags } from "../session/storagePressure";
+ import { ClinicalContentNotice } from "./ClinicalContentNotice";
++import { CLOUD_NOTICE_VERSION, downloadCloudRecovery, useCloudAccount } from "../session/cloud/CloudAccount";
++import { cloudEntryError } from "./cloudEntryError";
++import { exportOlderClinicCopy, listOlderClinicCopies, restoreOlderClinicCopy, type OlderClinicCopy } from "../session/cloud/olderCopies";
+ import "./betaAccount.css";
+ 
+ function useUsageStatus() {
+@@ -16,14 +22,18 @@
+ }
+ 
+ function PrivacyInfo() {
++  const cloud = useCloudAccount();
+   return <>
+     <p>{USAGE_NOTICE_TEXT}</p>
++    <p>{COMPETITION_PRIVACY_NOTICE}</p>
++    <p>Competition revenue snapshots are retained for 90 days. Pending competition submissions stay in this browser for at most seven days. Your hide preference remains until account data deletion.</p>
+     <p>The owner sees only total active play time and total questions for the last 90 days. Time stops when the game is hidden, paused, or unused for five minutes. Help, Build and Management pause time recording. First scored patient and team questions each count once, right or wrong.</p>
+     <p>Question flags are voluntary and separate from usage counts. A flag sends question IDs and versions, displayed choice order, your chosen answer and your comment. The owner and manager review reports manually, using Claude Code and Codex to investigate issues. Please do not enter real patient information.</p>
+-    <p>Supabase hosts account and usage data; the email provider delivers account emails, and GitHub Pages hosts the game. These providers may keep security logs. Hosted usage and flags are retained for 90 days. Pending uploads stay in this browser for at most seven days and may be lost if storage is blocked or full.</p>
++    <p>Send feedback stores your voluntary comment with your account, game release/build version, facility level, desktop or phone layout, and time. Send a problem report asks your consent to include technical timer, saving, storage and error details, including this device's previous session. It sends no saved clinic contents or answers. The manager compiles reports privately for the game owner, who decides what to do with each report. You can send feedback even while usage recording is off; a deletion request stops further submissions.</p>
++    <p>Supabase hosts accounts, usage, question flags and feedback comments; the owner emails account links personally, and GitHub Pages hosts the game. These providers may keep security logs. Hosted usage, flags and feedback are retained for 90 days. Pending usage and flag uploads stay in this browser for at most seven days and may be lost if storage is blocked or full. Unsent feedback stays in the open comment box for you to retry; it is not uploaded automatically.</p>
+     <p>Contact the owner who invited you for support or deletion. After an in-game deletion request, recording stops immediately; remaining account administration and private report copies are handled by the owner within seven days.</p>
+-    <p>Saves stay on this device until cloud saves arrive.</p>
+-    <p>Local campaigns belong to this browser profile and site address. Signing in elsewhere does not move them. A remote deletion request cannot erase offline local copies on other devices.</p>
++    {cloud ? <CloudNoticeDetails region={cloud.runtime.region} /> : <p>Saves stay on this device until cloud saves arrive.</p>}
++    {cloud ? <p>Account campaigns can be resumed on another device after signing into the same account. Older copies retained on this device belong to this browser profile and site address. A remote deletion request cannot erase offline local copies on other devices.</p> : <p>Local campaigns belong to this browser profile and site address. Signing in elsewhere does not move them. A remote deletion request cannot erase offline local copies on other devices.</p>}
+   </>;
+ }
+ 
+@@ -62,7 +72,8 @@
+   </aside>;
+ }
+ 
+-export function AccountMenu() {
++export function AccountMenu({ children }: { children?: ReactNode } = {}) {
++  const cloud = useCloudAccount();
+   const account = useAuthAccountActions();
+   const accountId = useAuthAccountId();
+   const tracker = useUsageTracking();
+@@ -73,21 +84,22 @@
+   const [error, setError] = useState("");
+   const [requested, setRequested] = useState(false);
+   if (!account || !accountId) return null;
++  if (cloud) return <CloudAccountMenu>{children}</CloudAccountMenu>;
+   const removeUsage = async () => {
+     if (!tracker || pending) return;
+     setPending(true); setError(""); setRequested(true);
+     flags?.clear();
+     saveQuestionReviewFlags([], undefined, accountId);
+-    try { await tracker.requestDeletion(); setConfirm(false); }
++    try { await tracker.requestDeletion(); await clearArchivedReviewFlags(accountStorageKey("gamify-surgery.question-review-flags.v1", accountId)); setConfirm(false); }
+     catch { setError("Deletion could not reach the service. Recording is off on this device. Retry when you are online; hosted deletion is not yet confirmed."); }
+     finally { setPending(false); }
+   };
+   return <details className="beta-account">
+     <summary>Account &amp; privacy</summary>
+     <p>Signed in as {account.email}</p>
+-    <PrivacyInfo />
++    <PrivacyInfo />{children}
+     <AcceptUsageNotice />
+-    <p role="status">{status?.state === "deleted" ? "Usage and submitted flags deleted. Recording is off for this account." :
++    <p role="status">{status?.state === "deleted" ? "Usage and submitted flags deleted. Recording is off for this account. Feedback comments are also deleted." :
+       status?.state === "blocked" ? "Recording is off for this account." : status?.state === "unavailable" ? "Usage uploads are unavailable. Pending records are waiting to send." :
+       status?.pendingReceipts ? "Usage is waiting to send." : tracker?.canRecordQuestions() ? "Usage recording is on." : "Usage recording is off."}
+       {status && !status.storageAvailable ? " Browser storage is unavailable; pending usage may be lost when this tab closes." : ""}
+@@ -95,7 +107,7 @@
+       {tracker?.canRecordQuestions() && !status?.countingHere ? " Time recording needs a visible tab with browser lock support." : ""}
+     </p>
+     {confirm ? <div aria-label="Confirm usage data deletion">
+-      <p>Delete your recorded usage and submitted question flags? Recording will stop for this account. Your saved clinics stay on this device.</p>
++      <p>Delete your recorded usage, submitted question flags and feedback comments? Recording and new feedback submissions will stop for this account. Your saved clinics stay on this device.</p>
+       <div className="beta-actions">
+         <button type="button" disabled={pending} onClick={() => void removeUsage()}>{pending ? "Deleting…" : "Confirm delete my usage data"}</button>
+         <button type="button" disabled={pending} onClick={() => setConfirm(false)}>Cancel deletion</button>
+@@ -110,3 +122,102 @@
+     <VersionLabel />
+   </details>;
+ }
++
++export function CloudNoticeDetails({ region }: { region: string }) {
++  return <div className="cloud-notice-details">
++    <p>Cloud save notice · {CLOUD_NOTICE_VERSION}</p>
++    <p>Supabase stores your full functional clinic for account play: synthetic cases and displayed choices, answers and learning history, facility state, finances and inspection history. After you accept this notice, previous campaigns for this account on this device are added automatically when there is room. If there are too many, you choose which to keep in your account. Original device copies stay here.</p>
++    <p>The owner's routine usage report still contains only total active play time and question counts. Cloud saves are used to continue and recover your game, and for owner support when needed. They are not clinical research or campaign analytics and are not sent to the feedback review pipeline. Optional usage recording has its own notice.</p>
++    <p>Service region: {region || "not yet published — enrollment unavailable"}. GitHub Pages hosts the game. The beta private-backup policy is weekly, with two copies kept for up to 14 days, alongside a prior cloud save. A total service loss could lose progress since the last weekly backup.</p>
++    <p>Cloud campaigns and evidence remain for account gameplay until approved removal or account deletion; they do not expire with the 90-day usage, flag and feedback retention. Ordinary save operations are retained for eight days; import provenance remains with its campaign.</p>
++    <p>Delete my data removes cloud campaigns, saved revisions, learning and other evidence, usage, flags and feedback, and stops this account's access. The owner completes remaining account, invitation and private-export cleanup within seven days. A hash-only deletion record lasts 30 days to prevent restoration from backups. Offline browser copies on other devices must be cleared there.</p>
++    <p>Signing out keeps this account's recovery copy on this device by default. On a shared device, someone using this browser profile could access stored game data. You may clear this device after confirming or exporting unsent progress. This does not delete cloud campaigns or another account's or the unowned prototype's data.</p>
++    <ClinicalContentNotice /><p>Please do not enter real patient information.</p>
++  </div>;
++}
++
++function CloudAccountMenu({ children }: { children?: ReactNode }) {
++  const cloud = useCloudAccount()!, account = useAuthAccountActions()!, tracker = useUsageTracking(), flags = useQuestionFlags();
++  const [confirm, setConfirm] = useState(false), [pending, setPending] = useState(false), [error, setError] = useState("");
++  const [clearDevice, setClearDevice] = useState(false), [exported, setExported] = useState(false), [downloaded, setDownloaded] = useState(false);
++  const remove = async () => {
++    setPending(true); setError(""); flags?.clear();
++    try {
++      if (tracker) await tracker.requestDeletion(cloud.requestDeletion); else await cloud.requestDeletion();
++      setConfirm(false);
++    } catch { setError("Deletion is not confirmed. Play and uploads are stopped on this device. Retry when the service is available; hosted data has not been confirmed deleted."); }
++    finally { setPending(false); }
++  };
++  const keepRecovery = async () => {
++    setPending(true); setError("");
++    try {
++      const bytes = await cloud.exportDeviceRecovery(); downloadCloudRecovery(bytes); setDownloaded(true);
++      if (JSON.parse(bytes).storageReadComplete === false) setError("The recovery file includes the open campaign, but some stored device copies could not be read. Keep this tab open and contact the owner before clearing the device.");
++    }
++    catch (failure) { setError(cloudEntryError(failure)); }
++    finally { setPending(false); }
++  };
++  const signOut = async () => {
++    setPending(true); setError("");
++    try {
++      if (clearDevice && !exported) { setError("Confirm that unsent progress is saved to your account or that you have kept a recovery file before clearing this device."); return; }
++      await cloud.stop(); tracker?.stop(); flags?.stop();
++      if (clearDevice) await cloud.clearDevice(exported);
++      const signedOut = await account.signOut();
++      if (signedOut === false) { setError(clearDevice ? "Device data was cleared, but sign-out was not confirmed. Retry signing out from Account & privacy before leaving this shared device." : "Sign-out was not confirmed. This account campaign stays paused; retry from Account & privacy."); return; }
++    } catch (failure) { setError(clearDevice ? "Clearing this device and signing out could not be confirmed. Keep this tab open and retry before leaving this shared device." : cloudEntryError(failure)); }
++    finally { setPending(false); }
++  };
++  return <details className="beta-account cloud-account">
++    <summary>Account &amp; privacy</summary><p>Signed in as {account.email}</p>
++    <PrivacyInfo />{children}<AcceptUsageNotice /><OlderCopies />
++    <button type="button" disabled={pending} onClick={cloud.showCampaigns}>Account campaign screen</button>
++    <p>Sign out keeps this account's recovery copy on this device. On a shared device, stored game data can remain accessible to people using this browser profile.</p>
++    <button type="button" disabled={pending} onClick={() => void keepRecovery()}>Download device recovery copy</button>
++    {downloaded ? <p role="status">A recovery-file download was requested. Check that the file finished saving before clearing this device.</p> : null}
++    <label><input type="checkbox" checked={clearDevice} disabled={pending} onChange={event => { setClearDevice(event.target.checked); setExported(false); }} />Clear this device when I sign out</label>
++    {clearDevice ? <>
++      <p>This removes only this account's campaigns, recovery copies and pending queues from this site and browser profile. Close other tabs for this account first. Unsent progress will be lost unless it is confirmed in your account or saved in a recovery file. Other offline devices keep their copies.</p>
++      <label><input type="checkbox" checked={exported} disabled={pending} onChange={event => setExported(event.target.checked)} />I have confirmed my account saves or kept a completed recovery file for all unsent progress.</label>
++    </> : null}
++    <button type="button" disabled={pending || account.pending || clearDevice && !exported} onClick={() => void signOut()}>{pending ? "Working…" : clearDevice ? "Sign out and clear this device" : "Sign out"}</button>
++    {confirm ? <section aria-label="Confirm full account data deletion">
++      <h3>Delete my data/account?</h3><p>This deletes all account cloud campaigns, saved revisions and evidence, learning history, usage, submitted question flags and feedback. Play and uploads stop. This cannot be undone from this device. Signing out alone keeps your account data.</p>
++      <p>Your local copies remain until you choose Clear this device. Other offline devices must be cleared there. The owner completes remaining account administration within seven days.</p>
++      <button type="button" disabled={pending} onClick={() => void remove()}>Confirm delete all my account data</button>
++      <button type="button" disabled={pending} onClick={() => setConfirm(false)}>Cancel deletion</button>
++    </section> : cloud.phase !== "deleted" ? <button type="button" disabled={pending} onClick={() => setConfirm(true)}>{cloud.phase === "deletion-requested" ? "Retry delete my data/account" : "Delete my data/account"}</button> : <p role="status">Account data deletion is confirmed. Account access and uploads are stopped.</p>}
++    {error ? <p role="alert">{error}</p> : null}{account.message ? <p role="alert">{account.message}</p> : null}<VersionLabel />
++  </details>;
++}
++
++/** Deliberately nested support tools, never part of opening/resuming play. */
++function OlderCopies() {
++  const cloud = useCloudAccount()!;
++  const [copies, setCopies] = useState<OlderClinicCopy[] | null>(null), [pending, setPending] = useState(false), [error, setError] = useState("");
++  const run = async (work: () => Promise<void>) => {
++    if (pending) return;
++    setPending(true); setError("");
++    try { await work(); } catch (failure) {
++      setError(failure instanceof Error && "code" in failure && failure.code === "capacity" ? "Both account slots are in use. This older copy is kept here and can be exported." : cloudEntryError(failure));
++    } finally { setPending(false); }
++  };
++  return <details className="cloud-older-copies" onToggle={event => {
++    if (event.currentTarget.open && copies === null && !pending) void run(async () => setCopies(await listOlderClinicCopies(cloud.runtime)));
++  }}>
++    <summary>Older copies (support)</summary>
++    <p>Saved copies on this device can be exported or restored as a separate clinic.</p>
++    {copies?.length === 0 ? <p>No older copies are retained on this device.</p> : null}
++    {copies?.map(copy => <section key={copy.key} aria-label={`Older copy: ${copy.name}`}>
++      <p>{copy.name}: {copy.dayTime} · ${copy.cash.toFixed(2)}</p>
++      <button type="button" disabled={pending} onClick={() => void run(async () => downloadCloudRecovery(await exportOlderClinicCopy(cloud.runtime, copy.key)))}>Export older copy</button>
++      <button type="button" disabled={pending} onClick={() => void run(async () => {
++        if (cloud.active && !await cloud.active.durable()) throw new Error("storage");
++        const id = await restoreOlderClinicCopy(cloud.runtime, copy.key); await cloud.refresh();
++        if (cloud.openCampaign) await cloud.openCampaign(id); else cloud.showCampaigns();
++      })}>Restore as a separate clinic</button>
++    </section>)}
++    {pending ? <p role="status">Checking older copies...</p> : null}
++    {error ? <p role="alert">{error}</p> : null}
++  </details>;
++}

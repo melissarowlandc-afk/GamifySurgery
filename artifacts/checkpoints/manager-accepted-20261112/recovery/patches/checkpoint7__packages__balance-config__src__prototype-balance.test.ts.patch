@@ -1,0 +1,11 @@
+--- a/packages/balance-config/src/prototype-balance.test.ts
++++ b/packages/balance-config/src/prototype-balance.test.ts
+@@ -213,7 +213,7 @@
+         }),
+         expect.objectContaining({
+           level: 3,
+-          minimumClinicalXp: 500,
++          minimumClinicalXp: 550,
+           satisfactionMustBeGreaterThan: 90,
+           requiredRoomDefinitionIds: [],
+           requiredStaffRoleIds: ["staff.pharmacist"],

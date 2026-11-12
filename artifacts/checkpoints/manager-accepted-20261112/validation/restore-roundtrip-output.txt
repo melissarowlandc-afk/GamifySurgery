@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "dryRun": false,
+  "recoveredFiles": 2938,
+  "recoveredBytes": 1012705329,
+  "gitMutations": 0,
+  "requiresAllSixPriorArchivesAndCompatibleEarlierDependencies": true,
+  "diskHashesMatched": 2938,
+  "diskBytes": 1012705329,
+  "reproduceFromPatches": 350,
+  "reverseFromDisk": 350,
+  "archiveOnlyInputs": true,
+  "liveSourcesReadByRestore": false,
+  "gitObjectsReadByRestore": false,
+  "isolatedArchiveHardlinks": 3340,
+  "isolatedArchiveCopies": 0,
+  "allScratchInsideAssignedArchive": true,
+  "scratchRemoved": true,
+  "resolvedEnvironmentIssue": "Initial deeply nested temporary input exceeded Windows path length; the shortened archive-local scratch path passed.",
+  "note": "Whole new files are restored as exact archive payloads; shared targets are reconstructed solely from bundled bases and patches. Six prior layers and baseline dependencies are still required for the full project."
+}
