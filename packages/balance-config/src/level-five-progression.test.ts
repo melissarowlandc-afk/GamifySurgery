@@ -7,7 +7,7 @@ import { facilityStageDefinitionSchema } from "./schema";
 describe("Level 5 M6 binding goal data", () => {
   it("defines the three editorial goals with established encounter volume for satisfaction", () => {
     expect(LEVEL_FIVE_STAGE_DEFINITION).toEqual({ level: 5, displayName: "Level 5 - Optimized ASC / Prestige",
-      minimumClinicalXp: 2300, minimumCompletedEncounters: 330, satisfactionMustBeGreaterThan: 90,
+      minimumClinicalXp: 2300, minimumCompletedEncounters: 390, satisfactionMustBeGreaterThan: 90,
       minimumAverageStaffMorale: 85, requiredRoomDefinitionIds: [], requiredStaffRoleIds: [], nextFacilityLevel: null });
     expect(facilityStageDefinitionSchema.parse(LEVEL_FIVE_STAGE_DEFINITION)).toEqual(LEVEL_FIVE_STAGE_DEFINITION);
   });

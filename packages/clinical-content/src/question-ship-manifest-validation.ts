@@ -1,6 +1,8 @@
 import type { SyntheticClinicalRelease } from "./schema";
 import { QUESTION_SHIP_MANIFEST, type QuestionShipManifest } from "./question-ship-manifest";
 import { resolveQuestionShipCaseReplacements } from "./question-ship-case-replacements";
+import { resolveQuestionShipRetirements } from "./question-ship-retirements";
+import { projectManagerAcceptedQuestions } from "./question-ship-projection";
 
 /** Build/test diagnostics only; not called by the live projection or exported
  * from the runtime barrel. */
@@ -58,6 +60,10 @@ export function questionShipManifestIssues(
       const key = JSON.stringify([caseId, node.id]);
       if (!legacyKeys.has(key) && !acceptedKeys.has(key)) issues.push(`unaccepted header node: ${key}`);
     }
+  }
+  if (manifest.retirements?.length) {
+    const projected = projectManagerAcceptedQuestions(catalog, legacy, views, {...manifest, retirements: []});
+    issues.push(...resolveQuestionShipRetirements(projected.cases, manifest).issues);
   }
   return issues;
 }

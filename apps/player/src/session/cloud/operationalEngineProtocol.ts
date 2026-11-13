@@ -25,7 +25,7 @@ export type OperationalEngineReply =
   | { id: number; kind: "projected"; version: number; projection: OperationalViewReply }
   | { id: number; kind: "checkpoint"; version: number; checkpoint: GameEvidenceCheckpoint }
   | { id: number; kind: "compacted"; baseVersion: number; version: number; checkpoint: GameEvidenceCheckpoint }
-  | { id: number; kind: "journalHashes"; hashes: string[]; missing?: never }
+  | { id: number; kind: "journalHashes"; hashes: string[]; encodedRows?: unknown[]; missing?: never }
   | { id: number; kind: "journalHashes"; missing: true; hashes?: never }
   | { id: number; kind: "failure"; code: string };
 

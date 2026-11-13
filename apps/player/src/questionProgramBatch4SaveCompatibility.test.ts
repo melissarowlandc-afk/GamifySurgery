@@ -1,3 +1,4 @@
+import {beforeProgramBatch8AcceptanceRelease} from "../../../packages/clinical-content/src/question-program-batch8-acceptance-test-support";
 import {materializePatientName} from "../../../packages/game-domain/src/patientText";
 import {describe, expect, it} from "vitest";
 import {
@@ -7,7 +8,7 @@ import {
   type SyntheticClinicalCase,
 } from "@gamify-surgery/clinical-content";
 import {
-  PROTOTYPE_DOMAIN_CONTEXT as current, gameReducer, getCurrentQuestion, getAnswerChoiceServicePreview,
+  PROTOTYPE_DOMAIN_CONTEXT as activeDefault, gameReducer, getCurrentQuestion, getAnswerChoiceServicePreview,
   applyFsrsReview, createNewFsrsCard, applyGameEvidenceCommand, gameEvidenceDelta,
   type DomainContext, type GameState, type GameCommand,
   createInitialGameState,
@@ -31,6 +32,9 @@ import {bindJournal, prepareJournal} from "./session/cloud/journalCodec";
 import {snapshotCopy} from "./session/cloud/snapshotCodec";
 import {TestCloudClock} from "./session/cloud/syncTestSupport";
 
+// Exercise the exact accepted batch epoch; reopen/continue through the current
+// production session. Batch8 explicitly replaces these prior question versions.
+const current: DomainContext = {...activeDefault, clinicalRelease:beforeProgramBatch8AcceptanceRelease(activeDefault.clinicalRelease)};
 const encounterId = "encounter.topic4.acceptance";
 const now = 1_800_000_000_000;
 const previous: DomainContext = {...current, clinicalRelease:beforeProgramBatch4AcceptanceRelease(current.clinicalRelease)};
@@ -188,7 +192,7 @@ async function finish(session: CloudGameSession, frozen: Frozen) {
   expect(await session.durable()).toBe(true);
 }
 
-describe("topic batch4 default admission and all retired frozen identities", () => {
+describe("topic batch4 exact accepted-epoch admission and all retired frozen identities", () => {
   it.each(cases.filter(cs => cs.participant?.kind !== "employee_discussion"))("admits $id and completes its exact format3 save", async clinicalCase => {
     expect(current.clinicalRelease.cases.find(cs => cs.id === clinicalCase.id)).toEqual(clinicalCase);
     const f = fixture(clinicalCase);
@@ -270,6 +274,25 @@ describe("topic batch4 default admission and all retired frozen identities", () 
       expect((await prepareJournal(r.cache.journal!, key, cloudCodec, {local:true, encode:false}))!.state).toEqual(session.state);
     } finally {
       session.dispose();
+    }
+  });
+
+  it("requires the exact batch8 successor or rejects fresh admission while preserving all prior save cases",()=>{
+    const changed=cases.filter(cs=>JSON.stringify(activeDefault.clinicalRelease.cases.find(c=>c.id===cs.id))!==JSON.stringify(cs));
+    expect(changed.map(cs=>cs.id)).toEqual(["case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1", "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1"]);
+    for(const old of changed){
+      expect(current.clinicalRelease.cases.find(cs=>cs.id===old.id)).toEqual(old);
+      const fresh=activeDefault.clinicalRelease.cases.find(cs=>cs.id===old.id);
+      const f=fixture(fresh??old,activeDefault);
+      const next=gameReducer(f.state,f.admission,activeDefault);
+      if(fresh){
+        expect(fresh.decisionNodes.map(node=>node.questionVariantId)).not.toEqual(old.decisionNodes.map(node=>node.questionVariantId));
+        expect(next.operationReceipts[f.admission.operationId]!.status).toBe("applied");
+        expect(next.encounters[encounterId]!.frozenCase.decisionNodes.map(node=>node.questionVariantId)).toEqual(fresh.decisionNodes.map(node=>node.questionVariantId));
+      }else{
+        expect(next.operationReceipts[f.admission.operationId]!.status).toBe("rejected");
+        expect(next.encounters[encounterId]).toBeUndefined();
+      }
     }
   });
 });

@@ -1,3 +1,4 @@
+import { RuntimeCatalogueUnavailable, withRuntimeCatalogue } from "../../mobile/performance/runtimeCatalogue";
 import { CLOUD_CAPACITY_LIMITS } from "./codec";
 import { encodeCloudEvidenceCheckpoint, loadCloudEvidenceCheckpoint } from "./codecEvidence";
 import { CloudCodecError, logicalJsonText, sha256Utf8, utf8Bytes } from "./codecJson";
@@ -183,6 +184,7 @@ export async function runCloudCodecTask<T extends CloudCodecTask>(task: T): Prom
 
 export interface CloudCodecFailure { kind: "sync" | "cache" | "codec"; code: string; message: string; retryAfterMs?: number }
 export function packCodecFailure(error: unknown): CloudCodecFailure {
+  if (error instanceof RuntimeCatalogueUnavailable) return { kind: "codec", code: "worker_unavailable", message: error.message };
   if (error instanceof CloudCacheError) return { kind: "cache", code: error.reason, message: error.message };
   if (error instanceof CloudSyncError) return { kind: "sync", code: error.code, retryAfterMs: error.retryAfterMs, message: error.message };
   if (error instanceof Error && error.name === "DataCloneError") return { kind: "codec", code: "worker_data_clone", message: "Save processing could not transfer the checkpoint. Retry the account save." };
@@ -199,7 +201,7 @@ export type CloudCodecReply = { ready: true } | { id: number; started: true } | 
 
 export async function handleCloudCodecMessage(message: CloudCodecMessage): Promise<CloudCodecReply> {
   try {
-    const result = await runCloudCodecTask(message.task);
+    const result = await withRuntimeCatalogue(() => runCloudCodecTask(message.task));
     const diagnosticCodes = result && typeof result === "object" ? numberRepairReports.get(result) : undefined;
     const reply = { id: message.id, result, ...(diagnosticCodes?.length ? { diagnosticCodes } : {}) };
     // The inline executor must exercise the return boundary too. Production's

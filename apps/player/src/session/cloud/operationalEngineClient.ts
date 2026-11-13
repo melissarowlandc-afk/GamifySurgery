@@ -4,6 +4,7 @@ import type { OperationalContextFlags, OperationalEngineReply, OperationalEngine
 import type { PrototypePlayerView } from "../viewModels";
 import type { OperationalViewArguments } from "./operationalViewProjection";
 import type { JournalRow } from "../localJournal";
+import { rememberEncodedJournalValues } from "../journalEncoding";
 import { OperationalEvidenceMirror } from "./operationalEvidenceMirror";
 import { freezeOperationalValue as freeze } from "./operationalFreeze";
 
@@ -88,6 +89,7 @@ export class OperationalEngineClient {
   get recoveryCheckpoint(): GameEvidenceCheckpoint { return this.mirror.checkpoint; }
   get view(): PrototypePlayerView | null { return this.currentView; }
   get canAccept(): boolean { return !this.closed && this.queued < this.queueLimit; }
+  get isQuiescent(): boolean { return !this.closed && this.queued === 0 && this.pending.size === 0; }
   get queuedCommands(): number { return this.queued; }
   async hashJournalRows(rows: readonly JournalRow[], full = false): Promise<string[]> {
     if (this.closed || this.pending.size >= this.queueLimit) throw new OperationalEngineFailure(this.closed ? this.failure : "engine-backlog");
@@ -99,6 +101,7 @@ export class OperationalEngineClient {
     const reply = await this.request({ kind: "journalHashes", rows: inputs });
     if (!("kind" in reply) || reply.kind !== "journalHashes") throw new OperationalEngineFailure("engine-journal-hash");
     if (reply.missing) { if (full) throw new OperationalEngineFailure("engine-journal-hash"); return this.hashJournalRows(rows, true); }
+    if (reply.encodedRows) rememberEncodedJournalValues(rows, reply.encodedRows);
     return reply.hashes;
   }
   execute(command: GameCommand, context?: DomainContext, contextFlags?: OperationalContextFlags): Promise<OperationalEngineResult> {

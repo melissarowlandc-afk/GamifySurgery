@@ -1,4 +1,4 @@
-import { CloudCodecError, sha256Utf8, utf8Bytes } from "./codecJson";
+import { checkedUtf8, CloudCodecError, sha256Bytes, utf8Bytes } from "./codecJson";
 
 export type CloudCompression = "gzip" | "deflate";
 export interface CloudCompressedText {
@@ -60,8 +60,8 @@ export async function compressCloudText(text: string, encoding: CloudCompression
   if (encoding !== "gzip" && encoding !== "deflate") throw new CloudCodecError("compressed_shape", "Unsupported lossless encoding.");
   const uncompressedBytes = utf8Bytes(text);
   if (uncompressedBytes > CLOUD_COMPRESSION_LIMITS.decodedBytes) throw new CloudCodecError("decompression_size", "Decoded text exceeds the permitted byte limit.");
-  const uncompressedSha256 = await sha256Utf8(text);
-  const input = new TextEncoder().encode(text);
+  const input = checkedUtf8(text);
+  const uncompressedSha256 = await sha256Bytes(input);
   const output = await boundedBytes(byteStream(input).pipeThrough(new CompressionStream(encoding)), CLOUD_COMPRESSION_LIMITS.compressedBytes);
   const result = Object.freeze({ encoding, uncompressedSha256, uncompressedBytes, compressedBytes: output.byteLength, dataBase64: base64(output) });
   // Verify every emitted compressed object, rather than assuming a successful

@@ -20,7 +20,8 @@ export function createLevelFiveLaunchQaState(scenario: LevelFiveLaunchQaScenario
     state.clinicalXp = PROTOTYPE_BALANCE_RELEASE.facility.stageDefinitions.find(stage => stage.level === 4)!.minimumClinicalXp - 1;
     // This deliberately unmet preview must not inherit the checkpoint's earned
     // legacy goal. Every patient and chart in that checkpoint remains intact.
-    state.lateProgression = { version: "late-progression.v1", preservedClinicalXpGoal: null };
+    state.lateProgression = { version: "late-progression.v2", preservedClinicalXpGoal: null,
+      preservedCompletedEncounterGoal: null };
   }
   return state;
 }

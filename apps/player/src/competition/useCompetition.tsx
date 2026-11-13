@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useRef } from "react";
+import { bindVisibleInterval } from "../mobile/performance/visibleInterval";
 import type { GameState } from "@gamify-surgery/game-domain";
 import { useAuthAccountId } from "../auth/AuthAccountContext";
 import { hostedAuthConfiguration } from "../auth/prototypeAuth";
@@ -85,7 +86,7 @@ export function useCompetitionSubmission(state: GameState, clinicName: string, o
     window.addEventListener("online", retry);
     window.addEventListener("focus", retry);
     document.addEventListener("visibilitychange", retry);
-    const timer = setInterval(retry, 60_000);
-    return () => { window.removeEventListener("online", retry); window.removeEventListener("focus", retry); document.removeEventListener("visibilitychange", retry); clearInterval(timer); };
+    const stopTimer = bindVisibleInterval(window, document, retry, 60_000);
+    return () => { window.removeEventListener("online", retry); window.removeEventListener("focus", retry); document.removeEventListener("visibilitychange", retry); stopTimer(); };
   }, [client]);
 }

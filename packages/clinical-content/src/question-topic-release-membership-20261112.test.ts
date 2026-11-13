@@ -1,10 +1,13 @@
+import {beforeProgramBatch8AcceptanceRelease,beforeProgramBatch8AcceptanceManifest,programBatch8HistoricalMembership} from "./question-program-batch8-acceptance-test-support";
 import {createHash} from "node:crypto";
 import {existsSync,readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
-import {QUESTION_SHIP_MANIFEST as manifest} from "./question-ship-manifest";
-import {SYNTHETIC_CLINICAL_RELEASE as live} from "./synthetic-content";
+import {QUESTION_SHIP_MANIFEST as currentManifest} from "./question-ship-manifest";
+import {SYNTHETIC_CLINICAL_RELEASE as currentLive} from "./synthetic-content";
 import {topicQuestionAcceptance,topicCaseIsExplicitlyLive,retainedTopicCase} from "./question-program-batch6-acceptance-test-support";
 
+const manifest=beforeProgramBatch8AcceptanceManifest(currentManifest);
+const live=beforeProgramBatch8AcceptanceRelease(currentLive);
 const read=(path:string)=>JSON.parse(readFileSync(new URL("../../../"+path,import.meta.url),"utf8"));
 const digest=(value:unknown)=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const repairs=read("tools/question-quality/fixtures/question-topic-batches45-repaired-tests-20261112.json") as {
@@ -69,8 +72,8 @@ describe("frozen repaired topic acceptance membership in the release",()=>{
     }
   });
 
-  it("checks all545 topic authority rows and every retained topic case",()=>{
-    expect(topicRows).toHaveLength(545);
+  it("checks all627 historical topic authority rows and every retained topic case",()=>{
+    expect(topicRows).toHaveLength(627);
     for(const id of new Set(topicRows.map(row=>row.questionVariantId)))expect(topicQuestionAcceptance(id).accepted).toBe(true);
     const retiredIds=new Set<string>(retainedCases.map((cs:{id:string})=>cs.id));
     for(const id of retiredIds){
@@ -79,6 +82,19 @@ describe("frozen repaired topic acceptance membership in the release",()=>{
       const originals=retainedCases.filter((cs:{id:string})=>cs.id===id);
       expect(originals.some((cs:unknown)=>digest(cs)===digest(retained)),id+" immutable retained definition").toBe(true);
       for(const node of retained.decisionNodes)expect(live.concepts.some(co=>co.id===node.primaryConceptId)).toBe(true);
+    }
+  });
+
+  it("binds all622 current topic rows and all777 current acceptances before historical membership checks",()=>{
+    expect(currentManifest.accepted).toHaveLength(777);
+    expect(currentManifest.accepted.filter(r=>r.sourceView.startsWith("topic-batch"))).toHaveLength(622);
+    for(const row of currentManifest.accepted)programBatch8HistoricalMembership(currentLive,currentManifest,{questionVariantId:row.questionVariantId});
+    const archiveBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-topic-batch7-retained-authoring-tests-20261112.json",import.meta.url));
+    expect(createHash("sha256").update(archiveBytes).digest("hex")).toBe("0b8003094103b1a53578ef1a3eac96d190e273a3c8bccbe2f99cc1c16cd55060");
+    const archive=JSON.parse(archiveBytes.toString("utf8"));expect(archive.records).toHaveLength(4);
+    for(const record of archive.records){
+      expect(createHash("sha256").update(record.sourceText).digest("hex")).toBe(record.sha256);
+      expect(existsSync(new URL("../../../"+record.path,import.meta.url))).toBe(false);
     }
   });
 });

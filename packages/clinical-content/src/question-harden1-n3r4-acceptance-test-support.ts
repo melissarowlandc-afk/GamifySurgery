@@ -51,7 +51,14 @@ export function beforeHarden1N3r4AcceptanceSource(path:string,current:string):st
  const releasePins=read("tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json") as {paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string}>};
  const release=releasePins.paths.find(p=>p.path===path);
  if(release){expect(release.mainBeforeSha256).toBe(row.beforeSha256);expect(release.mainAfterSha256).toBe(row.afterSha256);}
- expect(sha(current),path+" exact authorized acceptance postimage").toBe(release?.requiredReleaseSha256??row.afterSha256);
+ // Batch7 inverses produce the exact prior release binding. Require that
+ // preimage both in the immutable migration and the authorized pin history.
+ const batch7=read("tools/question-quality/fixtures/question-topic-acceptance-batch7-source-migration-20261112.json").files.find((r:{path:string})=>r.path===path);
+ const historical=(releasePins as typeof releasePins & {authorizationHistory:Array<{milestone:string;priorPaths:typeof releasePins.paths}>}).authorizationHistory
+   .find(h=>h.milestone==="release-port36-port")?.priorPaths.find(r=>r.path===path);
+ const expected=sha(current)===batch7?.beforeSha256&&historical?.requiredReleaseSha256===batch7.beforeSha256
+   ?batch7.beforeSha256:release?.requiredReleaseSha256??row.afterSha256;
+ expect(sha(current),path+" exact authorized acceptance/recorded release epoch postimage").toBe(expected);
  expect(sha(row.beforeText),path+" original source preimage").toBe(row.beforeSha256);
  expect(row.beforeSha256).toBe(before.files[path]??expansion.files.find(f=>f.path===path)?.beforeSha256);return row.beforeText;
 }

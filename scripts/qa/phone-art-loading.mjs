@@ -6,6 +6,7 @@
  * PHONE_ART_CAPTURE=<round2/entry> freezes packages/session modules and supplies
  * the old mobile/scene source for a before run. Never swaps working-tree files.
  */
+import './runtime-asset-fetch.mjs';
 import { build } from 'vite';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { readFileSync, existsSync } from 'node:fs';
@@ -34,6 +35,6 @@ await build({ configFile: false, root, logLevel: 'error', plugins: [runtimeClini
     }
   },
 }], resolve: { alias: { phaser: shim } }, ssr: { noExternal: [/^@gamify-surgery\//] },
-  build: { ssr: resolve('scripts/qa/phone-art-loading.entry.ts'), target: 'node22', minify: true, outDir: out, emptyOutDir: false,
+  build: { emitAssets: true, ssr: resolve('scripts/qa/phone-art-loading.entry.ts'), target: 'node22', minify: true, outDir: out, emptyOutDir: false,
     rolldownOptions: { output: { entryFileNames: 'loading.mjs' } } } });
 await import(pathToFileURL(resolve(out, 'loading.mjs')));

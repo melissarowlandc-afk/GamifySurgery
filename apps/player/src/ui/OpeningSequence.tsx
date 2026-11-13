@@ -30,6 +30,8 @@ interface OpeningSequenceProps {
   campaignSeed?: string;
   initialStep?: "main" | "founder";
   initialGuidanceEnabled?: boolean;
+  /** Native saves can show the chooser while the local command catalogue warms. */
+  campaignReady?: boolean;
   onBeginClinic: (
     founder: FounderIdentity,
     clinicName: string,
@@ -54,6 +56,7 @@ export function OpeningSequence({
   campaignSeed,
   initialStep = "main",
   initialGuidanceEnabled = true,
+  campaignReady = true,
   onBeginClinic,
   onResumeCampaign,
   onRestoreCampaign,
@@ -107,6 +110,7 @@ export function OpeningSequence({
 
   const beginClinic = () => {
     if (
+      !campaignReady ||
       initializingRef.current ||
       trimmedFounderName.length === 0 ||
       normalizedClinicName.length === 0 ||
@@ -139,7 +143,7 @@ export function OpeningSequence({
   if (step === "main") {
     return (
       <main className="opening-screen prototype-main-screen">
-        <div className="opening-beta-info"><ClinicalContentNotice /><AccountMenu /></div>
+        <div className="opening-beta-info" inert={!campaignReady}><ClinicalContentNotice /><AccountMenu /></div>
         <header className="opening-title-lockup">
           <OpeningWordmark />
           <div className="opening-tagline-slot">
@@ -149,11 +153,13 @@ export function OpeningSequence({
           </div>
         </header>
         <h1>Clinic Campaigns</h1>
+        {!campaignReady ? <p role="status">Getting ready to resume…</p> : null}
         <div className="prototype-main-actions">
           {resumableCampaigns.length === 1 ? (
             <button
               className="opening-choice"
               type="button"
+              disabled={!campaignReady}
               onClick={() =>
                 onResumeCampaign(resumableCampaigns[0]!.campaignId)
               }
@@ -168,6 +174,7 @@ export function OpeningSequence({
                   className="opening-choice"
                   type="button"
                   key={campaign.campaignId}
+                  disabled={!campaignReady}
                   onClick={() => onResumeCampaign(campaign.campaignId)}
                 >
                   {campaign.name}
@@ -178,6 +185,7 @@ export function OpeningSequence({
           <button
             className="opening-choice opening-choice-primary"
             type="button"
+            disabled={!campaignReady}
             onClick={beginFreshFounder}
           >
             New Campaign
@@ -192,6 +200,7 @@ export function OpeningSequence({
                   className="opening-choice"
                   type="button"
                   key={campaign.campaignId}
+                  disabled={!campaignReady}
                   onClick={() => onRestoreCampaign(campaign.campaignId)}
                 >
                   Restore {campaign.name}
@@ -299,7 +308,7 @@ export function OpeningSequence({
           <span>Guidance: {guidanceEnabled ? "On" : "Off"}</span>
         </label>
         <button className="opening-choice founder-continue" type="submit"
-          disabled={initializing || trimmedFounderName.length === 0 || normalizedClinicName.length === 0 || duplicateClinicName}>
+          disabled={!campaignReady || initializing || trimmedFounderName.length === 0 || normalizedClinicName.length === 0 || duplicateClinicName}>
           {initializing ? "Opening clinic..." : "Open the Clinic"}
         </button>
         <button className="text-button" type="button" disabled={initializing || trimmedFounderName.length === 0} onClick={() => setStep("happy")}>Be Rich and Happy</button>

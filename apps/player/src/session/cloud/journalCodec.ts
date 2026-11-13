@@ -1,3 +1,4 @@
+import { encodeJournalValue } from "../journalEncoding";
 import { createGameEvidenceCheckpoint, importGameEvidence, restoreGameEvidenceJournal } from "@gamify-surgery/game-domain";
 import { journalWorkerStore, journalQuotaRetry, journalRowText, type JournalAddress, type JournalHead, type JournalRead, type JournalSeed, type JournalStorage, type JournalWorkerAddress } from "../localJournal";
 import { CloudCacheError } from "./codecCache";
@@ -33,7 +34,7 @@ export async function rebaseJournalInWorker(input: { address: JournalWorkerAddre
   const store = journalWorkerStore(input.address), head = await store.head(input.address.key);
   if (!head || head.owner !== input.owner || head.highWater !== input.through) throw new CloudCacheError("conflict");
   importGameEvidence(input.seed.checkpoint.snapshot, input.seed.checkpoint.evidence);
-  await store.compact(input.address.key, input.owner, input.through, input.seed, await sha256Utf8(JSON.stringify(input.seed)));
+  await store.compact(input.address.key, input.owner, input.through, input.seed, await sha256Utf8(JSON.stringify(input.seed)), await encodeJournalValue(input.seed));
 }
 function rejectRewind(seed: JournalSeed, latest: JournalPreparation | null): void {
   if (!latest?.seed || !latest.state) return;
@@ -50,7 +51,7 @@ export async function bindJournalInWorker(input: { address: JournalAddress; owne
   importGameEvidence(input.seed.checkpoint.snapshot, input.seed.checkpoint.evidence);
   const store = journalWorkerStore(input.address);
   rejectRewind(input.seed, await prepareJournalInWorker({ address: input.address, encode: false, local: true }));
-  const head = await store.bind(input.address.key, input.owner, input.expected, input.seed, await sha256Utf8(JSON.stringify(input.seed)));
+  const head = await store.bind(input.address.key, input.owner, input.expected, input.seed, await sha256Utf8(JSON.stringify(input.seed)), await encodeJournalValue(input.seed));
   const committed = await store.read(input.address.key);
   if (!committed || committed.head.owner !== input.owner || await sha256Utf8(JSON.stringify(committed.snapshot.seed)) !== committed.snapshot.sha256) throw new CloudCacheError("checksum");
   return head;
@@ -118,7 +119,7 @@ export async function prepareJournalInWorker(input: JournalPreparationInput): Pr
       }
     }
   }
-  if (input.compact && store) await store.compact(input.address!.key, data.head.owner, data.head.highWater, seed, await sha256Utf8(JSON.stringify(seed)));
+  if (input.compact && store) await store.compact(input.address!.key, data.head.owner, data.head.highWater, seed, await sha256Utf8(JSON.stringify(seed)), await encodeJournalValue(seed));
   return { through: data.head.highWater, ...(seed.snapshotPolicy ? { snapshotOnly: true } : {}), ...(numberRepairs ? { numberRepairs } : {}), base: store && input.encode === false && !input.local ? null : base,
     candidate, writerGeneration: seed.writerGeneration, profileOrder: data.head.profileOrder,
     ...(!store || input.local ? { seed } : {}), ...(input.local ? { state: nativeState ?? importGameEvidence(checkpoint.snapshot, checkpoint.evidence) } : {}) };
@@ -129,7 +130,7 @@ export async function bindJournal(store: JournalStorage, key: string, owner: str
   const expected = await store.head(key);
   if (store.databaseName) return journalQuotaRetry(() => codec.run({ kind: "journalBind", input: { address: { database: store.databaseName!, key }, owner, expected, seed } }));
   rejectRewind(seed, await prepareJournalInWorker({ data: await store.read(key) ?? undefined, encode: false, local: true }));
-  return store.bind(key, owner, expected, seed, await sha256Utf8(JSON.stringify(seed)));
+  return store.bind(key, owner, expected, seed, await sha256Utf8(JSON.stringify(seed)), await encodeJournalValue(seed));
 }
 export async function prepareJournal(store: JournalStorage, key: string, codec: import("./codecTasks").CloudCodecExecutor,
   options: Omit<JournalPreparationInput, "data" | "address"> = {}): Promise<JournalPreparation | null> {
@@ -138,7 +139,7 @@ export async function prepareJournal(store: JournalStorage, key: string, codec: 
   if (result?.seed && options.compact && !store.databaseName) {
     const head = await store.head(key);
     if (!head) throw new CloudCacheError("conflict");
-    await store.compact(key, head.owner, result.through, result.seed, await sha256Utf8(JSON.stringify(result.seed)));
+    await store.compact(key, head.owner, result.through, result.seed, await sha256Utf8(JSON.stringify(result.seed)), await encodeJournalValue(result.seed));
   }
   return result;
 }

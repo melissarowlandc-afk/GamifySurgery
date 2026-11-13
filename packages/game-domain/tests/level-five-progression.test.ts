@@ -14,7 +14,7 @@ const base = createLevelFiveStateQaState("pre-goal", context);
 const ready = () => {
   const state = { ...structuredClone(base), clinicalXp: 2300 };
   setLevelFiveQaPatientSatisfaction(state, context, 100);
-  setLevelFiveQaCompletedEncounters(state, 330);
+  setLevelFiveQaCompletedEncounters(state, 390);
   return state;
 };
 const apply = (state: GameState, command: GameCommand) => gameReducer(state, command, context);
@@ -99,7 +99,7 @@ describe("M6 three-goal inspection eligibility", () => {
     expect(state.employees.find(employee => employee.id === id)?.training).toBeTruthy();
     state.clinicalXp = 2300;
     setLevelFiveQaPatientSatisfaction(state, context, 100);
-    setLevelFiveQaCompletedEncounters(state, 330);
+    setLevelFiveQaCompletedEncounters(state, 390);
     for (const employee of state.employees) employee.morale = 83; // +2 owned Founder Office = 85.
     expect(unlock(acknowledge(state))).toMatchObject({ averageStaffMorale: 85, employedStaffCount: state.employees.length });
   });

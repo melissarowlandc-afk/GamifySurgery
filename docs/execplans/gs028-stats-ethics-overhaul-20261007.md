@@ -14254,3 +14254,179 @@ packages/clinical-content/src/question-program-batch6-acceptance-20261112.test.t
 ```
 
 The port-35 validation is complete locally. The pending source decision is resolved. Work is uncommitted, and manager review and release coordination are next.
+
+## Rebind 36 (release worktree, accepted batches 7-8 + phone memory + pacing round 2) — 2026-11-12
+
+Completed only the manager-authorized lanes in GS-release, manager-supplied base `3bc237a1`. Main stayed read-only. Exact path dispositions and before/after file hashes: `.local-dev/release-verify/port36-20261112.json` (209 changed public paths; 123 copied, 86 hunk/integration paths, 287 excluded Main differences). The complete changed/excluded lists are in [the release plan](release-port36-20261112.md). Pacing `types.ts`/`reducer.ts` came from their recorded frozen postimages, excluding concurrent ENG-I01. No intraop draft was admitted or ported.
+
+Frozen batch7/batch8 builders both pass `--check`: 82+10 newly accepted draft versions, five superseded authority rows, 13+12 new waits and nine retained historical waits. Default: **1,407 cases / 1,610 nodes / 1,109 meanings / 777 rows**. Clinical JSON SHA-256 `4474bd1722eef6dc7b99d64dd21d4ddf5a907ec8a1dfe3ac4c20047f51d559d8`; manifest JSON SHA-256 `9e163b7ebe29bce3468ee34feada226e97329d700512e6342da210134f986f60`; unchanged catalog `3e0d1bb346abc1579e5c24400565c36c158d90304b60171b24b6a88f64b2ed40`. The 17 exact full-version owner approvals and five key-only confirmations remain version-bound; all 92 newly accepted versions remain `needs_clinician_review`. Four dependency-bound D97 authoring-test repairs are retained in a pinned archive; accepted and predecessor D97 cases run directly from the frozen acceptance records.
+
+Phone memory rounds1-3 are included, with **`LOCAL_STORAGE_COMPRESSION_WRITES = false`** in the shared build policy. Plain, compressed and mixed journal readers, worker dispatch, lazy catalogue slices and unchanged state/evidence behavior pass. No compression-write enablement shipped.
+
+| Arm | Commands | Closing cents | Completed | Walkouts | First finish |
+|---|---:|---:|---:|---:|---:|
+| Before: old content / old policy | 31,511 | 6,524,517 | 492 | 0 | 22,747 |
+| Current cache/bindings, old content / old policy | 31,511 | 6,524,517 | 492 | 0 | 22,747 |
+| Old content / new policy+prices | 35,335 | 6,899,694 | 551 | 0 | 26,400 |
+| New content / old policy+prices | 31,600 | 6,125,150 | 494 | 0 | 22,887 |
+| Shipping: new content / new policy+prices | 35,236 | 6,829,124 | 550 | 0 | 26,312 |
+
+Both old-content/old-policy controls reproduce all nine prior checkpoint serializations and all three reports exactly, including the arm retaining the current cache/bindings. Content alone moves first finish +140 ticks; policy/prices alone +3,653; combined +3,565 (+15.67%), with the accepted 390-completion floor driving the longer journey. The final pacing CLI independently returns 26,312, **+0.11795593774970303%** from the fixed 26,281 reference, inside +/-10%. Minimum cash is 1,478,000 cents. The nine price increases cost 124,000 cents: 54,000 in the funded opening and 70,000 during Level5 construction. Final cash reconciliation is `1,635,500 + 19,779,700 - 483,437 - 12,856,639 - 1,246,000 = 6,829,124` cents. Closing cash is +304,607 cents versus rebind35; the controls isolate content selection from the longer accepted pacing and higher prices.
+
+All nine saves changed through the native generators (timing, balances, selected/frozen cohorts, 70 additional blank histories and v2 policy); detailed paths/hashes are in `.local-dev/release-port36-20261112/checkpoint-deltas.json` and `accepted-run-verification.json`. Three reports changed as follows; best/latest/first-finish assertions remain exact.
+
+| Report | Before raw score / patients | After raw score / patients |
+|---|---|---|
+| 1 | 62.67926869955808 / 51 | 62.44776314872817 / 50 |
+| 2 | 66.45754055477256 / 49 | 66.6794894760407 / 49 |
+| 3 | 45.381510275164956 / 50 | 45.45120376175499 / 50 |
+
+| Artifact | Before SHA-256 | After SHA-256 |
+|---|---|---|
+| `tools/qa/level-five-integration-results-20261012.json` | `0184edeb7f8958509f3f891cc16ba902c38cddc6ac282abb5e334c7311e1a3df` | `106448a2bd9e4a3a4161297c7e714fcbe6cd7e42833c2c5ae6ac01443e53b091` |
+| `tests/fixtures/level-five-integration-checkpoints-20261012.json` | `3ae9ec7864795e0b0b8924e8acad07f66248a04e1762945e003cf4f7ecf8193e` | `53fd4a90f888c250466c4817433c2e4b7e57d8c198eb2dd14b5c442cef07ef4a` |
+| `tests/fixtures/level-five-legacy-behavior-20261012.json` | `6570dc30860ac6e5bdfe04c8b37fff187c122e3899018e2d5700e0b6f121967d` | `09d571f52111f9c12ef85a39cf1bbe2d877e061b66bbd3f38245b023897ae3d8` |
+
+The original native journey and lower helper ran unchanged into guarded staging before verification/publication. Results contain only the established `liveCap` 4->5 metadata correction and history append beyond native output. All 30 prior history entries are exact; entry31 preserves the previous 609 input hashes. Current binding: 616 inputs /467 clinical, with 27 changed/added input hashes listed in the release plan. Integration guard unchanged: `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`. All original command/report/cash/retirement/comfort/round/supplier assertions remain.
+
+Save safety: 25 actual schema5-9 loads and120-minute continuations regenerated via the established reducer generator. Changes are confined to 70 blank new histories, newly admitted definitions/proven fresh ambient art and the exact earned-goal-preserving v2 record. Existing histories and frozen definitions remain exact, with independent old-content policy controls. Natural old Level5 checkpoints below330 and at/above330 preserve their appropriate partial/earned goals; 107 frozen-record comparisons across nine old checkpoints pass. Focused admission/save checks:135; memory/reader checks:37; pacing-save checks:37; current admission guards:2; wait/price checks:12. Existing batch3/4 snapshot/journal tests are retained under their exact accepted epoch, with explicit current-successor/rejection assertions added.
+
+Final seven suites: `CI=true`, threads (player4 workers; others2). No timeout failure occurred. The initial full player run had 7 stale expectation failures in4 files (five superseded case admissions, one retired-tuple lookup, one four-price display assertion); those were repaired without dropping a case or changing any timing budget. The final full player rerun passes. The manager's three CI timing edits remain; the large-entry test changes only its honestly measured 9,119->9,300 record expectation, retaining3,200 actions,8,500 floor and600,000ms timeout.
+
+| Workspace | Files | Passed | Failed | Skipped |
+|---|---:|---:|---:|---:|
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 444 | 5465 | 0 | 0 |
+| balance-config | 26 | 168 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 141 | 1744 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 213 | 6000 | 0 | 1 |
+| Total | 847 | 13584 | 0 | 1 |
+
+Exact native suite summary lines:
+
+```text
+clinical-context-workbench
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Duration  1.06s (transform 321ms, setup 0ms, import 865ms, tests 443ms, environment 0ms)
+
+player
+ Test Files  444 passed (444)
+      Tests  5465 passed (5465)
+   Duration  1096.08s (transform 77.27s, setup 0ms, import 1125.95s, tests 2656.73s, environment 45ms)
+
+balance-config
+ Test Files  26 passed (26)
+      Tests  168 passed (168)
+   Duration  2.50s (transform 580ms, setup 0ms, import 2.55s, tests 185ms, environment 2ms)
+
+clinical-authoring
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Duration  693ms (transform 143ms, setup 0ms, import 405ms, tests 317ms, environment 0ms)
+
+clinical-content
+ Test Files  141 passed (141)
+      Tests  1744 passed (1744)
+   Duration  283.50s (transform 30.37s, setup 0ms, import 479.43s, tests 62.43s, environment 13ms)
+
+clinical-research
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Duration  2.23s (transform 195ms, setup 0ms, import 527ms, tests 1.06s, environment 0ms)
+
+game-domain
+ Test Files  213 passed (213)
+      Tests  6000 passed | 1 skipped (6001)
+   Duration  1031.94s (transform 21.97s, setup 0ms, import 716.82s, tests 1315.15s, environment 21ms)
+```
+
+All seven workspace typechecks exit0. Boundary and launcher scripts exit0 unchanged, using a checksum-verified read-only native inventory of7,886 tracked paths (no Git process). Player build exits0: ✓ 681 modules transformed.; ✓ built in 11.42s. Pacing guard tests:3passed. Builder checks:both exit0. Nine actual cloud-format3/page-wire capacity round trips pass. Full commands, outputs, SHA-256 and original/final reports are retained under `.local-dev/release-port36-20261112/`; consolidated exact counts/output hashes are in `validation-summary.json`.
+
+Forward save compatibility is verified; the accepted `late-progression.v2` record establishes a rollback floor for older readers, as documented in the pacing handoff. Browser/physical-phone tests were not run in this sandbox. No Git, installs, network, agents, commits, push or deploy. The release remains uncommitted for manager review; existing owner opening pathways are unchanged.
+
+## Port36 follow-up: phone memory Round4 opening recovery — 2026-11-12
+
+Ported exactly the recorded 14 Round4 source/test/entry paths (9 modified/5 new), plus only the Round4 section of the phone-memory plan. All raw author postimages match its manifest; all edited preimages equal Release after line-ending normalization. Source data/patches and beforeimages: `.local-dev/release-port36-20261112/round4/`. Shared files contain only the recorded hunks; output is UTF-8/no BOM/LF. ENG-I01, intraop drafts and unrelated Main work remain excluded.
+
+Static App navigation is restored; the native chooser can paint read-only while catalogue warm and journal recovery finish. Resume/new/restore/storage actions remain gated on both. Missing legacy-template signals retry without replacing saved bytes. Compatibility graph assembly yields without publishing partial data. The new classic startup-recovery asset is included with index.html; it offers manual Reload on early graph/asset failure and never writes storage. The built asset matches the recorded source. Vite hoists the module tag, but its module entry remains implicitly deferred; the classic guard executes during parsing with the root already present.
+
+The manager's `packages/clinical-content/vitest.config.ts` remains byte-exact at `f00d45ecd1174400973ad40f2335547c78f01b1b28f023d7eaf8a3cdc6fd6f00`. Three preexisting browser screenshot changes were also preserved; none was edited by this worker. `LOCAL_STORAGE_COMPRESSION_WRITES` stays **false**. No protected-source pin requires a delta; every original port36 pin/capture stays exact.
+
+**No rebind was needed.** All 616 bound input hashes (467 clinical) are identical. Results/checkpoints/legacy fixture, nine saves, three reports, all numbers and inputHistory31 remain byte-identical: **35,236 commands /6,829,124 cents /550 completions /0 walkouts**, first finish26,312. Integration guard remains `812c9823ed10c4007460f56d41c30dc698c61576a0631e55a24e92094c129909`. The older canonical numbers in the copied Main Round4 report describe that author's frozen control epoch; they are not the GS-release rebind36 artifact.
+
+- `tools/qa/level-five-integration-results-20261012.json`: `106448a2bd9e4a3a4161297c7e714fcbe6cd7e42833c2c5ae6ac01443e53b091`
+- `tests/fixtures/level-five-integration-checkpoints-20261012.json`: `53fd4a90f888c250466c4817433c2e4b7e57d8c198eb2dd14b5c442cef07ef4a`
+- `tests/fixtures/level-five-legacy-behavior-20261012.json`: `09d571f52111f9c12ef85a39cf1bbe2d877e061b66bbd3f38245b023897ae3d8`
+
+| Round4 source/test/entry path | Release before SHA-256 | Release after SHA-256 |
+|---|---|---|
+| `apps/player/src/main.tsx` | `5a44d5c72cf7d10046920449b41db96867c1541d472eabb3baf4becc6c4bff05` | `b7afc0cb6143b017c8becc51c4e9ccba9f06533990800d65ecf0189a1e6738a0` |
+| `apps/player/src/App.tsx` | `c91141465a69ddd807be112126f39e91bdd8fa2c36488cfd119f790e9da672b6` | `d4ace4f1e426fa35e2e163a000b1fa8e66750ca5e8f8de15f999d45ff27bb339` |
+| `apps/player/src/session/prototypeStorage.ts` | `b507eba29e7156f8dd6a692169e46410a6805b5d0bba9b745c4b74ee590ce6a4` | `47059b80a2be3658029e3fd90ad7d0b70e302279dc652827543dc135fa25e49b` |
+| `apps/player/src/ui/OpeningSequence.tsx` | `2cda3f55f46e3f6a056ae0667e44150fe898fa206c92fff971f14b0b1531b9ad` | `c6411a8b4c10f856a994c0d6c1aaa4d3468ef328a806e4b2634f6d638203876c` |
+| `apps/player/src/mobile/performance/runtimeCatalogue.ts` | `4130621e35e1aa36c067ac3dd60150e2e668c34014141e4e97c15a6abe9fe8e9` | `b6b718acf6bc0aaafa6dd92a964a7cce62cc64d697c0f4eb014487f6270dc864` |
+| `apps/player/src/mobile/performance/runtimeClinicalData.test.ts` | `62e32c69298de78e3e5ca899e818115ae392f058765d18a409e05c69877e882a` | `10141b640489e56893a836abafacf690202aef81adf5d64dd84f67f75dd2db72` |
+| `scripts/vite/runtime-clinical-data.ts` | `9d134cedb3c10bbb0d3c7b9c232ee267274f44b881e351fe1fd88de4e8891090` | `edacd3f1d12d3e003704e8fb551727424a2a942952da565b79522109875755b7` |
+| `scripts/vite/runtime-clinical-graph.ts` | `343dcbe6f7d365a9257b1100723141e1ac2e75b6def145eee24a58fdfee48024` | `078fd992101aea1a88e88f4cf12b50ff1ac47d9853b423520bdb991dba1ed2e7` |
+| `apps/player/src/App.localCatalogueOpening.test.tsx` | `new` | `0d365bf914191f9df59257e8cf9394151e06e97c08f8a1e09ed74f651fdbc027` |
+| `apps/player/src/mobile/performance/runtimeYield.test.ts` | `new` | `555c7fb3d75db0415d98b45f74e16604f0de7c5e36bcf5be2cc2d701c92b723c` |
+| `apps/player/src/session/prototypeStorageCatalogue.test.ts` | `new` | `b83271e1782f430bae9e603a3c1787aa14280d27186ddd3e71a9e02ca7914831` |
+| `apps/player/index.html` | `2eb970728bbca193cd9ed42d386d3ba830b40029a232019d096541745a6a3eb5` | `ad65cad761f5af715ea21dba914ebdf752dc86b912ccadee1edca0ee631116f5` |
+| `apps/player/public/startup-recovery.js` | `new` | `b92e01c2f876dc9ee06c49d96558016f0989b57355f7468e40cbb2c532a1c5ca` |
+| `apps/player/src/ui/startupRecovery.test.ts` | `new` | `f66b33ee8b62ca54cdb205d3e2ae840b267d32973a9b159a54cf2cb7bab91bb1` |
+
+Final validation: CI=true; seven workspace suites with threads (player4 workers, others2). **851 files /13,594 passed /0 failed /one existing skip**. Opening/legacy/yield/startup focus:8 files/41 passed. Seven typechecks, boundaries/launcher and player build all exit0. Build: ✓ 681 modules transformed.; ✓ built in 11.17s. All counts match port36 plus four new test files and ten tests. No new timeout or assertion budget was introduced.
+
+| Workspace | Files | Passed | Failed | Skipped |
+|---|---:|---:|---:|---:|
+| clinical-context-workbench | 8 | 43 | 0 | 0 |
+| player | 448 | 5475 | 0 | 0 |
+| balance-config | 26 | 168 | 0 | 0 |
+| clinical-authoring | 7 | 81 | 0 | 0 |
+| clinical-content | 141 | 1744 | 0 | 0 |
+| clinical-research | 8 | 83 | 0 | 0 |
+| game-domain | 213 | 6000 | 0 | 1 |
+
+Exact native suite summaries:
+
+```text
+clinical-context-workbench
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Duration  1.35s (transform 436ms, setup 0ms, import 1.17s, tests 584ms, environment 1ms)
+
+player
+ Test Files  448 passed (448)
+      Tests  5475 passed (5475)
+   Duration  827.53s (transform 40.93s, setup 0ms, import 1012.62s, tests 2239.40s, environment 37ms)
+
+balance-config
+ Test Files  26 passed (26)
+      Tests  168 passed (168)
+   Duration  2.82s (transform 623ms, setup 0ms, import 2.81s, tests 230ms, environment 1ms)
+
+clinical-authoring
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Duration  814ms (transform 171ms, setup 0ms, import 485ms, tests 341ms, environment 0ms)
+
+clinical-content
+ Test Files  141 passed (141)
+      Tests  1744 passed (1744)
+   Duration  201.19s (transform 14.69s, setup 0ms, import 338.30s, tests 46.09s, environment 11ms)
+
+clinical-research
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Duration  3.00s (transform 285ms, setup 0ms, import 775ms, tests 1.34s, environment 1ms)
+
+game-domain
+ Test Files  213 passed (213)
+      Tests  6000 passed | 1 skipped (6001)
+   Duration  898.13s (transform 23.33s, setup 0ms, import 557.52s, tests 1214.99s, environment 18ms)
+```
+
+Commands, raw outputs and hashes are retained in `.local-dev/release-port36-20261112/round4/validation-summary.json` and per-command logs. Updated dispositions: `.local-dev/release-verify/port36-20261112.json`; Round4 snapshot manifest and patch are preserved beside these receipts. The Node checks do not prove the manager's browser reload-to-chooser <5s acceptance: rerun the unchanged room-upgrades browser cases and phone/Pages smoke checks. No e2e expectation or timeout changed. No Git, commit/push, install, network, agent, deploy, real-save access or opening-origin change.

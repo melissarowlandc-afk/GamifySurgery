@@ -1,3 +1,4 @@
+import { ensureRuntimeCatalogue, releaseRuntimeCatalogue } from "../../mobile/performance/runtimeCatalogue";
 import { applyGameEvidenceBuildUndo, applyGameEvidenceCommand, createGameEvidenceCheckpoint, gameEvidenceDelta,
   type DomainContext, type GameCommand, type GameEvidenceCheckpoint, type GameState } from "@gamify-surgery/game-domain";
 import { OperationalEngineClient, OperationalEngineFailure, type OperationalEnginePort } from "./operationalEngineClient";
@@ -33,6 +34,7 @@ export class OperationalSessionEngine {
   private visible: GameState;
   private nextRetry = 0;
   private stopped = false;
+  private parked = false;
   private args: OperationalViewArguments;
   private currentHead: GameEvidenceCheckpoint["snapshot"]["head"];
   private constructor(checkpoint: GameEvidenceCheckpoint, state: GameState, private readonly context: DomainContext,
@@ -50,6 +52,17 @@ export class OperationalSessionEngine {
     return this.currentHead;
   }
   get mode(): "worker" | "synchronous" { return this.client ? "worker" : "synchronous"; }
+  /** Called only at the session's durable, ordered idle boundary. The exact
+   * mirrored prefix stays in memory; the next command restarts before applying. */
+  async park(): Promise<boolean> {
+    const client = this.client;
+    if (!client || this.stopped) return false;
+    try { await client.idle(); } catch { return false; }
+    if (this.client !== client || this.stopped || !client.isQuiescent) return false;
+    this.fallback = client.recoveryCheckpoint; this.baseline = this.fallback;
+    this.client = null; this.parked = true; client.dispose();
+    this.diagnose("worker-idle-released"); return true;
+  }
   async hashJournalRows(rows: readonly JournalRow[]): Promise<string[] | null> {
     if (!this.client) return null;
     try { return await this.client.hashJournalRows(rows); }
@@ -70,6 +83,7 @@ export class OperationalSessionEngine {
       if (this.stopped) { client.dispose(); return; }
       client.setProjection(this.args, true);
       this.client = client; this.baseline = checkpoint; this.fallback = null;
+      if (this.options.useBundledContext) releaseRuntimeCatalogue();
       this.diagnose("worker-ready");
     } catch (error) {
       this.client = null; this.fallback = checkpoint; this.nextRetry = this.now() + (this.options.retryMs ?? 5_000);
@@ -85,6 +99,7 @@ export class OperationalSessionEngine {
   }
   private async ready(): Promise<void> {
     if (this.stopped) throw new OperationalEngineFailure("engine-stopped");
+    if (this.parked) { this.parked = false; await this.start(); return; }
     if (!this.client && this.now() >= this.nextRetry) await this.start();
   }
   /** Capture only command/session flags. Catalogs were bound at session open. */
@@ -121,7 +136,8 @@ export class OperationalSessionEngine {
     }
     return this.synchronous(entry);
   }
-  private synchronous(entry: Entry): OperationalEngineResult {
+  private async synchronous(entry: Entry): Promise<OperationalEngineResult> {
+    await ensureRuntimeCatalogue();
     const before = this.fallback ?? this.baseline, at = performance.now();
     const result = "command" in entry ? applyGameEvidenceCommand(before, entry.command, entry.context)
       : applyGameEvidenceBuildUndo(before, entry.target, entry.operationId);

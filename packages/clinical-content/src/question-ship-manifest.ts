@@ -22,15 +22,26 @@ export interface QuestionShipTopicConsolidation {
   with: string;
   decision: string;
 }
+/** Explicit fresh-supply retirement. Exact old question bindings remain archived.
+ * When a successor is declared, retirement applies only if that entire accepted
+ * successor case is present. Frozen encounters do not use this projection. */
+export interface QuestionShipCaseRetirement {
+  caseId: string;
+  questionVariantIds: readonly string[];
+  decision: string;
+  reason: string;
+  replacementQuestionVariantId?: string;
+}
 export interface QuestionShipManifest {
   legacyBindings: readonly (readonly [string, string, string, string])[];
   accepted: readonly QuestionShipAcceptance[];
   headerSources: Readonly<Record<string, string>>;
   replacements?: readonly QuestionShipCaseReplacement[];
   topicConsolidations?: readonly QuestionShipTopicConsolidation[];
+  retirements?: readonly QuestionShipCaseRetirement[];
 }
 export const QUESTION_SHIP_MANIFEST = {
-  id: "question-ship.2026-11-12.v15",
+  id: "question-ship.2026-11-12.v17",
   clinicalApproval: false,
   legacyDecision: "Carry forward the existing live bank before the owner-flag rewrite program; user-directed fallback on 2026-11-05. This does not independently accept prior drafts or grant clinical approval.",
   legacyBindings: [
@@ -10317,24 +10328,8 @@ export const QUESTION_SHIP_MANIFEST = {
     "sourceView": "topic-batch3-esophagus-gerd-barrett-hiatal",
     "decision": "docs/research/question-topic-acceptance-batch3-20261111.md"
   },
-  {
-    "acceptanceId": "question.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
-    "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
-    "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
-    "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
-    "conceptId": "concept.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
-    "sourceView": "topic-batch3-esophagus-gerd-barrett-hiatal",
-    "decision": "docs/research/question-topic-acceptance-batch3-20261111.md"
-  },
-  {
-    "acceptanceId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
-    "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
-    "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
-    "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
-    "conceptId": "concept.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
-    "sourceView": "topic-batch3-esophagus-gerd-barrett-hiatal",
-    "decision": "docs/research/question-topic-acceptance-batch3-20261111.md"
-  },
+  
+  
   {
     "acceptanceId": "question.topic.esophagus-gerd-barrett-hiatal.inconclusive-wireless-study.v2",
     "caseId": "case.topic.esophagus-gerd-barrett-hiatal.variable-acid-exposure.v2",
@@ -10911,15 +10906,7 @@ export const QUESTION_SHIP_MANIFEST = {
     "sourceView": "topic-batch3-bowel-ibd-malabsorption-short-bowel",
     "decision": "docs/research/question-topic-acceptance-batch3-20261111.md"
   },
-  {
-    "acceptanceId": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
-    "caseId": "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance-review.v2",
-    "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
-    "questionVariantId": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
-    "conceptId": "concept.bowel-ibd-malabsorption-short-bowel.crohn-postresection-endoscopy.v1",
-    "sourceView": "topic-batch3-bowel-ibd-malabsorption-short-bowel",
-    "decision": "docs/research/question-topic-acceptance-batch3-20261111.md"
-  },
+  
   {
     "acceptanceId": "question.topic.bowel-ibd-malabsorption-short-bowel.jejunal-gist-resection.v2",
     "caseId": "case.topic.bowel-ibd-malabsorption-short-bowel.jejunal-gist-resection-review.v2",
@@ -12407,15 +12394,7 @@ export const QUESTION_SHIP_MANIFEST = {
     "sourceView": "topic-batch4-colorectal-polyps-cancer",
     "decision": "docs/research/question-topic-acceptance-batch4-20261111.md"
   },
-  {
-    "acceptanceId": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
-    "caseId": "case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1",
-    "nodeId": "node.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
-    "questionVariantId": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
-    "conceptId": "concept.rectal-cancer.selected-watch-and-wait",
-    "sourceView": "topic-batch4-colorectal-polyps-cancer",
-    "decision": "docs/research/question-topic-acceptance-batch4-20261111.md"
-  },
+  
   {
     "acceptanceId": "question.topic.colorectal-polyps-cancer.lesions-not-fragments.v1",
     "caseId": "case.topic.colorectal-polyps-cancer.adenoma-fragment-count.v1",
@@ -14054,15 +14033,7 @@ export const QUESTION_SHIP_MANIFEST = {
     "sourceView": "topic-batch4-ethics-professionalism",
     "decision": "docs/research/question-topic-acceptance-batch4-20261111.md"
   },
-  {
-    "acceptanceId": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
-    "caseId": "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
-    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
-    "questionVariantId": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
-    "conceptId": "concept.mh.nontriggering-plan-and-testing-sequence.v1",
-    "sourceView": "topic-batch4-anesthesia-analgesia-pharmacology",
-    "decision": "docs/research/question-topic-acceptance-batch4-20261111.md"
-  },
+  
   {
     "acceptanceId": "question.topic.anesthesia-analgesia-pharmacology.last-seizure-drug.v2",
     "caseId": "case.topic.anesthesia-analgesia-pharmacology.last-seizure-drug-revision.v2",
@@ -14734,8 +14705,894 @@ export const QUESTION_SHIP_MANIFEST = {
     "decision": "docs/research/question-topic-acceptance-batch6-20261112.md"
   }
 ,
+  // Manager-accepted final PASS complete topic cases and D97 node overrides, batch 7.
+{
+    "acceptanceId": "question.topic.statistics.r3.alpha-definition.v1",
+    "caseId": "case.topic.statistics.r3.alpha-definition.v1",
+    "nodeId": "node.topic.statistics.r3.alpha-definition.v1",
+    "questionVariantId": "question.topic.statistics.r3.alpha-definition.v1",
+    "conceptId": "concept.statistics-ethics.errors-power",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.sample-size-beta.v1",
+    "caseId": "case.topic.statistics.r3.sample-size-beta.v1",
+    "nodeId": "node.topic.statistics.r3.sample-size-beta.v1",
+    "questionVariantId": "question.topic.statistics.r3.sample-size-beta.v1",
+    "conceptId": "concept.topic.statistics.r3.sample-size-beta.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.effect-size-power.v1",
+    "caseId": "case.topic.statistics.r3.effect-size-power.v1",
+    "nodeId": "node.topic.statistics.r3.effect-size-power.v1",
+    "questionVariantId": "question.topic.statistics.r3.effect-size-power.v1",
+    "conceptId": "concept.topic.statistics.r3.effect-size-power.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.alpha-power.v1",
+    "caseId": "case.topic.statistics.r3.alpha-power.v1",
+    "nodeId": "node.topic.statistics.r3.alpha-power.v1",
+    "questionVariantId": "question.topic.statistics.r3.alpha-power.v1",
+    "conceptId": "concept.topic.statistics.r3.alpha-power.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.variance-power.v1",
+    "caseId": "case.topic.statistics.r3.variance-power.v1",
+    "nodeId": "node.topic.statistics.r3.variance-power.v1",
+    "questionVariantId": "question.topic.statistics.r3.variance-power.v1",
+    "conceptId": "concept.topic.statistics.r3.variance-power.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.kruskal-wallis.v1",
+    "caseId": "case.topic.statistics.r3.kruskal-wallis.v1",
+    "nodeId": "node.topic.statistics.r3.kruskal-wallis.v1",
+    "questionVariantId": "question.topic.statistics.r3.kruskal-wallis.v1",
+    "conceptId": "concept.topic.statistics.r3.kruskal-wallis.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.pearson-correlation.v1",
+    "caseId": "case.topic.statistics.r3.pearson-correlation.v1",
+    "nodeId": "node.topic.statistics.r3.pearson-correlation.v1",
+    "questionVariantId": "question.topic.statistics.r3.pearson-correlation.v1",
+    "conceptId": "concept.topic.statistics.r3.pearson-correlation.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.spearman-correlation.v1",
+    "caseId": "case.topic.statistics.r3.spearman-correlation.v1",
+    "nodeId": "node.topic.statistics.r3.spearman-correlation.v1",
+    "questionVariantId": "question.topic.statistics.r3.spearman-correlation.v1",
+    "conceptId": "concept.topic.statistics.r3.spearman-correlation.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.linear-regression.v1",
+    "caseId": "case.topic.statistics.r3.linear-regression.v1",
+    "nodeId": "node.topic.statistics.r3.linear-regression.v1",
+    "questionVariantId": "question.topic.statistics.r3.linear-regression.v1",
+    "conceptId": "concept.topic.statistics.r3.linear-regression.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.log-rank.v1",
+    "caseId": "case.topic.statistics.r3.log-rank.v1",
+    "nodeId": "node.topic.statistics.r3.log-rank.v1",
+    "questionVariantId": "question.topic.statistics.r3.log-rank.v1",
+    "conceptId": "concept.topic.statistics.r3.log-rank.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.prevalence-npv.v1",
+    "caseId": "case.topic.statistics.r3.prevalence-npv.v1",
+    "nodeId": "node.topic.statistics.r3.prevalence-npv.v1",
+    "questionVariantId": "question.topic.statistics.r3.prevalence-npv.v1",
+    "conceptId": "concept.topic.statistics.r3.prevalence-npv.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.prevalence-measures.v1",
+    "caseId": "case.topic.statistics.r3.prevalence-measures.v1",
+    "nodeId": "node.topic.statistics.r3.prevalence-measures.v1",
+    "questionVariantId": "question.topic.statistics.r3.prevalence-measures.v1",
+    "conceptId": "concept.topic.statistics.r3.prevalence-measures.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.roc-horizontal-axis.v1",
+    "caseId": "case.topic.statistics.r3.roc-horizontal-axis.v1",
+    "nodeId": "node.topic.statistics.r3.roc-horizontal-axis.v1",
+    "questionVariantId": "question.topic.statistics.r3.roc-horizontal-axis.v1",
+    "conceptId": "concept.topic.statistics.r3.roc-horizontal-axis.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.auc-discrimination.v1",
+    "caseId": "case.topic.statistics.r3.auc-discrimination.v1",
+    "nodeId": "node.topic.statistics.r3.auc-discrimination.v1",
+    "questionVariantId": "question.topic.statistics.r3.auc-discrimination.v1",
+    "conceptId": "concept.topic.statistics.r3.auc-discrimination.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.relative-risk-reduction-r3.v1",
+    "caseId": "case.topic.statistics.r3.relative-risk-reduction-r3.v1",
+    "nodeId": "node.topic.statistics.r3.relative-risk-reduction-r3.v1",
+    "questionVariantId": "question.topic.statistics.r3.relative-risk-reduction-r3.v1",
+    "conceptId": "concept.topic.statistics.relative-risk-reduction.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.systematic-review.v1",
+    "caseId": "case.topic.statistics.r3.systematic-review.v1",
+    "nodeId": "node.topic.statistics.r3.systematic-review.v1",
+    "questionVariantId": "question.topic.statistics.r3.systematic-review.v1",
+    "conceptId": "concept.topic.statistics.r3.systematic-review.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.meta-analysis.v1",
+    "caseId": "case.topic.statistics.r3.meta-analysis.v1",
+    "nodeId": "node.topic.statistics.r3.meta-analysis.v1",
+    "questionVariantId": "question.topic.statistics.r3.meta-analysis.v1",
+    "conceptId": "concept.topic.statistics.r3.meta-analysis.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.treatment-evidence-hierarchy.v1",
+    "caseId": "case.topic.statistics.r3.treatment-evidence-hierarchy.v1",
+    "nodeId": "node.topic.statistics.r3.treatment-evidence-hierarchy.v1",
+    "questionVariantId": "question.topic.statistics.r3.treatment-evidence-hierarchy.v1",
+    "conceptId": "concept.topic.statistics.r3.treatment-evidence-hierarchy.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.observer-bias.v1",
+    "caseId": "case.topic.statistics.r3.observer-bias.v1",
+    "nodeId": "node.topic.statistics.r3.observer-bias.v1",
+    "questionVariantId": "question.topic.statistics.r3.observer-bias.v1",
+    "conceptId": "concept.topic.statistics.r3.observer-bias.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.attrition-bias.v1",
+    "caseId": "case.topic.statistics.r3.attrition-bias.v1",
+    "nodeId": "node.topic.statistics.r3.attrition-bias.v1",
+    "questionVariantId": "question.topic.statistics.r3.attrition-bias.v1",
+    "conceptId": "concept.topic.statistics.r3.attrition-bias.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.publication-bias.v1",
+    "caseId": "case.topic.statistics.r3.publication-bias.v1",
+    "nodeId": "node.topic.statistics.r3.publication-bias.v1",
+    "questionVariantId": "question.topic.statistics.r3.publication-bias.v1",
+    "conceptId": "concept.topic.statistics.r3.publication-bias.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.randomization-purpose.v1",
+    "caseId": "case.topic.statistics.r3.randomization-purpose.v1",
+    "nodeId": "node.topic.statistics.r3.randomization-purpose.v1",
+    "questionVariantId": "question.topic.statistics.r3.randomization-purpose.v1",
+    "conceptId": "concept.topic.statistics.r3.randomization-purpose.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.assessor-blinding.v1",
+    "caseId": "case.topic.statistics.r3.assessor-blinding.v1",
+    "nodeId": "node.topic.statistics.r3.assessor-blinding.v1",
+    "questionVariantId": "question.topic.statistics.r3.assessor-blinding.v1",
+    "conceptId": "concept.topic.statistics.r3.assessor-blinding.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.per-protocol.v1",
+    "caseId": "case.topic.statistics.r3.per-protocol.v1",
+    "nodeId": "node.topic.statistics.r3.per-protocol.v1",
+    "questionVariantId": "question.topic.statistics.r3.per-protocol.v1",
+    "conceptId": "concept.topic.statistics.r3.per-protocol.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.noninferiority.v1",
+    "caseId": "case.topic.statistics.r3.noninferiority.v1",
+    "nodeId": "node.topic.statistics.r3.noninferiority.v1",
+    "questionVariantId": "question.topic.statistics.r3.noninferiority.v1",
+    "conceptId": "concept.topic.statistics.r3.noninferiority.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.phase-0.v1",
+    "caseId": "case.topic.statistics.r3.phase-0.v1",
+    "nodeId": "node.topic.statistics.r3.phase-0.v1",
+    "questionVariantId": "question.topic.statistics.r3.phase-0.v1",
+    "conceptId": "concept.topic.statistics.r3.phase-0.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.phase-1.v1",
+    "caseId": "case.topic.statistics.r3.phase-1.v1",
+    "nodeId": "node.topic.statistics.r3.phase-1.v1",
+    "questionVariantId": "question.topic.statistics.r3.phase-1.v1",
+    "conceptId": "concept.topic.statistics.r3.phase-1.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.phase-2.v1",
+    "caseId": "case.topic.statistics.r3.phase-2.v1",
+    "nodeId": "node.topic.statistics.r3.phase-2.v1",
+    "questionVariantId": "question.topic.statistics.r3.phase-2.v1",
+    "conceptId": "concept.topic.statistics.r3.phase-2.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.phase-3.v1",
+    "caseId": "case.topic.statistics.r3.phase-3.v1",
+    "nodeId": "node.topic.statistics.r3.phase-3.v1",
+    "questionVariantId": "question.topic.statistics.r3.phase-3.v1",
+    "conceptId": "concept.topic.statistics.r3.phase-3.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.phase-4.v1",
+    "caseId": "case.topic.statistics.r3.phase-4.v1",
+    "nodeId": "node.topic.statistics.r3.phase-4.v1",
+    "questionVariantId": "question.topic.statistics.r3.phase-4.v1",
+    "conceptId": "concept.topic.statistics.r3.phase-4.v1",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.statistics.r3.welch-test.v1",
+    "caseId": "case.topic.statistics.r3.welch-test.v1",
+    "nodeId": "node.topic.statistics.r3.welch-test.v1",
+    "questionVariantId": "question.topic.statistics.r3.welch-test.v1",
+    "conceptId": "concept.statistics-ethics.independent-t",
+    "sourceView": "topic-batch7-statistics",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ethics-professionalism.r3.clinical-authority.v3",
+    "caseId": "case.topic.ethics-professionalism.r3.capacity.v3",
+    "nodeId": "node.topic.ethics-professionalism.r3.clinical-authority.v3",
+    "questionVariantId": "question.topic.ethics-professionalism.r3.clinical-authority.v3",
+    "conceptId": "concept.consent.decision-specific-appreciation-assessment.v1",
+    "sourceView": "topic-batch7-ethics-professionalism",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ethics-professionalism.r3.designated-agent.v3",
+    "caseId": "case.topic.ethics-professionalism.r3.surrogate.v3",
+    "nodeId": "node.topic.ethics-professionalism.r3.designated-agent.v3",
+    "questionVariantId": "question.topic.ethics-professionalism.r3.designated-agent.v3",
+    "conceptId": "concept.topic.ethics-professionalism.r3.designated-agent-priority.v1",
+    "sourceView": "topic-batch7-ethics-professionalism",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ethics-professionalism.r3.patient-values.v3",
+    "caseId": "case.topic.ethics-professionalism.r3.surrogate.v3",
+    "nodeId": "node.topic.ethics-professionalism.r3.patient-values.v3",
+    "questionVariantId": "question.topic.ethics-professionalism.r3.patient-values.v3",
+    "conceptId": "concept.statistics-ethics.surrogate-decisions",
+    "sourceView": "topic-batch7-ethics-professionalism",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ethics-professionalism.r3.adult-blood-refusal.v3",
+    "caseId": "case.topic.ethics-professionalism.r3.adult-blood.v3",
+    "nodeId": "node.topic.ethics-professionalism.r3.adult-blood-refusal.v3",
+    "questionVariantId": "question.topic.ethics-professionalism.r3.adult-blood-refusal.v3",
+    "conceptId": "concept.topic.ethics-professionalism.r3.applicable-adult-blood-refusal.v1",
+    "sourceView": "topic-batch7-ethics-professionalism",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ethics-professionalism.r3.child-dissent.v3",
+    "caseId": "case.topic.ethics-professionalism.r3.child-assent.v3",
+    "nodeId": "node.topic.ethics-professionalism.r3.child-dissent.v3",
+    "questionVariantId": "question.topic.ethics-professionalism.r3.child-dissent.v3",
+    "conceptId": "concept.pediatric-clinic.developmental-assent-discussion",
+    "sourceView": "topic-batch7-ethics-professionalism",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ethics-professionalism.r3.child-emergency-blood.v3",
+    "caseId": "case.topic.ethics-professionalism.r3.child-blood.v3",
+    "nodeId": "node.topic.ethics-professionalism.r3.child-emergency-blood.v3",
+    "questionVariantId": "question.topic.ethics-professionalism.r3.child-emergency-blood.v3",
+    "conceptId": "concept.topic.ethics-professionalism.r3.child-protective-emergency.v1",
+    "sourceView": "topic-batch7-ethics-professionalism",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ethics-professionalism.r3.information-preference.v3",
+    "caseId": "case.topic.ethics-professionalism.r3.consent.v3",
+    "nodeId": "node.topic.ethics-professionalism.r3.information-preference.v3",
+    "questionVariantId": "question.topic.ethics-professionalism.r3.information-preference.v3",
+    "conceptId": "concept.statistics-ethics.informed-consent",
+    "sourceView": "topic-batch7-ethics-professionalism",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ethics-professionalism.r3.error-account.v3",
+    "caseId": "case.topic.ethics-professionalism.r3.disclosure.v3",
+    "nodeId": "node.topic.ethics-professionalism.r3.error-account.v3",
+    "questionVariantId": "question.topic.ethics-professionalism.r3.error-account.v3",
+    "conceptId": "concept.statistics-ethics.error-disclosure",
+    "sourceView": "topic-batch7-ethics-professionalism",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ethics-professionalism.r3.unsafe-colleague.v3",
+    "caseId": "case.topic.ethics-professionalism.r3.colleague.v3",
+    "nodeId": "node.topic.ethics-professionalism.r3.unsafe-colleague.v3",
+    "questionVariantId": "question.topic.ethics-professionalism.r3.unsafe-colleague.v3",
+    "conceptId": "concept.statistics-ethics.impaired-colleague",
+    "sourceView": "topic-batch7-ethics-professionalism",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ethics-professionalism.r3.ownership-referral.v3",
+    "caseId": "case.topic.ethics-professionalism.r3.financial.v3",
+    "nodeId": "node.topic.ethics-professionalism.r3.ownership-referral.v3",
+    "questionVariantId": "question.topic.ethics-professionalism.r3.ownership-referral.v3",
+    "conceptId": "concept.topic.ethics-professionalism.r3.ownership-referral-choice.v1",
+    "sourceView": "topic-batch7-ethics-professionalism",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ethics-professionalism.r3.nonbeneficial-demand.v3",
+    "caseId": "case.topic.ethics-professionalism.r3.futility.v3",
+    "nodeId": "node.topic.ethics-professionalism.r3.nonbeneficial-demand.v3",
+    "questionVariantId": "question.topic.ethics-professionalism.r3.nonbeneficial-demand.v3",
+    "conceptId": "concept.topic.ethics-professionalism.r3.ineffective-intervention-process.v1",
+    "sourceView": "topic-batch7-ethics-professionalism",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ethics-professionalism.r3.trial-withdrawal.v3",
+    "caseId": "case.topic.ethics-professionalism.r3.withdrawal.v3",
+    "nodeId": "node.topic.ethics-professionalism.r3.trial-withdrawal.v3",
+    "questionVariantId": "question.topic.ethics-professionalism.r3.trial-withdrawal.v3",
+    "conceptId": "concept.topic.ethics-professionalism.r3.withdrawal-withholding-equivalence.v1",
+    "sourceView": "topic-batch7-ethics-professionalism",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ethics-professionalism.r3.donation-order.v3",
+    "caseId": "case.topic.ethics-professionalism.r3.donation.v3",
+    "nodeId": "node.topic.ethics-professionalism.r3.donation-order.v3",
+    "questionVariantId": "question.topic.ethics-professionalism.r3.donation-order.v3",
+    "conceptId": "concept.topic.ethics-professionalism.r3.dcd-decision-separation.v1",
+    "sourceView": "topic-batch7-ethics-professionalism",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ethics-professionalism.r3.donation-role.v3",
+    "caseId": "case.topic.ethics-professionalism.r3.donation.v3",
+    "nodeId": "node.topic.ethics-professionalism.r3.donation-role.v3",
+    "questionVariantId": "question.topic.ethics-professionalism.r3.donation-role.v3",
+    "conceptId": "concept.topic.ethics-professionalism.r3.dcd-care-certification-independence.v1",
+    "sourceView": "topic-batch7-ethics-professionalism",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ostomy-enterocutaneous-fistula.r3-intermittent-workup.v1",
+    "caseId": "case.topic.ostomy-enterocutaneous-fistula.r3-interrupted-output.v1",
+    "nodeId": "node.topic.ostomy-enterocutaneous-fistula.r3-intermittent-workup.v1",
+    "questionVariantId": "question.topic.ostomy-enterocutaneous-fistula.r3-intermittent-workup.v1",
+    "conceptId": "concept.ostomy-enterocutaneous-fistula.intermittent-obstruction.v1",
+    "sourceView": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ostomy-enterocutaneous-fistula.r3-superficial-stenosis.v1",
+    "caseId": "case.topic.ostomy-enterocutaneous-fistula.r3-interrupted-output.v1",
+    "nodeId": "node.topic.ostomy-enterocutaneous-fistula.r3-superficial-stenosis.v1",
+    "questionVariantId": "question.topic.ostomy-enterocutaneous-fistula.r3-superficial-stenosis.v1",
+    "conceptId": "concept.ostomy-enterocutaneous-fistula.stoma-stenosis-revision.v1",
+    "sourceView": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ostomy-enterocutaneous-fistula.r3-supplemental-nutrition.v1",
+    "caseId": "case.topic.ostomy-enterocutaneous-fistula.r3-ecf-rehabilitation.v1",
+    "nodeId": "node.topic.ostomy-enterocutaneous-fistula.r3-supplemental-nutrition.v1",
+    "questionVariantId": "question.topic.ostomy-enterocutaneous-fistula.r3-supplemental-nutrition.v1",
+    "conceptId": "concept.ostomy-enterocutaneous-fistula.ecf-enteral-failure-support.v1",
+    "sourceView": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ostomy-enterocutaneous-fistula.r3-reconstruction-readiness.v1",
+    "caseId": "case.topic.ostomy-enterocutaneous-fistula.r3-ecf-rehabilitation.v1",
+    "nodeId": "node.topic.ostomy-enterocutaneous-fistula.r3-reconstruction-readiness.v1",
+    "questionVariantId": "question.topic.ostomy-enterocutaneous-fistula.r3-reconstruction-readiness.v1",
+    "conceptId": "concept.ostomy-enterocutaneous-fistula.ecf-readiness.v1",
+    "sourceView": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ostomy-enterocutaneous-fistula.r3-obstructed-fistula-repair.v1",
+    "caseId": "case.topic.ostomy-enterocutaneous-fistula.r3-anastomotic-fistula.v1",
+    "nodeId": "node.topic.ostomy-enterocutaneous-fistula.r3-obstructed-fistula-repair.v1",
+    "questionVariantId": "question.topic.ostomy-enterocutaneous-fistula.r3-obstructed-fistula-repair.v1",
+    "conceptId": "concept.ostomy-enterocutaneous-fistula.ecf-distal-obstruction.v1",
+    "sourceView": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ostomy-enterocutaneous-fistula.r3-fluid-only-support.v1",
+    "caseId": "case.topic.ostomy-enterocutaneous-fistula.r3-balance-support.v1",
+    "nodeId": "node.topic.ostomy-enterocutaneous-fistula.r3-fluid-only-support.v1",
+    "questionVariantId": "question.topic.ostomy-enterocutaneous-fistula.r3-fluid-only-support.v1",
+    "conceptId": "concept.ostomy-enterocutaneous-fistula.net-secretor-support.v1",
+    "sourceView": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ostomy-enterocutaneous-fistula.r3-temporary-stoma-hernia.v1",
+    "caseId": "case.topic.ostomy-enterocutaneous-fistula.r3-temporary-hernia.v1",
+    "nodeId": "node.topic.ostomy-enterocutaneous-fistula.r3-temporary-stoma-hernia.v1",
+    "questionVariantId": "question.topic.ostomy-enterocutaneous-fistula.r3-temporary-stoma-hernia.v1",
+    "conceptId": "concept.ostomy-enterocutaneous-fistula.temporary-stoma-hernia-reversal.v1",
+    "sourceView": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ostomy-enterocutaneous-fistula.r3-necrosis-depth-and-access.v1",
+    "caseId": "case.topic.ostomy-enterocutaneous-fistula.r3-ischemic-conduit.v1",
+    "nodeId": "node.topic.ostomy-enterocutaneous-fistula.r3-necrosis-depth-and-access.v1",
+    "questionVariantId": "question.topic.ostomy-enterocutaneous-fistula.r3-necrosis-depth-and-access.v1",
+    "conceptId": "concept.ostomy-enterocutaneous-fistula.stoma-deep-necrosis.v1",
+    "sourceView": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.ostomy-enterocutaneous-fistula.r3-loperamide-toxicity.v1",
+    "caseId": "case.topic.ostomy-enterocutaneous-fistula.r3-medication-cardiac-review.v1",
+    "nodeId": "node.topic.ostomy-enterocutaneous-fistula.r3-loperamide-toxicity.v1",
+    "questionVariantId": "question.topic.ostomy-enterocutaneous-fistula.r3-loperamide-toxicity.v1",
+    "conceptId": "concept.ostomy-enterocutaneous-fistula.loperamide-cardiac-toxicity-management.v2",
+    "sourceView": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.capacity-refusal.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.capacity.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.capacity-refusal.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.capacity-refusal.v1",
+    "conceptId": "concept.statistics-ethics.capacity-refusal",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.agent-values.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.capacity.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.agent-values.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.agent-values.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.agent-values.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.emergency-authorization.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.emergency.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.emergency-authorization.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.emergency-authorization.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.emergency-authorization.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.adult-blood-refusal.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.blood-adult.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.adult-blood-refusal.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.adult-blood-refusal.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.adult-blood-refusal.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.or-procedure-limits.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.directive-trial.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.or-procedure-limits.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.or-procedure-limits.v1",
+    "conceptId": "concept.statistics-ethics.perioperative-dnr",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.withdraw-agreed-trial.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.directive-trial.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.withdraw-agreed-trial.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.withdraw-agreed-trial.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.withdraw-agreed-trial.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.consent-alternative.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.consent-choice.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.consent-alternative.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.consent-alternative.v1",
+    "conceptId": "concept.statistics-ethics.informed-consent",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.family-disclosure-scope.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.confidentiality.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.family-disclosure-scope.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.family-disclosure-scope.v1",
+    "conceptId": "concept.statistics-ethics.confidentiality",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.imminent-threat-disclosure.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.confidentiality.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.imminent-threat-disclosure.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.imminent-threat-disclosure.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.imminent-threat-disclosure.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.referral-remuneration.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.financial.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.referral-remuneration.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.referral-remuneration.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.referral-remuneration.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.current-functional-impairment.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.impairment.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.current-functional-impairment.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.current-functional-impairment.v1",
+    "conceptId": "concept.statistics-ethics.impaired-colleague",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.ineffective-care-dispute.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.ineffective.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.ineffective-care-dispute.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.ineffective-care-dispute.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.ineffective-care-dispute.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.donation-decision-separation.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.donation.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.donation-decision-separation.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.donation-decision-separation.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.donation-decision-separation.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.donation-death-roles.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.donation.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.donation-death-roles.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.donation-death-roles.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.donation-death-roles.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.stoma-below-fascia.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.stoma-depth.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.stoma-below-fascia.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.stoma-below-fascia.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.stoma-below-fascia.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.output-intermittent-obstruction.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.output.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.output-intermittent-obstruction.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.output-intermittent-obstruction.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.output-intermittent-obstruction.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.output-oral-replacement.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.output.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.output-oral-replacement.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.output-oral-replacement.v1",
+    "conceptId": "concept.high-output-ileostomy.sodium-glucose-oral-rehydration",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.ecf-distal-nutrition.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.ecf-nutrition.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.ecf-distal-nutrition.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.ecf-distal-nutrition.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.ecf-distal-nutrition.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.ecf-obstruction-reconstruction.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.ecf-readiness.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.ecf-obstruction-reconstruction.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.ecf-obstruction-reconstruction.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.ecf-obstruction-reconstruction.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.parastomal-elective-escalation.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.parastomal.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.parastomal-elective-escalation.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.parastomal-elective-escalation.v1",
+    "conceptId": "concept.parastomal-hernia.nonurgent-stoma-specialist-management",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.hfmea-independent-control.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.prospective-label.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.hfmea-independent-control.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.hfmea-independent-control.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.hfmea-independent-control.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.block-versus-incision-pause.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.phase-pause.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.block-versus-incision-pause.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.block-versus-incision-pause.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.block-versus-incision-pause.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.just-culture-behavior.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.just-culture.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.just-culture-behavior.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.just-culture-behavior.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.just-culture-behavior.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.ssi-drain-prophylaxis.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.ssi-prophylaxis.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.ssi-drain-prophylaxis.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.ssi-drain-prophylaxis.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.ssi-drain-prophylaxis.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.nsqip-case-mix.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.nsqip.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.nsqip-case-mix.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.nsqip-case-mix.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.nsqip-case-mix.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.quality-safety-systems.round3.control-chart-choice.v1",
+    "caseId": "case.topic.quality-safety-systems.round3.control-chart.v1",
+    "nodeId": "node.topic.quality-safety-systems.round3.control-chart-choice.v1",
+    "questionVariantId": "question.topic.quality-safety-systems.round3.control-chart-choice.v1",
+    "conceptId": "concept.topic.quality-safety-systems.round3.control-chart-choice.v1",
+    "sourceView": "topic-batch7-quality-safety-systems",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r6",
+    "caseId": "case.soft-tissue-mass.deep-thigh",
+    "nodeId": "node.soft-tissue-mass.deep-thigh.2",
+    "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r6",
+    "conceptId": "concept.soft-tissue-mass.specialist-planned-biopsy",
+    "sourceView": "topic-batch7-d97aa716",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  },
+  {
+    "acceptanceId": "question.soft-tissue-mass.specialist-planned-biopsy.v2.r6",
+    "caseId": "case.soft-tissue-mass.upper-arm",
+    "nodeId": "node.soft-tissue-mass.upper-arm.2",
+    "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v2.r6",
+    "conceptId": "concept.soft-tissue-mass.specialist-planned-biopsy",
+    "sourceView": "topic-batch7-d97aa716",
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md"
+  }
+,
+
+  // Batch 8: exact owner-directed successors and the new dantrolene item.
+{
+    "acceptanceId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v1.r4",
+    "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+    "nodeId": "node.gs028d.acid-base.b-cirrhosis-gap.1",
+    "questionVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v1.r4",
+    "conceptId": "concept.metabolic-acidosis.corrected-gap-directed-evaluation.v1",
+    "sourceView": "owner-decisions-batch8",
+    "decision": "docs/research/question-topic-acceptance-batch8-20261112.md"
+  },
+  {
+    "acceptanceId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v3.r4",
+    "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+    "nodeId": "node.gs028d.acid-base.b-sepsis-recovery-gap.1",
+    "questionVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v3.r4",
+    "conceptId": "concept.metabolic-acidosis.corrected-gap-directed-evaluation.v1",
+    "sourceView": "owner-decisions-batch8",
+    "decision": "docs/research/question-topic-acceptance-batch8-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v2",
+    "caseId": "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
+    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+    "questionVariantId": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v2",
+    "conceptId": "concept.mh.nontriggering-plan-and-testing-sequence.v1",
+    "sourceView": "owner-decisions-batch8",
+    "decision": "docs/research/question-topic-acceptance-batch8-20261112.md"
+  },
+  {
+    "acceptanceId": "question.malignant-hyperthermia-susceptibility.dantrolene-readiness.v1",
+    "caseId": "case.owner-decisions.20261112.mh-medication",
+    "nodeId": "node.owner-decisions.20261112.mh-medication",
+    "questionVariantId": "question.malignant-hyperthermia-susceptibility.dantrolene-readiness.v1",
+    "conceptId": "concept.mh.dantrolene-readiness.v1",
+    "sourceView": "owner-decisions-batch8",
+    "decision": "docs/research/question-topic-acceptance-batch8-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v2",
+    "caseId": "case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1",
+    "nodeId": "node.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+    "questionVariantId": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v2",
+    "conceptId": "concept.rectal-cancer.selected-watch-and-wait",
+    "sourceView": "owner-decisions-batch8",
+    "decision": "docs/research/question-topic-acceptance-batch8-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v3",
+    "caseId": "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance-review.v2",
+    "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+    "questionVariantId": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v3",
+    "conceptId": "concept.bowel-ibd-malabsorption-short-bowel.crohn-postresection-endoscopy.v1",
+    "sourceView": "owner-decisions-batch8",
+    "decision": "docs/research/question-topic-acceptance-batch8-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v2",
+    "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+    "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+    "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v2",
+    "conceptId": "concept.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+    "sourceView": "owner-decisions-batch8",
+    "decision": "docs/research/question-topic-acceptance-batch8-20261112.md"
+  },
+  {
+    "acceptanceId": "question.gs028f.gynecology.symptomatic-falling-hcg-localization.v2",
+    "caseId": "case.gs028f.gynecology.c1-late-period",
+    "nodeId": "node.gs028f.gynecology.c1-late-period.1",
+    "questionVariantId": "question.gs028f.gynecology.symptomatic-falling-hcg-localization.v2",
+    "conceptId": "concept.early-pregnancy.location-before-disposition.v1",
+    "sourceView": "owner-decisions-batch8",
+    "decision": "docs/research/question-topic-acceptance-batch8-20261112.md"
+  },
+  {
+    "acceptanceId": "question.topic.perioperative-risk-recovery.awake-ventilation-assessment.v4",
+    "caseId": "case.topic.perioperative-risk-recovery.awake-gas.v3",
+    "nodeId": "node.topic.perioperative-risk-recovery.awake-ventilation-assessment.v3",
+    "questionVariantId": "question.topic.perioperative-risk-recovery.awake-ventilation-assessment.v4",
+    "conceptId": "concept.preoperative-osa.awake-ventilation-assessment.v1",
+    "sourceView": "owner-decisions-batch8",
+    "decision": "docs/research/question-topic-acceptance-batch8-20261112.md"
+  },
+  {
+    "acceptanceId": "question.ptld.tissue-diagnosis-coordination.v4.r4",
+    "caseId": "case.gs028b.ptld.b-pathology-returned",
+    "nodeId": "node.gs028b.ptld.b-pathology-returned.1",
+    "questionVariantId": "question.ptld.tissue-diagnosis-coordination.v4.r4",
+    "conceptId": "concept.ptld.node-specimen-and-ancillary-handling.v1",
+    "sourceView": "owner-decisions-batch8",
+    "decision": "docs/research/question-topic-acceptance-batch8-20261112.md"
+  }
+,
 ] satisfies QuestionShipAcceptance[],
   // BEGIN FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
+  retirements: [
+  {
+    "caseId": "case.pediatric-gi-abdominal-wall.preterm-hernia-timing-salvage.v1",
+    "questionVariantIds": [
+      "question.pediatric-gi-abdominal-wall.preterm-hernia-timing.v1"
+    ],
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md",
+    "reason": "Owner-directed retirement TOPIC-202 (2026-11-12): framing or teaching-item retirement; preserve frozen encounters and FSRS."
+  },
+  {
+    "caseId": "case.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness-salvage.v1",
+    "questionVariantIds": [
+      "question.pediatric-neck-thoracic-gu.20261111.cdh-physiologic-readiness.v2"
+    ],
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md",
+    "reason": "Owner-directed retirement TOPIC-218 (2026-11-12): framing or teaching-item retirement; preserve frozen encounters and FSRS."
+  },
+  {
+    "caseId": "case.gs028b.differentiated-thyroid-cancer.a-completed-negative",
+    "questionVariantIds": [
+      "question.differentiated-thyroid-cancer.preoperative-nodal-ultrasound.v4.r5"
+    ],
+    "decision": "docs/research/question-topic-acceptance-batch7-20261112.md",
+    "reason": "Owner-directed retirement TOPIC-287 (2026-11-12): framing or teaching-item retirement; preserve frozen encounters and FSRS."
+  }
+,
+{
+    "caseId": "case.pediatric-gi-abdominal-wall.nec-fixed-loop-context-salvage.v1",
+    "questionVariantIds": [
+      "question.pediatric-gi-abdominal-wall.nec-fixed-loop-context.v1"
+    ],
+    "decision": "docs/research/question-topic-acceptance-batch8-20261112.md",
+    "reason": "Owner-directed retirement 2026-11-12: neonatal clinical framing is outside the accepted patient/art setting."
+  },
+  {
+    "caseId": "case.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary-salvage.v1",
+    "questionVariantIds": [
+      "question.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary.v2"
+    ],
+    "decision": "docs/research/question-topic-acceptance-batch8-20261112.md",
+    "reason": "Owner-directed retirement 2026-11-12: neonatal clinical framing is outside the accepted patient/art setting."
+  },
+  {
+    "caseId": "case.topic.fluids-electrolytes-acid-base.current-corrected-gap.r2",
+    "questionVariantIds": [
+      "question.metabolic-acidosis.albumin-corrected-anion-gap.v3.r2.topic20261111.v2"
+    ],
+    "decision": "docs/research/question-topic-acceptance-batch8-20261112.md",
+    "reason": "Owner-directed anion-gap successor replaces this additional live correction-dependent predecessor.",
+    "replacementQuestionVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v3.r4"
+  }
+
+] satisfies QuestionShipCaseRetirement[],
   replacements: [
     {"replaces":"case.pediatric-clinic.growing-firm-neck-node","with":"question.pediatric-neck-thoracic-gu.20261111.node-sample.v1"},
     {"replaces":"case.pediatric-clinic.retractile-testis-remains-scrotal","with":"question.pediatric-neck-thoracic-gu.20261111.dsd-assessment.v2"},
@@ -14806,7 +15663,7 @@ export const QUESTION_SHIP_MANIFEST = {
     {"id":"topic-program.batch4.case.topic.colorectal-polyps-cancer.vascular-channel-polyp.v1","program":"topic-program","replaces":["case.gs028c.malignant-polyp.b-lymphovascular","case.gs028c.malignant-polyp.b-poor-grade"],"with":"question.topic.colorectal-polyps-cancer.vascular-channel-regional-resection.v1","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
     {"id":"topic-program.batch4.case.topic.colorectal-polyps-cancer.transected-invasive-front.v1","program":"topic-program","replaces":["case.gs028c.malignant-polyp.b-piecemeal-margin","case.gs028c.malignant-polyp.b-positive-deep"],"with":"question.topic.colorectal-polyps-cancer.transected-front-regional-resection.v1","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
     {"id":"topic-program.batch4.case.topic.colorectal-polyps-cancer.fap-rectal-field.v1","program":"topic-program","replaces":["case.fap.new-parent","case.fap.rectal-burden","case.fap.screening-call"],"with":"question.topic.colorectal-polyps-cancer.fap-diffuse-rectal-burden.v1","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
-    {"id":"topic-program.batch4.case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1","program":"topic-program","replaces":["case.rectal-cancer.accountant-followup","case.rectal-cancer.caregiver-followup","case.rectal-cancer.cyclist-followup","case.rectal-cancer.teacher-followup"],"with":"question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
+    {"id":"topic-program.batch4.case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1","program":"topic-program","replaces":["case.rectal-cancer.accountant-followup","case.rectal-cancer.caregiver-followup","case.rectal-cancer.cyclist-followup","case.rectal-cancer.teacher-followup"],"with":"question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v2","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
     {"id":"topic-program.batch4.case.topic.colorectal-polyps-cancer.positive-fit-negative-repeat-r2.v2","program":"topic-program","replaces":["case.colorectal.mailed-fit","case.colorectal.preventive-visit","case.colorectal.repeat-screening","case.colorectal.routine-screen"],"with":"question.topic.colorectal-polyps-cancer.positive-fit-negative-repeat.v2","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
     {"id":"topic-program.batch4.case.topic.colorectal-polyps-cancer.intact-low-risk-specimen-r2.v2","program":"topic-program","replaces":["case.gs028c.malignant-polyp.a-clear-cautery-line","case.gs028c.malignant-polyp.a-sessile-superficial"],"with":"question.topic.colorectal-polyps-cancer.intact-low-risk-specimen.v2","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
     {"id":"topic-program.batch4.case.topic.perioperative-risk-recovery.beta-exposure.v2","program":"topic-program","replaces":["case.bread-butter.perioperative-medications.medication-instructions","case.bread-butter.perioperative-medications.medication-review","case.bread-butter.perioperative-medications.preoperative-visit","case.bread-butter.perioperative-medications.surgery-medications","case.gs028e.radiology.c1-noncontrast-ct","case.gs028e.radiology.c1-planned-mri-ct","case.gs028e.radiology.c1-prior-ct-ultrasound","case.gs028e.radiology.c1-ultrasound-sound","case.gs028e.radiology.c2-cochlear-model","case.gs028e.radiology.c2-pacemaker-card","case.gs028e.radiology.c2-prior-scan-different","case.gs028e.radiology.c2-unidentified-implant"],"with":"question.topic.perioperative-risk-recovery.beta-new-exposure.v2","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
@@ -14832,7 +15689,7 @@ export const QUESTION_SHIP_MANIFEST = {
     {"id":"topic-program.batch4.case.topic.wound-healing-immunology.revision-graft-fluid.v2","program":"topic-program","replaces":["case.gs028e.collagen-remodeling.c1-early-matrix-record","case.gs028e.collagen-remodeling.c1-later-matrix-counseling","case.gs028e.collagen-remodeling.c1-maturing-incision","case.gs028e.collagen-remodeling.c1-reversed-diagram","case.gs028f.reconstruction.c1-attached-bridge","case.gs028f.reconstruction.c1-recipient-bed","case.gs028f.reconstruction.c1-reconnected-vessels","case.gs028f.reconstruction.c1-same-donor-different-supply"],"with":"question.topic.wound-healing-immunology.graft-fluid.v2","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
     {"id":"topic-program.batch4.case.topic.biliary-injury-malignancy.communicating-leak.v1","program":"topic-program","replaces":["case.post-cholecystectomy-bile-leak.drain-output","case.post-cholecystectomy-bile-leak.delayed-recovery","case.post-cholecystectomy-bile-leak.outside-followup","case.post-cholecystectomy-bile-leak.painful-recovery"],"with":"question.topic.biliary-injury-malignancy.communicating-leak-stent.v1","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
     {"id":"topic-program.batch4.case.spleen-asplenia.early-itp-pass-standalone.20261111.v1","program":"topic-program","replaces":["case.persistent-itp.four-month","case.persistent-itp.hematology-followup","case.persistent-itp.six-month","case.persistent-itp.stable-count"],"with":"question.spleen-asplenia.itp-etiology.20261111.v1","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
-    {"id":"topic-program.batch4.case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1","program":"topic-program","replaces":["case.gs028d.anesthesia.b-documented-susceptibility","case.gs028d.anesthesia.b-family-testing-record","case.gs028d.anesthesia.b-mh-alert-bracelet","case.gs028d.anesthesia.b-prior-mh-event"],"with":"question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
+    {"id":"topic-program.batch4.case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1","program":"topic-program","replaces":["case.gs028d.anesthesia.b-documented-susceptibility","case.gs028d.anesthesia.b-family-testing-record","case.gs028d.anesthesia.b-mh-alert-bracelet","case.gs028d.anesthesia.b-prior-mh-event"],"with":"question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v2","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
     {"id":"topic-program.batch4.case.topic.anesthesia-analgesia-pharmacology.last-wide-complex-revision.v2","program":"topic-program","replaces":["case.gs028f.local-anesthetic.c1-awake-biopsy","case.gs028f.local-anesthetic.c1-dental-membrane","case.gs028f.local-anesthetic.c1-regional-report","case.gs028f.local-anesthetic.c1-topical-record"],"with":"question.topic.anesthesia-analgesia-pharmacology.last-wide-complex.v2","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
     {"id":"topic-program.batch4.case.topic.anesthesia-analgesia-pharmacology.nmb-measurement-pass.v1","program":"topic-program","replaces":["case.gs028g.neuromuscular-recovery.paired-four-twitches","case.gs028g.neuromuscular-recovery.c1-future-plan","case.gs028g.neuromuscular-recovery.c1-subjective-fade","case.gs028g.neuromuscular-recovery.paired-head-lift"],"with":"question.topic.anesthesia-analgesia-pharmacology.nmb-measurement.v1","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
     {"id":"topic-program.batch4.case.topic.anesthesia-analgesia-pharmacology.boosted-midazolam-route-revision.v2","program":"topic-program","replaces":["case.gs028g.hiv-perioperative.c2-monitored-iv","case.gs028g.hiv-perioperative.c2-slow-clearance","case.gs028g.hiv-perioperative.paired-postoperative-orders"],"with":"question.topic.anesthesia-analgesia-pharmacology.boosted-midazolam-route.v2","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
@@ -14882,6 +15739,79 @@ export const QUESTION_SHIP_MANIFEST = {
   }
 ] satisfies QuestionShipTopicConsolidation[],
   headerSources: {
+    "case.topic.statistics.r3.alpha-definition.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.sample-size-beta.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.effect-size-power.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.alpha-power.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.variance-power.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.kruskal-wallis.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.pearson-correlation.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.spearman-correlation.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.linear-regression.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.log-rank.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.prevalence-npv.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.prevalence-measures.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.roc-horizontal-axis.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.auc-discrimination.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.relative-risk-reduction-r3.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.systematic-review.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.meta-analysis.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.treatment-evidence-hierarchy.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.observer-bias.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.attrition-bias.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.publication-bias.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.randomization-purpose.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.assessor-blinding.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.per-protocol.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.noninferiority.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.phase-0.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.phase-1.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.phase-2.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.phase-3.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.phase-4.v1": "topic-batch7-statistics",
+    "case.topic.statistics.r3.welch-test.v1": "topic-batch7-statistics",
+    "case.topic.ethics-professionalism.r3.capacity.v3": "topic-batch7-ethics-professionalism",
+    "case.topic.ethics-professionalism.r3.surrogate.v3": "topic-batch7-ethics-professionalism",
+    "case.topic.ethics-professionalism.r3.adult-blood.v3": "topic-batch7-ethics-professionalism",
+    "case.topic.ethics-professionalism.r3.child-assent.v3": "topic-batch7-ethics-professionalism",
+    "case.topic.ethics-professionalism.r3.child-blood.v3": "topic-batch7-ethics-professionalism",
+    "case.topic.ethics-professionalism.r3.consent.v3": "topic-batch7-ethics-professionalism",
+    "case.topic.ethics-professionalism.r3.disclosure.v3": "topic-batch7-ethics-professionalism",
+    "case.topic.ethics-professionalism.r3.colleague.v3": "topic-batch7-ethics-professionalism",
+    "case.topic.ethics-professionalism.r3.financial.v3": "topic-batch7-ethics-professionalism",
+    "case.topic.ethics-professionalism.r3.futility.v3": "topic-batch7-ethics-professionalism",
+    "case.topic.ethics-professionalism.r3.withdrawal.v3": "topic-batch7-ethics-professionalism",
+    "case.topic.ethics-professionalism.r3.donation.v3": "topic-batch7-ethics-professionalism",
+    "case.topic.ostomy-enterocutaneous-fistula.r3-interrupted-output.v1": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "case.topic.ostomy-enterocutaneous-fistula.r3-ecf-rehabilitation.v1": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "case.topic.ostomy-enterocutaneous-fistula.r3-anastomotic-fistula.v1": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "case.topic.ostomy-enterocutaneous-fistula.r3-balance-support.v1": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "case.topic.ostomy-enterocutaneous-fistula.r3-temporary-hernia.v1": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "case.topic.ostomy-enterocutaneous-fistula.r3-ischemic-conduit.v1": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "case.topic.ostomy-enterocutaneous-fistula.r3-medication-cardiac-review.v1": "topic-batch7-ostomy-enterocutaneous-fistula",
+    "case.topic.quality-safety-systems.round3.capacity.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.emergency.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.blood-adult.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.directive-trial.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.consent-choice.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.confidentiality.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.financial.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.impairment.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.ineffective.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.donation.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.stoma-depth.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.output.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.ecf-nutrition.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.ecf-readiness.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.parastomal.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.prospective-label.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.phase-pause.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.just-culture.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.ssi-prophylaxis.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.nsqip.v1": "topic-batch7-quality-safety-systems",
+    "case.topic.quality-safety-systems.round3.control-chart.v1": "topic-batch7-quality-safety-systems",
+    "case.soft-tissue-mass.deep-thigh": "topic-batch7-d97aa716",
+    "case.soft-tissue-mass.upper-arm": "topic-batch7-d97aa716",
     "case.pediatric-neck-thoracic-gu.20261111.node-sample-salvage.v1": "topic-batch6-pediatric-neck-thoracic-gu",
     "case.pediatric-neck-thoracic-gu.20261111.mediastinal-biopsy-salvage.v1": "topic-batch6-pediatric-neck-thoracic-gu",
     "case.pediatric-neck-thoracic-gu.20261111.dsd-assessment-salvage.v1": "topic-batch6-pediatric-neck-thoracic-gu",
@@ -14934,7 +15864,7 @@ export const QUESTION_SHIP_MANIFEST = {
     "case.topic.colorectal-polyps-cancer.fap-rectal-sparing.v1": "topic-batch4-colorectal-polyps-cancer",
     "case.topic.colorectal-polyps-cancer.fap-poor-sphincter.v1": "topic-batch4-colorectal-polyps-cancer",
     "case.topic.colorectal-polyps-cancer.rectal-initial-staging.v1": "topic-batch4-colorectal-polyps-cancer",
-    "case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1": "topic-batch4-colorectal-polyps-cancer",
+    "case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1": "owner-decisions-batch8",
     "case.topic.colorectal-polyps-cancer.adenoma-fragment-count.v1": "topic-batch4-colorectal-polyps-cancer",
     "case.topic.colorectal-polyps-cancer.positive-fit-negative-repeat-r2.v2": "topic-batch4-colorectal-polyps-cancer",
     "case.topic.colorectal-polyps-cancer.advanced-adenoma-surveillance-r2.v2": "topic-batch4-colorectal-polyps-cancer",
@@ -15111,7 +16041,7 @@ export const QUESTION_SHIP_MANIFEST = {
     "case.topic.ethics-professionalism.consent-scope-r2.v2": "topic-batch4-ethics-professionalism",
     "case.topic.ethics-professionalism.reversible-delay-r2.v2": "topic-batch4-ethics-professionalism",
     "case.topic.ethics-professionalism.research-integrity-r2.v2": "topic-batch4-ethics-professionalism",
-    "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1": "topic-batch4-anesthesia-analgesia-pharmacology",
+    "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1": "owner-decisions-batch8",
     "case.topic.anesthesia-analgesia-pharmacology.last-seizure-drug-revision.v2": "topic-batch4-anesthesia-analgesia-pharmacology",
     "case.topic.anesthesia-analgesia-pharmacology.last-wide-complex-revision.v2": "topic-batch4-anesthesia-analgesia-pharmacology",
     "case.topic.anesthesia-analgesia-pharmacology.nmb-measurement-pass.v1": "topic-batch4-anesthesia-analgesia-pharmacology",
@@ -15165,7 +16095,7 @@ export const QUESTION_SHIP_MANIFEST = {
     "case.topic.esophagus-motility-achalasia.borderline-relaxation.v1": "topic-batch3-esophagus-motility-achalasia",
     "case.topic.esophagus-gerd-barrett-hiatal.nighttime-symptoms.v1": "topic-batch3-esophagus-gerd-barrett-hiatal",
     "case.topic.esophagus-gerd-barrett-hiatal.junctional-metaplasia.v1": "topic-batch3-esophagus-gerd-barrett-hiatal",
-    "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1": "topic-batch3-esophagus-gerd-barrett-hiatal",
+    "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1": "owner-decisions-batch8",
     "case.topic.esophagus-gerd-barrett-hiatal.variable-acid-exposure.v2": "topic-batch3-esophagus-gerd-barrett-hiatal",
     "case.topic.esophagus-gerd-barrett-hiatal.referral-versus-record.v2": "topic-batch3-esophagus-gerd-barrett-hiatal",
     "case.topic.esophagus-gerd-barrett-hiatal.sampling-and-inflammation.v2": "topic-batch3-esophagus-gerd-barrett-hiatal",
@@ -15224,7 +16154,7 @@ export const QUESTION_SHIP_MANIFEST = {
     "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-penetrating-course.v2": "topic-batch3-bowel-ibd-malabsorption-short-bowel",
     "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-bowel-preservation.v1": "topic-batch3-bowel-ibd-malabsorption-short-bowel",
     "case.topic.bowel-ibd-malabsorption-short-bowel.uc-dysplasia-course.v2": "topic-batch3-bowel-ibd-malabsorption-short-bowel",
-    "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance-review.v2": "topic-batch3-bowel-ibd-malabsorption-short-bowel",
+    "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance-review.v2": "owner-decisions-batch8",
     "case.topic.bowel-ibd-malabsorption-short-bowel.jejunal-gist-resection-review.v2": "topic-batch3-bowel-ibd-malabsorption-short-bowel",
     "case.topic.bowel-ibd-malabsorption-short-bowel.uc-staged-colectomy-review.v2": "topic-batch3-bowel-ibd-malabsorption-short-bowel",
     "case.topic.bowel-ibd-malabsorption-short-bowel.pouch-localize-review.v2": "topic-batch3-bowel-ibd-malabsorption-short-bowel",
@@ -15549,7 +16479,14 @@ export const QUESTION_SHIP_MANIFEST = {
   "case.n2.negative-predictive-value-denominator.v1": "catalog",
   "case.n2.positive-likelihood-ratio.v1": "catalog",
   "case.n2.mcnemar-paired-binary-outcomes.v1": "catalog",
-  "case.n2.equivalence-margin-versus-null-test.v1": "catalog"
+  "case.n2.equivalence-margin-versus-null-test.v1": "catalog",
+
+    "case.gs028d.acid-base.b-cirrhosis-gap": "owner-decisions-batch8",
+    "case.gs028d.acid-base.b-sepsis-recovery-gap": "owner-decisions-batch8",
+    "case.owner-decisions.20261112.mh-medication": "owner-decisions-batch8",
+    "case.gs028f.gynecology.c1-late-period": "owner-decisions-batch8",
+    "case.topic.perioperative-risk-recovery.awake-gas.v3": "owner-decisions-batch8",
+    "case.gs028b.ptld.b-pathology-returned": "owner-decisions-batch8",
 } as Record<string,string>,
 } as const;
 

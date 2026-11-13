@@ -9432,3 +9432,15 @@ The manager authorized the three cloud-save CI timing edits in commit98c1bf38. S
 Fresh clinical-content passes1,711tests in138files. Fresh player passes5,291tests in432files. Focused Level5 integration passes36tests and all seven typechecks pass. Overall port35 validation is830files /13,271passed /0failed /1existing skip. Exact output and hash deltas are appended in GS028 under “Port 35 follow-up resolved — manager commit 98c1bf38”. Full receipts are in .local-dev/release-port35-20261112/followup-98c1bf38/.
 
 Rebind35 remains31,511commands /6,524,517cents /492completed /0walkouts, first22,747. All609bound inputs, canonical artifacts and30history entries match the accepted publication. The earlier pending source decision is resolved. Dispositions are in .local-dev/release-verify/port35-20261112.json. Work remains uncommitted for manager review.
+
+## Release port 36 / rebind 36 — 2026-11-12
+
+GS-release only, base `3bc237a1`. Frozen batches 7-8, phone memory rounds 1-3 (compression writes false), pacing 870 XP / 390 visits and nine prices are integrated. Default: 1,407 cases / 1,610 nodes / 1,109 meanings / 777 rows. Actual CHECK: 35,236 commands / 6,829,124 cents / 550 completed / 0 walkouts; first finish 26,312 passes fixed 26,281 +/-10%. Cash reconciles; all nine saves and three reports regenerated; old/old control reproduces previous artifacts exactly. History 30->31, guard unchanged. ENG-I01, intraop and unaccepted Main work excluded.
+
+Seven final suites: 847 files / 13584 passed / 0 failed / one existing skip; seven typechecks, boundaries/launcher, player build, frozen/FSRS/earned-goal/journal readers and capacity checks pass. Initial seven stale player failures are repaired and the full suite rerun passes; no timeout or budget relaxation. Full handoff/artifact hashes: docs/execplans/gs028-stats-ethics-overhaul-20261007.md; all 209 changed paths and exclusions: docs/execplans/release-port36-20261112.md and .local-dev/release-verify/port36-20261112.json. The v2 policy has an older-reader rollback floor. No browser, Git, network, install, agent, commit/push/deploy. Work is uncommitted for manager review; owner origins unchanged.
+
+## Port36 follow-up: phone memory Round4 opening recovery — 2026-11-12
+
+Exactly14 recorded Round4 paths plus its doc section are ported into the uncommitted GS-release. Static entry/read-only chooser, legacy retry, bounded graph yielding and the startup guard are included. Compression writes remain false; manager clinical Vitest config and three preexisting browser screenshots are untouched. No clinical/ENG-I01/intraop work or source-pin delta was taken.
+
+Seven suites:851 files/13,594 passed/0 failed/one existing skip; seven types, boundaries/launcher, player build and focused8files/41tests pass. All616 bound hashes and the complete rebind36 artifacts remain byte-identical at35,236 /6,829,124 /550 /0; no rebind/history append. Exact files/hashes/output: GS028 follow-up and .local-dev/release-verify/port36-20261112.json. Manager must rerun the unchanged browser5s opening acceptance. No commit/push/deploy/install/network/agent or owner-origin change.

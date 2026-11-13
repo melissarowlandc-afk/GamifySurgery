@@ -1,3 +1,5 @@
+import {PROGRAM_BATCH4_ORDERS as orders} from "./question-program-batch4-accepted-data-20261111";
+import {QUESTION_PROGRAM_BATCH8_WITHDRAWN_ROWS,QUESTION_PROGRAM_BATCH8_RETAINED_TEST_ORDER_RECORDS} from "./question-program-batch8-accepted-20261112";
 import {describe, expect, it} from "vitest";
 import {readFileSync} from "node:fs";
 import {createHash} from "node:crypto";
@@ -9,7 +11,7 @@ import {
   QUESTION_PROGRAM_BATCH4_ACCEPTED_QUESTIONS as questions, QUESTION_PROGRAM_BATCH4_ACCEPTED_SOURCE_VIEWS as views,
   QUESTION_PROGRAM_BATCH4_RETAINED_CASES as retired, QUESTION_PROGRAM_BATCH4_REPLACEMENTS as replacements,
   QUESTION_PROGRAM_BATCH4_CONSOLIDATIONS as consolidations, QUESTION_PROGRAM_BATCH4_FROZEN_PRESERVATION as frozen,
-  QUESTION_PROGRAM_BATCH4_ACCEPTED_TEST_ORDER_RECORDS as orders, QUESTION_PROGRAM_BATCH4_CLAIMS as claims,
+  QUESTION_PROGRAM_BATCH4_ACCEPTED_TEST_ORDER_RECORDS as currentFreshOrders, QUESTION_PROGRAM_BATCH4_CLAIMS as claims,
 } from "./question-program-batch4-accepted-20261111";
 import {
   beforeProgramBatch4AcceptanceRelease as previous, beforeProgramBatch4AcceptanceManifest as previousManifest,
@@ -154,6 +156,12 @@ describe("topic batch4 complete reviewed acceptance", () => {
   });
 
   it("keeps all2554 prior timing tuples and adds260 rows plus292 pending test choices", () => {
+    // Fresh exports omit superseded rows; frozen orders remain separately exact.
+    const withheld=new Set(QUESTION_PROGRAM_BATCH8_WITHDRAWN_ROWS.map(r=>r.questionVariantId));
+    expect(currentFreshOrders).toEqual(orders.filter(r=>!withheld.has(r.questionVariantId)));
+    for(const old of orders.filter(r=>withheld.has(r.questionVariantId)))
+      expect(QUESTION_PROGRAM_BATCH8_RETAINED_TEST_ORDER_RECORDS.filter(r=>r.caseId===old.caseId&&r.nodeId===old.nodeId&&r.questionVariantId===old.questionVariantId&&r.choiceId===old.choiceId)).toEqual([old]);
+
     expect(timing).toHaveLength(2814);
     expect(previousTimings(timing)).toEqual(before.timing);
     expect(orders).toHaveLength(292);
@@ -207,7 +215,7 @@ describe("topic batch4 complete reviewed acceptance", () => {
   it("binds each integration source to its exact intake preimage", () => {
     const migration = read("tools/question-quality/fixtures/question-topic-acceptance-batch4-source-migration-20261111.json");
     const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch4-release-source-pins-20261111.json",import.meta.url));
-    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("6619820930bac31312fceea1624b2b10ad708a3fb1b62341978e62d7381e17cc");
+    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("bb8103b7f028c435ee486e64f956da4fb7c9e84e20b851ee0d15af9b03c19b9b");
     const releasePins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;testSupportSha256:string;repairedTopicTestArchivePath?:string;repairedTopicTestArchiveSha256?:string;paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string|null}>};
     expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-topic-acceptance-batch4-source-migration-20261111.json",import.meta.url))).digest("hex")).toBe(releasePins.capturedFixtureSha256);
     expect(createHash("sha256").update(readFileSync(new URL("./question-program-batch4-acceptance-test-support.ts",import.meta.url))).digest("hex")).toBe(releasePins.testSupportSha256);

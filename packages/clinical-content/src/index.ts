@@ -194,3 +194,9 @@ export * from "./question-program-batch5-accepted-20261111";
 
 export * from "./question-program-batch6-accepted-20261112";
 export {QUESTION_PROGRAM_BATCH6_RUNTIME_FAMILY_CONTEXTS as PEDIATRIC_CLINIC_FAMILY_CONTEXTS} from "./question-program-batch6-accepted-20261112";
+
+// Batch 7 acceptance and exact owner clinical-review records.
+export * from "./question-program-batch7-accepted-20261112";
+
+// Batch 8 exact owner-directed acceptance; direction is not version approval.
+export * from "./question-program-batch8-accepted-20261112";

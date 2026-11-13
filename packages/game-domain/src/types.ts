@@ -1704,13 +1704,22 @@ export interface DomainEvent {
   };
 }
 
-export interface LateProgressionState {
-  version: "late-progression.v1";
-  preservedClinicalXpGoal: {
-    facilityLevel: 3 | 4 | 5;
-    minimumClinicalXp: number;
-  } | null;
+interface PreservedClinicalXpGoal {
+  facilityLevel: 3 | 4 | 5;
+  minimumClinicalXp: number;
 }
+
+export type LateProgressionState = {
+  version: "late-progression.v1";
+  preservedClinicalXpGoal: PreservedClinicalXpGoal | null;
+} | {
+  version: "late-progression.v2";
+  preservedClinicalXpGoal: PreservedClinicalXpGoal | null;
+  preservedCompletedEncounterGoal: {
+    facilityLevel: 5;
+    minimumCompletedEncounters: number;
+  } | null;
+};
 
 export interface GameState {
   schemaVersion: 8 | 9;

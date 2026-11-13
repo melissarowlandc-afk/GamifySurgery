@@ -1,0 +1,1300 @@
+{
+  "checkedOn": "2026-11-12",
+  "round": 2,
+  "reviewStatus": "needs_clinician_review",
+  "clinicalApproval": false,
+  "networkUsed": false,
+  "newClinicalClaims": 0,
+  "evidenceClaims": [
+    {
+      "contentVersion": "development-batch.2026-09-09.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.soft-tissue-mass.planned-biopsy",
+      "statement": "A suspicious extremity soft-tissue mass should reach an experienced sarcoma team before a planned image-guided core biopsy so the biopsy path respects a future surgical approach.",
+      "sourceIds": [
+        "source.essr.soft-tissue-imaging.2024",
+        "source.nci.soft-tissue-sarcoma-pdq.2025"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "high",
+      "limitation": "Biopsy technique and selected incisional approaches remain specialist decisions; imaging suspicion is not a tissue diagnosis.",
+      "applicablePopulation": "Adults whose extremity mass remains suspicious after local MRI characterization.",
+      "lastCheckedOn": "2026-09-09"
+    },
+    {
+      "contentVersion": "development-batch.2026-09-09.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.soft-tissue-mass.mri",
+      "statement": "MRI is appropriate for local characterization of a deep, enlarging, or ultrasound-indeterminate extremity soft-tissue mass before biopsy.",
+      "sourceIds": [
+        "source.essr.soft-tissue-imaging.2024",
+        "source.nci.soft-tissue-sarcoma-pdq.2025"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "high",
+      "limitation": "MRI can characterize and guide planning but cannot by itself prove sarcoma.",
+      "applicablePopulation": "Stable adults with a deep, enlarging, or ultrasound-indeterminate extremity soft-tissue mass.",
+      "lastCheckedOn": "2026-09-09"
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v5",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.qq20261102a.sarcoma-viable-biopsy-target",
+      "statement": "Image-guided core sampling of a heterogeneous soft-tissue tumor should target viable tumor identified with enhancement or vascularity.",
+      "sourceIds": [
+        "source.qq20261102a.essr2015-target",
+        "source.qq20261102a.seom2024"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Exact targeting is directly supported by older primary technique guidance; current society guidance corroborates planned image-guided core biopsy. No diagnostic certainty from MRI alone, invented needle size or tract rule added.",
+      "applicablePopulation": "The adult synthetic clinical scenarios identified in the associated question mappings.",
+      "lastCheckedOn": "2026-11-02"
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v6",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.qq20261102b.sarcoma-method-and-tract",
+      "statement": "Planned sarcoma biopsy should avoid contaminating a separate unaffected compartment.",
+      "sourceIds": [
+        "source.qq20261102b.essr2015",
+        "source.qq20261102b.seom2024"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "The exact compartment rule is directly checked in older ESSR technique guidance; current SEOM corroborates tract removal/planning. Constructed rectus/adductor and triceps/biceps paths require clinician anatomy review.",
+      "applicablePopulation": "The identified adult synthetic teaching cases; constructed observations are not observed patient data.",
+      "lastCheckedOn": "2026-11-02"
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v6",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.qq20261102b.sarcoma-initial-core-method",
+      "statement": "A feasible image-guided core biopsy is preferred initially for a suspicious deep extremity soft-tissue mass.",
+      "sourceIds": [
+        "source.qq20261102b.seom2024",
+        "source.qq20261102b.essr2015"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Open biopsy is a selected alternative, not universally wrong; no failed core, needle gauge, sample count or tumor subtype is invented.",
+      "applicablePopulation": "The identified adult synthetic teaching cases; constructed observations are not observed patient data.",
+      "lastCheckedOn": "2026-11-02"
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v6",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.qq20261102b.rectus-anterior-compartment",
+      "statement": "Rectus femoris belongs to the anterior thigh compartment.",
+      "sourceIds": [
+        "source.qq20261102b.thigh-anatomy"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "moderate",
+      "limitation": "Stable anatomy, independently synthesized from the review's compartment depiction. No figure adapted. The exact constructed tract still needs clinician review.",
+      "applicablePopulation": "The identified adult synthetic teaching cases; constructed observations are not observed patient data.",
+      "lastCheckedOn": "2026-11-02"
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v6",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.qq20261102b.adductor-medial-compartment",
+      "statement": "Adductor longus is a muscle of the medial thigh compartment.",
+      "sourceIds": [
+        "source.qq20261102b.adductor-anatomy"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "moderate",
+      "limitation": "Directly described anatomical membership; not a claim about all adductor variants or the clinical safety of a trajectory. B19's medial crossing is a constructed observation.",
+      "applicablePopulation": "The identified adult synthetic teaching cases; constructed observations are not observed patient data.",
+      "lastCheckedOn": "2026-11-02"
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v6",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.qq20261102b.biceps-anterior-compartment",
+      "statement": "Biceps brachii is in the anterior arm compartment.",
+      "sourceIds": [
+        "source.qq20261102b.arm-anatomy"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "moderate",
+      "limitation": "Single adequate imaging-anatomy review for stable membership. No source expression adapted; exact case route requires clinician review.",
+      "applicablePopulation": "The identified adult synthetic teaching cases; constructed observations are not observed patient data.",
+      "lastCheckedOn": "2026-11-02"
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v6",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.qq20261102b.triceps-posterior-compartment",
+      "statement": "Triceps brachii is in the posterior arm compartment.",
+      "sourceIds": [
+        "source.qq20261102b.arm-anatomy"
+      ],
+      "evidenceCategory": "definition",
+      "certainty": "moderate",
+      "limitation": "Single adequate imaging-anatomy review for stable membership. No source expression adapted; exact case route requires clinician review.",
+      "applicablePopulation": "The identified adult synthetic teaching cases; constructed observations are not observed patient data.",
+      "lastCheckedOn": "2026-11-02"
+    },
+    {
+      "contentVersion": "question-topic.soft-tissue-sarcoma-desmoid.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.question-topic-soft-tissue-sarcoma-desmoid.initial-core",
+      "statement": "Image-guided core biopsy planned with the definitive-treatment team is the preferred initial tissue approach for a suspicious deep soft-tissue mass.",
+      "sourceIds": [
+        "source.question-topic-soft-tissue-sarcoma-desmoid.uk-2024",
+        "source.question-topic-soft-tissue-sarcoma-desmoid.seom-geis-2024",
+        "source.question-topic-soft-tissue-sarcoma-desmoid.nci"
+      ],
+      "evidenceCategory": "evaluation",
+      "certainty": "moderate",
+      "limitation": "Incisional biopsy can be appropriate after nondiagnostic cores or when core sampling is unsafe. Small superficial excision exceptions do not apply to the constructed deep masses.",
+      "applicablePopulation": "Adults in the constructed topic cases; observations are fictional, not empirical outcome data.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    },
+    {
+      "contentVersion": "question-topic.soft-tissue-sarcoma-desmoid.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "claim.question-topic-soft-tissue-sarcoma-desmoid.tract-excision",
+      "statement": "The biopsy tract should be selected so that it can be included safely in the definitive sarcoma resection.",
+      "sourceIds": [
+        "source.question-topic-soft-tissue-sarcoma-desmoid.uk-2024",
+        "source.question-topic-soft-tissue-sarcoma-desmoid.seom-geis-2024"
+      ],
+      "evidenceCategory": "management",
+      "certainty": "moderate",
+      "limitation": "Constructed corridors still require sarcoma/radiology anatomical confirmation. Tract planning must not become a reason to omit necessary pre-treatment diagnosis.",
+      "applicablePopulation": "Adults in the constructed topic cases; observations are fictional, not empirical outcome data.",
+      "lastCheckedOn": "2026-11-11",
+      "localMappingCheckedOn": "2026-11-11"
+    }
+  ],
+  "sources": [
+    {
+      "contentVersion": "development-batch.2026-09-09.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.essr.soft-tissue-imaging.2024",
+      "title": "Soft tissue tumor imaging in adults: European Society of Musculoskeletal Radiology-Guidelines 2023-overview, and primary local imaging: how and where?",
+      "completeCitation": "Noebauer-Huhmann IM, Vanhoenacker FM, Vilanova JC, et al. Soft tissue tumor imaging in adults: European Society of Musculoskeletal Radiology-Guidelines 2023-overview, and primary local imaging: how and where? European Radiology. 2024;34:4427-4437. doi:10.1007/s00330-023-10425-5.",
+      "organizationOrJournal": "European Radiology",
+      "authors": [
+        "Noebauer-Huhmann IM",
+        "Vanhoenacker FM",
+        "Vilanova JC",
+        "et al."
+      ],
+      "publicationYear": 2024,
+      "doi": "10.1007/s00330-023-10425-5",
+      "pmid": null,
+      "officialUrl": "https://link.springer.com/article/10.1007/s00330-023-10425-5",
+      "accessedOn": "2026-09-09",
+      "sourceClass": "peer_reviewed_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original modified factual synthesis; no algorithms, figures, or third-party art copied. Attribution and license: https://creativecommons.org/licenses/by/4.0/ .",
+      "authorityAssessment": "Peer-reviewed ESSR expert consensus directly checked for MRI characterization, tumor-center referral before intervention, and planned image-guided biopsy.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.soft-tissue-mass.mri",
+        "claim.soft-tissue-mass.planned-biopsy"
+      ]
+    },
+    {
+      "contentVersion": "development-batch.2026-09-09.1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.nci.soft-tissue-sarcoma-pdq.2025",
+      "title": "Soft Tissue Sarcoma Treatment, Health Professional Version",
+      "completeCitation": "PDQ Adult Treatment Editorial Board. Soft Tissue Sarcoma Treatment, Health Professional Version. Bethesda, MD: National Cancer Institute. Updated February 21, 2025. PMID:26389481.",
+      "organizationOrJournal": "National Cancer Institute PDQ",
+      "authors": [
+        "PDQ Adult Treatment Editorial Board"
+      ],
+      "publicationYear": 2025,
+      "doi": null,
+      "pmid": "26389481",
+      "officialUrl": "https://www.cancer.gov/types/soft-tissue-sarcoma/hp/adult-soft-tissue-treatment-pdq",
+      "accessedOn": "2026-09-09",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "United States government work; NCI reuse conditions apply",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Original factual synthesis only; no source prose, imagery, agency marks, or PDQ branding reproduced.",
+      "authorityAssessment": "NCI expert editorial synthesis directly checked for imaging before intervention, planned biopsy, and experienced pathology review; PDQ is independent of NCI policy.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.soft-tissue-mass.mri",
+        "claim.soft-tissue-mass.planned-biopsy"
+      ]
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v5",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.qq20261102a.essr2015-target",
+      "title": "Soft Tissue Tumors in Adults: ESSR-Approved Guidelines for Diagnostic Imaging",
+      "completeCitation": "Noebauer-Huhmann IM, et al. Soft Tissue Tumors in Adults: ESSR-Approved Guidelines for Diagnostic Imaging. Semin Musculoskelet Radiol. 2015;19(5):475-482. doi:10.1055/s-0035-1569251.",
+      "organizationOrJournal": "European Society of Musculoskeletal Radiology / Seminars in Musculoskeletal Radiology",
+      "authors": [
+        "Iris-Melanie Noebauer-Huhmann",
+        "et al."
+      ],
+      "publicationYear": 2015,
+      "doi": "10.1055/s-0035-1569251",
+      "pmid": null,
+      "officialUrl": "https://pure.amsterdamumc.nl/ws/files/173173752/Soft-tissue-tumors-in-adults-essr-approved-guidelines-for-diagnostic-imaging.pdf",
+      "accessedOn": "2026-11-02",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright Thieme; public institutional copy; targeted verification only",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Targeted factual verification and independently written synthesis only. No source prose, tables, figures, algorithms, examples or full text retained. Public access is not permission to copy or to ingest a prohibited corpus; no reusable rights are assumed.",
+      "authorityAssessment": "Older primary society technique guidance, complete PDF checked: target viable areas identified by enhancement/Doppler, coordinate route. Current ESSR and SEOM local-imaging/core guidance independently corroborate the general pathway; no invented needle size or timing.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.qq20261102a.sarcoma-viable-biopsy-target"
+      ]
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v5",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.qq20261102a.seom2024",
+      "title": "SEOM-GEIS Spanish clinical guidelines for the management of soft-tissue sarcomas (2024)",
+      "completeCitation": "Serrano C, Arregui M, Carrasco I, et al. SEOM-GEIS Spanish clinical guidelines for the management of soft-tissue sarcomas (2024). Clinical and Translational Oncology. 2025;27(4):1460-1471. doi:10.1007/s12094-024-03842-5.",
+      "organizationOrJournal": "Spanish Society of Medical Oncology and Spanish Group for Sarcoma Research; Clinical and Translational Oncology",
+      "authors": [
+        "Cesar Serrano",
+        "Marta Arregui",
+        "Irene Carrasco",
+        "Nadia Hindi",
+        "Javier Martinez-Trufero",
+        "Jeronimo Martinez-Garcia",
+        "Aurea Molina",
+        "Ana Paisan",
+        "Raul Sanchez",
+        "Maria Angeles Sala"
+      ],
+      "publicationYear": 2025,
+      "doi": "10.1007/s12094-024-03842-5",
+      "pmid": "39918719",
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12000159/",
+      "accessedOn": "2026-11-02",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Use independently written factual synthesis with attribution; do not copy source prose, tables, figures, or algorithms.",
+      "authorityAssessment": "Independent society guideline for contrast MRI and coordinated image-guided core biopsy; specific viable-area selection additionally checked in ESSR technique guidance. Same publication as source.seom-geis.soft-tissue-sarcoma-guideline.2024; this recheck is not an independent second source.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.qq20261102a.sarcoma-viable-biopsy-target",
+        "claim.qq20261102a.sarcoma-local-imaging"
+      ]
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v6",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.qq20261102b.essr2015",
+      "title": "Soft Tissue Tumors in Adults: ESSR-Approved Guidelines for Diagnostic Imaging",
+      "completeCitation": "Noebauer-Huhmann IM, et al. Soft Tissue Tumors in Adults: ESSR-Approved Guidelines for Diagnostic Imaging. Semin Musculoskelet Radiol. 2015;19(5):475-482. doi:10.1055/s-0035-1569251.",
+      "organizationOrJournal": "European Society of Musculoskeletal Radiology / Seminars in Musculoskeletal Radiology",
+      "authors": [
+        "Iris-Melanie Noebauer-Huhmann",
+        "et al."
+      ],
+      "publicationYear": 2015,
+      "doi": "10.1055/s-0035-1569251",
+      "pmid": null,
+      "officialUrl": "https://pure.amsterdamumc.nl/ws/files/173173752/Soft-tissue-tumors-in-adults-essr-approved-guidelines-for-diagnostic-imaging.pdf",
+      "accessedOn": "2026-11-02",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Copyright Thieme; institutional Taverne access, not an open reuse license",
+      "reuseStatus": "copyrighted_targeted_verification_only",
+      "reuseNotes": "Institutional version states personal-use/reproduction restrictions. Used only for targeted factual verification of professional-society guidance as permitted by AGENTS; no text, figures, biopsy diagrams or procedures copied or distributed. No reusable-content license inferred.",
+      "authorityAssessment": "Primary technical guideline rechecked for viable targets, core sampling and avoiding contamination of other compartments. Older technique guidance, corroborated by current SEOM planning guidance. Same publication as source.qq20261102a.essr2015-target; no independent second source is implied.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.qq20261102b.sarcoma-method-and-tract",
+        "claim.qq20261102b.sarcoma-initial-core-method"
+      ]
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v6",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.qq20261102b.seom2024",
+      "title": "SEOM-GEIS Spanish clinical guidelines for the management of soft-tissue sarcomas (2024)",
+      "completeCitation": "Serrano C, Arregui M, Carrasco I, et al. SEOM-GEIS Spanish clinical guidelines for the management of soft-tissue sarcomas (2024). Clinical and Translational Oncology. 2025;27(4):1460-1471. doi:10.1007/s12094-024-03842-5.",
+      "organizationOrJournal": "Spanish Society of Medical Oncology and Spanish Group for Sarcoma Research; Clinical and Translational Oncology",
+      "authors": [
+        "Cesar Serrano",
+        "Marta Arregui",
+        "Irene Carrasco",
+        "Nadia Hindi",
+        "Javier Martinez-Trufero",
+        "Jeronimo Martinez-Garcia",
+        "Aurea Molina",
+        "Ana Paisan",
+        "Raul Sanchez",
+        "Maria Angeles Sala"
+      ],
+      "publicationYear": 2025,
+      "doi": "10.1007/s12094-024-03842-5",
+      "pmid": "39918719",
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12000159/",
+      "accessedOn": "2026-11-02",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Use independently written factual synthesis with attribution; do not copy source prose, tables, figures, or algorithms.",
+      "authorityAssessment": "Current open society guideline rechecked for initial image-guided core biopsy, selected open biopsy and planned removal of the tract with the tumor. Same publication as source.qq20261102a.seom2024; no independent second source is implied.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.qq20261102b.sarcoma-method-and-tract",
+        "claim.qq20261102b.sarcoma-initial-core-method"
+      ]
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v6",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.qq20261102b.thigh-anatomy",
+      "title": "Fascia lata and tensor fasciae latae anatomy review",
+      "completeCitation": "Szczerba N, Waleszczyńska J, Jerka D, Bonowicz-Kozłowska K, Gagat M. Fascia Lata and Tensor Fasciae Latae in Lower-Limb Reconstruction. J Clin Med. 2026;15(14):5547. doi:10.3390/jcm15145547.",
+      "organizationOrJournal": "Journal of Clinical Medicine",
+      "authors": [
+        "Szczerba N",
+        "Waleszczyńska J",
+        "Jerka D",
+        "Bonowicz-Kozłowska K",
+        "Gagat M"
+      ],
+      "publicationYear": 2026,
+      "doi": "10.3390/jcm15145547",
+      "pmid": "42513461",
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13413262/",
+      "accessedOn": "2026-11-02",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "CC BY 4.0; copyright the authors",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "https://creativecommons.org/licenses/by/4.0/ . Underlying compartment anatomy independently synthesized with attribution; no figure, caption, table or source prose copied or adapted.",
+      "authorityAssessment": "Open peer-reviewed anatomical review, used only for rectus femoris compartment membership, not its proposed reconstruction treatments. Clinical route interpretation requires specialist review.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.qq20261102b.rectus-anterior-compartment"
+      ]
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v6",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.qq20261102b.adductor-anatomy",
+      "title": "Adductor longus cadaveric and sonographic anatomy",
+      "completeCitation": "Santamaría-Le Pera J, Valera-Garrido F, Valderrama-Canales FJ, Minaya-Muñoz F, Herrero P, Lapuente-Hernández D. Are palpation-guided interventional procedures on the adductor longus muscle safe? A cadaveric and sonographic investigation. Surg Radiol Anat. 2025;47(1):74. doi:10.1007/s00276-025-03567-2.",
+      "organizationOrJournal": "Surgical and Radiologic Anatomy",
+      "authors": [
+        "Santamaría-Le Pera J",
+        "Valera-Garrido F",
+        "Valderrama-Canales FJ",
+        "Minaya-Muñoz F",
+        "Herrero P",
+        "Lapuente-Hernández D"
+      ],
+      "publicationYear": 2025,
+      "doi": "10.1007/s00276-025-03567-2",
+      "pmid": "39920288",
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11805763/",
+      "accessedOn": "2026-11-02",
+      "sourceClass": "observational_study",
+      "licenseLabel": "CC BY 4.0; copyright the authors",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "https://creativecommons.org/licenses/by/4.0/ . Original synthesis of compartment membership only; no procedural windows, numerical measurements, text, images or tables reproduced.",
+      "authorityAssessment": "Primary cadaveric/sonographic study directly describes adductor longus in the medial thigh compartment. Not evidence that any named trajectory is clinically safe or that every adductor has identical relationships.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.qq20261102b.adductor-medial-compartment"
+      ]
+    },
+    {
+      "contentVersion": "evidence.question-quality.2026-11-02.v6",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.qq20261102b.arm-anatomy",
+      "title": "Elbow MRI anatomy review",
+      "completeCitation": "Lombardi A, Ashir A, Gorbachova T, Taljanovic MS, Chang EY. Magnetic resonance imaging of the elbow. Pol J Radiol. 2020;85:e440-e460. doi:10.5114/pjr.2020.98691.",
+      "organizationOrJournal": "Polish Journal of Radiology",
+      "authors": [
+        "Lombardi A",
+        "Ashir A",
+        "Gorbachova T",
+        "Taljanovic MS",
+        "Chang EY"
+      ],
+      "publicationYear": 2020,
+      "doi": "10.5114/pjr.2020.98691",
+      "pmid": "32999696",
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7509698/",
+      "accessedOn": "2026-11-02",
+      "sourceClass": "narrative_review",
+      "licenseLabel": "CC BY-NC-ND 4.0; copyright Polish Medical Society of Radiology",
+      "reuseStatus": "metadata_only_rights_reserved",
+      "reuseNotes": "https://creativecommons.org/licenses/by-nc-nd/4.0/ . No adaptation, copying or redistribution of source expression, tables or images. Bibliographic citation and independently expressed underlying anatomic facts only; no commercial reuse permission inferred.",
+      "authorityAssessment": "Open peer-reviewed imaging-anatomy review directly identifies biceps anterior and triceps posterior. Single adequate source for these stable anatomical facts; no inference that the constructed biopsy route is clinically approved.",
+      "usageRole": "evidence",
+      "evidenceClaimIds": [
+        "claim.qq20261102b.biceps-anterior-compartment",
+        "claim.qq20261102b.triceps-posterior-compartment"
+      ]
+    },
+    {
+      "contentVersion": "question-topic.soft-tissue-sarcoma-desmoid.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.question-topic-soft-tissue-sarcoma-desmoid.uk-2024",
+      "title": "UK guidelines for the management of soft tissue sarcomas",
+      "completeCitation": "Hayes AJ, Nixon IF, Strauss DC, Seddon BM, Desai A, Benson C, Judson IR, Dangoor A. UK guidelines for the management of soft tissue sarcomas. Br J Cancer. 2025;132:11-31. Published online 2024. doi:10.1038/s41416-024-02674-y.",
+      "organizationOrJournal": "British Sarcoma Group; British Journal of Cancer",
+      "authors": [
+        "Andrew J Hayes",
+        "Ioanna F Nixon",
+        "Dirk C Strauss",
+        "Beatrice M Seddon",
+        "Anant Desai",
+        "Charlotte Benson",
+        "Ian R Judson",
+        "Adam Dangoor"
+      ],
+      "publicationYear": 2025,
+      "doi": "10.1038/s41416-024-02674-y",
+      "pmid": "38734790",
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11724041/",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original factual synthesis and constructed teaching applications with attribution; no source prose, table, figure or algorithm copied. License https://creativecommons.org/licenses/by/4.0/ .",
+      "authorityAssessment": "Current broad BSG multidisciplinary guidance, including histotype-specific retroperitoneal and desmoid sections. UK funding statements do not determine US access.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.local-mri",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.imaging-provenance",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.initial-core",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.tract-excision",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.sampling-discordance",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.ct-chest",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.pet-not-routine",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.rt-local-control",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.rt-sequence-tradeoff",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.rt-early-surgery",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.margin-context",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.no-automatic-boost",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.unplanned-reexcision",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.rps-core",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.rps-intact",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.rps-lms-organs",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.rps-rt",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.desmoid-behavior",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.desmoid-surveillance",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.desmoid-escalation",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.desmoid-wall-option",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.desmoid-apc",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.desmoid-medical",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.nirogacestat-option",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.alt-mdm2",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.alt-marginal",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.histotype-staging",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.polyposis-evaluation",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.desmoid-sorafenib-option",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.ctnnb1-desmoid-marker"
+      ],
+      "rightsCheckedOn": "2026-11-11",
+      "accessMode": "Permitted public HTML read; no full text saved in the repository."
+    },
+    {
+      "contentVersion": "question-topic.soft-tissue-sarcoma-desmoid.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.question-topic-soft-tissue-sarcoma-desmoid.seom-geis-2024",
+      "title": "SEOM-GEIS Spanish clinical guidelines for the management of soft-tissue sarcomas (2024)",
+      "completeCitation": "Serrano C, Arregui M, Carrasco I, Hindi N, Mart?nez-Trufero J, Mart?nez-Garc?a J, Molina ?, Pais?n A, S?nchez R, Sala M?. SEOM-GEIS Spanish clinical guidelines for the management of soft-tissue sarcomas (2024). Clin Transl Oncol. 2025;27:1460-1471. doi:10.1007/s12094-024-03842-5.",
+      "organizationOrJournal": "SEOM and GEIS; Clinical and Translational Oncology",
+      "authors": [
+        "C?sar Serrano",
+        "Marta Arregui",
+        "Irene Carrasco",
+        "Nadia Hindi",
+        "Javier Mart?nez-Trufero",
+        "Jer?nimo Mart?nez-Garc?a",
+        "?urea Molina",
+        "Ana Pais?n",
+        "Ra?l S?nchez",
+        "Mar?a ?ngeles Sala"
+      ],
+      "publicationYear": 2025,
+      "doi": "10.1007/s12094-024-03842-5",
+      "pmid": "39918719",
+      "officialUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12000159/",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "professional_society_guideline",
+      "licenseLabel": "Creative Commons Attribution 4.0 International",
+      "reuseStatus": "cc_by_4_0",
+      "reuseNotes": "Original factual synthesis and constructed teaching applications with attribution; no source prose, table, figure or algorithm copied. License https://creativecommons.org/licenses/by/4.0/ .",
+      "authorityAssessment": "Independent current society synthesis. Corroborates general workup, surgery, radiation tradeoffs, RPS and desmoid boundaries. Shares some underlying studies with BSG; two guideline groups are not two trials.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.local-mri",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.initial-core",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.tract-excision",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.sampling-discordance",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.ct-chest",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.pet-not-routine",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.rt-local-control",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.rt-sequence-tradeoff",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.margin-context",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.unplanned-reexcision",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.rps-core",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.rps-intact",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.rps-rt",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.desmoid-behavior",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.desmoid-surveillance",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.desmoid-escalation",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.desmoid-wall-option",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.desmoid-r1",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.desmoid-apc",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.desmoid-medical",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.nirogacestat-option",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.advanced-doxo",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.histotype-staging",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.desmoid-sorafenib-option"
+      ],
+      "rightsCheckedOn": "2026-11-11",
+      "accessMode": "Permitted public HTML read; no full text saved in the repository."
+    },
+    {
+      "contentVersion": "question-topic.soft-tissue-sarcoma-desmoid.2026-11-11.v1",
+      "reviewStatus": "needs_clinician_review",
+      "aiAssistedDrafting": true,
+      "lastClinicianReview": null,
+      "id": "source.question-topic-soft-tissue-sarcoma-desmoid.nci",
+      "title": "Soft Tissue Sarcoma Treatment (PDQ)?Health Professional Version",
+      "completeCitation": "PDQ Adult Treatment Editorial Board. Soft Tissue Sarcoma Treatment (PDQ)?Health Professional Version. Bethesda, MD: National Cancer Institute. Updated February 21, 2025. PMID:26389481.",
+      "organizationOrJournal": "National Cancer Institute",
+      "authors": [
+        "PDQ Adult Treatment Editorial Board"
+      ],
+      "publicationYear": 2025,
+      "doi": null,
+      "pmid": "26389481",
+      "officialUrl": "https://www.cancer.gov/types/soft-tissue-sarcoma/hp/adult-soft-tissue-treatment-pdq",
+      "accessedOn": "2026-11-11",
+      "sourceClass": "government_guidance",
+      "licenseLabel": "Public US government factual guidance; third-party material excluded",
+      "reuseStatus": "public_domain_conditions_apply",
+      "reuseNotes": "Use original factual synthesis and source links; do not reproduce protected third-party images or imply NCI/FDA endorsement.",
+      "authorityAssessment": "Independent US government evidence summary; explicitly not a formal treatment guideline. Used for biopsy coordination and systemic-treatment cross-checks. No proprietary references linked by the summary were retrieved.",
+      "usageRole": "both",
+      "evidenceClaimIds": [
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.initial-core",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.sampling-discordance",
+        "claim.question-topic-soft-tissue-sarcoma-desmoid.advanced-doxo"
+      ],
+      "rightsCheckedOn": "2026-11-11",
+      "accessMode": "Permitted public HTML read; no full text saved in the repository."
+    }
+  ],
+  "policy": "Exact existing source records and atomic claims reused offline. Original access/check dates and limitations preserved. Duplicate ESSR or SEOM records are one publication each, not independent corroboration.",
+  "constructedObservations": "Percutaneous access and proposed resection outlines are fictional case data. General guidance supports the decision rule, not these anatomical trajectories. No clinician confirmation is claimed.",
+  "withheldAssertions": [
+    {
+      "id": "D97-3",
+      "statement": "No calf compartment-membership statement is taught or scored. The existing ledger does not verify gastrocnemius/peroneus-longus compartment membership. The constructed specimen outline supplies the case-specific tract relationship under the existing tract-excision claim; it is not new anatomical evidence."
+    }
+  ],
+  "clinicalReviewBoundary": [
+    {
+      "id": "D97-1",
+      "boundary": "Melissa Rowland and musculoskeletal radiology/sarcoma review must confirm the constructed access, specimen outline, skin entry and entire tract geometry. No clinician confirmation has occurred. General source guidance does not certify a safe operative trajectory."
+    },
+    {
+      "id": "D97-2",
+      "boundary": "Melissa Rowland and musculoskeletal radiology/sarcoma review must confirm the constructed access, specimen outline, skin entry and entire tract geometry. No clinician confirmation has occurred. General source guidance does not certify a safe operative trajectory."
+    },
+    {
+      "id": "D97-3",
+      "boundary": "Melissa Rowland and musculoskeletal radiology/sarcoma review must confirm the constructed access, specimen outline, skin entry and entire tract geometry. No clinician confirmation has occurred. General source guidance does not certify a safe operative trajectory."
+    }
+  ],
+  "questionClaimMappings": [
+    {
+      "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r6",
+      "fields": [
+        {
+          "fields": [
+            "Presentation",
+            "Chief complaint",
+            "Current update: mass location",
+            "Exhibit: needle routes"
+          ],
+          "type": "Retained constructed patient/MRI observations; the thigh medial muscle is made specific to its existing claim",
+          "sourceCaseSha256": "207358f9a1c29521814e8fee4810fe63d4c1fbcdd191b8e062c4c38170ca54b5",
+          "claimIds": [
+            "claim.soft-tissue-mass.planned-biopsy",
+            "claim.soft-tissue-mass.mri",
+            "claim.qq20261102b.rectus-anterior-compartment",
+            "claim.qq20261102b.adductor-medial-compartment"
+          ]
+        },
+        {
+          "fields": [
+            "Current update: percutaneous access",
+            "Options: method",
+            "Rationales",
+            "Explanation: initial method"
+          ],
+          "type": "Constructed access observation with the existing feasible-initial-core rule",
+          "claimIds": [
+            "claim.soft-tissue-mass.planned-biopsy",
+            "claim.qq20261102b.sarcoma-initial-core-method"
+          ]
+        },
+        {
+          "fields": [
+            "Current update: proposed resection",
+            "Rationales: tract/specimen relation",
+            "Explanation: tract excision"
+          ],
+          "type": "New constructed planning observation; applying existing guidance, not new general anatomy or a certified operative plan",
+          "claimIds": [
+            "claim.question-topic-soft-tissue-sarcoma-desmoid.tract-excision"
+          ]
+        },
+        {
+          "fields": [
+            "Current update: enhancing solid targets",
+            "Exhibit: enhancement",
+            "Rationales",
+            "Explanation: enhancement"
+          ],
+          "type": "Existing viable-target principle; original enhancing-target observations retained",
+          "claimIds": [
+            "claim.qq20261102a.sarcoma-viable-biopsy-target"
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v2.r6",
+      "fields": [
+        {
+          "fields": [
+            "Presentation",
+            "Chief complaint",
+            "Current update: mass location",
+            "Exhibit: needle routes"
+          ],
+          "type": "Retained constructed upper-arm patient/MRI observations with the existing biceps/triceps membership claims",
+          "sourceCaseSha256": "7a118d7909b6119f6165e436ee858747261d3d7f8e0975ed9bb62951f4cefeaa",
+          "claimIds": [
+            "claim.soft-tissue-mass.planned-biopsy",
+            "claim.soft-tissue-mass.mri",
+            "claim.qq20261102b.biceps-anterior-compartment",
+            "claim.qq20261102b.triceps-posterior-compartment"
+          ]
+        },
+        {
+          "fields": [
+            "Current update: percutaneous access",
+            "Options: method",
+            "Rationales",
+            "Explanation: initial method"
+          ],
+          "type": "Constructed access observation with the existing feasible-initial-core rule",
+          "claimIds": [
+            "claim.soft-tissue-mass.planned-biopsy",
+            "claim.qq20261102b.sarcoma-initial-core-method"
+          ]
+        },
+        {
+          "fields": [
+            "Current update: proposed resection",
+            "Rationales: tract/specimen relation",
+            "Explanation: tract excision"
+          ],
+          "type": "New constructed planning observation; applying existing guidance, not new general anatomy or a certified operative plan",
+          "claimIds": [
+            "claim.question-topic-soft-tissue-sarcoma-desmoid.tract-excision"
+          ]
+        },
+        {
+          "fields": [
+            "Current update: enhancing solid targets",
+            "Exhibit: enhancement",
+            "Rationales",
+            "Explanation: enhancement"
+          ],
+          "type": "Existing viable-target principle; original enhancing-target observations retained",
+          "claimIds": [
+            "claim.qq20261102a.sarcoma-viable-biopsy-target"
+          ]
+        }
+      ]
+    },
+    {
+      "questionVariantId": "question.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.20261111.v3",
+      "fields": [
+        {
+          "fields": [
+            "Presentation",
+            "Chief complaint",
+            "Current update: mass location",
+            "Exhibit: needle routes"
+          ],
+          "type": "Retained constructed patient/MRI observations; the thigh medial muscle is made specific to its existing claim",
+          "sourceCaseSha256": "4c94085e62ad11f413ee6fdc5822732038e3add94a364cf8d9a0857b8a0df9d0",
+          "claimIds": []
+        },
+        {
+          "fields": [
+            "Current update: percutaneous access",
+            "Options: method",
+            "Rationales",
+            "Explanation: initial method"
+          ],
+          "type": "Constructed access observation with the existing feasible-initial-core rule",
+          "claimIds": [
+            "claim.question-topic-soft-tissue-sarcoma-desmoid.initial-core"
+          ]
+        },
+        {
+          "fields": [
+            "Current update: proposed resection",
+            "Rationales: tract/specimen relation",
+            "Explanation: tract excision"
+          ],
+          "type": "New constructed planning observation; applying existing guidance, not new general anatomy or a certified operative plan",
+          "claimIds": [
+            "claim.question-topic-soft-tissue-sarcoma-desmoid.tract-excision"
+          ]
+        },
+        {
+          "fields": [
+            "Current update: enhancing solid targets",
+            "Exhibit: enhancement",
+            "Rationales",
+            "Explanation: enhancement"
+          ],
+          "type": "Existing viable-target principle; original enhancing-target observations retained",
+          "claimIds": [
+            "claim.qq20261102a.sarcoma-viable-biopsy-target"
+          ]
+        }
+      ]
+    }
+  ],
+  "siblingAudit": [
+    {
+      "caseId": "case.soft-tissue-mass.deep-thigh",
+      "nodeId": "node.soft-tissue-mass.deep-thigh.2",
+      "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r4",
+      "fresh": true,
+      "node": {
+        "id": "node.soft-tissue-mass.deep-thigh.2",
+        "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r4",
+        "primaryConceptId": "concept.soft-tissue-mass.specialist-planned-biopsy",
+        "currentUpdate": "MRI places the mass within rectus femoris. Solid regions A and B both enhance; B enhances more intensely. Path A enters from the anterior skin through rectus femoris. The shorter path B enters from the medial skin, crosses adductor muscle and then reaches region B. Both regions can be sampled percutaneously.",
+        "stem": "Which initial tissue-sampling plan should the sarcoma team select for {patientName}?",
+        "answerChoices": [
+          {
+            "id": "sarcoma_core_1",
+            "label": "Image-guided core biopsy of region A along path A",
+            "isCorrect": true,
+            "rationale": "Obtains diagnostic cores from viable tissue while keeping the planned tract within the tumor-bearing compartment.",
+            "serviceRequest": null
+          },
+          {
+            "id": "choice.qq20261102b.b19.d1",
+            "label": "Image-guided core biopsy of region B along path B",
+            "isCorrect": false,
+            "rationale": "Selects the shorter route to the more intensely enhancing region but contaminates a separate muscle compartment.",
+            "serviceRequest": null
+          },
+          {
+            "id": "choice.qq20261102b.b19.d2",
+            "label": "Open incisional biopsy of region A along path A",
+            "isCorrect": false,
+            "rationale": "Uses the better tract but escalates to an open procedure before a feasible initial core approach has been attempted.",
+            "serviceRequest": null
+          },
+          {
+            "id": "choice.qq20261102b.b19.d3",
+            "label": "Open incisional biopsy of region B along path B",
+            "isCorrect": false,
+            "rationale": "Combines premature open sampling with the path that traverses a separate muscle compartment.",
+            "serviceRequest": null
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "Plan the biopsy with the team that would perform definitive surgery. Both offered targets are viable, so the most intense enhancement/shortest route is not sufficient: preserve the surgical approach and avoid traversing a separate compartment. A feasible image-guided core approach is preferred initially; open biopsy is a selected alternative rather than automatically wrong. Both method and tract are balanced across the offered plans.",
+        "teachingPoint": "Plan the biopsy with the team that would perform definitive surgery. Both offered targets are viable, so the most intense enhancement/shortest route is not sufficient: preserve the surgical approach and avoid traversing a separate compartment. A feasible image-guided core approach is preferred initially; open biopsy is a selected alternative rather than automatically wrong. Both method and tract are balanced across the offered plans.",
+        "sourceLabels": [
+          "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+          "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)",
+          "AI-assisted revision: needs_clinician_review (question-authoring.2026-11-02.v4)",
+          "AI-assisted revision: needs_clinician_review (question-authoring.2026-11-02.v5)",
+          "AI-assisted revision: needs_clinician_review (question-authoring.2026-11-02.v6)"
+        ],
+        "resultGateAfter": null,
+        "terminalDispositions": [
+          {
+            "answerChoiceId": "choice.qq20261102b.b19.d2",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The encounter recorded “Open incisional biopsy of region A along path A”.",
+            "clinicalRationale": "Uses the better tract but escalates to an open procedure before a feasible initial core approach has been attempted.",
+            "sourceLabels": [
+              "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+              "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)"
+            ]
+          },
+          {
+            "answerChoiceId": "choice.qq20261102b.b19.d1",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The encounter recorded “Image-guided core biopsy of region B along path B”.",
+            "clinicalRationale": "Selects the shorter route to the more intensely enhancing region but contaminates a separate muscle compartment.",
+            "sourceLabels": [
+              "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+              "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)"
+            ]
+          },
+          {
+            "answerChoiceId": "choice.qq20261102b.b19.d3",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The encounter recorded “Open incisional biopsy of region B along path B”.",
+            "clinicalRationale": "Combines premature open sampling with the path that traverses a separate muscle compartment.",
+            "sourceLabels": [
+              "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+              "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)"
+            ]
+          }
+        ]
+      },
+      "caseSha256": "207358f9a1c29521814e8fee4810fe63d4c1fbcdd191b8e062c4c38170ca54b5",
+      "retirement": [],
+      "consolidations": []
+    },
+    {
+      "caseId": "case.soft-tissue-mass.upper-arm",
+      "nodeId": "node.soft-tissue-mass.upper-arm.2",
+      "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v2.r4",
+      "fresh": true,
+      "node": {
+        "id": "node.soft-tissue-mass.upper-arm.2",
+        "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v2.r4",
+        "primaryConceptId": "concept.soft-tissue-mass.specialist-planned-biopsy",
+        "currentUpdate": "MRI places the mass within triceps. Solid regions A and B both enhance; A enhances more intensely. Path B enters from the posterior skin through triceps. The shorter path A enters from anterior skin, crosses biceps and then reaches region A. Both regions can be sampled percutaneously.",
+        "stem": "Which initial tissue-sampling plan should the sarcoma team select for {patientName}?",
+        "answerChoices": [
+          {
+            "id": "sarcoma_core_2",
+            "label": "Image-guided core biopsy of region B along path B",
+            "isCorrect": true,
+            "rationale": "Obtains diagnostic cores from viable tissue while keeping the planned tract within the tumor-bearing compartment.",
+            "serviceRequest": null
+          },
+          {
+            "id": "choice.qq20261102b.b20.d1",
+            "label": "Image-guided core biopsy of region A along path A",
+            "isCorrect": false,
+            "rationale": "Selects the shorter route to the more intensely enhancing region but contaminates a separate muscle compartment.",
+            "serviceRequest": null
+          },
+          {
+            "id": "choice.qq20261102b.b20.d2",
+            "label": "Open incisional biopsy of region B along path B",
+            "isCorrect": false,
+            "rationale": "Uses the better tract but escalates to an open procedure before a feasible initial core approach has been attempted.",
+            "serviceRequest": null
+          },
+          {
+            "id": "choice.qq20261102b.b20.d3",
+            "label": "Open incisional biopsy of region A along path A",
+            "isCorrect": false,
+            "rationale": "Combines premature open sampling with the path that traverses a separate muscle compartment.",
+            "serviceRequest": null
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "Plan the biopsy with the team that would perform definitive surgery. Both offered targets are viable, so the most intense enhancement/shortest route is not sufficient: preserve the surgical approach and avoid traversing a separate compartment. A feasible image-guided core approach is preferred initially; open biopsy is a selected alternative rather than automatically wrong. Both method and tract are balanced across the offered plans.",
+        "teachingPoint": "Plan the biopsy with the team that would perform definitive surgery. Both offered targets are viable, so the most intense enhancement/shortest route is not sufficient: preserve the surgical approach and avoid traversing a separate compartment. A feasible image-guided core approach is preferred initially; open biopsy is a selected alternative rather than automatically wrong. Both method and tract are balanced across the offered plans.",
+        "sourceLabels": [
+          "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+          "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)",
+          "AI-assisted revision: needs_clinician_review (question-authoring.2026-11-02.v4)",
+          "AI-assisted revision: needs_clinician_review (question-authoring.2026-11-02.v5)",
+          "AI-assisted revision: needs_clinician_review (question-authoring.2026-11-02.v6)"
+        ],
+        "resultGateAfter": null,
+        "terminalDispositions": [
+          {
+            "answerChoiceId": "choice.qq20261102b.b20.d2",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The encounter recorded “Open incisional biopsy of region B along path B”.",
+            "clinicalRationale": "Uses the better tract but escalates to an open procedure before a feasible initial core approach has been attempted.",
+            "sourceLabels": [
+              "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+              "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)"
+            ]
+          },
+          {
+            "answerChoiceId": "choice.qq20261102b.b20.d1",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The encounter recorded “Image-guided core biopsy of region A along path A”.",
+            "clinicalRationale": "Selects the shorter route to the more intensely enhancing region but contaminates a separate muscle compartment.",
+            "sourceLabels": [
+              "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+              "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)"
+            ]
+          },
+          {
+            "answerChoiceId": "choice.qq20261102b.b20.d3",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The encounter recorded “Open incisional biopsy of region A along path A”.",
+            "clinicalRationale": "Combines premature open sampling with the path that traverses a separate muscle compartment.",
+            "sourceLabels": [
+              "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+              "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)"
+            ]
+          }
+        ]
+      },
+      "caseSha256": "7a118d7909b6119f6165e436ee858747261d3d7f8e0975ed9bb62951f4cefeaa",
+      "retirement": [],
+      "consolidations": []
+    },
+    {
+      "caseId": "case.topic-soft-tissue-sarcoma-desmoid.calf-planning.20261111.v1",
+      "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.20261111.v1",
+      "questionVariantId": "question.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.20261111.v1",
+      "fresh": true,
+      "node": {
+        "id": "node.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.20261111.v1",
+        "questionVariantId": "question.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.20261111.v1",
+        "primaryConceptId": "concept.soft-tissue-mass.specialist-planned-biopsy",
+        "currentUpdate": "After the supplementary MRI comparison, the local images have been reviewed. The mass lies in the lateral gastrocnemius. Two solid intramass targets enhance; B enhances more intensely. Radiology maps these corridors away from visible neurovascular structures.",
+        "stem": "Which initial biopsy plan should the sarcoma team select for {patientName}’s calf mass?",
+        "answerChoices": [
+          {
+            "id": "choice.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.1",
+            "label": "Image-guided core biopsy of A through the posterior corridor",
+            "isCorrect": true,
+            "rationale": "Both targets are enhancing intramass tissue. The planned core route through the tumor-bearing muscle avoids adding another compartment to the definitive surgical field. Greater enhancement at B does not resolve that tract problem.",
+            "serviceRequest": null
+          },
+          {
+            "id": "choice.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.2",
+            "label": "Image-guided core biopsy of B through the lateral corridor",
+            "isCorrect": false,
+            "rationale": "B is an attractive enhancing target, but this route crosses peroneal muscle in another compartment before reaching the gastrocnemius mass.",
+            "serviceRequest": null
+          },
+          {
+            "id": "choice.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.3",
+            "label": "Open incisional biopsy of A through the posterior corridor",
+            "isCorrect": false,
+            "rationale": "The corridor is favorable, but an initial feasible image-guided core is preferred to creating an open biopsy wound.",
+            "serviceRequest": null
+          },
+          {
+            "id": "choice.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.4",
+            "label": "Open incisional biopsy of B through the lateral corridor",
+            "isCorrect": false,
+            "rationale": "This combines escalation of the initial method with a route through another compartment.",
+            "serviceRequest": null
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "Both targets are enhancing intramass tissue. The planned core route through the tumor-bearing muscle avoids adding another compartment to the definitive surgical field. Greater enhancement at B does not resolve that tract problem. B is an attractive enhancing target, but this route crosses peroneal muscle in another compartment before reaching the gastrocnemius mass. The corridor is favorable, but an initial feasible image-guided core is preferred to creating an open biopsy wound. This combines escalation of the initial method with a route through another compartment.",
+        "exhibit": {
+          "kind": "table",
+          "caption": "Original constructed planning record; fictional observations, not copied imaging",
+          "columnHeaders": [
+            "Target A",
+            "Target B"
+          ],
+          "rowHeaders": [
+            "Needle corridor",
+            "Enhancement"
+          ],
+          "cells": [
+            [
+              "Posterior skin through lateral gastrocnemius",
+              "Lateral skin through peroneus longus and then gastrocnemius"
+            ],
+            [
+              "Present",
+              "More intense"
+            ]
+          ]
+        },
+        "sourceLabels": [
+          "UK guidelines for the management of soft tissue sarcomas",
+          "SEOM-GEIS Spanish clinical guidelines for the management of soft-tissue sarcomas (2024)",
+          "Soft Tissue Sarcoma Treatment (PDQ)?Health Professional Version",
+          "Soft Tissue Tumors in Adults: ESSR-Approved Guidelines for Diagnostic Imaging",
+          "SEOM-GEIS Spanish clinical guidelines for the management of soft-tissue sarcomas (2024)"
+        ],
+        "resultGateAfter": null,
+        "terminalDispositions": [
+          {
+            "answerChoiceId": "choice.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.2",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "Review the outside specialist record and the selected plan.",
+            "clinicalRationale": "B is an attractive enhancing target, but this route crosses peroneal muscle in another compartment before reaching the gastrocnemius mass.",
+            "sourceLabels": [
+              "UK guidelines for the management of soft tissue sarcomas",
+              "SEOM-GEIS Spanish clinical guidelines for the management of soft-tissue sarcomas (2024)",
+              "Soft Tissue Sarcoma Treatment (PDQ)?Health Professional Version",
+              "Soft Tissue Tumors in Adults: ESSR-Approved Guidelines for Diagnostic Imaging",
+              "SEOM-GEIS Spanish clinical guidelines for the management of soft-tissue sarcomas (2024)"
+            ]
+          },
+          {
+            "answerChoiceId": "choice.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.3",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "Review the outside specialist record and the selected plan.",
+            "clinicalRationale": "The corridor is favorable, but an initial feasible image-guided core is preferred to creating an open biopsy wound.",
+            "sourceLabels": [
+              "UK guidelines for the management of soft tissue sarcomas",
+              "SEOM-GEIS Spanish clinical guidelines for the management of soft-tissue sarcomas (2024)",
+              "Soft Tissue Sarcoma Treatment (PDQ)?Health Professional Version",
+              "Soft Tissue Tumors in Adults: ESSR-Approved Guidelines for Diagnostic Imaging",
+              "SEOM-GEIS Spanish clinical guidelines for the management of soft-tissue sarcomas (2024)"
+            ]
+          },
+          {
+            "answerChoiceId": "choice.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.4",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "Review the outside specialist record and the selected plan.",
+            "clinicalRationale": "This combines escalation of the initial method with a route through another compartment.",
+            "sourceLabels": [
+              "UK guidelines for the management of soft tissue sarcomas",
+              "SEOM-GEIS Spanish clinical guidelines for the management of soft-tissue sarcomas (2024)",
+              "Soft Tissue Sarcoma Treatment (PDQ)?Health Professional Version",
+              "Soft Tissue Tumors in Adults: ESSR-Approved Guidelines for Diagnostic Imaging",
+              "SEOM-GEIS Spanish clinical guidelines for the management of soft-tissue sarcomas (2024)"
+            ]
+          }
+        ]
+      },
+      "caseSha256": "4c94085e62ad11f413ee6fdc5822732038e3add94a364cf8d9a0857b8a0df9d0",
+      "retirement": [],
+      "consolidations": []
+    },
+    {
+      "caseId": "case.soft-tissue-mass.calf-indeterminate",
+      "nodeId": "node.soft-tissue-mass.calf-indeterminate.2",
+      "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v3",
+      "fresh": false,
+      "node": {
+        "id": "node.soft-tissue-mass.calf-indeterminate.2",
+        "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v3",
+        "primaryConceptId": "concept.soft-tissue-mass.specialist-planned-biopsy",
+        "currentUpdate": "Extremity MRI defines the lesion's local extent and shows features concerning for an aggressive soft-tissue tumor. Imaging is suspicious but does not establish a histologic diagnosis.",
+        "stem": "Which tissue-diagnosis plan best protects the patient's later definitive treatment options?",
+        "answerChoices": [
+          {
+            "id": "sarcoma_core_3",
+            "label": "Sarcoma-team-planned image-guided core biopsy",
+            "isCorrect": true,
+            "serviceRequest": null
+          },
+          {
+            "id": "office_excision_3",
+            "label": "Office excision of the mass",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "random_fna_3",
+            "label": "Fine-needle aspiration before specialist referral",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "open_biopsy_3",
+            "label": "Incisional biopsy before sarcoma-center review",
+            "isCorrect": false,
+            "serviceRequest": null
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "Suspicious MRI should prompt referral to an experienced sarcoma team before biopsy. A planned image-guided core biopsy can obtain tissue while placing the biopsy tract where it can be managed within a future surgical approach; MRI suspicion alone is not sarcoma confirmation.",
+        "sourceLabels": [
+          "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+          "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)"
+        ],
+        "resultGateAfter": null,
+        "terminalDispositions": [
+          {
+            "answerChoiceId": "office_excision_3",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Office excision of the mass.”",
+            "clinicalRationale": "Suspicious MRI should prompt referral to an experienced sarcoma team before biopsy. A planned image-guided core biopsy can obtain tissue while placing the biopsy tract where it can be managed within a future surgical approach; MRI suspicion alone is not sarcoma confirmation.",
+            "sourceLabels": [
+              "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+              "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)"
+            ]
+          },
+          {
+            "answerChoiceId": "random_fna_3",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Fine-needle aspiration before specialist referral.”",
+            "clinicalRationale": "Suspicious MRI should prompt referral to an experienced sarcoma team before biopsy. A planned image-guided core biopsy can obtain tissue while placing the biopsy tract where it can be managed within a future surgical approach; MRI suspicion alone is not sarcoma confirmation.",
+            "sourceLabels": [
+              "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+              "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)"
+            ]
+          },
+          {
+            "answerChoiceId": "open_biopsy_3",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Incisional biopsy before sarcoma-center review.”",
+            "clinicalRationale": "Suspicious MRI should prompt referral to an experienced sarcoma team before biopsy. A planned image-guided core biopsy can obtain tissue while placing the biopsy tract where it can be managed within a future surgical approach; MRI suspicion alone is not sarcoma confirmation.",
+            "sourceLabels": [
+              "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+              "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)"
+            ]
+          }
+        ]
+      },
+      "caseSha256": "c9fb6e9ea9150ed335d658d5815c30a944cccadfe500a2c6d25bcb97a6da38c6",
+      "retirement": [
+        {
+          "replaces": "case.soft-tissue-mass.calf-indeterminate",
+          "with": "question.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.20261111.v1"
+        }
+      ],
+      "consolidations": []
+    },
+    {
+      "caseId": "case.soft-tissue-mass.forearm-progressive",
+      "nodeId": "node.soft-tissue-mass.forearm-progressive.2",
+      "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v4",
+      "fresh": false,
+      "node": {
+        "id": "node.soft-tissue-mass.forearm-progressive.2",
+        "questionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v4",
+        "primaryConceptId": "concept.soft-tissue-mass.specialist-planned-biopsy",
+        "currentUpdate": "Extremity MRI defines the lesion's local extent and shows features concerning for an aggressive soft-tissue tumor. Imaging is suspicious but does not establish a histologic diagnosis.",
+        "stem": "Which tissue-diagnosis plan best protects the patient's later definitive treatment options?",
+        "answerChoices": [
+          {
+            "id": "sarcoma_core_4",
+            "label": "Sarcoma-team-planned image-guided core biopsy",
+            "isCorrect": true,
+            "serviceRequest": null
+          },
+          {
+            "id": "office_excision_4",
+            "label": "Office excision of the mass",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "random_fna_4",
+            "label": "Fine-needle aspiration before specialist referral",
+            "isCorrect": false,
+            "serviceRequest": null
+          },
+          {
+            "id": "open_biopsy_4",
+            "label": "Incisional biopsy before sarcoma-center review",
+            "isCorrect": false,
+            "serviceRequest": null
+          }
+        ],
+        "shuffleAnswers": true,
+        "explanation": "Suspicious MRI should prompt referral to an experienced sarcoma team before biopsy. A planned image-guided core biopsy can obtain tissue while placing the biopsy tract where it can be managed within a future surgical approach; MRI suspicion alone is not sarcoma confirmation.",
+        "sourceLabels": [
+          "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+          "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)"
+        ],
+        "resultGateAfter": null,
+        "terminalDispositions": [
+          {
+            "answerChoiceId": "office_excision_4",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Office excision of the mass.”",
+            "clinicalRationale": "Suspicious MRI should prompt referral to an experienced sarcoma team before biopsy. A planned image-guided core biopsy can obtain tissue while placing the biopsy tract where it can be managed within a future surgical approach; MRI suspicion alone is not sarcoma confirmation.",
+            "sourceLabels": [
+              "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+              "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)"
+            ]
+          },
+          {
+            "answerChoiceId": "random_fna_4",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Fine-needle aspiration before specialist referral.”",
+            "clinicalRationale": "Suspicious MRI should prompt referral to an experienced sarcoma team before biopsy. A planned image-guided core biopsy can obtain tissue while placing the biopsy tract where it can be managed within a future surgical approach; MRI suspicion alone is not sarcoma confirmation.",
+            "sourceLabels": [
+              "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+              "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)"
+            ]
+          },
+          {
+            "answerChoiceId": "open_biopsy_4",
+            "kind": "no_terminal_outcome",
+            "consequenceNarrative": "The teaching encounter recorded “Incisional biopsy before sarcoma-center review.”",
+            "clinicalRationale": "Suspicious MRI should prompt referral to an experienced sarcoma team before biopsy. A planned image-guided core biopsy can obtain tissue while placing the biopsy tract where it can be managed within a future surgical approach; MRI suspicion alone is not sarcoma confirmation.",
+            "sourceLabels": [
+              "Noebauer-Huhmann et al., ESSR soft-tissue imaging guideline (2024), CC BY 4.0",
+              "NCI PDQ Soft Tissue Sarcoma Treatment (updated 2025)"
+            ]
+          }
+        ]
+      },
+      "caseSha256": "0d0be968e8a68d4892cceae7859bd725a6a86e24abad2882312876f596431e1c",
+      "retirement": [
+        {
+          "replaces": "case.soft-tissue-mass.forearm-progressive",
+          "with": "question.topic-soft-tissue-sarcoma-desmoid.forearm-biopsy-correspondence.20261111.v1"
+        }
+      ],
+      "consolidations": []
+    }
+  ]
+}

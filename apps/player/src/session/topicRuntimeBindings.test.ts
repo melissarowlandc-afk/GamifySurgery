@@ -5,6 +5,11 @@ import {
   QUESTION_PROGRAM_BATCH4_ACCEPTED_TEST_ORDER_RECORDS,
   QUESTION_PROGRAM_BATCH5_ACCEPTED_TEST_ORDER_RECORDS,
   QUESTION_PROGRAM_BATCH6_ACCEPTED_TEST_ORDER_RECORDS,
+  QUESTION_PROGRAM_BATCH7_ACCEPTED_TEST_ORDER_RECORDS,
+  QUESTION_PROGRAM_BATCH8_ACCEPTED_TEST_ORDER_RECORDS,
+  QUESTION_PROGRAM_BATCH8_RETAINED_TEST_ORDER_RECORDS,
+  QUESTION_PROGRAM_BATCH7_RETAINED_CASES,
+  QUESTION_PROGRAM_BATCH8_RETAINED_CASES,
   PEDIATRIC_CLINIC_FAMILY_CONTEXTS,
 } from "@gamify-surgery/clinical-content";
 import {
@@ -21,17 +26,25 @@ const batches = [
   [4, QUESTION_PROGRAM_BATCH4_ACCEPTED_TEST_ORDER_RECORDS],
   [5, QUESTION_PROGRAM_BATCH5_ACCEPTED_TEST_ORDER_RECORDS],
   [6, QUESTION_PROGRAM_BATCH6_ACCEPTED_TEST_ORDER_RECORDS],
+  [7, QUESTION_PROGRAM_BATCH7_ACCEPTED_TEST_ORDER_RECORDS],
+  [8, QUESTION_PROGRAM_BATCH8_ACCEPTED_TEST_ORDER_RECORDS],
+  ["8 historical", QUESTION_PROGRAM_BATCH8_RETAINED_TEST_ORDER_RECORDS],
 ] as const;
 
 describe("accepted topic testing-choice wait labels", () => {
-  it.each(batches)("shows a runtime estimate for every batch %i testing option, including distractors", (_batch, bindings) => {
+  it.each(batches)("shows a runtime estimate for every batch %s testing option, including distractors", (_batch, bindings) => {
     const nodes = new Map(bindings.map(record => [`${record.caseId}|${record.nodeId}|${record.questionVariantId}`, record]));
     let tested = 0;
     let wrongTests = 0;
     for (const record of nodes.values()) {
       const state = createInitialGameState();
       const encounter = Object.values(state.encounters)[0]!;
-      const clinicalCase = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(c => c.id === record.caseId)!;
+      // Fresh and explicitly retained frozen cases can share a case ID after a
+      // whole-case replacement. Resolve the complete recorded question tuple.
+      const clinicalCase = [...PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases,
+        ...QUESTION_PROGRAM_BATCH7_RETAINED_CASES,...QUESTION_PROGRAM_BATCH8_RETAINED_CASES]
+        .find(c => c.id === record.caseId && c.decisionNodes.some(n => n.id === record.nodeId && n.questionVariantId === record.questionVariantId))!;
+      expect(clinicalCase,record.caseId+" exact fresh/frozen tuple").toBeDefined();
       const index = clinicalCase.decisionNodes.findIndex(n => n.id === record.nodeId && n.questionVariantId === record.questionVariantId);
       encounter.frozenCase = structuredClone(clinicalCase);
       encounter.arrivalClass = "routine";

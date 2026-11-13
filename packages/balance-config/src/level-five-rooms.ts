@@ -2,11 +2,11 @@ import { getApprovedRoomNavigation } from "./approved-room-layouts";
 
 /** Editorial prestige-room construction/upkeep and implemented retail access. */
 const rooms = [
-  ["room.founder_office", "Founder's Office", 3, 3, 1440, [300, 500, 900, 1400]],
-  ["room.executive_office", "Executive Office", 3, 2, 2400, [500, 750, 1320, 2100]],
-  ["room.gift_shop", "Gift Shop", 3, 3, 960, [200, 300, 540, 840]],
-  ["room.indoor_garden", "Indoor Garden", 4, 4, 960, [200, 300, 540, 840]],
-  ["room.staff_gym", "Staff Gym", 4, 4, 1200, [250, 375, 660, 1050]],
+  ["room.founder_office", "Founder's Office", 3, 3, 1580, [300, 500, 900, 1400]],
+  ["room.executive_office", "Executive Office", 3, 2, 2640, [500, 750, 1320, 2100]],
+  ["room.gift_shop", "Gift Shop", 3, 3, 1060, [200, 300, 540, 840]],
+  ["room.indoor_garden", "Indoor Garden", 4, 4, 1060, [200, 300, 540, 840]],
+  ["room.staff_gym", "Staff Gym", 4, 4, 1320, [250, 375, 660, 1050]],
 ] as const;
 export const LEVEL_FIVE_ROOM_DEFINITIONS = rooms.map(([id, displayName, width, height, constructionCost, upgradeCosts]) => ({
   id, displayName, kind: "room", unlockFacilityLevel: 5,

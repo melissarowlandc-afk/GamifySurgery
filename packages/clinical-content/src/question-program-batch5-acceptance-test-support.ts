@@ -104,7 +104,9 @@ export function beforeProgramBatch5AcceptanceSource(path: string, current: strin
     expect(record!.afterSha256).toBe(row.afterSha256);expect(hash(record!.afterText)).toBe(row.afterSha256);
   }else{
     expect(current,path+" required source").toBeDefined();
-    expect(hash(current!),path+" exact authorized release postimage").toBe(release?.requiredReleaseSha256??row.afterSha256);
+    // Later exact source inverses return this immutable authoring epoch.
+    // The direct pin test independently requires the current release bytes.
+    expect(hash(current!),path+" exact authorized release/epoch postimage").toBe(hash(current!)===row.afterSha256?row.afterSha256:release?.requiredReleaseSha256??row.afterSha256);
   }
   expect(hash(row.beforeText)).toBe(row.beforeSha256);
   expect(row.beforeSha256).toBe([...before.sourcePreimages,...additional.files,...supplemental].find((file: {path: string}) => file.path === path).beforeSha256);

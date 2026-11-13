@@ -1,3 +1,6 @@
+import {programBatch8HistoricalMembership} from "./question-program-batch8-acceptance-test-support";
+import {beforeProgramBatch7AcceptanceRelease,beforeProgramBatch7AcceptanceManifest,beforeProgramBatch7AcceptanceTimings,beforeProgramBatch7AcceptanceSource,topicQuestionAcceptance as batch7QuestionAcceptance,topicCaseIsExplicitlyLive as batch7CaseLive} from "./question-program-batch7-acceptance-test-support";
+import {PROGRAM_BATCH7_RETIRED_CASES as retired7} from "./question-program-batch7-accepted-data-20261112";
 import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
 import {expect} from "vitest";
@@ -35,50 +38,29 @@ const literalNameCorrections = read("tools/question-quality/fixtures/question-to
 /** Later manager acceptances may change membership without changing authoring.
  * Verify authority against the captured prior manifest plus this exact batch,
  * and verify every resulting case against its frozen accepted serialization. */
-export function topicQuestionAcceptance(questionVariantId: string): {accepted: boolean; live: boolean} {
-  const authorized = [...before.manifest.accepted, ...rows] as QuestionShipManifest["accepted"];
-  const expectedRows = authorized.filter(row => row.questionVariantId === questionVariantId);
-  expect(currentManifest.accepted.filter(row => row.questionVariantId === questionVariantId)).toEqual(expectedRows);
-  const retiredIds = new Set(retired.map(clinicalCase => clinicalCase.id));
-  const freshRows = expectedRows.filter(row => cases.some(clinicalCase => clinicalCase.id === row.caseId) ||
-    before.default.caseIds.includes(row.caseId) && !retiredIds.has(row.caseId));
-  const actual = currentRelease.cases.flatMap(clinicalCase => clinicalCase.decisionNodes
-    .filter(node => node.questionVariantId === questionVariantId)
-    .map(node => [clinicalCase.id, node.id, node.questionVariantId, node.primaryConceptId]));
-  const expected = freshRows.map(row => [row.caseId, row.nodeId, row.questionVariantId, row.conceptId]);
-  expect(actual.sort(), questionVariantId + " exact fresh bindings").toEqual(expected.sort());
-  for (const row of freshRows) {
-    const clinicalCase = currentRelease.cases.find(candidate => candidate.id === row.caseId)!;
-    const acceptedCase = cases.find(candidate => candidate.id === row.caseId);
-    expect(digest(clinicalCase), row.caseId + " frozen accepted context")
-      .toBe(acceptedCase ? digest(acceptedCase) : before.default.caseHashes[row.caseId]);
-  }
-  return {accepted: expectedRows.length > 0, live: freshRows.length > 0};
+export function topicQuestionAcceptance(questionVariantId:string): {accepted:boolean;live:boolean} {
+  return batch7QuestionAcceptance(questionVariantId);
 }
 
-export function topicCaseIsExplicitlyLive(caseId: string): boolean {
-  const authorized = [...before.manifest.accepted, ...rows] as QuestionShipManifest["accepted"];
-  const caseRows = authorized.filter(row => row.caseId === caseId);
-  const expected = caseRows.length > 0 && (cases.some(clinicalCase => clinicalCase.id === caseId) ||
-    before.default.caseIds.includes(caseId) && !retired.some(clinicalCase => clinicalCase.id === caseId));
-  expect(currentRelease.cases.some(clinicalCase => clinicalCase.id === caseId), caseId).toBe(expected);
-  for (const row of caseRows) topicQuestionAcceptance(row.questionVariantId);
-  return expected;
+export function topicCaseIsExplicitlyLive(caseId:string):boolean {
+  return batch7CaseLive(caseId);
 }
 
 /** An authoring preservation guard may inspect a case later retired from fresh
  * selection. Require an explicit retirement relation and its retained source. */
 export function retainedTopicCase(caseId: string): SyntheticClinicalRelease["cases"][number] | undefined {
-  const current = currentRelease.cases.find(clinicalCase => clinicalCase.id === caseId);
+  const historical=programBatch8HistoricalMembership(currentRelease,currentManifest,{caseId});
+  const current = historical.release.cases.find(clinicalCase => clinicalCase.id === caseId);
   if (current) return current;
-  const archived = [...retired1, ...retired2, ...retired3, ...retired4, ...retired5, ...retired]
+  const archived = [...retired1, ...retired2, ...retired3, ...retired4, ...retired5, ...retired, ...retired7]
     .find(clinicalCase => clinicalCase.id === caseId);
-  const relation = currentManifest.replacements.some(row => row.replaces === caseId) ||
-    currentManifest.topicConsolidations.some(row => row.replaces.includes(caseId));
+  const relation = (historical.manifest.replacements??[]).some(row => row.replaces === caseId) ||
+    (historical.manifest.topicConsolidations??[]).some(row => row.replaces.includes(caseId)) ||
+    (historical.manifest.retirements??[]).some(row => row.caseId === caseId);
   expect(relation, caseId + " explicit retirement relation").toBe(true);
   expect(archived, caseId + " retained frozen source").toBeDefined();
   for (const node of archived!.decisionNodes)
-    expect(currentRelease.concepts.some(concept => concept.id === node.primaryConceptId), node.primaryConceptId).toBe(true);
+    expect(historical.release.concepts.some(concept => concept.id === node.primaryConceptId), node.primaryConceptId).toBe(true);
   return archived;
 }
 
@@ -102,6 +84,7 @@ export function withProgramBatch6PresentationCorrections<T>(source: T, targetId:
 }
 
 export function beforeProgramBatch6AcceptanceRelease(release: SyntheticClinicalRelease): SyntheticClinicalRelease {
+  release = beforeProgramBatch7AcceptanceRelease(release);
   if (digest(release) === before.default.sha256) return release;
   if (!release.cases.some(cs => cases.some(accepted => accepted.id === cs.id))) return release;
   for (const cs of cases) expect(release.cases.find(actual => actual.id === cs.id), cs.id).toEqual(cs);
@@ -122,6 +105,7 @@ export function beforeProgramBatch6AcceptanceRelease(release: SyntheticClinicalR
 }
 
 export function beforeProgramBatch6AcceptanceManifest(manifest: QuestionShipManifest): QuestionShipManifest & {id: string; clinicalApproval: false} {
+  manifest = beforeProgramBatch7AcceptanceManifest(manifest);
   if (!manifest.accepted.some(row => row.sourceView.startsWith("topic-batch6-")))
     return manifest as ReturnType<typeof beforeProgramBatch6AcceptanceManifest>;
   expect(manifest).toEqual({...before.manifest, id:"question-ship.2026-11-12.v15",
@@ -132,6 +116,7 @@ export function beforeProgramBatch6AcceptanceManifest(manifest: QuestionShipMani
 }
 
 export function beforeProgramBatch6AcceptanceTimings(actual: readonly AnswerChoiceTimingRegistryEntry[]): AnswerChoiceTimingRegistryEntry[] {
+  actual = beforeProgramBatch7AcceptanceTimings(actual);
   if (!actual.some(entry => rows.some(row => row.questionVariantId === entry.questionVariantId))) return [...actual];
   // Exact manager-approved runtime delta; the reviewed no_test source stays frozen.
   const proposals = read("docs/research/question-topic-acceptance-batch6-packet-20261112.json").outsideRecordTestingChoices as Array<{
@@ -159,6 +144,7 @@ export function beforeProgramBatch6AcceptanceFamilies<T>(actual: readonly T[]): 
 }
 
 export function beforeProgramBatch6AcceptanceSource(path: string, current: string | undefined): string {
+  if (current !== undefined) current = beforeProgramBatch7AcceptanceSource(path, current);
   const row = migration.files.find(file => file.path === path);
   if (!row) {
     expect(current, path + " required source").toBeDefined();

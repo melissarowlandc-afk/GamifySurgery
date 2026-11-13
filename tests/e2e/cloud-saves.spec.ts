@@ -61,7 +61,11 @@ async function createAccountCampaign(page: Page, name: string, fromFounder = fal
 async function closeSaved(page: Page) {
   await page.getByRole("button", { name: "Save & Close", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Safe to close this tab", exact: true })).toBeVisible();
-  expect((await snapshot(page)).pending).toBe(false);
+  // Durability/ack precede "closed"; ordered housekeeping (journal compaction,
+  // idle engine parking) may still be settling, so wait for it before asserting.
+  await expect.poll(() => status(page), { timeout: CLOUD_QA_WAIT_MS }).toMatchObject({
+    phase: "closed", pending: false, localDurable: true, canExecute: false, failure: null, needsReload: false,
+  });
 }
 
 test("operational worker crash after private apply preserves one command, recovers automatically, and survives Save & Close/reload", async ({ browser, baseURL }) => {
@@ -150,7 +154,7 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       expect(f.server.operationCount("qa-account-a")).toBe(0);
       const original = await desktop.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"));
       await acceptAccountNotice(desktop);
-      await expect(desktop.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true })).toBeEnabled();
+      await expectResumeReady(desktop, "Synthetic clinic 1");
       expect(await desktop.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBe(original);
       await openAndContinue(desktop);
       await desktop.getByRole("button", { name: "Set facility speed to 2x", exact: true }).click();

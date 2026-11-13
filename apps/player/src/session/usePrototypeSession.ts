@@ -1,4 +1,5 @@
 import { SessionActions, type SessionActionResult } from "./sessionActions";
+import { bindVisibleInterval } from "../mobile/performance/visibleInterval";
 import { learningReviewCount } from "./learningReviewCount";
 import { startFacilityClock } from "./facilityClock";
 import { LocalProfileJournal } from "./localProfileJournal";
@@ -637,11 +638,11 @@ export function usePrototypeSession(
       if (localJournalGenerationRef.current !== generation) return;
       localJournalRef.current = journal; journal.record(profileRef.current); showCommandProblem(null); setLocalPreparation("ready");
     }).catch(error => { if (localJournalGenerationRef.current !== generation) return; setLocalPreparation("failed"); problemDiagnostics.error("local-journal-open", error); showCommandProblem("Device saving could not start. Keep the app open and send a problem report."); });
-    const timer = window.setInterval(() => {
+    const stopTimer = bindVisibleInterval(window, document, () => {
       if (document.visibilityState !== "hidden") void localJournalRef.current?.compact();
     }, 1_000);
     return () => {
-      window.clearInterval(timer);
+      stopTimer();
       queueMicrotask(() => {
         if (localJournalBindingRef.current === binding) void localJournalOpeningRef.current?.then(async journal => {
           await journal.durable(); journal.stop();
@@ -700,7 +701,7 @@ export function usePrototypeSession(
       cloudUsageRef.current?.setGame({ campaignId: next.campaignId, paused: next.paused || !cloud.canExecute, finishReportOpen: finishReportOpenRef.current });
     };
     const unsubscribe = cloud.subscribe(sync);
-    const timer = window.setInterval(() => { if (!cloudPresentationCoveredRef.current && document.visibilityState !== "hidden") void cloud.pulse(); }, 1_000);
+    const stopTimer = bindVisibleInterval(window, document, () => { if (!cloudPresentationCoveredRef.current && document.visibilityState !== "hidden") void cloud.pulse(); }, 1_000);
     const focus = () => {
       const visible = document.visibilityState !== "hidden"; setDocumentVisible(visible);
       if (visible && !cloudPresentationCoveredRef.current) void cloud.foreground();
@@ -718,7 +719,7 @@ export function usePrototypeSession(
     sync();
     if (cloud.coordinator.reconnectsAutomatically && !cloud.canExecute && !cloud.needsReload) void cloud.reconnect();
     return () => {
-      unsubscribe(); window.clearInterval(timer); window.removeEventListener("focus", focus);
+      unsubscribe(); stopTimer(); window.removeEventListener("focus", focus);
       window.removeEventListener("pageshow", focus); window.removeEventListener("online", online); window.removeEventListener("offline", offline);
       document.removeEventListener("resume", focus);
       // React StrictMode may immediately bind the same owner again.

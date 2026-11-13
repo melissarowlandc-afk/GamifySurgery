@@ -1,3 +1,4 @@
+import { RuntimeCatalogueUnavailable, withRuntimeCatalogue } from "../../mobile/performance/runtimeCatalogue";
 import {
   createGameEvidenceCheckpoint, deserializeGameState, importGameEvidence, restoreGameEvidenceImportSource, serializeGameState,
   type DomainContext, type GameEvidenceArchive, type GameEvidenceCheckpoint, type GameEvidenceRecord, type GameEvidenceSnapshot,
@@ -132,8 +133,11 @@ export async function prepareCloudEvidenceImport(input: {
   const source = codecObject(parseCodecJson(input.serializedState), "Original import source");
   assertMappedGameFields(source);
   let state;
-  try { state = deserializeGameState(input.serializedState, context); }
-  catch { throw new CloudCodecError("domain_validation", "The public domain loader rejected the import source."); }
+  try { state = await withRuntimeCatalogue(async () => deserializeGameState(input.serializedState, context)); }
+  catch (error) {
+    if (error instanceof RuntimeCatalogueUnavailable) throw error;
+    throw new CloudCodecError("domain_validation", "The public domain loader rejected the import source.");
+  }
   if (typeof source.campaignId === "string" && source.campaignId !== state.campaignId) throw new CloudCodecError("campaign_identity", "The import would change an existing campaign identity.");
   const checkpoint = createGameEvidenceCheckpoint(state, { sourceState: source });
   const provenance = Object.freeze({ sha256: await sha256Utf8(input.serializedState), utf8Bytes: utf8Bytes(input.serializedState), schemaVersion: Number(source.schemaVersion) });

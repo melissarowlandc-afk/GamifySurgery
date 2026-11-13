@@ -1,4 +1,5 @@
 import { renderLoopWatchdog, wakePresentationLoop } from "../diagnostics/renderLoopWatchdog";
+import { bindVisibleInterval } from "../mobile/performance/visibleInterval";
 import {
   useEffect,
   useRef,
@@ -276,7 +277,7 @@ export function FacilityCanvas({
       () => !mainCanvasLost && document.visibilityState !== "hidden" && scene.sys.isActive() && !bridgeRef.current.mobilePresentation?.hidden,
       () => wakePresentationLoop(game), Date.now, () => ({ paused: game.isPaused, running: game.loop.running }));
     game.events.on(Phaser.Core.Events.POST_STEP, renderWatchdog.frame);
-    const renderWatchdogTimer = window.setInterval(renderWatchdog.check, 1_000);
+    const stopRenderWatchdog = bindVisibleInterval(window, document, renderWatchdog.check, 1_000);
     const ownedCanvas = game.canvas;
     gameRef.current = game;
     let lastCameraLayoutSignature = "";
@@ -446,7 +447,7 @@ export function FacilityCanvas({
           game.canvas.removeEventListener(event, frameBudget.interact, true);
       }
       game.events.off(Phaser.Core.Events.POST_STEP, renderWatchdog.frame);
-      window.clearInterval(renderWatchdogTimer); renderWatchdog.dispose();
+      stopRenderWatchdog(); renderWatchdog.dispose();
       game.events.off(Phaser.Core.Events.POST_STEP, reconcileCamera);
       resizeObserver.disconnect();
       if (cameraSettleTimer !== null) window.clearTimeout(cameraSettleTimer);

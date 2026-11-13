@@ -1,3 +1,4 @@
+import { ensureRuntimeCatalogue } from "../../mobile/performance/runtimeCatalogue";
 import { problemDiagnostics, showCommandProblem } from "../../diagnostics/problemDiagnostics";
 import { observePhoneClinic, phoneMemoryProfile } from "../../mobile/performance/phoneMemoryPolicy";
 import { PROTOTYPE_DOMAIN_CONTEXT, createGameEvidenceCheckpoint, prepareGameEvidenceCheckpoint, prepareFacilityPathfinding, getRoomDefinition, applyGameEvidenceCommand, applyGameEvidenceBuildUndo, gameEvidenceDelta, type DomainContext, type GameCommand, type GameEvidenceCheckpoint, type GameEvidenceDelta, type GameState } from "@gamify-surgery/game-domain";
@@ -24,6 +25,7 @@ import { OrderedSessionWork } from "./orderedSessionWork";
 import { OperationalSessionView } from "./operationalSessionView";
 import type { OperationalViewArguments } from "./operationalViewProjection";
 import type { SessionActions } from "../sessionActions";
+import { IdleWorkerRelease } from "../../mobile/performance/idleWorkerRelease";
 
 export function cloudCampaignMetadata(profile: LocalPrototypeProfile): CloudCampaignMetadata {
   const campaign = profile.campaigns.find(row => row.campaignId === profile.activeCampaignId);
@@ -40,6 +42,7 @@ export function cloudCampaignMetadata(profile: LocalPrototypeProfile): CloudCamp
  * checked server lease or explicitly durable offline authority are required. */
 export class CloudGameSession {
   private engine: OperationalSessionEngine | null = null;
+  private readonly idleWorker = new IdleWorkerRelease(() => this.releaseIdleEngine());
   private readonly projectedView = new OperationalSessionView(args => this.engine?.setProjection(args));
   private readonly ordered = new OrderedSessionWork();
   private skippedClockPulses = 0;
@@ -146,6 +149,7 @@ export class CloudGameSession {
     const adapted = playable !== loaded.state || Boolean(loaded.numberRepairs?.length);
     observePhoneClinic(playable.facilityLevel, playable.rooms.length);
     const useEngine = options.operational !== false && (typeof Worker !== "undefined" || Boolean(options.operational?.createPort));
+    if (!useEngine) await ensureRuntimeCatalogue();
     const session = new CloudGameSession(coordinator, adapted ? { ...loaded, state: playable,
       checkpoint: playable !== loaded.state ? createGameEvidenceCheckpoint(playable) : loaded.checkpoint } : loaded,
       [openedSnapshot.uncompressedSha256, confirmed.snapshot.uncompressedSha256], switchTo, automaticReconnect, !useEngine);
@@ -183,9 +187,27 @@ export class CloudGameSession {
         { ...options.operational, adoptSharedSeed: true, useBundledContext: true,
           diagnose: code => { problemDiagnostics.event("operational-engine", code); options.operational && options.operational.diagnose?.(code); } });
     } else if (session.snapshotLineage) prepareSnapshotTick(session.checkpoint, session.current.paused, Date.now());
+    session.updateIdleWorker();
     return session;
   }
-  private emit(): void { for (const listener of this.listeners) { try { listener(); } catch (error) { problemDiagnostics.error("session-observer", error); } } }
+  private updateIdleWorker(): void {
+    this.idleWorker.update(!this.stopped && !this.detaching && this.engine?.mode === "worker" && this.journalDrain &&
+      phoneMemoryProfile().mode === "reduced" && (this.current.paused || this.backgrounded) ? this.changeVersion : null);
+  }
+  private releaseIdleEngine(): Promise<boolean> {
+    return this.ordered.run(async () => {
+      const engine = this.engine, drain = this.journalDrain;
+      if (this.stopped || this.detaching || !engine || engine.mode !== "worker") return true;
+      if (!drain || phoneMemoryProfile().mode !== "reduced" || !this.current.paused && !this.backgrounded) return true;
+      if (this.flushing || this.compacting || !await drain.drain()) return false;
+      // Hash/commit work is complete before termination. No RPC, new operation
+      // ID, pause command or save-policy boundary is invented here.
+      const released = await engine.park();
+      if (released) this.coordinator.codec.releaseIdle?.();
+      return released;
+    });
+  }
+  private emit(): void { this.updateIdleWorker(); for (const listener of this.listeners) { try { listener(); } catch (error) { problemDiagnostics.error("session-observer", error); } } }
   subscribe = (listener: () => void): (() => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
   get needsReload(): boolean { return this.reloadRequired; }
   get syncView(): CloudSyncView {
@@ -487,7 +509,9 @@ export class CloudGameSession {
   async checkpointNow(reason: CloudCheckpointReason): Promise<boolean> {
     if (reason === "hidden" || reason === "pagehide") this.backgrounded = true;
     if (!await this.durable()) return false;
-    return this.coordinator.checkpoint(reason);
+    const result = await this.coordinator.checkpoint(reason);
+    if (this.backgrounded) await this.releaseIdleEngine();
+    return result;
   }
   /** Explicit support/import boundary: materialize local recovery without RPC. */
   prepareRecoveryCopy(): Promise<boolean> { return this.prepareCheckpoint("campaign-switch"); }
@@ -629,6 +653,7 @@ export class CloudGameSession {
   detach(): void {
     if (this.stopped || this.detaching) return;
     this.detaching = true; this.commandActions?.pauseAdmissions(); this.lifecycleVersion++;
+    this.idleWorker.dispose();
     this.unbindDiagnostics(); this.unsubscribe(); this.unsubscribeReceipts(); this.unsubscribeRecovery(); this.unsubscribeAutomatic(); this.unsubscribeCheckpoint();
     const cleanup = () => { this.stopped = true; if (this.journalDrain) this.coordinator.releaseJournalOwner(this.journalDrain.owner);
       this.journalDrain?.stop(); this.engine?.dispose(); this.finishDurability(false); };

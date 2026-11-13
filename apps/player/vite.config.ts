@@ -6,7 +6,8 @@ import { runtimeClinicalData } from "../../scripts/vite/runtime-clinical-data";
 export default defineConfig({
   define: { __PLAYER_BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)) },
   plugins: [react(), forbidPrivateModules(), runtimeClinicalData()],
-  worker: { plugins: () => [forbidPrivateModules(), runtimeClinicalData()] },
+  build: { target: "es2022" },
+  worker: { format: "es", plugins: () => [forbidPrivateModules(), runtimeClinicalData()] },
   test: {
     // Minute-by-minute clinic simulations compete for CPU in the full suite.
     // Bound concurrent files without weakening their assertions or timeouts.

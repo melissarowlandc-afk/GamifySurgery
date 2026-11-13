@@ -1,0 +1,1635 @@
+{
+  "checkedOn": "2026-11-12",
+  "relations": [
+    {
+      "id": "topic-program.batch4.case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1",
+      "program": "topic-program",
+      "replaces": [
+        "case.rectal-cancer.accountant-followup",
+        "case.rectal-cancer.caregiver-followup",
+        "case.rectal-cancer.cyclist-followup",
+        "case.rectal-cancer.teacher-followup"
+      ],
+      "with": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+      "decision": "docs/research/question-topic-acceptance-batch4-20261111.md"
+    },
+    {
+      "id": "topic-program.batch4.case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
+      "program": "topic-program",
+      "replaces": [
+        "case.gs028d.anesthesia.b-documented-susceptibility",
+        "case.gs028d.anesthesia.b-family-testing-record",
+        "case.gs028d.anesthesia.b-mh-alert-bracelet",
+        "case.gs028d.anesthesia.b-prior-mh-event"
+      ],
+      "with": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+      "decision": "docs/research/question-topic-acceptance-batch4-20261111.md"
+    }
+  ],
+  "cases": [
+    {
+      "id": "case.rectal-cancer.accountant-followup",
+      "displayName": "Rectal cancer response assessment",
+      "patientPresentationVariantId": "presentation.rectal-cancer.accountant-followup",
+      "releasePointId": "release.l0.clinic_evaluation",
+      "patientDisplayName": "{patientName}",
+      "prototypeDemographics": {
+        "ageYears": 61,
+        "sexLabel": "Female"
+      },
+      "prototypeVitalSigns": {
+        "heartRateBpm": 76,
+        "systolicBloodPressureMmHg": 118,
+        "diastolicBloodPressureMmHg": 74,
+        "temperatureF": 98.4,
+        "oxygenSaturationPercent": 99
+      },
+      "chiefComplaint": "Rectal cancer response review",
+      "patientPresentationRevision": {
+        "id": "pprv3.case.rectal-cancer.accountant-followup",
+        "patientPresentationVariantId": "presentation.rectal-cancer.accountant-followup",
+        "contentVersion": "presentation-revision.patient-library.2026-09-13.v3",
+        "revisedChiefComplaint": "Rectal cancer response review",
+        "revisedFields": [
+          "chiefComplaint"
+        ],
+        "aiAssistedDrafting": true,
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null
+      },
+      "presentation": "{patientName} completed neoadjuvant treatment for a mid-rectal adenocarcinoma with negative systemic staging. An accountant, {patientName} prefers organ preservation after informed counseling and can attend an experienced multidisciplinary surveillance program.",
+      "approvedInstantiationProfiles": [
+        {
+          "id": "profile.rectal-cancer.accountant-followup.female.61",
+          "prototypeDemographics": {
+            "ageYears": 61,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a mid-rectal adenocarcinoma with negative systemic staging. An accountant, {patientName} prefers organ preservation after informed counseling and can attend an experienced multidisciplinary surveillance program."
+        },
+        {
+          "id": "profile.rectal-cancer.accountant-followup.male.61",
+          "prototypeDemographics": {
+            "ageYears": 61,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a mid-rectal adenocarcinoma with negative systemic staging. An accountant, {patientName} prefers organ preservation after informed counseling and can attend an experienced multidisciplinary surveillance program."
+        },
+        {
+          "id": "profile.rectal-cancer.accountant-followup.female.64",
+          "prototypeDemographics": {
+            "ageYears": 64,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a mid-rectal adenocarcinoma with negative systemic staging. An accountant, {patientName} prefers organ preservation after informed counseling and can attend an experienced multidisciplinary surveillance program."
+        },
+        {
+          "id": "profile.rectal-cancer.accountant-followup.male.64",
+          "prototypeDemographics": {
+            "ageYears": 64,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a mid-rectal adenocarcinoma with negative systemic staging. An accountant, {patientName} prefers organ preservation after informed counseling and can attend an experienced multidisciplinary surveillance program."
+        }
+      ],
+      "tutorialEligible": false,
+      "routineEligible": true,
+      "earliestFacilityStage": 1,
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "rewardTierId": "reward.clinic_basic",
+      "sourceLabels": [
+        "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+        "Rectal Cancer Treatment (PDQ), Health Professional Version"
+      ],
+      "decisionNodes": [
+        {
+          "id": "node.rectal-cancer.accountant-followup.1",
+          "questionVariantId": "question.rectal-cancer.multimodal-response-assessment.v4",
+          "primaryConceptId": "concept.rectal-cancer.multimodal-response-assessment",
+          "stem": "Which local response assessment should be arranged now for {patientName}?",
+          "answerChoices": [
+            {
+              "id": "multimodal_response_4",
+              "label": "DRE, endoscopy, and rectal MRI",
+              "isCorrect": true,
+              "serviceRequest": {
+                "serviceId": "service.rectal_response_assessment"
+              }
+            },
+            {
+              "id": "mri_only_4",
+              "label": "Rectal-protocol MRI",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "endoscopy_biopsy_4",
+              "label": "Endoscopy with biopsy",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "pet_ct_4",
+              "label": "Whole-body PET-CT response assessment",
+              "isCorrect": false,
+              "serviceRequest": null
+            }
+          ],
+          "shuffleAnswers": true,
+          "explanation": "Assessment after neoadjuvant rectal cancer treatment combines digital rectal examination, endoscopy, and rectal-protocol MRI.",
+          "sourceLabels": [
+            "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+            "Rectal Cancer Treatment (PDQ), Health Professional Version"
+          ],
+          "resultGateAfter": {
+            "id": "gate.rectal-cancer.4",
+            "resultTypeId": "service.rectal_response_assessment",
+            "pendingLabel": "External multimodal rectal response assessment pending",
+            "resultNarrative": "Digital rectal examination finds no palpable tumor; endoscopy shows a flat pale scar without ulcer or nodule; rectal-protocol MRI shows no residual tumor signal or suspicious nodes.",
+            "readiness": "all",
+            "allowedServiceRouteIds": [
+              "route.rectal_response_assessment.outsourced"
+            ]
+          },
+          "terminalDispositions": []
+        },
+        {
+          "id": "node.rectal-cancer.accountant-followup.2",
+          "questionVariantId": "question.rectal-cancer.selected-watch-and-wait.v4",
+          "primaryConceptId": "concept.rectal-cancer.selected-watch-and-wait",
+          "currentUpdate": "Digital rectal examination finds no palpable tumor; endoscopy shows a flat pale scar without ulcer or nodule; rectal-protocol MRI shows no residual tumor signal or suspicious nodes.",
+          "stem": "Which nonsurgical option may be offered to {patientName} after informed multidisciplinary counseling?",
+          "answerChoices": [
+            {
+              "id": "watch_wait_4",
+              "label": "Watch-and-wait with intensive surveillance",
+              "isCorrect": true,
+              "serviceRequest": null
+            },
+            {
+              "id": "routine_followup_4",
+              "label": "Routine annual follow-up without intensive surveillance",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "discharge_cured_4",
+              "label": "Discharge from cancer follow-up as cured",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "chemotherapy_indefinitely_4",
+              "label": "Continue indefinite systemic chemotherapy without reassessment",
+              "isCorrect": false,
+              "serviceRequest": null
+            }
+          ],
+          "shuffleAnswers": true,
+          "explanation": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+          "sourceLabels": [
+            "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+            "Rectal Cancer Treatment (PDQ), Health Professional Version"
+          ],
+          "resultGateAfter": null,
+          "terminalDispositions": [
+            {
+              "answerChoiceId": "routine_followup_4",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The teaching encounter recorded “Routine annual follow-up without intensive surveillance.”",
+              "clinicalRationale": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+              "sourceLabels": [
+                "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+                "Rectal Cancer Treatment (PDQ), Health Professional Version"
+              ]
+            },
+            {
+              "answerChoiceId": "discharge_cured_4",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The teaching encounter recorded “Discharge from cancer follow-up as cured.”",
+              "clinicalRationale": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+              "sourceLabels": [
+                "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+                "Rectal Cancer Treatment (PDQ), Health Professional Version"
+              ]
+            },
+            {
+              "answerChoiceId": "chemotherapy_indefinitely_4",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The teaching encounter recorded “Continue indefinite systemic chemotherapy without reassessment.”",
+              "clinicalRationale": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+              "sourceLabels": [
+                "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+                "Rectal Cancer Treatment (PDQ), Health Professional Version"
+              ]
+            }
+          ]
+        }
+      ],
+      "learningSummary": "Assessment after neoadjuvant rectal cancer treatment combines digital rectal examination, endoscopy, and rectal-protocol MRI. A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid."
+    },
+    {
+      "id": "case.rectal-cancer.caregiver-followup",
+      "displayName": "Rectal cancer response assessment",
+      "patientPresentationVariantId": "presentation.rectal-cancer.caregiver-followup",
+      "releasePointId": "release.l0.clinic_evaluation",
+      "patientDisplayName": "{patientName}",
+      "prototypeDemographics": {
+        "ageYears": 56,
+        "sexLabel": "Female"
+      },
+      "prototypeVitalSigns": {
+        "heartRateBpm": 76,
+        "systolicBloodPressureMmHg": 118,
+        "diastolicBloodPressureMmHg": 74,
+        "temperatureF": 98.4,
+        "oxygenSaturationPercent": 99
+      },
+      "chiefComplaint": "Rectal cancer response review",
+      "patientPresentationRevision": {
+        "id": "pprv3.case.rectal-cancer.caregiver-followup",
+        "patientPresentationVariantId": "presentation.rectal-cancer.caregiver-followup",
+        "contentVersion": "presentation-revision.patient-library.2026-09-13.v3",
+        "revisedChiefComplaint": "Rectal cancer response review",
+        "revisedFields": [
+          "chiefComplaint"
+        ],
+        "aiAssistedDrafting": true,
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null
+      },
+      "presentation": "{patientName} completed neoadjuvant treatment for a mid-rectal adenocarcinoma with no distant disease on systemic imaging. A family caregiver, {patientName} prefers organ preservation after informed counseling, understands surgery remains an option, and can adhere to intensive surveillance in an experienced program.",
+      "approvedInstantiationProfiles": [
+        {
+          "id": "profile.rectal-cancer.caregiver-followup.female.56",
+          "prototypeDemographics": {
+            "ageYears": 56,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a mid-rectal adenocarcinoma with no distant disease on systemic imaging. A family caregiver, {patientName} prefers organ preservation after informed counseling, understands surgery remains an option, and can adhere to intensive surveillance in an experienced program."
+        },
+        {
+          "id": "profile.rectal-cancer.caregiver-followup.male.56",
+          "prototypeDemographics": {
+            "ageYears": 56,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a mid-rectal adenocarcinoma with no distant disease on systemic imaging. A family caregiver, {patientName} prefers organ preservation after informed counseling, understands surgery remains an option, and can adhere to intensive surveillance in an experienced program."
+        },
+        {
+          "id": "profile.rectal-cancer.caregiver-followup.female.59",
+          "prototypeDemographics": {
+            "ageYears": 59,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a mid-rectal adenocarcinoma with no distant disease on systemic imaging. A family caregiver, {patientName} prefers organ preservation after informed counseling, understands surgery remains an option, and can adhere to intensive surveillance in an experienced program."
+        },
+        {
+          "id": "profile.rectal-cancer.caregiver-followup.male.59",
+          "prototypeDemographics": {
+            "ageYears": 59,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a mid-rectal adenocarcinoma with no distant disease on systemic imaging. A family caregiver, {patientName} prefers organ preservation after informed counseling, understands surgery remains an option, and can adhere to intensive surveillance in an experienced program."
+        }
+      ],
+      "tutorialEligible": false,
+      "routineEligible": true,
+      "earliestFacilityStage": 1,
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "rewardTierId": "reward.clinic_basic",
+      "sourceLabels": [
+        "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+        "Rectal Cancer Treatment (PDQ), Health Professional Version"
+      ],
+      "decisionNodes": [
+        {
+          "id": "node.rectal-cancer.caregiver-followup.1",
+          "questionVariantId": "question.rectal-cancer.multimodal-response-assessment.v2",
+          "primaryConceptId": "concept.rectal-cancer.multimodal-response-assessment",
+          "stem": "Which local response assessment should be arranged now for {patientName}?",
+          "answerChoices": [
+            {
+              "id": "multimodal_response_2",
+              "label": "DRE, endoscopy, and rectal MRI",
+              "isCorrect": true,
+              "serviceRequest": {
+                "serviceId": "service.rectal_response_assessment"
+              }
+            },
+            {
+              "id": "mri_only_2",
+              "label": "Rectal-protocol MRI",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "endoscopy_biopsy_2",
+              "label": "Endoscopy with biopsy",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "pet_ct_2",
+              "label": "Whole-body PET-CT response assessment",
+              "isCorrect": false,
+              "serviceRequest": null
+            }
+          ],
+          "shuffleAnswers": true,
+          "explanation": "Assessment after neoadjuvant rectal cancer treatment combines digital rectal examination, endoscopy, and rectal-protocol MRI.",
+          "sourceLabels": [
+            "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+            "Rectal Cancer Treatment (PDQ), Health Professional Version"
+          ],
+          "resultGateAfter": {
+            "id": "gate.rectal-cancer.2",
+            "resultTypeId": "service.rectal_response_assessment",
+            "pendingLabel": "External multimodal rectal response assessment pending",
+            "resultNarrative": "Digital rectal examination finds no palpable tumor; endoscopy shows a flat pale scar without ulcer or nodule; rectal-protocol MRI shows no residual tumor signal or suspicious nodes.",
+            "readiness": "all",
+            "allowedServiceRouteIds": [
+              "route.rectal_response_assessment.outsourced"
+            ]
+          },
+          "terminalDispositions": []
+        },
+        {
+          "id": "node.rectal-cancer.caregiver-followup.2",
+          "questionVariantId": "question.rectal-cancer.selected-watch-and-wait.v2",
+          "primaryConceptId": "concept.rectal-cancer.selected-watch-and-wait",
+          "currentUpdate": "Digital rectal examination finds no palpable tumor; endoscopy shows a flat pale scar without ulcer or nodule; rectal-protocol MRI shows no residual tumor signal or suspicious nodes.",
+          "stem": "Which nonsurgical option may be offered to {patientName} after informed multidisciplinary counseling?",
+          "answerChoices": [
+            {
+              "id": "watch_wait_2",
+              "label": "Watch-and-wait with intensive surveillance",
+              "isCorrect": true,
+              "serviceRequest": null
+            },
+            {
+              "id": "routine_followup_2",
+              "label": "Routine annual follow-up without intensive surveillance",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "discharge_cured_2",
+              "label": "Discharge from cancer follow-up as cured",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "chemotherapy_indefinitely_2",
+              "label": "Continue indefinite systemic chemotherapy without reassessment",
+              "isCorrect": false,
+              "serviceRequest": null
+            }
+          ],
+          "shuffleAnswers": true,
+          "explanation": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+          "sourceLabels": [
+            "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+            "Rectal Cancer Treatment (PDQ), Health Professional Version"
+          ],
+          "resultGateAfter": null,
+          "terminalDispositions": [
+            {
+              "answerChoiceId": "routine_followup_2",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The teaching encounter recorded “Routine annual follow-up without intensive surveillance.”",
+              "clinicalRationale": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+              "sourceLabels": [
+                "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+                "Rectal Cancer Treatment (PDQ), Health Professional Version"
+              ]
+            },
+            {
+              "answerChoiceId": "discharge_cured_2",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The teaching encounter recorded “Discharge from cancer follow-up as cured.”",
+              "clinicalRationale": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+              "sourceLabels": [
+                "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+                "Rectal Cancer Treatment (PDQ), Health Professional Version"
+              ]
+            },
+            {
+              "answerChoiceId": "chemotherapy_indefinitely_2",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The teaching encounter recorded “Continue indefinite systemic chemotherapy without reassessment.”",
+              "clinicalRationale": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+              "sourceLabels": [
+                "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+                "Rectal Cancer Treatment (PDQ), Health Professional Version"
+              ]
+            }
+          ]
+        }
+      ],
+      "learningSummary": "Assessment after neoadjuvant rectal cancer treatment combines digital rectal examination, endoscopy, and rectal-protocol MRI. A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid."
+    },
+    {
+      "id": "case.rectal-cancer.cyclist-followup",
+      "displayName": "Rectal cancer response assessment",
+      "patientPresentationVariantId": "presentation.rectal-cancer.cyclist-followup",
+      "releasePointId": "release.l0.clinic_evaluation",
+      "patientDisplayName": "{patientName}",
+      "prototypeDemographics": {
+        "ageYears": 44,
+        "sexLabel": "Female"
+      },
+      "prototypeVitalSigns": {
+        "heartRateBpm": 76,
+        "systolicBloodPressureMmHg": 118,
+        "diastolicBloodPressureMmHg": 74,
+        "temperatureF": 98.4,
+        "oxygenSaturationPercent": 99
+      },
+      "chiefComplaint": "Rectal cancer response review",
+      "patientPresentationRevision": {
+        "id": "pprv3.case.rectal-cancer.cyclist-followup",
+        "patientPresentationVariantId": "presentation.rectal-cancer.cyclist-followup",
+        "contentVersion": "presentation-revision.patient-library.2026-09-13.v3",
+        "revisedChiefComplaint": "Rectal cancer response review",
+        "revisedFields": [
+          "chiefComplaint"
+        ],
+        "aiAssistedDrafting": true,
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null
+      },
+      "presentation": "{patientName} completed neoadjuvant treatment for a low rectal adenocarcinoma and has no metastases on systemic imaging. An avid cyclist, {patientName} prefers organ preservation after informed counseling, has reliable follow-up access, and can enroll in an experienced multidisciplinary program.",
+      "approvedInstantiationProfiles": [
+        {
+          "id": "profile.rectal-cancer.cyclist-followup.female.44",
+          "prototypeDemographics": {
+            "ageYears": 44,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a low rectal adenocarcinoma and has no metastases on systemic imaging. An avid cyclist, {patientName} prefers organ preservation after informed counseling, has reliable follow-up access, and can enroll in an experienced multidisciplinary program."
+        },
+        {
+          "id": "profile.rectal-cancer.cyclist-followup.male.44",
+          "prototypeDemographics": {
+            "ageYears": 44,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a low rectal adenocarcinoma and has no metastases on systemic imaging. An avid cyclist, {patientName} prefers organ preservation after informed counseling, has reliable follow-up access, and can enroll in an experienced multidisciplinary program."
+        },
+        {
+          "id": "profile.rectal-cancer.cyclist-followup.female.47",
+          "prototypeDemographics": {
+            "ageYears": 47,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a low rectal adenocarcinoma and has no metastases on systemic imaging. An avid cyclist, {patientName} prefers organ preservation after informed counseling, has reliable follow-up access, and can enroll in an experienced multidisciplinary program."
+        },
+        {
+          "id": "profile.rectal-cancer.cyclist-followup.male.47",
+          "prototypeDemographics": {
+            "ageYears": 47,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a low rectal adenocarcinoma and has no metastases on systemic imaging. An avid cyclist, {patientName} prefers organ preservation after informed counseling, has reliable follow-up access, and can enroll in an experienced multidisciplinary program."
+        }
+      ],
+      "tutorialEligible": false,
+      "routineEligible": true,
+      "earliestFacilityStage": 1,
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "rewardTierId": "reward.clinic_basic",
+      "sourceLabels": [
+        "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+        "Rectal Cancer Treatment (PDQ), Health Professional Version"
+      ],
+      "decisionNodes": [
+        {
+          "id": "node.rectal-cancer.cyclist-followup.1",
+          "questionVariantId": "question.rectal-cancer.multimodal-response-assessment.v3",
+          "primaryConceptId": "concept.rectal-cancer.multimodal-response-assessment",
+          "stem": "Which local response assessment should be arranged now for {patientName}?",
+          "answerChoices": [
+            {
+              "id": "multimodal_response_3",
+              "label": "DRE, endoscopy, and rectal MRI",
+              "isCorrect": true,
+              "serviceRequest": {
+                "serviceId": "service.rectal_response_assessment"
+              }
+            },
+            {
+              "id": "mri_only_3",
+              "label": "Rectal-protocol MRI",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "endoscopy_biopsy_3",
+              "label": "Endoscopy with biopsy",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "pet_ct_3",
+              "label": "Whole-body PET-CT response assessment",
+              "isCorrect": false,
+              "serviceRequest": null
+            }
+          ],
+          "shuffleAnswers": true,
+          "explanation": "Assessment after neoadjuvant rectal cancer treatment combines digital rectal examination, endoscopy, and rectal-protocol MRI.",
+          "sourceLabels": [
+            "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+            "Rectal Cancer Treatment (PDQ), Health Professional Version"
+          ],
+          "resultGateAfter": {
+            "id": "gate.rectal-cancer.3",
+            "resultTypeId": "service.rectal_response_assessment",
+            "pendingLabel": "External multimodal rectal response assessment pending",
+            "resultNarrative": "Digital rectal examination finds no palpable tumor; endoscopy shows a flat pale scar without ulcer or nodule; rectal-protocol MRI shows no residual tumor signal or suspicious nodes.",
+            "readiness": "all",
+            "allowedServiceRouteIds": [
+              "route.rectal_response_assessment.outsourced"
+            ]
+          },
+          "terminalDispositions": []
+        },
+        {
+          "id": "node.rectal-cancer.cyclist-followup.2",
+          "questionVariantId": "question.rectal-cancer.selected-watch-and-wait.v3",
+          "primaryConceptId": "concept.rectal-cancer.selected-watch-and-wait",
+          "currentUpdate": "Digital rectal examination finds no palpable tumor; endoscopy shows a flat pale scar without ulcer or nodule; rectal-protocol MRI shows no residual tumor signal or suspicious nodes.",
+          "stem": "Which nonsurgical option may be offered to {patientName} after informed multidisciplinary counseling?",
+          "answerChoices": [
+            {
+              "id": "watch_wait_3",
+              "label": "Watch-and-wait with intensive surveillance",
+              "isCorrect": true,
+              "serviceRequest": null
+            },
+            {
+              "id": "routine_followup_3",
+              "label": "Routine annual follow-up without intensive surveillance",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "discharge_cured_3",
+              "label": "Discharge from cancer follow-up as cured",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "chemotherapy_indefinitely_3",
+              "label": "Continue indefinite systemic chemotherapy without reassessment",
+              "isCorrect": false,
+              "serviceRequest": null
+            }
+          ],
+          "shuffleAnswers": true,
+          "explanation": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+          "sourceLabels": [
+            "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+            "Rectal Cancer Treatment (PDQ), Health Professional Version"
+          ],
+          "resultGateAfter": null,
+          "terminalDispositions": [
+            {
+              "answerChoiceId": "routine_followup_3",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The teaching encounter recorded “Routine annual follow-up without intensive surveillance.”",
+              "clinicalRationale": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+              "sourceLabels": [
+                "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+                "Rectal Cancer Treatment (PDQ), Health Professional Version"
+              ]
+            },
+            {
+              "answerChoiceId": "discharge_cured_3",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The teaching encounter recorded “Discharge from cancer follow-up as cured.”",
+              "clinicalRationale": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+              "sourceLabels": [
+                "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+                "Rectal Cancer Treatment (PDQ), Health Professional Version"
+              ]
+            },
+            {
+              "answerChoiceId": "chemotherapy_indefinitely_3",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The teaching encounter recorded “Continue indefinite systemic chemotherapy without reassessment.”",
+              "clinicalRationale": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+              "sourceLabels": [
+                "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+                "Rectal Cancer Treatment (PDQ), Health Professional Version"
+              ]
+            }
+          ]
+        }
+      ],
+      "learningSummary": "Assessment after neoadjuvant rectal cancer treatment combines digital rectal examination, endoscopy, and rectal-protocol MRI. A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid."
+    },
+    {
+      "id": "case.rectal-cancer.teacher-followup",
+      "displayName": "Rectal cancer response assessment",
+      "patientPresentationVariantId": "presentation.rectal-cancer.teacher-followup",
+      "releasePointId": "release.l0.clinic_evaluation",
+      "patientDisplayName": "{patientName}",
+      "prototypeDemographics": {
+        "ageYears": 49,
+        "sexLabel": "Female"
+      },
+      "prototypeVitalSigns": {
+        "heartRateBpm": 76,
+        "systolicBloodPressureMmHg": 118,
+        "diastolicBloodPressureMmHg": 74,
+        "temperatureF": 98.4,
+        "oxygenSaturationPercent": 99
+      },
+      "chiefComplaint": "Rectal cancer response review",
+      "patientPresentationRevision": {
+        "id": "pprv3.case.rectal-cancer.teacher-followup",
+        "patientPresentationVariantId": "presentation.rectal-cancer.teacher-followup",
+        "contentVersion": "presentation-revision.patient-library.2026-09-13.v3",
+        "revisedChiefComplaint": "Rectal cancer response review",
+        "revisedFields": [
+          "chiefComplaint"
+        ],
+        "aiAssistedDrafting": true,
+        "reviewStatus": "needs_clinician_review",
+        "lastClinicianReview": null
+      },
+      "presentation": "{patientName} completed neoadjuvant treatment for a low rectal adenocarcinoma and has no metastases on systemic imaging. A teacher, {patientName} prefers organ preservation after informed counseling, can attend frequent follow-up, and has access to an experienced multidisciplinary program.",
+      "approvedInstantiationProfiles": [
+        {
+          "id": "profile.rectal-cancer.teacher-followup.female.49",
+          "prototypeDemographics": {
+            "ageYears": 49,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a low rectal adenocarcinoma and has no metastases on systemic imaging. A teacher, {patientName} prefers organ preservation after informed counseling, can attend frequent follow-up, and has access to an experienced multidisciplinary program."
+        },
+        {
+          "id": "profile.rectal-cancer.teacher-followup.male.49",
+          "prototypeDemographics": {
+            "ageYears": 49,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a low rectal adenocarcinoma and has no metastases on systemic imaging. A teacher, {patientName} prefers organ preservation after informed counseling, can attend frequent follow-up, and has access to an experienced multidisciplinary program."
+        },
+        {
+          "id": "profile.rectal-cancer.teacher-followup.female.52",
+          "prototypeDemographics": {
+            "ageYears": 52,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a low rectal adenocarcinoma and has no metastases on systemic imaging. A teacher, {patientName} prefers organ preservation after informed counseling, can attend frequent follow-up, and has access to an experienced multidisciplinary program."
+        },
+        {
+          "id": "profile.rectal-cancer.teacher-followup.male.52",
+          "prototypeDemographics": {
+            "ageYears": 52,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName} completed neoadjuvant treatment for a low rectal adenocarcinoma and has no metastases on systemic imaging. A teacher, {patientName} prefers organ preservation after informed counseling, can attend frequent follow-up, and has access to an experienced multidisciplinary program."
+        }
+      ],
+      "tutorialEligible": false,
+      "routineEligible": true,
+      "earliestFacilityStage": 1,
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "rewardTierId": "reward.clinic_basic",
+      "sourceLabels": [
+        "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+        "Rectal Cancer Treatment (PDQ), Health Professional Version"
+      ],
+      "decisionNodes": [
+        {
+          "id": "node.rectal-cancer.teacher-followup.1",
+          "questionVariantId": "question.rectal-cancer.multimodal-response-assessment.v1",
+          "primaryConceptId": "concept.rectal-cancer.multimodal-response-assessment",
+          "stem": "Which local response assessment should be arranged now for {patientName}?",
+          "answerChoices": [
+            {
+              "id": "multimodal_response_1",
+              "label": "DRE, endoscopy, and rectal MRI",
+              "isCorrect": true,
+              "serviceRequest": {
+                "serviceId": "service.rectal_response_assessment"
+              }
+            },
+            {
+              "id": "mri_only_1",
+              "label": "Rectal-protocol MRI",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "endoscopy_biopsy_1",
+              "label": "Endoscopy with biopsy",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "pet_ct_1",
+              "label": "Whole-body PET-CT response assessment",
+              "isCorrect": false,
+              "serviceRequest": null
+            }
+          ],
+          "shuffleAnswers": true,
+          "explanation": "Assessment after neoadjuvant rectal cancer treatment combines digital rectal examination, endoscopy, and rectal-protocol MRI.",
+          "sourceLabels": [
+            "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+            "Rectal Cancer Treatment (PDQ), Health Professional Version"
+          ],
+          "resultGateAfter": {
+            "id": "gate.rectal-cancer.1",
+            "resultTypeId": "service.rectal_response_assessment",
+            "pendingLabel": "External multimodal rectal response assessment pending",
+            "resultNarrative": "Digital rectal examination finds no palpable tumor; endoscopy shows a flat pale scar without ulcer or nodule; rectal-protocol MRI shows no residual tumor signal or suspicious nodes.",
+            "readiness": "all",
+            "allowedServiceRouteIds": [
+              "route.rectal_response_assessment.outsourced"
+            ]
+          },
+          "terminalDispositions": []
+        },
+        {
+          "id": "node.rectal-cancer.teacher-followup.2",
+          "questionVariantId": "question.rectal-cancer.selected-watch-and-wait.v1",
+          "primaryConceptId": "concept.rectal-cancer.selected-watch-and-wait",
+          "currentUpdate": "Digital rectal examination finds no palpable tumor; endoscopy shows a flat pale scar without ulcer or nodule; rectal-protocol MRI shows no residual tumor signal or suspicious nodes.",
+          "stem": "Which nonsurgical option may be offered to {patientName} after informed multidisciplinary counseling?",
+          "answerChoices": [
+            {
+              "id": "watch_wait_1",
+              "label": "Watch-and-wait with intensive surveillance",
+              "isCorrect": true,
+              "serviceRequest": null
+            },
+            {
+              "id": "routine_followup_1",
+              "label": "Routine annual follow-up without intensive surveillance",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "discharge_cured_1",
+              "label": "Discharge from cancer follow-up as cured",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "chemotherapy_indefinitely_1",
+              "label": "Continue indefinite systemic chemotherapy without reassessment",
+              "isCorrect": false,
+              "serviceRequest": null
+            }
+          ],
+          "shuffleAnswers": true,
+          "explanation": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+          "sourceLabels": [
+            "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+            "Rectal Cancer Treatment (PDQ), Health Professional Version"
+          ],
+          "resultGateAfter": null,
+          "terminalDispositions": [
+            {
+              "answerChoiceId": "routine_followup_1",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The teaching encounter recorded “Routine annual follow-up without intensive surveillance.”",
+              "clinicalRationale": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+              "sourceLabels": [
+                "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+                "Rectal Cancer Treatment (PDQ), Health Professional Version"
+              ]
+            },
+            {
+              "answerChoiceId": "discharge_cured_1",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The teaching encounter recorded “Discharge from cancer follow-up as cured.”",
+              "clinicalRationale": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+              "sourceLabels": [
+                "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+                "Rectal Cancer Treatment (PDQ), Health Professional Version"
+              ]
+            },
+            {
+              "answerChoiceId": "chemotherapy_indefinitely_1",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The teaching encounter recorded “Continue indefinite systemic chemotherapy without reassessment.”",
+              "clinicalRationale": "A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid.",
+              "sourceLabels": [
+                "ASCRS Clinical Practice Guidelines for the Management of Rectal Cancer 2023 Supplement",
+                "Rectal Cancer Treatment (PDQ), Health Professional Version"
+              ]
+            }
+          ]
+        }
+      ],
+      "learningSummary": "Assessment after neoadjuvant rectal cancer treatment combines digital rectal examination, endoscopy, and rectal-protocol MRI. A fully informed patient with a clinical complete response who prefers nonsurgical care and can adhere to intensive follow-up may choose watch-and-wait in an experienced multidisciplinary program; surgery remains valid."
+    },
+    {
+      "id": "case.gs028d.anesthesia.b-documented-susceptibility",
+      "displayName": "Preanesthetic planning",
+      "patientPresentationVariantId": "presentation.gs028d.anesthesia.b-documented-susceptibility",
+      "releasePointId": "release.l0.clinic_evaluation",
+      "patientDisplayName": "{patientName}",
+      "prototypeDemographics": {
+        "ageYears": 29,
+        "sexLabel": "Female"
+      },
+      "prototypeVitalSigns": {
+        "heartRateBpm": 76,
+        "systolicBloodPressureMmHg": 118,
+        "diastolicBloodPressureMmHg": 74,
+        "temperatureF": 98.4,
+        "oxygenSaturationPercent": 99
+      },
+      "chiefComplaint": "Malignant hyperthermia record",
+      "presentation": "{patientName}, a 29-year-old woman, has specialist documentation of malignant-hyperthermia susceptibility and is considering elective gallbladder surgery.",
+      "approvedInstantiationProfiles": [
+        {
+          "id": "profile.gs028d.anesthesia.b-documented-susceptibility.female.29",
+          "prototypeDemographics": {
+            "ageYears": 29,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 29-year-old woman, has specialist documentation of malignant-hyperthermia susceptibility and is considering elective gallbladder surgery."
+        },
+        {
+          "id": "profile.gs028d.anesthesia.b-documented-susceptibility.male.29",
+          "prototypeDemographics": {
+            "ageYears": 29,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 29-year-old man, has specialist documentation of malignant-hyperthermia susceptibility and is considering elective gallbladder surgery."
+        },
+        {
+          "id": "profile.gs028d.anesthesia.b-documented-susceptibility.female.52",
+          "prototypeDemographics": {
+            "ageYears": 52,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 52-year-old woman, has specialist documentation of malignant-hyperthermia susceptibility and is considering elective gallbladder surgery."
+        },
+        {
+          "id": "profile.gs028d.anesthesia.b-documented-susceptibility.male.52",
+          "prototypeDemographics": {
+            "ageYears": 52,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 52-year-old man, has specialist documentation of malignant-hyperthermia susceptibility and is considering elective gallbladder surgery."
+        }
+      ],
+      "tutorialEligible": false,
+      "routineEligible": true,
+      "earliestFacilityStage": 0,
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "rewardTierId": "reward.clinic_basic",
+      "sourceLabels": [
+        "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+        "JSA guideline for management of malignant hyperthermia in 2025",
+        "Perioperative Management of MH Suspected or Susceptible Patients"
+      ],
+      "decisionNodes": [
+        {
+          "id": "node.gs028d.anesthesia.b-documented-susceptibility.1",
+          "questionVariantId": "question.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan.v1",
+          "primaryConceptId": "concept.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan",
+          "stem": "What is the appropriate preoperative plan?",
+          "answerChoices": [
+            {
+              "id": "correct_1",
+              "label": "Plan trigger-free anesthesia",
+              "isCorrect": true,
+              "serviceRequest": null
+            },
+            {
+              "id": "d1_1",
+              "label": "Use routine anesthetic without disclosure",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "d2_1",
+              "label": "Administer a test anesthetic in clinic",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "d3_1",
+              "label": "Cancel all future surgery permanently",
+              "isCorrect": false,
+              "serviceRequest": null
+            }
+          ],
+          "shuffleAnswers": true,
+          "explanation": "Coordinate a trigger-free anaesthetic in an appropriately prepared hospital setting.",
+          "sourceLabels": [
+            "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+            "JSA guideline for management of malignant hyperthermia in 2025",
+            "Perioperative Management of MH Suspected or Susceptible Patients"
+          ],
+          "resultGateAfter": null,
+          "terminalDispositions": [
+            {
+              "answerChoiceId": "d1_1",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The encounter recorded “Use routine anesthetic without disclosure.”",
+              "clinicalRationale": "Coordinate a trigger-free anaesthetic in an appropriately prepared hospital setting.",
+              "sourceLabels": [
+                "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+                "JSA guideline for management of malignant hyperthermia in 2025",
+                "Perioperative Management of MH Suspected or Susceptible Patients"
+              ]
+            },
+            {
+              "answerChoiceId": "d2_1",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The encounter recorded “Administer a test anesthetic in clinic.”",
+              "clinicalRationale": "Coordinate a trigger-free anaesthetic in an appropriately prepared hospital setting.",
+              "sourceLabels": [
+                "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+                "JSA guideline for management of malignant hyperthermia in 2025",
+                "Perioperative Management of MH Suspected or Susceptible Patients"
+              ]
+            },
+            {
+              "answerChoiceId": "d3_1",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The encounter recorded “Cancel all future surgery permanently.”",
+              "clinicalRationale": "Coordinate a trigger-free anaesthetic in an appropriately prepared hospital setting.",
+              "sourceLabels": [
+                "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+                "JSA guideline for management of malignant hyperthermia in 2025",
+                "Perioperative Management of MH Suspected or Susceptible Patients"
+              ]
+            }
+          ]
+        }
+      ],
+      "learningSummary": "Coordinate a trigger-free anaesthetic in an appropriately prepared hospital setting."
+    },
+    {
+      "id": "case.gs028d.anesthesia.b-family-testing-record",
+      "displayName": "Preanesthetic planning",
+      "patientPresentationVariantId": "presentation.gs028d.anesthesia.b-family-testing-record",
+      "releasePointId": "release.l0.clinic_evaluation",
+      "patientDisplayName": "{patientName}",
+      "prototypeDemographics": {
+        "ageYears": 35,
+        "sexLabel": "Female"
+      },
+      "prototypeVitalSigns": {
+        "heartRateBpm": 76,
+        "systolicBloodPressureMmHg": 118,
+        "diastolicBloodPressureMmHg": 74,
+        "temperatureF": 98.4,
+        "oxygenSaturationPercent": 99
+      },
+      "chiefComplaint": "Family MH history",
+      "presentation": "{patientName}, a 35-year-old woman, has a credible family malignant-hyperthermia history and a genetics service record identifying susceptibility before planned colectomy.",
+      "approvedInstantiationProfiles": [
+        {
+          "id": "profile.gs028d.anesthesia.b-family-testing-record.female.35",
+          "prototypeDemographics": {
+            "ageYears": 35,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 35-year-old woman, has a credible family malignant-hyperthermia history and a genetics service record identifying susceptibility before planned colectomy."
+        },
+        {
+          "id": "profile.gs028d.anesthesia.b-family-testing-record.male.35",
+          "prototypeDemographics": {
+            "ageYears": 35,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 35-year-old man, has a credible family malignant-hyperthermia history and a genetics service record identifying susceptibility before planned colectomy."
+        },
+        {
+          "id": "profile.gs028d.anesthesia.b-family-testing-record.female.60",
+          "prototypeDemographics": {
+            "ageYears": 60,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 60-year-old woman, has a credible family malignant-hyperthermia history and a genetics service record identifying susceptibility before planned colectomy."
+        },
+        {
+          "id": "profile.gs028d.anesthesia.b-family-testing-record.male.60",
+          "prototypeDemographics": {
+            "ageYears": 60,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 60-year-old man, has a credible family malignant-hyperthermia history and a genetics service record identifying susceptibility before planned colectomy."
+        }
+      ],
+      "tutorialEligible": false,
+      "routineEligible": true,
+      "earliestFacilityStage": 0,
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "rewardTierId": "reward.clinic_basic",
+      "sourceLabels": [
+        "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+        "JSA guideline for management of malignant hyperthermia in 2025",
+        "Perioperative Management of MH Suspected or Susceptible Patients"
+      ],
+      "decisionNodes": [
+        {
+          "id": "node.gs028d.anesthesia.b-family-testing-record.1",
+          "questionVariantId": "question.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan.v2",
+          "primaryConceptId": "concept.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan",
+          "stem": "Which action best incorporates this information into surgical planning?",
+          "answerChoices": [
+            {
+              "id": "correct_2",
+              "label": "Request trigger-free planning",
+              "isCorrect": true,
+              "serviceRequest": null
+            },
+            {
+              "id": "d1_2",
+              "label": "Ignore family-linked documentation",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "d2_2",
+              "label": "Select a trigger-containing anesthetic",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "d3_2",
+              "label": "Give crisis medication in clinic now",
+              "isCorrect": false,
+              "serviceRequest": null
+            }
+          ],
+          "shuffleAnswers": true,
+          "explanation": "The clinic's role is to communicate and arrange an appropriate anesthetic setting, not administer anesthesia.",
+          "sourceLabels": [
+            "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+            "JSA guideline for management of malignant hyperthermia in 2025",
+            "Perioperative Management of MH Suspected or Susceptible Patients"
+          ],
+          "resultGateAfter": null,
+          "terminalDispositions": [
+            {
+              "answerChoiceId": "d1_2",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The encounter recorded “Ignore family-linked documentation.”",
+              "clinicalRationale": "The clinic's role is to communicate and arrange an appropriate anesthetic setting, not administer anesthesia.",
+              "sourceLabels": [
+                "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+                "JSA guideline for management of malignant hyperthermia in 2025",
+                "Perioperative Management of MH Suspected or Susceptible Patients"
+              ]
+            },
+            {
+              "answerChoiceId": "d2_2",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The encounter recorded “Select a trigger-containing anesthetic.”",
+              "clinicalRationale": "The clinic's role is to communicate and arrange an appropriate anesthetic setting, not administer anesthesia.",
+              "sourceLabels": [
+                "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+                "JSA guideline for management of malignant hyperthermia in 2025",
+                "Perioperative Management of MH Suspected or Susceptible Patients"
+              ]
+            },
+            {
+              "answerChoiceId": "d3_2",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The encounter recorded “Give crisis medication in clinic now.”",
+              "clinicalRationale": "The clinic's role is to communicate and arrange an appropriate anesthetic setting, not administer anesthesia.",
+              "sourceLabels": [
+                "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+                "JSA guideline for management of malignant hyperthermia in 2025",
+                "Perioperative Management of MH Suspected or Susceptible Patients"
+              ]
+            }
+          ]
+        }
+      ],
+      "learningSummary": "The clinic's role is to communicate and arrange an appropriate anesthetic setting, not administer anesthesia."
+    },
+    {
+      "id": "case.gs028d.anesthesia.b-mh-alert-bracelet",
+      "displayName": "Preanesthetic planning",
+      "patientPresentationVariantId": "presentation.gs028d.anesthesia.b-mh-alert-bracelet",
+      "releasePointId": "release.l0.clinic_evaluation",
+      "patientDisplayName": "{patientName}",
+      "prototypeDemographics": {
+        "ageYears": 32,
+        "sexLabel": "Female"
+      },
+      "prototypeVitalSigns": {
+        "heartRateBpm": 76,
+        "systolicBloodPressureMmHg": 118,
+        "diastolicBloodPressureMmHg": 74,
+        "temperatureF": 98.4,
+        "oxygenSaturationPercent": 99
+      },
+      "chiefComplaint": "Anesthesia alert review",
+      "presentation": "{patientName}, a 32-year-old woman, wears an MH alert bracelet and provides the confirming specialist record while discussing elective surgery.",
+      "approvedInstantiationProfiles": [
+        {
+          "id": "profile.gs028d.anesthesia.b-mh-alert-bracelet.female.32",
+          "prototypeDemographics": {
+            "ageYears": 32,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 32-year-old woman, wears an MH alert bracelet and provides the confirming specialist record while discussing elective surgery."
+        },
+        {
+          "id": "profile.gs028d.anesthesia.b-mh-alert-bracelet.male.32",
+          "prototypeDemographics": {
+            "ageYears": 32,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 32-year-old man, wears an MH alert bracelet and provides the confirming specialist record while discussing elective surgery."
+        },
+        {
+          "id": "profile.gs028d.anesthesia.b-mh-alert-bracelet.female.57",
+          "prototypeDemographics": {
+            "ageYears": 57,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 57-year-old woman, wears an MH alert bracelet and provides the confirming specialist record while discussing elective surgery."
+        },
+        {
+          "id": "profile.gs028d.anesthesia.b-mh-alert-bracelet.male.57",
+          "prototypeDemographics": {
+            "ageYears": 57,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 57-year-old man, wears an MH alert bracelet and provides the confirming specialist record while discussing elective surgery."
+        }
+      ],
+      "tutorialEligible": false,
+      "routineEligible": true,
+      "earliestFacilityStage": 0,
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "rewardTierId": "reward.clinic_basic",
+      "sourceLabels": [
+        "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+        "JSA guideline for management of malignant hyperthermia in 2025",
+        "Perioperative Management of MH Suspected or Susceptible Patients"
+      ],
+      "decisionNodes": [
+        {
+          "id": "node.gs028d.anesthesia.b-mh-alert-bracelet.1",
+          "questionVariantId": "question.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan.v4",
+          "primaryConceptId": "concept.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan",
+          "stem": "Which referral message is most important?",
+          "answerChoices": [
+            {
+              "id": "correct_4",
+              "label": "MH requires trigger-free planning",
+              "isCorrect": true,
+              "serviceRequest": null
+            },
+            {
+              "id": "d1_4",
+              "label": "Bracelet alone determines drug dose",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "d2_4",
+              "label": "Routine anesthesia needs no change",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "d3_4",
+              "label": "Clinic can manage an MH crisis",
+              "isCorrect": false,
+              "serviceRequest": null
+            }
+          ],
+          "shuffleAnswers": true,
+          "explanation": "Transmit the verified susceptibility and request trigger-free, prepared-facility planning.",
+          "sourceLabels": [
+            "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+            "JSA guideline for management of malignant hyperthermia in 2025",
+            "Perioperative Management of MH Suspected or Susceptible Patients"
+          ],
+          "resultGateAfter": null,
+          "terminalDispositions": [
+            {
+              "answerChoiceId": "d1_4",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The encounter recorded “Bracelet alone determines drug dose.”",
+              "clinicalRationale": "Transmit the verified susceptibility and request trigger-free, prepared-facility planning.",
+              "sourceLabels": [
+                "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+                "JSA guideline for management of malignant hyperthermia in 2025",
+                "Perioperative Management of MH Suspected or Susceptible Patients"
+              ]
+            },
+            {
+              "answerChoiceId": "d2_4",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The encounter recorded “Routine anesthesia needs no change.”",
+              "clinicalRationale": "Transmit the verified susceptibility and request trigger-free, prepared-facility planning.",
+              "sourceLabels": [
+                "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+                "JSA guideline for management of malignant hyperthermia in 2025",
+                "Perioperative Management of MH Suspected or Susceptible Patients"
+              ]
+            },
+            {
+              "answerChoiceId": "d3_4",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The encounter recorded “Clinic can manage an MH crisis.”",
+              "clinicalRationale": "Transmit the verified susceptibility and request trigger-free, prepared-facility planning.",
+              "sourceLabels": [
+                "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+                "JSA guideline for management of malignant hyperthermia in 2025",
+                "Perioperative Management of MH Suspected or Susceptible Patients"
+              ]
+            }
+          ]
+        }
+      ],
+      "learningSummary": "Transmit the verified susceptibility and request trigger-free, prepared-facility planning."
+    },
+    {
+      "id": "case.gs028d.anesthesia.b-prior-mh-event",
+      "displayName": "Preanesthetic planning",
+      "patientPresentationVariantId": "presentation.gs028d.anesthesia.b-prior-mh-event",
+      "releasePointId": "release.l0.clinic_evaluation",
+      "patientDisplayName": "{patientName}",
+      "prototypeDemographics": {
+        "ageYears": 41,
+        "sexLabel": "Female"
+      },
+      "prototypeVitalSigns": {
+        "heartRateBpm": 76,
+        "systolicBloodPressureMmHg": 118,
+        "diastolicBloodPressureMmHg": 74,
+        "temperatureF": 98.4,
+        "oxygenSaturationPercent": 99
+      },
+      "chiefComplaint": "Prior anesthesia reaction",
+      "presentation": "{patientName}, a 41-year-old woman, has a prior specialist-reviewed anesthetic record confirming malignant-hyperthermia susceptibility and now needs another operation.",
+      "approvedInstantiationProfiles": [
+        {
+          "id": "profile.gs028d.anesthesia.b-prior-mh-event.female.41",
+          "prototypeDemographics": {
+            "ageYears": 41,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 41-year-old woman, has a prior specialist-reviewed anesthetic record confirming malignant-hyperthermia susceptibility and now needs another operation."
+        },
+        {
+          "id": "profile.gs028d.anesthesia.b-prior-mh-event.male.41",
+          "prototypeDemographics": {
+            "ageYears": 41,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 41-year-old man, has a prior specialist-reviewed anesthetic record confirming malignant-hyperthermia susceptibility and now needs another operation."
+        },
+        {
+          "id": "profile.gs028d.anesthesia.b-prior-mh-event.female.66",
+          "prototypeDemographics": {
+            "ageYears": 66,
+            "sexLabel": "Female"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 66-year-old woman, has a prior specialist-reviewed anesthetic record confirming malignant-hyperthermia susceptibility and now needs another operation."
+        },
+        {
+          "id": "profile.gs028d.anesthesia.b-prior-mh-event.male.66",
+          "prototypeDemographics": {
+            "ageYears": 66,
+            "sexLabel": "Male"
+          },
+          "prototypeVitalSigns": {
+            "heartRateBpm": 76,
+            "systolicBloodPressureMmHg": 118,
+            "diastolicBloodPressureMmHg": 74,
+            "temperatureF": 98.4,
+            "oxygenSaturationPercent": 99
+          },
+          "presentation": "{patientName}, a 66-year-old man, has a prior specialist-reviewed anesthetic record confirming malignant-hyperthermia susceptibility and now needs another operation."
+        }
+      ],
+      "tutorialEligible": false,
+      "routineEligible": true,
+      "earliestFacilityStage": 0,
+      "requiredClinicalSetting": "clinic",
+      "requiredCapabilityIds": [],
+      "rewardTierId": "reward.clinic_basic",
+      "sourceLabels": [
+        "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+        "JSA guideline for management of malignant hyperthermia in 2025",
+        "Perioperative Management of MH Suspected or Susceptible Patients"
+      ],
+      "decisionNodes": [
+        {
+          "id": "node.gs028d.anesthesia.b-prior-mh-event.1",
+          "questionVariantId": "question.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan.v3",
+          "primaryConceptId": "concept.malignant-hyperthermia-susceptibility.trigger-free-anesthesia-plan",
+          "stem": "What should be established before scheduling the new procedure?",
+          "answerChoices": [
+            {
+              "id": "correct_3",
+              "label": "A trigger-free plan",
+              "isCorrect": true,
+              "serviceRequest": null
+            },
+            {
+              "id": "d1_3",
+              "label": "A routine outpatient anesthetic plan",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "d2_3",
+              "label": "A clinic challenge with anesthetic gas",
+              "isCorrect": false,
+              "serviceRequest": null
+            },
+            {
+              "id": "d3_3",
+              "label": "No anesthesiology review",
+              "isCorrect": false,
+              "serviceRequest": null
+            }
+          ],
+          "shuffleAnswers": true,
+          "explanation": "Known susceptibility should be visible to the anesthesiology and facility teams before the procedure.",
+          "sourceLabels": [
+            "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+            "JSA guideline for management of malignant hyperthermia in 2025",
+            "Perioperative Management of MH Suspected or Susceptible Patients"
+          ],
+          "resultGateAfter": null,
+          "terminalDispositions": [
+            {
+              "answerChoiceId": "d1_3",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The encounter recorded “A routine outpatient anesthetic plan.”",
+              "clinicalRationale": "Known susceptibility should be visible to the anesthesiology and facility teams before the procedure.",
+              "sourceLabels": [
+                "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+                "JSA guideline for management of malignant hyperthermia in 2025",
+                "Perioperative Management of MH Suspected or Susceptible Patients"
+              ]
+            },
+            {
+              "answerChoiceId": "d2_3",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The encounter recorded “A clinic challenge with anesthetic gas.”",
+              "clinicalRationale": "Known susceptibility should be visible to the anesthesiology and facility teams before the procedure.",
+              "sourceLabels": [
+                "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+                "JSA guideline for management of malignant hyperthermia in 2025",
+                "Perioperative Management of MH Suspected or Susceptible Patients"
+              ]
+            },
+            {
+              "answerChoiceId": "d3_3",
+              "kind": "no_terminal_outcome",
+              "consequenceNarrative": "The encounter recorded “No anesthesiology review.”",
+              "clinicalRationale": "Known susceptibility should be visible to the anesthesiology and facility teams before the procedure.",
+              "sourceLabels": [
+                "SASM Guidelines on Preoperative Screening and Assessment of Adult Patients With OSA",
+                "JSA guideline for management of malignant hyperthermia in 2025",
+                "Perioperative Management of MH Suspected or Susceptible Patients"
+              ]
+            }
+          ]
+        }
+      ],
+      "learningSummary": "Known susceptibility should be visible to the anesthesiology and facility teams before the procedure."
+    }
+  ]
+}

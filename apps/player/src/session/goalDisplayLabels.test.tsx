@@ -1,6 +1,8 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { createInitialGameState, getFacilityProgressionStatus, serializeGameState } from "@gamify-surgery/game-domain";
+import { createInitialGameState, deserializeGameState, getFacilityProgressionStatus, serializeGameState } from "@gamify-surgery/game-domain";
+import { createLevelFiveStateQaContext, createLevelFiveStateQaState } from "../../../../tests/fixtures/level-five-state";
+import { setLevelFiveQaCompletedEncounters } from "../../../../tests/fixtures/level-five-progression";
 import { GoalList } from "../ui/GoalList";
 import { withGoalDisplayLabel } from "./goalDisplayLabels";
 import { createPrototypePlayerView } from "./viewModels";
@@ -11,10 +13,25 @@ const labelsByLevel = [
   ["Clinical XP", "Satisfaction above 90%", "First endoscopy"],
   ["Clinical XP", "Satisfaction above 90%", "Hire Pharmacist", "First ambulatory operation"],
   ["Clinical XP", "Recent patient satisfaction", "APP in an operating room", "Pediatric visit with parent", "Wound/ostomy visit"],
-  ["Current-level Clinical XP", "Rating after 330 encounters", "Average staff morale ≥85"],
+  ["Current-level Clinical XP", "Rating after 390 encounters", "Average staff morale ≥85"],
 ];
 
 describe("player-only goal display labels", () => {
+  it("shows the earned 330-encounter label on an old save and 390 for a current campaign", () => {
+    const context = createLevelFiveStateQaContext();
+    const state = createLevelFiveStateQaState("pre-goal", context);
+    state.lateProgression = {version: "late-progression.v2", preservedClinicalXpGoal: null, preservedCompletedEncounterGoal: null};
+    setLevelFiveQaCompletedEncounters(state, 330);
+    const current = createPrototypePlayerView(state, null, false, null).progression.goals.find(goal => goal.id === "progression.satisfaction")!;
+    expect(current).toMatchObject({complete: false, label: "Recent patient satisfaction above 90% after 390 completed encounters",
+      displayLabel: "Rating after 390 encounters"});
+    state.lateProgression = {version: "late-progression.v1", preservedClinicalXpGoal: null};
+    const loaded = deserializeGameState(serializeGameState(state), context);
+    const prior = createPrototypePlayerView(loaded, null, false, null).progression.goals.find(goal => goal.id === "progression.satisfaction")!;
+    expect(prior).toMatchObject({complete: true, label: "Recent patient satisfaction above 90% after 330 completed encounters",
+      displayLabel: "Rating after 330 encounters"});
+  });
+
   it.each([0, 1, 2, 3, 4, 5] as const)("reviews every Level %s goal, preserves full requirements and leaves the serialized game unchanged", level => {
     const state = createInitialGameState(); state.facilityLevel = level;
     const before = serializeGameState(state);

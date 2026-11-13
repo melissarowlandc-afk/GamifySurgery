@@ -8,7 +8,7 @@ export const LEVEL_FIVE_STAGE_DEFINITION = facilityStageDefinitionSchema.parse({
   minimumClinicalXp: 2300,
   // Editorial clinic-volume requirement for an established satisfaction record.
   // Completed encounters advance once regardless of their scored-node count.
-  minimumCompletedEncounters: 330,
+  minimumCompletedEncounters: 390,
   satisfactionMustBeGreaterThan: 90,
   minimumAverageStaffMorale: 85,
   requiredRoomDefinitionIds: [],

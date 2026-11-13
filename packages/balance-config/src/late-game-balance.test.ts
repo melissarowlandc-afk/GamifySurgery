@@ -8,8 +8,8 @@ describe("November11 editorial late-game purchase curves", () => {
   it("preserves early builds, low tiers, running costs and rewards with explicit late progression goals", () => {
     expect(balance.clinicalSettlement).toEqual(before.clinicalSettlement);
     expect(balance.facility.stageDefinitions).toEqual(before.progression.map(stage => ({
-      ...stage, minimumClinicalXp: ({ 3: 550, 4: 790, 5: 2300 } as Record<number, number>)[stage.level] ?? stage.minimumClinicalXp,
-      minimumCompletedEncounters: stage.level === 5 ? 330 : stage.minimumCompletedEncounters,
+      ...stage, minimumClinicalXp: ({ 3: 550, 4: 870, 5: 2300 } as Record<number, number>)[stage.level] ?? stage.minimumClinicalXp,
+      minimumCompletedEncounters: stage.level === 5 ? 390 : stage.minimumCompletedEncounters,
     })));
     for (const room of balance.facility.roomDefinitions) {
       const old = before.rooms[room.id as keyof typeof before.rooms];
@@ -49,12 +49,14 @@ describe("November11 editorial late-game purchase curves", () => {
     for (const room of balance.facility.roomDefinitions) {
       const old = before.rooms[room.id as keyof typeof before.rooms];
       if (old.unlock < 4) continue;
-      expect(room.constructionCost, room.id).toBe(Math.round(old.construction * (old.unlock === 4 ? 1.15 : 1.2)));
+      const roundOne = Math.round(old.construction * (old.unlock === 4 ? 1.15 : 1.2));
+      expect(room.constructionCost, room.id).toBe(Math.round(roundOne * 1.1 / 10) * 10);
+      expect(room.constructionCost, room.id).toBeLessThanOrEqual(roundOne * 1.25);
     }
     expect(balance.facility.staffRoleDefinitions.find(r => r.id === "staff.app")!.hiringCost).toBe(690);
     expect(balance.facility.staffRoleDefinitions.find(r => r.id === "staff.executive")!.hiringCost).toBe(720);
     const minimumSpecialtySetup = ["room.pediatric_waiting", "room.pediatric_examination", "room.wound_ostomy"]
       .reduce((sum, id) => sum + balance.facility.roomDefinitions.find(r => r.id === id)!.constructionCost, 0) + 2 * 690;
-    expect(minimumSpecialtySetup).toBe(3910);
+    expect(minimumSpecialtySetup).toBe(4170);
   });
 });

@@ -22,7 +22,18 @@ export const CLOUD_JSON_LIMITS = Object.freeze({
 });
 
 export function utf8Bytes(text: string): number {
-  return new TextEncoder().encode(text).byteLength;
+  // TextEncoder's replacement for a lone surrogate is three bytes. Count the
+  // same UTF-8 representation without allocating a temporary buffer for every
+  // key/string/size check in a large verified snapshot.
+  let bytes = text.length;
+  for (let i = 0; i < text.length; i++) {
+    const code = text.charCodeAt(i);
+    if (code < 0x80) continue;
+    if (code < 0x800) bytes++;
+    else if (code >= 0xd800 && code <= 0xdbff && text.charCodeAt(i + 1) >= 0xdc00 && text.charCodeAt(i + 1) <= 0xdfff) { bytes += 2; i++; }
+    else bytes += 2;
+  }
+  return bytes;
 }
 
 function validText(text: string): void {
@@ -40,6 +51,19 @@ function validText(text: string): void {
   }
 }
 
+const jsonNumber = /^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?/;
+const jsonWhitespace = /[\t\n\r ]/;
+const jsonLiterals = ["true", "false", "null"];
+function decimalToken(token: string): string {
+  const [mantissa = "", exponent = "0"] = token.toLowerCase().split("e");
+  const fractionLength = mantissa.includes(".") ? mantissa.length - mantissa.indexOf(".") - 1 : 0;
+  let digits = mantissa.replace(".", "").replace(/^(-?)0+/, "$1");
+  const trimmed = digits.replace(/0+$/, "");
+  const power = Number(exponent) - fractionLength + digits.length - trimmed.length;
+  digits = trimmed;
+  return digits === "" || digits === "-" ? "0" : `${digits}e${power}`;
+}
+
 /** Reject duplicate keys and unsafe numbers BEFORE JSON.parse can discard/round them. */
 export function parseCodecJson(text: string, recovery?: { allowUnsafeNumber(path: readonly (string | number)[]): boolean }): CodecJson {
   if (typeof text !== "string" || text.length > CLOUD_JSON_LIMITS.maxTextBytes ||
@@ -48,7 +72,7 @@ export function parseCodecJson(text: string, recovery?: { allowUnsafeNumber(path
   }
   validText(text);
   let offset = 0, nodes = 0;
-  const whitespace = () => { while (/[\t\n\r ]/.test(text[offset] ?? "x")) offset += 1; };
+  const whitespace = () => { while (jsonWhitespace.test(text[offset] ?? "x")) offset += 1; };
   const fail = (): never => { throw new CloudCodecError("invalid_json", "Malformed JSON text."); };
   const string = (): string => {
     const start = offset++;
@@ -76,7 +100,7 @@ export function parseCodecJson(text: string, recovery?: { allowUnsafeNumber(path
     const token = text[offset];
     if (token === '"') { string(); return; }
     if (token === "{" || token === "[") {
-      const object = token === "{", end = object ? "}" : "]", keys = new Set<string>();
+      const object = token === "{", end = object ? "}" : "]", keys = object ? new Set<string>() : null;
       let entries = 0;
       offset += 1;
       whitespace();
@@ -90,8 +114,8 @@ export function parseCodecJson(text: string, recovery?: { allowUnsafeNumber(path
           whitespace();
           if (text[offset] !== '"') return fail();
           key = string();
-          if (keys.has(key)) throw new CloudCodecError("duplicate_key", "Duplicate JSON object key.");
-          keys.add(key);
+          if (keys!.has(key)) throw new CloudCodecError("duplicate_key", "Duplicate JSON object key.");
+          keys!.add(key);
           whitespace();
           if (text[offset++] !== ":") return fail();
         }
@@ -103,25 +127,17 @@ export function parseCodecJson(text: string, recovery?: { allowUnsafeNumber(path
       }
       return fail();
     }
-    for (const literal of ["true", "false", "null"]) {
+    for (const literal of jsonLiterals) {
       if (text.startsWith(literal, offset)) { offset += literal.length; return; }
     }
-    const number = /^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?/.exec(text.slice(offset))?.[0];
+    const number = jsonNumber.exec(text.slice(offset))?.[0];
     if (!number) return fail();
     const parsed = Number(number);
     // Compare decimal values, not spelling: SQL may expand an exponent or keep
     // trailing zeroes, but it must not smuggle in a value JSON.parse would round.
-    const decimal = (token: string): string => {
-      const [mantissa = "", exponent = "0"] = token.toLowerCase().split("e");
-      const fractionLength = mantissa.includes(".") ? mantissa.length - mantissa.indexOf(".") - 1 : 0;
-      let digits = mantissa.replace(".", "").replace(/^(-?)0+/, "$1");
-      const trimmed = digits.replace(/0+$/, "");
-      const power = Number(exponent) - fractionLength + digits.length - trimmed.length;
-      digits = trimmed;
-      return digits === "" || digits === "-" ? "0" : `${digits}e${power}`;
-    };
+    const serialized = JSON.stringify(parsed);
     if (!Number.isFinite(parsed) || Number.isInteger(parsed) && !Number.isSafeInteger(parsed) || Object.is(parsed, -0) ||
-      decimal(number) !== decimal(JSON.stringify(parsed))) {
+      number !== serialized && decimalToken(number) !== decimalToken(serialized)) {
       if (!recovery?.allowUnsafeNumber(path)) throw new CloudCodecError("unsafe_number", "JSON number cannot round-trip safely through JavaScript and JSONB.");
     }
     offset += number.length;
@@ -157,10 +173,20 @@ export function changedTopLevelFields(left: CodecObject, right: CodecObject): st
 }
 
 export async function sha256Utf8(text: string): Promise<string> {
+  return sha256Bytes(checkedUtf8(text));
+}
+
+/** Owned canonical-text bytes may feed both hashing and compression. */
+export function checkedUtf8(text: string): Uint8Array<ArrayBuffer> {
   validText(text);
+  return new TextEncoder().encode(text);
+}
+
+/** Low-level byte hash; callers validate text before encoding it. */
+export async function sha256Bytes(bytes: Uint8Array<ArrayBuffer>): Promise<string> {
   if (!globalThis.crypto?.subtle) {
     throw new CloudCodecError("crypto_unavailable", "SHA-256 is unavailable; the save was not verified.");
   }
-  const hash = await globalThis.crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  const hash = await globalThis.crypto.subtle.digest("SHA-256", bytes);
   return Array.from(new Uint8Array(hash), byte => byte.toString(16).padStart(2, "0")).join("");
 }

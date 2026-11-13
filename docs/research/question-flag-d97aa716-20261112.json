@@ -1,0 +1,1048 @@
+[
+  {
+    "id": "D97-1",
+    "round": 2,
+    "title": "Thigh biopsy method and approach",
+    "flagId": "d97aa716",
+    "ownerNote": "This question is confusing using path A/B and region A/B",
+    "status": "draft_needs_independent_review",
+    "reviewStatus": "needs_clinician_review",
+    "clinicalApproval": false,
+    "sourceView": "flag-d97aa716-round2",
+    "caseId": "case.soft-tissue-mass.deep-thigh",
+    "nodeId": "node.soft-tissue-mass.deep-thigh.2",
+    "conceptId": "concept.soft-tissue-mass.specialist-planned-biopsy",
+    "conceptMeaningChanged": false,
+    "keyChanged": false,
+    "holdStatus": "none",
+    "withheldAssertion": null,
+    "before": {
+      "variantId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r5",
+      "Chief complaint": "Enlarging limb mass",
+      "Presentation": "{patientName}, a 39-year-old woman, visits the clinic with an enlarging extremity mass. Ultrasound places its superficial margin beneath the investing fascia, but cannot show the deep margin.",
+      "Current update": "MRI places the mass within rectus femoris. Two solid areas within the mass enhance after contrast.",
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Constructed MRI planning record",
+        "columnHeaders": [
+          "Anterior approach",
+          "Medial approach"
+        ],
+        "rowHeaders": [
+          "Needle route",
+          "Solid-tissue enhancement",
+          "Relative route length"
+        ],
+        "cells": [
+          [
+            "Anterior skin through rectus femoris",
+            "Medial skin through adductor muscle, then rectus femoris"
+          ],
+          [
+            "Present",
+            "More intense"
+          ],
+          [
+            "Longer",
+            "Shorter"
+          ]
+        ]
+      },
+      "Task": "Which initial tissue-sampling plan should the sarcoma team select for {patientName}?",
+      "Options": [
+        "**KEY:** Image-guided core biopsy with an anterior approach through rectus femoris",
+        "Image-guided core biopsy with a medial approach through adductor muscle",
+        "Open incisional biopsy with an anterior approach through rectus femoris",
+        "Open incisional biopsy with a medial approach through adductor muscle"
+      ]
+    },
+    "after": {
+      "variantId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r6",
+      "Chief complaint": "Enlarging limb mass",
+      "Presentation": "{patientName}, a 39-year-old woman, visits the clinic with an enlarging extremity mass. Ultrasound places its superficial margin beneath the investing fascia, but cannot show the deep margin.",
+      "Current update": "MRI places the mass within rectus femoris. Both enhancing solid targets can be sampled percutaneously. The proposed longitudinal anterior resection includes the anterior skin entry and underlying rectus femoris; adductor longus is outside the proposed specimen.",
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Constructed MRI and operative-planning record",
+        "columnHeaders": [
+          "Anterior approach",
+          "Medial approach"
+        ],
+        "rowHeaders": [
+          "Needle route",
+          "Solid-tissue enhancement",
+          "Relative route length"
+        ],
+        "cells": [
+          [
+            "Anterior skin through rectus femoris",
+            "Medial skin through adductor longus, then rectus femoris"
+          ],
+          [
+            "Present",
+            "More intense"
+          ],
+          [
+            "Longer",
+            "Shorter"
+          ]
+        ]
+      },
+      "Task": "Which initial tissue-sampling plan should the sarcoma team select for {patientName}’s thigh mass?",
+      "Options": [
+        "**KEY:** Image-guided core biopsy with an anterior approach through rectus femoris",
+        "Image-guided core biopsy with a medial approach through adductor longus",
+        "Open incisional biopsy with an anterior approach through rectus femoris",
+        "Open incisional biopsy with a medial approach through adductor longus"
+      ]
+    },
+    "originalLive": {
+      "variantId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r4",
+      "Presentation": "{patientName}, a 39-year-old woman, visits the clinic with an enlarging extremity mass. Ultrasound places its superficial margin beneath the investing fascia, but cannot show the deep margin.",
+      "Current update": "MRI places the mass within rectus femoris. Solid regions A and B both enhance; B enhances more intensely. Path A enters from the anterior skin through rectus femoris. The shorter path B enters from the medial skin, crosses adductor muscle and then reaches region B. Both regions can be sampled percutaneously.",
+      "Exhibit": null,
+      "Task": "Which initial tissue-sampling plan should the sarcoma team select for {patientName}?",
+      "Options": [
+        "**KEY:** Image-guided core biopsy of region A along path A",
+        "Image-guided core biopsy of region B along path B",
+        "Open incisional biopsy of region A along path A",
+        "Open incisional biopsy of region B along path B"
+      ]
+    },
+    "keyOrderNotice": "Key shown first for review only. Runtime answer choices are randomized.",
+    "rationalePairs": {
+      "before": [
+        {
+          "choiceId": "sarcoma_core_1",
+          "label": "Image-guided core biopsy with an anterior approach through rectus femoris",
+          "key": true,
+          "rationale": "Obtains diagnostic cores from viable tissue while keeping the planned tract within the tumor-bearing compartment."
+        },
+        {
+          "choiceId": "choice.qq20261102b.b19.d1",
+          "label": "Image-guided core biopsy with a medial approach through adductor muscle",
+          "key": false,
+          "rationale": "Selects the shorter route to the more intensely enhancing region but contaminates a separate muscle compartment."
+        },
+        {
+          "choiceId": "choice.qq20261102b.b19.d2",
+          "label": "Open incisional biopsy with an anterior approach through rectus femoris",
+          "key": false,
+          "rationale": "Uses the better tract but escalates to an open procedure before a feasible initial core approach has been attempted."
+        },
+        {
+          "choiceId": "choice.qq20261102b.b19.d3",
+          "label": "Open incisional biopsy with a medial approach through adductor muscle",
+          "key": false,
+          "rationale": "Combines premature open sampling with the path that traverses a separate muscle compartment."
+        }
+      ],
+      "after": [
+        {
+          "choiceId": "sarcoma_core_1",
+          "label": "Image-guided core biopsy with an anterior approach through rectus femoris",
+          "key": true,
+          "rationale": "Both targets enhance. An anterior core biopsy follows the proposed resection exposure: its skin entry and intramuscular tract lie within the proposed specimen. It also avoids crossing the separate medial compartment."
+        },
+        {
+          "choiceId": "choice.qq20261102b.b19.d1",
+          "label": "Image-guided core biopsy with a medial approach through adductor longus",
+          "key": false,
+          "rationale": "The shorter medial route reaches more intensely enhancing tissue, but crosses adductor longus outside the proposed specimen. That tract would not be removed with the currently planned specimen."
+        },
+        {
+          "choiceId": "choice.qq20261102b.b19.d2",
+          "label": "Open incisional biopsy with an anterior approach through rectus femoris",
+          "key": false,
+          "rationale": "The anterior skin entry and intramuscular tract are inside the proposed specimen, but an initial image-guided core is preferred when percutaneous sampling is feasible. Open incisional biopsy is a selected alternative, not the initial choice on these findings."
+        },
+        {
+          "choiceId": "choice.qq20261102b.b19.d3",
+          "label": "Open incisional biopsy with a medial approach through adductor longus",
+          "key": false,
+          "rationale": "This combines an open initial procedure despite feasible core access with a medial tract through adductor longus outside the proposed specimen."
+        }
+      ]
+    },
+    "explanation": "Choose image-guided core sampling through the anterior approach. Both targets enhance; the stronger enhancement and shorter medial route do not outweigh tract planning. The biopsy tract, including its skin entry, must be removable with the definitive specimen. The stated anterior resection includes that tract; staying in the tumor-bearing compartment by itself would not establish this. Feasible core sampling is the preferred initial method; selected cases may require open biopsy.",
+    "inference": "Interpret enhancing solid targets and the documented resection field, then combine tract removability with the preferred feasible initial biopsy method.",
+    "focus": "Initial core method plus tract removability under an explicitly documented resection plan",
+    "whatChanged": "Restore percutaneous access for both targets; state the proposed exposure and specimen relationship; explain removal of the entire tract with the specimen. Retain the balanced label-free option matrix, concept, key, choice identities and all preceding nodes. Replace generic adductor muscle with the specifically sourced adductor longus.",
+    "clinicalReviewBoundary": "Melissa Rowland and musculoskeletal radiology/sarcoma review must confirm the constructed access, specimen outline, skin entry and entire tract geometry. No clinician confirmation has occurred. General source guidance does not certify a safe operative trajectory.",
+    "reviewResponse": {
+      "reviewFile": "docs/research/question-flag-d97aa716-review-20261112.json",
+      "reviewSha256": "c96f476768352c75b96733c8cbf36e41b9ab1a108fdb2f7a18c5f02d7bdcbb09",
+      "priorVerdict": "REVISE",
+      "notes": [
+        {
+          "type": "fairness",
+          "noteIndex": 1,
+          "response": "Offline review scope and source limitations retained; no fresh retrieval or clinician approval is claimed."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 2,
+          "response": "Label-free routes retained; every medial-route field now specifies adductor longus."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 3,
+          "response": "Both enhancing targets are explicitly accessible percutaneously. The initial core key and selected-open alternative distinction are unchanged."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 4,
+          "response": "A constructed longitudinal anterior resection includes the anterior skin entry and underlying rectus femoris; the explanation requires tract removal with the specimen, separately from compartment confinement."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 5,
+          "response": "Both targets still enhance. Existing viable-target claim and older direct-technique limitation retained; duplicate publication IDs are not independent evidence."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 6,
+          "response": "Use the exact muscle supported by the existing adductor-longus claim. The source is not presented as certification of the constructed trajectory."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 7,
+          "response": "Balanced four-plan method-by-route matrix, unchanged choice identities and no uniquely long or cautious option."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 8,
+          "response": "Moderate application remains the author prediction; missing operative information is supplied rather than counted as difficulty."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 9,
+          "response": "The packet now displays the inherited three-word chief complaint and a complete thigh-specific task; all original profiles and presentation tokens are exact."
+        },
+        {
+          "type": "suggestion",
+          "noteIndex": 1,
+          "response": "Restored explicit percutaneous sampling access for both enhancing targets, without designating either route preferred in the case record."
+        },
+        {
+          "type": "suggestion",
+          "noteIndex": 2,
+          "response": "Added a constructed resection exposure and specimen outline. Mapped the requirement to the existing tract-excision claim and explained complete tract removal. No clinician confirmation is falsely claimed; exact geometry remains the named clinical-review boundary."
+        },
+        {
+          "type": "suggestion",
+          "noteIndex": 3,
+          "response": "Changed generic adductor muscle to adductor longus in the exhibit, both medial options and feedback, using the existing exact anatomical claim. Human confirmation of this fictional route remains pending."
+        },
+        {
+          "type": "suggestion",
+          "noteIndex": 4,
+          "response": "Retained the table, enhancing targets, full balanced matrix and concept; added chief complaint to both packet projections. All versions remain needs_clinician_review."
+        }
+      ]
+    },
+    "selfCheck": {
+      "independent": false,
+      "clinicalApproval": false,
+      "authorVerdict": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "coverTheKey": "Each method occurs with each approach. The documented specimen relation narrows the route, not the method; the player must also apply feasible initial-core guidance.",
+      "optionCategory": "Four initial biopsy plans in a complete method-by-approach matrix.",
+      "reasoningSteps": [
+        "Interpret enhancing targets and each route relative to the stated resection specimen.",
+        "Combine a removable planned tract with the preferred feasible initial sampling method."
+      ],
+      "decidingObservation": "The anterior skin entry and underlying rectus femoris are inside the proposed specimen; the medial route traverses adductor longus outside it. Both solid targets enhance and are accessible percutaneously.",
+      "closestCredibleError": "Core sampling through the shorter medial route to more intensely enhancing tissue.",
+      "counterfactual": "If the proposed resection instead included the medial entry and entire medial tract while the anterior tract lay outside it, and neither route crossed an unaffected compartment, the tract ranking could change. Same-compartment access alone never proves removability.",
+      "predictedDifficulty": "moderate",
+      "fairness": "Both targets enhance and are accessible percutaneously. The selected entire tract is included in the constructed resection plan; no same-compartment inference substitutes for this. Human confirmation is pending.",
+      "sourceClosure": "Existing exact muscle-membership claims retained; adductor longus is used precisely.",
+      "originalOwnerNoteResolved": true
+    },
+    "evidenceClaimIds": [
+      "claim.soft-tissue-mass.planned-biopsy",
+      "claim.soft-tissue-mass.mri",
+      "claim.qq20261102a.sarcoma-viable-biopsy-target",
+      "claim.qq20261102b.sarcoma-method-and-tract",
+      "claim.qq20261102b.sarcoma-initial-core-method",
+      "claim.qq20261102b.rectus-anterior-compartment",
+      "claim.qq20261102b.adductor-medial-compartment",
+      "claim.question-topic-soft-tissue-sarcoma-desmoid.tract-excision"
+    ],
+    "evidenceMapping": [
+      {
+        "fields": [
+          "Presentation",
+          "Chief complaint",
+          "Current update: mass location",
+          "Exhibit: needle routes"
+        ],
+        "type": "Retained constructed patient/MRI observations; the thigh medial muscle is made specific to its existing claim",
+        "sourceCaseSha256": "207358f9a1c29521814e8fee4810fe63d4c1fbcdd191b8e062c4c38170ca54b5",
+        "claimIds": [
+          "claim.soft-tissue-mass.planned-biopsy",
+          "claim.soft-tissue-mass.mri",
+          "claim.qq20261102b.rectus-anterior-compartment",
+          "claim.qq20261102b.adductor-medial-compartment"
+        ]
+      },
+      {
+        "fields": [
+          "Current update: percutaneous access",
+          "Options: method",
+          "Rationales",
+          "Explanation: initial method"
+        ],
+        "type": "Constructed access observation with the existing feasible-initial-core rule",
+        "claimIds": [
+          "claim.soft-tissue-mass.planned-biopsy",
+          "claim.qq20261102b.sarcoma-initial-core-method"
+        ]
+      },
+      {
+        "fields": [
+          "Current update: proposed resection",
+          "Rationales: tract/specimen relation",
+          "Explanation: tract excision"
+        ],
+        "type": "New constructed planning observation; applying existing guidance, not new general anatomy or a certified operative plan",
+        "claimIds": [
+          "claim.question-topic-soft-tissue-sarcoma-desmoid.tract-excision"
+        ]
+      },
+      {
+        "fields": [
+          "Current update: enhancing solid targets",
+          "Exhibit: enhancement",
+          "Rationales",
+          "Explanation: enhancement"
+        ],
+        "type": "Existing viable-target principle; original enhancing-target observations retained",
+        "claimIds": [
+          "claim.qq20261102a.sarcoma-viable-biopsy-target"
+        ]
+      }
+    ],
+    "lint": {
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 5,
+      "suppressedFindings": 0
+    },
+    "frozenPreservation": {
+      "originalLiveCaseSha256": "207358f9a1c29521814e8fee4810fe63d4c1fbcdd191b8e062c4c38170ca54b5",
+      "beforeCaseSha256": "7fbceb21ae6692192411945227e413f95284e48583a5f322ffc739b5be929dfa",
+      "afterCaseSha256": "1c33772f358c0b405babee1a5f89029d84e29c667edffd0342c35bbff11977e5",
+      "beforeNodeSha256": "42c6dc8cf9a5d7fbb50fc88fb009d8d47808b42444218a0c7e27c92f1e738c40",
+      "afterNodeSha256": "5723e3a483e68d76bd708c2343aeaedb6c422e568e36ffcd2e085de74b03712c",
+      "afterQuestionSha256": "711ee5967367ca9784bf614ab7cf5a2363d1770e3bfe58cba8a6fc752f6f1de6"
+    },
+    "currentFreshReachability": {
+      "issue": null,
+      "receipt": {
+        "operationId": "flag.d97aa716.admit.0",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "admittedVariantIds": [
+        "question.soft-tissue-mass.extremity-mri.v1.r8",
+        "question.soft-tissue-mass.specialist-planned-biopsy.v1.r4"
+      ]
+    },
+    "fallbackQuestionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v1.r4"
+  },
+  {
+    "id": "D97-2",
+    "round": 2,
+    "title": "Upper-arm biopsy method and approach",
+    "flagId": "d97aa716",
+    "ownerNote": "This question is confusing using path A/B and region A/B",
+    "status": "draft_needs_independent_review",
+    "reviewStatus": "needs_clinician_review",
+    "clinicalApproval": false,
+    "sourceView": "flag-d97aa716-round2",
+    "caseId": "case.soft-tissue-mass.upper-arm",
+    "nodeId": "node.soft-tissue-mass.upper-arm.2",
+    "conceptId": "concept.soft-tissue-mass.specialist-planned-biopsy",
+    "conceptMeaningChanged": false,
+    "keyChanged": false,
+    "holdStatus": "none",
+    "withheldAssertion": null,
+    "before": {
+      "variantId": "question.soft-tissue-mass.specialist-planned-biopsy.v2.r5",
+      "Chief complaint": "Enlarging limb mass",
+      "Presentation": "{patientName}, a 52-year-old woman, visits the clinic with an enlarging extremity mass. Ultrasound places its superficial margin beneath the investing fascia, but cannot show the deep margin.",
+      "Current update": "MRI places the mass within triceps. Two solid areas within the mass enhance after contrast.",
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Constructed MRI planning record",
+        "columnHeaders": [
+          "Posterior approach",
+          "Anterior approach"
+        ],
+        "rowHeaders": [
+          "Needle route",
+          "Solid-tissue enhancement",
+          "Relative route length"
+        ],
+        "cells": [
+          [
+            "Posterior skin through triceps",
+            "Anterior skin through biceps, then triceps"
+          ],
+          [
+            "Present",
+            "More intense"
+          ],
+          [
+            "Longer",
+            "Shorter"
+          ]
+        ]
+      },
+      "Task": "Which initial tissue-sampling plan should the sarcoma team select for {patientName}?",
+      "Options": [
+        "**KEY:** Image-guided core biopsy with a posterior approach through triceps",
+        "Image-guided core biopsy with an anterior approach through biceps",
+        "Open incisional biopsy with a posterior approach through triceps",
+        "Open incisional biopsy with an anterior approach through biceps"
+      ]
+    },
+    "after": {
+      "variantId": "question.soft-tissue-mass.specialist-planned-biopsy.v2.r6",
+      "Chief complaint": "Enlarging limb mass",
+      "Presentation": "{patientName}, a 52-year-old woman, visits the clinic with an enlarging extremity mass. Ultrasound places its superficial margin beneath the investing fascia, but cannot show the deep margin.",
+      "Current update": "MRI places the mass within triceps. Both enhancing solid targets can be sampled percutaneously. The proposed longitudinal posterior resection includes the posterior skin entry and underlying triceps; biceps is outside the proposed specimen.",
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Constructed MRI and operative-planning record",
+        "columnHeaders": [
+          "Posterior approach",
+          "Anterior approach"
+        ],
+        "rowHeaders": [
+          "Needle route",
+          "Solid-tissue enhancement",
+          "Relative route length"
+        ],
+        "cells": [
+          [
+            "Posterior skin through triceps",
+            "Anterior skin through biceps, then triceps"
+          ],
+          [
+            "Present",
+            "More intense"
+          ],
+          [
+            "Longer",
+            "Shorter"
+          ]
+        ]
+      },
+      "Task": "Which initial tissue-sampling plan should the sarcoma team select for {patientName}’s upper-arm mass?",
+      "Options": [
+        "**KEY:** Image-guided core biopsy with a posterior approach through triceps",
+        "Image-guided core biopsy with an anterior approach through biceps",
+        "Open incisional biopsy with a posterior approach through triceps",
+        "Open incisional biopsy with an anterior approach through biceps"
+      ]
+    },
+    "originalLive": {
+      "variantId": "question.soft-tissue-mass.specialist-planned-biopsy.v2.r4",
+      "Presentation": "{patientName}, a 52-year-old woman, visits the clinic with an enlarging extremity mass. Ultrasound places its superficial margin beneath the investing fascia, but cannot show the deep margin.",
+      "Current update": "MRI places the mass within triceps. Solid regions A and B both enhance; A enhances more intensely. Path B enters from the posterior skin through triceps. The shorter path A enters from anterior skin, crosses biceps and then reaches region A. Both regions can be sampled percutaneously.",
+      "Exhibit": null,
+      "Task": "Which initial tissue-sampling plan should the sarcoma team select for {patientName}?",
+      "Options": [
+        "**KEY:** Image-guided core biopsy of region B along path B",
+        "Image-guided core biopsy of region A along path A",
+        "Open incisional biopsy of region B along path B",
+        "Open incisional biopsy of region A along path A"
+      ]
+    },
+    "keyOrderNotice": "Key shown first for review only. Runtime answer choices are randomized.",
+    "rationalePairs": {
+      "before": [
+        {
+          "choiceId": "sarcoma_core_2",
+          "label": "Image-guided core biopsy with a posterior approach through triceps",
+          "key": true,
+          "rationale": "Obtains diagnostic cores from viable tissue while keeping the planned tract within the tumor-bearing compartment."
+        },
+        {
+          "choiceId": "choice.qq20261102b.b20.d1",
+          "label": "Image-guided core biopsy with an anterior approach through biceps",
+          "key": false,
+          "rationale": "Selects the shorter route to the more intensely enhancing region but contaminates a separate muscle compartment."
+        },
+        {
+          "choiceId": "choice.qq20261102b.b20.d2",
+          "label": "Open incisional biopsy with a posterior approach through triceps",
+          "key": false,
+          "rationale": "Uses the better tract but escalates to an open procedure before a feasible initial core approach has been attempted."
+        },
+        {
+          "choiceId": "choice.qq20261102b.b20.d3",
+          "label": "Open incisional biopsy with an anterior approach through biceps",
+          "key": false,
+          "rationale": "Combines premature open sampling with the path that traverses a separate muscle compartment."
+        }
+      ],
+      "after": [
+        {
+          "choiceId": "sarcoma_core_2",
+          "label": "Image-guided core biopsy with a posterior approach through triceps",
+          "key": true,
+          "rationale": "Both targets enhance. A posterior core biopsy follows the proposed resection exposure: its skin entry and intramuscular tract lie within the proposed specimen. It also avoids crossing the separate anterior compartment."
+        },
+        {
+          "choiceId": "choice.qq20261102b.b20.d1",
+          "label": "Image-guided core biopsy with an anterior approach through biceps",
+          "key": false,
+          "rationale": "The shorter anterior route reaches more intensely enhancing tissue, but crosses biceps outside the proposed specimen. That tract would not be removed with the currently planned specimen."
+        },
+        {
+          "choiceId": "choice.qq20261102b.b20.d2",
+          "label": "Open incisional biopsy with a posterior approach through triceps",
+          "key": false,
+          "rationale": "The posterior skin entry and intramuscular tract are inside the proposed specimen, but an initial image-guided core is preferred when percutaneous sampling is feasible. Open incisional biopsy is a selected alternative, not the initial choice on these findings."
+        },
+        {
+          "choiceId": "choice.qq20261102b.b20.d3",
+          "label": "Open incisional biopsy with an anterior approach through biceps",
+          "key": false,
+          "rationale": "This combines an open initial procedure despite feasible core access with an anterior tract through biceps outside the proposed specimen."
+        }
+      ]
+    },
+    "explanation": "Choose image-guided core sampling through the posterior approach. Both targets enhance; the stronger enhancement and shorter anterior route do not outweigh tract planning. The biopsy tract, including its skin entry, must be removable with the definitive specimen. The stated posterior resection includes that tract; staying in the tumor-bearing compartment by itself would not establish this. Feasible core sampling is the preferred initial method; selected cases may require open biopsy.",
+    "inference": "Interpret enhancing solid targets and the documented resection field, then combine tract removability with the preferred feasible initial biopsy method.",
+    "focus": "Initial core method plus tract removability under an explicitly documented resection plan",
+    "whatChanged": "Restore percutaneous access for both targets; state the proposed exposure and specimen relationship; explain removal of the entire tract with the specimen. Retain the balanced label-free option matrix, concept, key, choice identities and all preceding nodes.",
+    "clinicalReviewBoundary": "Melissa Rowland and musculoskeletal radiology/sarcoma review must confirm the constructed access, specimen outline, skin entry and entire tract geometry. No clinician confirmation has occurred. General source guidance does not certify a safe operative trajectory.",
+    "reviewResponse": {
+      "reviewFile": "docs/research/question-flag-d97aa716-review-20261112.json",
+      "reviewSha256": "c96f476768352c75b96733c8cbf36e41b9ab1a108fdb2f7a18c5f02d7bdcbb09",
+      "priorVerdict": "REVISE",
+      "notes": [
+        {
+          "type": "fairness",
+          "noteIndex": 1,
+          "response": "Kept both named approaches and the complete route-to-enhancement table; no letter labels return."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 2,
+          "response": "Kept the posterior core key, concept and exact choice identities. Existing arm anatomy claims support membership but do not certify the invented route."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 3,
+          "response": "Restored percutaneous sampling access for both enhancing targets; feasible initial core remains the keyed method."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 4,
+          "response": "Added the constructed posterior resection exposure, posterior skin entry and triceps specimen relation. Explicitly teach tract excision rather than inferring it from compartment confinement."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 5,
+          "response": "Both targets enhance; greater anterior enhancement does not override the documented tract relation. Older direct targeting source and duplicate-record limitation are retained."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 6,
+          "response": "Retained the complete two-method/two-route matrix with parallel choices and no new qualifier on the key."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 7,
+          "response": "Moderate, at the easier end, remains a qualitative author prediction; no ambiguity is used to increase difficulty."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 8,
+          "response": "Added chief complaint and the upper-arm-specific complete task. Original profiles and runtime name token are preserved; clinical approval is not claimed."
+        },
+        {
+          "type": "suggestion",
+          "noteIndex": 1,
+          "response": "Restored explicit percutaneous sampling access to both targets, not a preferred-route label."
+        },
+        {
+          "type": "suggestion",
+          "noteIndex": 2,
+          "response": "Added the constructed posterior exposure and skin-to-mass tract within the proposed specimen; explained removal with definitive resection and mapped the existing tract-excision claim. Actual specialist confirmation remains pending and is stated explicitly."
+        },
+        {
+          "type": "suggestion",
+          "noteIndex": 3,
+          "response": "Retained the named balanced matrix, stable concept and needs_clinician_review status; included chief complaint and a site-specific complete task."
+        }
+      ]
+    },
+    "selfCheck": {
+      "independent": false,
+      "clinicalApproval": false,
+      "authorVerdict": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "coverTheKey": "Each method occurs with each approach. The documented specimen relation narrows the route, not the method; the player must also apply feasible initial-core guidance.",
+      "optionCategory": "Four initial biopsy plans in a complete method-by-approach matrix.",
+      "reasoningSteps": [
+        "Interpret enhancing targets and each route relative to the stated resection specimen.",
+        "Combine a removable planned tract with the preferred feasible initial sampling method."
+      ],
+      "decidingObservation": "The posterior skin entry and underlying triceps are inside the proposed specimen; the anterior route traverses biceps outside it. Both solid targets enhance and are accessible percutaneously.",
+      "closestCredibleError": "Core sampling through the shorter anterior route to more intensely enhancing tissue.",
+      "counterfactual": "If the proposed resection instead included the anterior entry and entire anterior tract while the posterior tract lay outside it, and neither route crossed an unaffected compartment, the tract ranking could change. Same-compartment access alone never proves removability.",
+      "predictedDifficulty": "moderate",
+      "fairness": "Both targets enhance and are accessible percutaneously. The selected entire tract is included in the constructed resection plan; no same-compartment inference substitutes for this. Human confirmation is pending.",
+      "sourceClosure": "Existing biceps-anterior and triceps-posterior arm-membership claims are retained; the constructed posterior access and complete tract geometry still need clinician confirmation.",
+      "originalOwnerNoteResolved": true
+    },
+    "evidenceClaimIds": [
+      "claim.soft-tissue-mass.planned-biopsy",
+      "claim.soft-tissue-mass.mri",
+      "claim.qq20261102a.sarcoma-viable-biopsy-target",
+      "claim.qq20261102b.sarcoma-method-and-tract",
+      "claim.qq20261102b.sarcoma-initial-core-method",
+      "claim.qq20261102b.biceps-anterior-compartment",
+      "claim.qq20261102b.triceps-posterior-compartment",
+      "claim.question-topic-soft-tissue-sarcoma-desmoid.tract-excision"
+    ],
+    "evidenceMapping": [
+      {
+        "fields": [
+          "Presentation",
+          "Chief complaint",
+          "Current update: mass location",
+          "Exhibit: needle routes"
+        ],
+        "type": "Retained constructed upper-arm patient/MRI observations with the existing biceps/triceps membership claims",
+        "sourceCaseSha256": "7a118d7909b6119f6165e436ee858747261d3d7f8e0975ed9bb62951f4cefeaa",
+        "claimIds": [
+          "claim.soft-tissue-mass.planned-biopsy",
+          "claim.soft-tissue-mass.mri",
+          "claim.qq20261102b.biceps-anterior-compartment",
+          "claim.qq20261102b.triceps-posterior-compartment"
+        ]
+      },
+      {
+        "fields": [
+          "Current update: percutaneous access",
+          "Options: method",
+          "Rationales",
+          "Explanation: initial method"
+        ],
+        "type": "Constructed access observation with the existing feasible-initial-core rule",
+        "claimIds": [
+          "claim.soft-tissue-mass.planned-biopsy",
+          "claim.qq20261102b.sarcoma-initial-core-method"
+        ]
+      },
+      {
+        "fields": [
+          "Current update: proposed resection",
+          "Rationales: tract/specimen relation",
+          "Explanation: tract excision"
+        ],
+        "type": "New constructed planning observation; applying existing guidance, not new general anatomy or a certified operative plan",
+        "claimIds": [
+          "claim.question-topic-soft-tissue-sarcoma-desmoid.tract-excision"
+        ]
+      },
+      {
+        "fields": [
+          "Current update: enhancing solid targets",
+          "Exhibit: enhancement",
+          "Rationales",
+          "Explanation: enhancement"
+        ],
+        "type": "Existing viable-target principle; original enhancing-target observations retained",
+        "claimIds": [
+          "claim.qq20261102a.sarcoma-viable-biopsy-target"
+        ]
+      }
+    ],
+    "lint": {
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 5,
+      "suppressedFindings": 0
+    },
+    "frozenPreservation": {
+      "originalLiveCaseSha256": "7a118d7909b6119f6165e436ee858747261d3d7f8e0975ed9bb62951f4cefeaa",
+      "beforeCaseSha256": "a247422fe48e310ac0f940d42b48a2b57c0b35d1b83f17b8990e53a5880e8b88",
+      "afterCaseSha256": "cb3d64bc76010a02d72299374581bafd1cc95edde46ebbd3c616779abe99bbfd",
+      "beforeNodeSha256": "ba392ff73fb54910e5b8be0e96524b0fbad3967545240e33b7857af903b540de",
+      "afterNodeSha256": "88b64c67ab0061ac0af6c1773153e7e8f6cfeb975b374fbcb8e0538934e17c69",
+      "afterQuestionSha256": "d179aee21102b3c76b67c1c27cd2a8355bc381f094683a03f6cf9a44fdeeb262"
+    },
+    "currentFreshReachability": {
+      "issue": null,
+      "receipt": {
+        "operationId": "flag.d97aa716.admit.1",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "admittedVariantIds": [
+        "question.soft-tissue-mass.extremity-mri.v2.r6",
+        "question.soft-tissue-mass.specialist-planned-biopsy.v2.r4"
+      ]
+    },
+    "fallbackQuestionVariantId": "question.soft-tissue-mass.specialist-planned-biopsy.v2.r4"
+  },
+  {
+    "id": "D97-3",
+    "round": 2,
+    "title": "Calf biopsy method and approach",
+    "flagId": "d97aa716",
+    "ownerNote": "This question is confusing using path A/B and region A/B",
+    "status": "draft_needs_independent_review",
+    "reviewStatus": "needs_clinician_review",
+    "clinicalApproval": false,
+    "sourceView": "flag-d97aa716-round2",
+    "caseId": "case.topic-soft-tissue-sarcoma-desmoid.calf-planning.20261111.v1",
+    "nodeId": "node.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.20261111.v1",
+    "conceptId": "concept.soft-tissue-mass.specialist-planned-biopsy",
+    "conceptMeaningChanged": false,
+    "keyChanged": false,
+    "holdStatus": "none",
+    "withheldAssertion": "No calf compartment-membership statement is taught or scored. The existing ledger does not verify gastrocnemius/peroneus-longus compartment membership. The constructed specimen outline supplies the case-specific tract relationship under the existing tract-excision claim; it is not new anatomical evidence.",
+    "before": {
+      "variantId": "question.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.20261111.v2",
+      "Chief complaint": "Enlarging calf lump",
+      "Presentation": "{patientName}, a 43-year-old woman, comes to clinic for an enlarging mid-calf lump. Ultrasound shows the mass beneath the fascia. An outside MRI is available.",
+      "Current update": "MRI places the mass in lateral gastrocnemius. Two solid areas within the mass enhance after contrast. Radiology maps both routes away from visible neurovascular structures.",
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Constructed MRI planning record",
+        "columnHeaders": [
+          "Posterior approach",
+          "Lateral approach"
+        ],
+        "rowHeaders": [
+          "Needle route",
+          "Solid-tissue enhancement"
+        ],
+        "cells": [
+          [
+            "Posterior skin through lateral gastrocnemius",
+            "Lateral skin through peroneus longus, then gastrocnemius"
+          ],
+          [
+            "Present",
+            "More intense"
+          ]
+        ]
+      },
+      "Task": "Which initial biopsy plan should the sarcoma team select for {patientName}’s calf mass?",
+      "Options": [
+        "**KEY:** Image-guided core biopsy with a posterior approach through lateral gastrocnemius",
+        "Image-guided core biopsy with a lateral approach through peroneus longus",
+        "Open incisional biopsy with a posterior approach through lateral gastrocnemius",
+        "Open incisional biopsy with a lateral approach through peroneus longus"
+      ]
+    },
+    "after": {
+      "variantId": "question.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.20261111.v3",
+      "Chief complaint": "Enlarging calf lump",
+      "Presentation": "{patientName}, a 43-year-old woman, comes to clinic for an enlarging mid-calf lump. Ultrasound shows the mass beneath the fascia. An outside MRI is available.",
+      "Current update": "MRI places the mass in lateral gastrocnemius. Both enhancing solid targets can be sampled percutaneously along routes clear of visible neurovascular structures. The proposed posterior resection includes the posterior skin entry and underlying lateral gastrocnemius; peroneus longus is outside the proposed specimen.",
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Constructed MRI and operative-planning record",
+        "columnHeaders": [
+          "Posterior approach",
+          "Lateral approach"
+        ],
+        "rowHeaders": [
+          "Needle route",
+          "Solid-tissue enhancement"
+        ],
+        "cells": [
+          [
+            "Posterior skin through lateral gastrocnemius",
+            "Lateral skin through peroneus longus, then gastrocnemius"
+          ],
+          [
+            "Present",
+            "More intense"
+          ]
+        ]
+      },
+      "Task": "Which initial tissue-sampling plan should the sarcoma team select for {patientName}’s calf mass?",
+      "Options": [
+        "**KEY:** Image-guided core biopsy with a posterior approach through lateral gastrocnemius",
+        "Image-guided core biopsy with a lateral approach through peroneus longus",
+        "Open incisional biopsy with a posterior approach through lateral gastrocnemius",
+        "Open incisional biopsy with a lateral approach through peroneus longus"
+      ]
+    },
+    "originalLive": {
+      "variantId": "question.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.20261111.v1",
+      "Presentation": "{patientName}, a 43-year-old woman, comes to clinic for an enlarging mid-calf lump. Ultrasound shows the mass beneath the fascia. An outside MRI is available.",
+      "Current update": "After the supplementary MRI comparison, the local images have been reviewed. The mass lies in the lateral gastrocnemius. Two solid intramass targets enhance; B enhances more intensely. Radiology maps these corridors away from visible neurovascular structures.",
+      "Exhibit": {
+        "kind": "table",
+        "caption": "Original constructed planning record; fictional observations, not copied imaging",
+        "columnHeaders": [
+          "Target A",
+          "Target B"
+        ],
+        "rowHeaders": [
+          "Needle corridor",
+          "Enhancement"
+        ],
+        "cells": [
+          [
+            "Posterior skin through lateral gastrocnemius",
+            "Lateral skin through peroneus longus and then gastrocnemius"
+          ],
+          [
+            "Present",
+            "More intense"
+          ]
+        ]
+      },
+      "Task": "Which initial biopsy plan should the sarcoma team select for {patientName}’s calf mass?",
+      "Options": [
+        "**KEY:** Image-guided core biopsy of A through the posterior corridor",
+        "Image-guided core biopsy of B through the lateral corridor",
+        "Open incisional biopsy of A through the posterior corridor",
+        "Open incisional biopsy of B through the lateral corridor"
+      ]
+    },
+    "keyOrderNotice": "Key shown first for review only. Runtime answer choices are randomized.",
+    "rationalePairs": {
+      "before": [
+        {
+          "choiceId": "choice.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.1",
+          "label": "Image-guided core biopsy with a posterior approach through lateral gastrocnemius",
+          "key": true,
+          "rationale": "Both targets are enhancing intramass tissue. The planned core route through the tumor-bearing muscle avoids adding another compartment to the definitive surgical field. Greater enhancement in the tissue reached through peroneus longus does not resolve that tract problem."
+        },
+        {
+          "choiceId": "choice.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.2",
+          "label": "Image-guided core biopsy with a lateral approach through peroneus longus",
+          "key": false,
+          "rationale": "The tissue reached through peroneus longus is an attractive enhancing target, but this route crosses peroneal muscle in another compartment before reaching the gastrocnemius mass."
+        },
+        {
+          "choiceId": "choice.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.3",
+          "label": "Open incisional biopsy with a posterior approach through lateral gastrocnemius",
+          "key": false,
+          "rationale": "The corridor is favorable, but an initial feasible image-guided core is preferred to creating an open biopsy wound."
+        },
+        {
+          "choiceId": "choice.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.4",
+          "label": "Open incisional biopsy with a lateral approach through peroneus longus",
+          "key": false,
+          "rationale": "This combines escalation of the initial method with a route through another compartment."
+        }
+      ],
+      "after": [
+        {
+          "choiceId": "choice.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.1",
+          "label": "Image-guided core biopsy with a posterior approach through lateral gastrocnemius",
+          "key": true,
+          "rationale": "Both targets enhance. A posterior core biopsy follows the proposed resection exposure: its skin entry and intramuscular tract lie within the proposed specimen."
+        },
+        {
+          "choiceId": "choice.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.2",
+          "label": "Image-guided core biopsy with a lateral approach through peroneus longus",
+          "key": false,
+          "rationale": "The lateral route reaches more intensely enhancing tissue, but traverses peroneus longus outside the proposed specimen. That tract would not be removed with the currently planned specimen."
+        },
+        {
+          "choiceId": "choice.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.3",
+          "label": "Open incisional biopsy with a posterior approach through lateral gastrocnemius",
+          "key": false,
+          "rationale": "The posterior skin entry and intramuscular tract are inside the proposed specimen, but an initial image-guided core is preferred when percutaneous sampling is feasible. Open incisional biopsy is a selected alternative, not the initial choice on these findings."
+        },
+        {
+          "choiceId": "choice.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.4",
+          "label": "Open incisional biopsy with a lateral approach through peroneus longus",
+          "key": false,
+          "rationale": "This combines an open initial procedure despite feasible core access with a lateral tract through peroneus longus outside the proposed specimen."
+        }
+      ]
+    },
+    "explanation": "Choose image-guided core sampling through the posterior approach. Both targets enhance; stronger enhancement does not outweigh tract planning. The biopsy tract, including its skin entry, must be removable with the definitive specimen. The stated posterior resection includes that tract, whereas the lateral tract crosses tissue outside the proposed specimen. Feasible core sampling is the preferred initial method; selected cases may require open biopsy.",
+    "inference": "Interpret enhancing solid targets and the documented resection field, then combine tract removability with the preferred feasible initial biopsy method.",
+    "focus": "Initial core method plus tract removability under an explicitly documented resection plan",
+    "whatChanged": "Restore percutaneous access for both targets; state the proposed exposure and specimen relationship; explain removal of the entire tract with the specimen. Retain the balanced label-free option matrix, concept, key, choice identities and all preceding nodes. Withdraw unsupported calf-compartment teaching and map enhancing-target selection to its existing claim.",
+    "clinicalReviewBoundary": "Melissa Rowland and musculoskeletal radiology/sarcoma review must confirm the constructed access, specimen outline, skin entry and entire tract geometry. No clinician confirmation has occurred. General source guidance does not certify a safe operative trajectory.",
+    "reviewResponse": {
+      "reviewFile": "docs/research/question-flag-d97aa716-review-20261112.json",
+      "reviewSha256": "c96f476768352c75b96733c8cbf36e41b9ab1a108fdb2f7a18c5f02d7bdcbb09",
+      "priorVerdict": "REVISE",
+      "notes": [
+        {
+          "type": "fairness",
+          "noteIndex": 1,
+          "response": "Retained the complete posterior and lateral anatomical routes without abstract labels."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 2,
+          "response": "Kept the initial posterior core key and stable concept. Both targets now have explicit percutaneous access; the key also depends on the documented specimen outline."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 3,
+          "response": "Withdrew the unverified calf compartment-membership assertion from all teaching, feedback and scoring rationale. No calf anatomy claim is invented or borrowed from thigh/arm records. The same planned-tract objective now uses the constructed specimen outline under the existing tract-excision claim."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 4,
+          "response": "Added the constructed posterior exposure, skin entry and underlying gastrocnemius within the proposed specimen, with peroneus longus outside it. Explain complete tract removal; general guidance does not certify the fictional geometry."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 5,
+          "response": "Added the existing viable-target claim to D97-3 and the enhancement/explanation field mappings, preserving the older technical-source limitation and not counting duplicate records independently."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 6,
+          "response": "Retained all four balanced method-by-route options, equal word lengths and no key-only qualifier. Both routes retain neurovascular clearance."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 7,
+          "response": "Moderate application is predicted from method plus specimen/tract interpretation; it no longer requires an unverified compartment premise."
+        },
+        {
+          "type": "fairness",
+          "noteIndex": 8,
+          "response": "Included the short complaint in the packet and retained all demographic/name tokens and a complete calf-specific task. No clinical approval is implied."
+        },
+        {
+          "type": "suggestion",
+          "noteIndex": 1,
+          "response": "The existing permitted ledger cannot verify the calf compartment memberships. That assertion is explicitly withheld, not represented as clinician-reviewed. The candidate is revised to use the stated operative specimen relationship instead, without a new general anatomical teaching point or a changed core/tract objective."
+        },
+        {
+          "type": "suggestion",
+          "noteIndex": 2,
+          "response": "Restored percutaneous access for both targets and documented the proposed posterior exposure and tract/specimen relationship. Explained removal with the specimen. These are labeled constructed observations with named specialist confirmation still pending."
+        },
+        {
+          "type": "suggestion",
+          "noteIndex": 3,
+          "response": "Mapped enhancement and viable-target explanation to claim.qq20261102a.sarcoma-viable-biopsy-target and its exact existing records; retained source-age and duplicate-publication limitations."
+        },
+        {
+          "type": "suggestion",
+          "noteIndex": 4,
+          "response": "Retained the readable matrix, calf-specific task, chief complaint and stable concept/key/choice identities. Needs_clinician_review remains explicit."
+        }
+      ]
+    },
+    "selfCheck": {
+      "independent": false,
+      "clinicalApproval": false,
+      "authorVerdict": "DRAFT_FOR_INDEPENDENT_REVIEW",
+      "coverTheKey": "Each method occurs with each approach. The documented specimen relation narrows the route, not the method; the player must also apply feasible initial-core guidance.",
+      "optionCategory": "Four initial biopsy plans in a complete method-by-approach matrix.",
+      "reasoningSteps": [
+        "Interpret enhancing targets and each route relative to the stated resection specimen.",
+        "Combine a removable planned tract with the preferred feasible initial sampling method."
+      ],
+      "decidingObservation": "The posterior skin entry and underlying lateral gastrocnemius are inside the proposed specimen; peroneus longus along the lateral tract is outside it. Both targets enhance and are accessible percutaneously.",
+      "closestCredibleError": "Core sampling of the more intensely enhancing tissue through the lateral approach.",
+      "counterfactual": "If the lateral entry and entire lateral tract were within the proposed specimen and the posterior tract were outside it, with both routes otherwise acceptable, the tract ranking would reverse despite identical target enhancement.",
+      "predictedDifficulty": "moderate",
+      "fairness": "Both targets enhance and are accessible percutaneously. The selected entire tract is included in the constructed resection plan; no same-compartment inference substitutes for this. Human confirmation is pending.",
+      "sourceClosure": "No unverified calf compartment membership is required or taught.",
+      "originalOwnerNoteResolved": true
+    },
+    "evidenceClaimIds": [
+      "claim.question-topic-soft-tissue-sarcoma-desmoid.initial-core",
+      "claim.question-topic-soft-tissue-sarcoma-desmoid.tract-excision",
+      "claim.qq20261102a.sarcoma-viable-biopsy-target"
+    ],
+    "evidenceMapping": [
+      {
+        "fields": [
+          "Presentation",
+          "Chief complaint",
+          "Current update: mass location",
+          "Exhibit: needle routes"
+        ],
+        "type": "Retained constructed patient/MRI observations; the thigh medial muscle is made specific to its existing claim",
+        "sourceCaseSha256": "4c94085e62ad11f413ee6fdc5822732038e3add94a364cf8d9a0857b8a0df9d0",
+        "claimIds": []
+      },
+      {
+        "fields": [
+          "Current update: percutaneous access",
+          "Options: method",
+          "Rationales",
+          "Explanation: initial method"
+        ],
+        "type": "Constructed access observation with the existing feasible-initial-core rule",
+        "claimIds": [
+          "claim.question-topic-soft-tissue-sarcoma-desmoid.initial-core"
+        ]
+      },
+      {
+        "fields": [
+          "Current update: proposed resection",
+          "Rationales: tract/specimen relation",
+          "Explanation: tract excision"
+        ],
+        "type": "New constructed planning observation; applying existing guidance, not new general anatomy or a certified operative plan",
+        "claimIds": [
+          "claim.question-topic-soft-tissue-sarcoma-desmoid.tract-excision"
+        ]
+      },
+      {
+        "fields": [
+          "Current update: enhancing solid targets",
+          "Exhibit: enhancement",
+          "Rationales",
+          "Explanation: enhancement"
+        ],
+        "type": "Existing viable-target principle; original enhancing-target observations retained",
+        "claimIds": [
+          "claim.qq20261102a.sarcoma-viable-biopsy-target"
+        ]
+      }
+    ],
+    "lint": {
+      "beforeCount": 0,
+      "afterCount": 0,
+      "profileContexts": 2,
+      "suppressedFindings": 0
+    },
+    "frozenPreservation": {
+      "originalLiveCaseSha256": "4c94085e62ad11f413ee6fdc5822732038e3add94a364cf8d9a0857b8a0df9d0",
+      "beforeCaseSha256": "3e03cd299e64c3e88d33735f35b9d49b3abc12a0dc01100b1f50e258133f527f",
+      "afterCaseSha256": "82823da2ecacc916fd9afce7127ac1b4825a4d0dc55a358b7513c6a4f39a907f",
+      "beforeNodeSha256": "62d18c381c230234bead4e582a92d3778d96df06d168bd6a98e40811570d433d",
+      "afterNodeSha256": "456ce5b7f5e4319d6c48509b58b67c22dcd92d7ea18505e8ef4495401e696d56",
+      "afterQuestionSha256": "be034f46d59cd683084e1124f43abb34abbb1f03eb627e0a747797745706812d"
+    },
+    "currentFreshReachability": {
+      "issue": null,
+      "receipt": {
+        "operationId": "flag.d97aa716.admit.2",
+        "commandType": "ADMIT_PATIENT",
+        "status": "applied",
+        "message": "Patient is approaching the clinic.",
+        "facilityTick": 0
+      },
+      "admittedVariantIds": [
+        "question.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.20261111.v1"
+      ]
+    },
+    "fallbackQuestionVariantId": "question.topic-soft-tissue-sarcoma-desmoid.calf-core-tract.20261111.v1"
+  }
+]

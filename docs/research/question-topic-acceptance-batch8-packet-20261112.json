@@ -1,0 +1,2551 @@
+{
+  "checkedOn": "2026-11-12",
+  "reviewDisplay": "Key shown first for review only. Runtime options shuffle.",
+  "accepted": [
+    {
+      "id": "B2B32",
+      "questionVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v1.r4",
+      "conceptId": "concept.metabolic-acidosis.corrected-gap-directed-evaluation.v1",
+      "contentVersion": "clinical.owner-decisions.2026-11-12.v2",
+      "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+      "nodeId": "node.gs028d.acid-base.b-cirrhosis-gap.1",
+      "review": {
+        "path": "docs/research/question-owner-decisions-review2-20261112.json",
+        "record": {
+          "id": "B2B32",
+          "variantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v1.r4",
+          "verdict": "PASS",
+          "difficulty": {
+            "level": "Easy foundational application",
+            "highYield": true,
+            "rationale": "Requires the ordinary anion-gap calculation and the direction of albumin's contribution. Removing the earlier cues improves validity, but one calculation and a binary physiology judgment do not make this a hard question."
+          },
+          "clarityIssues": [],
+          "cues": [
+            {
+              "severity": "Low residual",
+              "exactPhrases": [
+                "Below the laboratory reference interval",
+                "12 mmol/L with an albumin-related decrease",
+                "28 mmol/L with an albumin-related decrease",
+                "12 mmol/L with an albumin-related increase",
+                "28 mmol/L with an albumin-related increase"
+              ],
+              "attack": "A nonmedical reader might match low albumin to 'decrease', but that leaves two choices. Both values and both directions occur equally often, with identical grammar and certainty. The former cautious-key and lone-number shortcuts are gone. The normal interval alone does not prove that this patient's gap must be normal."
+            }
+          ],
+          "fairness": {
+            "ownerDirection": "Faithful to Melissa Rowland's B2B32/B2B34 direction: tests plain Na-(Cl+HCO3) arithmetic and qualitative hypoalbuminemia only. No albumin-correction formula, corrected value or correction arithmetic appears in the reviewed content.",
+            "ownerStyle": "Pass: Jamie Taylor is a named 49-year-old woman attending clinic; 'Acidosis panel review' has three words; the task independently identifies the patient, potassium-excluding convention and requested value plus baseline albumin effect.",
+            "oneDefensibleBestAnswer": true,
+            "assessment": "140 - (112 + 16) = 12 mmol/L. Hypoalbuminemia lowers the baseline gap. Only the keyed combination gets both components right. The explanation correctly identifies the supplied interval as laboratory-specific, permits a masked additional unmeasured-acid component, and does not claim that lactulose or gastrointestinal loss establishes the cause. JSON and Markdown present the same reviewed content.",
+            "priorReviewResolution": [
+              "Both prior clarity findings addressed: the gastrointestinal-cause option and sole-cause rebuttal are removed; the potassium-excluding convention is stated in the task.",
+              "Both prior cue findings and the first two suggestions addressed: a complete two-by-two matrix replaces the qualified-key versus definitive-distractor contrast and the unbalanced numeric choices.",
+              "Remaining suggestions addressed: feedback now evaluates the actual calculation and albumin direction, and retains only plain-gap arithmetic plus qualitative albumin teaching."
+            ],
+            "evidenceSourceIds": [
+              "source.french-panel.metabolic-acidosis.2019"
+            ],
+            "evidenceClaimIds": [
+              "claim.owner-decisions.20261112.plain-gap",
+              "claim.owner-decisions.20261112.albumin-lowers-gap"
+            ],
+            "evidenceLimitations": "Offline review of the supplied claim mappings and source record, which identifies a CC BY 4.0 French expert-panel guideline. Single-source physiology support is disclosed. No network retrieval or independent authentication of the cited publication was performed. PASS is an editorial/evidence-alignment verdict, not clinical approval of this exact successor; its recorded needs_clinician_review status remains appropriate."
+          },
+          "suggestions": [
+            "No blocking revision. Classify this as foundational rather than hard; do not restore correction arithmetic to increase difficulty.",
+            "Retain the balanced option matrix and runtime randomization. The packet explicitly identifies first-position keys as a review-only convention; runtime behavior was not tested in this review."
+          ]
+        }
+      },
+      "sourceQuestionSha256": "cd05578e18095567690dc25f4534fe78dae0a60d71b378a57fe6e42107e54e16",
+      "sourceNodeSha256": "4b001674dbb2236ddda1a87e6a1ef104f64a79967914f1047ec83318c84926c0",
+      "sourceCaseSha256": "b31ce7ba35daa3d818cec00703a917a4342b6cfa64c54126a45b694641b2a5b1",
+      "reviewStatus": "needs_clinician_review",
+      "clinicalApprovalGranted": false,
+      "ownerDirection": {
+        "ownerId": "B2B32",
+        "questionVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v1.r4",
+        "conceptId": "concept.metabolic-acidosis.corrected-gap-directed-evaluation.v1",
+        "contentVersion": "clinical.owner-decisions.2026-11-12.v2",
+        "questionSha256": "cd05578e18095567690dc25f4534fe78dae0a60d71b378a57fe6e42107e54e16",
+        "nodeSha256": "4b001674dbb2236ddda1a87e6a1ef104f64a79967914f1047ec83318c84926c0",
+        "directedBy": "Melissa Rowland (clinical sign-off)",
+        "directedOn": "2026-11-12",
+        "authority": {
+          "path": "docs/research/owner-decision-answers-20261112.md",
+          "sha256": "6d58e11e4049b5bfa41e1d7dce73804bc2c40b6694ace2d78280a41bea3a473a"
+        },
+        "scope": "Owner-directed clinical/key/editorial direction; exact successor version has not received named clinician approval.",
+        "reviewStatus": "needs_clinician_review",
+        "clinicalApprovalGranted": false,
+        "lastClinicianReview": null,
+        "conceptVersion": {
+          "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+          "reviewStatus": "needs_clinician_review",
+          "aiAssistedDrafting": true,
+          "lastClinicianReview": null,
+          "id": "concept.metabolic-acidosis.corrected-gap-directed-evaluation.v1",
+          "displayName": "Calculate the uncorrected gap and interpret its limits when albumin is low.",
+          "learningObjective": "Calculate the uncorrected gap and interpret its limits when albumin is low.",
+          "conceptType": "applied_science",
+          "earliestFacilityStage": 0,
+          "educationalTier": 1,
+          "meaningChange": true,
+          "versioningReason": "Preserve the harder draft stable concept ID and issue a new concept content version for the owner-directed plain-gap calculation and qualitative albumin interpretation. The prior correction-dependent laboratory-ranking objective is narrowed."
+        },
+        "previousQuestionVariantIds": [
+          "question.metabolic-acidosis.albumin-corrected-anion-gap.v1.r3",
+          "question.metabolic-acidosis.albumin-corrected-anion-gap.v1.r2",
+          "question.metabolic-acidosis.albumin-corrected-anion-gap.v1"
+        ]
+      },
+      "before": [
+        {
+          "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+          "Presentation": "{patientName}, a 49-year-old woman with cirrhosis brings a complete outside panel confirming metabolic acidosis and marked hypoalbuminaemia.",
+          "questions": [
+            {
+              "questionVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v1",
+              "Current update": null,
+              "Exhibit": null,
+              "Task": "Which calculation best assesses whether unmeasured anions are accumulating in this patient?",
+              "Options": [
+                "**KEY:** Albumin-corrected anion gap",
+                "Uncorrected anion gap alone",
+                "Bicarbonate concentration alone",
+                "Uncorrected osmolar gap alone"
+              ]
+            }
+          ]
+        }
+      ],
+      "after": {
+        "Presentation": "{patientName}, a 49-year-old woman with cirrhosis, attends clinic to review an outside admission for loose stools while taking lactulose. Metabolic acidosis was documented during that admission.",
+        "Current update": null,
+        "Exhibit": {
+          "kind": "table",
+          "caption": "Constructed admission specimen. Laboratory uncorrected-gap interval 8-16 mmol/L.",
+          "columnHeaders": [
+            "Value"
+          ],
+          "rowHeaders": [
+            "Sodium (mmol/L)",
+            "Chloride (mmol/L)",
+            "Bicarbonate (mmol/L)",
+            "Albumin"
+          ],
+          "cells": [
+            [
+              "140"
+            ],
+            [
+              "112"
+            ],
+            [
+              "16"
+            ],
+            [
+              "Below the laboratory reference interval"
+            ]
+          ]
+        },
+        "Task": "Using the potassium-excluding convention, which anion-gap value and effect of hypoalbuminemia on the baseline gap best fit {patientName}'s admission panel?",
+        "Options": [
+          "**KEY:** 12 mmol/L with an albumin-related decrease",
+          "28 mmol/L with an albumin-related decrease",
+          "12 mmol/L with an albumin-related increase",
+          "28 mmol/L with an albumin-related increase"
+        ]
+      },
+      "explanation": "The potassium-excluding gap is 140 - (112 + 16) = 12 mmol/L, within the supplied laboratory interval. Hypoalbuminemia decreases the baseline gap. An additional unmeasured-acid component can therefore be masked by a raw value in that interval. This calculation does not establish the cause of the acidosis.",
+      "evidenceMapping": {
+        "caseObservations": "Constructed patient observations. Ages, specimen values, laboratory-specific reports and prior events describe this fictional patient and are not universal thresholds or empirical demographic weights.",
+        "clinicalTeachingClaimIds": [
+          "claim.owner-decisions.20261112.plain-gap",
+          "claim.owner-decisions.20261112.albumin-lowers-gap"
+        ],
+        "optionClaims": {
+          "choice.owner-decisions.20261112.plain-gap-single.lower-decrease.r4": [
+            "claim.owner-decisions.20261112.plain-gap",
+            "claim.owner-decisions.20261112.albumin-lowers-gap"
+          ],
+          "choice.owner-decisions.20261112.plain-gap-single.higher-decrease.r4": [
+            "claim.owner-decisions.20261112.plain-gap",
+            "claim.owner-decisions.20261112.albumin-lowers-gap"
+          ],
+          "choice.owner-decisions.20261112.plain-gap-single.lower-increase.r4": [
+            "claim.owner-decisions.20261112.plain-gap",
+            "claim.owner-decisions.20261112.albumin-lowers-gap"
+          ],
+          "choice.owner-decisions.20261112.plain-gap-single.higher-increase.r4": [
+            "claim.owner-decisions.20261112.plain-gap",
+            "claim.owner-decisions.20261112.albumin-lowers-gap"
+          ]
+        }
+      },
+      "rubric": {
+        "independentReviewStatus": "awaiting_single_fix_review",
+        "clinicalSignoff": "Melissa Rowland",
+        "runtimeIntegrationStatus": "pending_manager_acceptance",
+        "fixRound": 1,
+        "reviewedVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v1.r3"
+      },
+      "runtime": {
+        "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+        "clinicAdmissible": true,
+        "nativeAdmission": true,
+        "actualPatientName": "Jamie Taylor",
+        "demographics": {
+          "ageYears": 49,
+          "sexLabel": "Female"
+        }
+      },
+      "lint": []
+    },
+    {
+      "id": "B2B34",
+      "questionVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v3.r4",
+      "conceptId": "concept.metabolic-acidosis.corrected-gap-directed-evaluation.v1",
+      "contentVersion": "clinical.owner-decisions.2026-11-12.v2",
+      "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+      "nodeId": "node.gs028d.acid-base.b-sepsis-recovery-gap.1",
+      "review": {
+        "path": "docs/research/question-owner-decisions-review2-20261112.json",
+        "record": {
+          "id": "B2B34",
+          "variantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v3.r4",
+          "verdict": "PASS",
+          "difficulty": {
+            "level": "Easy to moderate; closer to foundational than advanced",
+            "highYield": true,
+            "rationale": "Adds a second calculation and a changing-albumin context. The scored choice still primarily tests calculation plus direction; the more valuable limit on inferring an unmeasured-acid process is taught mainly in feedback."
+          },
+          "clarityIssues": [
+            "Minor: 'with an albumin-related decrease' can be read as attributing the entire displayed numerical fall to albumin. The task asks for an albumin effect and the explanation describes the baseline gap, so the intended qualitative interpretation is recoverable; no quantitative attribution is established."
+          ],
+          "cues": [
+            {
+              "severity": "Low to moderate residual; not a unique-answer shortcut",
+              "exactPhrases": [
+                "Within the laboratory interval",
+                "Markedly below the laboratory interval",
+                "14 → 12 mmol/L with an albumin-related decrease",
+                "32 → 30 mmol/L with an albumin-related decrease",
+                "14 → 12 mmol/L with an albumin-related increase",
+                "32 → 30 mmol/L with an albumin-related increase"
+              ],
+              "attack": "A reader may match falling albumin, descending arrows and 'decrease' without physiology. Both numeric pairs descend, however, and both directions are offered with each pair; this heuristic cannot choose the correct arithmetic pair. The prior unique uncertainty wording and isolated copied bicarbonate values are absent."
+            }
+          ],
+          "fairness": {
+            "ownerDirection": "Faithful: both gaps are uncorrected, and albumin is interpreted qualitatively. No correction formula or corrected-gap arithmetic is required or disclosed.",
+            "ownerStyle": "Pass: Morgan Ellis is a named 45-year-old woman attending clinic; 'Hospital panel review' has three words; the complete task requests paired gaps and an albumin effect in assessing additional unmeasured acids.",
+            "oneDefensibleBestAnswer": true,
+            "assessment": "140 - (108 + 18) = 14 and 140 - (110 + 18) = 12 mmol/L. The alternative 32 and 30 omit bicarbonate. Falling albumin lowers the baseline gap rather than raising it. Both calculated gaps lie within the supplied interval, and neither proves absence of additional unmeasured acids. The explanation explicitly avoids asserting an initially established increased-gap process. JSON and Markdown agree.",
+            "priorReviewResolution": [
+              "All three prior clarity findings addressed: vague 'acid burden' wording is replaced with additional unmeasured acids; feedback states that the initial panel did not establish an increased-gap process; the task states the potassium-excluding convention.",
+              "Both cue findings addressed: equally definite choices form a complete matrix; the lone 18-to-18 copied-value option and the narrative sentence highlighting the albumin/bicarbonate contrast are removed.",
+              "All four prior suggestions addressed in substance: specific inference, balanced certainty, explicit normal-range feedback and no correction math. The packet retains the stable concept ID and the previously issued concept-content version for the narrowed objective; no runtime history migration was evaluated."
+            ],
+            "evidenceSourceIds": [
+              "source.french-panel.metabolic-acidosis.2019"
+            ],
+            "evidenceClaimIds": [
+              "claim.owner-decisions.20261112.plain-gap",
+              "claim.owner-decisions.20261112.albumin-lowers-gap",
+              "claim.owner-decisions.20261112.gap-trend-limit"
+            ],
+            "evidenceLimitations": "The packet records one CC BY guideline and identifies the serial interpretation as a qualitative application to constructed specimens. It cannot quantify the contribution of albumin to the observed change or establish a precise acid burden. Offline source-record and claim-mapping review only; PASS does not independently authenticate the publication or approve the exact successor clinically."
+          },
+          "suggestions": [
+            "Optional clarity polish: make all four labels explicitly describe albumin's effect on the baseline gap, preserving their identical structure. Do not imply that albumin accounts for the entire two-point fall.",
+            "No blocking revision. Keep the normal-range qualification and avoid advertising this as a difficult acid-base interpretation item."
+          ]
+        }
+      },
+      "sourceQuestionSha256": "ca1e3eaa04f45943356cf19b45108b62dfd7688943c57f24bd83847765fdd3f2",
+      "sourceNodeSha256": "854bced35ef0cf7a15fe7ff7f8a3a8644e1cf0bf71715b6d640fd0a40411e840",
+      "sourceCaseSha256": "de62d610ca78fb6c627dcab57e77d718ec25ef183ea1a1a2c6aae3949067f4e9",
+      "reviewStatus": "needs_clinician_review",
+      "clinicalApprovalGranted": false,
+      "ownerDirection": {
+        "ownerId": "B2B34",
+        "questionVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v3.r4",
+        "conceptId": "concept.metabolic-acidosis.corrected-gap-directed-evaluation.v1",
+        "contentVersion": "clinical.owner-decisions.2026-11-12.v2",
+        "questionSha256": "ca1e3eaa04f45943356cf19b45108b62dfd7688943c57f24bd83847765fdd3f2",
+        "nodeSha256": "854bced35ef0cf7a15fe7ff7f8a3a8644e1cf0bf71715b6d640fd0a40411e840",
+        "directedBy": "Melissa Rowland (clinical sign-off)",
+        "directedOn": "2026-11-12",
+        "authority": {
+          "path": "docs/research/owner-decision-answers-20261112.md",
+          "sha256": "6d58e11e4049b5bfa41e1d7dce73804bc2c40b6694ace2d78280a41bea3a473a"
+        },
+        "scope": "Owner-directed clinical/key/editorial direction; exact successor version has not received named clinician approval.",
+        "reviewStatus": "needs_clinician_review",
+        "clinicalApprovalGranted": false,
+        "lastClinicianReview": null,
+        "conceptVersion": {
+          "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+          "reviewStatus": "needs_clinician_review",
+          "aiAssistedDrafting": true,
+          "lastClinicianReview": null,
+          "id": "concept.metabolic-acidosis.corrected-gap-directed-evaluation.v1",
+          "displayName": "Calculate the uncorrected gap and interpret its limits when albumin is low.",
+          "learningObjective": "Calculate the uncorrected gap and interpret its limits when albumin is low.",
+          "conceptType": "applied_science",
+          "earliestFacilityStage": 0,
+          "educationalTier": 1,
+          "meaningChange": true,
+          "versioningReason": "Preserve the harder draft stable concept ID and issue a new concept content version for the owner-directed plain-gap calculation and qualitative albumin interpretation. The prior correction-dependent laboratory-ranking objective is narrowed."
+        },
+        "previousQuestionVariantIds": [
+          "question.metabolic-acidosis.albumin-corrected-anion-gap.v3.r3",
+          "question.metabolic-acidosis.albumin-corrected-anion-gap.v3.r2",
+          "question.metabolic-acidosis.albumin-corrected-anion-gap.v3",
+          "question.metabolic-acidosis.albumin-corrected-anion-gap.v3.r2.topic20261111.v2"
+        ]
+      },
+      "before": [
+        {
+          "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+          "Presentation": "{patientName}, a 45-year-old woman is stable after a hospital admission for sepsis. Outside records show metabolic acidosis during admission and a substantially reduced albumin level.",
+          "questions": [
+            {
+              "questionVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v3",
+              "Current update": null,
+              "Exhibit": null,
+              "Task": "Which interpretation avoids underestimating unmeasured anion accumulation in the admission record?",
+              "Options": [
+                "**KEY:** Albumin-corrected anion gap",
+                "Uncorrected anion gap alone",
+                "Uncorrected osmolar gap alone",
+                "Serum lactate level alone"
+              ]
+            }
+          ]
+        },
+        {
+          "caseId": "case.topic.fluids-electrolytes-acid-base.current-corrected-gap.r2",
+          "Presentation": "{patientName}, a 58-year-old woman, attends clinic to review the evolving laboratory results from her outside admission.",
+          "questions": [
+            {
+              "questionVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v3.r2.topic20261111.v2",
+              "Current update": "During the outside admission for diarrhoea while taking lactulose, peripheral chemistry and arterial specimens were collected together. Cirrhosis and persistently low albumin were already documented in the preceding clinic records.",
+              "Exhibit": {
+                "kind": "table",
+                "caption": "Constructed current panel; laboratory AG reference 8-16 mmol/L; adjustment = AG + 0.25 * (40 - albumin in g/L)",
+                "columnHeaders": [
+                  "Observation"
+                ],
+                "rowHeaders": [
+                  "Sodium / chloride (mmol/L)",
+                  "Bicarbonate (mmol/L)",
+                  "Albumin (g/L)",
+                  "Arterial pH / PCO2 (mmHg)",
+                  "Creatinine (mg/dL)"
+                ],
+                "cells": [
+                  [
+                    "140 / 112"
+                  ],
+                  [
+                    "16"
+                  ],
+                  [
+                    "16"
+                  ],
+                  [
+                    "7.32 / 32"
+                  ],
+                  [
+                    "0.9"
+                  ]
+                ]
+              },
+              "Task": "Which initial cause-directed laboratory panel should the hospital team have requested for {patientName} at that sampling time?",
+              "Options": [
+                "**KEY:** Plasma lactate and beta-hydroxybutyrate",
+                "Urine electrolytes and urine pH",
+                "Stool electrolytes and stool osmotic gap"
+              ]
+            }
+          ]
+        }
+      ],
+      "after": {
+        "Presentation": "{patientName}, a 45-year-old woman, attends clinic after a hospital admission for sepsis. You review two chemistry panels collected during that admission.",
+        "Current update": null,
+        "Exhibit": {
+          "kind": "table",
+          "caption": "Constructed serial specimens. Laboratory uncorrected-gap interval 8-16 mmol/L.",
+          "columnHeaders": [
+            "Admission",
+            "Later specimen"
+          ],
+          "rowHeaders": [
+            "Sodium (mmol/L)",
+            "Chloride (mmol/L)",
+            "Bicarbonate (mmol/L)",
+            "Albumin"
+          ],
+          "cells": [
+            [
+              "140",
+              "140"
+            ],
+            [
+              "108",
+              "110"
+            ],
+            [
+              "18",
+              "18"
+            ],
+            [
+              "Within the laboratory interval",
+              "Markedly below the laboratory interval"
+            ]
+          ]
+        },
+        "Task": "Using the potassium-excluding convention, which paired gaps and albumin effect should guide assessment for additional unmeasured acids in {patientName}'s two specimens?",
+        "Options": [
+          "**KEY:** 14 → 12 mmol/L with an albumin-related decrease",
+          "32 → 30 mmol/L with an albumin-related decrease",
+          "14 → 12 mmol/L with an albumin-related increase",
+          "32 → 30 mmol/L with an albumin-related increase"
+        ]
+      },
+      "explanation": "The potassium-excluding gaps are 140 - (108 + 18) = 14 mmol/L and 140 - (110 + 18) = 12 mmol/L. Both are within the supplied laboratory interval. Falling albumin decreases the baseline gap, so this comparison cannot determine whether an additional unmeasured-acid process is present. The initial panel did not establish an increased-gap process.",
+      "evidenceMapping": {
+        "caseObservations": "Constructed patient observations. Ages, specimen values, laboratory-specific reports and prior events describe this fictional patient and are not universal thresholds or empirical demographic weights.",
+        "clinicalTeachingClaimIds": [
+          "claim.owner-decisions.20261112.plain-gap",
+          "claim.owner-decisions.20261112.albumin-lowers-gap",
+          "claim.owner-decisions.20261112.gap-trend-limit"
+        ],
+        "optionClaims": {
+          "choice.owner-decisions.20261112.plain-gap-trend.lower-decrease.r4": [
+            "claim.owner-decisions.20261112.plain-gap",
+            "claim.owner-decisions.20261112.albumin-lowers-gap",
+            "claim.owner-decisions.20261112.gap-trend-limit"
+          ],
+          "choice.owner-decisions.20261112.plain-gap-trend.higher-decrease.r4": [
+            "claim.owner-decisions.20261112.plain-gap",
+            "claim.owner-decisions.20261112.albumin-lowers-gap"
+          ],
+          "choice.owner-decisions.20261112.plain-gap-trend.lower-increase.r4": [
+            "claim.owner-decisions.20261112.plain-gap",
+            "claim.owner-decisions.20261112.albumin-lowers-gap"
+          ],
+          "choice.owner-decisions.20261112.plain-gap-trend.higher-increase.r4": [
+            "claim.owner-decisions.20261112.plain-gap",
+            "claim.owner-decisions.20261112.albumin-lowers-gap"
+          ]
+        }
+      },
+      "rubric": {
+        "independentReviewStatus": "awaiting_single_fix_review",
+        "clinicalSignoff": "Melissa Rowland",
+        "runtimeIntegrationStatus": "pending_manager_acceptance",
+        "fixRound": 1,
+        "reviewedVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v3.r3"
+      },
+      "runtime": {
+        "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+        "clinicAdmissible": true,
+        "nativeAdmission": true,
+        "actualPatientName": "Morgan Ellis",
+        "demographics": {
+          "ageYears": 45,
+          "sexLabel": "Female"
+        }
+      },
+      "lint": []
+    },
+    {
+      "id": "G02",
+      "questionVariantId": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v2",
+      "conceptId": "concept.mh.nontriggering-plan-and-testing-sequence.v1",
+      "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+      "caseId": "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
+      "nodeId": "node.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+      "review": {
+        "path": "docs/research/question-owner-decisions-review-20261112.json",
+        "record": {
+          "id": "G02",
+          "variantId": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v2",
+          "verdict": "PASS",
+          "difficulty": {
+            "level": "Moderate",
+            "highYield": true,
+            "rationale": "Combines unresolved familial susceptibility, an uninformative genetic result, prior uneventful exposure, trigger avoidance and the distinction between preparedness and prophylactic dosing."
+          },
+          "clarityIssues": [
+            "Minor: 'MH' first appears in the options without expansion in this question's presentation or task. Spell out malignant hyperthermia at first use.",
+            "The version tests the perioperative plan well, but it does not directly discriminate proceeding now from postponing for testing because no option proposes waiting for testing. Its legacy testing-sequence identifier overstates that part of the current assessment."
+          ],
+          "cues": [
+            {
+              "severity": "Low",
+              "exactPhrases": [
+                "Trigger-free general anesthesia",
+                "Sevoflurane inhalational anesthesia",
+                "an MH response team ready",
+                "as a routine preoperative precaution"
+              ],
+              "attack": "'Trigger-free' sounds reassuring, and 'routine' can attract suspicion, but each factor appears in two options. The balanced two-by-two design prevents either phrase alone from revealing the key. Knowing why readiness is preferable to prophylaxis is still required."
+            }
+          ],
+          "fairness": {
+            "ownerDirection": "Faithful: the preparation sentence is absent from the stem. Trigger-free anesthesia with dantrolene and an MH response team is now the key, matching the owner's example. Workstation preparation and the ambulatory transfer pathway are supplied in the explanation.",
+            "ownerStyle": "Pass: Maya Chen is a named 35-year-old woman; 'Anesthetic planning' is two words; the task clearly asks her team to choose a perioperative plan for colectomy.",
+            "oneDefensibleBestAnswer": true,
+            "assessment": "The family history remains relevant despite an uninformative gene panel and previous uneventful exposure. The other options introduce a triggering volatile agent, routine prophylactic dantrolene, or both. The key is the unique best plan among those offered.",
+            "evidenceSourceIds": [
+              "source.anesthesia-analgesia-pharmacology.jsa-mh-2026",
+              "source.anesthesia-analgesia-pharmacology.emhg-perioperative-2018",
+              "source.owner-decisions.20261112.mhaus-pretesting-2018"
+            ],
+            "evidenceLimitations": "Packet records support susceptibility, trigger avoidance, readiness and avoiding routine prophylaxis. These are rare-event guidance and consensus recommendations; this review did not retrieve the external documents."
+          },
+          "suggestions": [
+            "Optional editorial polish: expand malignant hyperthermia on first use without restoring the preparation instructions to the stem.",
+            "Retain the parallel two-by-two options and the full preparation details in the explanation.",
+            "If testing sequence remains a separately scored objective, assess that decision explicitly in a separately reviewed item; do not claim this option set independently measures it."
+          ]
+        }
+      },
+      "sourceQuestionSha256": "81c420bf121c05a989d89071b2a3456fa52181470318202a8a15525f2f66f79a",
+      "sourceNodeSha256": "5a492da27188fbca0ce91538bcef3e8fa4d475b5261c3fb841ea814f028af0a3",
+      "sourceCaseSha256": "4475753753e824523546d4677e0fd7be3f6b19145121d7ed51e366660871738c",
+      "reviewStatus": "needs_clinician_review",
+      "clinicalApprovalGranted": false,
+      "ownerDirection": {
+        "ownerId": "G02",
+        "questionVariantId": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v2",
+        "conceptId": "concept.mh.nontriggering-plan-and-testing-sequence.v1",
+        "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+        "questionSha256": "81c420bf121c05a989d89071b2a3456fa52181470318202a8a15525f2f66f79a",
+        "nodeSha256": "5a492da27188fbca0ce91538bcef3e8fa4d475b5261c3fb841ea814f028af0a3",
+        "directedBy": "Melissa Rowland (clinical sign-off)",
+        "directedOn": "2026-11-12",
+        "authority": {
+          "path": "docs/research/owner-decision-answers-20261112.md",
+          "sha256": "6d58e11e4049b5bfa41e1d7dce73804bc2c40b6694ace2d78280a41bea3a473a"
+        },
+        "scope": "Owner-directed clinical/key/editorial direction; exact successor version has not received named clinician approval.",
+        "reviewStatus": "needs_clinician_review",
+        "clinicalApprovalGranted": false,
+        "lastClinicianReview": null,
+        "conceptVersion": {
+          "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+          "reviewStatus": "needs_clinician_review",
+          "aiAssistedDrafting": true,
+          "lastClinicianReview": null,
+          "id": "concept.mh.nontriggering-plan-and-testing-sequence.v1",
+          "displayName": "Plan anesthesia under unresolved familial MH susceptibility.",
+          "learningObjective": "Plan anesthesia under unresolved familial MH susceptibility.",
+          "conceptType": "management",
+          "earliestFacilityStage": 0,
+          "educationalTier": 1,
+          "meaningChange": false,
+          "versioningReason": "Same scored clinical meaning with a new exact wording version."
+        },
+        "previousQuestionVariantIds": [
+          "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1"
+        ]
+      },
+      "before": [
+        {
+          "caseId": "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
+          "Presentation": "{patientName}, a 35-year-old woman, attends clinic before elective colectomy. Her brother has a positive caffeine-halothane muscle-contracture test. Her prior sevoflurane anesthetic was uncomplicated. Her blood panel found no pathogenic variant; the family has no identified causative variant. The anesthetist proposes propofol-remifentanil anesthesia with rocuronium. The center records completed workstation preparation, a trained MH response team with dantrolene stocked, and a formal hospital-transfer agreement.",
+          "questions": [
+            {
+              "questionVariantId": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+              "Current update": null,
+              "Exhibit": null,
+              "Task": "Which recommendation should be sent to {patientName}'s anesthetist for the planned colectomy?",
+              "Options": [
+                "**KEY:** Proceed with the proposed anesthetic; arrange MH specialist assessment",
+                "Complete muscle-contracture testing before using the proposed anesthetic",
+                "Give prophylactic dantrolene before using the proposed anesthetic"
+              ]
+            }
+          ]
+        }
+      ],
+      "after": {
+        "Presentation": "{patientName}, a 35-year-old woman, attends clinic before elective colectomy. Her brother has a positive caffeine-halothane muscle-contracture test. Her previous sevoflurane anesthetic was uneventful. Her gene panel found no pathogenic variant, and no familial causative variant has been identified. She has not undergone contracture testing.",
+        "Current update": null,
+        "Exhibit": null,
+        "Task": "Which perioperative plan should {patientName}'s team arrange before her colectomy?",
+        "Options": [
+          "**KEY:** Trigger-free general anesthesia with dantrolene plus an MH response team ready",
+          "Sevoflurane inhalational anesthesia with dantrolene plus an MH response team ready",
+          "Trigger-free general anesthesia with prophylactic dantrolene dosing as a routine preoperative precaution",
+          "Sevoflurane inhalational anesthesia with prophylactic dantrolene dosing as a routine preoperative precaution"
+        ]
+      },
+      "explanation": "The family history keeps MH susceptibility in consideration despite an uninformative gene panel and an earlier uneventful exposure. Arrange trigger-free anesthesia, a prepared workstation, dantrolene availability and a trained MH response team. Include the appropriate transfer pathway for an ambulatory setting. MH specialist assessment and testing can be arranged separately. Routine prophylactic dantrolene is discouraged.",
+      "evidenceMapping": {
+        "caseObservations": "Constructed patient observations. Ages, specimen values, laboratory-specific reports and prior events describe this fictional patient and are not universal thresholds or empirical demographic weights.",
+        "clinicalTeachingClaimIds": [
+          "claim.owner-decisions.20261112.mh-family-risk",
+          "claim.owner-decisions.20261112.mh-trigger-free",
+          "claim.owner-decisions.20261112.mh-readiness",
+          "claim.owner-decisions.20261112.mh-testing-sequence",
+          "claim.owner-decisions.20261112.mh-prophylaxis"
+        ],
+        "optionClaims": {
+          "choice.owner-decisions.20261112.mh-plan.ready": [
+            "claim.owner-decisions.20261112.mh-family-risk",
+            "claim.owner-decisions.20261112.mh-trigger-free",
+            "claim.owner-decisions.20261112.mh-readiness",
+            "claim.owner-decisions.20261112.mh-testing-sequence"
+          ],
+          "choice.owner-decisions.20261112.mh-plan.volatile-ready": [
+            "claim.owner-decisions.20261112.mh-trigger-free",
+            "claim.owner-decisions.20261112.mh-readiness"
+          ],
+          "choice.owner-decisions.20261112.mh-plan.prophylaxis": [
+            "claim.owner-decisions.20261112.mh-trigger-free",
+            "claim.owner-decisions.20261112.mh-prophylaxis"
+          ],
+          "choice.owner-decisions.20261112.mh-plan.volatile-prophylaxis": [
+            "claim.owner-decisions.20261112.mh-trigger-free",
+            "claim.owner-decisions.20261112.mh-prophylaxis"
+          ]
+        }
+      },
+      "rubric": {
+        "independentReviewStatus": "pending",
+        "clinicalSignoff": "Melissa Rowland",
+        "runtimeIntegrationStatus": "pending_manager_acceptance"
+      },
+      "runtime": {
+        "caseId": "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
+        "clinicAdmissible": true,
+        "nativeAdmission": true,
+        "actualPatientName": "Maya Chen",
+        "demographics": {
+          "ageYears": 35,
+          "sexLabel": "Female"
+        }
+      },
+      "lint": []
+    },
+    {
+      "id": "G02-NEW",
+      "questionVariantId": "question.malignant-hyperthermia-susceptibility.dantrolene-readiness.v1",
+      "conceptId": "concept.mh.dantrolene-readiness.v1",
+      "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+      "caseId": "case.owner-decisions.20261112.mh-medication",
+      "nodeId": "node.owner-decisions.20261112.mh-medication",
+      "review": {
+        "path": "docs/research/question-owner-decisions-review-20261112.json",
+        "record": {
+          "id": "G02-NEW",
+          "variantId": "question.malignant-hyperthermia-susceptibility.dantrolene-readiness.v1",
+          "verdict": "PASS",
+          "difficulty": {
+            "level": "Easy recall",
+            "highYield": true,
+            "rationale": "Identifying dantrolene for an MH crisis is foundational emergency knowledge. Easy difficulty is appropriate for the owner's explicitly requested medication item."
+          },
+          "clarityIssues": [],
+          "cues": [
+            {
+              "severity": "None material",
+              "exactPhrases": [
+                "Dantrolene",
+                "Naloxone",
+                "Flumazenil",
+                "Sugammadex",
+                "if Daniel Brooks develops an MH crisis"
+              ],
+              "attack": "All choices are unqualified single medication names. The task names the emergency but does not repeat or describe the keyed drug. Selecting dantrolene requires the intended medical association."
+            }
+          ],
+          "fairness": {
+            "ownerDirection": "Faithful: adds a distinct medication-readiness question keyed to dantrolene, as requested.",
+            "ownerStyle": "Pass: Daniel Brooks is a named 41-year-old man; 'Anesthesia medication check' is three words; the task completely specifies medication readiness for an MH crisis.",
+            "oneDefensibleBestAnswer": true,
+            "assessment": "Dantrolene is uniquely appropriate for the specified crisis. The other medication names are plausible anesthetic emergency distractors but do not meet the MH-specific requirement. The item tests identification, not a stock quantity, dose or precise retrieval-time rule.",
+            "evidenceSourceIds": [
+              "source.anesthesia-analgesia-pharmacology.emhg-crisis-2024",
+              "source.owner-decisions.20261112.mhaus-pretesting-2018",
+              "source.anesthesia-analgesia-pharmacology.jsa-mh-2026"
+            ],
+            "evidenceLimitations": "Conclusion is aligned with the packet's recorded crisis-medication and readiness claims; no fresh external verification was performed."
+          },
+          "suggestions": [
+            "Accept as a foundational high-yield item rather than labeling it difficult.",
+            "Keep it separately scored from the MH planning concept and retain randomized runtime answer ordering."
+          ]
+        }
+      },
+      "sourceQuestionSha256": "24badd604c8d54334c1313d54998d54112bb86217ac55465f2df1d8f7fad2e99",
+      "sourceNodeSha256": "d8d96a7bbc7b72c440ba8c702f15aa26a0c88c7237a6fa05bfa5a54ab823fd37",
+      "sourceCaseSha256": "a794246eba565b45a41f23c5719705fb790cfd13f7819532611434e3fbfef938",
+      "reviewStatus": "needs_clinician_review",
+      "clinicalApprovalGranted": false,
+      "ownerDirection": {
+        "ownerId": "G02-NEW",
+        "questionVariantId": "question.malignant-hyperthermia-susceptibility.dantrolene-readiness.v1",
+        "conceptId": "concept.mh.dantrolene-readiness.v1",
+        "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+        "questionSha256": "24badd604c8d54334c1313d54998d54112bb86217ac55465f2df1d8f7fad2e99",
+        "nodeSha256": "d8d96a7bbc7b72c440ba8c702f15aa26a0c88c7237a6fa05bfa5a54ab823fd37",
+        "directedBy": "Melissa Rowland (clinical sign-off)",
+        "directedOn": "2026-11-12",
+        "authority": {
+          "path": "docs/research/owner-decision-answers-20261112.md",
+          "sha256": "6d58e11e4049b5bfa41e1d7dce73804bc2c40b6694ace2d78280a41bea3a473a"
+        },
+        "scope": "Owner-directed clinical/key/editorial direction; exact successor version has not received named clinician approval.",
+        "reviewStatus": "needs_clinician_review",
+        "clinicalApprovalGranted": false,
+        "lastClinicianReview": null,
+        "conceptVersion": {
+          "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+          "reviewStatus": "needs_clinician_review",
+          "aiAssistedDrafting": true,
+          "lastClinicianReview": null,
+          "id": "concept.mh.dantrolene-readiness.v1",
+          "displayName": "Identify the medication required for MH crisis readiness.",
+          "learningObjective": "Identify the medication required for MH crisis readiness.",
+          "conceptType": "applied_science",
+          "earliestFacilityStage": 0,
+          "educationalTier": 1,
+          "meaningChange": true,
+          "versioningReason": "New separately scored medication-readiness concept requested by Melissa Rowland."
+        },
+        "previousQuestionVariantIds": []
+      },
+      "before": [],
+      "after": {
+        "Presentation": "{patientName}, a 41-year-old man with malignant-hyperthermia susceptibility confirmed by contracture testing, attends clinic before elective hernia repair. The anesthetist is reviewing the facility's emergency medication supply.",
+        "Current update": null,
+        "Exhibit": null,
+        "Task": "Which medication must the team have ready for immediate administration if {patientName} develops an MH crisis?",
+        "Options": [
+          "**KEY:** Dantrolene",
+          "Naloxone",
+          "Flumazenil",
+          "Sugammadex"
+        ]
+      },
+      "explanation": "Dantrolene must be available for rapid treatment of an MH crisis. Verify its availability alongside the facility's MH response preparations before anesthesia.",
+      "evidenceMapping": {
+        "caseObservations": "Constructed patient observations. Ages, specimen values, laboratory-specific reports and prior events describe this fictional patient and are not universal thresholds or empirical demographic weights.",
+        "clinicalTeachingClaimIds": [
+          "claim.owner-decisions.20261112.mh-dantrolene",
+          "claim.owner-decisions.20261112.mh-readiness"
+        ],
+        "optionClaims": {
+          "choice.owner-decisions.20261112.mh-medication.dantrolene": [
+            "claim.owner-decisions.20261112.mh-dantrolene"
+          ],
+          "choice.owner-decisions.20261112.mh-medication.naloxone": [
+            "claim.owner-decisions.20261112.mh-dantrolene"
+          ],
+          "choice.owner-decisions.20261112.mh-medication.flumazenil": [
+            "claim.owner-decisions.20261112.mh-dantrolene"
+          ],
+          "choice.owner-decisions.20261112.mh-medication.sugammadex": [
+            "claim.owner-decisions.20261112.mh-dantrolene"
+          ]
+        }
+      },
+      "rubric": {
+        "independentReviewStatus": "pending",
+        "clinicalSignoff": "Melissa Rowland",
+        "runtimeIntegrationStatus": "pending_manager_acceptance"
+      },
+      "runtime": {
+        "caseId": "case.owner-decisions.20261112.mh-medication",
+        "clinicAdmissible": true,
+        "nativeAdmission": true,
+        "actualPatientName": "Daniel Brooks",
+        "demographics": {
+          "ageYears": 41,
+          "sexLabel": "Male"
+        }
+      },
+      "lint": []
+    },
+    {
+      "id": "TOPIC-060",
+      "questionVariantId": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v2",
+      "conceptId": "concept.rectal-cancer.selected-watch-and-wait",
+      "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+      "caseId": "case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1",
+      "nodeId": "node.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+      "review": {
+        "path": "docs/research/question-owner-decisions-review-20261112.json",
+        "record": {
+          "id": "TOPIC-060",
+          "variantId": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v2",
+          "verdict": "PASS",
+          "difficulty": {
+            "level": "Moderate",
+            "highYield": true,
+            "rationale": "Tests why a superficial negative biopsy does not override progressive concordant examination and MRI findings after rectal cancer treatment, and distinguishes oncologic resection from local excision or surveillance."
+          },
+          "clarityIssues": [
+            "Minor generalization risk: the explanation says LAR and APR 'are both total mesorectal excision operations' without repeating the low-rectal-cancer context. The corresponding atomic claim is explicitly scoped to low rectal cancer; retain that qualifier if this explanation is reused independently."
+          ],
+          "cues": [
+            {
+              "severity": "Low",
+              "exactPhrases": [
+                "has enlarged",
+                "progressive post-treatment rectal findings",
+                "Protocolized watch-and-wait follow-up within a specialist surveillance program",
+                "Oncologic rectal resection with total mesorectal excision"
+              ],
+              "attack": "Progression makes 'watch-and-wait' unattractive even to a lay reader, but it does not distinguish the two excision choices. Prior nodal disease and mesorectal oncologic coverage remain necessary discriminators. The word 'Oncologic' slightly favors the cancer-directed choice but does not alone establish its superiority to local excision."
+            }
+          ],
+          "fairness": {
+            "ownerDirection": "Faithful: retains the resection key, spells out 'total mesorectal excision', and explicitly explains that low anterior resection (LAR) and abdominoperineal resection (APR) are both such operations. The owner's explanatory requirement is fulfilled in the explanation, without overloading the option label.",
+            "ownerStyle": "Pass: Rachel Hayes is a named 57-year-old woman; 'Rectal treatment review' is three words; the task explicitly asks for the treatment plan for her progressive findings.",
+            "oneDefensibleBestAnswer": true,
+            "assessment": "In the stated fit patient with previously node-positive low rectal cancer and progressive concordant mural findings, oncologic resection is the best listed option. Local excision does not address the same mesorectal oncologic concern; progressive disease does not satisfy a clinical complete-response selection for watch-and-wait. No choice between LAR and APR is demanded without the necessary anatomical details.",
+            "evidenceSourceIds": [
+              "source.colorectal-polyps-cancer.ascrs-rectal-supplement-2023",
+              "source.colorectal-polyps-cancer.nci-rectal-pdq"
+            ],
+            "evidenceLimitations": "The packet explicitly reports that current ASCRS full-text access returned HTTP 403; its negative-biopsy claim uses inherited atomic alignment. NCI is recorded as directly checked for the operation descriptions. This PASS accepts that disclosed evidence boundary and the owner's direction; it does not certify newly authenticated full-text support for the negative-biopsy claim."
+          },
+          "suggestions": [
+            "Optional precision edit: qualify the LAR/APR sentence with 'For this low rectal cancer' to match the atomic claim and avoid universalizing the extent of mesorectal excision.",
+            "Preserve the inherited-ASCRS verification limitation in acceptance records; do not describe it as a new full-text verification.",
+            "Retain the distinction between progressive residual disease and an equivocal or improving response."
+          ]
+        }
+      },
+      "sourceQuestionSha256": "057159062f2eb3cd5752fcbb72546822370b390e56e5b0e5603621aa90f26762",
+      "sourceNodeSha256": "03118fb1805daf747961587e6f103903f679267784e7035011fe72866c6c29b5",
+      "sourceCaseSha256": "b53e20b6b4e399f83eb7a01f6b3c457c4536977cc85ecc5e757a7bb9f4052211",
+      "reviewStatus": "needs_clinician_review",
+      "clinicalApprovalGranted": false,
+      "ownerDirection": {
+        "ownerId": "TOPIC-060",
+        "questionVariantId": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v2",
+        "conceptId": "concept.rectal-cancer.selected-watch-and-wait",
+        "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+        "questionSha256": "057159062f2eb3cd5752fcbb72546822370b390e56e5b0e5603621aa90f26762",
+        "nodeSha256": "03118fb1805daf747961587e6f103903f679267784e7035011fe72866c6c29b5",
+        "directedBy": "Melissa Rowland (clinical sign-off)",
+        "directedOn": "2026-11-12",
+        "authority": {
+          "path": "docs/research/owner-decision-answers-20261112.md",
+          "sha256": "6d58e11e4049b5bfa41e1d7dce73804bc2c40b6694ace2d78280a41bea3a473a"
+        },
+        "scope": "Owner-directed clinical/key/editorial direction; exact successor version has not received named clinician approval.",
+        "reviewStatus": "needs_clinician_review",
+        "clinicalApprovalGranted": false,
+        "lastClinicianReview": null,
+        "conceptVersion": {
+          "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+          "reviewStatus": "needs_clinician_review",
+          "aiAssistedDrafting": true,
+          "lastClinicianReview": null,
+          "id": "concept.rectal-cancer.selected-watch-and-wait",
+          "displayName": "Select resection for progressive residual low rectal disease.",
+          "learningObjective": "Select resection for progressive residual low rectal disease.",
+          "conceptType": "management",
+          "earliestFacilityStage": 1,
+          "educationalTier": 1,
+          "meaningChange": false,
+          "versioningReason": "Same scored clinical meaning with a new exact wording version."
+        },
+        "previousQuestionVariantIds": [
+          "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1"
+        ]
+      },
+      "before": [
+        {
+          "caseId": "case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1",
+          "Presentation": "{patientName}, a 57-year-old woman, attends clinic after outside neoadjuvant treatment for a previously node-positive low rectal adenocarcinoma.",
+          "questions": [
+            {
+              "questionVariantId": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+              "Current update": "Treatment ended in July. In September, a firm mural nodule was palpable beneath intact mucosa; on a later October assessment it was larger. MRI shows a corresponding intermediate-T2 focus with diffusion restriction. Superficial biopsies contain scar and inflammation. Distant restaging is negative. She is fit for resection and remains interested in organ preservation.",
+              "Exhibit": null,
+              "Task": "Which treatment plan best fits {patientName}'s current rectal findings?",
+              "Options": [
+                "**KEY:** Oncologic rectal resection with total mesorectal excision",
+                "Full-thickness transanal excision of the treated site",
+                "Protocolized watch-and-wait surveillance"
+              ]
+            }
+          ]
+        }
+      ],
+      "after": {
+        "Presentation": "{patientName}, a 57-year-old woman, attends clinic after neoadjuvant therapy for a previously node-positive low rectal adenocarcinoma. On successive reassessments, a firm mural nodule beneath intact mucosa has enlarged. MRI shows a corresponding intermediate-T2 focus with diffusion restriction. Superficial biopsies contain scar and inflammation. Distant restaging is negative, and she is fit for surgery.",
+        "Current update": null,
+        "Exhibit": null,
+        "Task": "Which treatment plan best fits {patientName}'s progressive post-treatment rectal findings?",
+        "Options": [
+          "**KEY:** Oncologic rectal resection with total mesorectal excision",
+          "Full-thickness local rectal excision through a transanal approach",
+          "Protocolized watch-and-wait follow-up within a specialist surveillance program"
+        ]
+      },
+      "explanation": "Progressive palpable and MRI findings support oncologic rectal resection despite a superficial negative biopsy. Low anterior resection (LAR) and abdominoperineal resection (APR) are both total mesorectal excision operations. Tumor extent, sphincter involvement and margin feasibility determine the operation.",
+      "evidenceMapping": {
+        "caseObservations": "Constructed patient observations. Ages, specimen values, laboratory-specific reports and prior events describe this fictional patient and are not universal thresholds or empirical demographic weights.",
+        "clinicalTeachingClaimIds": [
+          "claim.owner-decisions.20261112.rectal-negative-biopsy",
+          "claim.owner-decisions.20261112.rectal-residual-surgery",
+          "claim.owner-decisions.20261112.rectal-watch-selection",
+          "claim.owner-decisions.20261112.rectal-operations"
+        ],
+        "optionClaims": {
+          "choice.owner-decisions.20261112.rectal-resection.resection": [
+            "claim.owner-decisions.20261112.rectal-negative-biopsy",
+            "claim.owner-decisions.20261112.rectal-residual-surgery",
+            "claim.owner-decisions.20261112.rectal-operations"
+          ],
+          "choice.owner-decisions.20261112.rectal-resection.local": [
+            "claim.owner-decisions.20261112.rectal-residual-surgery"
+          ],
+          "choice.owner-decisions.20261112.rectal-resection.observe": [
+            "claim.owner-decisions.20261112.rectal-watch-selection",
+            "claim.owner-decisions.20261112.rectal-residual-surgery"
+          ]
+        }
+      },
+      "rubric": {
+        "independentReviewStatus": "pending",
+        "clinicalSignoff": "Melissa Rowland",
+        "runtimeIntegrationStatus": "pending_manager_acceptance"
+      },
+      "runtime": {
+        "caseId": "case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1",
+        "clinicAdmissible": true,
+        "nativeAdmission": true,
+        "actualPatientName": "Rachel Hayes",
+        "demographics": {
+          "ageYears": 57,
+          "sexLabel": "Female"
+        }
+      },
+      "lint": []
+    },
+    {
+      "id": "TOPIC-034",
+      "questionVariantId": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v3",
+      "conceptId": "concept.bowel-ibd-malabsorption-short-bowel.crohn-postresection-endoscopy.v1",
+      "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+      "caseId": "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance-review.v2",
+      "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+      "review": {
+        "path": "docs/research/question-owner-decisions-review-20261112.json",
+        "record": {
+          "id": "TOPIC-034",
+          "variantId": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v3",
+          "verdict": "PASS",
+          "difficulty": {
+            "level": "Easy to moderate",
+            "highYield": true,
+            "rationale": "Requires interpreting an incomplete postoperative examination alongside discordant biomarkers and clinical remission. The explicit description of the incomplete scope makes it easier, but the surveillance principle remains useful."
+          },
+          "clarityIssues": [
+            "Minor: 'An outside colonoscopy was summarized as normal' followed by the procedural limitation is understandable but could more explicitly distinguish the outside summary from the actual incomplete report."
+          ],
+          "cues": [
+            {
+              "severity": "Moderate but not disqualifying",
+              "exactPhrases": [
+                "poor preparation prevented further passage",
+                "after this limited examination",
+                "Obtain ileocolonoscopy to reassess postoperative disease activity"
+              ],
+              "attack": "A reader can reason that an unfinished examination should be completed; the task repeats 'limited' and the key is the only option to obtain a scope. This reduces difficulty, but the limitation is a legitimate clinical fact needed to reject the reassuring outside report. Its anatomical significance and relationship to postoperative surveillance still require knowledge."
+            }
+          ],
+          "fairness": {
+            "ownerDirection": "Faithful: retains ileocolonoscopy and replaces record-style fragments with complete sentences in a connected presentation.",
+            "ownerStyle": "Pass: Lena Morgan is a named 36-year-old woman; 'Crohn follow-up' is two words; the task completely asks for her next follow-up plan.",
+            "oneDefensibleBestAnswer": true,
+            "assessment": "The examination stopped before the ileocolic anastomosis and neoterminal ileum, and the patient has repeatedly elevated fecal calprotectin at eight months after resection. Completing endoscopic assessment is better supported than empirically escalating infliximab or continuing biomarker-only monitoring. Distal negative biopsies and normal CRP do not resolve the unexamined postoperative sites.",
+            "evidenceSourceIds": [
+              "source.bowel-ibd-malabsorption-short-bowel.ecco-crohn-2024",
+              "source.bowel-ibd-malabsorption-short-bowel.aga-crohn-biomarkers-2023"
+            ],
+            "evidenceLimitations": "The packet records ECCO's 6-12-month surveillance interval and conditional AGA biomarker guidance. The eight-month visit fits that recorded interval. Source-alignment review only; no external retrieval."
+          },
+          "suggestions": [
+            "Optional cue reduction: remove 'after this limited examination' from the task while preserving the actual procedural reach and preparation limitation in the presentation.",
+            "Keep the repeated biomarker elevation, the unassessed postoperative anatomy and the lack of enteric pathogen; do not add unsupported calprotectin thresholds.",
+            "Retain runtime wait treatment for both ileocolonoscopy and the biomarker-monitoring testing choice during integration."
+          ]
+        }
+      },
+      "sourceQuestionSha256": "ad76b808566c62ef38608ece183dbad81c6e10cdb146edf7f367f31cc50faa3e",
+      "sourceNodeSha256": "f359c0015fd48b4ead2ad2520c1b4ba4453c4098dbfc289001b4f4af8f5a5d25",
+      "sourceCaseSha256": "6815357b688d41a0fb7ef36129cae8015c72876180f5ce68f03c4305369203aa",
+      "reviewStatus": "needs_clinician_review",
+      "clinicalApprovalGranted": false,
+      "ownerDirection": {
+        "ownerId": "TOPIC-034",
+        "questionVariantId": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v3",
+        "conceptId": "concept.bowel-ibd-malabsorption-short-bowel.crohn-postresection-endoscopy.v1",
+        "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+        "questionSha256": "ad76b808566c62ef38608ece183dbad81c6e10cdb146edf7f367f31cc50faa3e",
+        "nodeSha256": "f359c0015fd48b4ead2ad2520c1b4ba4453c4098dbfc289001b4f4af8f5a5d25",
+        "directedBy": "Melissa Rowland (clinical sign-off)",
+        "directedOn": "2026-11-12",
+        "authority": {
+          "path": "docs/research/owner-decision-answers-20261112.md",
+          "sha256": "6d58e11e4049b5bfa41e1d7dce73804bc2c40b6694ace2d78280a41bea3a473a"
+        },
+        "scope": "Owner-directed clinical/key/editorial direction; exact successor version has not received named clinician approval.",
+        "reviewStatus": "needs_clinician_review",
+        "clinicalApprovalGranted": false,
+        "lastClinicianReview": null,
+        "conceptVersion": {
+          "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+          "reviewStatus": "needs_clinician_review",
+          "aiAssistedDrafting": true,
+          "lastClinicianReview": null,
+          "id": "concept.bowel-ibd-malabsorption-short-bowel.crohn-postresection-endoscopy.v1",
+          "displayName": "Complete postoperative mucosal assessment after ileocolic Crohn resection.",
+          "learningObjective": "Complete postoperative mucosal assessment after ileocolic Crohn resection.",
+          "conceptType": "workup",
+          "earliestFacilityStage": 2,
+          "educationalTier": 1,
+          "meaningChange": false,
+          "versioningReason": "Same scored clinical meaning with a new exact wording version."
+        },
+        "previousQuestionVariantIds": [
+          "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2"
+        ]
+      },
+      "before": [
+        {
+          "caseId": "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance-review.v2",
+          "Presentation": "{patientName}, a 36-year-old woman with ileal Crohn disease, attends clinic after an outside hospitalization. The founder reviews the hospital decisions and subsequent records with her.",
+          "questions": [
+            {
+              "questionVariantId": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+              "Current update": "Eight months after ileocolic resection for Crohn disease, she feels well on maintenance infliximab. CRP is within range, but fecal calprotectin is 420 and 460 micrograms/g on two samples. Stool testing found no enteric pathogen. An outside colonoscopy was reported as normal. Its procedure record is shown below.",
+              "Exhibit": {
+                "kind": "keyValue",
+                "caption": "Original constructed teaching record. observations are fictional",
+                "items": [
+                  {
+                    "label": "Extent reached",
+                    "value": "Splenic flexure. proximal examination stopped because preparation obscured the lumen"
+                  },
+                  {
+                    "label": "Biopsy containers",
+                    "value": "Descending colon, sigmoid colon and rectum. no active inflammation"
+                  },
+                  {
+                    "label": "Current symptoms",
+                    "value": "Usual oral intake and bowel function. no postprandial distension or vomiting"
+                  }
+                ]
+              },
+              "Task": "Which next plan best fits {patientName}'s postoperative Crohn record?",
+              "Options": [
+                "**KEY:** Obtain ileocolonoscopy to reassess disease activity",
+                "Intensify infliximab maintenance treatment",
+                "Continue treatment with biomarker-only monitoring"
+              ]
+            }
+          ]
+        }
+      ],
+      "after": {
+        "Presentation": "{patientName}, a 36-year-old woman, attends clinic eight months after ileocolic resection for Crohn disease. She feels well on maintenance infliximab, with usual oral intake and bowel function. CRP is within the laboratory interval, but fecal calprotectin remains elevated on repeated samples. Stool testing found no enteric pathogen. An outside colonoscopy was summarized as normal. The procedure reached the splenic flexure, where poor preparation prevented further passage. Biopsies from the descending colon, sigmoid colon and rectum showed no active inflammation.",
+        "Current update": null,
+        "Exhibit": null,
+        "Task": "Which next plan best fits {patientName}'s Crohn follow-up after this limited examination?",
+        "Options": [
+          "**KEY:** Obtain ileocolonoscopy to reassess postoperative disease activity",
+          "Intensify infliximab maintenance therapy based on current biomarkers",
+          "Continue maintenance therapy with biomarker-based monitoring at follow-up"
+        ]
+      },
+      "explanation": "The limited distal examination leaves the ileocolic anastomosis and neoterminal ileum unassessed. Ileocolonoscopy can clarify postoperative activity before a treatment change. Symptom control and a normal CRP do not settle the repeated stool-marker abnormality.",
+      "evidenceMapping": {
+        "caseObservations": "Constructed patient observations. Ages, specimen values, laboratory-specific reports and prior events describe this fictional patient and are not universal thresholds or empirical demographic weights.",
+        "clinicalTeachingClaimIds": [
+          "claim.owner-decisions.20261112.crohn-postoperative-scope",
+          "claim.owner-decisions.20261112.crohn-marker-discordance",
+          "claim.owner-decisions.20261112.crohn-incomplete-exam"
+        ],
+        "optionClaims": {
+          "choice.owner-decisions.20261112.crohn-surveillance.scope": [
+            "claim.owner-decisions.20261112.crohn-postoperative-scope",
+            "claim.owner-decisions.20261112.crohn-marker-discordance",
+            "claim.owner-decisions.20261112.crohn-incomplete-exam"
+          ],
+          "choice.owner-decisions.20261112.crohn-surveillance.escalate": [
+            "claim.owner-decisions.20261112.crohn-marker-discordance"
+          ],
+          "choice.owner-decisions.20261112.crohn-surveillance.markers": [
+            "claim.owner-decisions.20261112.crohn-postoperative-scope",
+            "claim.owner-decisions.20261112.crohn-marker-discordance",
+            "claim.owner-decisions.20261112.crohn-incomplete-exam"
+          ]
+        }
+      },
+      "rubric": {
+        "independentReviewStatus": "pending",
+        "clinicalSignoff": "Melissa Rowland",
+        "runtimeIntegrationStatus": "pending_manager_acceptance"
+      },
+      "runtime": {
+        "caseId": "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance-review.v2",
+        "clinicAdmissible": true,
+        "nativeAdmission": true,
+        "actualPatientName": "Lena Morgan",
+        "demographics": {
+          "ageYears": 36,
+          "sexLabel": "Female"
+        }
+      },
+      "lint": []
+    },
+    {
+      "id": "TOPIC-069",
+      "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v2",
+      "conceptId": "concept.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+      "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+      "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "review": {
+        "path": "docs/research/question-owner-decisions-review-20261112.json",
+        "record": {
+          "id": "TOPIC-069",
+          "variantId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v2",
+          "verdict": "PASS",
+          "difficulty": {
+            "level": "Easy to moderate",
+            "highYield": true,
+            "rationale": "Tests adding reflux control to repair in a fit symptomatic patient with objective reflux and reassuring swallowing/motility findings. It does not test selection of a specific wrap or complex motility interpretation."
+          },
+          "clarityIssues": [
+            "Minor: 'normal junction relaxation, propagating contractions and augmentation with multiple rapid swallows' is fairly technical for an item whose options only require deciding whether to add a wrap. It is clinically coherent but contributes reading burden."
+          ],
+          "cues": [
+            {
+              "severity": "Moderate but not disqualifying",
+              "exactPhrases": [
+                "fit for reconstruction",
+                "Reduce hernia, close hiatus and add fundoplication",
+                "without a wrap",
+                "isolated gastric fixation"
+              ],
+              "attack": "The key sounds most comprehensive, while 'without' and 'isolated' label the alternatives as limited. A more-is-better heuristic favors it. However, a reader still needs the connection between fundoplication and the documented reflux; the choices represent real competing operative strategies."
+            }
+          ],
+          "fairness": {
+            "ownerDirection": "Faithful: keeps fundoplication and explicitly names a 'type III hiatal (paraesophageal) hernia' in the presentation and hiatal hernia in the task.",
+            "ownerStyle": "Pass: Helen Carter is a named 69-year-old woman; 'Recurrent anemia' is two words; the task completely asks for a repair plan in the stated reflux context.",
+            "oneDefensibleBestAnswer": true,
+            "assessment": "The documented reflux, acceptable operative fitness and absence of a stated swallowing/motility contraindication make repair with fundoplication the best listed plan. The conditional recommendation does not make every individualized alternative equally best for this constructed patient. The explanation correctly acknowledges low certainty and individualized planning.",
+            "evidenceSourceIds": [
+              "source.esophagus-gerd-barrett-hiatal.sages-hiatal-2024",
+              "source.esophagus-gerd-barrett-hiatal.wses-diaphragmatic-2023"
+            ],
+            "evidenceLimitations": "SAGES is the principal elective-repair support and is recorded as conditional/low certainty. WSES concerns the acute setting and offers a limited cross-check, not an independent high-certainty elective mandate. No external source authentication was performed."
+          },
+          "suggestions": [
+            "Optional cue polish: express alternatives as neutrally named procedures instead of emphasizing 'without' and 'isolated', while keeping their operative content unambiguous.",
+            "Retain the conditional-evidence qualification; do not turn the feedback into a universal rule that every hiatal repair requires fundoplication.",
+            "Do not infer a proven source of anemia or a mandatory specific wrap from the supplied data."
+          ]
+        }
+      },
+      "sourceQuestionSha256": "3008fc42c5e986ecdabeb22e5f277f25282b3422dc4e9dd84cf0d0537fededd1",
+      "sourceNodeSha256": "fb21cc7b0cf972ca5b35bbacea9cf0e5f5e435c1f33b9b3222c4cc15f73b4d29",
+      "sourceCaseSha256": "bbb4568ba6c439470e38a7fe75db738ba9f2b8f7ea8376ee497a35078b64dd16",
+      "reviewStatus": "needs_clinician_review",
+      "clinicalApprovalGranted": false,
+      "ownerDirection": {
+        "ownerId": "TOPIC-069",
+        "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v2",
+        "conceptId": "concept.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+        "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+        "questionSha256": "3008fc42c5e986ecdabeb22e5f277f25282b3422dc4e9dd84cf0d0537fededd1",
+        "nodeSha256": "fb21cc7b0cf972ca5b35bbacea9cf0e5f5e435c1f33b9b3222c4cc15f73b4d29",
+        "directedBy": "Melissa Rowland (clinical sign-off)",
+        "directedOn": "2026-11-12",
+        "authority": {
+          "path": "docs/research/owner-decision-answers-20261112.md",
+          "sha256": "6d58e11e4049b5bfa41e1d7dce73804bc2c40b6694ace2d78280a41bea3a473a"
+        },
+        "scope": "Owner-directed clinical/key/editorial direction; exact successor version has not received named clinician approval.",
+        "reviewStatus": "needs_clinician_review",
+        "clinicalApprovalGranted": false,
+        "lastClinicianReview": null,
+        "conceptVersion": {
+          "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+          "reviewStatus": "needs_clinician_review",
+          "aiAssistedDrafting": true,
+          "lastClinicianReview": null,
+          "id": "concept.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+          "displayName": "Plan reflux control during symptomatic paraesophageal hernia repair.",
+          "learningObjective": "Plan reflux control during symptomatic paraesophageal hernia repair.",
+          "conceptType": "management",
+          "earliestFacilityStage": 0,
+          "educationalTier": 1,
+          "meaningChange": false,
+          "versioningReason": "Same scored clinical meaning with a new exact wording version."
+        },
+        "previousQuestionVariantIds": [
+          "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1"
+        ]
+      },
+      "before": [
+        {
+          "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+          "Presentation": "{patientName}, a 69-year-old woman, visits the clinic. She reviews outside foregut records after iron deficiency recurred despite PPI treatment and iron replacement. Early satiety limits meals. She remains independent, and the outside preoperative review found no prohibitive cardiopulmonary condition.",
+          "questions": [
+            {
+              "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+              "Current update": null,
+              "Exhibit": {
+                "kind": "keyValue",
+                "caption": "Original constructed teaching record; fictional observations",
+                "items": [
+                  {
+                    "label": "Anatomy",
+                    "value": "Both the gastroesophageal junction and gastric fundus lie above the diaphragm."
+                  },
+                  {
+                    "label": "Endoscopic and anemia review",
+                    "value": "Linear gastric erosions occur at the diaphragmatic impression; the completed alternative-source workup found no other bleeding source."
+                  },
+                  {
+                    "label": "Course",
+                    "value": "Iron stores improve with replacement, then fall again during the documented medical-treatment course; meal limitation persists."
+                  }
+                ]
+              },
+              "Task": "Which plan is most appropriate to offer {patientName} for the findings and treatment course?",
+              "Options": [
+                "**KEY:** Elective anatomical hiatal hernia repair",
+                "Continued PPI and iron with observation",
+                "Limited reduction and gastric fixation"
+              ]
+            },
+            {
+              "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+              "Current update": "{patientName} returns after the outside team completes its physiological assessment.",
+              "Exhibit": {
+                "kind": "keyValue",
+                "caption": "Original constructed teaching record; fictional observations",
+                "items": [
+                  {
+                    "label": "Reflux study",
+                    "value": "Off-PPI monitoring reports acid exposure above the laboratory pathological range."
+                  },
+                  {
+                    "label": "Motor study",
+                    "value": "Normal lower-sphincter relaxation, propagating contractions and contraction augmentation with multiple rapid swallows."
+                  },
+                  {
+                    "label": "Operative review",
+                    "value": "Definitive hernia reconstruction is planned; no swallowing limitation or prohibitive operative condition is identified."
+                  }
+                ]
+              },
+              "Task": "Which repair plan best fits {patientName}'s completed preoperative assessment?",
+              "Options": [
+                "**KEY:** Reduce hernia, close hiatus and add fundoplication",
+                "Reduce hernia and close hiatus without a wrap",
+                "Reduce hernia and perform gastric fixation"
+              ]
+            }
+          ]
+        }
+      ],
+      "after": {
+        "Presentation": "{patientName}, a 69-year-old woman, attends clinic to review outside foregut testing. Iron deficiency recurred despite acid suppression and iron replacement. Early satiety limits meals. Imaging confirms a type III hiatal (paraesophageal) hernia. Off-treatment monitoring documents pathologic acid exposure. Manometry shows normal junction relaxation, propagating contractions and augmentation with multiple rapid swallows. She reports comfortable swallowing, remains independent and has been assessed as fit for reconstruction.",
+        "Current update": null,
+        "Exhibit": null,
+        "Task": "Which repair plan best fits {patientName}'s symptomatic type III hiatal hernia and completed reflux assessment?",
+        "Options": [
+          "**KEY:** Reduce hernia, close hiatus and add fundoplication",
+          "Reduce hernia and close hiatus without a wrap",
+          "Reduce hernia and perform isolated gastric fixation"
+        ]
+      },
+      "explanation": "For this symptomatic type III hiatal hernia with documented reflux and acceptable operative fitness, the supported plan includes reduction, hiatal closure and fundoplication. SAGES bases its recommendation on low-certainty evidence, so the operative plan remains individualized.",
+      "evidenceMapping": {
+        "caseObservations": "Constructed patient observations. Ages, specimen values, laboratory-specific reports and prior events describe this fictional patient and are not universal thresholds or empirical demographic weights.",
+        "clinicalTeachingClaimIds": [
+          "claim.owner-decisions.20261112.hiatal-fundoplication",
+          "claim.owner-decisions.20261112.hiatal-fixation"
+        ],
+        "optionClaims": {
+          "choice.owner-decisions.20261112.hiatal-repair.wrap": [
+            "claim.owner-decisions.20261112.hiatal-fundoplication"
+          ],
+          "choice.owner-decisions.20261112.hiatal-repair.no-wrap": [
+            "claim.owner-decisions.20261112.hiatal-fundoplication"
+          ],
+          "choice.owner-decisions.20261112.hiatal-repair.fix": [
+            "claim.owner-decisions.20261112.hiatal-fixation",
+            "claim.owner-decisions.20261112.hiatal-fundoplication"
+          ]
+        }
+      },
+      "rubric": {
+        "independentReviewStatus": "pending",
+        "clinicalSignoff": "Melissa Rowland",
+        "runtimeIntegrationStatus": "pending_manager_acceptance"
+      },
+      "runtime": {
+        "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+        "clinicAdmissible": true,
+        "nativeAdmission": true,
+        "actualPatientName": "Helen Carter",
+        "demographics": {
+          "ageYears": 69,
+          "sexLabel": "Female"
+        }
+      },
+      "lint": []
+    },
+    {
+      "id": "G04-R",
+      "questionVariantId": "question.gs028f.gynecology.symptomatic-falling-hcg-localization.v2",
+      "conceptId": "concept.early-pregnancy.location-before-disposition.v1",
+      "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+      "caseId": "case.gs028f.gynecology.c1-late-period",
+      "nodeId": "node.gs028f.gynecology.c1-late-period.1",
+      "review": {
+        "path": "docs/research/question-owner-decisions-review-20261112.json",
+        "record": {
+          "id": "G04-R",
+          "variantId": "question.gs028f.gynecology.symptomatic-falling-hcg-localization.v2",
+          "verdict": "PASS",
+          "difficulty": {
+            "level": "Moderate",
+            "highYield": true,
+            "rationale": "Tests persistent ectopic-pregnancy concern despite falling hCG and apparent stability, while presenting a plausible competing appendiceal workup and a premature invasive uterine procedure."
+          },
+          "clarityIssues": [
+            "Minor: 'does not resolve the adnexa separately' is less direct than saying the adnexa were not adequately visualized. The intended limitation is nevertheless understandable."
+          ],
+          "cues": [
+            {
+              "severity": "Low",
+              "exactPhrases": [
+                "despite the falling serum hCG",
+                "No earlier scan has confirmed an intrauterine pregnancy",
+                "Transvaginal ultrasound with gynecologic assessment",
+                "Diagnostic uterine aspiration with histopathologic assessment"
+              ],
+              "attack": "'Despite' signals that the falling hormone is not reassuring, and vaginal symptoms favor a gynecologic route. Neither clue alone distinguishes focused imaging from uterine aspiration. All options pair a diagnostic procedure with an assessment, without an explanatory qualifier attached only to the key."
+            }
+          ],
+          "fairness": {
+            "ownerDirection": "Faithful: implements the harder symptomatic falling-hCG replacement keyed to transvaginal ultrasound plus gynecologic assessment. The easy serum-hCG item's retirement is assigned to integration and is not proven by this content packet.",
+            "ownerStyle": "Pass: Ava Bennett is a named 24-year-old woman; 'Pelvic pain and spotting' is four words; the task fully specifies a same-day diagnostic priority for her pain, bleeding and falling hCG.",
+            "oneDefensibleBestAnswer": true,
+            "assessment": "The symptomatic pregnancy remains unlocated after limited transabdominal imaging. TVUS with gynecologic assessment is the best first listed plan. Appendiceal disease remains possible but does not resolve the pregnancy risk; uterine aspiration is premature as the first localization step in this record. The explanation appropriately preserves follow-up if imaging remains inconclusive rather than promising a definitive scan.",
+            "evidenceSourceIds": [
+              "source.gs028f.qld.early-pregnancy-loss.2025",
+              "source.gs028f.nhs.ectopic-pregnancy.2022"
+            ],
+            "evidenceLimitations": "Queensland supplies the principal recorded support; NHS is a modality cross-check whose overdue review date is disclosed. No exact hCG discriminatory threshold, decline rate or scan-result guarantee is introduced. Offline packet review only."
+          },
+          "suggestions": [
+            "Optional wording edit: state directly that the adnexa were not adequately visualized.",
+            "Preserve the need for specialist follow-up after an inconclusive TVUS and the distinction between a diagnostic priority and exclusion of appendicitis.",
+            "Manager acceptance should separately confirm retirement of the easy pregnancy-screening version and runtime wait estimates for all three diagnostic choices."
+          ]
+        }
+      },
+      "sourceQuestionSha256": "1f737397845c0bc58913df0f3f332b977f77048469bf5bffb47b46871bafb64b",
+      "sourceNodeSha256": "f61a6f7013ec786595b7db03caf9d803d745fd5b37aa72af2fdf3b107f6c2306",
+      "sourceCaseSha256": "3d6891806556346ce87edefe731c215b173c2c575a7aa5af60c49d19da0f69ae",
+      "reviewStatus": "needs_clinician_review",
+      "clinicalApprovalGranted": false,
+      "ownerDirection": {
+        "ownerId": "G04-R",
+        "questionVariantId": "question.gs028f.gynecology.symptomatic-falling-hcg-localization.v2",
+        "conceptId": "concept.early-pregnancy.location-before-disposition.v1",
+        "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+        "questionSha256": "1f737397845c0bc58913df0f3f332b977f77048469bf5bffb47b46871bafb64b",
+        "nodeSha256": "f61a6f7013ec786595b7db03caf9d803d745fd5b37aa72af2fdf3b107f6c2306",
+        "directedBy": "Melissa Rowland (clinical sign-off)",
+        "directedOn": "2026-11-12",
+        "authority": {
+          "path": "docs/research/owner-decision-answers-20261112.md",
+          "sha256": "6d58e11e4049b5bfa41e1d7dce73804bc2c40b6694ace2d78280a41bea3a473a"
+        },
+        "scope": "Owner-directed clinical/key/editorial direction; exact successor version has not received named clinician approval.",
+        "reviewStatus": "needs_clinician_review",
+        "clinicalApprovalGranted": false,
+        "lastClinicianReview": null,
+        "conceptVersion": {
+          "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+          "reviewStatus": "needs_clinician_review",
+          "aiAssistedDrafting": true,
+          "lastClinicianReview": null,
+          "id": "concept.early-pregnancy.location-before-disposition.v1",
+          "displayName": "Localize a symptomatic early pregnancy despite falling hCG.",
+          "learningObjective": "Localize a symptomatic early pregnancy despite falling hCG.",
+          "conceptType": "workup",
+          "earliestFacilityStage": 0,
+          "educationalTier": 1,
+          "meaningChange": true,
+          "versioningReason": "Retain the existing harder location-before-disposition concept ID. The distinct easy pregnancy-screening concept and frozen history remain archived."
+        },
+        "previousQuestionVariantIds": [
+          "question.gs028f.gynecology.pregnancy-testing-pelvic-pain.v1.r1",
+          "question.gs028f.gynecology.pregnancy-testing-pelvic-pain.v1"
+        ]
+      },
+      "before": [
+        {
+          "caseId": "case.gs028f.gynecology.c1-late-period",
+          "Presentation": "{patientName}, a 24-year-old woman, visits the clinic with a new lower abdominal ache and a late menstrual period. Pregnancy is possible, but no pregnancy test has been performed. The patient is alert, has normal current vital signs and no syncope or severe pain; clinical assessment is underway.",
+          "questions": [
+            {
+              "questionVariantId": "question.gs028f.gynecology.pregnancy-testing-pelvic-pain.v1",
+              "Current update": null,
+              "Exhibit": null,
+              "Task": "Which laboratory test should assess possible pregnancy during this patient's pelvic-pain evaluation?",
+              "Options": [
+                "**KEY:** Serum hCG measurement",
+                "Complete blood count",
+                "Serum lipase testing",
+                "Serum creatinine testing"
+              ]
+            }
+          ]
+        }
+      ],
+      "after": {
+        "Presentation": "{patientName}, a 24-year-old woman, returns to clinic with persistent right lower abdominal pain and vaginal spotting. Serum hCG is detectable and has fallen between two measurements. Her blood pressure and pulse are within the clinic's normal ranges. Examination shows focal right lower-quadrant tenderness without generalized rigidity. A limited transabdominal study shows an empty uterine cavity, does not resolve the adnexa separately and does not visualize the appendix. No earlier scan has confirmed an intrauterine pregnancy.",
+        "Current update": null,
+        "Exhibit": null,
+        "Task": "Which same-day diagnostic plan should be prioritized for {patientName}'s focal pain and bleeding despite the falling serum hCG?",
+        "Options": [
+          "**KEY:** Transvaginal ultrasound with gynecologic assessment",
+          "Appendiceal magnetic resonance imaging with general-surgical assessment",
+          "Diagnostic uterine aspiration with histopathologic assessment"
+        ]
+      },
+      "explanation": "Falling hCG does not locate a pregnancy or exclude an ectopic pregnancy. Persistent focal pain and spotting warrant same-day transvaginal ultrasound and gynecologic assessment. The specialist team must arrange follow-up if the location remains uncertain.",
+      "evidenceMapping": {
+        "caseObservations": "Constructed patient observations. Ages, specimen values, laboratory-specific reports and prior events describe this fictional patient and are not universal thresholds or empirical demographic weights.",
+        "clinicalTeachingClaimIds": [
+          "claim.owner-decisions.20261112.pregnancy-hcg-location",
+          "claim.owner-decisions.20261112.pregnancy-symptomatic-localization",
+          "claim.owner-decisions.20261112.pregnancy-aspiration-limit"
+        ],
+        "optionClaims": {
+          "choice.owner-decisions.20261112.pregnancy-location.localize": [
+            "claim.owner-decisions.20261112.pregnancy-hcg-location",
+            "claim.owner-decisions.20261112.pregnancy-symptomatic-localization"
+          ],
+          "choice.owner-decisions.20261112.pregnancy-location.appendix": [
+            "claim.owner-decisions.20261112.pregnancy-symptomatic-localization"
+          ],
+          "choice.owner-decisions.20261112.pregnancy-location.aspirate": [
+            "claim.owner-decisions.20261112.pregnancy-aspiration-limit",
+            "claim.owner-decisions.20261112.pregnancy-symptomatic-localization"
+          ]
+        }
+      },
+      "rubric": {
+        "independentReviewStatus": "pending",
+        "clinicalSignoff": "Melissa Rowland",
+        "runtimeIntegrationStatus": "pending_manager_acceptance"
+      },
+      "runtime": {
+        "caseId": "case.gs028f.gynecology.c1-late-period",
+        "clinicAdmissible": true,
+        "nativeAdmission": true,
+        "actualPatientName": "Ava Bennett",
+        "demographics": {
+          "ageYears": 24,
+          "sexLabel": "Female"
+        }
+      },
+      "lint": []
+    },
+    {
+      "id": "F13",
+      "questionVariantId": "question.topic.perioperative-risk-recovery.awake-ventilation-assessment.v4",
+      "conceptId": "concept.preoperative-osa.awake-ventilation-assessment.v1",
+      "contentVersion": "clinical.owner-decisions.2026-11-12.v2",
+      "caseId": "case.topic.perioperative-risk-recovery.awake-gas.v3",
+      "nodeId": "node.topic.perioperative-risk-recovery.awake-ventilation-assessment.v3",
+      "review": {
+        "path": "docs/research/question-owner-decisions-review2-20261112.json",
+        "record": {
+          "id": "F13",
+          "variantId": "question.topic.perioperative-risk-recovery.awake-ventilation-assessment.v4",
+          "verdict": "PASS",
+          "difficulty": {
+            "level": "Moderate clinical application",
+            "highYield": true,
+            "rationale": "Requires connecting obesity, sleep-disordered breathing and unexplained persistent bicarbonate elevation to possible chronic hypoventilation, then distinguishing carbon-dioxide measurement from sleep and oxygen-saturation testing."
+          },
+          "clarityIssues": [],
+          "cues": [
+            {
+              "severity": "Low residual",
+              "exactPhrases": [
+                "persistently raised serum bicarbonate",
+                "Arterial blood gas analysis",
+                "Attended laboratory polysomnography",
+                "Overnight pulse oximetry",
+                "He is comfortable and alert at the visit."
+              ],
+              "attack": "A reader might associate a serum abnormality with the only option explicitly saying 'blood', or choose that option as the odd modality. Neither is the former deterministic awake-versus-overnight exclusion. There is no awake/daytime target in the pre-answer text, and comfort and alertness do not logically rule out sleep studies. Recognizing why the bicarbonate pattern calls for carbon-dioxide assessment still supplies the clinical discrimination."
+            }
+          ],
+          "fairness": {
+            "ownerDirection": "Faithful: retains explicit obesity, witnessed sleep-disordered breathing and repeatedly raised bicarbonate; keys arterial blood gas; retains polysomnography and overnight oximetry as the owner-requested distractors. Suspected awake hypoventilation is explained after selection rather than handed to the learner in the task.",
+            "ownerStyle": "Pass: Aaron Patel is a named 49-year-old man at a preoperative clinic visit; 'Preoperative breathing review' has three words; the task completely asks which investigation clarifies his persistent bicarbonate elevation before major surgery.",
+            "oneDefensibleBestAnswer": true,
+            "assessment": "Within the stated pattern, ABG is the best listed investigation to determine whether arterial hypercapnia explains the biochemical finding. Polysomnography remains useful for the wider sleep-disordered-breathing assessment, while overnight oximetry cannot answer the arterial carbon-dioxide question. Feedback correctly avoids diagnosing OHS from bicarbonate alone. No unsupported numeric cutoff is introduced. JSON and Markdown agree.",
+            "priorReviewResolution": [
+              "The prior clarity/cue problem is addressed: the task asks about the significance of persistent bicarbonate elevation, not possible awake hypoventilation.",
+              "Both prior cue findings addressed: repeated awake wording is absent before the answer, and redundant overnight wording is removed from polysomnography without changing either requested distractor modality.",
+              "All four prior suggestions addressed: the clinical pattern and ABG key remain; the task is reframed; awake carbon-dioxide physiology and the continuing role of sleep testing appear in feedback; a fresh wording-only attack no longer yields the former temporal-elimination solution."
+            ],
+            "evidenceSourceIds": [
+              "source.perioperative-risk-recovery.ats-ohs-2019"
+            ],
+            "evidenceClaimIds": [
+              "claim.owner-decisions.20261112.ohs-awake-gas",
+              "claim.owner-decisions.20261112.ohs-sleep-study-role"
+            ],
+            "evidenceLimitations": "The packet records a single ATS guideline with conditional recommendations and very low-certainty evidence, used for targeted factual verification under retained copyright. This review inspected its recorded support and limitations without network access; it did not authenticate or update the guideline. The conclusion is limited to the supplied clinical context and listed alternatives, not any isolated bicarbonate elevation. PASS is not exact-version clinician approval."
+          },
+          "suggestions": [
+            "No blocking revision. Preserve the distinction between suspicion, measurement of awake hypercapnia and the broader OHS assessment.",
+            "All three choices have test timing-profile references in the JSON. Actual display of runtime wait estimates was outside this document-only review."
+          ]
+        }
+      },
+      "sourceQuestionSha256": "ef1192c2b4e2487391ac1c76abda31a6933fceb8081f3938d95de03a5b81a443",
+      "sourceNodeSha256": "7d1ecc10f2261cace730259eb0549b97a6e620c346a1b0a722cb55578693fe7a",
+      "sourceCaseSha256": "30fddff92e1672c236a040a3829adae4d5a7b7750e0c1473e5f45dbbaf3477d7",
+      "reviewStatus": "needs_clinician_review",
+      "clinicalApprovalGranted": false,
+      "ownerDirection": {
+        "ownerId": "F13",
+        "questionVariantId": "question.topic.perioperative-risk-recovery.awake-ventilation-assessment.v4",
+        "conceptId": "concept.preoperative-osa.awake-ventilation-assessment.v1",
+        "contentVersion": "clinical.owner-decisions.2026-11-12.v2",
+        "questionSha256": "ef1192c2b4e2487391ac1c76abda31a6933fceb8081f3938d95de03a5b81a443",
+        "nodeSha256": "7d1ecc10f2261cace730259eb0549b97a6e620c346a1b0a722cb55578693fe7a",
+        "directedBy": "Melissa Rowland (clinical sign-off)",
+        "directedOn": "2026-11-12",
+        "authority": {
+          "path": "docs/research/owner-decision-answers-20261112.md",
+          "sha256": "6d58e11e4049b5bfa41e1d7dce73804bc2c40b6694ace2d78280a41bea3a473a"
+        },
+        "scope": "Owner-directed clinical/key/editorial direction; exact successor version has not received named clinician approval.",
+        "reviewStatus": "needs_clinician_review",
+        "clinicalApprovalGranted": false,
+        "lastClinicianReview": null,
+        "conceptVersion": {
+          "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+          "reviewStatus": "needs_clinician_review",
+          "aiAssistedDrafting": true,
+          "lastClinicianReview": null,
+          "id": "concept.preoperative-osa.awake-ventilation-assessment.v1",
+          "displayName": "Assess awake ventilation when obesity and sleep-disordered breathing raise concern.",
+          "learningObjective": "Assess awake ventilation when obesity and sleep-disordered breathing raise concern.",
+          "conceptType": "workup",
+          "earliestFacilityStage": 0,
+          "educationalTier": 1,
+          "meaningChange": false,
+          "versioningReason": "Retain the existing harder awake-ventilation concept. The distinct easy validated-screening item may remain in fresh play."
+        },
+        "previousQuestionVariantIds": [
+          "question.topic.perioperative-risk-recovery.awake-ventilation-assessment.v3",
+          "question.preoperative-osa.validated-risk-screening.v4.r5",
+          "question.topic.perioperative-risk-recovery.awake-ventilation-assessment.v2"
+        ]
+      },
+      "before": [],
+      "after": {
+        "Presentation": "{patientName}, a 49-year-old man with obesity, attends clinic before major abdominal surgery. His partner reports loud snoring and repeated pauses in breathing during sleep. Serum bicarbonate is raised on repeated measurements. He reports no vomiting, takes no diuretic and has no known chronic lung or neuromuscular disease. He is comfortable and alert at the visit.",
+        "Current update": null,
+        "Exhibit": null,
+        "Task": "Which investigation should clarify the significance of {patientName}'s persistently raised serum bicarbonate before major surgery?",
+        "Options": [
+          "**KEY:** Arterial blood gas analysis",
+          "Attended laboratory polysomnography",
+          "Overnight pulse oximetry"
+        ]
+      },
+      "explanation": "Obesity, sleep-disordered breathing and persistently raised bicarbonate raise concern for obesity hypoventilation syndrome. Obtain an awake arterial blood gas to measure carbon dioxide. Sleep testing remains part of the wider assessment. Bicarbonate alone does not confirm awake hypoventilation.",
+      "evidenceMapping": {
+        "caseObservations": "Constructed patient observations. Ages, specimen values, laboratory-specific reports and prior events describe this fictional patient and are not universal thresholds or empirical demographic weights.",
+        "clinicalTeachingClaimIds": [
+          "claim.owner-decisions.20261112.ohs-awake-gas",
+          "claim.owner-decisions.20261112.ohs-sleep-study-role"
+        ],
+        "optionClaims": {
+          "choice.owner-decisions.20261112.awake-gas.gas": [
+            "claim.owner-decisions.20261112.ohs-awake-gas",
+            "claim.owner-decisions.20261112.ohs-sleep-study-role"
+          ],
+          "choice.owner-decisions.20261112.awake-gas.polysomnography": [
+            "claim.owner-decisions.20261112.ohs-sleep-study-role"
+          ],
+          "choice.owner-decisions.20261112.awake-gas.oximetry": [
+            "claim.owner-decisions.20261112.ohs-sleep-study-role"
+          ]
+        }
+      },
+      "rubric": {
+        "independentReviewStatus": "awaiting_single_fix_review",
+        "clinicalSignoff": "Melissa Rowland",
+        "runtimeIntegrationStatus": "pending_manager_acceptance",
+        "fixRound": 1,
+        "reviewedVariantId": "question.topic.perioperative-risk-recovery.awake-ventilation-assessment.v3"
+      },
+      "runtime": {
+        "caseId": "case.topic.perioperative-risk-recovery.awake-gas.v3",
+        "clinicAdmissible": true,
+        "nativeAdmission": true,
+        "actualPatientName": "Aaron Patel",
+        "demographics": {
+          "ageYears": 49,
+          "sexLabel": "Male"
+        }
+      },
+      "lint": []
+    },
+    {
+      "id": "G07",
+      "questionVariantId": "question.ptld.tissue-diagnosis-coordination.v4.r4",
+      "conceptId": "concept.ptld.node-specimen-and-ancillary-handling.v1",
+      "contentVersion": "clinical.owner-decisions.2026-11-12.v2",
+      "caseId": "case.gs028b.ptld.b-pathology-returned",
+      "nodeId": "node.gs028b.ptld.b-pathology-returned.1",
+      "review": {
+        "path": "docs/research/question-owner-decisions-review2-20261112.json",
+        "record": {
+          "id": "G07",
+          "variantId": "question.ptld.tissue-diagnosis-coordination.v4.r4",
+          "verdict": "PASS",
+          "difficulty": {
+            "level": "Easy to moderate procedural application",
+            "highYield": true,
+            "rationale": "The failed core and accessible node make excision relatively straightforward. Selecting fresh and fixed material still tests useful specimen-handling knowledge after removal of the explicit unfixed instruction and failed-flow detail."
+          },
+          "clarityIssues": [
+            "Minor stale feedback: 'the requested flow analysis' and 'both represented adequacy concerns' sound as though a flow request or second documented sampling failure was supplied before selection. The revised stem documents only inadequate architecture. The preferred plan remains clear, but these phrases should describe preservation of ancillary-testing capability rather than a previously stated failed or requested test."
+          ],
+          "cues": [
+            {
+              "severity": "Moderate residual; reduced from the prior blocking combination",
+              "exactPhrases": [
+                "An outside core biopsy showed atypical lymphoid cells but insufficient architecture for classification.",
+                "The team can discuss specimen allocation with the receiving hematopathology service before the procedure.",
+                "fresh flow-cytometry tissue plus fixed histology tissue",
+                "whole-specimen formalin fixation for paraffin-based studies"
+              ],
+              "attack": "A nonmedical reader can reject repeating a named failed core and may then prefer the plan offering two tissue uses, especially after 'specimen allocation'. That is a residual comprehensiveness heuristic, not direct matching to an instruction to send unfixed tissue. Neither fresh transport nor a failed flow test is disclosed in the stem. The complete two-by-two structure gives both biopsy methods both handling strategies; choosing between the remaining excision options requires knowing the value of fresh material, unless guessed."
+            }
+          ],
+          "fairness": {
+            "ownerDirection": "Faithful: keys excisional lymph-node biopsy with fresh tissue for flow cytometry and fixed tissue for histology. Feedback places allocation with the receiving hematopathology service under its agreed protocol, implementing the owner's split-specimen direction without implying arbitrary surgical division.",
+            "ownerStyle": "Pass: Nora Reed is a named 43-year-old woman attending clinic; 'Enlarging neck node' has three words; the task completely requests both the next biopsy and specimen-handling plan and spells out post-transplant lymphoproliferative disorder.",
+            "oneDefensibleBestAnswer": true,
+            "assessment": "After inadequate core architecture, an accessible superficial node and acceptable operative risk favor excision. Coordinated fresh/fixed allocation retains both architecture and the opportunity for fresh-cell ancillary testing. A repeat core may be reasonable when excision is unsuitable, but those circumstances are not stated here. Whole-node fixation can still yield diagnostic histology; it is less suitable than planned allocation, not universally incapable of diagnosing PTLD. The explanation correctly leaves viability and diagnostic adequacy to laboratory assessment. JSON and Markdown agree.",
+            "priorReviewResolution": [
+              "Both prior clarity findings addressed: the laboratory explicitly allocates tissue under its agreed protocol, and the disease name is expanded in the task.",
+              "The prior high combined cue is addressed: inadequate architecture and safe accessibility are retained for fairness, while the pre-answer unfixed-specimen instruction is removed and appears only in feedback.",
+              "The prior failed-flow phrase-matching cue is addressed by removing the failed-flow/nonviable-suspension detail from the presentation.",
+              "All four prior suggestions addressed: fair excision context, neutral coordination availability, explicit laboratory allocation in feedback and retention of the two-by-two options. The new cue attack finds residual heuristic assistance but no direct textual solution to both dimensions."
+            ],
+            "evidenceSourceIds": [
+              "source.ptld.frontiers-review-2026",
+              "source.owner-decisions.20261112.rcpath-lymphoma-2015"
+            ],
+            "evidenceClaimIds": [
+              "claim.owner-decisions.20261112.ptld-architecture",
+              "claim.owner-decisions.20261112.ptld-fresh-flow",
+              "claim.owner-decisions.20261112.ptld-fixed-histology"
+            ],
+            "evidenceLimitations": "The packet records a CC BY narrative PTLD review and an RCPath technical guideline used for targeted verification. Fresh-flow handling has a single 2015 technical source listed as under review; the local laboratory protocol remains an essential qualification. No network authentication or fresh currency check was performed. PASS does not promote this successor from needs_clinician_review or constitute named-clinician approval."
+          },
+          "suggestions": [
+            "Optional feedback cleanup: replace 'needed for the requested flow analysis' with 'needed if flow cytometry is performed', and describe the core/fixed option as repeating limited sampling while forfeiting fresh ancillary material. Do not imply a second documented failure that the revised stem no longer contains.",
+            "No blocking revision. Retain the local-protocol and viability qualifications; do not claim fresh allocation guarantees a diagnostic result or that fixation makes all PTLD assessment impossible.",
+            "All four choices reference the biopsy timing profile. Runtime timing display and answer randomization were not exercised in this review."
+          ]
+        }
+      },
+      "sourceQuestionSha256": "31c25ad22a7d4029e479d0c142a7a49af5aa8ea56a60adf5b155b09a116bfd0b",
+      "sourceNodeSha256": "5dbbebfa48f98988cd0dee5ccea495fce73446682148faea0462be42417a3434",
+      "sourceCaseSha256": "9eccdfd118cee1c19d6ae521c4249034d143415f2e458ef9710b3773eff55667",
+      "reviewStatus": "needs_clinician_review",
+      "clinicalApprovalGranted": false,
+      "ownerDirection": {
+        "ownerId": "G07",
+        "questionVariantId": "question.ptld.tissue-diagnosis-coordination.v4.r4",
+        "conceptId": "concept.ptld.node-specimen-and-ancillary-handling.v1",
+        "contentVersion": "clinical.owner-decisions.2026-11-12.v2",
+        "questionSha256": "31c25ad22a7d4029e479d0c142a7a49af5aa8ea56a60adf5b155b09a116bfd0b",
+        "nodeSha256": "5dbbebfa48f98988cd0dee5ccea495fce73446682148faea0462be42417a3434",
+        "directedBy": "Melissa Rowland (clinical sign-off)",
+        "directedOn": "2026-11-12",
+        "authority": {
+          "path": "docs/research/owner-decision-answers-20261112.md",
+          "sha256": "6d58e11e4049b5bfa41e1d7dce73804bc2c40b6694ace2d78280a41bea3a473a"
+        },
+        "scope": "Owner-directed clinical/key/editorial direction; exact successor version has not received named clinician approval.",
+        "reviewStatus": "needs_clinician_review",
+        "clinicalApprovalGranted": false,
+        "lastClinicianReview": null,
+        "conceptVersion": {
+          "contentVersion": "clinical.owner-decisions.2026-11-12.v1",
+          "reviewStatus": "needs_clinician_review",
+          "aiAssistedDrafting": true,
+          "lastClinicianReview": null,
+          "id": "concept.ptld.node-specimen-and-ancillary-handling.v1",
+          "displayName": "Plan PTLD tissue acquisition with fresh and fixed specimen allocation.",
+          "learningObjective": "Plan PTLD tissue acquisition with fresh and fixed specimen allocation.",
+          "conceptType": "workup",
+          "earliestFacilityStage": 1,
+          "educationalTier": 1,
+          "meaningChange": true,
+          "versioningReason": "Retain the harder draft node-specimen-and-ancillary-handling concept ID. The legacy coordination-only question has a distinct historical concept."
+        },
+        "previousQuestionVariantIds": [
+          "question.ptld.tissue-diagnosis-coordination.v4.r3",
+          "question.ptld.tissue-diagnosis-coordination.v4.r2",
+          "question.ptld.tissue-diagnosis-coordination.v4"
+        ]
+      },
+      "before": [
+        {
+          "caseId": "case.gs028b.ptld.b-pathology-returned",
+          "Presentation": "{patientName}, a 43-year-old woman with a liver transplant, returns after an external biopsy has confirmed and classified PTLD. The transplant and hematology teams are reviewing the pathology together.",
+          "questions": [
+            {
+              "questionVariantId": "question.ptld.tissue-diagnosis-coordination.v4",
+              "Current update": null,
+              "Exhibit": null,
+              "Task": "Which care structure is most appropriate?",
+              "Options": [
+                "**KEY:** Transplant-hematology planning",
+                "Independent medication changes in clinic",
+                "Repeat biopsy before reading pathology",
+                "Routine annual surveillance only"
+              ]
+            }
+          ]
+        }
+      ],
+      "after": {
+        "Presentation": "{patientName}, a 43-year-old woman with a liver transplant, attends clinic for an enlarging left supraclavicular lymph node. An outside core biopsy showed atypical lymphoid cells but insufficient architecture for classification. The node remains superficial and mobile. Surgical review finds acceptable operative risk. The team can discuss specimen allocation with the receiving hematopathology service before the procedure.",
+        "Current update": null,
+        "Exhibit": null,
+        "Task": "Which biopsy and specimen-handling plan should {patientName}'s team request next for suspected post-transplant lymphoproliferative disorder?",
+        "Options": [
+          "**KEY:** Excisional lymph-node biopsy with fresh flow-cytometry tissue plus fixed histology tissue",
+          "Image-guided core biopsy with fresh flow-cytometry tissue plus fixed histology tissue",
+          "Excisional lymph-node biopsy with whole-specimen formalin fixation for paraffin-based studies",
+          "Image-guided core biopsy with whole-specimen formalin fixation for paraffin-based studies"
+        ]
+      },
+      "explanation": "Coordinate the excisional biopsy and specimen allocation with the receiving hematopathology service. Send the specimen unfixed under its agreed transport protocol. The laboratory preserves a fresh portion for flow cytometry and fixes an adequate portion for histology. The accessible node and acceptable operative risk favor excision after inadequate core sampling. The laboratory must still assess viability and diagnostic adequacy.",
+      "evidenceMapping": {
+        "caseObservations": "Constructed patient observations. Ages, specimen values, laboratory-specific reports and prior events describe this fictional patient and are not universal thresholds or empirical demographic weights.",
+        "clinicalTeachingClaimIds": [
+          "claim.owner-decisions.20261112.ptld-architecture",
+          "claim.owner-decisions.20261112.ptld-fresh-flow",
+          "claim.owner-decisions.20261112.ptld-fixed-histology"
+        ],
+        "optionClaims": {
+          "choice.owner-decisions.20261112.ptld-biopsy.excision-split": [
+            "claim.owner-decisions.20261112.ptld-architecture",
+            "claim.owner-decisions.20261112.ptld-fresh-flow",
+            "claim.owner-decisions.20261112.ptld-fixed-histology"
+          ],
+          "choice.owner-decisions.20261112.ptld-biopsy.core-split": [
+            "claim.owner-decisions.20261112.ptld-architecture",
+            "claim.owner-decisions.20261112.ptld-fresh-flow",
+            "claim.owner-decisions.20261112.ptld-fixed-histology"
+          ],
+          "choice.owner-decisions.20261112.ptld-biopsy.excision-fixed": [
+            "claim.owner-decisions.20261112.ptld-fresh-flow",
+            "claim.owner-decisions.20261112.ptld-fixed-histology"
+          ],
+          "choice.owner-decisions.20261112.ptld-biopsy.core-fixed": [
+            "claim.owner-decisions.20261112.ptld-architecture",
+            "claim.owner-decisions.20261112.ptld-fresh-flow",
+            "claim.owner-decisions.20261112.ptld-fixed-histology"
+          ]
+        }
+      },
+      "rubric": {
+        "independentReviewStatus": "awaiting_single_fix_review",
+        "clinicalSignoff": "Melissa Rowland",
+        "runtimeIntegrationStatus": "pending_manager_acceptance",
+        "fixRound": 1,
+        "reviewedVariantId": "question.ptld.tissue-diagnosis-coordination.v4.r3"
+      },
+      "runtime": {
+        "caseId": "case.gs028b.ptld.b-pathology-returned",
+        "clinicAdmissible": true,
+        "nativeAdmission": true,
+        "actualPatientName": "Nora Reed",
+        "demographics": {
+          "ageYears": 43,
+          "sexLabel": "Female"
+        }
+      },
+      "lint": []
+    }
+  ],
+  "skipped": [],
+  "counts": {
+    "before": {
+      "cases": 1408,
+      "nodes": 1612,
+      "meanings": 1105,
+      "scoredMeanings": 907,
+      "acceptedRows": 772,
+      "timingRows": 2922
+    },
+    "after": {
+      "cases": 1407,
+      "nodes": 1610,
+      "meanings": 1109,
+      "scoredMeanings": 909,
+      "acceptedRows": 777,
+      "timingRows": 2932
+    }
+  },
+  "manifestSha256": "9e163b7ebe29bce3468ee34feada226e97329d700512e6342da210134f986f60",
+  "defaultSha256": "4474bd1722eef6dc7b99d64dd21d4ddf5a907ec8a1dfe3ac4c20047f51d559d8",
+  "catalogSha256": "3e0d1bb346abc1579e5c24400565c36c158d90304b60171b24b6a88f64b2ed40",
+  "timingSha256": "e4fecca521fb727c50e72f4926620a0afcb6afe660766c6b59ccb60ad2b3acd9",
+  "withdrawnAuthorityRows": [
+    {
+      "acceptanceId": "question.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+      "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+      "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+      "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+      "conceptId": "concept.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+      "sourceView": "topic-batch3-esophagus-gerd-barrett-hiatal",
+      "decision": "docs/research/question-topic-acceptance-batch3-20261111.md"
+    },
+    {
+      "acceptanceId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+      "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "conceptId": "concept.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "sourceView": "topic-batch3-esophagus-gerd-barrett-hiatal",
+      "decision": "docs/research/question-topic-acceptance-batch3-20261111.md"
+    },
+    {
+      "acceptanceId": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+      "caseId": "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance-review.v2",
+      "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+      "questionVariantId": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+      "conceptId": "concept.bowel-ibd-malabsorption-short-bowel.crohn-postresection-endoscopy.v1",
+      "sourceView": "topic-batch3-bowel-ibd-malabsorption-short-bowel",
+      "decision": "docs/research/question-topic-acceptance-batch3-20261111.md"
+    },
+    {
+      "acceptanceId": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+      "caseId": "case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1",
+      "nodeId": "node.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+      "questionVariantId": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+      "conceptId": "concept.rectal-cancer.selected-watch-and-wait",
+      "sourceView": "topic-batch4-colorectal-polyps-cancer",
+      "decision": "docs/research/question-topic-acceptance-batch4-20261111.md"
+    },
+    {
+      "acceptanceId": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+      "caseId": "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
+      "nodeId": "node.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+      "questionVariantId": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+      "conceptId": "concept.mh.nontriggering-plan-and-testing-sequence.v1",
+      "sourceView": "topic-batch4-anesthesia-analgesia-pharmacology",
+      "decision": "docs/research/question-topic-acceptance-batch4-20261111.md"
+    }
+  ],
+  "retargetedConsolidations": [
+    {
+      "before": {
+        "id": "topic-program.batch4.case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1",
+        "program": "topic-program",
+        "replaces": [
+          "case.rectal-cancer.accountant-followup",
+          "case.rectal-cancer.caregiver-followup",
+          "case.rectal-cancer.cyclist-followup",
+          "case.rectal-cancer.teacher-followup"
+        ],
+        "with": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+        "decision": "docs/research/question-topic-acceptance-batch4-20261111.md"
+      },
+      "after": {
+        "id": "topic-program.batch4.case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1",
+        "program": "topic-program",
+        "replaces": [
+          "case.rectal-cancer.accountant-followup",
+          "case.rectal-cancer.caregiver-followup",
+          "case.rectal-cancer.cyclist-followup",
+          "case.rectal-cancer.teacher-followup"
+        ],
+        "with": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v2",
+        "decision": "docs/research/question-topic-acceptance-batch4-20261111.md"
+      }
+    },
+    {
+      "before": {
+        "id": "topic-program.batch4.case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
+        "program": "topic-program",
+        "replaces": [
+          "case.gs028d.anesthesia.b-documented-susceptibility",
+          "case.gs028d.anesthesia.b-family-testing-record",
+          "case.gs028d.anesthesia.b-mh-alert-bracelet",
+          "case.gs028d.anesthesia.b-prior-mh-event"
+        ],
+        "with": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+        "decision": "docs/research/question-topic-acceptance-batch4-20261111.md"
+      },
+      "after": {
+        "id": "topic-program.batch4.case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
+        "program": "topic-program",
+        "replaces": [
+          "case.gs028d.anesthesia.b-documented-susceptibility",
+          "case.gs028d.anesthesia.b-family-testing-record",
+          "case.gs028d.anesthesia.b-mh-alert-bracelet",
+          "case.gs028d.anesthesia.b-prior-mh-event"
+        ],
+        "with": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v2",
+        "decision": "docs/research/question-topic-acceptance-batch4-20261111.md"
+      }
+    }
+  ],
+  "retirements": [
+    {
+      "caseId": "case.pediatric-gi-abdominal-wall.nec-fixed-loop-context-salvage.v1",
+      "questionVariantIds": [
+        "question.pediatric-gi-abdominal-wall.nec-fixed-loop-context.v1"
+      ],
+      "decision": "docs/research/question-topic-acceptance-batch8-20261112.md",
+      "reason": "Owner-directed retirement 2026-11-12: neonatal clinical framing is outside the accepted patient/art setting."
+    },
+    {
+      "caseId": "case.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary-salvage.v1",
+      "questionVariantIds": [
+        "question.pediatric-gi-abdominal-wall.meconium-resuscitated-boundary.v2"
+      ],
+      "decision": "docs/research/question-topic-acceptance-batch8-20261112.md",
+      "reason": "Owner-directed retirement 2026-11-12: neonatal clinical framing is outside the accepted patient/art setting."
+    },
+    {
+      "caseId": "case.topic.fluids-electrolytes-acid-base.current-corrected-gap.r2",
+      "questionVariantIds": [
+        "question.metabolic-acidosis.albumin-corrected-anion-gap.v3.r2.topic20261111.v2"
+      ],
+      "decision": "docs/research/question-topic-acceptance-batch8-20261112.md",
+      "reason": "Owner-directed anion-gap successor replaces this additional live correction-dependent predecessor.",
+      "replacementQuestionVariantId": "question.metabolic-acidosis.albumin-corrected-anion-gap.v3.r4"
+    }
+  ],
+  "wholeCaseReplacement": {
+    "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+    "reason": "The exact reviewed successor is a complete one-node case. The prior two-node case remains archived for frozen encounters.",
+    "priorQuestionVariantIds": [
+      "question.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+      "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1"
+    ]
+  },
+  "easyPregnancy": {
+    "retiredQuestionVariantId": "question.gs028f.gynecology.pregnancy-testing-pelvic-pain.v1",
+    "successorQuestionVariantId": "question.gs028f.gynecology.symptomatic-falling-hcg-localization.v2",
+    "kind": "same-case exact accepted node replacement"
+  },
+  "waitBindings": [
+    {
+      "caseId": "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance-review.v2",
+      "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+      "questionVariantId": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v3",
+      "choiceId": "choice.owner-decisions.20261112.crohn-surveillance.scope",
+      "choiceLabel": "Obtain ileocolonoscopy to reassess postoperative disease activity",
+      "timingProfileId": "timing.test.lower_endoscopy",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    },
+    {
+      "caseId": "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance-review.v2",
+      "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+      "questionVariantId": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v3",
+      "choiceId": "choice.owner-decisions.20261112.crohn-surveillance.markers",
+      "choiceLabel": "Continue maintenance therapy with biomarker-based monitoring at follow-up",
+      "timingProfileId": "timing.test.basic_labs",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    },
+    {
+      "caseId": "case.gs028f.gynecology.c1-late-period",
+      "nodeId": "node.gs028f.gynecology.c1-late-period.1",
+      "questionVariantId": "question.gs028f.gynecology.symptomatic-falling-hcg-localization.v2",
+      "choiceId": "choice.owner-decisions.20261112.pregnancy-location.localize",
+      "choiceLabel": "Transvaginal ultrasound with gynecologic assessment",
+      "timingProfileId": "timing.test.ultrasound",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    },
+    {
+      "caseId": "case.gs028f.gynecology.c1-late-period",
+      "nodeId": "node.gs028f.gynecology.c1-late-period.1",
+      "questionVariantId": "question.gs028f.gynecology.symptomatic-falling-hcg-localization.v2",
+      "choiceId": "choice.owner-decisions.20261112.pregnancy-location.appendix",
+      "choiceLabel": "Appendiceal magnetic resonance imaging with general-surgical assessment",
+      "timingProfileId": "timing.test.mri_routine",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    },
+    {
+      "caseId": "case.gs028f.gynecology.c1-late-period",
+      "nodeId": "node.gs028f.gynecology.c1-late-period.1",
+      "questionVariantId": "question.gs028f.gynecology.symptomatic-falling-hcg-localization.v2",
+      "choiceId": "choice.owner-decisions.20261112.pregnancy-location.aspirate",
+      "choiceLabel": "Diagnostic uterine aspiration with histopathologic assessment",
+      "timingProfileId": "timing.test.biopsy",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    },
+    {
+      "caseId": "case.topic.perioperative-risk-recovery.awake-gas.v3",
+      "nodeId": "node.topic.perioperative-risk-recovery.awake-ventilation-assessment.v3",
+      "questionVariantId": "question.topic.perioperative-risk-recovery.awake-ventilation-assessment.v4",
+      "choiceId": "choice.owner-decisions.20261112.awake-gas.gas",
+      "choiceLabel": "Arterial blood gas analysis",
+      "timingProfileId": "timing.test.basic_labs",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    },
+    {
+      "caseId": "case.topic.perioperative-risk-recovery.awake-gas.v3",
+      "nodeId": "node.topic.perioperative-risk-recovery.awake-ventilation-assessment.v3",
+      "questionVariantId": "question.topic.perioperative-risk-recovery.awake-ventilation-assessment.v4",
+      "choiceId": "choice.owner-decisions.20261112.awake-gas.polysomnography",
+      "choiceLabel": "Attended laboratory polysomnography",
+      "timingProfileId": "timing.test.overnight_protocol",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    },
+    {
+      "caseId": "case.topic.perioperative-risk-recovery.awake-gas.v3",
+      "nodeId": "node.topic.perioperative-risk-recovery.awake-ventilation-assessment.v3",
+      "questionVariantId": "question.topic.perioperative-risk-recovery.awake-ventilation-assessment.v4",
+      "choiceId": "choice.owner-decisions.20261112.awake-gas.oximetry",
+      "choiceLabel": "Overnight pulse oximetry",
+      "timingProfileId": "timing.test.overnight_protocol",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    },
+    {
+      "caseId": "case.gs028b.ptld.b-pathology-returned",
+      "nodeId": "node.gs028b.ptld.b-pathology-returned.1",
+      "questionVariantId": "question.ptld.tissue-diagnosis-coordination.v4.r4",
+      "choiceId": "choice.owner-decisions.20261112.ptld-biopsy.excision-split",
+      "choiceLabel": "Excisional lymph-node biopsy with fresh flow-cytometry tissue plus fixed histology tissue",
+      "timingProfileId": "timing.test.biopsy",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    },
+    {
+      "caseId": "case.gs028b.ptld.b-pathology-returned",
+      "nodeId": "node.gs028b.ptld.b-pathology-returned.1",
+      "questionVariantId": "question.ptld.tissue-diagnosis-coordination.v4.r4",
+      "choiceId": "choice.owner-decisions.20261112.ptld-biopsy.core-split",
+      "choiceLabel": "Image-guided core biopsy with fresh flow-cytometry tissue plus fixed histology tissue",
+      "timingProfileId": "timing.test.biopsy",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    },
+    {
+      "caseId": "case.gs028b.ptld.b-pathology-returned",
+      "nodeId": "node.gs028b.ptld.b-pathology-returned.1",
+      "questionVariantId": "question.ptld.tissue-diagnosis-coordination.v4.r4",
+      "choiceId": "choice.owner-decisions.20261112.ptld-biopsy.excision-fixed",
+      "choiceLabel": "Excisional lymph-node biopsy with whole-specimen formalin fixation for paraffin-based studies",
+      "timingProfileId": "timing.test.biopsy",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    },
+    {
+      "caseId": "case.gs028b.ptld.b-pathology-returned",
+      "nodeId": "node.gs028b.ptld.b-pathology-returned.1",
+      "questionVariantId": "question.ptld.tissue-diagnosis-coordination.v4.r4",
+      "choiceId": "choice.owner-decisions.20261112.ptld-biopsy.core-fixed",
+      "choiceLabel": "Image-guided core biopsy with whole-specimen formalin fixation for paraffin-based studies",
+      "timingProfileId": "timing.test.biopsy",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    }
+  ],
+  "retainedHistoricalWaitBindings": [
+    {
+      "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+      "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+      "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+      "choiceId": "choice.topic.egh.symptomatic-hernia-anemia.repair",
+      "choiceLabel": "Elective anatomical hiatal hernia repair",
+      "timingProfileId": "timing.test.clinical_procedure",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+      "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+      "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+      "choiceId": "choice.topic.egh.symptomatic-hernia-anemia.fix",
+      "choiceLabel": "Limited reduction and gastric fixation",
+      "timingProfileId": "timing.test.clinical_procedure",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+      "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "choiceId": "choice.topic.egh.repair-with-reflux-control.wrap",
+      "choiceLabel": "Reduce hernia, close hiatus and add fundoplication",
+      "timingProfileId": "timing.test.clinical_procedure",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+      "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "choiceId": "choice.topic.egh.repair-with-reflux-control.none",
+      "choiceLabel": "Reduce hernia and close hiatus without a wrap",
+      "timingProfileId": "timing.test.clinical_procedure",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+      "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "choiceId": "choice.topic.egh.repair-with-reflux-control.fix",
+      "choiceLabel": "Reduce hernia and perform gastric fixation",
+      "timingProfileId": "timing.test.clinical_procedure",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance-review.v2",
+      "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+      "questionVariantId": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+      "choiceId": "choice.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.ileocolonoscopy.v2",
+      "choiceLabel": "Obtain ileocolonoscopy to reassess disease activity",
+      "timingProfileId": "timing.test.endoscopy_with_sampling",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1",
+      "nodeId": "node.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+      "questionVariantId": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+      "choiceId": "choice.cpc.residual-despite-negative-biopsy.local.v1",
+      "choiceLabel": "Full-thickness transanal excision of the treated site",
+      "timingProfileId": "timing.test.clinical_procedure",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1",
+      "nodeId": "node.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+      "questionVariantId": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+      "choiceId": "choice.cpc.residual-despite-negative-biopsy.watch.v1",
+      "choiceLabel": "Protocolized watch-and-wait surveillance",
+      "timingProfileId": "timing.test.rectal_response_assessment",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
+      "nodeId": "node.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+      "questionVariantId": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+      "choiceId": "choice.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.test-first.v1",
+      "choiceLabel": "Complete muscle-contracture testing before using the proposed anesthetic",
+      "timingProfileId": "timing.test.advanced_diagnostic",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    }
+  ],
+  "remainingWaitBindings": [],
+  "runtimeProbes": [
+    {
+      "caseId": "case.gs028d.acid-base.b-cirrhosis-gap",
+      "clinicAdmissible": true,
+      "nativeAdmission": true,
+      "actualPatientName": "Jamie Taylor",
+      "demographics": {
+        "ageYears": 49,
+        "sexLabel": "Female"
+      }
+    },
+    {
+      "caseId": "case.gs028d.acid-base.b-sepsis-recovery-gap",
+      "clinicAdmissible": true,
+      "nativeAdmission": true,
+      "actualPatientName": "Morgan Ellis",
+      "demographics": {
+        "ageYears": 45,
+        "sexLabel": "Female"
+      }
+    },
+    {
+      "caseId": "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
+      "clinicAdmissible": true,
+      "nativeAdmission": true,
+      "actualPatientName": "Maya Chen",
+      "demographics": {
+        "ageYears": 35,
+        "sexLabel": "Female"
+      }
+    },
+    {
+      "caseId": "case.owner-decisions.20261112.mh-medication",
+      "clinicAdmissible": true,
+      "nativeAdmission": true,
+      "actualPatientName": "Daniel Brooks",
+      "demographics": {
+        "ageYears": 41,
+        "sexLabel": "Male"
+      }
+    },
+    {
+      "caseId": "case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1",
+      "clinicAdmissible": true,
+      "nativeAdmission": true,
+      "actualPatientName": "Rachel Hayes",
+      "demographics": {
+        "ageYears": 57,
+        "sexLabel": "Female"
+      }
+    },
+    {
+      "caseId": "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance-review.v2",
+      "clinicAdmissible": true,
+      "nativeAdmission": true,
+      "actualPatientName": "Lena Morgan",
+      "demographics": {
+        "ageYears": 36,
+        "sexLabel": "Female"
+      }
+    },
+    {
+      "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+      "clinicAdmissible": true,
+      "nativeAdmission": true,
+      "actualPatientName": "Helen Carter",
+      "demographics": {
+        "ageYears": 69,
+        "sexLabel": "Female"
+      }
+    },
+    {
+      "caseId": "case.gs028f.gynecology.c1-late-period",
+      "clinicAdmissible": true,
+      "nativeAdmission": true,
+      "actualPatientName": "Ava Bennett",
+      "demographics": {
+        "ageYears": 24,
+        "sexLabel": "Female"
+      }
+    },
+    {
+      "caseId": "case.topic.perioperative-risk-recovery.awake-gas.v3",
+      "clinicAdmissible": true,
+      "nativeAdmission": true,
+      "actualPatientName": "Aaron Patel",
+      "demographics": {
+        "ageYears": 49,
+        "sexLabel": "Male"
+      }
+    },
+    {
+      "caseId": "case.gs028b.ptld.b-pathology-returned",
+      "clinicAdmissible": true,
+      "nativeAdmission": true,
+      "actualPatientName": "Nora Reed",
+      "demographics": {
+        "ageYears": 43,
+        "sexLabel": "Female"
+      }
+    }
+  ],
+  "sourceInputs": [
+    {
+      "path": "packages/clinical-content/src/question-owner-decisions-20261112.ts",
+      "sha256": "09e54a34e45fa0cbb249d154686f784e8cb7bb9c97314e620224c0271da512b6"
+    },
+    {
+      "path": "docs/research/question-owner-decisions-20261112.json",
+      "sha256": "422841b6d09899c294bd7344829ab112264fa36c7d4054db37cc8369ba49907d"
+    },
+    {
+      "path": "docs/research/question-owner-decisions-20261112.md",
+      "sha256": "40b74ab6996de5cc836b6a48758fbcb6c33650e2e63e7307bdc7d1794cb53be2"
+    },
+    {
+      "path": "docs/research/owner-decision-answers-20261112.md",
+      "sha256": "6d58e11e4049b5bfa41e1d7dce73804bc2c40b6694ace2d78280a41bea3a473a"
+    },
+    {
+      "path": "docs/research/question-owner-decisions-review-20261112.json",
+      "sha256": "e22f31d75fe17ae618569c927ea164154e1e30226b3a54dad904ec76ef6ecb65"
+    },
+    {
+      "path": "docs/research/question-owner-decisions-review2-20261112.json",
+      "sha256": "376f367038e325ac4919395f7601d12c0600b5242eb83ca0eeb7f075ab694c97"
+    }
+  ],
+  "levelFiveInputs": [
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "1c825724e83c5724b8fd35ee03c14740be3cdb87068bb45e246ef3936513defa",
+      "afterSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38",
+      "recordedSha256": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c",
+      "alreadyUnboundAtIntake": true
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "65d649bad4aa9fa9940e6510670c1b02a3aaf36a27cc2f22f4f462b2e19ce733",
+      "afterSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461",
+      "recordedSha256": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4",
+      "alreadyUnboundAtIntake": true
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "ba34c6078923b5d7dc34f283fd00775f261c7561dcbf7fe65a0f1e35497e860f",
+      "afterSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9",
+      "recordedSha256": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245",
+      "alreadyUnboundAtIntake": true
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "beforeSha256": "7f06f75a9b26f6d5b196c1f69635458b3cd0467528f6dfa65636fc77922a2d77",
+      "afterSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03",
+      "recordedSha256": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639",
+      "alreadyUnboundAtIntake": true
+    }
+  ],
+  "lint": {
+    "target": {
+      "cases": 10,
+      "nodeOccurrences": 10,
+      "uniqueVariants": 10,
+      "concepts": 9,
+      "profileContexts": 20,
+      "variantsWithFindings": 0,
+      "findings": 0,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 0,
+      "approvalRecordOnlyMetadata": 0,
+      "variantsWithCompleteRationales": 10,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 7,
+        "1": 2,
+        "2": 1
+      },
+      "byOptionCount": {
+        "3": 5,
+        "4": 5
+      },
+      "variantsByRule": {}
+    },
+    "beforeWholeBank": {
+      "cases": 1408,
+      "nodeOccurrences": 1612,
+      "uniqueVariants": 1607,
+      "concepts": 907,
+      "profileContexts": 5081,
+      "variantsWithFindings": 878,
+      "findings": 1847,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 316,
+      "approvalRecordOnlyMetadata": 35,
+      "variantsWithCompleteRationales": 894,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 764,
+        "1": 374,
+        "2": 225,
+        "3": 183,
+        "4": 61
+      },
+      "byOptionCount": {
+        "3": 813,
+        "4": 794
+      },
+      "variantsByRule": {
+        "ambiguous-cervical-term": 24,
+        "availability-permission-cue": 9,
+        "case-detail-decision-cue": 1,
+        "case-detail-key-rationale-overlap": 44,
+        "convergence": 91,
+        "heterogeneous-option-category": 84,
+        "key-length-disparity": 58,
+        "key-only-phrase-overlap": 71,
+        "key-only-word-overlap": 371,
+        "key-test-name-in-context": 16,
+        "lead-in-decision-principle": 15,
+        "near-duplicate-options": 39,
+        "negative-aligned-to-distractor": 87,
+        "option-absolute": 64,
+        "option-alone": 58,
+        "option-explanation": 26,
+        "option-generic-individualization": 8,
+        "option-length-disparity": 189,
+        "option-specificity-disparity": 14,
+        "supplied-clinical-conclusion": 4,
+        "unexplained-negative-imaging": 5,
+        "unique-key-abbreviation": 104,
+        "unique-key-test-name": 30,
+        "unnamed-treatment-action": 3
+      }
+    },
+    "wholeBank": {
+      "cases": 1407,
+      "nodeOccurrences": 1610,
+      "uniqueVariants": 1605,
+      "concepts": 909,
+      "profileContexts": 5067,
+      "variantsWithFindings": 870,
+      "findings": 1824,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 314,
+      "approvalRecordOnlyMetadata": 35,
+      "variantsWithCompleteRationales": 896,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 764,
+        "1": 374,
+        "2": 225,
+        "3": 183,
+        "4": 59
+      },
+      "byOptionCount": {
+        "3": 810,
+        "4": 795
+      },
+      "variantsByRule": {
+        "ambiguous-cervical-term": 24,
+        "availability-permission-cue": 9,
+        "case-detail-key-rationale-overlap": 44,
+        "convergence": 91,
+        "heterogeneous-option-category": 84,
+        "key-length-disparity": 57,
+        "key-only-phrase-overlap": 70,
+        "key-only-word-overlap": 369,
+        "key-test-name-in-context": 16,
+        "lead-in-decision-principle": 15,
+        "near-duplicate-options": 39,
+        "negative-aligned-to-distractor": 87,
+        "option-absolute": 62,
+        "option-alone": 56,
+        "option-explanation": 26,
+        "option-generic-individualization": 8,
+        "option-length-disparity": 187,
+        "option-specificity-disparity": 14,
+        "supplied-clinical-conclusion": 4,
+        "unexplained-negative-imaging": 5,
+        "unique-key-abbreviation": 102,
+        "unique-key-test-name": 30,
+        "unnamed-treatment-action": 3
+      }
+    }
+  },
+  "constraints": {
+    "sourceFilesEdited": false,
+    "balanceOrProgressionEdited": false,
+    "clinicalProseEdited": false,
+    "git": false,
+    "network": false,
+    "agents": false,
+    "rebind": false
+  }
+}

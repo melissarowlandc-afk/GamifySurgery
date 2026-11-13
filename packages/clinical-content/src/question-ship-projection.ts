@@ -1,6 +1,7 @@
 import type { SyntheticClinicalCase, SyntheticClinicalRelease } from "./schema";
 import { QUESTION_SHIP_MANIFEST, type QuestionShipManifest } from "./question-ship-manifest";
 import { resolveQuestionShipCaseReplacements } from "./question-ship-case-replacements";
+import { resolveQuestionShipRetirements } from "./question-ship-retirements";
 
 /** The only runtime shipping boundary. Explicit catalogs remain usable.
  * Frozen encounters never pass through this projection. */
@@ -96,6 +97,9 @@ export function projectManagerAcceptedQuestions(
       learningSummary: nodes.length === 1 ? nodes[0]!.explanation : nodes.map(node => node.explanation).join(" "),
     });
   }
+  const retirements = resolveQuestionShipRetirements(cases, manifest);
+  for (const issue of retirements.issues)
+    console.warn(`[question-ship] ${issue}; retaining the affected case.`);
   // Preserve concepts used by prior frozen encounters and FSRS histories.
-  return { ...catalog, cases };
+  return { ...catalog, cases: cases.filter(clinicalCase => !retirements.retiredCaseIds.has(clinicalCase.id)) };
 }

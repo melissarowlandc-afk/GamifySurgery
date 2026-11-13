@@ -25,10 +25,10 @@ describe("M3 Build catalog and actual room presentation", () => {
     const state = createLevelFourRoomsQaState();
     const view = createPrototypePlayerView(state, null, false, null, true);
     const expected = [
-      ["room.mri", "diagnostics", "$2,760", "$8 upkeep / hr", "4 × 4 tiles", "0 / 1 built"],
-      ["room.pediatric_waiting", "patient", "$690", "$1 upkeep / hr", "4 × 4 tiles", "0 / 2 built"],
-      ["room.pediatric_examination", "patient", "$690", "$2 upkeep / hr", "3 × 3 tiles", "0 / 4 built"],
-      ["room.wound_ostomy", "services", "$1,150", "$2 upkeep / hr", "3 × 3 tiles", "0 / 2 built"],
+      ["room.mri", "diagnostics", "$3,040", "$8 upkeep / hr", "4 × 4 tiles", "0 / 1 built"],
+      ["room.pediatric_waiting", "patient", "$760", "$1 upkeep / hr", "4 × 4 tiles", "0 / 2 built"],
+      ["room.pediatric_examination", "patient", "$760", "$2 upkeep / hr", "3 × 3 tiles", "0 / 4 built"],
+      ["room.wound_ostomy", "services", "$1,270", "$2 upkeep / hr", "3 × 3 tiles", "0 / 2 built"],
     ] as const;
     for (const [id, category, costLabel, upkeepLabel, footprintLabel, builtCountLabel] of expected) {
       expect(view.roomOptions.find((room) => room.id === id)).toMatchObject({ category, costLabel, upkeepLabel, footprintLabel, builtCountLabel, enabled: true });

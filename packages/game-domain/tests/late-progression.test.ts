@@ -11,8 +11,10 @@ import { createLevelThreeReadyQaState, createLevelFourAlmostQaState } from "../.
 import { createLevelFiveStateQaContext, createLevelFiveStateQaState } from "../../../tests/fixtures/level-five-state";
 
 const context = createLevelFiveStateQaContext();
-const boundaries = [[3, 500, 550], [4, 750, 790], [5, 2000, 2300]] as const;
-const policy = () => ({ version: "late-progression.v1" as const, preservedClinicalXpGoal: null });
+const boundaries = [[3, 500, 550], [4, 750, 870], [5, 2000, 2300]] as const;
+const policy = (level = 3) => level < 4
+  ? { version: "late-progression.v1" as const, preservedClinicalXpGoal: null }
+  : { version: "late-progression.v2" as const, preservedClinicalXpGoal: null, preservedCompletedEncounterGoal: null };
 function stateAt(level: 3 | 4 | 5): GameState {
   return level === 3 ? createLevelThreeReadyQaState() : level === 4
     ? createLevelFourAlmostQaState(context) : createLevelFiveStateQaState("pre-goal", context);
@@ -24,7 +26,7 @@ const load = (state: GameState) => deserializeGameState(serializeGameState(state
 describe("modest late XP pacing and earned save goals", () => {
   it.each(boundaries)("uses the new Level %i boundary for unearned/new-stage work", (level, oldXp, newXp) => {
     let state = stateAt(level);
-    state.lateProgression = policy();
+    state.lateProgression = policy(level);
     state.clinicalXp = oldXp;
     state = load(state);
     expect(goal(state)).toMatchObject({ required: newXp, met: false });
@@ -61,7 +63,8 @@ describe("modest late XP pacing and earned save goals", () => {
     delete state.lateProgression;
     state.clinicalXp = oldXp - 1;
     state = load(state);
-    expect(state.lateProgression).toEqual(policy());
+    expect(state.lateProgression).toEqual(level === 5 ? {...policy(level), preservedCompletedEncounterGoal:
+      {facilityLevel: 5, minimumCompletedEncounters: 330}} : policy(level));
     state.clinicalXp = oldXp;
     state = load(state);
     expect(goal(state)).toMatchObject({ required: newXp, met: false });
@@ -79,9 +82,9 @@ describe("modest late XP pacing and earned save goals", () => {
     expect(advanced.facilityLevel).toBe(4);
     expect(advanced.cashCents).toBe(state.cashCents);
     expect(advanced.clinicalXp).toBe(0);
-    expect(goal(advanced)).toMatchObject({ required: 790, met: false });
+    expect(goal(advanced)).toMatchObject({ required: 870, met: false });
     advanced.clinicalXp = 750;
-    expect(goal(load(advanced))).toMatchObject({ required: 790, met: false });
+    expect(goal(load(advanced))).toMatchObject({ required: 870, met: false });
     expect(gameReducer(advanced, command, context)).toBe(advanced);
   });
 

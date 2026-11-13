@@ -49,7 +49,7 @@ describe("M6 shared desktop and phone Goals projection", () => {
     expect(view.goals).toHaveLength(3);
     for (const markup of goals(state)) {
       expect(markup).toContain("Current-level Clinical XP");
-      expect(markup).toContain("Recent patient satisfaction above 90% after 330 completed encounters");
+      expect(markup).toContain("Recent patient satisfaction above 90% after 390 completed encounters");
       expect(markup).toContain("Average staff morale at least 85");
       expect(markup).toContain("Book inspection · Locked");
       expect(markup).toContain("disabled");

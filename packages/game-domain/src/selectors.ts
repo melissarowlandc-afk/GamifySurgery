@@ -1,5 +1,5 @@
 import { settledStateQuery } from "./settledStateQueries";
-import { getProgressionClinicalXpGoal } from "./late-progression";
+import { getProgressionClinicalXpGoal, getProgressionCompletedEncounterGoal } from "./late-progression";
 import type {
   ArrivalClass,
   CurrentQuestion,
@@ -1495,11 +1495,12 @@ export function getFacilityProgressionStatus(
   const progressionSatisfaction = state.facilityLevel >= 4
     ? historicalSatisfaction ?? 100
     : effectiveSatisfaction;
-  const minimumRatedEncounters = state.facilityLevel === 5
-    ? definition.minimumCompletedEncounters : 0;
+  const completedGoal = state.facilityLevel === 5
+    ? getProgressionCompletedEncounterGoal(state, definition.minimumCompletedEncounters) : null;
+  const minimumRatedEncounters = completedGoal?.required ?? 0;
   const earnedInspectionUnlock = Boolean(state.levelFive?.progress.inspectionUnlocked);
   const hasEstablishedSatisfaction = minimumRatedEncounters === 0 || earnedInspectionUnlock ||
-    (completedEncounters >= minimumRatedEncounters && historicalSatisfaction !== null);
+    (completedGoal?.met === true && historicalSatisfaction !== null);
   const averageStaffMorale = state.facilityLevel === 5 ? getAverageEffectiveStaffMorale(state) : null;
   const accessValidation = getFacilityAccessValidation(state, context);
   const requiredRooms = definition.requiredRoomDefinitionIds.map(

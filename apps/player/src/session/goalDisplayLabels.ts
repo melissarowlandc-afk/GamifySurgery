@@ -4,6 +4,7 @@ import type { ProgressionGoalView } from "../ui/types";
 const SHORT_GOAL_LABELS: Readonly<Record<string, string>> = {
   "Recent patient satisfaction above 90%": "Recent patient satisfaction",
   "Recent patient satisfaction above 90% after 330 completed encounters": "Rating after 330 encounters",
+  "Recent patient satisfaction above 90% after 390 completed encounters": "Rating after 390 encounters",
   "Complete both tutorial patients": "Both tutorial patients",
   "Complete your first endoscopy": "First endoscopy",
   "Complete your first ambulatory operation": "First ambulatory operation",

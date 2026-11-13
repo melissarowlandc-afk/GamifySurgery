@@ -1,0 +1,840 @@
+{
+  "capturePath": "tools/question-quality/fixtures/question-topic-acceptance-batch8-source-migration-20261112.json",
+  "capturedFixtureSha256": "423acf43ce6785fde6d0d3f7589945edb104c32f0e58533769dd434fe27ceb30",
+  "testSupportSha256": "56ba3f6694449272600f5490935f1b9e8950f30dd01bb5236ec93b5cfcac09ec",
+  "paths": [
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "mainBeforeSha256": "f1adc5282049d52dd832e6503666805f77a291b7f11c0323c49b37fd35dc6e6b",
+      "mainAfterSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22",
+      "requiredReleaseSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "mainBeforeSha256": "1c825724e83c5724b8fd35ee03c14740be3cdb87068bb45e246ef3936513defa",
+      "mainAfterSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38",
+      "requiredReleaseSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "mainBeforeSha256": "65d649bad4aa9fa9940e6510670c1b02a3aaf36a27cc2f22f4f462b2e19ce733",
+      "mainAfterSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461",
+      "requiredReleaseSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "mainBeforeSha256": "ba34c6078923b5d7dc34f283fd00775f261c7561dcbf7fe65a0f1e35497e860f",
+      "mainAfterSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9",
+      "requiredReleaseSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "mainBeforeSha256": "62fdb86a02257daa5121861b6373d74ba91da9b1b3d2586b23e3f5e4bd05d8d7",
+      "mainAfterSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c",
+      "requiredReleaseSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "mainBeforeSha256": "6f0ff208d7c38e855878a456b96b4d2c949983908fa05031a79f6ec2e342054c",
+      "mainAfterSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298",
+      "requiredReleaseSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298"
+    },
+    {
+      "path": "packages/clinical-content/src/pilot-content.test.ts",
+      "mainBeforeSha256": "6647ff5437c1d4efbe062cf3e9261f92c42031d1b682e22877102d5c22fb0f9b",
+      "mainAfterSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604",
+      "requiredReleaseSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch7-acceptance-test-support.ts",
+      "mainBeforeSha256": "96fad2d37b13187540866cbd77177751b8cd24d1b1a150d28e9628073a18bf1f",
+      "mainAfterSha256": "40a265f0c23e38c224d740b449192604b18659f971be03fae3095fcdebf8ead5",
+      "requiredReleaseSha256": "72ce746b5a5974e63a283f97521bee1a86e81d0dadbc0e694ca52806d1038f38"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch7-acceptance-20261112.test.ts",
+      "mainBeforeSha256": "58751f8e85442179a1f0ef898ec925fd4ba3068fd8671138d2bbf2098115407d",
+      "mainAfterSha256": "a67e4a429bfc944300f7dd23a40429fb2370da5f1cfee5e87eef9dde9f0f1293",
+      "requiredReleaseSha256": "1b99da22f4ae679c037926dde68185ee72f5bd9a45429be7acb78c02328f6dea"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "mainBeforeSha256": "7f06f75a9b26f6d5b196c1f69635458b3cd0467528f6dfa65636fc77922a2d77",
+      "mainAfterSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03",
+      "requiredReleaseSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03"
+    },
+    {
+      "path": "packages/game-domain/tests/question-ship-gate.test.ts",
+      "mainBeforeSha256": "fc8df13b9e46545e32fe43ee1323245d41dbd3cdd49608be20da9b8048e42ec9",
+      "mainAfterSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048",
+      "requiredReleaseSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch6-acceptance-test-support.ts",
+      "mainBeforeSha256": "0b3397521262c274e12eaf5eeddd4bf43d2e390a0da0787bba2e0daf538a186e",
+      "mainAfterSha256": "c4296d23ff0d65fd980517ee1a5aa7aa048810e714c6e7d3573ad859e96b94b8",
+      "requiredReleaseSha256": "70a3856269a45bb72210c9a130b5535e10a539d0c09abacc9c24a8f21a126e67"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+      "mainBeforeSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+      "mainAfterSha256": "87463d6786d16e6b652b2bb44c0eac10605061cd8c038b8732a25b772a3b63ca",
+      "requiredReleaseSha256": "78458c9e08b270bbb13369cdaea8f72fdad0f48816145787a5ae414ccd290e5b"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+      "mainBeforeSha256": "7351387a9b382f661eb443fce76e45b820aaa4f6183b88a470a2cb44ab958742",
+      "mainAfterSha256": "bef5a769fc044b501d2640ef3e4001365c4d665e359a73aa356b63f39f1aa3e6",
+      "requiredReleaseSha256": "d3271388e9669b5e153a2ec0a584a00ef614e9e30b6818c8a8326c0e04a34411"
+    },
+    {
+      "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+      "mainBeforeSha256": "0ad5916f4a81dc90fcb624c41435ee1634c69a254784cdf43f9bf9fff4297b80",
+      "mainAfterSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325",
+      "requiredReleaseSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325"
+    },
+    {
+      "path": "packages/game-domain/tests/topic-runtime-bindings.test.ts",
+      "mainBeforeSha256": "7c014fa2e957165e71791285efdfaa8ac822b610e63a3f27a782c8a11b799f87",
+      "mainAfterSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8",
+      "requiredReleaseSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8"
+    }
+  ],
+  "authorizationHistory": [
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port36-initial",
+      "priorFixtureSha256": null,
+      "priorPaths": [],
+      "reason": "Exact release hunk postimages; preserve all immutable source captures and explicit excluded-authoring presence checks."
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port36-closure",
+      "priorFixtureSha256": "f6d0c8d2d7cef8a000d3911ce0bfbbd17cb8c04b903c081c8eb8ad45c07daf97",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "f1adc5282049d52dd832e6503666805f77a291b7f11c0323c49b37fd35dc6e6b",
+          "mainAfterSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22",
+          "requiredReleaseSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "1c825724e83c5724b8fd35ee03c14740be3cdb87068bb45e246ef3936513defa",
+          "mainAfterSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38",
+          "requiredReleaseSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "65d649bad4aa9fa9940e6510670c1b02a3aaf36a27cc2f22f4f462b2e19ce733",
+          "mainAfterSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461",
+          "requiredReleaseSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "ba34c6078923b5d7dc34f283fd00775f261c7561dcbf7fe65a0f1e35497e860f",
+          "mainAfterSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9",
+          "requiredReleaseSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "62fdb86a02257daa5121861b6373d74ba91da9b1b3d2586b23e3f5e4bd05d8d7",
+          "mainAfterSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c",
+          "requiredReleaseSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "6f0ff208d7c38e855878a456b96b4d2c949983908fa05031a79f6ec2e342054c",
+          "mainAfterSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298",
+          "requiredReleaseSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298"
+        },
+        {
+          "path": "packages/clinical-content/src/pilot-content.test.ts",
+          "mainBeforeSha256": "6647ff5437c1d4efbe062cf3e9261f92c42031d1b682e22877102d5c22fb0f9b",
+          "mainAfterSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604",
+          "requiredReleaseSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-test-support.ts",
+          "mainBeforeSha256": "96fad2d37b13187540866cbd77177751b8cd24d1b1a150d28e9628073a18bf1f",
+          "mainAfterSha256": "40a265f0c23e38c224d740b449192604b18659f971be03fae3095fcdebf8ead5",
+          "requiredReleaseSha256": "edaabfddeb8a9b640395ce294ded57103f3faaef3fca08b951cf0fbcbce8fd28"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-20261112.test.ts",
+          "mainBeforeSha256": "58751f8e85442179a1f0ef898ec925fd4ba3068fd8671138d2bbf2098115407d",
+          "mainAfterSha256": "a67e4a429bfc944300f7dd23a40429fb2370da5f1cfee5e87eef9dde9f0f1293",
+          "requiredReleaseSha256": "cfbcd28e1ce5c2b56716dcb540353552131185d840d161043c3a4efafdc43bbf"
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "7f06f75a9b26f6d5b196c1f69635458b3cd0467528f6dfa65636fc77922a2d77",
+          "mainAfterSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03",
+          "requiredReleaseSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03"
+        },
+        {
+          "path": "packages/game-domain/tests/question-ship-gate.test.ts",
+          "mainBeforeSha256": "fc8df13b9e46545e32fe43ee1323245d41dbd3cdd49608be20da9b8048e42ec9",
+          "mainAfterSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048",
+          "requiredReleaseSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch6-acceptance-test-support.ts",
+          "mainBeforeSha256": "0b3397521262c274e12eaf5eeddd4bf43d2e390a0da0787bba2e0daf538a186e",
+          "mainAfterSha256": "c4296d23ff0d65fd980517ee1a5aa7aa048810e714c6e7d3573ad859e96b94b8",
+          "requiredReleaseSha256": "70a3856269a45bb72210c9a130b5535e10a539d0c09abacc9c24a8f21a126e67"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "mainAfterSha256": "87463d6786d16e6b652b2bb44c0eac10605061cd8c038b8732a25b772a3b63ca",
+          "requiredReleaseSha256": "216bd276da3cb46e9e15145291d122fd95a10a718137fa148146059bcdbe86b0"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "7351387a9b382f661eb443fce76e45b820aaa4f6183b88a470a2cb44ab958742",
+          "mainAfterSha256": "bef5a769fc044b501d2640ef3e4001365c4d665e359a73aa356b63f39f1aa3e6",
+          "requiredReleaseSha256": "4cb30f694928ba676e86d655bcf6653c6c8663e4f3ff0621a662f963e3b35209"
+        },
+        {
+          "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+          "mainBeforeSha256": "0ad5916f4a81dc90fcb624c41435ee1634c69a254784cdf43f9bf9fff4297b80",
+          "mainAfterSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325",
+          "requiredReleaseSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325"
+        },
+        {
+          "path": "packages/game-domain/tests/topic-runtime-bindings.test.ts",
+          "mainBeforeSha256": "7c014fa2e957165e71791285efdfaa8ac822b610e63a3f27a782c8a11b799f87",
+          "mainAfterSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8",
+          "requiredReleaseSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8"
+        }
+      ],
+      "reason": "Exact release hunk postimages; preserve all immutable source captures and explicit excluded-authoring presence checks."
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port36-final-epoch",
+      "priorFixtureSha256": "4cbe1fbe4eb308cb6d8bcabb640bbac5ebe05de9412c332309f0775820713110",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "f1adc5282049d52dd832e6503666805f77a291b7f11c0323c49b37fd35dc6e6b",
+          "mainAfterSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22",
+          "requiredReleaseSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "1c825724e83c5724b8fd35ee03c14740be3cdb87068bb45e246ef3936513defa",
+          "mainAfterSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38",
+          "requiredReleaseSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "65d649bad4aa9fa9940e6510670c1b02a3aaf36a27cc2f22f4f462b2e19ce733",
+          "mainAfterSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461",
+          "requiredReleaseSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "ba34c6078923b5d7dc34f283fd00775f261c7561dcbf7fe65a0f1e35497e860f",
+          "mainAfterSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9",
+          "requiredReleaseSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "62fdb86a02257daa5121861b6373d74ba91da9b1b3d2586b23e3f5e4bd05d8d7",
+          "mainAfterSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c",
+          "requiredReleaseSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "6f0ff208d7c38e855878a456b96b4d2c949983908fa05031a79f6ec2e342054c",
+          "mainAfterSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298",
+          "requiredReleaseSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298"
+        },
+        {
+          "path": "packages/clinical-content/src/pilot-content.test.ts",
+          "mainBeforeSha256": "6647ff5437c1d4efbe062cf3e9261f92c42031d1b682e22877102d5c22fb0f9b",
+          "mainAfterSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604",
+          "requiredReleaseSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-test-support.ts",
+          "mainBeforeSha256": "96fad2d37b13187540866cbd77177751b8cd24d1b1a150d28e9628073a18bf1f",
+          "mainAfterSha256": "40a265f0c23e38c224d740b449192604b18659f971be03fae3095fcdebf8ead5",
+          "requiredReleaseSha256": "72ce746b5a5974e63a283f97521bee1a86e81d0dadbc0e694ca52806d1038f38"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-20261112.test.ts",
+          "mainBeforeSha256": "58751f8e85442179a1f0ef898ec925fd4ba3068fd8671138d2bbf2098115407d",
+          "mainAfterSha256": "a67e4a429bfc944300f7dd23a40429fb2370da5f1cfee5e87eef9dde9f0f1293",
+          "requiredReleaseSha256": "378390c1791844c6ab5ec3008cc43e5d7d05b3dd2853c7df70f4b755e9d1fcdf"
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "7f06f75a9b26f6d5b196c1f69635458b3cd0467528f6dfa65636fc77922a2d77",
+          "mainAfterSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03",
+          "requiredReleaseSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03"
+        },
+        {
+          "path": "packages/game-domain/tests/question-ship-gate.test.ts",
+          "mainBeforeSha256": "fc8df13b9e46545e32fe43ee1323245d41dbd3cdd49608be20da9b8048e42ec9",
+          "mainAfterSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048",
+          "requiredReleaseSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch6-acceptance-test-support.ts",
+          "mainBeforeSha256": "0b3397521262c274e12eaf5eeddd4bf43d2e390a0da0787bba2e0daf538a186e",
+          "mainAfterSha256": "c4296d23ff0d65fd980517ee1a5aa7aa048810e714c6e7d3573ad859e96b94b8",
+          "requiredReleaseSha256": "70a3856269a45bb72210c9a130b5535e10a539d0c09abacc9c24a8f21a126e67"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "mainAfterSha256": "87463d6786d16e6b652b2bb44c0eac10605061cd8c038b8732a25b772a3b63ca",
+          "requiredReleaseSha256": "216bd276da3cb46e9e15145291d122fd95a10a718137fa148146059bcdbe86b0"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "7351387a9b382f661eb443fce76e45b820aaa4f6183b88a470a2cb44ab958742",
+          "mainAfterSha256": "bef5a769fc044b501d2640ef3e4001365c4d665e359a73aa356b63f39f1aa3e6",
+          "requiredReleaseSha256": "1c234050acbb6f73f2d40a2ed965e0ebfd3c3e1d8f9705e68bff027fd83892b7"
+        },
+        {
+          "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+          "mainBeforeSha256": "0ad5916f4a81dc90fcb624c41435ee1634c69a254784cdf43f9bf9fff4297b80",
+          "mainAfterSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325",
+          "requiredReleaseSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325"
+        },
+        {
+          "path": "packages/game-domain/tests/topic-runtime-bindings.test.ts",
+          "mainBeforeSha256": "7c014fa2e957165e71791285efdfaa8ac822b610e63a3f27a782c8a11b799f87",
+          "mainAfterSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8",
+          "requiredReleaseSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8"
+        }
+      ],
+      "reason": "Exact release hunk postimages; preserve all immutable source captures and explicit excluded-authoring presence checks."
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port36-admission",
+      "priorFixtureSha256": "0405555616ae656922a47752f86a614a18b7564fa31a7ce6a0af5634f068a182",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "f1adc5282049d52dd832e6503666805f77a291b7f11c0323c49b37fd35dc6e6b",
+          "mainAfterSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22",
+          "requiredReleaseSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "1c825724e83c5724b8fd35ee03c14740be3cdb87068bb45e246ef3936513defa",
+          "mainAfterSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38",
+          "requiredReleaseSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "65d649bad4aa9fa9940e6510670c1b02a3aaf36a27cc2f22f4f462b2e19ce733",
+          "mainAfterSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461",
+          "requiredReleaseSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "ba34c6078923b5d7dc34f283fd00775f261c7561dcbf7fe65a0f1e35497e860f",
+          "mainAfterSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9",
+          "requiredReleaseSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "62fdb86a02257daa5121861b6373d74ba91da9b1b3d2586b23e3f5e4bd05d8d7",
+          "mainAfterSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c",
+          "requiredReleaseSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "6f0ff208d7c38e855878a456b96b4d2c949983908fa05031a79f6ec2e342054c",
+          "mainAfterSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298",
+          "requiredReleaseSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298"
+        },
+        {
+          "path": "packages/clinical-content/src/pilot-content.test.ts",
+          "mainBeforeSha256": "6647ff5437c1d4efbe062cf3e9261f92c42031d1b682e22877102d5c22fb0f9b",
+          "mainAfterSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604",
+          "requiredReleaseSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-test-support.ts",
+          "mainBeforeSha256": "96fad2d37b13187540866cbd77177751b8cd24d1b1a150d28e9628073a18bf1f",
+          "mainAfterSha256": "40a265f0c23e38c224d740b449192604b18659f971be03fae3095fcdebf8ead5",
+          "requiredReleaseSha256": "72ce746b5a5974e63a283f97521bee1a86e81d0dadbc0e694ca52806d1038f38"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-20261112.test.ts",
+          "mainBeforeSha256": "58751f8e85442179a1f0ef898ec925fd4ba3068fd8671138d2bbf2098115407d",
+          "mainAfterSha256": "a67e4a429bfc944300f7dd23a40429fb2370da5f1cfee5e87eef9dde9f0f1293",
+          "requiredReleaseSha256": "3dcc8591554a587f4a13c659523d18d522000f2706abb6954e2d58f7bc775dc3"
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "7f06f75a9b26f6d5b196c1f69635458b3cd0467528f6dfa65636fc77922a2d77",
+          "mainAfterSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03",
+          "requiredReleaseSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03"
+        },
+        {
+          "path": "packages/game-domain/tests/question-ship-gate.test.ts",
+          "mainBeforeSha256": "fc8df13b9e46545e32fe43ee1323245d41dbd3cdd49608be20da9b8048e42ec9",
+          "mainAfterSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048",
+          "requiredReleaseSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch6-acceptance-test-support.ts",
+          "mainBeforeSha256": "0b3397521262c274e12eaf5eeddd4bf43d2e390a0da0787bba2e0daf538a186e",
+          "mainAfterSha256": "c4296d23ff0d65fd980517ee1a5aa7aa048810e714c6e7d3573ad859e96b94b8",
+          "requiredReleaseSha256": "70a3856269a45bb72210c9a130b5535e10a539d0c09abacc9c24a8f21a126e67"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "mainAfterSha256": "87463d6786d16e6b652b2bb44c0eac10605061cd8c038b8732a25b772a3b63ca",
+          "requiredReleaseSha256": "b3acb658c5fa33363175253b0b9bb4b98ddf077c98bd15476e2f01d4ec19a0a2"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "7351387a9b382f661eb443fce76e45b820aaa4f6183b88a470a2cb44ab958742",
+          "mainAfterSha256": "bef5a769fc044b501d2640ef3e4001365c4d665e359a73aa356b63f39f1aa3e6",
+          "requiredReleaseSha256": "53fda18f684f34f9057d664d458143b79e81cf39bb07ee36c6b61a40d8107e38"
+        },
+        {
+          "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+          "mainBeforeSha256": "0ad5916f4a81dc90fcb624c41435ee1634c69a254784cdf43f9bf9fff4297b80",
+          "mainAfterSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325",
+          "requiredReleaseSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325"
+        },
+        {
+          "path": "packages/game-domain/tests/topic-runtime-bindings.test.ts",
+          "mainBeforeSha256": "7c014fa2e957165e71791285efdfaa8ac822b610e63a3f27a782c8a11b799f87",
+          "mainAfterSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8",
+          "requiredReleaseSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8"
+        }
+      ],
+      "reason": "Exact release hunk postimages; preserve all immutable source captures and explicit excluded-authoring presence checks."
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port36-evidence",
+      "priorFixtureSha256": "dee757259fa245ae02237e9a491c059ab205365e3fb011affabb290c5c38b9b5",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "f1adc5282049d52dd832e6503666805f77a291b7f11c0323c49b37fd35dc6e6b",
+          "mainAfterSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22",
+          "requiredReleaseSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "1c825724e83c5724b8fd35ee03c14740be3cdb87068bb45e246ef3936513defa",
+          "mainAfterSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38",
+          "requiredReleaseSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "65d649bad4aa9fa9940e6510670c1b02a3aaf36a27cc2f22f4f462b2e19ce733",
+          "mainAfterSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461",
+          "requiredReleaseSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "ba34c6078923b5d7dc34f283fd00775f261c7561dcbf7fe65a0f1e35497e860f",
+          "mainAfterSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9",
+          "requiredReleaseSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "62fdb86a02257daa5121861b6373d74ba91da9b1b3d2586b23e3f5e4bd05d8d7",
+          "mainAfterSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c",
+          "requiredReleaseSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "6f0ff208d7c38e855878a456b96b4d2c949983908fa05031a79f6ec2e342054c",
+          "mainAfterSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298",
+          "requiredReleaseSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298"
+        },
+        {
+          "path": "packages/clinical-content/src/pilot-content.test.ts",
+          "mainBeforeSha256": "6647ff5437c1d4efbe062cf3e9261f92c42031d1b682e22877102d5c22fb0f9b",
+          "mainAfterSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604",
+          "requiredReleaseSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-test-support.ts",
+          "mainBeforeSha256": "96fad2d37b13187540866cbd77177751b8cd24d1b1a150d28e9628073a18bf1f",
+          "mainAfterSha256": "40a265f0c23e38c224d740b449192604b18659f971be03fae3095fcdebf8ead5",
+          "requiredReleaseSha256": "72ce746b5a5974e63a283f97521bee1a86e81d0dadbc0e694ca52806d1038f38"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-20261112.test.ts",
+          "mainBeforeSha256": "58751f8e85442179a1f0ef898ec925fd4ba3068fd8671138d2bbf2098115407d",
+          "mainAfterSha256": "a67e4a429bfc944300f7dd23a40429fb2370da5f1cfee5e87eef9dde9f0f1293",
+          "requiredReleaseSha256": "540872fbf0e6d334edab95211e88e885e80623ad4dc862a312934218fa282355"
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "7f06f75a9b26f6d5b196c1f69635458b3cd0467528f6dfa65636fc77922a2d77",
+          "mainAfterSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03",
+          "requiredReleaseSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03"
+        },
+        {
+          "path": "packages/game-domain/tests/question-ship-gate.test.ts",
+          "mainBeforeSha256": "fc8df13b9e46545e32fe43ee1323245d41dbd3cdd49608be20da9b8048e42ec9",
+          "mainAfterSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048",
+          "requiredReleaseSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch6-acceptance-test-support.ts",
+          "mainBeforeSha256": "0b3397521262c274e12eaf5eeddd4bf43d2e390a0da0787bba2e0daf538a186e",
+          "mainAfterSha256": "c4296d23ff0d65fd980517ee1a5aa7aa048810e714c6e7d3573ad859e96b94b8",
+          "requiredReleaseSha256": "70a3856269a45bb72210c9a130b5535e10a539d0c09abacc9c24a8f21a126e67"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "mainAfterSha256": "87463d6786d16e6b652b2bb44c0eac10605061cd8c038b8732a25b772a3b63ca",
+          "requiredReleaseSha256": "897c35d759b21feca4bfb0f69e262a0b46761f2b608a993d91e90cd1a3178963"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "7351387a9b382f661eb443fce76e45b820aaa4f6183b88a470a2cb44ab958742",
+          "mainAfterSha256": "bef5a769fc044b501d2640ef3e4001365c4d665e359a73aa356b63f39f1aa3e6",
+          "requiredReleaseSha256": "0e6d6afe9ce60b38472b209420e35da1fe239949bc8fa5188f5517cb0dd196c0"
+        },
+        {
+          "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+          "mainBeforeSha256": "0ad5916f4a81dc90fcb624c41435ee1634c69a254784cdf43f9bf9fff4297b80",
+          "mainAfterSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325",
+          "requiredReleaseSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325"
+        },
+        {
+          "path": "packages/game-domain/tests/topic-runtime-bindings.test.ts",
+          "mainBeforeSha256": "7c014fa2e957165e71791285efdfaa8ac822b610e63a3f27a782c8a11b799f87",
+          "mainAfterSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8",
+          "requiredReleaseSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8"
+        }
+      ],
+      "reason": "Exact release hunk postimages; preserve all immutable source captures and explicit excluded-authoring presence checks."
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port36-entry-size",
+      "priorFixtureSha256": "9fb25d7ed7a31c1c35e2a608f3b7c8e9c38b7fc5da7833c9475e16a746ef8b13",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "f1adc5282049d52dd832e6503666805f77a291b7f11c0323c49b37fd35dc6e6b",
+          "mainAfterSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22",
+          "requiredReleaseSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "1c825724e83c5724b8fd35ee03c14740be3cdb87068bb45e246ef3936513defa",
+          "mainAfterSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38",
+          "requiredReleaseSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "65d649bad4aa9fa9940e6510670c1b02a3aaf36a27cc2f22f4f462b2e19ce733",
+          "mainAfterSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461",
+          "requiredReleaseSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "ba34c6078923b5d7dc34f283fd00775f261c7561dcbf7fe65a0f1e35497e860f",
+          "mainAfterSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9",
+          "requiredReleaseSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "62fdb86a02257daa5121861b6373d74ba91da9b1b3d2586b23e3f5e4bd05d8d7",
+          "mainAfterSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c",
+          "requiredReleaseSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "6f0ff208d7c38e855878a456b96b4d2c949983908fa05031a79f6ec2e342054c",
+          "mainAfterSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298",
+          "requiredReleaseSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298"
+        },
+        {
+          "path": "packages/clinical-content/src/pilot-content.test.ts",
+          "mainBeforeSha256": "6647ff5437c1d4efbe062cf3e9261f92c42031d1b682e22877102d5c22fb0f9b",
+          "mainAfterSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604",
+          "requiredReleaseSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-test-support.ts",
+          "mainBeforeSha256": "96fad2d37b13187540866cbd77177751b8cd24d1b1a150d28e9628073a18bf1f",
+          "mainAfterSha256": "40a265f0c23e38c224d740b449192604b18659f971be03fae3095fcdebf8ead5",
+          "requiredReleaseSha256": "72ce746b5a5974e63a283f97521bee1a86e81d0dadbc0e694ca52806d1038f38"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-20261112.test.ts",
+          "mainBeforeSha256": "58751f8e85442179a1f0ef898ec925fd4ba3068fd8671138d2bbf2098115407d",
+          "mainAfterSha256": "a67e4a429bfc944300f7dd23a40429fb2370da5f1cfee5e87eef9dde9f0f1293",
+          "requiredReleaseSha256": "ebd56ce6794672f28eb5eaace2c5d779287a5c897b783bcb5ac2354539ae6637"
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "7f06f75a9b26f6d5b196c1f69635458b3cd0467528f6dfa65636fc77922a2d77",
+          "mainAfterSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03",
+          "requiredReleaseSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03"
+        },
+        {
+          "path": "packages/game-domain/tests/question-ship-gate.test.ts",
+          "mainBeforeSha256": "fc8df13b9e46545e32fe43ee1323245d41dbd3cdd49608be20da9b8048e42ec9",
+          "mainAfterSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048",
+          "requiredReleaseSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch6-acceptance-test-support.ts",
+          "mainBeforeSha256": "0b3397521262c274e12eaf5eeddd4bf43d2e390a0da0787bba2e0daf538a186e",
+          "mainAfterSha256": "c4296d23ff0d65fd980517ee1a5aa7aa048810e714c6e7d3573ad859e96b94b8",
+          "requiredReleaseSha256": "70a3856269a45bb72210c9a130b5535e10a539d0c09abacc9c24a8f21a126e67"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "mainAfterSha256": "87463d6786d16e6b652b2bb44c0eac10605061cd8c038b8732a25b772a3b63ca",
+          "requiredReleaseSha256": "571b93ee3a2e80e4484aaf45266bf46af3452cd864f26f1a368ce4e40be7f03f"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "7351387a9b382f661eb443fce76e45b820aaa4f6183b88a470a2cb44ab958742",
+          "mainAfterSha256": "bef5a769fc044b501d2640ef3e4001365c4d665e359a73aa356b63f39f1aa3e6",
+          "requiredReleaseSha256": "b0ae955232921eeac8a91c3bc859f1d7d72c9a1917d1bc9e046f0baae88eabaa"
+        },
+        {
+          "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+          "mainBeforeSha256": "0ad5916f4a81dc90fcb624c41435ee1634c69a254784cdf43f9bf9fff4297b80",
+          "mainAfterSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325",
+          "requiredReleaseSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325"
+        },
+        {
+          "path": "packages/game-domain/tests/topic-runtime-bindings.test.ts",
+          "mainBeforeSha256": "7c014fa2e957165e71791285efdfaa8ac822b610e63a3f27a782c8a11b799f87",
+          "mainAfterSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8",
+          "requiredReleaseSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8"
+        }
+      ],
+      "reason": "Exact release hunk postimages; preserve all immutable source captures and explicit excluded-authoring presence checks."
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port36-historical-player",
+      "priorFixtureSha256": "7bca8d3be42d94e8d200c6d41a9d813d0492bef5941f058ca1f84132ac7929f1",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "f1adc5282049d52dd832e6503666805f77a291b7f11c0323c49b37fd35dc6e6b",
+          "mainAfterSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22",
+          "requiredReleaseSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "1c825724e83c5724b8fd35ee03c14740be3cdb87068bb45e246ef3936513defa",
+          "mainAfterSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38",
+          "requiredReleaseSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "65d649bad4aa9fa9940e6510670c1b02a3aaf36a27cc2f22f4f462b2e19ce733",
+          "mainAfterSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461",
+          "requiredReleaseSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "ba34c6078923b5d7dc34f283fd00775f261c7561dcbf7fe65a0f1e35497e860f",
+          "mainAfterSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9",
+          "requiredReleaseSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "62fdb86a02257daa5121861b6373d74ba91da9b1b3d2586b23e3f5e4bd05d8d7",
+          "mainAfterSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c",
+          "requiredReleaseSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "6f0ff208d7c38e855878a456b96b4d2c949983908fa05031a79f6ec2e342054c",
+          "mainAfterSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298",
+          "requiredReleaseSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298"
+        },
+        {
+          "path": "packages/clinical-content/src/pilot-content.test.ts",
+          "mainBeforeSha256": "6647ff5437c1d4efbe062cf3e9261f92c42031d1b682e22877102d5c22fb0f9b",
+          "mainAfterSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604",
+          "requiredReleaseSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-test-support.ts",
+          "mainBeforeSha256": "96fad2d37b13187540866cbd77177751b8cd24d1b1a150d28e9628073a18bf1f",
+          "mainAfterSha256": "40a265f0c23e38c224d740b449192604b18659f971be03fae3095fcdebf8ead5",
+          "requiredReleaseSha256": "72ce746b5a5974e63a283f97521bee1a86e81d0dadbc0e694ca52806d1038f38"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-20261112.test.ts",
+          "mainBeforeSha256": "58751f8e85442179a1f0ef898ec925fd4ba3068fd8671138d2bbf2098115407d",
+          "mainAfterSha256": "a67e4a429bfc944300f7dd23a40429fb2370da5f1cfee5e87eef9dde9f0f1293",
+          "requiredReleaseSha256": "e3ca85dd3302bda468cfb6d72ed95f63660a598f5687a2ac55b71d194f7e9996"
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "7f06f75a9b26f6d5b196c1f69635458b3cd0467528f6dfa65636fc77922a2d77",
+          "mainAfterSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03",
+          "requiredReleaseSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03"
+        },
+        {
+          "path": "packages/game-domain/tests/question-ship-gate.test.ts",
+          "mainBeforeSha256": "fc8df13b9e46545e32fe43ee1323245d41dbd3cdd49608be20da9b8048e42ec9",
+          "mainAfterSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048",
+          "requiredReleaseSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch6-acceptance-test-support.ts",
+          "mainBeforeSha256": "0b3397521262c274e12eaf5eeddd4bf43d2e390a0da0787bba2e0daf538a186e",
+          "mainAfterSha256": "c4296d23ff0d65fd980517ee1a5aa7aa048810e714c6e7d3573ad859e96b94b8",
+          "requiredReleaseSha256": "70a3856269a45bb72210c9a130b5535e10a539d0c09abacc9c24a8f21a126e67"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "mainAfterSha256": "87463d6786d16e6b652b2bb44c0eac10605061cd8c038b8732a25b772a3b63ca",
+          "requiredReleaseSha256": "78458c9e08b270bbb13369cdaea8f72fdad0f48816145787a5ae414ccd290e5b"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "7351387a9b382f661eb443fce76e45b820aaa4f6183b88a470a2cb44ab958742",
+          "mainAfterSha256": "bef5a769fc044b501d2640ef3e4001365c4d665e359a73aa356b63f39f1aa3e6",
+          "requiredReleaseSha256": "d3271388e9669b5e153a2ec0a584a00ef614e9e30b6818c8a8326c0e04a34411"
+        },
+        {
+          "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+          "mainBeforeSha256": "0ad5916f4a81dc90fcb624c41435ee1634c69a254784cdf43f9bf9fff4297b80",
+          "mainAfterSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325",
+          "requiredReleaseSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325"
+        },
+        {
+          "path": "packages/game-domain/tests/topic-runtime-bindings.test.ts",
+          "mainBeforeSha256": "7c014fa2e957165e71791285efdfaa8ac822b610e63a3f27a782c8a11b799f87",
+          "mainAfterSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8",
+          "requiredReleaseSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8"
+        }
+      ],
+      "reason": "Exact release hunk postimages; preserve all immutable source captures and explicit excluded-authoring presence checks."
+    },
+    {
+      "on": "2026-11-12",
+      "milestone": "release-port36-expectations",
+      "priorFixtureSha256": "c68d9e7dcb1b8a9cf05e44dbba80b98987ab65b8392e976b1ba3044715f03731",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "f1adc5282049d52dd832e6503666805f77a291b7f11c0323c49b37fd35dc6e6b",
+          "mainAfterSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22",
+          "requiredReleaseSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "1c825724e83c5724b8fd35ee03c14740be3cdb87068bb45e246ef3936513defa",
+          "mainAfterSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38",
+          "requiredReleaseSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "65d649bad4aa9fa9940e6510670c1b02a3aaf36a27cc2f22f4f462b2e19ce733",
+          "mainAfterSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461",
+          "requiredReleaseSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "ba34c6078923b5d7dc34f283fd00775f261c7561dcbf7fe65a0f1e35497e860f",
+          "mainAfterSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9",
+          "requiredReleaseSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "62fdb86a02257daa5121861b6373d74ba91da9b1b3d2586b23e3f5e4bd05d8d7",
+          "mainAfterSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c",
+          "requiredReleaseSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "6f0ff208d7c38e855878a456b96b4d2c949983908fa05031a79f6ec2e342054c",
+          "mainAfterSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298",
+          "requiredReleaseSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298"
+        },
+        {
+          "path": "packages/clinical-content/src/pilot-content.test.ts",
+          "mainBeforeSha256": "6647ff5437c1d4efbe062cf3e9261f92c42031d1b682e22877102d5c22fb0f9b",
+          "mainAfterSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604",
+          "requiredReleaseSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-test-support.ts",
+          "mainBeforeSha256": "96fad2d37b13187540866cbd77177751b8cd24d1b1a150d28e9628073a18bf1f",
+          "mainAfterSha256": "40a265f0c23e38c224d740b449192604b18659f971be03fae3095fcdebf8ead5",
+          "requiredReleaseSha256": "72ce746b5a5974e63a283f97521bee1a86e81d0dadbc0e694ca52806d1038f38"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-20261112.test.ts",
+          "mainBeforeSha256": "58751f8e85442179a1f0ef898ec925fd4ba3068fd8671138d2bbf2098115407d",
+          "mainAfterSha256": "a67e4a429bfc944300f7dd23a40429fb2370da5f1cfee5e87eef9dde9f0f1293",
+          "requiredReleaseSha256": "4d26f146856dfeb9caf59cd90da1e55661ac76bcc6cf54baf5e2470bddc34af6"
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "7f06f75a9b26f6d5b196c1f69635458b3cd0467528f6dfa65636fc77922a2d77",
+          "mainAfterSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03",
+          "requiredReleaseSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03"
+        },
+        {
+          "path": "packages/game-domain/tests/question-ship-gate.test.ts",
+          "mainBeforeSha256": "fc8df13b9e46545e32fe43ee1323245d41dbd3cdd49608be20da9b8048e42ec9",
+          "mainAfterSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048",
+          "requiredReleaseSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch6-acceptance-test-support.ts",
+          "mainBeforeSha256": "0b3397521262c274e12eaf5eeddd4bf43d2e390a0da0787bba2e0daf538a186e",
+          "mainAfterSha256": "c4296d23ff0d65fd980517ee1a5aa7aa048810e714c6e7d3573ad859e96b94b8",
+          "requiredReleaseSha256": "70a3856269a45bb72210c9a130b5535e10a539d0c09abacc9c24a8f21a126e67"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "mainAfterSha256": "87463d6786d16e6b652b2bb44c0eac10605061cd8c038b8732a25b772a3b63ca",
+          "requiredReleaseSha256": "78458c9e08b270bbb13369cdaea8f72fdad0f48816145787a5ae414ccd290e5b"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "7351387a9b382f661eb443fce76e45b820aaa4f6183b88a470a2cb44ab958742",
+          "mainAfterSha256": "bef5a769fc044b501d2640ef3e4001365c4d665e359a73aa356b63f39f1aa3e6",
+          "requiredReleaseSha256": "d3271388e9669b5e153a2ec0a584a00ef614e9e30b6818c8a8326c0e04a34411"
+        },
+        {
+          "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+          "mainBeforeSha256": "0ad5916f4a81dc90fcb624c41435ee1634c69a254784cdf43f9bf9fff4297b80",
+          "mainAfterSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325",
+          "requiredReleaseSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325"
+        },
+        {
+          "path": "packages/game-domain/tests/topic-runtime-bindings.test.ts",
+          "mainBeforeSha256": "7c014fa2e957165e71791285efdfaa8ac822b610e63a3f27a782c8a11b799f87",
+          "mainAfterSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8",
+          "requiredReleaseSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8"
+        }
+      ],
+      "reason": "Exact release hunk postimages; preserve all immutable source captures and explicit excluded-authoring presence checks."
+    }
+  ]
+}

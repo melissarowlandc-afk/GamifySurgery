@@ -1,3 +1,4 @@
+import { RuntimeCatalogueRequired } from "../../mobile/performance/runtimeCatalogue";
 import { applyGameEvidenceBuildUndo, applyGameEvidenceCommand, createGameEvidenceCheckpoint, gameEvidenceDelta, GameEvidenceError,
   importGameEvidence, prepareGameEvidenceCheckpoint, PROTOTYPE_DOMAIN_CONTEXT, type DomainContext, type GameEvidenceCheckpoint, type GameEvidenceDelta, type GameState } from "@gamify-surgery/game-domain";
 import { equalParsedJson } from "./codecWorkerJsonEqual";
@@ -103,6 +104,7 @@ export class OperationalEngineProcessor {
         replayed: result.replayed, ...(patch ? { patch } : {}), ...(snapshotPatch ? { snapshotPatch } : {}), delta, computeMs, diffMs,
         ...(projection ? { projection: projection.reply } : {}) };
     } catch (error) {
+      if (error instanceof RuntimeCatalogueRequired) throw error;
       return { id: request.id, kind: "failure", code: error instanceof GameEvidenceError ? error.code : "engine-command" };
     }
   }

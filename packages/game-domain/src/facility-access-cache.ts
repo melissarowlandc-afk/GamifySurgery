@@ -6,11 +6,12 @@ import type { DomainContext, GameState } from "./types";
  * Whole-facility door and reachability validation depends only on room
  * placement and doors, yet operational, staffing, scheduling, condition and
  * view checks ask for it dozens of times per facility minute. Recomputing it
- * each time dominated tick cost in large clinics, so the last result for each
- * domain context is reused until the layout changes.
+ * each time dominated tick cost in large clinics. Command guidance flags wrap
+ * the context every tick; they do not change access. Reuse the last result for
+ * the facility definition, checking actual layout/definitions on every call.
  */
 const facilityAccessValidationCache = new WeakMap<
-  DomainContext,
+  DomainContext["balanceRelease"]["facility"],
   { layoutKey: string; width: number; height: number; protectedKey: string; validation: FacilityAccessValidation }
 >();
 
@@ -23,7 +24,7 @@ export function getCachedFacilityAccessValidation(
   const layoutKey = facilityNavigationKey(state.rooms, state.doors,
     facilityDefinitionReader(context));
   const protectedKey = JSON.stringify(facility.protectedRoomDefinitionIds);
-  let cached = facilityAccessValidationCache.get(context);
+  let cached = facilityAccessValidationCache.get(facility);
   if (!cached || cached.layoutKey !== layoutKey || cached.width !== facility.gridWidth ||
       cached.height !== facility.gridHeight || cached.protectedKey !== protectedKey) {
     const facility = context.balanceRelease.facility;
@@ -39,7 +40,7 @@ export function getCachedFacilityAccessValidation(
         new Set(facility.protectedRoomDefinitionIds),
       ),
     };
-    facilityAccessValidationCache.set(context, cached);
+    facilityAccessValidationCache.set(facility, cached);
   }
   // Callers receive their own arrays, so the cached result cannot be mutated.
   return {

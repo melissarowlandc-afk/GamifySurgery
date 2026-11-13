@@ -1,3 +1,6 @@
+import {SYNTHETIC_CLINICAL_RELEASE as currentDefault} from "./synthetic-content";
+import {beforeProgramBatch8AcceptanceRelease,beforeProgramBatch8AcceptanceManifest} from "./question-program-batch8-acceptance-test-support";
+import {QUESTION_PROGRAM_BATCH7_LENGTH_RESIDUALS,QUESTION_PROGRAM_BATCH7_FROZEN_PRESERVATION} from "./question-program-batch7-accepted-20261112";
 import {QUESTION_PROGRAM_BATCH5_LENGTH_RESIDUALS,QUESTION_PROGRAM_BATCH5_FROZEN_PRESERVATION} from "./question-program-batch5-accepted-20261111";
 import {QUESTION_PROGRAM_BATCH4_LENGTH_RESIDUALS,QUESTION_PROGRAM_BATCH4_FROZEN_PRESERVATION} from "./question-program-batch4-accepted-20261111";
 import {QUESTION_PROGRAM_BATCH3_LENGTH_RESIDUALS,QUESTION_PROGRAM_BATCH3_FROZEN_PRESERVATION} from "./question-program-batch3-accepted-20261111";
@@ -63,6 +66,7 @@ const N4_EXACT_LENGTH_EXCEPTIONS=new Map([
 const PROGRAM_EXACT_LENGTH_EXCEPTIONS=new Map<string,typeof QUESTION_PROGRAM_BATCH1_LENGTH_RESIDUALS[number]>(QUESTION_PROGRAM_BATCH1_LENGTH_RESIDUALS.map(r=>[r.questionVariantId,r]));
 const PROGRAM_BATCH2_LENGTH_EXCEPTIONS = new Map<string,typeof QUESTION_PROGRAM_BATCH2_LENGTH_RESIDUALS[number]>(
   QUESTION_PROGRAM_BATCH2_LENGTH_RESIDUALS.map(row => [row.questionVariantId,row]));
+const PROGRAM_BATCH7_LENGTH_EXCEPTIONS = new Map<string,typeof QUESTION_PROGRAM_BATCH7_LENGTH_RESIDUALS[number]>(QUESTION_PROGRAM_BATCH7_LENGTH_RESIDUALS.map(row=>[row.questionVariantId,row]));
 const PROGRAM_BATCH5_LENGTH_EXCEPTIONS = new Map<string,typeof QUESTION_PROGRAM_BATCH5_LENGTH_RESIDUALS[number]>(QUESTION_PROGRAM_BATCH5_LENGTH_RESIDUALS.map(row => [row.questionVariantId,row]));
 const PROGRAM_BATCH4_LENGTH_EXCEPTIONS = new Map<string,typeof QUESTION_PROGRAM_BATCH4_LENGTH_RESIDUALS[number]>(QUESTION_PROGRAM_BATCH4_LENGTH_RESIDUALS.map(row => [row.questionVariantId,row]));
 const PROGRAM_BATCH3_LENGTH_EXCEPTIONS = new Map<string,typeof QUESTION_PROGRAM_BATCH3_LENGTH_RESIDUALS[number]>(QUESTION_PROGRAM_BATCH3_LENGTH_RESIDUALS.map(row => [row.questionVariantId,row]));
@@ -78,8 +82,15 @@ function generatedForEveryTemplate(seed = "pilot-test-seed") {
 
 describe("five-diagnosis pilot registry", () => {
   it("does not make the keyed answer uniquely longest in the runtime release", () => {
+    // Pin the full current epoch before checking unchanged historical exceptions.
+    // Batch8 tests separately require zero new cue findings and no length residual.
+    const priorDefault=beforeProgramBatch8AcceptanceRelease(currentDefault);
+    const currentIds=new Set(currentDefault.cases.map(c=>c.id));
+    expect(PILOT_CLINICAL_RELEASE.cases.filter(c=>currentIds.has(c.id))).toEqual(currentDefault.cases);
+    const priorRuntime={...PILOT_CLINICAL_RELEASE,cases:[...priorDefault.cases,...PILOT_CLINICAL_RELEASE.cases.filter(c=>!currentIds.has(c.id))]};
+    const priorManifest=beforeProgramBatch8AcceptanceManifest(QUESTION_SHIP_MANIFEST);
     const seenQuestionVariantIds = new Set<string>();
-    const violations = PILOT_CLINICAL_RELEASE.cases.flatMap((clinicalCase) =>
+    const violations = priorRuntime.cases.flatMap((clinicalCase) =>
       clinicalCase.decisionNodes.flatMap((node) => {
         if (clinicalCase.id.startsWith("case.l2.")) return [];
         if (seenQuestionVariantIds.has(node.questionVariantId)) {
@@ -105,14 +116,20 @@ describe("five-diagnosis pilot registry", () => {
     );
 
     expect(
-      violations.filter(v => !PROGRAM_BATCH5_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_BATCH4_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_BATCH3_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_BATCH2_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !N4_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId) && v.questionVariantId !== "question.n3.venous-ulcer-with-competing-arterial-findings.v4" && v.questionVariantId !== "question.n3.gastric-lymphoma-new-large-cell-process.v2"&&!STATS1_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId))
+      violations.filter(v => !PROGRAM_BATCH7_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_BATCH5_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_BATCH4_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_BATCH3_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_BATCH2_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !PROGRAM_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId) && !N4_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId) && v.questionVariantId !== "question.n3.venous-ulcer-with-competing-arterial-findings.v4" && v.questionVariantId !== "question.n3.gastric-lymphoma-new-large-cell-process.v2"&&!STATS1_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId))
         .map((violation) => violation.questionVariantId).sort(),
     ).toEqual([...IMMUTABLE_APPROVED_LENGTH_EXCEPTIONS].sort());
+    for(const [id,row]of PROGRAM_BATCH7_LENGTH_EXCEPTIONS){
+      expect(violations.filter(v=>v.questionVariantId===id)).toEqual([{questionVariantId:id,correctLength:row.correctLength,longestDistractor:row.longestDistractor}]);
+      expect(priorManifest.accepted.find(r=>r.questionVariantId===id)).toMatchObject({decision:"docs/research/question-topic-acceptance-batch7-20261112.md"});
+      const cs=priorRuntime.cases.find(c=>c.id===row.caseId)!;
+      expect(createHash("sha256").update(JSON.stringify(cs)).digest("hex")).toBe(QUESTION_PROGRAM_BATCH7_FROZEN_PRESERVATION.find(f=>f.questionVariantId===id)!.acceptedCaseSha256);
+    }
     for (const [id,row] of PROGRAM_BATCH5_LENGTH_EXCEPTIONS) {
       expect(violations.filter(violation => violation.questionVariantId === id))
         .toEqual([{questionVariantId:id,correctLength:row.correctLength,longestDistractor:row.longestDistractor}]);
-      const clinicalCase = PILOT_CLINICAL_RELEASE.cases.find(cs => cs.id === row.caseId)!;
-      expect(QUESTION_SHIP_MANIFEST.accepted.find(accepted => accepted.questionVariantId === id))
+      const clinicalCase = priorRuntime.cases.find(cs => cs.id === row.caseId)!;
+      expect(priorManifest.accepted.find(accepted => accepted.questionVariantId === id))
         .toMatchObject({decision:"docs/research/question-topic-acceptance-batch5-20261111.md"});
       expect(createHash("sha256").update(JSON.stringify(clinicalCase)).digest("hex"))
         .toBe(QUESTION_PROGRAM_BATCH5_FROZEN_PRESERVATION.find(frozen => frozen.caseId === row.caseId)!.retainedCaseSha256);
@@ -120,8 +137,8 @@ describe("five-diagnosis pilot registry", () => {
     for (const [id,row] of PROGRAM_BATCH4_LENGTH_EXCEPTIONS) {
       expect(violations.filter(violation => violation.questionVariantId === id))
         .toEqual([{questionVariantId:id,correctLength:row.correctLength,longestDistractor:row.longestDistractor}]);
-      const clinicalCase = PILOT_CLINICAL_RELEASE.cases.find(cs => cs.id === row.caseId)!;
-      expect(QUESTION_SHIP_MANIFEST.accepted.find(accepted => accepted.questionVariantId === id))
+      const clinicalCase = priorRuntime.cases.find(cs => cs.id === row.caseId)!;
+      expect(priorManifest.accepted.find(accepted => accepted.questionVariantId === id))
         .toMatchObject({decision:"docs/research/question-topic-acceptance-batch4-20261111.md"});
       expect(createHash("sha256").update(JSON.stringify(clinicalCase)).digest("hex"))
         .toBe(QUESTION_PROGRAM_BATCH4_FROZEN_PRESERVATION.find(frozen => frozen.caseId === row.caseId)!.retainedCaseSha256);
@@ -129,8 +146,8 @@ describe("five-diagnosis pilot registry", () => {
     for (const [id,row] of PROGRAM_BATCH3_LENGTH_EXCEPTIONS) {
       expect(violations.filter(violation => violation.questionVariantId === id))
         .toEqual([{questionVariantId:id,correctLength:row.correctLength,longestDistractor:row.longestDistractor}]);
-      const clinicalCase = PILOT_CLINICAL_RELEASE.cases.find(cs => cs.id === row.caseId)!;
-      expect(QUESTION_SHIP_MANIFEST.accepted.find(accepted => accepted.questionVariantId === id))
+      const clinicalCase = priorRuntime.cases.find(cs => cs.id === row.caseId)!;
+      expect(priorManifest.accepted.find(accepted => accepted.questionVariantId === id))
         .toMatchObject({decision:"docs/research/question-topic-acceptance-batch3-20261111.md"});
       expect(createHash("sha256").update(JSON.stringify(clinicalCase)).digest("hex"))
         .toBe(QUESTION_PROGRAM_BATCH3_FROZEN_PRESERVATION.find(frozen => frozen.caseId === row.caseId)!.retainedCaseSha256);
@@ -138,8 +155,8 @@ describe("five-diagnosis pilot registry", () => {
     for (const [id,row] of PROGRAM_BATCH2_LENGTH_EXCEPTIONS) {
       expect(violations.filter(violation => violation.questionVariantId === id))
         .toEqual([{questionVariantId:id,correctLength:row.correctLength,longestDistractor:row.longestDistractor}]);
-      const clinicalCase = PILOT_CLINICAL_RELEASE.cases.find(cs => cs.id === row.caseId)!;
-      expect(QUESTION_SHIP_MANIFEST.accepted.find(accepted => accepted.questionVariantId === id))
+      const clinicalCase = priorRuntime.cases.find(cs => cs.id === row.caseId)!;
+      expect(priorManifest.accepted.find(accepted => accepted.questionVariantId === id))
         .toMatchObject({decision:"docs/research/question-topic-acceptance-batch2-20261111.md"});
       expect(createHash("sha256").update(JSON.stringify(clinicalCase)).digest("hex"))
         .toBe(QUESTION_PROGRAM_BATCH2_FROZEN_PRESERVATION.find(frozen => frozen.caseId === row.caseId)!.retainedCaseSha256);
@@ -148,8 +165,8 @@ describe("five-diagnosis pilot registry", () => {
     // bind every raw-character residual rather than rewording an accepted key.
     for(const [id,row]of PROGRAM_EXACT_LENGTH_EXCEPTIONS){
       expect(violations.filter(v=>v.questionVariantId===id)).toEqual([{questionVariantId:id,correctLength:row.correctLength,longestDistractor:row.longestDistractor}]);
-      const cs=PILOT_CLINICAL_RELEASE.cases.find(c=>c.id===row.caseId)!;
-      expect(QUESTION_SHIP_MANIFEST.accepted.find(r=>r.questionVariantId===id))
+      const cs=priorRuntime.cases.find(c=>c.id===row.caseId)!;
+      expect(priorManifest.accepted.find(r=>r.questionVariantId===id))
         .toMatchObject({decision:"docs/research/question-topic-acceptance-batch1-20261111.md"});
       expect(createHash("sha256").update(JSON.stringify(cs)).digest("hex"))
         .toBe(QUESTION_PROGRAM_BATCH1_FROZEN_PRESERVATION.find(r=>r.caseId===cs.id)!.retainedCaseSha256);
@@ -158,39 +175,39 @@ describe("five-diagnosis pilot registry", () => {
     // reviewed prose; pin actual disparity, authority and complete case hashes.
     for(const [id,lengths]of N4_EXACT_LENGTH_EXCEPTIONS){
       expect(violations.filter(v=>v.questionVariantId===id)).toEqual([{questionVariantId:id,...lengths}]);
-      expect(QUESTION_SHIP_MANIFEST.accepted.find(row=>row.questionVariantId===id))
+      expect(priorManifest.accepted.find(row=>row.questionVariantId===id))
         .toMatchObject({decision:"docs/research/question-n4-manager-decision-20261110.md"});
-      const cs=PILOT_CLINICAL_RELEASE.cases.find(cs=>cs.decisionNodes.some(n=>n.questionVariantId===id))!;
+      const cs=priorRuntime.cases.find(cs=>cs.decisionNodes.some(n=>n.questionVariantId===id))!;
       expect(createHash("sha256").update(JSON.stringify(cs)).digest("hex"))
         .toBe(QUESTION_N4_FROZEN_PRESERVATION.find(row=>row.questionVariantId===id)!.acceptedCaseSha256);
     }
     // Exact round-four PASS wording is manager-frozen. Character count alone
     // flags 51 versus43 characters; bind the entire case and actual disparity.
     const venousId="question.n3.venous-ulcer-with-competing-arterial-findings.v4";
-    expect(QUESTION_SHIP_MANIFEST.accepted.find(row=>row.questionVariantId===venousId))
+    expect(priorManifest.accepted.find(row=>row.questionVariantId===venousId))
       .toMatchObject({acceptanceId:"review.n3.venous-ulcer-with-competing-arterial-findings.v4",sourceView:"n3-round4",
         decision:"docs/research/question-harden1-n3r4-manager-decision-20261110.md"});
     expect(violations.filter(v=>v.questionVariantId===venousId))
       .toEqual([{questionVariantId:venousId,correctLength:51,longestDistractor:43}]);
-    const venousCase=PILOT_CLINICAL_RELEASE.cases.find(cs=>cs.decisionNodes.some(n=>n.questionVariantId===venousId))!;
+    const venousCase=priorRuntime.cases.find(cs=>cs.decisionNodes.some(n=>n.questionVariantId===venousId))!;
     expect(createHash("sha256").update(JSON.stringify(venousCase)).digest("hex"))
       .toBe("188d81df478242036469efd23d0de6b7cf77726b0203a22f0ad82bb9c29b758e");
     // Manager explicitly freezes this review-two PASS version. Pin the whole
     // accepted case rather than editing its wording or expanding a broad budget.
     const frozenId = "question.n3.gastric-lymphoma-new-large-cell-process.v2";
-    expect(QUESTION_SHIP_MANIFEST.accepted.find(row => row.questionVariantId === frozenId))
+    expect(priorManifest.accepted.find(row => row.questionVariantId === frozenId))
       .toMatchObject({acceptanceId:"review.n3.gastric-lymphoma-new-large-cell-process.v2",sourceView:"n3-round3",
         decision:"docs/research/question-new-n3-manager-decision-20261105.md"});
-    const frozenCase = PILOT_CLINICAL_RELEASE.cases.find(cs => cs.decisionNodes.some(n => n.questionVariantId === frozenId))!;
+    const frozenCase = priorRuntime.cases.find(cs => cs.decisionNodes.some(n => n.questionVariantId === frozenId))!;
     expect(createHash("sha256").update(JSON.stringify(frozenCase)).digest("hex"))
       .toBe("c0a73c140565409277e2dbc382c3eee17ad8e0699c71db73fabe13a1401f09fc");
     expect(violations.filter(v => v.questionVariantId === frozenId)).toHaveLength(1);
     expect(violations.filter(v=>STATS1_EXACT_LENGTH_EXCEPTIONS.has(v.questionVariantId)).map(v=>v.questionVariantId).sort())
       .toEqual([...STATS1_EXACT_LENGTH_EXCEPTIONS].sort());
     for(const id of STATS1_EXACT_LENGTH_EXCEPTIONS){
-      expect(QUESTION_SHIP_MANIFEST.accepted.find(row=>row.questionVariantId===id))
+      expect(priorManifest.accepted.find(row=>row.questionVariantId===id))
         .toMatchObject({sourceView:"stats1-accepted",decision:"docs/research/question-stats1-manager-decision-20261108.md"});
-      const cs=PILOT_CLINICAL_RELEASE.cases.find(cs=>cs.decisionNodes.some(n=>n.questionVariantId===id))!;
+      const cs=priorRuntime.cases.find(cs=>cs.decisionNodes.some(n=>n.questionVariantId===id))!;
       expect(createHash("sha256").update(JSON.stringify(cs)).digest("hex"))
         .toBe(stats1Packet.find(p=>p.questionVariantId===id)!.frozenPreservation.acceptedCaseSha256);
     }

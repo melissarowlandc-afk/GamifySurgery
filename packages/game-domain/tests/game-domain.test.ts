@@ -712,7 +712,7 @@ describe("current prototype contracts", () => {
       }),
       expect.objectContaining({
         level: 4,
-        minimumClinicalXp: 790,
+        minimumClinicalXp: 870,
         requiredRoomDefinitionIds: [],
         requiredStaffRoleIds: ["staff.app"],
         requiredCompletionWitnessIds: ["pediatric_visit_with_parent", "wound_ostomy_care_visit"],

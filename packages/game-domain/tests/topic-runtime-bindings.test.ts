@@ -1,4 +1,6 @@
 import * as clinical from "@gamify-surgery/clinical-content";
+import {PROGRAM_BATCH3_ORDERS as historicalBatch3Orders} from "../../clinical-content/src/question-program-batch3-accepted-data-20261111";
+import {PROGRAM_BATCH4_ORDERS as historicalBatch4Orders} from "../../clinical-content/src/question-program-batch4-accepted-data-20261111";
 import type { SyntheticClinicalCase } from "@gamify-surgery/clinical-content";
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
@@ -16,10 +18,11 @@ import { EXACT_TEST_CHOICE_ORDER_RECORDS, getExactTestChoiceOrderRecord, type Ex
 const batches = [
   [1, 15, clinical.QUESTION_PROGRAM_BATCH1_ACCEPTED_TEST_ORDER_RECORDS],
   [2, 33, clinical.QUESTION_PROGRAM_BATCH2_ACCEPTED_TEST_ORDER_RECORDS],
-  [3, 209, clinical.QUESTION_PROGRAM_BATCH3_ACCEPTED_TEST_ORDER_RECORDS],
-  [4, 292, clinical.QUESTION_PROGRAM_BATCH4_ACCEPTED_TEST_ORDER_RECORDS],
+  [3, 209, historicalBatch3Orders],
+  [4, 292, historicalBatch4Orders],
   [5, 24, clinical.QUESTION_PROGRAM_BATCH5_ACCEPTED_TEST_ORDER_RECORDS],
   [6, 8, clinical.QUESTION_PROGRAM_BATCH6_ACCEPTED_TEST_ORDER_RECORDS],
+  [8, 12, clinical.QUESTION_PROGRAM_BATCH8_ACCEPTED_TEST_ORDER_RECORDS],
 ] as const;
 const keyOf = (record: Pick<ExactTestChoiceOrderRecord, "caseId" | "nodeId" | "questionVariantId" | "choiceId">) =>
   `${record.caseId}|${record.nodeId}|${record.questionVariantId}|${record.choiceId}`;
@@ -57,6 +60,14 @@ function ready(clinicalCase: SyntheticClinicalCase, index: number) {
 }
 
 describe("accepted topic runtime diagnostic bindings", () => {
+  it("separates superseded fresh exports from all nine exact retained predecessor bindings",()=>{
+    const withdrawn=new Set(clinical.QUESTION_PROGRAM_BATCH8_WITHDRAWN_ROWS.map(r=>r.questionVariantId));
+    expect(clinical.QUESTION_PROGRAM_BATCH3_ACCEPTED_TEST_ORDER_RECORDS).toEqual(historicalBatch3Orders.filter(r=>!withdrawn.has(r.questionVariantId)));
+    expect(clinical.QUESTION_PROGRAM_BATCH4_ACCEPTED_TEST_ORDER_RECORDS).toEqual(historicalBatch4Orders.filter(r=>!withdrawn.has(r.questionVariantId)));
+    expect(clinical.QUESTION_PROGRAM_BATCH8_RETAINED_TEST_ORDER_RECORDS).toHaveLength(9);
+    for(const record of clinical.QUESTION_PROGRAM_BATCH8_RETAINED_TEST_ORDER_RECORDS)
+      expect(records.get(keyOf(record))).toEqual(record);
+  });
   it("admits batch 6 pediatric planning reviews while rejecting enacted or incomplete testing semantics", () => {
     const {state, context} = createPediatricFamilyFixture();
     const caseIds = new Set(clinical.QUESTION_PROGRAM_BATCH6_ACCEPTED_TEST_ORDER_RECORDS.map(row => row.caseId));
@@ -157,7 +168,14 @@ describe("accepted topic runtime diagnostic bindings", () => {
 
   it.each(batches)("keeps batch %i's %i reviewed plans preview-only through answer/enactment and reload", (_batch, _count, accepted) => {
     for (const record of accepted) {
-      const clinicalCase = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(c => c.id === record.caseId)!;
+      const matches=(c:SyntheticClinicalCase)=>c.id===record.caseId&&c.decisionNodes.some(n=>n.id===record.nodeId&&n.questionVariantId===record.questionVariantId);
+      const current=PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(matches);
+      const clinicalCase = current ?? clinical.QUESTION_PROGRAM_BATCH8_RETAINED_CASES.find(matches)!;
+      expect(clinicalCase,keyOf(record)).toBeDefined();
+      if(!current){
+        expect(clinical.QUESTION_SHIP_MANIFEST.retirements.some(r=>r.caseId===record.caseId&&r.questionVariantIds.includes(record.questionVariantId))||
+          clinical.QUESTION_PROGRAM_BATCH8_WITHDRAWN_ROWS.some(r=>r.caseId===record.caseId&&r.nodeId===record.nodeId&&r.questionVariantId===record.questionVariantId)).toBe(true);
+      }
       const index = clinicalCase.decisionNodes.findIndex(n => n.id === record.nodeId && n.questionVariantId === record.questionVariantId);
       const { state, encounter, node } = ready(clinicalCase, index);
       expect(getExactTestChoiceOrderRecord(encounter, node, record.choiceId)).toEqual(record);

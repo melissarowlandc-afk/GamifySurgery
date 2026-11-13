@@ -1,4 +1,5 @@
 import {QUESTION_PROGRAM_BATCH6_ACCEPTED_CASES} from "./question-program-batch6-accepted-20261112";
+import {QUESTION_PROGRAM_BATCH7_ACCEPTED_CASES} from "./question-program-batch7-accepted-20261112";
 import {QUESTION_PROGRAM_BATCH5_ACCEPTED_CASES} from "./question-program-batch5-accepted-20261111";
 import { describe, expect, it } from "vitest";
 import type { SyntheticClinicalCase } from "./schema";
@@ -81,7 +82,7 @@ describe("full patient-library wording repair", () => {
       expect(clinicalCase.chiefComplaint, clinicalCase.id).not.toMatch(
         /^(?:Select|Identify|Level|Clinic|Outpatient)\b|\bv\d+\b/i,
       );
-      const acceptedTemplate = [...QUESTION_PROGRAM_BATCH5_ACCEPTED_CASES,...QUESTION_PROGRAM_BATCH6_ACCEPTED_CASES].some(accepted => accepted.id === clinicalCase.id);
+      const acceptedTemplate = [...QUESTION_PROGRAM_BATCH5_ACCEPTED_CASES,...QUESTION_PROGRAM_BATCH6_ACCEPTED_CASES,...QUESTION_PROGRAM_BATCH7_ACCEPTED_CASES].some(accepted => accepted.id === clinicalCase.id);
       const name = ((clinicalCase.pediatricProfile && !acceptedTemplate) || clinicalCase.id.startsWith("case.variety3.")) ? clinicalCase.patientDisplayName : "{patientName}";
       expect(clinicalCase.presentation, clinicalCase.id).toContain(name);
       expect(clinicalCase.presentation, clinicalCase.id).not.toMatch(

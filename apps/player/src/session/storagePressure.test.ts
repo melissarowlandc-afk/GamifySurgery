@@ -31,6 +31,17 @@ function reviewFlags(count = 45) {
 }
 
 describe("campaign-priority auxiliary storage", () => {
+  it("skips identical durable auxiliary writes and still rewrites externally changed or evicted values", () => {
+    const f = store(), key = "gamify-surgery.usage.outbox.v1.account.same", text = '[{"receipt_id":"public-fixture"}]';
+    const write = vi.spyOn(f.storage, "setItem"), inventory = vi.spyOn(f.storage, "key");
+    setAuxiliaryItem(f.storage, key, text); write.mockClear(); inventory.mockClear();
+    for (let i = 0; i < 60; i++) setAuxiliaryItem(f.storage, key, text);
+    expect(write).not.toHaveBeenCalled(); expect(inventory).not.toHaveBeenCalled();
+    f.values.set(key, "changed in another tab"); setAuxiliaryItem(f.storage, key, text);
+    expect(write).toHaveBeenCalledOnce(); expect(f.values.get(key)).toBe(text);
+    f.values.delete(key); setAuxiliaryItem(f.storage, key, text);
+    expect(write).toHaveBeenCalledTimes(2); expect(f.values.get(key)).toBe(text);
+  });
   it("grandfathers oversized archived history without allowing further auxiliary growth", async () => {
     vi.stubGlobal("indexedDB", new IDBFactory());
     const f = store(), flags = reviewFlags(220), key = accountStorageKey(QUESTION_REVIEW_FLAGS_STORAGE_KEY, "archive-limit");

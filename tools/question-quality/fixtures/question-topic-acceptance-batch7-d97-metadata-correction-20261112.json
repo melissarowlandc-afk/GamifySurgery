@@ -1,0 +1,47 @@
+{
+  "checkedOn": "2026-11-12",
+  "id": "D97-2",
+  "playerFacingChanges": 0,
+  "corrections": [
+    {
+      "file": "docs/research/question-flag-d97aa716-20261112.json",
+      "fields": [
+        {
+          "path": [
+            "1",
+            "selfCheck",
+            "sourceClosure"
+          ],
+          "before": "Existing exact muscle-membership claims retained; adductor longus is used precisely.",
+          "after": "Existing biceps-anterior and triceps-posterior arm-membership claims are retained; the constructed posterior access and complete tract geometry still need clinician confirmation."
+        },
+        {
+          "path": [
+            "1",
+            "evidenceMapping",
+            "0",
+            "type"
+          ],
+          "before": "Retained constructed patient/MRI observations; the thigh medial muscle is made specific to its existing claim",
+          "after": "Retained constructed upper-arm patient/MRI observations with the existing biceps/triceps membership claims"
+        }
+      ]
+    },
+    {
+      "file": "docs/research/sources-question-flag-d97aa716-20261112.json",
+      "fields": [
+        {
+          "path": [
+            "questionClaimMappings",
+            "1",
+            "fields",
+            "0",
+            "type"
+          ],
+          "before": "Retained constructed patient/MRI observations; the thigh medial muscle is made specific to its existing claim",
+          "after": "Retained constructed upper-arm patient/MRI observations with the existing biceps/triceps membership claims"
+        }
+      ]
+    }
+  ]
+}

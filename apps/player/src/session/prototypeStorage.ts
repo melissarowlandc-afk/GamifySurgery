@@ -11,6 +11,7 @@ import { normalizeRetiredTutorialPauses } from "./dailyRoutineTutorialPause";
 import { accountStorageKey } from "./accountStorageKey";
 import { isStorageQuotaError, reclaimOptionalStorage } from "./storagePressure";
 import { parseQuestionUsageReceipts, type QuestionUsageReceipt } from "../playtime/usageTypes";
+import { RuntimeCatalogueRequired } from "../mobile/performance/runtimeCatalogue";
 
 export const LEGACY_PROTOTYPE_SAVE_KEY = "gamify-surgery.prototype.save.v1";
 export const PROTOTYPE_PROFILE_KEY = "gamify-surgery.prototype.profile.v1";
@@ -428,7 +429,8 @@ function parsePersistedProfile(serialized: string): {
         status: migratedStatus,
         state,
       });
-    } catch {
+    } catch (error) {
+      if (error instanceof RuntimeCatalogueRequired) throw error;
       skippedCampaignCount += 1;
     }
   }
@@ -592,7 +594,8 @@ export function loadPrototypeProfile(accountId: string | null = null): LoadedPro
         ? "New clinic started."
         : `New clinic started, but ${describePrototypeStorageFailure(persisted.failure)}`,
     };
-  } catch {
+  } catch (error) {
+    if (error instanceof RuntimeCatalogueRequired) throw error;
     const profile = createFreshProfile();
     return {
       profile,

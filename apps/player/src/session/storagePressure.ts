@@ -40,6 +40,10 @@ export function isStorageQuotaError(error: unknown): boolean {
 /** Auxiliary growth may fail independently; reserve space for the next save. */
 export function setAuxiliaryItem(storage: AuxiliaryStorage, key: string, value: string): void {
   if (bytes(key, value) > AUXILIARY_ITEM_BYTES) throw new DOMException("Auxiliary item budget", "QuotaExceededError");
+  // An identical durable outbox/cache needs neither a rewrite nor a scan of
+  // every localStorage value. Read again on each call so another tab's changes
+  // and optional-cache eviction are still observed; never trust a memory copy.
+  if (read(storage, key) === value) return;
   for (let attempt = 0; attempt < 2; attempt++) {
     const previous = read(storage, key), growth = bytes(key, value) - (previous === null ? 0 : bytes(key, previous));
     let total = 0, auxiliary = 0;

@@ -1,5 +1,5 @@
 import { founderConsultClockKey, founderProcedureConsultPath, procedureConsultKind, reconcileFounderConsultSources, selectProcedureConsult, sourceConsultOperation } from "./founder-consults";
-import { createLateProgressionState } from "./late-progression";
+import { createLateProgressionState, readLateProgressionState, upgradeLateProgressionState } from "./late-progression";
 import { clinicFounderPath, clinicFounderWaitsForSeat, isClinicFounderConsult, reconcileClinicConsultClosures,
   releaseClinicConsult, returnClinicProvider, selectClinicConsult, vacateClinicProvider } from "./clinic-consults";
 import { withFacilityNavigationScope } from "./facilityNavigation";
@@ -11271,8 +11271,9 @@ export function gameReducer(
   command: GameCommand,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): GameState {
-  const input = !state.lateProgression && state.facilityLevel >= 3
-    ? { ...state, lateProgression: createLateProgressionState(state) }
+  const input = state.facilityLevel >= 3 && (!state.lateProgression ||
+    state.facilityLevel >= 4 && state.lateProgression.version === "late-progression.v1")
+    ? { ...state, lateProgression: readLateProgressionState(state.lateProgression, state) ?? createLateProgressionState(state) }
     : state;
   const next = reduceGameCommand(input, command, context);
   if (next === input) {
@@ -11282,6 +11283,11 @@ export function gameReducer(
     // Use the pre-command XP: crossing a historical threshold after the update
     // must not grant legacy credit. Advancing from Level 2 starts the new policy.
     next.lateProgression = createLateProgressionState(state);
+  }
+  if (next.facilityLevel >= 4 && next.lateProgression?.version === "late-progression.v1") {
+    // Crossing from Level 3 starts current late goals, without granting old
+    // Level 4 credit based on XP earned in the previous level.
+    next.lateProgression = upgradeLateProgressionState(state, next.lateProgression);
   }
   reconcilePediatricFamilies(next, context);
   if (next.operationReceipts[command.operationId]?.status === "applied") {

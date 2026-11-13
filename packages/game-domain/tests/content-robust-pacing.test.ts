@@ -14,7 +14,7 @@ const satisfactionGoal = (state: GameState) => getFacilityProgressionStatus(stat
   .find(requirement => requirement.id === "progression.satisfaction")!;
 const acknowledge = (state: GameState, operationId = "pacing.goals") =>
   gameReducer(state, { type: "SET_PAUSED", paused: state.paused, operationId }, context);
-function ready(rating = 95, completed = 330) {
+function ready(rating = 95, completed = 390) {
   const state = createLevelFiveStateQaState("pre-goal", context);
   state.clinicalXp = 2300;
   setLevelFiveQaPatientSatisfaction(state, context, rating);
@@ -23,12 +23,12 @@ function ready(rating = 95, completed = 330) {
 }
 
 describe("content-robust established satisfaction goal", () => {
-  it.each([[329, false], [330, true], [331, true]])("uses %i completed encounters as the volume boundary", (count, met) => {
+  it.each([[389, false], [390, true], [391, true]])("uses %i completed encounters as the volume boundary", (count, met) => {
     const state = ready(95, count);
     expect(getCompletedEncounterCount(state)).toBe(count);
     const goal = satisfactionGoal(state);
     expect(goal).toMatchObject({ current: 95, required: 91, met });
-    expect(goal.label).toContain("after 330 completed encounters");
+    expect(goal.label).toContain("after 390 completed encounters");
     expect(getFacilityProgressionStatus(state, context).requirements.map(requirement => requirement.id)).toEqual([
       "progression.clinical_xp", "progression.satisfaction", "progression.staff_morale",
     ]);
@@ -113,7 +113,7 @@ describe("content-robust established satisfaction goal", () => {
 
   it("earns the volume boundary on a normal scored encounter completion without another XP goal change", () => {
     let state = createLevelFiveStateQaState("goals", context);
-    setLevelFiveQaCompletedEncounters(state, 329);
+    setLevelFiveQaCompletedEncounters(state, 389);
     state.clinicalXp = 2300;
     state.paused = false;
     state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
@@ -133,7 +133,7 @@ describe("content-robust established satisfaction goal", () => {
       answerChoiceId: question.node.answerChoices.find(choice => choice.isCorrect)!.id, operationId: "pacing.answer" };
     const first = gameReducer(state, command, context);
     expect(first.operationReceipts[command.operationId]?.status).toBe("applied");
-    expect(getCompletedEncounterCount(first)).toBe(330);
+    expect(getCompletedEncounterCount(first)).toBe(390);
     expect(first.clinicalXp - state.clinicalXp).toBe(10);
     expect(first.levelFive!.progress.inspectionUnlocked).toMatchObject({ clinicalXp: 2310 });
     expect(serializeGameState(gameReducer(state, command, context))).toBe(serializeGameState(first));

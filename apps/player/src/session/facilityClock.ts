@@ -1,4 +1,5 @@
 import { problemDiagnostics } from "../diagnostics/problemDiagnostics";
+import { wakeVisibleIntervals } from "../mobile/performance/visibleInterval";
 
 export interface FacilityClockScheduler {
   setInterval(callback: () => void, ms: number): number; clearInterval(id: number): void;
@@ -30,6 +31,7 @@ export function startFacilityClock(scheduler: FacilityClockScheduler, intervalMs
   }; });
   const check = () => {
     if (stopped) return;
+    if (typeof document !== "undefined") wakeVisibleIntervals(document);
     const state = observe();
     const running = state.visible && !state.paused && state.allowed;
     if (running && interval === null) { start(); lastRepair = now(); }

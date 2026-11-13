@@ -1,4 +1,5 @@
 import { problemDiagnostics } from "../diagnostics/problemDiagnostics";
+import { bindVisibleInterval } from "../mobile/performance/visibleInterval";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { useAuthAccountId } from "../auth/AuthAccountContext";
 import { hostedAuthConfiguration } from "../auth/prototypeAuth";
@@ -31,11 +32,11 @@ export function QuestionFlagProvider({ children }: { children: ReactNode }) {
     };
     const retry = () => { if (!canPollAccount(accountId)) return; sync(); void current.refreshStatuses(true); };
     const unsubscribe = usage.subscribe(sync);
-    const timer = window.setInterval(retry, 60_000);
+    const stopTimer = bindVisibleInterval(window, document, retry, 60_000);
     window.addEventListener("online", retry);
     document.addEventListener("visibilitychange", retry);
     retry();
-    return () => { unbindDiagnostics(); unsubscribe(); window.clearInterval(timer); window.removeEventListener("online", retry); document.removeEventListener("visibilitychange", retry); current.stop(); };
+    return () => { unbindDiagnostics(); unsubscribe(); stopTimer(); window.removeEventListener("online", retry); document.removeEventListener("visibilitychange", retry); current.stop(); };
   }, [accountId, usage]);
   return <FlagContext.Provider value={queue}>{children}</FlagContext.Provider>;
 }

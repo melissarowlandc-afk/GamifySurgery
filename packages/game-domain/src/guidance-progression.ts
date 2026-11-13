@@ -1,6 +1,7 @@
 import { evaluateFacilityExperienceConditions } from "./facility-experience";
 import { guidanceOwnsCondition } from "./guidance-tip-suppression";
 import { getRetiredEndedSatisfactionSamples } from "./retired-encounters";
+import { getProgressionCompletedEncounterGoal } from "./late-progression";
 import { getClinicSatisfaction, getCompletedEncounterCount, getDisplayedClinicSatisfaction, getRoomDefinition, getStaffRoleDefinition } from "./selectors";
 import type { GuidanceTipAction } from "./guidance-tip-types";
 import type { DomainContext, GameState } from "./types";
@@ -47,9 +48,10 @@ export function progressionMetricGuidance(state: GameState, goal: { id: string; 
   const target = stage.satisfactionMustBeGreaterThan;
   if (state.facilityLevel === 5 && !state.levelFive?.progress.inspectionUnlocked) {
     const completed = getCompletedEncounterCount(state);
-    if (completed < stage.minimumCompletedEncounters) {
-      const remainingEncounters = stage.minimumCompletedEncounters - completed;
-      return `Complete ${remainingEncounters} more ${remainingEncounters === 1 ? "encounter" : "encounters"} to establish the ${stage.minimumCompletedEncounters}-encounter satisfaction goal. Recent patient satisfaction is ${current}% (goal above ${target}%).`;
+    const minimum = getProgressionCompletedEncounterGoal(state, stage.minimumCompletedEncounters).required;
+    if (completed < minimum) {
+      const remainingEncounters = minimum - completed;
+      return `Complete ${remainingEncounters} more ${remainingEncounters === 1 ? "encounter" : "encounters"} to establish the ${minimum}-encounter satisfaction goal. Recent patient satisfaction is ${current}% (goal above ${target}%).`;
     }
   }
   if (getClinicSatisfaction(state, context) === null) return `Provisional satisfaction is ${current}% (goal: above ${target}%); complete patient visits to record a rating.`;

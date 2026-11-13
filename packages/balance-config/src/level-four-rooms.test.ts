@@ -6,10 +6,10 @@ import { getCurrentRoomUpgradeDefinition, getRoomUpgradeDurationMultiplier, getR
   getRoomUpgradeRevenueMultiplier, ROOM_UPGRADE_CATALOG } from "./room-upgrades";
 
 const expected = [
-  ["room.mri", 4, 4, 2760, 8, 1, 1, 0, [600, 900, 1560, 2520]],
-  ["room.pediatric_waiting", 4, 4, 690, 1, 0, 2, 0, [150, 225, 390, 630]],
-  ["room.pediatric_examination", 3, 3, 690, 2, 0, 4, 1, [150, 225, 390, 630]],
-  ["room.wound_ostomy", 3, 3, 1150, 2, 1, 2, 1, [250, 375, 660, 1050]],
+  ["room.mri", 4, 4, 3040, 8, 1, 1, 0, [600, 900, 1560, 2520]],
+  ["room.pediatric_waiting", 4, 4, 760, 1, 0, 2, 0, [150, 225, 390, 630]],
+  ["room.pediatric_examination", 3, 3, 760, 2, 0, 4, 1, [150, 225, 390, 630]],
+  ["room.wound_ostomy", 3, 3, 1270, 2, 1, 2, 1, [250, 375, 660, 1050]],
 ] as const;
 const room = (id: string) => PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find((definition) => definition.id === id)!;
 

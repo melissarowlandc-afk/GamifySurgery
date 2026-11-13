@@ -1,3 +1,4 @@
+import { withRuntimeCatalogue } from "../../mobile/performance/runtimeCatalogue";
 import { deserializeGameState, importGameEvidence, restoreGameEvidenceImportSource, serializeGameState, type GameEvidenceCheckpoint } from "@gamify-surgery/game-domain";
 import { accountStorageKey } from "../accountStorageKey";
 import { LEGACY_PROTOTYPE_SAVE_KEY, PROTOTYPE_PROFILE_KEY, createFreshProfile, type LocalPrototypeProfile } from "../prototypeStorage";
@@ -72,7 +73,7 @@ export async function inspectLocalCloudSources(accountId: string, storage: Pick<
           let facilityLevel = 0, error: string | null = null;
           try {
             if (bytes > 3_000_000) error = "This local campaign is too large to copy. Keep it here or contact the owner.";
-            else { const state = deserializeGameState(record.serializedState); facilityLevel = state.facilityLevel; campaign = metadata(profile, record, facilityLevel);
+            else { const state = await withRuntimeCatalogue(async () => deserializeGameState(record.serializedState)); facilityLevel = state.facilityLevel; campaign = metadata(profile, record, facilityLevel);
               if (state.campaignId !== campaign.campaignId) throw new Error("identity"); }
           } catch { error = "This campaign could not be validated. Its original bytes are retained; update the game or contact the owner."; }
           result.sources.push({ id: `${sourceKey}:${campaign.campaignId}`, sourceKey, unowned: owner === null,
@@ -91,7 +92,7 @@ export async function inspectLocalCloudSources(accountId: string, storage: Pick<
         if (!loaded?.state || !loaded.seed) continue;
         const index = result.sources.findIndex(source => source.unowned === (owner === null) && source.campaign.campaignId === loaded.state!.campaignId);
         if (index < 0) continue; // Explicitly removed profile campaigns stay removed.
-        const source = result.sources[index]!, old = deserializeGameState(source.serializedState), state = loaded.state;
+        const source = result.sources[index]!, old = await withRuntimeCatalogue(async () => deserializeGameState(source.serializedState)), state = loaded.state;
         if (old.facilityTick > state.facilityTick || old.facilityTick === state.facilityTick &&
           Object.keys(old.operationReceipts).length > Object.keys(state.operationReceipts).length) continue;
         const serializedState = serializeGameState(state);

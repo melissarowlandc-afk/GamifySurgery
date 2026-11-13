@@ -1,0 +1,347 @@
+{
+  "checkedOn": "2026-11-12",
+  "manifestSha256": "37ca22ed9c647967aa539cd2bc3e51377b60a5746a5093ae8187967c7ac46b0e",
+  "timings": [
+    {
+      "index": 2350,
+      "entry": {
+        "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+        "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+        "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+        "classification": {
+          "kind": "test_choices",
+          "choices": [
+            {
+              "choiceId": "choice.topic.egh.symptomatic-hernia-anemia.repair",
+              "choiceLabel": "Elective anatomical hiatal hernia repair",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.clinical_procedure"
+              }
+            },
+            {
+              "choiceId": "choice.topic.egh.symptomatic-hernia-anemia.medical",
+              "choiceLabel": "Continued PPI and iron with observation",
+              "timing": {
+                "kind": "no_test"
+              }
+            },
+            {
+              "choiceId": "choice.topic.egh.symptomatic-hernia-anemia.fix",
+              "choiceLabel": "Limited reduction and gastric fixation",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.clinical_procedure"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "index": 2351,
+      "entry": {
+        "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+        "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+        "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+        "classification": {
+          "kind": "test_choices",
+          "choices": [
+            {
+              "choiceId": "choice.topic.egh.repair-with-reflux-control.wrap",
+              "choiceLabel": "Reduce hernia, close hiatus and add fundoplication",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.clinical_procedure"
+              }
+            },
+            {
+              "choiceId": "choice.topic.egh.repair-with-reflux-control.none",
+              "choiceLabel": "Reduce hernia and close hiatus without a wrap",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.clinical_procedure"
+              }
+            },
+            {
+              "choiceId": "choice.topic.egh.repair-with-reflux-control.fix",
+              "choiceLabel": "Reduce hernia and perform gastric fixation",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.clinical_procedure"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "index": 2416,
+      "entry": {
+        "caseId": "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance-review.v2",
+        "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+        "questionVariantId": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+        "classification": {
+          "kind": "test_choices",
+          "choices": [
+            {
+              "choiceId": "choice.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.ileocolonoscopy.v2",
+              "choiceLabel": "Obtain ileocolonoscopy to reassess disease activity",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.endoscopy_with_sampling"
+              }
+            },
+            {
+              "choiceId": "choice.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.escalate.v2",
+              "choiceLabel": "Intensify infliximab maintenance treatment",
+              "timing": {
+                "kind": "no_test"
+              }
+            },
+            {
+              "choiceId": "choice.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.monitor.v2",
+              "choiceLabel": "Continue treatment with biomarker-only monitoring",
+              "timing": {
+                "kind": "no_test"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "index": 2582,
+      "entry": {
+        "caseId": "case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1",
+        "nodeId": "node.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+        "questionVariantId": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+        "classification": {
+          "kind": "test_choices",
+          "choices": [
+            {
+              "choiceId": "choice.cpc.residual-despite-negative-biopsy.tme.v1",
+              "choiceLabel": "Oncologic rectal resection with total mesorectal excision",
+              "timing": {
+                "kind": "no_test"
+              }
+            },
+            {
+              "choiceId": "choice.cpc.residual-despite-negative-biopsy.local.v1",
+              "choiceLabel": "Full-thickness transanal excision of the treated site",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.clinical_procedure"
+              }
+            },
+            {
+              "choiceId": "choice.cpc.residual-despite-negative-biopsy.watch.v1",
+              "choiceLabel": "Protocolized watch-and-wait surveillance",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.rectal_response_assessment"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "index": 2765,
+      "entry": {
+        "caseId": "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
+        "nodeId": "node.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+        "questionVariantId": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+        "classification": {
+          "kind": "test_choices",
+          "choices": [
+            {
+              "choiceId": "choice.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.proceed.v1",
+              "choiceLabel": "Proceed with the proposed anesthetic; arrange MH specialist assessment",
+              "timing": {
+                "kind": "no_test"
+              }
+            },
+            {
+              "choiceId": "choice.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.test-first.v1",
+              "choiceLabel": "Complete muscle-contracture testing before using the proposed anesthetic",
+              "timing": {
+                "kind": "test",
+                "timingProfileId": "timing.test.advanced_diagnostic"
+              }
+            },
+            {
+              "choiceId": "choice.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.pretreat.v1",
+              "choiceLabel": "Give prophylactic dantrolene before using the proposed anesthetic",
+              "timing": {
+                "kind": "no_test"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "orders": [
+    {
+      "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+      "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+      "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+      "choiceId": "choice.topic.egh.symptomatic-hernia-anemia.repair",
+      "choiceLabel": "Elective anatomical hiatal hernia repair",
+      "timingProfileId": "timing.test.clinical_procedure",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+      "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+      "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+      "choiceId": "choice.topic.egh.symptomatic-hernia-anemia.fix",
+      "choiceLabel": "Limited reduction and gastric fixation",
+      "timingProfileId": "timing.test.clinical_procedure",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+      "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "choiceId": "choice.topic.egh.repair-with-reflux-control.wrap",
+      "choiceLabel": "Reduce hernia, close hiatus and add fundoplication",
+      "timingProfileId": "timing.test.clinical_procedure",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+      "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "choiceId": "choice.topic.egh.repair-with-reflux-control.none",
+      "choiceLabel": "Reduce hernia and close hiatus without a wrap",
+      "timingProfileId": "timing.test.clinical_procedure",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.esophagus-gerd-barrett-hiatal.hernia-anemia.v1",
+      "nodeId": "node.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "questionVariantId": "question.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+      "choiceId": "choice.topic.egh.repair-with-reflux-control.fix",
+      "choiceLabel": "Reduce hernia and perform gastric fixation",
+      "timingProfileId": "timing.test.clinical_procedure",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance-review.v2",
+      "nodeId": "node.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+      "questionVariantId": "question.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.v2",
+      "choiceId": "choice.topic.bowel-ibd-malabsorption-short-bowel.crohn-surveillance.ileocolonoscopy.v2",
+      "choiceLabel": "Obtain ileocolonoscopy to reassess disease activity",
+      "timingProfileId": "timing.test.endoscopy_with_sampling",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1",
+      "nodeId": "node.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+      "questionVariantId": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+      "choiceId": "choice.cpc.residual-despite-negative-biopsy.local.v1",
+      "choiceLabel": "Full-thickness transanal excision of the treated site",
+      "timingProfileId": "timing.test.clinical_procedure",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.colorectal-polyps-cancer.persistent-rectal-wall-focus.v1",
+      "nodeId": "node.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+      "questionVariantId": "question.topic.colorectal-polyps-cancer.residual-despite-negative-biopsy.v1",
+      "choiceId": "choice.cpc.residual-despite-negative-biopsy.watch.v1",
+      "choiceLabel": "Protocolized watch-and-wait surveillance",
+      "timingProfileId": "timing.test.rectal_response_assessment",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
+      "nodeId": "node.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+      "questionVariantId": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
+      "choiceId": "choice.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.test-first.v1",
+      "choiceLabel": "Complete muscle-contracture testing before using the proposed anesthetic",
+      "timingProfileId": "timing.test.advanced_diagnostic",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    }
+  ],
+  "concepts": [
+    {
+      "index": 100,
+      "entry": {
+        "id": "concept.rectal-cancer.selected-watch-and-wait",
+        "displayName": "Selected watch-and-wait after clinical complete response",
+        "learningObjective": "Recognize intensive-surveillance watch-and-wait as an acceptable nonsurgical option for a fully informed adherent patient with a clinical complete response in an experienced program.",
+        "earliestFacilityStage": 1,
+        "conceptType": "management"
+      }
+    },
+    {
+      "index": 660,
+      "entry": {
+        "id": "concept.topic.esophagus-gerd-barrett-hiatal.symptomatic-hernia-anemia.v1",
+        "displayName": "Recognize anemia and meal symptoms as consequential paraesophageal-hernia manifestations.",
+        "learningObjective": "Recognize anemia and meal symptoms as consequential paraesophageal-hernia manifestations.",
+        "earliestFacilityStage": 0,
+        "conceptType": "management"
+      }
+    },
+    {
+      "index": 661,
+      "entry": {
+        "id": "concept.topic.esophagus-gerd-barrett-hiatal.repair-with-reflux-control.v1",
+        "displayName": "Plan reflux control as part of a symptomatic type III hernia repair.",
+        "learningObjective": "Plan reflux control as part of a symptomatic type III hernia repair.",
+        "earliestFacilityStage": 0,
+        "conceptType": "management"
+      }
+    },
+    {
+      "index": 709,
+      "entry": {
+        "id": "concept.bowel-ibd-malabsorption-short-bowel.crohn-postresection-endoscopy.v1",
+        "displayName": "crohn surveillance",
+        "learningObjective": "Choose postoperative mucosal assessment despite symptom control after ileocolic Crohn resection.",
+        "earliestFacilityStage": 2,
+        "conceptType": "workup"
+      }
+    },
+    {
+      "index": 982,
+      "entry": {
+        "id": "concept.mh.nontriggering-plan-and-testing-sequence.v1",
+        "displayName": "Choose the surgical testing sequence under unresolved familial MH risk",
+        "learningObjective": "Interpret family history and an uninformative genetic result, then distinguish nontriggering perioperative planning from prophylactic dantrolene or obligatory preoperative contracture testing.",
+        "earliestFacilityStage": 0,
+        "conceptType": "management"
+      }
+    }
+  ]
+}

@@ -41,6 +41,7 @@ import { openAutomaticCloudCampaign } from "./session/cloud/automaticResolution"
 import { CloudSyncError } from "./session/cloud/transport";
 import { CloudCacheError } from "./session/cloud/codecCache";
 import { cloudOpeningDiagnostic } from "./session/cloud/openingDiagnostic";
+import { ensureRuntimeCatalogue, RuntimeCatalogueRequired, runtimeCatalogueStatus, yieldRuntimeTask } from "./mobile/performance/runtimeCatalogue";
 
 const MobileEntryPresentation = lazy(() => import("./mobile/MobileEntryPresentation"));
 
@@ -285,9 +286,9 @@ interface GameLaunchState {
   loadedProfile: LoadedPrototypeProfile;
 }
 
-type LaunchState = OpeningLaunchState | GameLaunchState;
+type LaunchState = OpeningLaunchState | GameLaunchState | { mode: "preparing" };
 
-function initialLaunchState(accountId: string | null): LaunchState {
+function initialLaunchState(accountId: string | null): OpeningLaunchState {
   const loadedProfile = loadPrototypeProfile(accountId);
   return {
     mode: "opening",
@@ -299,29 +300,50 @@ function initialLaunchState(accountId: string | null): LaunchState {
 
 export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignId?: string } = {}) {
   const accountId = useAuthAccountId();
-  const [launch, setLaunch] = useState<LaunchState>(() => {
+  const loadLaunch = (): LaunchState => { try {
     const initial = initialLaunchState(accountId);
     if (initialCampaignId && initial.mode === "opening") {
       const restored = initial.profile.campaigns.find(row => row.campaignId === initialCampaignId)?.status === "archived" ? restoreLocalCampaign(initial.profile, initialCampaignId) : initial.profile;
       return { mode: "game", loadedProfile: { profile: selectLocalCampaign(restored, initialCampaignId), notice: "This device only. Account progress is separate." } };
     }
     return initial;
-  });
+  } catch (error) { if (error instanceof RuntimeCatalogueRequired) return { mode: "preparing" }; throw error; } };
+  const [launch, setLaunch] = useState<LaunchState>(loadLaunch);
+  const [catalogue, setCatalogue] = useState<"ready" | "preparing" | "failed">(() => runtimeCatalogueStatus().indexed ? "preparing" : "ready");
   const [localRecovery, setLocalRecovery] = useState<"checking" | "ready" | "failed">(() => typeof indexedDB === "undefined" ? "ready" : "checking");
   const [localRecoveryAttempt, setLocalRecoveryAttempt] = useState(0);
   useEffect(() => {
-    if (typeof indexedDB === "undefined") return;
+    // The native chooser uses frozen save data and the compact index. Warm the
+    // synchronous local command path after paint, alongside journal recovery.
+    let cancelled = false;
+    if (runtimeCatalogueStatus().indexed) setCatalogue("preparing");
+    void (runtimeCatalogueStatus().indexed ? yieldRuntimeTask() : Promise.resolve()).then(() => {
+      if (!cancelled) return ensureRuntimeCatalogue();
+    }).then(() => {
+      if (cancelled) return;
+      const loaded = preparingProfile ? loadLaunch() : null;
+      if (loaded?.mode === "preparing") { setCatalogue("failed"); return; }
+      if (loaded) setLaunch(current => current.mode === "preparing" ? loaded : current);
+      setCatalogue("ready");
+    }).catch(error => { if (!cancelled) { problemDiagnostics.error("local-catalogue-open", error); setCatalogue("failed"); } });
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accountId, localRecoveryAttempt]);
+  const preparingProfile = launch.mode === "preparing";
+  useEffect(() => {
+    if (typeof indexedDB === "undefined" || launch.mode === "preparing") return;
     let cancelled = false; setLocalRecovery("checking");
     const profile = launch.mode === "game" ? launch.loadedProfile.profile : launch.profile;
     void cloudCheckDeadline(import("./session/localProfileJournal").then(module => module.recoverLocalProfile(profile, accountId))).then(profile => {
       if (cancelled) return;
-      setLaunch(current => current.mode === "game" ? { ...current, loadedProfile: { ...current.loadedProfile, profile } } : { ...current, profile });
+      setLaunch(current => current.mode === "preparing" ? current : current.mode === "game" ? { ...current, loadedProfile: { ...current.loadedProfile, profile } } : { ...current, profile });
       setLocalRecovery("ready");
     }).catch(error => { if (!cancelled) { problemDiagnostics.error("local-journal-open", error); setLocalRecovery("failed"); } });
     return () => { cancelled = true; };
-    // This opening pass completes before any campaign interaction is mounted.
+    // The validated chooser may paint early, but every campaign/storage action
+    // remains gated until this exact recovery pass and catalogue warm finish.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accountId, localRecoveryAttempt]);
+  }, [accountId, localRecoveryAttempt, preparingProfile]);
 
   const requestOpening = (
     profile: LocalPrototypeProfile,
@@ -355,7 +377,10 @@ export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignI
     });
   };
 
-  if (localRecovery !== "ready") return <LoadingScreen status="Opening your device save…" stage="checking"
+  if (catalogue === "failed") return <LoadingScreen status="Opening your clinic data…" stage="opening"
+    failure="Clinic data could not load. Your saved copies are safe." onRetry={() => setLocalRecoveryAttempt(n => n + 1)} />;
+  if (launch.mode === "preparing") return <LoadingScreen status="Opening your device save…" stage="opening" />;
+  if (localRecovery === "failed" || (localRecovery !== "ready" && launch.mode !== "opening")) return <LoadingScreen status="Opening your device save…" stage="checking"
     failure={localRecovery === "failed" ? "Your device save could not be read. Your copies are safe." : null}
     onRetry={() => setLocalRecoveryAttempt(n => n + 1)} />;
   if (launch.mode === "opening") {
@@ -363,6 +388,7 @@ export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignI
       <OpeningSequence
         key={launch.sequence}
         profile={launch.profile}
+        campaignReady={catalogue === "ready" && localRecovery === "ready"}
         campaignSeed={launch.campaignSeed}
         initialStep={launch.initialStep}
         initialGuidanceEnabled={launch.guidanceEnabled}
@@ -412,6 +438,7 @@ export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignI
     return (
       <OpeningSequence
         profile={launch.loadedProfile.profile}
+        campaignReady={catalogue === "ready"}
         initialStep="main"
         onBeginClinic={(founder, clinicName, campaignSeed, guidanceEnabled) => {
           const next = appendLocalCampaign(
@@ -454,6 +481,7 @@ export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignI
     );
   }
 
+  if (catalogue !== "ready") return <LoadingScreen status="Preparing your clinic…" stage="opening" />;
   return (
     <ActivePrototypeGame
       key={activeCampaign.campaignId}

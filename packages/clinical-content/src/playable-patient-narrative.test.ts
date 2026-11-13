@@ -1,3 +1,4 @@
+import {QUESTION_PROGRAM_BATCH7_ACCEPTED_SOURCE_VIEWS} from "./question-program-batch7-accepted-20261112";
 import {QUESTION_PROGRAM_BATCH4_ACCEPTED_SOURCE_VIEWS,QUESTION_PROGRAM_BATCH4_FROZEN_PRESERVATION} from "./question-program-batch4-accepted-20261111";
 import {createHash} from "node:crypto";
 import { describe, expect, it } from "vitest";
@@ -10,7 +11,7 @@ import type {SyntheticClinicalCase} from "./schema";
 // presentation-only staff profiles. They never introduce patient demographics.
 // Every other staff discussion keeps the original no-profile assertion.
 function expectStaffProfiles(clinicalCase:SyntheticClinicalCase):void {
- const exact=[...QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE.cases,...Object.values(QUESTION_PROGRAM_BATCH4_ACCEPTED_SOURCE_VIEWS).flatMap(view=>view.cases),...QUESTION_PROGRAM_BATCH3_ACCEPTED_SOURCE_VIEWS["topic-batch3-statistics"]!.cases].find(c=>c.id===clinicalCase.id&&
+ const exact=[...Object.values(QUESTION_PROGRAM_BATCH7_ACCEPTED_SOURCE_VIEWS).flatMap(view=>view.cases),...QUESTION_STATS1_ACCEPTED_SOURCE_RELEASE.cases,...Object.values(QUESTION_PROGRAM_BATCH4_ACCEPTED_SOURCE_VIEWS).flatMap(view=>view.cases),...QUESTION_PROGRAM_BATCH3_ACCEPTED_SOURCE_VIEWS["topic-batch3-statistics"]!.cases].find(c=>c.id===clinicalCase.id&&
   c.participant?.kind==="employee_discussion"&&c.decisionNodes[0]!.questionVariantId===clinicalCase.decisionNodes[0]!.questionVariantId);
  if(!exact){expect(clinicalCase.approvedInstantiationProfiles,clinicalCase.id).toBeUndefined();return;}
  expect(clinicalCase.approvedInstantiationProfiles,clinicalCase.id).toEqual(exact.approvedInstantiationProfiles);
@@ -32,7 +33,7 @@ const MULTI_PATIENT_FRAMING = [
 const PATIENT_REFERENCE =
   /(?:\{patientName\}|\b(?:patient|adult|woman|man|recipient|they|she|he|\d{1,3}-year-old)\b)/i;
 const STORY_CUE =
-  /\b(?:asks?|wants?|requests?|reports?|returns?|arrives?|attends?|noticed|notes?|describes?|is seen|is reviewed|is offered|is invited|comes?|visits?|brings?|discuss(?:es|ing)?|reviews?|reviewing|hoping|considering|counseled|diagnosed|hypercalcemia|shows?|showing|discovered|identifies|referred|confirming|evaluated|evaluates?|assess(?:ed|ing)|wakes?|found|undergoing|preparing|prepared|presents?|has|have|had|develops?|confirms|completed|scheduled|plans|starts|persists|decides|receives|reads?|sees?|declines?|lacks?|overhears?|recognizes?|waits?|considers?|compares?|moves?|records?|measures?|tabulates?|cross-classifies|designs?|tests?|recalls?|cannot|eats?|viene|consulta|llega|quiere|dice|pregunta|está|comprende)\b/i;
+  /\b(?:asks?|wants?|requests?|reports?|returns?|arrives?|attends?|noticed|notes?|describes?|is seen|is reviewed|is offered|is invited|comes?|visits?|brings?|discuss(?:es|ing)?|reviews?|reviewing|hoping|considering|counseled|diagnosed|hypercalcemia|shows?|showing|discovered|identifies|referred|confirming|evaluated|evaluates?|assess(?:ed|ing)|wakes?|found|undergoing|preparing|prepared|presents?|has|have|had|develops?|confirms|completed|scheduled|plans|starts|persists|decides|receives|reads?|sees?|declines?|lacks?|overhears?|recognizes?|waits?|considers?|compares?|moves?|records?|measures?|tabulates?|cross-classifies|tracks?|designs?|tests?|recalls?|cannot|eats?|viene|consulta|llega|quiere|dice|pregunta|está|comprende)\b/i;
 const ALTERNATE_PATIENT_CHOICE =
   /^(?:a|an|fit) (?:patient|adult|woman|man)\b/i;
 

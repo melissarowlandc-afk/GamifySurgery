@@ -1,9 +1,10 @@
+import {beforeProgramBatch7AcceptanceRelease,beforeProgramBatch7AcceptanceManifest,beforeProgramBatch7AcceptanceTimings} from "./question-program-batch7-acceptance-test-support";
 import {createHash} from "node:crypto";
 import {readFileSync, existsSync} from "node:fs";
 import {describe, expect, it} from "vitest";
-import {SYNTHETIC_CLINICAL_RELEASE as live, QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
-import {QUESTION_SHIP_MANIFEST as manifest} from "./question-ship-manifest";
-import {ANSWER_CHOICE_TIMING_REGISTRY as timings} from "./answer-choice-timing";
+import {SYNTHETIC_CLINICAL_RELEASE as actualLive, QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
+import {QUESTION_SHIP_MANIFEST as actualManifest} from "./question-ship-manifest";
+import {ANSWER_CHOICE_TIMING_REGISTRY as actualTimings} from "./answer-choice-timing";
 import {PROGRAM_BATCH6_TIMINGS as capturedTimings} from "./question-program-batch6-accepted-data-20261112";
 import {
   QUESTION_PROGRAM_BATCH6_ACCEPTED_CASES as cases, QUESTION_PROGRAM_BATCH6_ACCEPTED_ROWS as rows,
@@ -22,6 +23,10 @@ import {
   beforeProgramBatch6AcceptanceSource as previousSource,
   withProgramBatch6PresentationCorrections as corrected,
 } from "./question-program-batch6-acceptance-test-support";
+
+const live=beforeProgramBatch7AcceptanceRelease(actualLive);
+const manifest=beforeProgramBatch7AcceptanceManifest(actualManifest);
+const timings=beforeProgramBatch7AcceptanceTimings(actualTimings);
 
 const read = (path: string) => JSON.parse(readFileSync(new URL("../../../" + path, import.meta.url), "utf8"));
 const root = "tools/question-quality/fixtures/question-topic-acceptance-batch6-";
@@ -208,7 +213,7 @@ describe("topic batch6 exact pediatric salvage acceptance", () => {
     }
     const migration = read(root + "source-migration-20261112.json");
     const pinBytes = readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch6-release-source-pins-20261112.json", import.meta.url));
-    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("ef5af731ee4525e96be5e8b4917a8b9795298f1a9627153fdb6b121011ad8452");
+    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("ea3e42d663ddf9b5c13dbe8743e58b2245af9d349ff68713f13b10c020d3231d");
     const releasePins = JSON.parse(pinBytes.toString("utf8")) as {
       capturedFixtureSha256: string; testSupportSha256: string; repairedTopicTestArchivePath: string; repairedTopicTestArchiveSha256: string;
       paths: Array<{path: string; mainBeforeSha256: string; mainAfterSha256: string; requiredReleaseSha256: string | null}>;

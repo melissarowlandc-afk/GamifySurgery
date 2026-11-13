@@ -1,3 +1,4 @@
+import {QUESTION_PROGRAM_BATCH8_ACCEPTED_TEST_ORDER_RECORDS,QUESTION_PROGRAM_BATCH8_RETAINED_TEST_ORDER_RECORDS} from "@gamify-surgery/clinical-content";
 // BEGIN N2 ROUND3 exact-order import
 import { QUESTION_NEW_N2_ROUND3_TEST_ORDER_RECORDS } from "./question-new-n2-round3-test-orders";
 // END N2 ROUND3 exact-order import
@@ -2161,7 +2162,17 @@ const questionBankBatch2aRound2Records: ExactTestChoiceOrderRecord[] = [
 ];
 // END QUESTION BANK BATCH2A ROUND2 20261104 EXACT RECORDS
 
-export const EXACT_TEST_CHOICE_ORDER_RECORDS: readonly ExactTestChoiceOrderRecord[] = [
+function withBatch8HistoricalOrders(records:readonly ExactTestChoiceOrderRecord[]):readonly ExactTestChoiceOrderRecord[]{
+  const restored=[...records];
+  for(const record of QUESTION_PROGRAM_BATCH8_RETAINED_TEST_ORDER_RECORDS){
+    const prior=restored.find(r=>r.caseId===record.caseId&&r.nodeId===record.nodeId&&r.questionVariantId===record.questionVariantId&&r.choiceId===record.choiceId);
+    if(!prior)restored.push(record);
+    else if(JSON.stringify(prior)!==JSON.stringify(record))throw new Error("Conflicting frozen batch8 predecessor order: "+record.questionVariantId);
+  }
+  return restored;
+}
+
+export const EXACT_TEST_CHOICE_ORDER_RECORDS: readonly ExactTestChoiceOrderRecord[] = withBatch8HistoricalOrders([
   ...questionQualityAdversarialR520261102Records,
   ...questionQualityAdversarialR420261102Records,
   ...questionQualityAdversarialR320261102Records,
@@ -2240,7 +2251,9 @@ export const EXACT_TEST_CHOICE_ORDER_RECORDS: readonly ExactTestChoiceOrderRecor
   ...QUESTION_PROGRAM_BATCH4_ACCEPTED_TEST_ORDER_RECORDS,
   ...QUESTION_PROGRAM_BATCH5_ACCEPTED_TEST_ORDER_RECORDS,
   ...QUESTION_PROGRAM_BATCH6_ACCEPTED_TEST_ORDER_RECORDS,
-];
+  ...QUESTION_PROGRAM_BATCH7_ACCEPTED_TEST_ORDER_RECORDS,
+  ...QUESTION_PROGRAM_BATCH8_ACCEPTED_TEST_ORDER_RECORDS,
+]);
 
 // BEGIN N3 exact-order append - external-only records, old identities retained.
 import { QUESTION_NEW_N3_TEST_ORDER_RECORDS } from "./question-new-n3-test-orders";
@@ -2305,3 +2318,6 @@ import { QUESTION_FLAGS3_ACCEPTED_TEST_ORDER_RECORDS } from "@gamify-surgery/cli
 
 // Exact accepted N3R4 external-only identities; no service execution or acceptance check.
 import {QUESTION_HARDEN1_N3R4_TEST_ORDER_RECORDS} from "./question-harden1-n3r4-test-orders";
+
+// Exact accepted batch7 plan previews; existing frozen tuples remain intact.
+import {QUESTION_PROGRAM_BATCH7_ACCEPTED_TEST_ORDER_RECORDS} from "@gamify-surgery/clinical-content";

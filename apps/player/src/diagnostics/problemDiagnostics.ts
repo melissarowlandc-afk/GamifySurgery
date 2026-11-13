@@ -1,4 +1,5 @@
 import { APP_BUILD_VERSION, APP_VERSION } from "../buildVersion";
+import { bindVisibleInterval } from "../mobile/performance/visibleInterval";
 
 export const DIAGNOSTICS_KEY = "gamify-surgery.problem-diagnostics.v1";
 export const DIAGNOSTICS_MAX_CHARS = 3_072; // At most 6 KiB of optional UTF-16 storage.
@@ -175,10 +176,13 @@ export function bindProblemDiagnostics(browser: Window, doc: Document): () => vo
   const documentEvents = ["visibilitychange", "freeze", "resume"];
   windowEvents.forEach(name => browser.addEventListener(name, event)); documentEvents.forEach(name => doc.addEventListener(name, event));
   browser.addEventListener("error", caught); browser.addEventListener("unhandledrejection", rejection);
-  const timer = setInterval(() => { if (doc.visibilityState !== "hidden") problemDiagnostics.persist(); }, 5_000);
+  // Fatal errors and lifecycle exits still persist immediately. A healthy
+  // narrow phone page needs one bounded diagnostic heartbeat per minute.
+  const stopTimer = bindVisibleInterval(browser, doc, () => problemDiagnostics.persist(),
+    browser.innerWidth > 0 && browser.innerWidth <= 800 ? 60_000 : 5_000);
   problemDiagnostics.event("lifecycle", `launch:${doc.visibilityState}`);
   return () => {
     windowEvents.forEach(name => browser.removeEventListener(name, event)); documentEvents.forEach(name => doc.removeEventListener(name, event));
-    browser.removeEventListener("error", caught); browser.removeEventListener("unhandledrejection", rejection); clearInterval(timer);
+    browser.removeEventListener("error", caught); browser.removeEventListener("unhandledrejection", rejection); stopTimer();
   };
 }

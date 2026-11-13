@@ -76,6 +76,17 @@ describe("default release projection and explicit catalog runtime behavior",()=>
   const replacementRow=relation?QUESTION_SHIP_MANIFEST.accepted.find(r=>r.questionVariantId===relation.with)!:null;
   const effectiveRow=replacementRow&&replacementRow.caseId!==row.caseId?replacementRow:row;
   if(replacementRow&&replacementRow.caseId!==row.caseId)expect(SYNTHETIC_CLINICAL_RELEASE.cases.some(c=>c.id===row.caseId)).toBe(false);
+  const retirement=QUESTION_SHIP_MANIFEST.retirements.find(r=>r.caseId===effectiveRow.caseId);
+  if(retirement){
+   const authorized=[...QUESTION_PROGRAM_BATCH7_RETIREMENTS,...QUESTION_PROGRAM_BATCH8_RETIREMENTS].find(r=>r.caseId===retirement.caseId);
+   expect(authorized).toBeDefined();expect(retirement).toEqual(authorized);
+   expect(retirement.questionVariantIds).toContain(effectiveRow.questionVariantId);
+   expect(SYNTHETIC_CLINICAL_RELEASE.cases.some(c=>c.id===effectiveRow.caseId)).toBe(false);
+   const retiredPool=SYNTHETIC_CLINICAL_RELEASE.cases.filter(c=>c.id===effectiveRow.caseId);
+   expect(selectRoutineClinicalCase(vacant(),retiredPool,NOW)).toBeNull();
+   expect(getRoutinePatientAvailability(vacant(),NOW,only(retiredPool)).reason).toBe("content_unavailable");
+   return;
+  }
   const cs=SYNTHETIC_CLINICAL_RELEASE.cases.find(c=>c.id===effectiveRow.caseId)!;
   const selected=selectRoutineClinicalCase(vacant(),[cs],NOW)!;
   expect(selected.clinicalCase.id).toBe(cs.id);
@@ -165,3 +176,4 @@ describe("default release projection and explicit catalog runtime behavior",()=>
   throw new Error("The pre-gate frozen chart did not reach its ordinary answer step");
  });
 });
+import {QUESTION_PROGRAM_BATCH7_RETIREMENTS,QUESTION_PROGRAM_BATCH8_RETIREMENTS} from "@gamify-surgery/clinical-content";

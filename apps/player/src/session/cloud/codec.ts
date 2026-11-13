@@ -1,3 +1,4 @@
+import { RuntimeCatalogueRequired, withRuntimeCatalogue } from "../../mobile/performance/runtimeCatalogue";
 import {
   deserializeGameState, serializeGameState, type DomainContext, type GameState,
 } from "@gamify-surgery/game-domain";
@@ -183,7 +184,7 @@ function domainLoad(source: CodecObject, context?: DomainContext): { state: Game
     const state = deserializeGameState(JSON.stringify(source), context);
     return { state, persisted: persistedState(state) };
   } catch (error) {
-    if (error instanceof CloudCodecError) throw error;
+    if (error instanceof CloudCodecError || error instanceof RuntimeCatalogueRequired) throw error;
     // Keep arbitrary domain error content out of logs and future sync UI.
     throw new CloudCodecError("domain_validation", "The public domain deserializer rejected the saved game.");
   }
@@ -205,12 +206,12 @@ export async function prepareCloudBaselineImport(input: {
   requireString(input.operationId, 256, "Import operation ID");
   const campaign = readCloudCampaignMetadata(parseCodecJson(JSON.stringify(input.campaign)));
   const source = codecObject(parseCodecJson(input.serializedState), "Local source state");
-  const migrated = domainLoad(source, context);
+  const migrated = await withRuntimeCatalogue(async () => domainLoad(source, context));
   if (migrated.state.campaignId !== campaign.campaignId ||
     typeof source.campaignId === "string" && source.campaignId !== campaign.campaignId) {
     throw new CloudCodecError("campaign_identity", "Campaign metadata and the saved game have different IDs.");
   }
-  const reloaded = domainLoad(migrated.persisted, context);
+  const reloaded = await withRuntimeCatalogue(async () => domainLoad(migrated.persisted, context));
   if (!sameLogicalJson(migrated.persisted, reloaded.persisted)) {
     throw new CloudCodecError("domain_fidelity", "The public domain load changes the migrated logical state; preserve the source and request domain review.");
   }
@@ -312,8 +313,8 @@ export async function loadCloudBaselineImport(input: {
     game.campaignId !== campaign.campaignId || baseline.baselineId !== input.expectedBaselineId ||
     envelope.baselineId !== baseline.baselineId) throw new CloudCodecError("campaign_identity", "Loaded campaign or baseline identity does not match the requested campaign.");
   if (envelope.gameSchemaVersion !== game.schemaVersion) throw new CloudCodecError("invalid_shape", "Envelope and game schema versions differ.");
-  const original = domainLoad(baseline.sourceState, context);
-  const loaded = domainLoad(game, context);
+  const original = await withRuntimeCatalogue(async () => domainLoad(baseline.sourceState, context));
+  const loaded = await withRuntimeCatalogue(async () => domainLoad(game, context));
   if (!sameLogicalJson(game, loaded.persisted)) throw new CloudCodecError("domain_fidelity", "The public domain load would alter this snapshot.");
   if (!sameLogicalJson(original.persisted, game)) {
     throw new CloudCodecError("baseline_projection_mismatch", "The snapshot does not reconcile with the immutable import baseline.");

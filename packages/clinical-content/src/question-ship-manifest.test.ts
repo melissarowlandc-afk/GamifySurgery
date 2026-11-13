@@ -1,3 +1,5 @@
+import {QUESTION_PROGRAM_BATCH8_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch8Concepts} from "./question-program-batch8-accepted-20261112";
+import {QUESTION_PROGRAM_BATCH7_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch7Concepts} from "./question-program-batch7-accepted-20261112";
 import {QUESTION_PROGRAM_BATCH6_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch6Concepts} from "./question-program-batch6-accepted-20261112";
 import {QUESTION_PROGRAM_BATCH5_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch5Concepts} from "./question-program-batch5-accepted-20261111";
 import {QUESTION_PROGRAM_BATCH4_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch4Concepts} from "./question-program-batch4-accepted-20261111";
@@ -31,8 +33,8 @@ import { withAcceptedQuestionNewN3Round2Concepts } from "./question-new-n3-round
 const n3Catalog = withAcceptedQuestionNewN3Round2Concepts(completeCatalog,authoringCatalog.concepts);
 const priorCatalog = withAcceptedQuestionFlags3Concepts(withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionStats1Concepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(n3Catalog)))));
 const batch2Catalog = withAcceptedQuestionProgramBatch2Concepts(withAcceptedQuestionProgramBatch1Concepts(withAcceptedQuestionN4Concepts(withAcceptedHarden1N3r4Concepts(priorCatalog))));
-const catalog=withAcceptedQuestionProgramBatch6Concepts(withAcceptedQuestionProgramBatch5Concepts(withAcceptedQuestionProgramBatch4Concepts(withAcceptedQuestionProgramBatch3Concepts(batch2Catalog))));
-const views = {...QUESTION_PROGRAM_BATCH6_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH5_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH4_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH3_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH2_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH1_ACCEPTED_SOURCE_VIEWS,...QUESTION_N4_ACCEPTED_SOURCE_VIEWS, "harden1-round1":harden1,"n3-round4":n3r4, "flags4-accepted":flags4,"stats1-accepted":stats1,"flags3-accepted":flags3, legacy, "flags-round3": flags, "batch2a-round3": batch2a, "n1-round3": n1, "n2-round2": n2, "batch2b-round2": batch2b, "flags2-round1": flags2, "flags2-round3":flags2round3, "n3-round3":n3 };
+const catalog=withAcceptedQuestionProgramBatch8Concepts(withAcceptedQuestionProgramBatch7Concepts(withAcceptedQuestionProgramBatch6Concepts(withAcceptedQuestionProgramBatch5Concepts(withAcceptedQuestionProgramBatch4Concepts(withAcceptedQuestionProgramBatch3Concepts(batch2Catalog))))));
+const views = {...QUESTION_PROGRAM_BATCH8_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH7_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH6_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH5_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH4_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH3_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH2_ACCEPTED_SOURCE_VIEWS,...QUESTION_PROGRAM_BATCH1_ACCEPTED_SOURCE_VIEWS,...QUESTION_N4_ACCEPTED_SOURCE_VIEWS, "harden1-round1":harden1,"n3-round4":n3r4, "flags4-accepted":flags4,"stats1-accepted":stats1,"flags3-accepted":flags3, legacy, "flags-round3": flags, "batch2a-round3": batch2a, "n1-round3": n1, "n2-round2": n2, "batch2b-round2": batch2b, "flags2-round1": flags2, "flags2-round3":flags2round3, "n3-round3":n3 };
 const readReview = (name: string) => JSON.parse(readFileSync(new URL("../../../docs/research/" + name, import.meta.url), "utf8")) as Array<{id: string; verdict: string}>;
 
 describe("projection-only manager shipping manifest", () => {
@@ -42,7 +44,7 @@ describe("projection-only manager shipping manifest", () => {
   // Separate exact-version tests pin the sixteen 2b rows and the single G06
   // row; every earlier lane retains its exact acceptance checks below.
   expect(beforeFlags3AcceptanceManifest(manifest).accepted.filter(row => !["batch2b-round2", "flags2-round1", "flags2-round3", "n3-round3"].includes(row.sourceView))).toHaveLength(45);
-  expect(live.cases).toHaveLength(1340);
+  expect(live.cases).toHaveLength(1407);
   expect(catalog.cases).toHaveLength(1229);
  });
  it("ships exactly twelve N1 review-three acceptances and parks all twenty-eight returned drafts", () => {
@@ -87,23 +89,48 @@ describe("projection-only manager shipping manifest", () => {
   expect(manifest.accepted.filter(row => /^F\d\d$/.test(row.acceptanceId)).map(row => row.acceptanceId).sort()).toEqual(["F01","F03","F05","F09","F10","F11","F12","F15","F17"]);
   expect(beforeFlags3AcceptanceManifest(manifest).accepted.filter(row => /^B2A/.test(row.acceptanceId)).map(row => row.acceptanceId).sort()).toEqual(["B2A01","B2A02","B2A04","B2A05","B2A06","B2A07","B2A08","B2A09","B2A10","B2A11"]);
   for (const row of manifest.accepted) {
+   const retirement=manifest.retirements.find(r=>r.caseId===row.caseId);
+   if(retirement){
+    expect(live.cases.some(cs=>cs.id===row.caseId)).toBe(false);
+    expect(retirement.questionVariantIds).toContain(row.questionVariantId);
+    const source=views[row.sourceView as keyof typeof views]!.cases.find(cs=>cs.id===row.caseId)!;
+    expect(source.decisionNodes.find(n=>n.id===row.nodeId)).toMatchObject({questionVariantId:row.questionVariantId,primaryConceptId:row.conceptId});
+    continue;
+   }
    const replacement=manifest.replacements.find(r=>r.replaces===row.caseId) ??
      manifest.topicConsolidations.find(r=>r.replaces.includes(row.caseId));
    if(replacement&&manifest.accepted.find(r=>r.questionVariantId===replacement.with)!.caseId!==row.caseId){
     const accepted=manifest.accepted.find(r=>r.questionVariantId===replacement.with)!;
     expect(live.cases.some(cs=>cs.id===row.caseId)).toBe(false);
-    expect(live.cases.find(cs=>cs.id===accepted.caseId)).toEqual(views[accepted.sourceView as keyof typeof views]!.cases.find(cs=>cs.id===accepted.caseId));
+    const targetSource=views[accepted.sourceView as keyof typeof views]!.cases.find(cs=>cs.id===accepted.caseId);
+    const targetRetirement=manifest.retirements.find(r=>r.caseId===accepted.caseId);
+    if(targetRetirement){
+     expect(targetRetirement.decision).toBe("docs/research/question-topic-acceptance-batch7-20261112.md");
+     expect(targetRetirement.questionVariantIds).toEqual(targetSource!.decisionNodes.map(n=>n.questionVariantId));
+     expect(live.cases.find(cs=>cs.id===accepted.caseId)).toBeUndefined();
+    }else expect(live.cases.find(cs=>cs.id===accepted.caseId)).toEqual(targetSource);
     continue;
    }
    const node = live.cases.find(cs => cs.id === row.caseId)!.decisionNodes.find(node => node.id === row.nodeId)!;
    expect(node).toMatchObject({ questionVariantId: row.questionVariantId, primaryConceptId: row.conceptId });
   }
   for (const cs of legacy.cases) for (const node of cs.decisionNodes) {
+   if(manifest.retirements.some(r=>r.caseId===cs.id)){
+    expect(live.cases.some(c=>c.id===cs.id)).toBe(false);
+    expect(live.concepts.some(c=>c.id===node.primaryConceptId)).toBe(true);
+    continue;
+   }
    const relation = manifest.replacements.find(row => row.replaces === cs.id) ??
      manifest.topicConsolidations.find(row => row.replaces.includes(cs.id));
    if(relation){
     const accepted=manifest.accepted.find(row=>row.questionVariantId===relation.with)!;
-    expect(live.cases.find(row=>row.id===accepted.caseId)).toEqual(views[accepted.sourceView as keyof typeof views]!.cases.find(row=>row.id===accepted.caseId));
+    const targetSource=views[accepted.sourceView as keyof typeof views]!.cases.find(row=>row.id===accepted.caseId);
+    const targetRetirement=manifest.retirements.find(r=>r.caseId===accepted.caseId);
+    if(targetRetirement){
+     expect(targetRetirement.decision).toBe("docs/research/question-topic-acceptance-batch7-20261112.md");
+     expect(targetRetirement.questionVariantIds).toEqual(targetSource!.decisionNodes.map(n=>n.questionVariantId));
+     expect(live.cases.find(row=>row.id===accepted.caseId)).toBeUndefined();
+    }else expect(live.cases.find(row=>row.id===accepted.caseId)).toEqual(targetSource);
     if(accepted.caseId!==cs.id)expect(live.cases.some(row=>row.id===cs.id)).toBe(false);
     continue;
    }

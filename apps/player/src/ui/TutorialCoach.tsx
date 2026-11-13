@@ -6,6 +6,7 @@ import {
   useState,
   type CSSProperties,
 } from "react";
+import { bindVisibleInterval } from "../mobile/performance/visibleInterval";
 import {
   isClinicControlsTutorialStepId,
   type TutorialActionId,
@@ -577,7 +578,7 @@ export function TutorialCoach({
     };
 
     const scheduleUpdate = () => {
-      if (cancelled || animationFrame !== 0) {
+      if (cancelled || animationFrame !== 0 || document.visibilityState === "hidden") {
         return;
       }
       animationFrame = window.requestAnimationFrame(() => {
@@ -613,7 +614,7 @@ export function TutorialCoach({
     // own size (for example, when a new alert enters the feed). Recheck the
     // geometry occasionally, but equality checks and placement hysteresis
     // ensure this safety check cannot create visible movement by itself.
-    const positionInterval = window.setInterval(scheduleUpdate, 600);
+    const stopPositionInterval = bindVisibleInterval(window, document, scheduleUpdate, 600);
 
     return () => {
       cancelled = true;
@@ -624,7 +625,7 @@ export function TutorialCoach({
       if (missingTargetTimer !== 0) {
         window.clearTimeout(missingTargetTimer);
       }
-      window.clearInterval(positionInterval);
+      stopPositionInterval();
       mutationObserver.disconnect();
       resizeObserver.disconnect();
       window.removeEventListener("resize", scheduleUpdate);

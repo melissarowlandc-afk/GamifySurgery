@@ -1,3 +1,5 @@
+import {PROGRAM_BATCH3_ORDERS as orders} from "./question-program-batch3-accepted-data-20261111";
+import {QUESTION_PROGRAM_BATCH8_WITHDRAWN_ROWS,QUESTION_PROGRAM_BATCH8_RETAINED_TEST_ORDER_RECORDS} from "./question-program-batch8-accepted-20261112";
 import {beforeProgramBatch4AcceptanceRelease,beforeProgramBatch4AcceptanceManifest,beforeProgramBatch4AcceptanceTimings} from "./question-program-batch4-acceptance-test-support";
 import {describe,expect,it} from "vitest";
 import {readFileSync} from "node:fs";
@@ -9,18 +11,20 @@ import {QUESTION_PROGRAM_BATCH3_ACCEPTED_CASES as cases,QUESTION_PROGRAM_BATCH3_
   QUESTION_PROGRAM_BATCH3_ACCEPTED_QUESTIONS as questions,QUESTION_PROGRAM_BATCH3_ACCEPTED_SOURCE_VIEWS as views,
   QUESTION_PROGRAM_BATCH3_RETAINED_CASES as retired,QUESTION_PROGRAM_BATCH3_REPLACEMENTS as replacements,
   QUESTION_PROGRAM_BATCH3_CONSOLIDATIONS as consolidations,QUESTION_PROGRAM_BATCH3_FROZEN_PRESERVATION as frozen,
-  QUESTION_PROGRAM_BATCH3_ACCEPTED_TEST_ORDER_RECORDS as orders,QUESTION_PROGRAM_BATCH3_CLAIMS as claims} from "./question-program-batch3-accepted-20261111";
+  QUESTION_PROGRAM_BATCH3_ACCEPTED_TEST_ORDER_RECORDS as currentFreshOrders,QUESTION_PROGRAM_BATCH3_CLAIMS as claims} from "./question-program-batch3-accepted-20261111";
 import {beforeProgramBatch3AcceptanceRelease as previous,beforeProgramBatch3AcceptanceManifest as previousManifest,
   beforeProgramBatch3AcceptanceTimings as previousTimings,beforeProgramBatch3AcceptanceSource as previousSource,
   withProgramBatch3PresentationCorrections as correctPresentation} from "./question-program-batch3-acceptance-test-support";
-const live=beforeProgramBatch4AcceptanceRelease(currentLive);
-const manifest=beforeProgramBatch4AcceptanceManifest(currentManifest);
-const timing=beforeProgramBatch4AcceptanceTimings(currentTiming);
 const read=(path:string)=>JSON.parse(readFileSync(new URL("../../../"+path,import.meta.url),"utf8"));
 const before=read("tools/question-quality/fixtures/question-topic-acceptance-batch3-before-20261111.json");
 const decisions=read("docs/research/question-topic-acceptance-batch3-dispositions-20261111.json");
 const nameCorrections=read("tools/question-quality/fixtures/question-topic-acceptance-batch3-literal-name-corrections-20261111.json");
 const digest=(value:unknown)=>createHash("sha256").update(JSON.stringify(value)).digest("hex");
+
+
+const live=beforeProgramBatch4AcceptanceRelease(currentLive);
+const manifest=beforeProgramBatch4AcceptanceManifest(currentManifest);
+const timing=beforeProgramBatch4AcceptanceTimings(currentTiming);
 
 describe("topic batch3 complete exact PASS acceptance",()=>{
   it("accounts for225 requested nodes with211 acceptances and14 explicit exclusions",()=>{
@@ -149,6 +153,12 @@ describe("topic batch3 complete exact PASS acceptance",()=>{
     expect(decisions.presentationCorrections.caseIds).toEqual(nameCorrections.records.map((record:{caseId:string})=>record.caseId));
   });
   it("keeps all2343 previous timing tuples and adds211 exact rows and209 pending orders",()=>{
+    // Fresh exports omit superseded rows; frozen orders remain separately exact.
+    const withheld=new Set(QUESTION_PROGRAM_BATCH8_WITHDRAWN_ROWS.map(r=>r.questionVariantId));
+    expect(currentFreshOrders).toEqual(orders.filter(r=>!withheld.has(r.questionVariantId)));
+    for(const old of orders.filter(r=>withheld.has(r.questionVariantId)))
+      expect(QUESTION_PROGRAM_BATCH8_RETAINED_TEST_ORDER_RECORDS.filter(r=>r.caseId===old.caseId&&r.nodeId===old.nodeId&&r.questionVariantId===old.questionVariantId&&r.choiceId===old.choiceId)).toEqual([old]);
+
     expect(timing).toHaveLength(2554);expect(previousTimings(timing)).toEqual(before.timing);expect(orders).toHaveLength(209);
     for(const order of orders){expect(order.disposition).toEqual({kind:"not_executed",reason:"future_planned"});const node=cases.find(cs=>cs.id===order.caseId)!.decisionNodes.find(node=>node.id===order.nodeId)!;
       expect(node.questionVariantId).toBe(order.questionVariantId);expect(node.answerChoices.find(choice=>choice.id===order.choiceId)!.label).toBe(order.choiceLabel);}
@@ -167,7 +177,7 @@ describe("topic batch3 complete exact PASS acceptance",()=>{
     const migration=read("tools/question-quality/fixtures/question-topic-acceptance-batch3-source-migration-20261111.json");
     expect(migration.files.length).toBeGreaterThanOrEqual(9);
     const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch3-release-source-pins-20261111.json",import.meta.url));
-    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("c68796573c33ab9a9263ea0dc12183e35616286be1f6fdab83c4ca027e18daac");
+    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("caf9e22840fe7449a3f8b6b66062b75288b3a9d61f275682221e98d97418e532");
     const releasePins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;testSupportSha256:string;paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string}>};
     expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-topic-acceptance-batch3-source-migration-20261111.json",import.meta.url))).digest("hex")).toBe(releasePins.capturedFixtureSha256);
     expect(createHash("sha256").update(readFileSync(new URL("./question-program-batch3-acceptance-test-support.ts",import.meta.url))).digest("hex")).toBe(releasePins.testSupportSha256);

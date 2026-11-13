@@ -1,5 +1,6 @@
 import type { PlaytimeTracker } from "./playtimeTracker";
 import { RequestBackoff } from "../session/requestBudget";
+import { bindVisibleInterval } from "../mobile/performance/visibleInterval";
 
 /** Web Locks is origin/account scoped and atomic across tabs. No device identifier. */
 export function bindBrowserUsage(tracker: PlaytimeTracker, accountId: string, browser: Window,
@@ -44,11 +45,11 @@ export function bindBrowserUsage(tracker: PlaytimeTracker, accountId: string, br
   browser.addEventListener("pagehide", pagehide);
   browser.addEventListener("pageshow", visibilityChange);
   browser.addEventListener("online", online);
-  const timer = browser.setInterval(() => { takeLease(); tracker.tick(); }, 1_000);
+  const stopTimer = bindVisibleInterval(browser, doc, () => { takeLease(); tracker.tick(); }, 1_000);
   visibility();
   return () => {
     disposed = true;
-    browser.clearInterval(timer);
+    stopTimer();
     for (const type of activityEvents) doc.removeEventListener(type, input, true);
     doc.removeEventListener("visibilitychange", visibilityChange);
     browser.removeEventListener("pagehide", pagehide);

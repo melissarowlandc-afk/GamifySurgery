@@ -6,6 +6,9 @@ import type { CloudCandidate, CloudConfirmed, SnapshotLineage } from "./cloud/tr
 import type { CloudCompressedText } from "./cloud/codecCompression";
 import type { QuestionUsageReceipt } from "../playtime/usageTypes";
 import { observeStorage, problemDiagnostics } from "../diagnostics/problemDiagnostics";
+import { deleteJournalKeyRange } from "./journalRangeDelete";
+import { decodeJournalValue, encodeJournalValue, preparedJournalValue, type EncodedJournalValue } from "./journalEncoding";
+import { LOCAL_STORAGE_COMPRESSION_WRITES } from "./localStorageBuildPolicy";
 import { isStorageQuotaError, reclaimAuxiliaryStorage } from "./storagePressure";
 import { sha256Utf8 } from "./cloud/codecJson";
 import { isTransientStorageError, retrySlowStorage } from "./cloud/storageRetry";
@@ -53,6 +56,15 @@ export interface JournalRow {
 export interface JournalHead { schemaVersion: 1; key: string; owner: string; highWater: number; snapshotThrough: number; previousThrough: number | null;
   snapshotFormat?: 3; pendingUsageIds?: string[]; acknowledgedUsage?: string[]; profileOrder?: number; acknowledgedRecords?: number }
 export interface JournalSnapshot { key: string; through: number; seed: JournalSeed; sha256: string }
+type StoredRow = JournalRow | (EncodedJournalValue & { version: number });
+type StoredSnapshot = Omit<JournalSnapshot, "seed"> & { seed: JournalSeed | EncodedJournalValue };
+async function decodeRows(rows: readonly StoredRow[]): Promise<JournalRow[]> {
+  // Bound stream/UTF-8 scratch when reopening a long tail. The readonly IDB
+  // transaction has already completed; no durability or ordering depends on it.
+  const decoded: JournalRow[] = [];
+  for (const row of rows) decoded.push(await decodeJournalValue<JournalRow>(row));
+  return decoded;
+}
 export interface JournalRead { head: JournalHead; snapshot: JournalSnapshot; rows: JournalRow[] }
 export interface JournalAddress { database: string; key: string }
 export interface PreparedJournal { owner: string; through: number; candidate: CloudCandidate }
@@ -65,9 +77,9 @@ export interface JournalStorage {
   head(key: string): Promise<JournalHead | null>;
   read(key: string): Promise<JournalRead | null>;
   changes(key: string, after: number): Promise<{ head: JournalHead; rows: JournalRow[] } | null>;
-  bind(key: string, owner: string, expected: JournalHead | null, seed: JournalSeed, sha256: string): Promise<JournalHead>;
-  append(key: string, owner: string, from: number, rows: JournalRow[]): Promise<number>;
-  compact(key: string, owner: string, through: number, seed: JournalSeed, sha256: string): Promise<void>;
+  bind(key: string, owner: string, expected: JournalHead | null, seed: JournalSeed, sha256: string, encoded?: JournalSeed | EncodedJournalValue): Promise<JournalHead>;
+  append(key: string, owner: string, from: number, rows: JournalRow[], encoded?: readonly StoredRow[]): Promise<number>;
+  compact(key: string, owner: string, through: number, seed: JournalSeed, sha256: string, encoded?: JournalSeed | EncodedJournalValue): Promise<void>;
   /** Only after verification: reclaim older native representations before a
    * quota-constrained reopen needs to allocate any new cache/snapshot bytes. */
   reclaimCovered?(key: string, expected: JournalHead): Promise<void>;
@@ -160,41 +172,46 @@ export class IndexedDbJournalStorage implements JournalStorage {
     }));
   }
   head(key: string): Promise<JournalHead | null> { return this.transaction("readonly", async tx => await this.request(tx.objectStore("heads").get(key)) ?? null); }
-  read(key: string): Promise<JournalRead | null> {
-    return this.transaction("readonly", async tx => {
+  async read(key: string): Promise<JournalRead | null> {
+    const data = await this.transaction("readonly", async tx => {
       const head = await this.request(tx.objectStore("heads").get(key)) as JournalHead | undefined;
       if (!head) return null;
       if (head.schemaVersion !== 1) throw new CloudCacheError("version");
       if (!Number.isSafeInteger(head.highWater) || !Number.isSafeInteger(head.snapshotThrough) || head.snapshotThrough < 0 ||
         head.highWater < head.snapshotThrough || head.highWater - head.snapshotThrough > 100_000) throw new CloudCacheError("checksum");
-      const snapshot = await this.request(tx.objectStore("snapshots").get(snapshotKey(key, head.snapshotThrough))) as JournalSnapshot | undefined;
+      const snapshot = await this.request(tx.objectStore("snapshots").get(snapshotKey(key, head.snapshotThrough))) as StoredSnapshot | undefined;
       if (!snapshot) throw new CloudCacheError("checksum");
-      const rows: JournalRow[] = [];
+      const rows: StoredRow[] = [];
       if (typeof IDBKeyRange !== "undefined" && head.highWater > head.snapshotThrough) {
         rows.push(...await this.request(tx.objectStore("rows").getAll(IDBKeyRange.bound(rowKey(key, head.snapshotThrough + 1), rowKey(key, head.highWater + 1), false, true))));
       } else for (let version = head.snapshotThrough + 1; version <= head.highWater; version++) {
-        const row = await this.request(tx.objectStore("rows").get(rowKey(key, version))) as JournalRow | undefined;
+        const row = await this.request(tx.objectStore("rows").get(rowKey(key, version))) as StoredRow | undefined;
         if (!row || row.version !== version) throw new CloudCacheError("checksum");
         rows.push(row);
       }
       if (rows.length !== head.highWater - head.snapshotThrough || rows.some((r, i) => r.version !== head.snapshotThrough + i + 1)) throw new CloudCacheError("checksum");
       return { head, snapshot, rows };
     });
+    if (!data) return null;
+    return { head: data.head, snapshot: { ...data.snapshot, seed: await decodeJournalValue(data.snapshot.seed) },
+      rows: await decodeRows(data.rows) };
   }
-  changes(key: string, after: number): Promise<{ head: JournalHead; rows: JournalRow[] } | null> {
-    return this.transaction("readonly", async tx => {
+  async changes(key: string, after: number): Promise<{ head: JournalHead; rows: JournalRow[] } | null> {
+    const data = await this.transaction("readonly", async tx => {
       const head = await this.request(tx.objectStore("heads").get(key)) as JournalHead | undefined; if (!head) return null;
-      const rows: JournalRow[] = [];
+      const rows: StoredRow[] = [];
       if (head.highWater > after && typeof IDBKeyRange !== "undefined")
         rows.push(...await this.request(tx.objectStore("rows").getAll(IDBKeyRange.bound(rowKey(key, after + 1), rowKey(key, head.highWater + 1), false, true))));
       else for (let version = after + 1; version <= head.highWater; version++) {
-        const row = await this.request(tx.objectStore("rows").get(rowKey(key, version))) as JournalRow | undefined;
+        const row = await this.request(tx.objectStore("rows").get(rowKey(key, version))) as StoredRow | undefined;
         if (row) rows.push(row);
       }
       return { head, rows };
     });
+    return data ? { head: data.head, rows: await decodeRows(data.rows) } : null;
   }
-  bind(key: string, owner: string, expected: JournalHead | null, seed: JournalSeed, sha256: string): Promise<JournalHead> {
+  async bind(key: string, owner: string, expected: JournalHead | null, seed: JournalSeed, sha256: string, packed?: JournalSeed | EncodedJournalValue): Promise<JournalHead> {
+    const encoded = LOCAL_STORAGE_COMPRESSION_WRITES ? packed ?? await encodeJournalValue(seed) : seed;
     return this.transaction("readwrite", async tx => {
       const heads = tx.objectStore("heads"), actual = await this.request(heads.get(key)) as JournalHead | undefined;
       if (actual?.owner === owner) {
@@ -209,37 +226,53 @@ export class IndexedDbJournalStorage implements JournalStorage {
         acknowledgedRecords: seed.confirmed?.evidence.records.length ?? 0, ...(seed.snapshotPolicy ? { snapshotFormat: 3 } : {}) };
       if (actual?.previousThrough !== null && actual?.previousThrough !== undefined)
         await this.request(tx.objectStore("snapshots").delete(snapshotKey(key, actual.previousThrough)));
-      for (let v = (actual?.previousThrough ?? -1) + 1; v <= (seed.snapshotPolicy ? actual?.highWater ?? -1 : actual?.snapshotThrough ?? -1); v++)
-        await this.request(tx.objectStore("rows").delete(rowKey(key, v)));
+      const first = (actual?.previousThrough ?? -1) + 1, last = seed.snapshotPolicy ? actual?.highWater ?? -1 : actual?.snapshotThrough ?? -1;
+      if (last >= first) await deleteJournalKeyRange(tx.objectStore("rows"), rowKey(key, first), rowKey(key, last), value => this.request(value));
       await this.request(tx.objectStore("prepared").delete(key));
       for (const chunk of await this.request(tx.objectStore("chunks").getAllKeys()))
         if (typeof chunk === "string" && chunk.startsWith(keyPrefix(key))) await this.request(tx.objectStore("chunks").delete(chunk));
       // Reclaim redundant generations before allocating the replacement. All
       // mutations share this transaction: an abort restores every old byte.
-      await this.request(tx.objectStore("snapshots").put({ key, through, seed, sha256 } satisfies JournalSnapshot, snapshotKey(key, through)));
+      await this.request(tx.objectStore("snapshots").put({ key, through, seed: encoded, sha256 } satisfies StoredSnapshot, snapshotKey(key, through)));
       await this.request(heads.put(head, key)); return head;
     });
   }
-  async append(key: string, owner: string, from: number, rows: JournalRow[]): Promise<number> {
+  async append(key: string, owner: string, from: number, rows: JournalRow[], packed?: readonly StoredRow[]): Promise<number> {
     if (!rows.length) return from;
-    const stored = await hashedRows(rows);
-    return this.transaction("readwrite", async tx => {
+    // Enforce the rollout at the write boundary too: cached/worker-prepared
+    // values from another build cannot introduce compressed records while off.
+    const stored = !LOCAL_STORAGE_COMPRESSION_WRITES ? await hashedRows(rows) : packed ?? await Promise.all(rows.map(async row => preparedJournalValue<StoredRow>(row) ??
+      { ...await encodeJournalValue((await hashedRows([row]))[0]!), version: row.version }));
+    if (stored.length !== rows.length || stored.some((r, i) => r.version !== rows[i]!.version)) throw new CloudCacheError("checksum");
+    const to = rows.at(-1)!.version;
+    const result = await this.transaction("readwrite", async tx => {
       const heads = tx.objectStore("heads"), head = await this.request(heads.get(key)) as JournalHead | undefined;
       if (!head || head.owner !== owner) conflict();
-      const to = rows.at(-1)!.version;
-      // A lost local acknowledgement retries the exact immutable rows.
-      if (head!.highWater === to) {
-        for (const row of stored) if (JSON.stringify(await this.request(tx.objectStore("rows").get(rowKey(key, row.version)))) !== JSON.stringify(row)) conflict();
-        return to;
-      }
+      // Read a lost-ack retry atomically, but decode outside the transaction:
+      // asynchronous stream/crypto work must never outlive an active IDB tx.
+      if (head!.highWater === to) return await Promise.all(stored.map(row => this.request(tx.objectStore("rows").get(rowKey(key, row.version))) as Promise<StoredRow | undefined>));
       if (head!.highWater !== from || rows.some((r, i) => r.version !== from + i + 1)) conflict();
       for (const row of stored) await this.request(tx.objectStore("rows").put(row, rowKey(key, row.version)));
       const pendingUsageIds = rows.at(-1)!.usageQuestions.map(r => r.receipt_id);
       await this.request(heads.put({ ...head, highWater: to, pendingUsageIds,
         acknowledgedUsage: head!.acknowledgedUsage?.filter(id => pendingUsageIds.includes(id)) ?? [], profileOrder: await this.profileOrder(tx, key) }, key)); return to;
     });
+    if (typeof result === "number") return result;
+    const expected = await hashedRows(rows);
+    for (let i = 0; i < expected.length; i++) {
+      if (!result[i] || JSON.stringify(await decodeJournalValue<JournalRow>(result[i]!)) !== JSON.stringify(expected[i])) conflict();
+    }
+    // Recheck the owner/high-water AND captured bytes after asynchronous decode.
+    // A concurrent bind, corruption or replacement cannot bless an old retry.
+    return this.transaction("readonly", async tx => {
+      const head = await this.request(tx.objectStore("heads").get(key)) as JournalHead | undefined;
+      if (head?.owner !== owner || head.highWater !== to) conflict();
+      for (let i = 0; i < stored.length; i++) if (JSON.stringify(await this.request(tx.objectStore("rows").get(rowKey(key, stored[i]!.version)))) !== JSON.stringify(result[i])) conflict();
+      return to;
+    });
   }
-  compact(key: string, owner: string, through: number, seed: JournalSeed, sha256: string): Promise<void> {
+  async compact(key: string, owner: string, through: number, seed: JournalSeed, sha256: string, packed?: JournalSeed | EncodedJournalValue): Promise<void> {
+    const encoded = LOCAL_STORAGE_COMPRESSION_WRITES ? packed ?? await encodeJournalValue(seed) : seed;
     return this.transaction("readwrite", async tx => {
       const heads = tx.objectStore("heads"), head = await this.request(heads.get(key)) as JournalHead | undefined;
       if (!head || head.owner !== owner || through > head.highWater || through < head.snapshotThrough) conflict();
@@ -249,18 +282,25 @@ export class IndexedDbJournalStorage implements JournalStorage {
       // their move rows; legacy evidence journals still retain the prior suffix.
       if (head!.previousThrough !== null) await this.request(snapshots.delete(snapshotKey(key, head!.previousThrough!)));
       const redundantThrough = seed.snapshotPolicy ? through : head!.snapshotThrough;
-      for (let v = (head!.previousThrough ?? -1) + 1; v <= redundantThrough; v++) await this.request(rows.delete(rowKey(key, v)));
+      const first = (head!.previousThrough ?? -1) + 1;
+      if (redundantThrough >= first) await deleteJournalKeyRange(rows, rowKey(key, first), rowKey(key, redundantThrough), value => this.request(value));
       if (seed.snapshotPolicy) {
         // Native snapshots contain complete state. Old packed evidence is a
         // regenerable legacy representation, not an unsent recovery operation.
         const chunks = tx.objectStore("chunks"), prefix = keyPrefix(key);
         for (const chunk of await this.request(chunks.getAllKeys())) if (typeof chunk === "string" && chunk.startsWith(prefix)) await this.request(chunks.delete(chunk));
       }
-      await this.request(snapshots.put({ key, through, seed, sha256 } satisfies JournalSnapshot, snapshotKey(key, through)));
+      await this.request(snapshots.put({ key, through, seed: encoded, sha256 } satisfies StoredSnapshot, snapshotKey(key, through)));
       await this.request(heads.put({ ...head, previousThrough: head!.snapshotThrough, snapshotThrough: through, ...(seed.snapshotPolicy ? { snapshotFormat: 3 } : {}) }, key));
     });
   }
-  reclaimCovered(key: string, expected: JournalHead): Promise<void> {
+  async reclaimCovered(key: string, expected: JournalHead): Promise<void> {
+    // Only pre-hint native generations need this migration read. Decode before
+    // opening the deleting transaction, then fence its exact snapshot digest.
+    const legacy = expected.snapshotFormat !== 3 ? await this.transaction("readonly", async tx =>
+      await this.request(tx.objectStore("snapshots").get(snapshotKey(key, expected.snapshotThrough))) as StoredSnapshot | undefined) : undefined;
+    const seed = legacy ? await decodeJournalValue(legacy.seed) : undefined;
+    if (seed && await sha256Utf8(JSON.stringify(seed)) !== legacy!.sha256) throw new CloudCacheError("checksum");
     return this.transaction("readwrite", async tx => {
       const head = await this.request(tx.objectStore("heads").get(key)) as JournalHead | undefined;
       if (!head || head.owner !== expected.owner || head.snapshotThrough !== expected.snapshotThrough) return;
@@ -268,13 +308,10 @@ export class IndexedDbJournalStorage implements JournalStorage {
         // The earliest native releases did not write the format hint. Inspect
         // only that migration case; legacy evidence suffixes remain protected.
         const snapshot = await this.request(tx.objectStore("snapshots").get(snapshotKey(key, head.snapshotThrough))) as JournalSnapshot | undefined;
-        if (!snapshot?.seed.snapshotPolicy) return;
+        if (!seed?.snapshotPolicy || !snapshot || snapshot.sha256 !== legacy?.sha256) return;
       }
       const rows = tx.objectStore("rows"), prefix = keyPrefix(key);
-      const keys = await this.request(rows.getAllKeys(typeof IDBKeyRange === "undefined" ? undefined :
-        IDBKeyRange.bound(rowKey(key, 0), rowKey(key, head.snapshotThrough))));
-      for (const row of keys) if (typeof row === "string" && row.startsWith(prefix) &&
-        Number((JSON.parse(row) as [string, string])[1]) <= head.snapshotThrough) await this.request(rows.delete(row));
+      await deleteJournalKeyRange(rows, rowKey(key, 0), rowKey(key, head.snapshotThrough), value => this.request(value));
       const chunks = tx.objectStore("chunks");
       const packed = await this.request(chunks.getAllKeys(typeof IDBKeyRange === "undefined" ? undefined : IDBKeyRange.bound(prefix, prefix + "\uffff")));
       for (const chunk of packed) if (typeof chunk === "string" && chunk.startsWith(prefix)) await this.request(chunks.delete(chunk));
@@ -366,7 +403,7 @@ export class MemoryJournalStorage implements JournalStorage {
     const d = this.data.get(key); if (!d) return null;
     return copy({ head: d.head, rows: [...d.rows.values()].filter(r => r.version > after && r.version <= d.head.highWater) });
   }
-  async bind(key: string, owner: string, expected: JournalHead | null, seed: JournalSeed, sha256: string) {
+  async bind(key: string, owner: string, expected: JournalHead | null, seed: JournalSeed, sha256: string, _packed?: JournalSeed | EncodedJournalValue) {
     const actual = this.data.get(key);
     if (actual?.head.owner === owner && actual.snapshots.get(actual.head.snapshotThrough)?.sha256 === sha256) return copy(actual.head);
     if ((actual?.head.owner ?? null) !== (expected?.owner ?? null) || (actual?.head.highWater ?? null) !== (expected?.highWater ?? null)) conflict();
@@ -380,7 +417,7 @@ export class MemoryJournalStorage implements JournalStorage {
     for (const version of d.rows.keys()) if (version <= (seed.snapshotPolicy ? actual?.head.highWater ?? -1 : actual?.head.snapshotThrough ?? -1)) d.rows.delete(version);
     d.snapshots.set(through, copy({ key, through, seed, sha256 })); d.head = head; this.data.set(key, d); return copy(head);
   }
-  async append(key: string, owner: string, from: number, rows: JournalRow[]) {
+  async append(key: string, owner: string, from: number, rows: JournalRow[], _packed?: readonly StoredRow[]) {
     const d = this.data.get(key); if (!d || d.head.owner !== owner) conflict();
     const to = rows.at(-1)?.version ?? from;
     if (d!.head.highWater === to && rows.every(r => d!.rows.has(r.version) && journalRowText(r) === journalRowText(d!.rows.get(r.version)!))) return to;
@@ -394,7 +431,7 @@ export class MemoryJournalStorage implements JournalStorage {
     d!.head = { ...d!.head, highWater: to, pendingUsageIds, acknowledgedUsage: d!.head.acknowledgedUsage?.filter(id => pendingUsageIds.includes(id)) ?? [], profileOrder: this.profileOrder(key) };
     if (fault === "after-commit") throw new CloudCacheError("transaction"); return to;
   }
-  async compact(key: string, owner: string, through: number, seed: JournalSeed, sha256: string) {
+  async compact(key: string, owner: string, through: number, seed: JournalSeed, sha256: string, _packed?: JournalSeed | EncodedJournalValue) {
     const d = this.data.get(key); if (!d || d.head.owner !== owner || through > d.head.highWater) conflict();
     if (through === d!.head.snapshotThrough) return;
     const fault = this.fault; this.fault = null;
@@ -543,7 +580,8 @@ export class LocalJournalDrain {
             rows.forEach((row, index) => preparedHashes.set(row, hashes[index]!));
           }
         }
-        return this.store.append(this.key, this.owner, from, rows);
+        const encoded = rows.map(row => preparedJournalValue<StoredRow>(row));
+        return this.store.append(this.key, this.owner, from, rows, encoded.every((value): value is StoredRow => value !== undefined) ? encoded : undefined);
       }).then(through => {
         this.committed = through; this.pending = this.pending.filter(r => r.version > through); this.error = null; this.retries = 0;
         try { this.onCommit?.(rows.at(-1)!); } catch (error) { problemDiagnostics.error("journal-observer", error); }

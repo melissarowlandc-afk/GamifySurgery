@@ -4,10 +4,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 
-export const CONTENT_PACING_REFERENCE_TICK = 22_690;
+export const CONTENT_PACING_REFERENCE_TICK = 26_281;
 export const CONTENT_PACING_MAXIMUM_DRIFT = 0.10;
 
-/** Editorial campaign target approved with the release32 late-game balance. */
+/** Editorial target from the measured November 12 Level 4-5 pacing pass. */
 export function assertContentPacing(firstFinishTick) {
   assert(Number.isSafeInteger(firstFinishTick) && firstFinishTick > 0,
     'The pacing check requires an actual first-finish tick.');

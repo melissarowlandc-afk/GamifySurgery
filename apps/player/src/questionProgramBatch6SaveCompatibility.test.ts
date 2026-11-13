@@ -1,3 +1,4 @@
+import {beforeProgramBatch7AcceptanceRelease} from "../../../packages/clinical-content/src/question-program-batch7-acceptance-test-support";
 import {materializePatientName} from "../../../packages/game-domain/src/patientText";
 import {describe, expect, it} from "vitest";
 import {
@@ -8,7 +9,7 @@ import {
   type SyntheticClinicalCase,
 } from "@gamify-surgery/clinical-content";
 import {
-  PROTOTYPE_DOMAIN_CONTEXT as current, gameReducer, getCurrentQuestion, getAnswerChoiceServicePreview,
+  PROTOTYPE_DOMAIN_CONTEXT as activeDefault, gameReducer, getCurrentQuestion, getAnswerChoiceServicePreview,
   applyFsrsReview, createNewFsrsCard, applyGameEvidenceCommand, gameEvidenceDelta,
   type DomainContext, type GameState, type GameCommand,
   createInitialGameState,
@@ -33,6 +34,7 @@ import {bindJournal, prepareJournal} from "./session/cloud/journalCodec";
 import {snapshotCopy} from "./session/cloud/snapshotCodec";
 import {TestCloudClock} from "./session/cloud/syncTestSupport";
 
+const current:DomainContext={...activeDefault,clinicalRelease:beforeProgramBatch7AcceptanceRelease(activeDefault.clinicalRelease)};
 const encounterId = "encounter.topic6.acceptance";
 const now = 1_800_000_000_000;
 const previous: DomainContext = {...current, clinicalRelease:beforeProgramBatch6AcceptanceRelease(current.clinicalRelease)};

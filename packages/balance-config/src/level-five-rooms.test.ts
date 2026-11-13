@@ -4,11 +4,11 @@ import { APPROVED_LEVEL5_ROOM_NAVIGATION_CONTRACTS, APPROVED_LEVEL5_SUPPORT_NAVI
 import { getRoomUpgradeAmount, getRoomUpgradeCost, getRoomUpgradeDefinition, getRoomUpgradeRevenueMultiplier } from "./room-upgrades";
 
 const expected = [
-  ["room.founder_office", 3, 3, 1440, [300, 500, 900, 1400]],
-  ["room.executive_office", 3, 2, 2400, [500, 750, 1320, 2100]],
-  ["room.gift_shop", 3, 3, 960, [200, 300, 540, 840]],
-  ["room.indoor_garden", 4, 4, 960, [200, 300, 540, 840]],
-  ["room.staff_gym", 4, 4, 1200, [250, 375, 660, 1050]],
+  ["room.founder_office", 3, 3, 1580, [300, 500, 900, 1400]],
+  ["room.executive_office", 3, 2, 2640, [500, 750, 1320, 2100]],
+  ["room.gift_shop", 3, 3, 1060, [200, 300, 540, 840]],
+  ["room.indoor_garden", 4, 4, 1060, [200, 300, 540, 840]],
+  ["room.staff_gym", 4, 4, 1320, [250, 375, 660, 1050]],
 ] as const;
 
 describe("M2 Level 5 base catalog", () => {
@@ -37,7 +37,7 @@ describe("M2 Level 5 base catalog", () => {
     expect(PROTOTYPE_BALANCE_RELEASE.facility.stageDefinitions.at(-1)!.nextFacilityLevel).toBeNull();
     expect(PROTOTYPE_BALANCE_RELEASE.facility.staffRoleDefinitions.find(s => s.id === "staff.executive")?.unlockFacilityLevel).toBe(5);
     const rooms = PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.filter(r => r.unlockFacilityLevel === 5);
-    expect(rooms.reduce((sum, r) => sum + r.constructionCost, 0)).toBe(6960);
+    expect(rooms.reduce((sum, r) => sum + r.constructionCost, 0)).toBe(7660);
     expect(rooms.reduce((sum, r) => sum + r.upkeepPerExpenseInterval, 0)).toBe(5);
   });
 });
