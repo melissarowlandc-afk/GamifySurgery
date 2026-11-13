@@ -87,6 +87,48 @@
       "afterSha256": "4626286d0f47a1bcd6fb014909e6a0a51ff4d1c9f8acb741dbe0282f492b10dd",
       "authority": "docs/execplans/eng-i01-live-procedure-questions-20261112.md",
       "reason": "Exact ENG-I01b port-family append. Old authoring allowlist assertion remains checked against its original source epoch."
+    },
+    {
+      "path": "apps/player/src/session/localStorageBuildPolicy.ts",
+      "beforeText": "/** Two-step rollout: ship the dialect-aware reader with plain writes first.\n * Enable only in a later release whose rollback floor includes this reader.\n * One build constant is shared by main, engine and codec realms. */\nexport const LOCAL_STORAGE_COMPRESSION_WRITES = false;\n",
+      "beforeSha256": "75a790d3bda61cbe0d872622c2f4d6d816600e77d887cf27e827dbd450478f4a",
+      "afterSha256": "1cd7ed1d4b696813d5f1344d058b873ba3753a62b1d17fe4c78b36e1cd9dc893",
+      "authority": "Manager-approved release38; docs/research/release-port38-20261113.md",
+      "reason": "manager-approved release 38 compression enablement",
+      "protectedBeforeFixtures": [
+        "tools/question-quality/fixtures/question-topic-acceptance-batch8-before-20261112.json",
+        "tools/question-quality/fixtures/question-intraop-acceptance-batch9-before-20261112.json",
+        "tools/question-quality/fixtures/question-intraop-acceptance-batch10-before-20261113.json",
+        "tools/question-quality/fixtures/question-intraop-acceptance-batch11-before-20261113.json"
+      ]
+    },
+    {
+      "path": "apps/player/src/session/localStorageBuildPolicy.test.ts",
+      "beforeText": "import { expect, it } from \"vitest\";\nimport { LOCAL_STORAGE_COMPRESSION_WRITES } from \"./localStorageBuildPolicy\";\n\nit(\"ships the dialect-aware reader before enabling compressed local writes\", () => {\n  expect(LOCAL_STORAGE_COMPRESSION_WRITES).toBe(false);\n});\n",
+      "beforeSha256": "43182e07fec29784f909238503d9430faca6e06f082ee24b94d9104f8f99d4ee",
+      "afterSha256": "3eade604c81b73f9796fd130fe4c13280f9c091a31d2e1d5532e7cd878a005a5",
+      "authority": "Manager-approved release38; docs/research/release-port38-20261113.md",
+      "reason": "manager-approved release 38 compression enablement",
+      "protectedBeforeFixtures": [
+        "tools/question-quality/fixtures/question-topic-acceptance-batch8-before-20261112.json",
+        "tools/question-quality/fixtures/question-intraop-acceptance-batch9-before-20261112.json",
+        "tools/question-quality/fixtures/question-intraop-acceptance-batch10-before-20261113.json",
+        "tools/question-quality/fixtures/question-intraop-acceptance-batch11-before-20261113.json"
+      ]
+    }
+  ],
+  "authorizationHistory": [
+    {
+      "on": "2026-11-13",
+      "reason": "manager-approved release 38 compression enablement",
+      "releaseBase": "5e7177c4",
+      "priorFixtureSha256": "3c428083f360020055558d00e846dcc8f658df03ab6dd08c221b5cf0c1ec7ebd",
+      "originalRecordsPreserved": 11,
+      "addedPaths": [
+        "apps/player/src/session/localStorageBuildPolicy.ts",
+        "apps/player/src/session/localStorageBuildPolicy.test.ts"
+      ],
+      "source": "Actual GS-release preimage bytes; no Main reconciliation record copied."
     }
   ]
 }

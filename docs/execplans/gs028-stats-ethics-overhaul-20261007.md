@@ -14550,3 +14550,67 @@ game-domain
 ```
 
 40follow-up files (driver+2evidence+16pin fixtures+16guards+5docs); overall159public port37 paths. Full list/hashes/exact output: `docs/research/release-port37-20261113.md`, its validationJSON and `.local-dev/release-verify/port37-20261113.json`. Fresh staging/verification/process receipts: `.local-dev/release-port37-20261113/capture-correction/`. No remaining failing assertion; one existing skip and nonfatal build warnings remain. No browser/Git/commit/push/install/network/agent/deploy or owner-origin change. Work stays uncommitted.
+
+
+## Rebind38 (release worktree, compression enablement) - 2026-11-13
+
+Manager base5e7177c4. Copied only the two accepted localStorageBuildPolicy files: writes true and matching test/comment. Appended two own-release preimage authorizations with reason `manager-approved release 38 compression enablement`, preserving11earlier reconciliation records. No other Main lane was ported.
+
+Fresh guarded journey/lower: **35,342commands /6,966,492cents /551completed /0walkouts**, unchanged from rebind37. All9checkpoints,3reports, every native number and the complete final native save byte-identical; identical checkpoints were not rewritten. Cash1,635,500+19,910,900-491,339-12,842,569-1,246,000=6,966,492. First26,377 passes unchanged manager26,312+/-10% and CLI26,281. All629bound inputs/476clinical hashes unchanged; no clinical source/status/approval changed. History33->34 preserves every prior entry and appends previous629hashes. Only established liveCap metadata correction. Guard/assertions/drivers unchanged.
+
+| Path | Before SHA-256 | After SHA-256 |
+|---|---|---|
+| `apps/player/src/session/localStorageBuildPolicy.ts` | `75a790d3bda61cbe0d872622c2f4d6d816600e77d887cf27e827dbd450478f4a` | `1cd7ed1d4b696813d5f1344d058b873ba3753a62b1d17fe4c78b36e1cd9dc893` |
+| `apps/player/src/session/localStorageBuildPolicy.test.ts` | `43182e07fec29784f909238503d9430faca6e06f082ee24b94d9104f8f99d4ee` | `3eade604c81b73f9796fd130fe4c13280f9c091a31d2e1d5532e7cd878a005a5` |
+| `tools/question-quality/fixtures/question-intraop-acceptance-batch10-source-reconciliation-20261113.json` | `3c428083f360020055558d00e846dcc8f658df03ab6dd08c221b5cf0c1ec7ebd` | `0c104c9808449dab325f0e747dd86e2cdcd0bd174463008a5cf67d18f283a742` |
+| `tools/qa/level-five-integration-results-20261012.json` | `90e4cb56d75bf20785138c8d99d7172bcb83348048ef1632ca506eea98c9c55c` | `5a1e525607542b5bb2179c440dffbdcccb7e82ed3c4d65badb18322fe62d6f3e` |
+
+Exact metadata checksum closure updates16pin fixtures and16verifying test checksums; no assertion changed. All20historical captures, earlier authorizations and328required-absence entries (242paths) remain strict. No Main reconciliation records copied.
+
+CI=true threads: **866files /13,824passed /0failed /1existing skip**. Full domain6140/0/1 (Level5 integration36/36), player5541/0, clinical1768/0. Focused storage40/40 and pin tests34/34 also pass, already included in full counts. No failure or timeout required an isolated rerun. Seven typechecks, boundaries/launcher and player build exit0.
+
+```text
+clinical-context-workbench
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  05:51:01
+   Duration  2.00s (transform 797ms, setup 0ms, import 1.81s, tests 730ms, environment 1ms)
+
+player
+ Test Files  452 passed (452)
+      Tests  5541 passed (5541)
+   Start at  05:49:43
+   Duration  892.50s (transform 39.70s, setup 0ms, import 1061.88s, tests 2449.55s, environment 35ms)
+
+balance-config
+ Test Files  26 passed (26)
+      Tests  168 passed (168)
+   Start at  05:51:04
+   Duration  5.84s (transform 1.50s, setup 0ms, import 6.42s, tests 406ms, environment 3ms)
+
+clinical-authoring
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  05:51:10
+   Duration  1.14s (transform 237ms, setup 0ms, import 677ms, tests 545ms, environment 1ms)
+
+clinical-content
+ Test Files  145 passed (145)
+      Tests  1768 passed (1768)
+   Start at  05:49:43
+   Duration  251.99s (transform 13.33s, setup 0ms, import 394.41s, tests 89.49s, environment 13ms)
+
+clinical-research
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  05:51:12
+   Duration  3.57s (transform 329ms, setup 0ms, import 896ms, tests 1.59s, environment 1ms)
+
+game-domain
+ Test Files  220 passed (220)
+      Tests  6140 passed | 1 skipped (6141)
+   Start at  05:49:43
+   Duration  1083.01s (transform 21.60s, setup 0ms, import 601.30s, tests 1540.41s, environment 15ms)
+```
+
+41public changed paths and exact hashes/output: `docs/research/release-port38-20261113.md`, validationJSON and `.local-dev/release-verify/port38-20261113.json`. Proofs/staging/logs in `.local-dev/release-port38-20261113/`. Rollback floor remains the dialect-aware release36+ reader. Existing skip/nonfatal build warnings only; no browser/owner storage/origin change. Uncommitted; no Git/installs/network/agents/commit/push/deploy.

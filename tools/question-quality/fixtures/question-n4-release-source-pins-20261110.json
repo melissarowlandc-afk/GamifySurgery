@@ -9,7 +9,7 @@
       "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
       "mainBeforeSha256": "8c488117164c0ec32709c19b093c42d2e5de7ff5a93d2e27eb05068f4ed15b30",
       "mainAfterSha256": "59413788d5d5421d12b79a44107bd56d60a86638aecc5d9183452cf8e52cc2a0",
-      "requiredReleaseSha256": "27dad9c119b48e8439dec450bb45b02a1c13576bceed85858fd1c5a381e5c26d",
+      "requiredReleaseSha256": "fe28a355ac8e9cb41eccb7d440746683ae6d45a2ba6074b41343b9b1f3258609",
       "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
     },
     {
@@ -1086,6 +1086,44 @@
           "previousRequirement": "6da7b43ea3a9a17c99aa6c25d366ffb21efe1c049859b6837758ad1cf92c293e",
           "releaseAfterSha256": "27dad9c119b48e8439dec450bb45b02a1c13576bceed85858fd1c5a381e5c26d",
           "reason": "manager-approved port37 final-minute capture correction; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+        }
+      ]
+    },
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port38-compression-enablement",
+      "priorFixtureSha256": "2c5fda5d30d63ed31586c3a7f5ff462dd093606658538da0b58b9a4da4e60fb2",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+          "mainBeforeSha256": "8c488117164c0ec32709c19b093c42d2e5de7ff5a93d2e27eb05068f4ed15b30",
+          "mainAfterSha256": "59413788d5d5421d12b79a44107bd56d60a86638aecc5d9183452cf8e52cc2a0",
+          "requiredReleaseSha256": "27dad9c119b48e8439dec450bb45b02a1c13576bceed85858fd1c5a381e5c26d",
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        },
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-test-support.ts",
+          "mainBeforeSha256": "673eb53ba621031555ccbc55e9e930764e43db51482d633ddcd4954c9aceafdd",
+          "mainAfterSha256": "0a2b2370e96d2ac3c28941499fc6188ad1a4cefb73c81d7a229906e70cb7596a",
+          "requiredReleaseSha256": "da14487e87d8559f7ba44cdbc768c5679512d0be915e3b6c8f3312d0c5e43837",
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        },
+        {
+          "path": "packages/clinical-content/src/question-harden1-round2-20261110.test.ts",
+          "mainBeforeSha256": "c1be8bbc9bdea0032493d9df3a0c830cc5dec1f3f63929e72dd1f67abad46e9e",
+          "mainAfterSha256": "b4ba37830da65ffc95c9e24b5104ef2e55af1ddb2ab1c9eb7a3d958e3d1bcec7",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        }
+      ],
+      "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization.",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+          "releaseBeforeSha256": "27dad9c119b48e8439dec450bb45b02a1c13576bceed85858fd1c5a381e5c26d",
+          "previousRequirement": "27dad9c119b48e8439dec450bb45b02a1c13576bceed85858fd1c5a381e5c26d",
+          "releaseAfterSha256": "fe28a355ac8e9cb41eccb7d440746683ae6d45a2ba6074b41343b9b1f3258609",
+          "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
         }
       ]
     }

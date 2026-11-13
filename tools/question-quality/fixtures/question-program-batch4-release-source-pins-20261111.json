@@ -18,7 +18,7 @@
       "mainBeforeSha256": "f9e621ce2b0937ff147dfb072a7f93fe94033c4744c4af534a3409fb9756064e",
       "mainAfterSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
       "releaseBeforeSha256": "15db60305e031085c1718ff46d7da0844d2052fa074d13987bb83073ac206e39",
-      "requiredReleaseSha256": "6aba511602e97e75019002bdbd5e387ace88c09e1362f3be14583a8cdf950525",
+      "requiredReleaseSha256": "4e01c47678f2d36b01d259252df89264265287c5cd1f490e661d70d7b2e21e82",
       "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
     }
   ],
@@ -545,6 +545,39 @@
           "previousRequirement": "ca1dd258da99379dda81066f4d0bfc351b154f6ac5b6352895e2bbbd6fa01670",
           "releaseAfterSha256": "6aba511602e97e75019002bdbd5e387ace88c09e1362f3be14583a8cdf950525",
           "reason": "manager-approved port37 final-minute capture correction; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+        }
+      ]
+    },
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port38-compression-enablement",
+      "priorFixtureSha256": "8cbb36416dc2e009589b32d0ef679ae15a081319cee0730addb804dab4ae1248",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-test-support.ts",
+          "mainBeforeSha256": "11ef2cfa21b2b386a85cc79093216c762b84e93e7a3478173c2e3c7770115c00",
+          "mainAfterSha256": "3b3bd2c697c495966c8404c83531528b6a3dfc236dfaa08bc72eb78373f8b46e",
+          "releaseBeforeSha256": "0580d2b8a1db317d27fb2f404a45656b29b65b8c94c8f4dcef66bd179ddd431e",
+          "requiredReleaseSha256": "c81cd196af8d4c4dddd28b8bf98dbd8bf659bec839c64feb60b5c9c4bee681fb",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "f9e621ce2b0937ff147dfb072a7f93fe94033c4744c4af534a3409fb9756064e",
+          "mainAfterSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "releaseBeforeSha256": "15db60305e031085c1718ff46d7da0844d2052fa074d13987bb83073ac206e39",
+          "requiredReleaseSha256": "6aba511602e97e75019002bdbd5e387ace88c09e1362f3be14583a8cdf950525",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        }
+      ],
+      "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization.",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "6aba511602e97e75019002bdbd5e387ace88c09e1362f3be14583a8cdf950525",
+          "previousRequirement": "6aba511602e97e75019002bdbd5e387ace88c09e1362f3be14583a8cdf950525",
+          "releaseAfterSha256": "4e01c47678f2d36b01d259252df89264265287c5cd1f490e661d70d7b2e21e82",
+          "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
         }
       ]
     }

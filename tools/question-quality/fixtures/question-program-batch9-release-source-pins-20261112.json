@@ -48,7 +48,7 @@
       "path": "packages/clinical-content/src/question-program-batch8-acceptance-20261112.test.ts",
       "mainBeforeSha256": "2b2f0795f7390472a1d210544a60bb544605da2fc417ab572bd94644d27641de",
       "mainAfterSha256": "e7a87b679a5e7594af47909353bc253d4e199eeb9c5e9c34ab665a3283c2fbf8",
-      "requiredReleaseSha256": "780823a4871df2111dac47d78b140519ee32724ec0f99f894be399a142c92240"
+      "requiredReleaseSha256": "9e37b73ed66b7b34cc0a4126509772521e239300c945028775097ed03b9f2c2e"
     },
     {
       "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
@@ -739,6 +739,161 @@
           "previousRequirement": "782dfd47b95a56b0f8d04a76d2a4fe8094376706692370d46f3c19ad06d82199",
           "releaseAfterSha256": "780823a4871df2111dac47d78b140519ee32724ec0f99f894be399a142c92240",
           "reason": "manager-approved port37 final-minute capture correction; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+        }
+      ]
+    },
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port38-compression-enablement",
+      "priorFixtureSha256": "1364a43e1f6d8bb811a80ddc692dd36e5bd73e84b60ea7148d6cfe8022f5be43",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22",
+          "mainAfterSha256": "aabb1463ed7634557e1abdebfc72a7f559d485500cc8a686b02fc1a657bd3347",
+          "requiredReleaseSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38",
+          "mainAfterSha256": "fbec53164c3bfcc12d6c0a5e0e57b28a9c102ec7b25990c4a4939c9327c86b34",
+          "requiredReleaseSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461",
+          "mainAfterSha256": "2a0d4fe95613674ee092a0d5cee79410a2822a1e2d5cc940263c3b79417fb95c",
+          "requiredReleaseSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9",
+          "mainAfterSha256": "8a3795167915fa8cc4e091988faae70b54779793a094961fc9e95164ebce51b1",
+          "requiredReleaseSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c",
+          "mainAfterSha256": "8f82f7281a67276056df37f504ccb1ea45c383805127e913bcdd3cdf38f4d2d2",
+          "requiredReleaseSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298",
+          "mainAfterSha256": "077f1652c6a53ff732293315a0c0c85c84bbc3f3a634420da079f299c61e389d",
+          "requiredReleaseSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch8-acceptance-test-support.ts",
+          "mainBeforeSha256": "027cc09faf68e27d21ead43798b69e662155a22f48cb868c47eae97af8385abb",
+          "mainAfterSha256": "747c31167e7c8de2c7b28e2c5e24525dc8f19d92789e56ef66ceaf4fea349c80",
+          "requiredReleaseSha256": "b824e4d891fd30d46e62894574fea4d461ebd194faa7215df43e0bcbfea4cc90"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch8-acceptance-20261112.test.ts",
+          "mainBeforeSha256": "2b2f0795f7390472a1d210544a60bb544605da2fc417ab572bd94644d27641de",
+          "mainAfterSha256": "e7a87b679a5e7594af47909353bc253d4e199eeb9c5e9c34ab665a3283c2fbf8",
+          "requiredReleaseSha256": "780823a4871df2111dac47d78b140519ee32724ec0f99f894be399a142c92240"
+        },
+        {
+          "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+          "mainBeforeSha256": "809b184fa1650882184620fb3f6f565fcfb3970922fe9856c35dc711c3d6a934",
+          "mainAfterSha256": "6dca6d20088963fa080c78c05bbe8c3078c7ea9895fef22f3d706a4749ef02f5",
+          "requiredReleaseSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76"
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03",
+          "mainAfterSha256": "13f27aa5d0b902d7992bb8b92bc1a83219dcb3dffff250d4dde2284528d06b6e",
+          "requiredReleaseSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc"
+        },
+        {
+          "path": "apps/player/src/session/topicRuntimeBindings.test.ts",
+          "mainBeforeSha256": "03a97bb95f26687286becb3722aeb36ce57cc95cea8dacc13bc08cee2ee10279",
+          "mainAfterSha256": "ff6f354f63c9ebfcf81bf201288826444697e38e20f525c1dae7bc4dab874142",
+          "requiredReleaseSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9"
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-anesthetic-intraoperative-crises-20261112.test.ts",
+          "mainBeforeSha256": "d7c64d3ec38e72b9f699cfe8bf3edf01a06538f34acf4e99e68c1d958262dbaa",
+          "mainAfterSha256": "3c2361d6d15763ff3999e30e38a9fa2a6b189f2ef473183dbc4c950f7b759af4",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-anorectal-eua-and-fistula-20261112.test.ts",
+          "mainBeforeSha256": "2d8cca6cced9d1a9bca24aee2c68e5de6344f7efdd38b1b67e10e0c9b805ed17",
+          "mainAfterSha256": "b6292c47da46b9b25c0579baa61b682776f958cd3ed3b21077df77086a523336",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-asc-access-and-soft-tissue-surprises-20261112.test.ts",
+          "mainBeforeSha256": "4ed6b74301881c62be8de3dcb742673bc95f850d8f7b5d2e2a241e8fa9a936ba",
+          "mainAfterSha256": "347de6b060cec4729478009fd60467dca3179e7c0239e9096bb62e884cfd2cf8",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-biliary-safety-and-duct-decisions-20261112.test.ts",
+          "mainBeforeSha256": "a9eb91369bf3452ce67e5699989782aea180d6039e17ee85361d7b3889186c53",
+          "mainAfterSha256": "447612275e51f990be334bda7ed5b306488229c2a454454b5c1a1e7c5d8a4649",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-endoscopic-perforation-and-injury-20261112.test.ts",
+          "mainBeforeSha256": "3eb39000caace3d840a3e0970e60d5a8bc8ca32dbd38c4f93b8683b44c69b103",
+          "mainAfterSha256": "15c1298a86dceb7aded42912e295329190a7a4db1c2d6bc86808c0f11726ff8b",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-ercp-access-and-adverse-events-20261112.test.ts",
+          "mainBeforeSha256": "703ab09199d23e6ddf5c92e9fdce7aceb29317d09984d74b7df0d78be402d41d",
+          "mainAfterSha256": "a687f8c78e115064e068cb5e9288a7c49b83aedfb48d88d5d82ce6daf0eb3a18",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-groin-hernia-anatomy-and-injury-20261112.test.ts",
+          "mainBeforeSha256": "4633c9fbe131f0510e16d31ede69a37a9b17a13b6310815e7297e07ae24c66b4",
+          "mainAfterSha256": "be28c65fb9821470d1893969e8443669bbae41e20ce22e074a5dd4eecf7f3635",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-operative-hemorrhage-and-splenic-injury-20261112.test.ts",
+          "mainBeforeSha256": "7e74c25f38cc9f10d3eba608a8f406b61fb5a021f1e5211df48bf44d4dcbf55f",
+          "mainAfterSha256": "3fca6eddca51ccbdd6413861d38c7ee21ec3a370a3c8f0227ca06dbb4c9959c5",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-pediatric-egd-food-impaction-eoe-20261112.test.ts",
+          "mainBeforeSha256": "3ec105c47f761c72371a0b317595dfb8e75b188fcf519164172e84b2dff3d5df",
+          "mainAfterSha256": "2ef210512efc13caf3af3044128af4ff7fbc6f862bd3f2f60f8c2c67c6c31592",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-pediatric-endoscopy-foreign-body-20261112.test.ts",
+          "mainBeforeSha256": "18324f8179d8e976a718101a8984aa37c375aa2c292bd1fabdd5ca44acd90e2a",
+          "mainAfterSha256": "e51cc22def88aa790ae7b6306ca4f65d67dbc90fb5a0dbbfe29990f254293a8a",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-thyroid-nerve-monitoring-20261112.test.ts",
+          "mainBeforeSha256": "cd9521d03e0afc4092cd662d067ae0b1bc086c98be26189c3c6d3098164bcda4",
+          "mainAfterSha256": "189adbda725b316e3429ea71a8fb96e6cf68534c33a0e3d1ceae82f4c012b5b0",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-unexpected-appendix-and-bowel-findings-20261112.test.ts",
+          "mainBeforeSha256": "f9e8531e373f6a13e54cd53f53043d6556cdcc88381bac3f2de723a1290f24ab",
+          "mainAfterSha256": "d5e8240cf2926f516e95a80f0ed140c5338fd27308bc10952e1853d29a224e32",
+          "requiredReleaseSha256": null
+        }
+      ],
+      "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization.",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch8-acceptance-20261112.test.ts",
+          "releaseBeforeSha256": "780823a4871df2111dac47d78b140519ee32724ec0f99f894be399a142c92240",
+          "previousRequirement": "780823a4871df2111dac47d78b140519ee32724ec0f99f894be399a142c92240",
+          "releaseAfterSha256": "9e37b73ed66b7b34cc0a4126509772521e239300c945028775097ed03b9f2c2e",
+          "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
         }
       ]
     }

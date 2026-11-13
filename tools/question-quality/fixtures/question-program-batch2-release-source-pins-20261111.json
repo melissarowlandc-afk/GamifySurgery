@@ -16,7 +16,7 @@
       "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
       "mainBeforeSha256": "b1dbaed6698c006ae5cb88fc3308308da39eec327c0aa9a31eacfefa25888d05",
       "mainAfterSha256": "01b03a00e33fa635bad87150f70afa9bf7907ffd52d0a22f6cc8f5141f182d8f",
-      "requiredReleaseSha256": "bb0123d4ea0cadd99bface38538e40bd54725890c19377fb31ac929a3024bcf6",
+      "requiredReleaseSha256": "8aa640c35293d3db33661a137bc0e0cf69a8e7e747ad918b49e5631d0cd51170",
       "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
     }
   ],
@@ -764,6 +764,37 @@
           "previousRequirement": "83fd3c03c7d4c94805df73bde871feda4292b357a5b3a1f1a80557f09c4cc053",
           "releaseAfterSha256": "bb0123d4ea0cadd99bface38538e40bd54725890c19377fb31ac929a3024bcf6",
           "reason": "manager-approved port37 final-minute capture correction; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+        }
+      ]
+    },
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port38-compression-enablement",
+      "priorFixtureSha256": "73f396814b52f4716294cc19610be2dbaba7330e0425093c8c3285d5f8f8e198",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-test-support.ts",
+          "mainBeforeSha256": "ee579791c0bc964b7e9b5c94079fcd2c2937823224646a4f492d45e4d671a51d",
+          "mainAfterSha256": "a6a642fbdbce085b2636403fa03905d7f77c679384caf792009d0c69d4302ef3",
+          "requiredReleaseSha256": "b9c65a94d3b9d951a1fcf8ffeb74ce265884fc479db7883e34c4a68a3509e4d7",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b1dbaed6698c006ae5cb88fc3308308da39eec327c0aa9a31eacfefa25888d05",
+          "mainAfterSha256": "01b03a00e33fa635bad87150f70afa9bf7907ffd52d0a22f6cc8f5141f182d8f",
+          "requiredReleaseSha256": "bb0123d4ea0cadd99bface38538e40bd54725890c19377fb31ac929a3024bcf6",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization.",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "bb0123d4ea0cadd99bface38538e40bd54725890c19377fb31ac929a3024bcf6",
+          "previousRequirement": "bb0123d4ea0cadd99bface38538e40bd54725890c19377fb31ac929a3024bcf6",
+          "releaseAfterSha256": "8aa640c35293d3db33661a137bc0e0cf69a8e7e747ad918b49e5631d0cd51170",
+          "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
         }
       ]
     }

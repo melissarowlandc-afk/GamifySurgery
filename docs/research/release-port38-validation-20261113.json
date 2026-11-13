@@ -1,0 +1,1120 @@
+{
+  "status": "PASS",
+  "managerBase": "5e7177c4",
+  "reason": "manager-approved release 38 compression enablement",
+  "scope": "Only the two accepted Main policy files were copied; all other changes are release-generated exact pin/provenance closure and handoff records.",
+  "aggregate": {
+    "files": 866,
+    "passed": 13824,
+    "failed": 0,
+    "skipped": 1
+  },
+  "fullSuites": [
+    {
+      "workspace": "clinical-context-workbench",
+      "files": 8,
+      "passed": 43,
+      "failed": 0,
+      "skipped": 0,
+      "reportPath": ".local-dev/release-port38-20261113/workspace-clinical-context-workbench.json",
+      "reportSha256": "ba6d97ad60a60c2d6a4dc58eb9512d8ce4c2dbe870eff72daa6f9a54f31707c6",
+      "logPath": ".local-dev/release-port38-20261113/others.log",
+      "logSha256": "9878d04dde877eb55debbca626bbeac3a7a94755ee1dda7705ecebf7efb9e822",
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-context-workbench --workspace @gamify-surgery/balance-config --workspace @gamify-surgery/clinical-authoring --workspace @gamify-surgery/clinical-research -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port38-20261113/workspace-json-reporter.mjs",
+      "CI": "true",
+      "exactSummary": " Test Files  8 passed (8)\n      Tests  43 passed (43)\n   Start at  05:51:01\n   Duration  2.00s (transform 797ms, setup 0ms, import 1.81s, tests 730ms, environment 1ms)"
+    },
+    {
+      "workspace": "player",
+      "files": 452,
+      "passed": 5541,
+      "failed": 0,
+      "skipped": 0,
+      "reportPath": ".local-dev/release-port38-20261113/workspace-player.json",
+      "reportSha256": "54c5227080a800beaf1448be0716663c9e541a1dded2faccc70568c8c03bba9e",
+      "logPath": ".local-dev/release-port38-20261113/player.log",
+      "logSha256": "9245784dcb2472364efe190ac431701db448852e50876de43fb2d054c24f816d",
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- --pool=threads --maxWorkers=4 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port38-20261113/workspace-json-reporter.mjs",
+      "CI": "true",
+      "exactSummary": " Test Files  452 passed (452)\n      Tests  5541 passed (5541)\n   Start at  05:49:43\n   Duration  892.50s (transform 39.70s, setup 0ms, import 1061.88s, tests 2449.55s, environment 35ms)"
+    },
+    {
+      "workspace": "balance-config",
+      "files": 26,
+      "passed": 168,
+      "failed": 0,
+      "skipped": 0,
+      "reportPath": ".local-dev/release-port38-20261113/workspace-balance-config.json",
+      "reportSha256": "a16c005947bcdf14f37bbf40428f2c6c913c98661c1841c5b167f5f28777c9f3",
+      "logPath": ".local-dev/release-port38-20261113/others.log",
+      "logSha256": "9878d04dde877eb55debbca626bbeac3a7a94755ee1dda7705ecebf7efb9e822",
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-context-workbench --workspace @gamify-surgery/balance-config --workspace @gamify-surgery/clinical-authoring --workspace @gamify-surgery/clinical-research -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port38-20261113/workspace-json-reporter.mjs",
+      "CI": "true",
+      "exactSummary": " Test Files  26 passed (26)\n      Tests  168 passed (168)\n   Start at  05:51:04\n   Duration  5.84s (transform 1.50s, setup 0ms, import 6.42s, tests 406ms, environment 3ms)"
+    },
+    {
+      "workspace": "clinical-authoring",
+      "files": 7,
+      "passed": 81,
+      "failed": 0,
+      "skipped": 0,
+      "reportPath": ".local-dev/release-port38-20261113/workspace-clinical-authoring.json",
+      "reportSha256": "c72af1243f57ec0f0c4335f71cfe04a2395d6c1dad0e9e6517ec469650cb1f2a",
+      "logPath": ".local-dev/release-port38-20261113/others.log",
+      "logSha256": "9878d04dde877eb55debbca626bbeac3a7a94755ee1dda7705ecebf7efb9e822",
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-context-workbench --workspace @gamify-surgery/balance-config --workspace @gamify-surgery/clinical-authoring --workspace @gamify-surgery/clinical-research -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port38-20261113/workspace-json-reporter.mjs",
+      "CI": "true",
+      "exactSummary": " Test Files  7 passed (7)\n      Tests  81 passed (81)\n   Start at  05:51:10\n   Duration  1.14s (transform 237ms, setup 0ms, import 677ms, tests 545ms, environment 1ms)"
+    },
+    {
+      "workspace": "clinical-content",
+      "files": 145,
+      "passed": 1768,
+      "failed": 0,
+      "skipped": 0,
+      "reportPath": ".local-dev/release-port38-20261113/workspace-clinical-content.json",
+      "reportSha256": "97d3edd83d72c9701746e894874b6120d27f16061f9a2fd9e3b69036b75c37d5",
+      "logPath": ".local-dev/release-port38-20261113/clinical.log",
+      "logSha256": "cb0412b32be4f307453065d789c9173d8179377fc9d8dff1981441cc30854ea1",
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port38-20261113/workspace-json-reporter.mjs",
+      "CI": "true",
+      "exactSummary": " Test Files  145 passed (145)\n      Tests  1768 passed (1768)\n   Start at  05:49:43\n   Duration  251.99s (transform 13.33s, setup 0ms, import 394.41s, tests 89.49s, environment 13ms)"
+    },
+    {
+      "workspace": "clinical-research",
+      "files": 8,
+      "passed": 83,
+      "failed": 0,
+      "skipped": 0,
+      "reportPath": ".local-dev/release-port38-20261113/workspace-clinical-research.json",
+      "reportSha256": "1f76978d0e183821bc6edc3bc27216194e64a63193abde3a39892bf69f471ce6",
+      "logPath": ".local-dev/release-port38-20261113/others.log",
+      "logSha256": "9878d04dde877eb55debbca626bbeac3a7a94755ee1dda7705ecebf7efb9e822",
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-context-workbench --workspace @gamify-surgery/balance-config --workspace @gamify-surgery/clinical-authoring --workspace @gamify-surgery/clinical-research -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port38-20261113/workspace-json-reporter.mjs",
+      "CI": "true",
+      "exactSummary": " Test Files  8 passed (8)\n      Tests  83 passed (83)\n   Start at  05:51:12\n   Duration  3.57s (transform 329ms, setup 0ms, import 896ms, tests 1.59s, environment 1ms)"
+    },
+    {
+      "workspace": "game-domain",
+      "files": 220,
+      "passed": 6140,
+      "failed": 0,
+      "skipped": 1,
+      "reportPath": ".local-dev/release-port38-20261113/workspace-game-domain.json",
+      "reportSha256": "b0068dd6d277f687bb5cf2998bbe745d5ea94500a87e9865c5ccacff4a7fd955",
+      "logPath": ".local-dev/release-port38-20261113/domain.log",
+      "logSha256": "29936db36dae2b04e60a2f845993b939b51f48d2e8b0f72dc5145bef293ecf65",
+      "command": "npm.cmd run test --workspace @gamify-surgery/game-domain -- --pool=threads --maxWorkers=2 --reporter=default --reporter=C:/Users/rowla/Projects/GS-release/.local-dev/release-port38-20261113/workspace-json-reporter.mjs",
+      "CI": "true",
+      "exactSummary": " Test Files  220 passed (220)\n      Tests  6140 passed | 1 skipped (6141)\n   Start at  05:49:43\n   Duration  1083.01s (transform 21.60s, setup 0ms, import 601.30s, tests 1540.41s, environment 15ms)"
+    }
+  ],
+  "levelFiveIntegrationWithinFullDomain": {
+    "files": 1,
+    "passed": 36,
+    "failed": 0,
+    "skipped": 0
+  },
+  "focused": [
+    {
+      "mode": "policy-focused",
+      "files": 4,
+      "passed": 40,
+      "failed": 0,
+      "skipped": 0,
+      "command": "npm.cmd run test --workspace @gamify-surgery/player -- src/session/localStorageBuildPolicy.test.ts src/session/journalEncoding.test.ts src/session/localJournal.test.ts src/session/cloud/operationalEngineDispatch.test.ts --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port38-20261113/policy-focused.json",
+      "exactSummary": " Test Files  4 passed (4)\n      Tests  40 passed (40)\n   Start at  05:43:27\n   Duration  15.65s (transform 13.67s, setup 0ms, import 22.01s, tests 6.31s, environment 0ms)",
+      "reportPath": ".local-dev/release-port38-20261113/policy-focused.json",
+      "reportSha256": "42a6052339b0fae39ad95f65267f3dc2e8d029d0ff866b9517f1d75050e0aa23"
+    },
+    {
+      "mode": "clinical-pins",
+      "files": 4,
+      "passed": 34,
+      "failed": 0,
+      "skipped": 0,
+      "command": "npm.cmd run test --workspace @gamify-surgery/clinical-content -- src/question-program-batch8-acceptance-20261112.test.ts src/question-program-batch9-acceptance-20261112.test.ts src/question-program-batch10-acceptance-20261113.test.ts src/question-program-batch11-acceptance-20261113.test.ts --pool=threads --maxWorkers=2 --reporter=default --reporter=json --outputFile=../../.local-dev/release-port38-20261113/clinical-pins.json",
+      "exactSummary": " Test Files  4 passed (4)\n      Tests  34 passed (34)\n   Start at  05:43:27\n   Duration  14.43s (transform 10.10s, setup 0ms, import 23.16s, tests 3.84s, environment 0ms)",
+      "reportPath": ".local-dev/release-port38-20261113/clinical-pins.json",
+      "reportSha256": "ddde8411bdce6996460060e94d244c706f7d8907bd311aacd3e6cafbb1d3c2b9"
+    }
+  ],
+  "native": {
+    "status": "PASS",
+    "reason": "manager-approved release 38 compression enablement",
+    "before": {
+      "commands": 35342,
+      "closingCashCents": 6966492,
+      "completed": 551,
+      "walkouts": 0
+    },
+    "after": {
+      "commands": 35342,
+      "closingCashCents": 6966492,
+      "completed": 551,
+      "walkouts": 0
+    },
+    "firstFinishTick": 26377,
+    "pacingReferenceUnchanged": 26281,
+    "managerReference": 26312,
+    "managerDriftPercent": 0.24703557312253377,
+    "cashReconciled": true,
+    "allNativeResultsByteEquivalent": true,
+    "allNineCheckpointsByteIdentical": true,
+    "allThreeReportsByteIdentical": true,
+    "finalNativeSaveByteIdentical": true,
+    "boundInputs": 629,
+    "changedBoundInputs": [],
+    "clinicalInputsUnchanged": 476,
+    "compressionWrites": true,
+    "policyHashes": [
+      {
+        "path": "apps/player/src/session/localStorageBuildPolicy.ts",
+        "beforeSha256": "75a790d3bda61cbe0d872622c2f4d6d816600e77d887cf27e827dbd450478f4a",
+        "acceptedMainSha256": "1cd7ed1d4b696813d5f1344d058b873ba3753a62b1d17fe4c78b36e1cd9dc893",
+        "bytes": 270
+      },
+      {
+        "path": "apps/player/src/session/localStorageBuildPolicy.test.ts",
+        "beforeSha256": "43182e07fec29784f909238503d9430faca6e06f082ee24b94d9104f8f99d4ee",
+        "acceptedMainSha256": "3eade604c81b73f9796fd130fe4c13280f9c091a31d2e1d5532e7cd878a005a5",
+        "bytes": 356
+      }
+    ],
+    "guardAndAssertionsUnchanged": true,
+    "qaDriversUnchanged": true,
+    "rawResultsSha256": "8c04641ad294dde3d09d5a3b10f777d53f18f53860c8da33a217f02089798d08",
+    "rawCheckpointsSha256": "04587f7d88309ffad208cb39854bd67b7b4aa6a441a0ba4650e514f0333001a3",
+    "rawProgressSha256": "5e4ac495d532fba4cb6ea27a7137d7632ed7adcff3d4d06ed41720fe4efcd189",
+    "canonicalWritten": false
+  },
+  "publication": {
+    "status": "published locally only",
+    "files": [
+      {
+        "path": "tools/qa/level-five-integration-results-20261012.json",
+        "beforeSha256": "90e4cb56d75bf20785138c8d99d7172bcb83348048ef1632ca506eea98c9c55c",
+        "afterSha256": "5a1e525607542b5bb2179c440dffbdcccb7e82ed3c4d65badb18322fe62d6f3e",
+        "bytes": 2678032
+      }
+    ],
+    "unchangedCheckpoints": {
+      "path": "tests/fixtures/level-five-integration-checkpoints-20261012.json",
+      "sha256": "04587f7d88309ffad208cb39854bd67b7b4aa6a441a0ba4650e514f0333001a3",
+      "rewritten": false
+    },
+    "inputHistoryBefore": 33,
+    "inputHistoryAfter": 34,
+    "guardAndDriversUnchanged": true,
+    "verificationSha256": "3ca42a2d7d3b4c8716d66c43d4a3f23b3ecc6ef12fb654c5132bfcbe76527c81"
+  },
+  "policyPinDeltas": {
+    "reason": "manager-approved release 38 compression enablement",
+    "records": [
+      {
+        "path": "apps/player/src/session/localStorageBuildPolicy.ts",
+        "beforeText": "/** Two-step rollout: ship the dialect-aware reader with plain writes first.\n * Enable only in a later release whose rollback floor includes this reader.\n * One build constant is shared by main, engine and codec realms. */\nexport const LOCAL_STORAGE_COMPRESSION_WRITES = false;\n",
+        "beforeSha256": "75a790d3bda61cbe0d872622c2f4d6d816600e77d887cf27e827dbd450478f4a",
+        "afterSha256": "1cd7ed1d4b696813d5f1344d058b873ba3753a62b1d17fe4c78b36e1cd9dc893",
+        "authority": "Manager-approved release38; docs/research/release-port38-20261113.md",
+        "reason": "manager-approved release 38 compression enablement",
+        "protectedBeforeFixtures": [
+          "tools/question-quality/fixtures/question-topic-acceptance-batch8-before-20261112.json",
+          "tools/question-quality/fixtures/question-intraop-acceptance-batch9-before-20261112.json",
+          "tools/question-quality/fixtures/question-intraop-acceptance-batch10-before-20261113.json",
+          "tools/question-quality/fixtures/question-intraop-acceptance-batch11-before-20261113.json"
+        ]
+      },
+      {
+        "path": "apps/player/src/session/localStorageBuildPolicy.test.ts",
+        "beforeText": "import { expect, it } from \"vitest\";\nimport { LOCAL_STORAGE_COMPRESSION_WRITES } from \"./localStorageBuildPolicy\";\n\nit(\"ships the dialect-aware reader before enabling compressed local writes\", () => {\n  expect(LOCAL_STORAGE_COMPRESSION_WRITES).toBe(false);\n});\n",
+        "beforeSha256": "43182e07fec29784f909238503d9430faca6e06f082ee24b94d9104f8f99d4ee",
+        "afterSha256": "3eade604c81b73f9796fd130fe4c13280f9c091a31d2e1d5532e7cd878a005a5",
+        "authority": "Manager-approved release38; docs/research/release-port38-20261113.md",
+        "reason": "manager-approved release 38 compression enablement",
+        "protectedBeforeFixtures": [
+          "tools/question-quality/fixtures/question-topic-acceptance-batch8-before-20261112.json",
+          "tools/question-quality/fixtures/question-intraop-acceptance-batch9-before-20261112.json",
+          "tools/question-quality/fixtures/question-intraop-acceptance-batch10-before-20261113.json",
+          "tools/question-quality/fixtures/question-intraop-acceptance-batch11-before-20261113.json"
+        ]
+      }
+    ],
+    "reconciliationPath": "tools/question-quality/fixtures/question-intraop-acceptance-batch10-source-reconciliation-20261113.json",
+    "beforeSha256": "3c428083f360020055558d00e846dcc8f658df03ab6dd08c221b5cf0c1ec7ebd",
+    "afterSha256": "0c104c9808449dab325f0e747dd86e2cdcd0bd174463008a5cf67d18f283a742",
+    "oldRecordsPreserved": 11
+  },
+  "authorizedEvidencePinDeltas": {
+    "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization.",
+    "changes": [
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json",
+        "testPath": "packages/clinical-content/src/question-stats1-20261108.test.ts",
+        "priorFixtureSha256": "1b252c2db93f8e3b1ee61cd0c360ba4e053ce40f03c64d4087f0d50c8e8e9c05",
+        "afterFixtureSha256": "3eb1b54647c4f370774f20da14692e80e2b230e44420cd9ccfe424e46c3b6189",
+        "deltas": [
+          {
+            "path": "tools/qa/level-five-integration-results-20261012.json",
+            "on": "2026-11-13",
+            "milestone": "release-port38-compression-enablement",
+            "releaseBeforeSha256": "90e4cb56d75bf20785138c8d99d7172bcb83348048ef1632ca506eea98c9c55c",
+            "previousRequirement": "90e4cb56d75bf20785138c8d99d7172bcb83348048ef1632ca506eea98c9c55c",
+            "releaseAfterSha256": "5a1e525607542b5bb2179c440dffbdcccb7e82ed3c4d65badb18322fe62d6f3e",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      },
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json",
+        "testPath": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+        "priorFixtureSha256": "61fb1827a241635a0c284cfed732e578001ca69c1d33ba685cae8b84e893b658",
+        "afterFixtureSha256": "d0d82329ec67643d4cc2eeb6c46f9a9867942f174b79a7dfd299f50e856d457c",
+        "deltas": [
+          {
+            "path": "packages/clinical-content/src/question-stats1-20261108.test.ts",
+            "on": "2026-11-13",
+            "milestone": "release-port38-compression-enablement",
+            "releaseBeforeSha256": "abb4ccdac0382412d06589acd2446bab49560399e070e8ba3a88ed8417299367",
+            "previousRequirement": "abb4ccdac0382412d06589acd2446bab49560399e070e8ba3a88ed8417299367",
+            "releaseAfterSha256": "e0ac19156c8b1533f0c08d4af1c63a023229ba441115537920d151a523df05b4",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          },
+          {
+            "path": "tools/qa/level-five-integration-results-20261012.json",
+            "on": "2026-11-13",
+            "milestone": "release-port38-compression-enablement",
+            "releaseBeforeSha256": "90e4cb56d75bf20785138c8d99d7172bcb83348048ef1632ca506eea98c9c55c",
+            "previousRequirement": "90e4cb56d75bf20785138c8d99d7172bcb83348048ef1632ca506eea98c9c55c",
+            "releaseAfterSha256": "5a1e525607542b5bb2179c440dffbdcccb7e82ed3c4d65badb18322fe62d6f3e",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      },
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json",
+        "testPath": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+        "priorFixtureSha256": "33f1f25945b3a012f06ad6d53ceb447d2d7b42254f22e5263537d9585b7d0629",
+        "afterFixtureSha256": "d453e5d71523b4a1f4cf27970b735a18e87bbd0d59d846b26887a2ef339578ef",
+        "deltas": [
+          {
+            "path": "packages/clinical-content/src/question-stats1-20261108.test.ts",
+            "on": "2026-11-13",
+            "milestone": "release-port38-compression-enablement",
+            "releaseBeforeSha256": "abb4ccdac0382412d06589acd2446bab49560399e070e8ba3a88ed8417299367",
+            "previousRequirement": "abb4ccdac0382412d06589acd2446bab49560399e070e8ba3a88ed8417299367",
+            "releaseAfterSha256": "e0ac19156c8b1533f0c08d4af1c63a023229ba441115537920d151a523df05b4",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          },
+          {
+            "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+            "on": "2026-11-13",
+            "milestone": "release-port38-compression-enablement",
+            "releaseBeforeSha256": "ee1101418499ba47336a1f5318de61ad86b22a420ad6c5c0c0a18c4a3412afe2",
+            "previousRequirement": "ee1101418499ba47336a1f5318de61ad86b22a420ad6c5c0c0a18c4a3412afe2",
+            "releaseAfterSha256": "72de246ee5728aea2bd8dabfa5b50dfa7310925fea2b77a03e696cac8850adad",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      },
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json",
+        "testPath": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+        "priorFixtureSha256": "a09af4ec9ba4dab03e53e492984175137f6cfdb89026b715e2b7d511c7b35826",
+        "afterFixtureSha256": "7224fe03758fd87c736dcbe7313a34565051ce3964314d2db23cce242b170060",
+        "deltas": [
+          {
+            "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+            "releaseBeforeSha256": "054e782c7a7cd7165e9c165a957400611d2d20b23eea7bc66db2cfba83ed399a",
+            "previousRequirement": "054e782c7a7cd7165e9c165a957400611d2d20b23eea7bc66db2cfba83ed399a",
+            "releaseAfterSha256": "8df8f7c26132643fab66dcf66daa24133ee3a6314a1f76d98a0377fe9d40010f",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      },
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-n4-release-source-pins-20261110.json",
+        "testPath": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+        "priorFixtureSha256": "2c5fda5d30d63ed31586c3a7f5ff462dd093606658538da0b58b9a4da4e60fb2",
+        "afterFixtureSha256": "793147581f90f5dd6e5f9da4903e767ffdefc270dafa38d9439e6d84539bfd3a",
+        "deltas": [
+          {
+            "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+            "releaseBeforeSha256": "27dad9c119b48e8439dec450bb45b02a1c13576bceed85858fd1c5a381e5c26d",
+            "previousRequirement": "27dad9c119b48e8439dec450bb45b02a1c13576bceed85858fd1c5a381e5c26d",
+            "releaseAfterSha256": "fe28a355ac8e9cb41eccb7d440746683ae6d45a2ba6074b41343b9b1f3258609",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      },
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-program-batch1-release-source-pins-20261111.json",
+        "testPath": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+        "priorFixtureSha256": "e1aaf452713f2a938226ea1201a0268232c6c7e09a800f854a2058eaacb2bafd",
+        "afterFixtureSha256": "7f853d30210c4b20e5fc960124897adca10e6186968b2e5d7d717ac1b22e656b",
+        "deltas": [
+          {
+            "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+            "releaseBeforeSha256": "b987ae78a0de2f79f56f388284b9eb9ff17639f4cc6f7454a1b6155cdfa3cbe3",
+            "previousRequirement": "b987ae78a0de2f79f56f388284b9eb9ff17639f4cc6f7454a1b6155cdfa3cbe3",
+            "releaseAfterSha256": "0a59d2e7442bb7573875ef2103c5c3b7bee0322d84b430785da8b556d97e13aa",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      },
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-program-batch2-release-source-pins-20261111.json",
+        "testPath": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+        "priorFixtureSha256": "73f396814b52f4716294cc19610be2dbaba7330e0425093c8c3285d5f8f8e198",
+        "afterFixtureSha256": "64f70cb144ae571622dfafc63e362658f3cb413dcc76301ca783e34e90617f29",
+        "deltas": [
+          {
+            "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+            "releaseBeforeSha256": "bb0123d4ea0cadd99bface38538e40bd54725890c19377fb31ac929a3024bcf6",
+            "previousRequirement": "bb0123d4ea0cadd99bface38538e40bd54725890c19377fb31ac929a3024bcf6",
+            "releaseAfterSha256": "8aa640c35293d3db33661a137bc0e0cf69a8e7e747ad918b49e5631d0cd51170",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      },
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-program-batch3-release-source-pins-20261111.json",
+        "testPath": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+        "priorFixtureSha256": "746b8ac903fae84d099cd2d5df5bcf5ab238301c1ad8f563a5a78e38c87bd1bf",
+        "afterFixtureSha256": "b275a5fd889105c945be82f9f6874fde8e4e768749a8668a7f86067f387aacac",
+        "deltas": [
+          {
+            "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+            "releaseBeforeSha256": "60e2d56bad17d818eacef06a0abde4576f9436064eb35dfb9e20e1d2d9cff460",
+            "previousRequirement": "60e2d56bad17d818eacef06a0abde4576f9436064eb35dfb9e20e1d2d9cff460",
+            "releaseAfterSha256": "b9d3df702390495e748b1f9bf9eaa2ce367c4471eb5287e5abef30a2d06688c5",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      },
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-program-batch4-release-source-pins-20261111.json",
+        "testPath": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+        "priorFixtureSha256": "8cbb36416dc2e009589b32d0ef679ae15a081319cee0730addb804dab4ae1248",
+        "afterFixtureSha256": "18eca91ef66837845c2d57ee5ea5c0fd47570d44019a5f3df11dad86cbbe8d14",
+        "deltas": [
+          {
+            "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+            "releaseBeforeSha256": "6aba511602e97e75019002bdbd5e387ace88c09e1362f3be14583a8cdf950525",
+            "previousRequirement": "6aba511602e97e75019002bdbd5e387ace88c09e1362f3be14583a8cdf950525",
+            "releaseAfterSha256": "4e01c47678f2d36b01d259252df89264265287c5cd1f490e661d70d7b2e21e82",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      },
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-program-batch5-release-source-pins-20261111.json",
+        "testPath": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+        "priorFixtureSha256": "35ff11223a88929b560a79c2a23346c408a5c2f8ed5d0e86dd70af010337cb2c",
+        "afterFixtureSha256": "73567a7901c07120bba04793541e5ec1c40c36151b9f29897fa37c5ddce7c1c0",
+        "deltas": [
+          {
+            "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+            "releaseBeforeSha256": "0710d5252ccde86eb1a8b2d8ab4e3a9c7f068d4ba1a0e97b295a61ea504d3f51",
+            "previousRequirement": "0710d5252ccde86eb1a8b2d8ab4e3a9c7f068d4ba1a0e97b295a61ea504d3f51",
+            "releaseAfterSha256": "dd1e055901d83a6849fa8d86fe2eb349e1d3278b367304f85e3d0f3585e6a590",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      },
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-program-batch6-release-source-pins-20261112.json",
+        "testPath": "packages/clinical-content/src/question-program-batch6-acceptance-20261112.test.ts",
+        "priorFixtureSha256": "ff8b173395105be7eddbfec3f9a50c14fe7d36fbc337c0a9f807bfefd9d302d1",
+        "afterFixtureSha256": "33f2ef9b2254b42afed527a4de90784207378b1cd1ef2c263cb529207a3711d1",
+        "deltas": [
+          {
+            "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+            "releaseBeforeSha256": "90d1da884265c5ba174a3457880174834fcdccf5a622ac052c9701f1370776d6",
+            "previousRequirement": "90d1da884265c5ba174a3457880174834fcdccf5a622ac052c9701f1370776d6",
+            "releaseAfterSha256": "0837a5f4b2a237e3bfdc974c614b5967a8dcef2368de912f9f15e34950dc01e4",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      },
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-program-batch7-release-source-pins-20261112.json",
+        "testPath": "packages/clinical-content/src/question-program-batch7-acceptance-20261112.test.ts",
+        "priorFixtureSha256": "8ed7d66eff6e487de84897b820d842eabb82c9fa40129de7574de36c0c45cd9e",
+        "afterFixtureSha256": "0c2a964063263486dcb06e024947ffe866e29d369eb7384271490d350d75b041",
+        "deltas": [
+          {
+            "path": "packages/clinical-content/src/question-program-batch6-acceptance-20261112.test.ts",
+            "releaseBeforeSha256": "b57fe74b6d145c212acf10840bfcff96156cfb1c97d71e6f2a0ef4cc89c9f0f0",
+            "previousRequirement": "b57fe74b6d145c212acf10840bfcff96156cfb1c97d71e6f2a0ef4cc89c9f0f0",
+            "releaseAfterSha256": "12e7f3dfeee87e9d61e564fd304f770f0ef09a2ab788810b4fa6145cf69492d3",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      },
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-program-batch8-release-source-pins-20261112.json",
+        "testPath": "packages/clinical-content/src/question-program-batch8-acceptance-20261112.test.ts",
+        "priorFixtureSha256": "e820d2ff5d72639ed416b7865b688bed9a1267600dbb27b9d7e8916e18af5843",
+        "afterFixtureSha256": "210d877afbabcc2877bfe254405776089c36ba6d7413114ec1903d2cc58b822b",
+        "deltas": [
+          {
+            "path": "packages/clinical-content/src/question-program-batch7-acceptance-20261112.test.ts",
+            "releaseBeforeSha256": "a14c898990bed2757db1a1fcf030e9c51ac1736f8a392964925d97b84738c241",
+            "previousRequirement": "a14c898990bed2757db1a1fcf030e9c51ac1736f8a392964925d97b84738c241",
+            "releaseAfterSha256": "e1c1cded74183516d5dc4628e88dc8b6097da443c797b18eae9b225a7830f9d0",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          },
+          {
+            "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+            "releaseBeforeSha256": "6aba511602e97e75019002bdbd5e387ace88c09e1362f3be14583a8cdf950525",
+            "previousRequirement": "6aba511602e97e75019002bdbd5e387ace88c09e1362f3be14583a8cdf950525",
+            "releaseAfterSha256": "4e01c47678f2d36b01d259252df89264265287c5cd1f490e661d70d7b2e21e82",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          },
+          {
+            "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+            "releaseBeforeSha256": "0710d5252ccde86eb1a8b2d8ab4e3a9c7f068d4ba1a0e97b295a61ea504d3f51",
+            "previousRequirement": "0710d5252ccde86eb1a8b2d8ab4e3a9c7f068d4ba1a0e97b295a61ea504d3f51",
+            "releaseAfterSha256": "dd1e055901d83a6849fa8d86fe2eb349e1d3278b367304f85e3d0f3585e6a590",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      },
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-program-batch9-release-source-pins-20261112.json",
+        "testPath": "packages/clinical-content/src/question-program-batch9-acceptance-20261112.test.ts",
+        "priorFixtureSha256": "1364a43e1f6d8bb811a80ddc692dd36e5bd73e84b60ea7148d6cfe8022f5be43",
+        "afterFixtureSha256": "99ffc3767aa77415d05acf93441908cbea6627f02078f6c7441a39bc1931b0cd",
+        "deltas": [
+          {
+            "path": "packages/clinical-content/src/question-program-batch8-acceptance-20261112.test.ts",
+            "releaseBeforeSha256": "780823a4871df2111dac47d78b140519ee32724ec0f99f894be399a142c92240",
+            "previousRequirement": "780823a4871df2111dac47d78b140519ee32724ec0f99f894be399a142c92240",
+            "releaseAfterSha256": "9e37b73ed66b7b34cc0a4126509772521e239300c945028775097ed03b9f2c2e",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      },
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-program-batch10-release-source-pins-20261113.json",
+        "testPath": "packages/clinical-content/src/question-program-batch10-acceptance-20261113.test.ts",
+        "priorFixtureSha256": "a2ec9c0efa82b6b812197e5e5a5d95b7f8b1e4540feb1afe2e7cd62608755265",
+        "afterFixtureSha256": "eae07c97b9a0a220841cf2df6268f4027f15b37d34867a1c260065b67caf8252",
+        "deltas": [
+          {
+            "path": "packages/clinical-content/src/question-program-batch9-acceptance-20261112.test.ts",
+            "releaseBeforeSha256": "9d2209b338854fc5abe558812ef740ef32221311fd14d476efb32e4ba6acb565",
+            "previousRequirement": "9d2209b338854fc5abe558812ef740ef32221311fd14d476efb32e4ba6acb565",
+            "releaseAfterSha256": "6ff58d817d4d8ffe6eea200345dd273f7812b097be484cd0e66bc2cd3e0a4d61",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      },
+      {
+        "pinsPath": "tools/question-quality/fixtures/question-program-batch11-release-source-pins-20261113.json",
+        "testPath": "packages/clinical-content/src/question-program-batch11-acceptance-20261113.test.ts",
+        "priorFixtureSha256": "280991d41ab26df2238b5f8d6ed12a0bcbd07a97f07203a064d695efcf939671",
+        "afterFixtureSha256": "50bb93bd24e284cd9c3390bc3836ab0bef998014b506c2aa63e0fe9ddd7559fa",
+        "deltas": [
+          {
+            "path": "packages/clinical-content/src/question-program-batch10-acceptance-20261113.test.ts",
+            "releaseBeforeSha256": "2f9db8eb354ea9bd3c8b220e0953047572fcca2e202974037b3a6b7231836eca",
+            "previousRequirement": "2f9db8eb354ea9bd3c8b220e0953047572fcca2e202974037b3a6b7231836eca",
+            "releaseAfterSha256": "a1c9593a0aef177bbb87fa59708ae8376cdc7eb916f7810305960516ceb5ca24",
+            "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+          }
+        ]
+      }
+    ],
+    "files": [
+      {
+        "path": "tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json",
+        "beforeSha256": "1b252c2db93f8e3b1ee61cd0c360ba4e053ce40f03c64d4087f0d50c8e8e9c05",
+        "afterSha256": "3eb1b54647c4f370774f20da14692e80e2b230e44420cd9ccfe424e46c3b6189"
+      },
+      {
+        "path": "packages/clinical-content/src/question-stats1-20261108.test.ts",
+        "beforeSha256": "abb4ccdac0382412d06589acd2446bab49560399e070e8ba3a88ed8417299367",
+        "afterSha256": "e0ac19156c8b1533f0c08d4af1c63a023229ba441115537920d151a523df05b4"
+      },
+      {
+        "path": "tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json",
+        "beforeSha256": "61fb1827a241635a0c284cfed732e578001ca69c1d33ba685cae8b84e893b658",
+        "afterSha256": "d0d82329ec67643d4cc2eeb6c46f9a9867942f174b79a7dfd299f50e856d457c"
+      },
+      {
+        "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+        "beforeSha256": "ee1101418499ba47336a1f5318de61ad86b22a420ad6c5c0c0a18c4a3412afe2",
+        "afterSha256": "72de246ee5728aea2bd8dabfa5b50dfa7310925fea2b77a03e696cac8850adad"
+      },
+      {
+        "path": "tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json",
+        "beforeSha256": "33f1f25945b3a012f06ad6d53ceb447d2d7b42254f22e5263537d9585b7d0629",
+        "afterSha256": "d453e5d71523b4a1f4cf27970b735a18e87bbd0d59d846b26887a2ef339578ef"
+      },
+      {
+        "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+        "beforeSha256": "054e782c7a7cd7165e9c165a957400611d2d20b23eea7bc66db2cfba83ed399a",
+        "afterSha256": "8df8f7c26132643fab66dcf66daa24133ee3a6314a1f76d98a0377fe9d40010f"
+      },
+      {
+        "path": "tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json",
+        "beforeSha256": "a09af4ec9ba4dab03e53e492984175137f6cfdb89026b715e2b7d511c7b35826",
+        "afterSha256": "7224fe03758fd87c736dcbe7313a34565051ce3964314d2db23cce242b170060"
+      },
+      {
+        "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+        "beforeSha256": "27dad9c119b48e8439dec450bb45b02a1c13576bceed85858fd1c5a381e5c26d",
+        "afterSha256": "fe28a355ac8e9cb41eccb7d440746683ae6d45a2ba6074b41343b9b1f3258609"
+      },
+      {
+        "path": "tools/question-quality/fixtures/question-n4-release-source-pins-20261110.json",
+        "beforeSha256": "2c5fda5d30d63ed31586c3a7f5ff462dd093606658538da0b58b9a4da4e60fb2",
+        "afterSha256": "793147581f90f5dd6e5f9da4903e767ffdefc270dafa38d9439e6d84539bfd3a"
+      },
+      {
+        "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+        "beforeSha256": "b987ae78a0de2f79f56f388284b9eb9ff17639f4cc6f7454a1b6155cdfa3cbe3",
+        "afterSha256": "0a59d2e7442bb7573875ef2103c5c3b7bee0322d84b430785da8b556d97e13aa"
+      },
+      {
+        "path": "tools/question-quality/fixtures/question-program-batch1-release-source-pins-20261111.json",
+        "beforeSha256": "e1aaf452713f2a938226ea1201a0268232c6c7e09a800f854a2058eaacb2bafd",
+        "afterSha256": "7f853d30210c4b20e5fc960124897adca10e6186968b2e5d7d717ac1b22e656b"
+      },
+      {
+        "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+        "beforeSha256": "bb0123d4ea0cadd99bface38538e40bd54725890c19377fb31ac929a3024bcf6",
+        "afterSha256": "8aa640c35293d3db33661a137bc0e0cf69a8e7e747ad918b49e5631d0cd51170"
+      },
+      {
+        "path": "tools/question-quality/fixtures/question-program-batch2-release-source-pins-20261111.json",
+        "beforeSha256": "73f396814b52f4716294cc19610be2dbaba7330e0425093c8c3285d5f8f8e198",
+        "afterSha256": "64f70cb144ae571622dfafc63e362658f3cb413dcc76301ca783e34e90617f29"
+      },
+      {
+        "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+        "beforeSha256": "60e2d56bad17d818eacef06a0abde4576f9436064eb35dfb9e20e1d2d9cff460",
+        "afterSha256": "b9d3df702390495e748b1f9bf9eaa2ce367c4471eb5287e5abef30a2d06688c5"
+      },
+      {
+        "path": "tools/question-quality/fixtures/question-program-batch3-release-source-pins-20261111.json",
+        "beforeSha256": "746b8ac903fae84d099cd2d5df5bcf5ab238301c1ad8f563a5a78e38c87bd1bf",
+        "afterSha256": "b275a5fd889105c945be82f9f6874fde8e4e768749a8668a7f86067f387aacac"
+      },
+      {
+        "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+        "beforeSha256": "6aba511602e97e75019002bdbd5e387ace88c09e1362f3be14583a8cdf950525",
+        "afterSha256": "4e01c47678f2d36b01d259252df89264265287c5cd1f490e661d70d7b2e21e82"
+      },
+      {
+        "path": "tools/question-quality/fixtures/question-program-batch4-release-source-pins-20261111.json",
+        "beforeSha256": "8cbb36416dc2e009589b32d0ef679ae15a081319cee0730addb804dab4ae1248",
+        "afterSha256": "18eca91ef66837845c2d57ee5ea5c0fd47570d44019a5f3df11dad86cbbe8d14"
+      },
+      {
+        "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+        "beforeSha256": "0710d5252ccde86eb1a8b2d8ab4e3a9c7f068d4ba1a0e97b295a61ea504d3f51",
+        "afterSha256": "dd1e055901d83a6849fa8d86fe2eb349e1d3278b367304f85e3d0f3585e6a590"
+      },
+      {
+        "path": "tools/question-quality/fixtures/question-program-batch5-release-source-pins-20261111.json",
+        "beforeSha256": "35ff11223a88929b560a79c2a23346c408a5c2f8ed5d0e86dd70af010337cb2c",
+        "afterSha256": "73567a7901c07120bba04793541e5ec1c40c36151b9f29897fa37c5ddce7c1c0"
+      },
+      {
+        "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+        "beforeSha256": "90d1da884265c5ba174a3457880174834fcdccf5a622ac052c9701f1370776d6",
+        "afterSha256": "0837a5f4b2a237e3bfdc974c614b5967a8dcef2368de912f9f15e34950dc01e4"
+      },
+      {
+        "path": "tools/question-quality/fixtures/question-program-batch6-release-source-pins-20261112.json",
+        "beforeSha256": "ff8b173395105be7eddbfec3f9a50c14fe7d36fbc337c0a9f807bfefd9d302d1",
+        "afterSha256": "33f2ef9b2254b42afed527a4de90784207378b1cd1ef2c263cb529207a3711d1"
+      },
+      {
+        "path": "packages/clinical-content/src/question-program-batch6-acceptance-20261112.test.ts",
+        "beforeSha256": "b57fe74b6d145c212acf10840bfcff96156cfb1c97d71e6f2a0ef4cc89c9f0f0",
+        "afterSha256": "12e7f3dfeee87e9d61e564fd304f770f0ef09a2ab788810b4fa6145cf69492d3"
+      },
+      {
+        "path": "tools/question-quality/fixtures/question-program-batch7-release-source-pins-20261112.json",
+        "beforeSha256": "8ed7d66eff6e487de84897b820d842eabb82c9fa40129de7574de36c0c45cd9e",
+        "afterSha256": "0c2a964063263486dcb06e024947ffe866e29d369eb7384271490d350d75b041"
+      },
+      {
+        "path": "packages/clinical-content/src/question-program-batch7-acceptance-20261112.test.ts",
+        "beforeSha256": "a14c898990bed2757db1a1fcf030e9c51ac1736f8a392964925d97b84738c241",
+        "afterSha256": "e1c1cded74183516d5dc4628e88dc8b6097da443c797b18eae9b225a7830f9d0"
+      },
+      {
+        "path": "tools/question-quality/fixtures/question-program-batch8-release-source-pins-20261112.json",
+        "beforeSha256": "e820d2ff5d72639ed416b7865b688bed9a1267600dbb27b9d7e8916e18af5843",
+        "afterSha256": "210d877afbabcc2877bfe254405776089c36ba6d7413114ec1903d2cc58b822b"
+      },
+      {
+        "path": "packages/clinical-content/src/question-program-batch8-acceptance-20261112.test.ts",
+        "beforeSha256": "780823a4871df2111dac47d78b140519ee32724ec0f99f894be399a142c92240",
+        "afterSha256": "9e37b73ed66b7b34cc0a4126509772521e239300c945028775097ed03b9f2c2e"
+      },
+      {
+        "path": "tools/question-quality/fixtures/question-program-batch9-release-source-pins-20261112.json",
+        "beforeSha256": "1364a43e1f6d8bb811a80ddc692dd36e5bd73e84b60ea7148d6cfe8022f5be43",
+        "afterSha256": "99ffc3767aa77415d05acf93441908cbea6627f02078f6c7441a39bc1931b0cd"
+      },
+      {
+        "path": "packages/clinical-content/src/question-program-batch9-acceptance-20261112.test.ts",
+        "beforeSha256": "9d2209b338854fc5abe558812ef740ef32221311fd14d476efb32e4ba6acb565",
+        "afterSha256": "6ff58d817d4d8ffe6eea200345dd273f7812b097be484cd0e66bc2cd3e0a4d61"
+      },
+      {
+        "path": "tools/question-quality/fixtures/question-program-batch10-release-source-pins-20261113.json",
+        "beforeSha256": "a2ec9c0efa82b6b812197e5e5a5d95b7f8b1e4540feb1afe2e7cd62608755265",
+        "afterSha256": "eae07c97b9a0a220841cf2df6268f4027f15b37d34867a1c260065b67caf8252"
+      },
+      {
+        "path": "packages/clinical-content/src/question-program-batch10-acceptance-20261113.test.ts",
+        "beforeSha256": "2f9db8eb354ea9bd3c8b220e0953047572fcca2e202974037b3a6b7231836eca",
+        "afterSha256": "a1c9593a0aef177bbb87fa59708ae8376cdc7eb916f7810305960516ceb5ca24"
+      },
+      {
+        "path": "tools/question-quality/fixtures/question-program-batch11-release-source-pins-20261113.json",
+        "beforeSha256": "280991d41ab26df2238b5f8d6ed12a0bcbd07a97f07203a064d695efcf939671",
+        "afterSha256": "50bb93bd24e284cd9c3390bc3836ab0bef998014b506c2aa63e0fe9ddd7559fa"
+      },
+      {
+        "path": "packages/clinical-content/src/question-program-batch11-acceptance-20261113.test.ts",
+        "beforeSha256": "ab8e34425f3e1082f9e06614a0bf64b721937c079e7d92092deb1d877cd20f57",
+        "afterSha256": "923979623be9b10a73b7fbf72fa6156b54cf528bf9b55307b06e782fd549c0f4"
+      }
+    ]
+  },
+  "sourcePinProof": {
+    "path": ".local-dev/release-port38-20261113/source-pin-provenance-verification.json",
+    "sha256": "bd7307fbf9be793f56717d5fabd3793db68cba7cbc9ba5d20d0db3241e02555a",
+    "historicalCapturesUnchanged": 20,
+    "requiredAbsenceEntries": 328,
+    "uniqueRequiredAbsentPaths": 242
+  },
+  "clinical": {
+    "inputsUnchanged": 476,
+    "sha256": "4da0db5dd2a1a268440d5a5abc1ea81412224a249d7c089ec98a684442cf654f",
+    "cases": 1436,
+    "nodes": 1644,
+    "meanings": 1142,
+    "manifestRows": 811,
+    "clinicalStatusAndApprovalsUnchanged": true
+  },
+  "typechecks": {
+    "workspaces": 7,
+    "exitCode": 0,
+    "command": "npm.cmd run typecheck",
+    "exactOutput": "\n> gamify-surgery@0.0.1 typecheck\n> npm run typecheck --workspaces --if-present\n\n\n> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck\n> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json\n\n\n> @gamify-surgery/player@0.0.1 typecheck\n> tsc --noEmit -p tsconfig.json\n\n\n> @gamify-surgery/balance-config@0.0.1 typecheck\n> tsc --noEmit -p tsconfig.json\n\n\n> @gamify-surgery/clinical-authoring@0.0.1 typecheck\n> tsc --noEmit -p tsconfig.json\n\n\n> @gamify-surgery/clinical-content@0.0.1 typecheck\n> tsc --noEmit -p tsconfig.json\n\n\n> @gamify-surgery/clinical-research@0.0.1 typecheck\n> tsc --noEmit -p tsconfig.json\n\n\n> @gamify-surgery/game-domain@0.0.1 typecheck\n> tsc --noEmit -p tsconfig.json\n\n"
+  },
+  "boundaries": {
+    "exitCode": 0,
+    "command": "npm.cmd run test:boundaries",
+    "exactOutput": "\n> gamify-surgery@0.0.1 test:boundaries\n> node scripts/verify-app-boundaries.mjs && node scripts/verify-launcher-contract.mjs\n\nVerified runtime dependency boundaries and 8072 tracked path(s).\nVerified launcher health contract gamify-surgery-player protocol 1.\n",
+    "inventoryProvenance": {
+      "capturedAt": "2026-11-13T10:50:59.835878+00:00",
+      "workingDirectory": "C:/Users/rowla/Projects/GS-release",
+      "source": "Direct read-only checksum-verified DIRC decoding; bounds, stages, path order and extensions verified; no Git process/index write.",
+      "version": 2,
+      "gitPointer": "C:/Users/rowla/Projects/GS-release/.git",
+      "gitPointerSha256": "7f066d414b449e8486ff3314fab029d486474296f620a6b1e411a753ff4469d7",
+      "indexPath": "C:/Users/rowla/Projects/GamifySurgery/.git/worktrees/GS-release/index",
+      "indexSha256": "f1b7d2aeb273c58f97db8b4578e25679c077db53b50d40ba0160a0fe0d74cf0f",
+      "inventorySha256": "2661b21b3ff4f09211c082a76a31c5b23c9bd7f78e92669b8b4e8931f67e0780",
+      "inventoryBytes": 571400,
+      "trackedPaths": 8072,
+      "extensions": [
+        "TREE"
+      ],
+      "readOnly": true
+    }
+  },
+  "build": {
+    "exitCode": 0,
+    "command": "npm.cmd run build --workspace @gamify-surgery/player",
+    "exactBuildLines": [
+      "✓ 686 modules transformed.",
+      "✓ built in 17.21s"
+    ],
+    "logPath": ".local-dev/release-port38-20261113/build.log",
+    "logSha256": "8322153c17bf5b53da92305f4f30f6fa4fd2f9279c67403739825de9f6cece5f"
+  },
+  "pacing": {
+    "unchangedCliReference": 26281,
+    "managerReference": 26312,
+    "firstFinishTick": 26377,
+    "managerDriftPercent": 0.24703557312253377,
+    "exitCode": 0,
+    "exactOutput": "{\n  \"firstFinishTick\": 26377,\n  \"closingCashCents\": 5913995,\n  \"completions\": 442,\n  \"walkouts\": 0,\n  \"referenceTick\": 26281,\n  \"driftPercent\": 0.3652829039990868,\n  \"clinicalSha256\": \"4da0db5dd2a1a268440d5a5abc1ea81412224a249d7c089ec98a684442cf654f\",\n  \"caseCount\": 1436,\n  \"registeredMeanings\": 1142\n}\n(node:35728) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+  },
+  "files": [
+    {
+      "path": "apps/player/src/session/localStorageBuildPolicy.test.ts",
+      "disposition": "copied",
+      "reason": "Exact accepted Release38 Main policy bytes; compression writes enabled and its test updated.",
+      "beforeSha256": "43182e07fec29784f909238503d9430faca6e06f082ee24b94d9104f8f99d4ee",
+      "afterSha256": "3eade604c81b73f9796fd130fe4c13280f9c091a31d2e1d5532e7cd878a005a5",
+      "bytes": 356
+    },
+    {
+      "path": "apps/player/src/session/localStorageBuildPolicy.ts",
+      "disposition": "copied",
+      "reason": "Exact accepted Release38 Main policy bytes; compression writes enabled and its test updated.",
+      "beforeSha256": "75a790d3bda61cbe0d872622c2f4d6d816600e77d887cf27e827dbd450478f4a",
+      "afterSha256": "1cd7ed1d4b696813d5f1344d058b873ba3753a62b1d17fe4c78b36e1cd9dc893",
+      "bytes": 270
+    },
+    {
+      "path": "docs/execplans/gs028-stats-ethics-overhaul-20261007.md",
+      "disposition": "handoff",
+      "reason": "Release38 plan, exact results, validation and current manager handoff.",
+      "beforeSha256": "a4e121f637cef70d6b0f7acb4576824204c5c8d79e9cf190682aad8d3c88a547",
+      "afterSha256": null,
+      "bytes": null,
+      "finalHashLocation": ".local-dev/release-verify/port38-20261113.json"
+    },
+    {
+      "path": "docs/execplans/release-port38-20261113.md",
+      "disposition": "handoff",
+      "reason": "Release38 plan, exact results, validation and current manager handoff.",
+      "beforeSha256": null,
+      "afterSha256": null,
+      "bytes": null,
+      "finalHashLocation": ".local-dev/release-verify/port38-20261113.json"
+    },
+    {
+      "path": "docs/handoffs/CURRENT_THREAD_HANDOFF.md",
+      "disposition": "handoff",
+      "reason": "Release38 plan, exact results, validation and current manager handoff.",
+      "beforeSha256": "5e0962d3cee3edd4d7bfd9bff1cfd3296ea78b27a4dff28eabc831774d1b6671",
+      "afterSha256": null,
+      "bytes": null,
+      "finalHashLocation": ".local-dev/release-verify/port38-20261113.json"
+    },
+    {
+      "path": "docs/research/release-port38-20261113.md",
+      "disposition": "handoff",
+      "reason": "Release38 plan, exact results, validation and current manager handoff.",
+      "beforeSha256": null,
+      "afterSha256": null,
+      "bytes": null,
+      "finalHashLocation": ".local-dev/release-verify/port38-20261113.json"
+    },
+    {
+      "path": "docs/research/release-port38-validation-20261113.json",
+      "disposition": "handoff",
+      "reason": "Release38 plan, exact results, validation and current manager handoff.",
+      "beforeSha256": null,
+      "afterSha256": null,
+      "bytes": null,
+      "finalHashLocation": ".local-dev/release-verify/port38-20261113.json"
+    },
+    {
+      "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "054e782c7a7cd7165e9c165a957400611d2d20b23eea7bc66db2cfba83ed399a",
+      "afterSha256": "8df8f7c26132643fab66dcf66daa24133ee3a6314a1f76d98a0377fe9d40010f",
+      "bytes": 8521
+    },
+    {
+      "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "27dad9c119b48e8439dec450bb45b02a1c13576bceed85858fd1c5a381e5c26d",
+      "afterSha256": "fe28a355ac8e9cb41eccb7d440746683ae6d45a2ba6074b41343b9b1f3258609",
+      "bytes": 6954
+    },
+    {
+      "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "b987ae78a0de2f79f56f388284b9eb9ff17639f4cc6f7454a1b6155cdfa3cbe3",
+      "afterSha256": "0a59d2e7442bb7573875ef2103c5c3b7bee0322d84b430785da8b556d97e13aa",
+      "bytes": 9225
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "bb0123d4ea0cadd99bface38538e40bd54725890c19377fb31ac929a3024bcf6",
+      "afterSha256": "8aa640c35293d3db33661a137bc0e0cf69a8e7e747ad918b49e5631d0cd51170",
+      "bytes": 9536
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch10-acceptance-20261113.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "2f9db8eb354ea9bd3c8b220e0953047572fcca2e202974037b3a6b7231836eca",
+      "afterSha256": "a1c9593a0aef177bbb87fa59708ae8376cdc7eb916f7810305960516ceb5ca24",
+      "bytes": 14936
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch11-acceptance-20261113.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "ab8e34425f3e1082f9e06614a0bf64b721937c079e7d92092deb1d877cd20f57",
+      "afterSha256": "923979623be9b10a73b7fbf72fa6156b54cf528bf9b55307b06e782fd549c0f4",
+      "bytes": 12301
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "60e2d56bad17d818eacef06a0abde4576f9436064eb35dfb9e20e1d2d9cff460",
+      "afterSha256": "b9d3df702390495e748b1f9bf9eaa2ce367c4471eb5287e5abef30a2d06688c5",
+      "bytes": 10378
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "6aba511602e97e75019002bdbd5e387ace88c09e1362f3be14583a8cdf950525",
+      "afterSha256": "4e01c47678f2d36b01d259252df89264265287c5cd1f490e661d70d7b2e21e82",
+      "bytes": 18140
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "0710d5252ccde86eb1a8b2d8ab4e3a9c7f068d4ba1a0e97b295a61ea504d3f51",
+      "afterSha256": "dd1e055901d83a6849fa8d86fe2eb349e1d3278b367304f85e3d0f3585e6a590",
+      "bytes": 16321
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "90d1da884265c5ba174a3457880174834fcdccf5a622ac052c9701f1370776d6",
+      "afterSha256": "0837a5f4b2a237e3bfdc974c614b5967a8dcef2368de912f9f15e34950dc01e4",
+      "bytes": 16802
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch6-acceptance-20261112.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "b57fe74b6d145c212acf10840bfcff96156cfb1c97d71e6f2a0ef4cc89c9f0f0",
+      "afterSha256": "12e7f3dfeee87e9d61e564fd304f770f0ef09a2ab788810b4fa6145cf69492d3",
+      "bytes": 16807
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch7-acceptance-20261112.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "a14c898990bed2757db1a1fcf030e9c51ac1736f8a392964925d97b84738c241",
+      "afterSha256": "e1c1cded74183516d5dc4628e88dc8b6097da443c797b18eae9b225a7830f9d0",
+      "bytes": 13460
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch8-acceptance-20261112.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "780823a4871df2111dac47d78b140519ee32724ec0f99f894be399a142c92240",
+      "afterSha256": "9e37b73ed66b7b34cc0a4126509772521e239300c945028775097ed03b9f2c2e",
+      "bytes": 16268
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch9-acceptance-20261112.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "9d2209b338854fc5abe558812ef740ef32221311fd14d476efb32e4ba6acb565",
+      "afterSha256": "6ff58d817d4d8ffe6eea200345dd273f7812b097be484cd0e66bc2cd3e0a4d61",
+      "bytes": 13095
+    },
+    {
+      "path": "packages/clinical-content/src/question-stats1-20261108.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "abb4ccdac0382412d06589acd2446bab49560399e070e8ba3a88ed8417299367",
+      "afterSha256": "e0ac19156c8b1533f0c08d4af1c63a023229ba441115537920d151a523df05b4",
+      "bytes": 18902
+    },
+    {
+      "path": "packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact pin-fixture checksum replacement only; every assertion unchanged.",
+      "beforeSha256": "ee1101418499ba47336a1f5318de61ad86b22a420ad6c5c0c0a18c4a3412afe2",
+      "afterSha256": "72de246ee5728aea2bd8dabfa5b50dfa7310925fea2b77a03e696cac8850adad",
+      "bytes": 15365
+    },
+    {
+      "path": "tools/qa/level-five-integration-results-20261012.json",
+      "disposition": "regenerated",
+      "reason": "Fresh guarded native run; history append and established liveCap metadata correction only.",
+      "beforeSha256": "90e4cb56d75bf20785138c8d99d7172bcb83348048ef1632ca506eea98c9c55c",
+      "afterSha256": "5a1e525607542b5bb2179c440dffbdcccb7e82ed3c4d65badb18322fe62d6f3e",
+      "bytes": 2678032
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "33f1f25945b3a012f06ad6d53ceb447d2d7b42254f22e5263537d9585b7d0629",
+      "afterSha256": "d453e5d71523b4a1f4cf27970b735a18e87bbd0d59d846b26887a2ef339578ef",
+      "bytes": 692466
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "a09af4ec9ba4dab03e53e492984175137f6cfdb89026b715e2b7d511c7b35826",
+      "afterSha256": "7224fe03758fd87c736dcbe7313a34565051ce3964314d2db23cce242b170060",
+      "bytes": 77675
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-intraop-acceptance-batch10-source-reconciliation-20261113.json",
+      "disposition": "release-generated",
+      "reason": "Append exactly two release-preimage policy authorizations; preserve the prior eleven records.",
+      "beforeSha256": "3c428083f360020055558d00e846dcc8f658df03ab6dd08c221b5cf0c1ec7ebd",
+      "afterSha256": "0c104c9808449dab325f0e747dd86e2cdcd0bd174463008a5cf67d18f283a742",
+      "bytes": 2285635
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-n4-release-source-pins-20261110.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "2c5fda5d30d63ed31586c3a7f5ff462dd093606658538da0b58b9a4da4e60fb2",
+      "afterSha256": "793147581f90f5dd6e5f9da4903e767ffdefc270dafa38d9439e6d84539bfd3a",
+      "bytes": 72152
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-program-batch1-release-source-pins-20261111.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "e1aaf452713f2a938226ea1201a0268232c6c7e09a800f854a2058eaacb2bafd",
+      "afterSha256": "7f853d30210c4b20e5fc960124897adca10e6186968b2e5d7d717ac1b22e656b",
+      "bytes": 49934
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-program-batch10-release-source-pins-20261113.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "a2ec9c0efa82b6b812197e5e5a5d95b7f8b1e4540feb1afe2e7cd62608755265",
+      "afterSha256": "eae07c97b9a0a220841cf2df6268f4027f15b37d34867a1c260065b67caf8252",
+      "bytes": 48396
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-program-batch11-release-source-pins-20261113.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "280991d41ab26df2238b5f8d6ed12a0bcbd07a97f07203a064d695efcf939671",
+      "afterSha256": "50bb93bd24e284cd9c3390bc3836ab0bef998014b506c2aa63e0fe9ddd7559fa",
+      "bytes": 34964
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-program-batch2-release-source-pins-20261111.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "73f396814b52f4716294cc19610be2dbaba7330e0425093c8c3285d5f8f8e198",
+      "afterSha256": "64f70cb144ae571622dfafc63e362658f3cb413dcc76301ca783e34e90617f29",
+      "bytes": 51239
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-program-batch3-release-source-pins-20261111.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "746b8ac903fae84d099cd2d5df5bcf5ab238301c1ad8f563a5a78e38c87bd1bf",
+      "afterSha256": "b275a5fd889105c945be82f9f6874fde8e4e768749a8668a7f86067f387aacac",
+      "bytes": 57025
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-program-batch4-release-source-pins-20261111.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "8cbb36416dc2e009589b32d0ef679ae15a081319cee0730addb804dab4ae1248",
+      "afterSha256": "18eca91ef66837845c2d57ee5ea5c0fd47570d44019a5f3df11dad86cbbe8d14",
+      "bytes": 36527
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-program-batch5-release-source-pins-20261111.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "35ff11223a88929b560a79c2a23346c408a5c2f8ed5d0e86dd70af010337cb2c",
+      "afterSha256": "73567a7901c07120bba04793541e5ec1c40c36151b9f29897fa37c5ddce7c1c0",
+      "bytes": 354702
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-program-batch6-release-source-pins-20261112.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "ff8b173395105be7eddbfec3f9a50c14fe7d36fbc337c0a9f807bfefd9d302d1",
+      "afterSha256": "33f2ef9b2254b42afed527a4de90784207378b1cd1ef2c263cb529207a3711d1",
+      "bytes": 44412
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-program-batch7-release-source-pins-20261112.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "8ed7d66eff6e487de84897b820d842eabb82c9fa40129de7574de36c0c45cd9e",
+      "afterSha256": "0c2a964063263486dcb06e024947ffe866e29d369eb7384271490d350d75b041",
+      "bytes": 137803
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-program-batch8-release-source-pins-20261112.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "e820d2ff5d72639ed416b7865b688bed9a1267600dbb27b9d7e8916e18af5843",
+      "afterSha256": "210d877afbabcc2877bfe254405776089c36ba6d7413114ec1903d2cc58b822b",
+      "bytes": 99241
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-program-batch9-release-source-pins-20261112.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "1364a43e1f6d8bb811a80ddc692dd36e5bd73e84b60ea7148d6cfe8022f5be43",
+      "afterSha256": "99ffc3767aa77415d05acf93441908cbea6627f02078f6c7441a39bc1931b0cd",
+      "bytes": 57089
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "61fb1827a241635a0c284cfed732e578001ca69c1d33ba685cae8b84e893b658",
+      "afterSha256": "d0d82329ec67643d4cc2eeb6c46f9a9867942f174b79a7dfd299f50e856d457c",
+      "bytes": 6345753
+    },
+    {
+      "path": "tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json",
+      "disposition": "authorized-checksum-delta",
+      "reason": "Exact native evidence/parent guard checksum authorization; original captures, prior pins and history preserved.",
+      "beforeSha256": "1b252c2db93f8e3b1ee61cd0c360ba4e053ce40f03c64d4087f0d50c8e8e9c05",
+      "afterSha256": "3eb1b54647c4f370774f20da14692e80e2b230e44420cd9ccfe424e46c3b6189",
+      "bytes": 5209035
+    }
+  ],
+  "dispositionCounts": {
+    "copied": 2,
+    "releaseGeneratedReconciliation": 1,
+    "regeneratedResultsMetadata": 1,
+    "exactPinFixtures": 16,
+    "exactVerifierChecksums": 16,
+    "handoffDocuments": 5,
+    "total": 41
+  },
+  "risks": {
+    "openFailures": [],
+    "existingSkippedTests": [
+      {
+        "file": "C:/Users/rowla/Projects/GS-release/packages/game-domain/tests/game-evidence-incremental.test.ts",
+        "name": "incremental evidence with the unchanged pre-refactor oracle matches all 26,710 Level 5 commands and byte-identical earned checkpoints",
+        "status": "skipped"
+      }
+    ],
+    "rollbackFloor": "Release36 or later: dialect-aware plain/compressed/mixed local readers must remain available.",
+    "browser": "No browser/physical-phone benchmark or owner storage was used in this worker turn. The change is the accepted build policy; full CI tests cover both journal dialects, mixed recovery and operational dispatch.",
+    "build": "Nonfatal dynamic-import/chunk-size/plugin-timing warnings remain.",
+    "worktree": "Uncommitted; no commit, push or deploy performed. No opening origin changed.",
+    "existingSkipProof": {
+      "sameAsRelease37": true,
+      "baselineReportPath": ".local-dev/release-port37-20261113/capture-correction/workspace-game-domain.json",
+      "baselineReportSha256": "617f8e644f8d89d5db1547ff34a5bd0f101db5a05f4c1d1e29f072f97759f624",
+      "currentReportSha256": "b0068dd6d277f687bb5cf2998bbe745d5ea94500a87e9865c5ccacff4a7fd955"
+    }
+  },
+  "allChangedFileFinalHashes": ".local-dev/release-verify/port38-20261113.json"
+}

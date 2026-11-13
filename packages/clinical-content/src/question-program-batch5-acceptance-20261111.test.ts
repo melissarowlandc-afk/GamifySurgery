@@ -213,7 +213,7 @@ describe("topic batch5 final exact manager acceptance", () => {
   it("binds every scoped existing-source correction to its captured preimage", () => {
     const migration = read("tools/question-quality/fixtures/question-topic-acceptance-batch5-source-migration-20261111.json");
     const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch5-release-source-pins-20261111.json",import.meta.url));
-    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("35ff11223a88929b560a79c2a23346c408a5c2f8ed5d0e86dd70af010337cb2c");
+    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("73567a7901c07120bba04793541e5ec1c40c36151b9f29897fa37c5ddce7c1c0");
     const releasePins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;testSupportSha256:string;repairedTopicTestArchivePath?:string;repairedTopicTestArchiveSha256?:string;paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string|null}>};
     expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-topic-acceptance-batch5-source-migration-20261111.json",import.meta.url))).digest("hex")).toBe(releasePins.capturedFixtureSha256);
     expect(createHash("sha256").update(readFileSync(new URL("./question-program-batch5-acceptance-test-support.ts",import.meta.url))).digest("hex")).toBe(releasePins.testSupportSha256);

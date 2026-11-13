@@ -192,7 +192,7 @@ describe("batch8 exact owner-directed acceptance and preserved history",()=>{
 
   it("pins exact release source deltas, presence and every immutable epoch preimage",()=>{
     const bytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch8-release-source-pins-20261112.json",import.meta.url));
-    expect(createHash("sha256").update(bytes).digest("hex")).toBe("e820d2ff5d72639ed416b7865b688bed9a1267600dbb27b9d7e8916e18af5843");
+    expect(createHash("sha256").update(bytes).digest("hex")).toBe("210d877afbabcc2877bfe254405776089c36ba6d7413114ec1903d2cc58b822b");
     const pins=JSON.parse(bytes.toString("utf8"));
     const hash=(path:string)=>createHash("sha256").update(readFileSync(new URL("../../../"+path,import.meta.url))).digest("hex");
     expect(hash(pins.capturePath)).toBe(pins.capturedFixtureSha256);

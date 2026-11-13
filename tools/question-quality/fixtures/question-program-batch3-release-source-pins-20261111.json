@@ -18,7 +18,7 @@
       "mainBeforeSha256": "6b6bda28d43a87d16365778aed15e937314d43774c22398cd282ddea47323d95",
       "mainAfterSha256": "da794d14e7e4acf85cc487bfce7a07310d04461779e2dc2f985c89afdf44ba52",
       "releaseBeforeSha256": "520fe53ecd0e037be70f04c7500a0b5c47f2e11e546893c63754d27ab409ad90",
-      "requiredReleaseSha256": "60e2d56bad17d818eacef06a0abde4576f9436064eb35dfb9e20e1d2d9cff460",
+      "requiredReleaseSha256": "b9d3df702390495e748b1f9bf9eaa2ce367c4471eb5287e5abef30a2d06688c5",
       "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
     },
     {
@@ -778,6 +778,47 @@
           "previousRequirement": "9aae321ff342a927b4150dfb0d3be858bc221e44c7cadd61cd1ac1a7b7b4e5f8",
           "releaseAfterSha256": "60e2d56bad17d818eacef06a0abde4576f9436064eb35dfb9e20e1d2d9cff460",
           "reason": "manager-approved port37 final-minute capture correction; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+        }
+      ]
+    },
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port38-compression-enablement",
+      "priorFixtureSha256": "746b8ac903fae84d099cd2d5df5bcf5ab238301c1ad8f563a5a78e38c87bd1bf",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-test-support.ts",
+          "mainBeforeSha256": "42e459846ffd5cc9e1022dc1d5601e88948f6764c49e0b781ea75ab981d01f7e",
+          "mainAfterSha256": "5459f2c4d6c9ad166fa1cb6ad6677dbffbda08197bf096dde89e016ea11f3aa9",
+          "releaseBeforeSha256": "dbd27f1580405ee5bee9308561674ac26e5f5446d014534fe2f32bf501c5b2db",
+          "requiredReleaseSha256": "3d02f6fbeb9fa81caf1948a03f34d26232606e8d3b15afd68658e9f53af9661c",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "6b6bda28d43a87d16365778aed15e937314d43774c22398cd282ddea47323d95",
+          "mainAfterSha256": "da794d14e7e4acf85cc487bfce7a07310d04461779e2dc2f985c89afdf44ba52",
+          "releaseBeforeSha256": "520fe53ecd0e037be70f04c7500a0b5c47f2e11e546893c63754d27ab409ad90",
+          "requiredReleaseSha256": "60e2d56bad17d818eacef06a0abde4576f9436064eb35dfb9e20e1d2d9cff460",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        },
+        {
+          "path": "tests/fixtures/diagnostic-workload.ts",
+          "mainBeforeSha256": "12c41f69689e0888d9510f01fea90e69c2c00a3af712d5eec83e1b90185d8559",
+          "mainAfterSha256": "3862651c9034c43ed2260de97cd1a990423b391da1dcca621a6a9bdc7195399d",
+          "releaseBeforeSha256": "a21f273bc9770967388e9d6d718adece4581765f40c36dbbc7d11650245a6318",
+          "requiredReleaseSha256": "bcc687c06b886fe28fefbe3fc09edc8f0b3dc9492ff9460fd679f18b6605cd5c",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        }
+      ],
+      "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization.",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "60e2d56bad17d818eacef06a0abde4576f9436064eb35dfb9e20e1d2d9cff460",
+          "previousRequirement": "60e2d56bad17d818eacef06a0abde4576f9436064eb35dfb9e20e1d2d9cff460",
+          "releaseAfterSha256": "b9d3df702390495e748b1f9bf9eaa2ce367c4471eb5287e5abef30a2d06688c5",
+          "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
         }
       ]
     }

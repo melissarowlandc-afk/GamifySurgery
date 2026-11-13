@@ -589,6 +589,51 @@
           "reason": "manager-approved port37 final-minute capture correction; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
         }
       ]
+    },
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port38-compression-enablement",
+      "priorFixtureSha256": "ff8b173395105be7eddbfec3f9a50c14fe7d36fbc337c0a9f807bfefd9d302d1",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-test-support.ts",
+          "mainBeforeSha256": "2cf42b758da44118496e5040df47a6b9c55e5c12ce17ad429da54dabd1818d93",
+          "mainAfterSha256": "59538549c39905e03cab96f9e78701d38c2230361733ce18ce6a30fbe44e88e8",
+          "requiredReleaseSha256": "753260c76f17c6a4a241f3d01d662bcc5d77034c8a89da5e772ec433265ffa5f",
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "956f776eff2111652772200d150bfff89d1fd99bf8f0fe74a77b144d75e1b535",
+          "mainAfterSha256": "61eabde7376a4e7cf6c642c9bf1fce49ad8a7ce273fa0e3a9ef9fdf32855a2f6",
+          "requiredReleaseSha256": "90d1da884265c5ba174a3457880174834fcdccf5a622ac052c9701f1370776d6",
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-pediatric-neck-thoracic-gu-20261111.test.ts",
+          "mainBeforeSha256": "25da8728a513ee4e208393f842207dcb1859ec398b1a47649d14d57a3106061b",
+          "mainAfterSha256": "27b512628162ba999e3e54e0dddff6334966cd32382eeba7d387889a787f7e45",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-wound-healing-immunology-20261111.test.ts",
+          "mainBeforeSha256": "9bdb26b6888aae0aab6422fa1f0da25b4ecadefd148b2204c44642eea1961366",
+          "mainAfterSha256": "f938877b47ae0ec9387f9790eb333c18dd0bd5cc4c655824bbf4fee3a82b8a40",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        }
+      ],
+      "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization.",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "90d1da884265c5ba174a3457880174834fcdccf5a622ac052c9701f1370776d6",
+          "previousRequirement": "90d1da884265c5ba174a3457880174834fcdccf5a622ac052c9701f1370776d6",
+          "releaseAfterSha256": "0837a5f4b2a237e3bfdc974c614b5967a8dcef2368de912f9f15e34950dc01e4",
+          "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+        }
+      ]
     }
   ],
   "paths": [
@@ -603,7 +648,7 @@
       "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
       "mainBeforeSha256": "956f776eff2111652772200d150bfff89d1fd99bf8f0fe74a77b144d75e1b535",
       "mainAfterSha256": "61eabde7376a4e7cf6c642c9bf1fce49ad8a7ce273fa0e3a9ef9fdf32855a2f6",
-      "requiredReleaseSha256": "90d1da884265c5ba174a3457880174834fcdccf5a622ac052c9701f1370776d6",
+      "requiredReleaseSha256": "0837a5f4b2a237e3bfdc974c614b5967a8dcef2368de912f9f15e34950dc01e4",
       "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
     },
     {

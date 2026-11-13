@@ -18,7 +18,7 @@
       "mainBeforeSha256": "6b2e0b4dc13b8d1615a6e55bdca9752366cac029222fde728ccde469b5492275",
       "mainAfterSha256": "7351387a9b382f661eb443fce76e45b820aaa4f6183b88a470a2cb44ab958742",
       "releaseBeforeSha256": null,
-      "requiredReleaseSha256": "0710d5252ccde86eb1a8b2d8ab4e3a9c7f068d4ba1a0e97b295a61ea504d3f51",
+      "requiredReleaseSha256": "dd1e055901d83a6849fa8d86fe2eb349e1d3278b367304f85e3d0f3585e6a590",
       "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
     },
     {
@@ -4360,6 +4360,239 @@
           "previousRequirement": "977dcc442866a5b3c1f6030b266c9863d6b103d881f6cab6cce5dc137255682b",
           "releaseAfterSha256": "0710d5252ccde86eb1a8b2d8ab4e3a9c7f068d4ba1a0e97b295a61ea504d3f51",
           "reason": "manager-approved port37 final-minute capture correction; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+        }
+      ]
+    },
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port38-compression-enablement",
+      "priorFixtureSha256": "35ff11223a88929b560a79c2a23346c408a5c2f8ed5d0e86dd70af010337cb2c",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch4-acceptance-test-support.ts",
+          "mainBeforeSha256": "d05e49626a9956e5a17f468b904dcb9106227f113caa38f2806f78000a27dde5",
+          "mainAfterSha256": "78d35d1dd454a202e3860f677662b8a5c6e1a70982c850515cc2ba4c56978826",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": "89bf7b25592ece7dff22a7810e6a4eef23da4189bf85aa43c971924ee669a22b",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "6b2e0b4dc13b8d1615a6e55bdca9752366cac029222fde728ccde469b5492275",
+          "mainAfterSha256": "7351387a9b382f661eb443fce76e45b820aaa4f6183b88a470a2cb44ab958742",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": "0710d5252ccde86eb1a8b2d8ab4e3a9c7f068d4ba1a0e97b295a61ea504d3f51",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-anorectal-benign-pelvic-floor-20261111.test.ts",
+          "mainBeforeSha256": "051cc442f515f3f25a006f37d48fc5700f527f95998498f0545088fc629adfb1",
+          "mainAfterSha256": "7cd3d8e33a7e90bbc10e476fddad7019eb58156f140a25f600327cfab410bb7b",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-breast-cancer-20261111.test.ts",
+          "mainBeforeSha256": "454b3ae99cb37da06275631559cc697f1f6ce7967eef9517b1217966fc3c0bdf",
+          "mainAfterSha256": "07cef40bdc836147dfc1ed59b3d6938058a4ac0405be71f0a4bf8f9cec062f56",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-colon-diverticular-lower-bleeding-20261111.test.ts",
+          "mainBeforeSha256": "ca5b17cdd6b04c596e6c4801712ff8d36569e5025be8daf410a70683a9014bb1",
+          "mainAfterSha256": "f9af25e9876cca62b5316584fd5ff9df190672b557fab82bf5c2ba86b7d9b431",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-critical-renal-organ-support-20261111.test.ts",
+          "mainBeforeSha256": "01fcfa9525b1a98392f5fc910d4f709b1e6613889db51d793a0dd01ba2e9acba",
+          "mainAfterSha256": "9152297e96bac688721facd721d16481f54c58714df430df4a4c579cbef95c9b",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-critical-shock-resuscitation-20261111.test.ts",
+          "mainBeforeSha256": "2d0c64ba47483a9e8f83a7b2e0787d4fd4c717cd277ac831d3db4331b0ab3dec",
+          "mainAfterSha256": "e9c6d3bb459bbb6b3d60bd8c405d16c92f2969a815d88c01ed1fed8c124273c3",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-esophagus-motility-achalasia-20261111.test.ts",
+          "mainBeforeSha256": "c82744e657fa823d99fa31fab7e0d0203fdaa7e77eadaff8b907f3b2f243c9dd",
+          "mainAfterSha256": "d027f5c51d0db6f17504fe33c0e56d411ccaf5acf03cd3e921b813cd971c7592",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-esophagus-structural-inflammatory-emergencies-20261111.test.ts",
+          "mainBeforeSha256": "79e527df3fbe66ce72c653b41c2a00499b2f0770c055182b773e295ec3c1a9db",
+          "mainAfterSha256": "11afc946957f4cb0b76d7861410b506f3f172cbc0e0c26a4eac7dad322810765",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-ethics-professionalism-20261111.test.ts",
+          "mainBeforeSha256": "4a3c00d8e84b34544676b14f8c83a6c877717de87ce04e27601ba6f24fb8e810",
+          "mainAfterSha256": "12f37fe405bdfece7d4c28c90ab6c521eee1319e50e6745ad975e36f53af704c",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-head-neck-salivary-20261111.test.ts",
+          "mainBeforeSha256": "cd89a62d9ba3ffb57c0e7f663a4282a69c728964fc4be6d9bec7c3489815e04c",
+          "mainAfterSha256": "8c22b78d393fa826bc16b3b242db1760311e16384570662886035bba75f6d496",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-hematology-transfusion-coagulation-20261111.test.ts",
+          "mainBeforeSha256": "2b7a5ee8924f2c934eba98a3cdc5f58f449d1dee0749075288c9385917e312ad",
+          "mainAfterSha256": "9fce69986b84c485fad3c150e3687598746b943d10415f9299cd88570416e06b",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-liver-benign-portal-infection-20261111.test.ts",
+          "mainBeforeSha256": "34f45e003ad19676e6c65366a5cbb6e88756859dec69ab33454b0687d0115cb8",
+          "mainAfterSha256": "ff470bcec2a210b1e9ba9ebbb82527939ae8a4008ea8c70557f8f14938a6da6f",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-melanoma-cutaneous-cancer-20261111.test.ts",
+          "mainBeforeSha256": "b35ec24ed7830c22eee84066544adae5214adc4912c3886d334a69913e3f9477",
+          "mainAfterSha256": "d18ed76676661e338395bf481f4fa69af9139ae593bd1d56b2fa4b423a6b7e9b",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-neuro-orthopedic-essentials-20261111.test.ts",
+          "mainBeforeSha256": "7e1daa8ee574764211f84daf08a5d8428a3a54c3f35d65aaf433dcd54520194c",
+          "mainAfterSha256": "01b01fa329b59566f0cb286658af198130a1e8604704d9e7d04541d0a52e6160",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-pancreas-chronic-cysts-neoplasia-20261111.test.ts",
+          "mainBeforeSha256": "fd14e5e26249e016d8e0c856a3374d81bb40c0870ba1d99260c5ce91f4a70805",
+          "mainAfterSha256": "e5303dba986037313cf933e917e90ae9c7d4ef31d2085bb1bd69ed13f24aa5dc",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-parathyroid-calcium-20261111.test.ts",
+          "mainBeforeSha256": "4f68bbcfd520136355b492eca3f9559d907efc0129d1a27cc4f34eed30e01fb0",
+          "mainAfterSha256": "896cc5f8bdd120cca2b5040ab223f64e32558889a8e838e02ec987875eaeb9ab",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-statistics-20261111.test.ts",
+          "mainBeforeSha256": "82d2c1edb4de099ae40443af6c78783c67a204a8543f32eae1767ec4bf93d90c",
+          "mainAfterSha256": "6f421d31b81a07dd20b938ff5ec132a8db12fd6e9e5788be0a1dd3bb55ba0947",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-surgical-infection-antibiotics-20261111.test.ts",
+          "mainBeforeSha256": "5da396ce4e43f350214cce0949d702268bdc8460cf054540194e3759798bf5d9",
+          "mainAfterSha256": "8abdab95a88d756af81ea2a0e06a7b04651baee5b4104cc5716c39a24eb1d834",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-thyroid-nodules-cancer-20261111.test.ts",
+          "mainBeforeSha256": "71d3ce663f8e2194e76d9cac2018f6bc8f9954520664fd948852750ded908465",
+          "mainAfterSha256": "49119d76cfe4010ebf397be3bbb19d7458704e2c8e7cd64befde61f3b544b6af",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-transplant-immunosuppression-20261111.test.ts",
+          "mainBeforeSha256": "b49f7f7a20271a71ad8583901961c74b8bcb68e901c026ebe115cd65c6566eea",
+          "mainAfterSha256": "fa831d766c6486e8b29f86cf5ca8ae7123dc3a64c3b9e7934593ecf6798a09cf",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-trauma-head-spine-extremities-20261111.test.ts",
+          "mainBeforeSha256": "f0f80832076951cae420100f18156aaa5d250d7cefe7d91b3b21df32f3de7992",
+          "mainAfterSha256": "0c5678170b2dfc7a16200a4c9cdd60d9a3cc9c0b52d2da9c11d637e026a87394",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-trauma-initial-abdomen-20261111.test.ts",
+          "mainBeforeSha256": "43fc15e225664bec4d7f408ddbc2a805eeebd1f638c584c1d1d19903bd2833e2",
+          "mainAfterSha256": "28acfa6088d43a8be7de8bc5c15e720e125f0cc53b7af7f3a163c21a94d9e983",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-vascular-aorta-20261111.test.ts",
+          "mainBeforeSha256": "b7d5e154472f93bfdf8718e91e12f9e64b7bac11890259853b13e04e144ced41",
+          "mainAfterSha256": "64820acc8cff923ae3127118c21974452dfd0e0f96c98c14ae06ff0f7f6deb4a",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-wound-healing-immunology-20261111.test.ts",
+          "mainBeforeSha256": "441ebe9971d05421a6d1f417a73b0ceed4705f8556d0d6e580553de9bd9bdce2",
+          "mainAfterSha256": "9bdb26b6888aae0aab6422fa1f0da25b4ecadefd148b2204c44642eea1961366",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-bariatric-metabolic-20261111.test.ts",
+          "mainBeforeSha256": "913f7b7c62eb12f743413b0ea0dd01be4c63adab902756149489bc08e1f0eca0",
+          "mainAfterSha256": "f6244ce724f7628fd37ecd4e3b0d1305a5d4ea0ab37def33377da9cfe4d357a7",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-vascular-venous-lymphatic-access-20261111.test.ts",
+          "mainBeforeSha256": "cd7d909e5e0168a8b614808954b34c4b2fc3b2bf6ed565b5737400984b6a53db",
+          "mainAfterSha256": "929774f0ccc716c7d5e6b239218c9deabf4aeb52bd9688a994a67f57fda17985",
+          "releaseBeforeSha256": null,
+          "requiredReleaseSha256": null,
+          "reason": "Raw authoring module dependencies are excluded by manager scope. Require source-path absence and exact frozen repaired test postimage provenance; exercise the accepted membership contract from immutable archives."
+        }
+      ],
+      "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization.",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "0710d5252ccde86eb1a8b2d8ab4e3a9c7f068d4ba1a0e97b295a61ea504d3f51",
+          "previousRequirement": "0710d5252ccde86eb1a8b2d8ab4e3a9c7f068d4ba1a0e97b295a61ea504d3f51",
+          "releaseAfterSha256": "dd1e055901d83a6849fa8d86fe2eb349e1d3278b367304f85e3d0f3585e6a590",
+          "reason": "manager-approved release 38 compression enablement; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
         }
       ]
     }
