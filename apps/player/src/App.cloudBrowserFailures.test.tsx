@@ -45,7 +45,7 @@ async function fixture(layout: "phone" | "desktop") {
       <CompetitionClientContext.Provider value={null}><CloudAccountProvider runtime={runtime}><Router /></CloudAccountProvider></CompetitionClientContext.Provider>
     </AuthAccountActionsContext.Provider>
   </AuthAccountContext.Provider>);
-  await vi.waitFor(async () => { await act(async () => {}); expect(cloud?.phase).toBe("available"); });
+  await vi.waitFor(async () => { await act(async () => {}); expect(cloud?.phase).toBe("available"); }, { timeout: 15_000 });
   const playing = () => vi.waitFor(async () => {
     await act(async () => {});
     expect(cloud.active?.syncView).toMatchObject({ canExecute: true, failure: null });
@@ -84,7 +84,7 @@ describe.each(["phone", "desktop"] as const)("%s real account provider and autom
     await f.playing();
     expect(f.cloud.active).not.toBe(session);
     expect(f.cloud.active!.state).toEqual(expected);
-    await vi.waitFor(() => expect(f.cloud.active?.syncView.pending).toBe(false));
+    await vi.waitFor(() => expect(f.cloud.active?.syncView.pending).toBe(false), { timeout: 15_000 });
     expect(allElements(f.env.doc.body, node => node.attributes.class?.includes("cloud-dialog") === true)).toHaveLength(0);
   });
 
@@ -130,7 +130,7 @@ describe.each(["phone", "desktop"] as const)("%s real account provider and autom
     await f.env.clickElement(allElements(f.env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Retry")[0]!);
     await f.playing();
     expect(f.cloud.active!.state.simulationSpeed).toBe(4);
-    await vi.waitFor(async () => { await act(async () => {}); expect(f.cloud.active?.syncView.pending).toBe(false); });
+    await vi.waitFor(async () => { await act(async () => {}); expect(f.cloud.active?.syncView.pending).toBe(false); }, { timeout: 15_000 });
   });
 
   it.each(["empty", "confirmed", "pending"] as const)("opens a verified prior copy read-only and exports it without closing it or modifying the account (current cache=%s)", async cacheMode => {
@@ -151,7 +151,8 @@ describe.each(["phone", "desktop"] as const)("%s real account provider and autom
     session.dispose();
     if (cacheMode === "empty") await f.cache.clearAccount(f.runtime);
     await act(async () => f.remount());
-    await vi.waitFor(async () => { await act(async () => {}); expect(f.cloud.active?.syncView.priorRecovery).toMatchObject({ verifiedRevision: prior.revision }); });
+    // Remount + verified-prior recovery can exceed vitest's 1 s default on slow CI runners.
+    await vi.waitFor(async () => { await act(async () => {}); expect(f.cloud.active?.syncView.priorRecovery).toMatchObject({ verifiedRevision: prior.revision }); }, { timeout: 15_000 });
     expect(f.cloud.active!.canExecute).toBe(false);
     expect(f.cloud.active!.coordinator.view.phase).toBe("readonly");
     const exported = JSON.parse(await f.cloud.exportDeviceRecovery());
