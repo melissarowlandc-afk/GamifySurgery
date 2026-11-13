@@ -1,0 +1,449 @@
+{
+  "capturePath": "tools/question-quality/fixtures/question-intraop-acceptance-batch11-source-migration-20261113.json",
+  "capturedFixtureSha256": "bc163c7a562af6af29053fa445bb5babee36fd61fceda4d5f797aaf4bf292386",
+  "paths": [
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "mainBeforeSha256": "b84a76bc5920c1f95c704b2787901b9635e4e2b3ffc7f63141de97b1641d9edc",
+      "mainAfterSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0",
+      "requiredReleaseSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "mainBeforeSha256": "cd8d023c72bb445cc154dc8a6ea35a01f60b4f5b15f10980fe58f50e7ab404cc",
+      "mainAfterSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02",
+      "requiredReleaseSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "mainBeforeSha256": "8cb558cfff5a82244d481ce5aa1b303456b8418a0d787313f8cd701dc231d8aa",
+      "mainAfterSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623",
+      "requiredReleaseSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "mainBeforeSha256": "78c3a41071dd1ae87ac6b18404538fed63ddb152a2fadf19d23a45f446726d83",
+      "mainAfterSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377",
+      "requiredReleaseSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "mainBeforeSha256": "2905b8f5c5ec083835b58b95e20a068e0f673df72e27b3eae6fff87fdb57e7e9",
+      "mainAfterSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb",
+      "requiredReleaseSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "mainBeforeSha256": "243e7d3a40f5787c3c34a9143cc60840ea1c41f0f7cd4a12585841042706ae3a",
+      "mainAfterSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227",
+      "requiredReleaseSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227"
+    },
+    {
+      "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+      "mainBeforeSha256": "b19884a18b8e1b03398b159251e9b0255d0fad4184c6b659bd2c24a5f3d9c3f7",
+      "mainAfterSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76",
+      "requiredReleaseSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch10-acceptance-test-support.ts",
+      "mainBeforeSha256": "e6466c9bac1200f98bd1429eaa65b0264de69b29a9039eefce48fbd9bc97cb52",
+      "mainAfterSha256": "5243504e14d2c32984d6158694417f36cb9bc67d9c9cbbacbd403b6f9189137d",
+      "requiredReleaseSha256": "1ec0bb8f944e4882bd5bbfaca8565506c7c17981c263e0402656fdeb68a785c3"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch10-acceptance-20261113.test.ts",
+      "mainBeforeSha256": "6b41a987e0927cf594c82df8153e4756599d25031d01f980706aca9f744df81d",
+      "mainAfterSha256": "96a35c551115934793c7d7726bd2d0edc3aa9fc91b963d7394338a78133e9960",
+      "requiredReleaseSha256": "2f9db8eb354ea9bd3c8b220e0953047572fcca2e202974037b3a6b7231836eca"
+    },
+    {
+      "path": "packages/clinical-content/src/question-intraop-parathyroid-localization-and-preservation-20261112.test.ts",
+      "mainBeforeSha256": "91e582fd8dbcadc062fac2663752df0aff4be74dbfd32324378d1ce1ee257b00",
+      "mainAfterSha256": "f48664f72f03fae736564d516d9ca6835aa6a9de077400a7e0b9f4ee6992cfec",
+      "requiredReleaseSha256": null
+    },
+    {
+      "path": "packages/clinical-content/src/question-intraop-polypectomy-technique-and-bleeding-20261112.test.ts",
+      "mainBeforeSha256": "682047e6543568c88af408962ab7b92ddeaca2d709f5c635edce7ad122aacfb9",
+      "mainAfterSha256": "45baff69198c8d44432473a38cc7cfa31067e9565ee5dd3cf02f567a774f9093",
+      "requiredReleaseSha256": null
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "mainBeforeSha256": "2f134b963295d1f859780dbee88d662036a4fbccff00fc033bfe7ce83d46a06f",
+      "mainAfterSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc",
+      "requiredReleaseSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc"
+    },
+    {
+      "path": "apps/player/src/session/topicRuntimeBindings.test.ts",
+      "mainBeforeSha256": "e0be29b7162c00b9cfc9b9ba2d976367f0a6a656e40d014211b58bbea8702d0c",
+      "mainAfterSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9",
+      "requiredReleaseSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9"
+    }
+  ],
+  "authorizationHistory": [
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port37-initial",
+      "priorFixtureSha256": null,
+      "priorPaths": [],
+      "reason": "Exact accepted ENG-I01 and frozen intraop9-11 postimages and release-only strict source guards. Captures, required absences and all prior authorizations preserved."
+    },
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port37-bridge",
+      "priorFixtureSha256": "3a590b050b9a70f25722e6bc3b827df036b48e99c99795b9632c0686ed7d5671",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "b84a76bc5920c1f95c704b2787901b9635e4e2b3ffc7f63141de97b1641d9edc",
+          "mainAfterSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0",
+          "requiredReleaseSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "cd8d023c72bb445cc154dc8a6ea35a01f60b4f5b15f10980fe58f50e7ab404cc",
+          "mainAfterSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02",
+          "requiredReleaseSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "8cb558cfff5a82244d481ce5aa1b303456b8418a0d787313f8cd701dc231d8aa",
+          "mainAfterSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623",
+          "requiredReleaseSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "78c3a41071dd1ae87ac6b18404538fed63ddb152a2fadf19d23a45f446726d83",
+          "mainAfterSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377",
+          "requiredReleaseSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "2905b8f5c5ec083835b58b95e20a068e0f673df72e27b3eae6fff87fdb57e7e9",
+          "mainAfterSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb",
+          "requiredReleaseSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "243e7d3a40f5787c3c34a9143cc60840ea1c41f0f7cd4a12585841042706ae3a",
+          "mainAfterSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227",
+          "requiredReleaseSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227"
+        },
+        {
+          "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+          "mainBeforeSha256": "b19884a18b8e1b03398b159251e9b0255d0fad4184c6b659bd2c24a5f3d9c3f7",
+          "mainAfterSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76",
+          "requiredReleaseSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch10-acceptance-test-support.ts",
+          "mainBeforeSha256": "e6466c9bac1200f98bd1429eaa65b0264de69b29a9039eefce48fbd9bc97cb52",
+          "mainAfterSha256": "5243504e14d2c32984d6158694417f36cb9bc67d9c9cbbacbd403b6f9189137d",
+          "requiredReleaseSha256": "7e69ad2d18f9ece7229d6c229c175f3b870a1fdac1216509f9d7ff13caa7bf7f"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch10-acceptance-20261113.test.ts",
+          "mainBeforeSha256": "6b41a987e0927cf594c82df8153e4756599d25031d01f980706aca9f744df81d",
+          "mainAfterSha256": "96a35c551115934793c7d7726bd2d0edc3aa9fc91b963d7394338a78133e9960",
+          "requiredReleaseSha256": "48da469608a8c32f09eea218730a1b5047d12d382a6745d740acf71e7e12fbbb"
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-parathyroid-localization-and-preservation-20261112.test.ts",
+          "mainBeforeSha256": "91e582fd8dbcadc062fac2663752df0aff4be74dbfd32324378d1ce1ee257b00",
+          "mainAfterSha256": "f48664f72f03fae736564d516d9ca6835aa6a9de077400a7e0b9f4ee6992cfec",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-polypectomy-technique-and-bleeding-20261112.test.ts",
+          "mainBeforeSha256": "682047e6543568c88af408962ab7b92ddeaca2d709f5c635edce7ad122aacfb9",
+          "mainAfterSha256": "45baff69198c8d44432473a38cc7cfa31067e9565ee5dd3cf02f567a774f9093",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "2f134b963295d1f859780dbee88d662036a4fbccff00fc033bfe7ce83d46a06f",
+          "mainAfterSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc",
+          "requiredReleaseSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc"
+        },
+        {
+          "path": "apps/player/src/session/topicRuntimeBindings.test.ts",
+          "mainBeforeSha256": "e0be29b7162c00b9cfc9b9ba2d976367f0a6a656e40d014211b58bbea8702d0c",
+          "mainAfterSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9",
+          "requiredReleaseSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9"
+        }
+      ],
+      "reason": "Exact accepted ENG-I01 and frozen intraop9-11 postimages and release-only strict source guards. Captures, required absences and all prior authorizations preserved."
+    },
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port37-evidence",
+      "priorFixtureSha256": "656dd0c328022fb2834ed17376f33347c74bdcf1bc91270fc09a800e1d199b4b",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "b84a76bc5920c1f95c704b2787901b9635e4e2b3ffc7f63141de97b1641d9edc",
+          "mainAfterSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0",
+          "requiredReleaseSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "cd8d023c72bb445cc154dc8a6ea35a01f60b4f5b15f10980fe58f50e7ab404cc",
+          "mainAfterSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02",
+          "requiredReleaseSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "8cb558cfff5a82244d481ce5aa1b303456b8418a0d787313f8cd701dc231d8aa",
+          "mainAfterSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623",
+          "requiredReleaseSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "78c3a41071dd1ae87ac6b18404538fed63ddb152a2fadf19d23a45f446726d83",
+          "mainAfterSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377",
+          "requiredReleaseSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "2905b8f5c5ec083835b58b95e20a068e0f673df72e27b3eae6fff87fdb57e7e9",
+          "mainAfterSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb",
+          "requiredReleaseSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "243e7d3a40f5787c3c34a9143cc60840ea1c41f0f7cd4a12585841042706ae3a",
+          "mainAfterSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227",
+          "requiredReleaseSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227"
+        },
+        {
+          "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+          "mainBeforeSha256": "b19884a18b8e1b03398b159251e9b0255d0fad4184c6b659bd2c24a5f3d9c3f7",
+          "mainAfterSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76",
+          "requiredReleaseSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch10-acceptance-test-support.ts",
+          "mainBeforeSha256": "e6466c9bac1200f98bd1429eaa65b0264de69b29a9039eefce48fbd9bc97cb52",
+          "mainAfterSha256": "5243504e14d2c32984d6158694417f36cb9bc67d9c9cbbacbd403b6f9189137d",
+          "requiredReleaseSha256": "1ec0bb8f944e4882bd5bbfaca8565506c7c17981c263e0402656fdeb68a785c3"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch10-acceptance-20261113.test.ts",
+          "mainBeforeSha256": "6b41a987e0927cf594c82df8153e4756599d25031d01f980706aca9f744df81d",
+          "mainAfterSha256": "96a35c551115934793c7d7726bd2d0edc3aa9fc91b963d7394338a78133e9960",
+          "requiredReleaseSha256": "6899dc04a3739ac746f89dad6fed4e2e02f268ab414441e4aa9500c17719ced2"
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-parathyroid-localization-and-preservation-20261112.test.ts",
+          "mainBeforeSha256": "91e582fd8dbcadc062fac2663752df0aff4be74dbfd32324378d1ce1ee257b00",
+          "mainAfterSha256": "f48664f72f03fae736564d516d9ca6835aa6a9de077400a7e0b9f4ee6992cfec",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-polypectomy-technique-and-bleeding-20261112.test.ts",
+          "mainBeforeSha256": "682047e6543568c88af408962ab7b92ddeaca2d709f5c635edce7ad122aacfb9",
+          "mainAfterSha256": "45baff69198c8d44432473a38cc7cfa31067e9565ee5dd3cf02f567a774f9093",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "2f134b963295d1f859780dbee88d662036a4fbccff00fc033bfe7ce83d46a06f",
+          "mainAfterSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc",
+          "requiredReleaseSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc"
+        },
+        {
+          "path": "apps/player/src/session/topicRuntimeBindings.test.ts",
+          "mainBeforeSha256": "e0be29b7162c00b9cfc9b9ba2d976367f0a6a656e40d014211b58bbea8702d0c",
+          "mainAfterSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9",
+          "requiredReleaseSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9"
+        }
+      ],
+      "reason": "Exact accepted ENG-I01 and frozen intraop9-11 postimages and release-only strict source guards. Captures, required absences and all prior authorizations preserved."
+    },
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port37-admission",
+      "priorFixtureSha256": "8fad077d7339511c71796ab9b5a362d46af6d8083413d9fb863b781576b96336",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "b84a76bc5920c1f95c704b2787901b9635e4e2b3ffc7f63141de97b1641d9edc",
+          "mainAfterSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0",
+          "requiredReleaseSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "cd8d023c72bb445cc154dc8a6ea35a01f60b4f5b15f10980fe58f50e7ab404cc",
+          "mainAfterSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02",
+          "requiredReleaseSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "8cb558cfff5a82244d481ce5aa1b303456b8418a0d787313f8cd701dc231d8aa",
+          "mainAfterSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623",
+          "requiredReleaseSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "78c3a41071dd1ae87ac6b18404538fed63ddb152a2fadf19d23a45f446726d83",
+          "mainAfterSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377",
+          "requiredReleaseSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "2905b8f5c5ec083835b58b95e20a068e0f673df72e27b3eae6fff87fdb57e7e9",
+          "mainAfterSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb",
+          "requiredReleaseSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "243e7d3a40f5787c3c34a9143cc60840ea1c41f0f7cd4a12585841042706ae3a",
+          "mainAfterSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227",
+          "requiredReleaseSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227"
+        },
+        {
+          "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+          "mainBeforeSha256": "b19884a18b8e1b03398b159251e9b0255d0fad4184c6b659bd2c24a5f3d9c3f7",
+          "mainAfterSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76",
+          "requiredReleaseSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch10-acceptance-test-support.ts",
+          "mainBeforeSha256": "e6466c9bac1200f98bd1429eaa65b0264de69b29a9039eefce48fbd9bc97cb52",
+          "mainAfterSha256": "5243504e14d2c32984d6158694417f36cb9bc67d9c9cbbacbd403b6f9189137d",
+          "requiredReleaseSha256": "1ec0bb8f944e4882bd5bbfaca8565506c7c17981c263e0402656fdeb68a785c3"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch10-acceptance-20261113.test.ts",
+          "mainBeforeSha256": "6b41a987e0927cf594c82df8153e4756599d25031d01f980706aca9f744df81d",
+          "mainAfterSha256": "96a35c551115934793c7d7726bd2d0edc3aa9fc91b963d7394338a78133e9960",
+          "requiredReleaseSha256": "93f44913996a4a50e8b4f67107437fd6fe34a62827fce1ff126b33d09dc317fc"
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-parathyroid-localization-and-preservation-20261112.test.ts",
+          "mainBeforeSha256": "91e582fd8dbcadc062fac2663752df0aff4be74dbfd32324378d1ce1ee257b00",
+          "mainAfterSha256": "f48664f72f03fae736564d516d9ca6835aa6a9de077400a7e0b9f4ee6992cfec",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-polypectomy-technique-and-bleeding-20261112.test.ts",
+          "mainBeforeSha256": "682047e6543568c88af408962ab7b92ddeaca2d709f5c635edce7ad122aacfb9",
+          "mainAfterSha256": "45baff69198c8d44432473a38cc7cfa31067e9565ee5dd3cf02f567a774f9093",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "2f134b963295d1f859780dbee88d662036a4fbccff00fc033bfe7ce83d46a06f",
+          "mainAfterSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc",
+          "requiredReleaseSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc"
+        },
+        {
+          "path": "apps/player/src/session/topicRuntimeBindings.test.ts",
+          "mainBeforeSha256": "e0be29b7162c00b9cfc9b9ba2d976367f0a6a656e40d014211b58bbea8702d0c",
+          "mainAfterSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9",
+          "requiredReleaseSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9"
+        }
+      ],
+      "reason": "Exact accepted ENG-I01 and frozen intraop9-11 postimages and release-only strict source guards. Captures, required absences and all prior authorizations preserved."
+    },
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port37-final-minute-capture",
+      "priorFixtureSha256": "48f89377c5f951b46263c80e37d8f89b6a6d341f5db916b3dd5555fc376facb8",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "b84a76bc5920c1f95c704b2787901b9635e4e2b3ffc7f63141de97b1641d9edc",
+          "mainAfterSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0",
+          "requiredReleaseSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "cd8d023c72bb445cc154dc8a6ea35a01f60b4f5b15f10980fe58f50e7ab404cc",
+          "mainAfterSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02",
+          "requiredReleaseSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "8cb558cfff5a82244d481ce5aa1b303456b8418a0d787313f8cd701dc231d8aa",
+          "mainAfterSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623",
+          "requiredReleaseSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "78c3a41071dd1ae87ac6b18404538fed63ddb152a2fadf19d23a45f446726d83",
+          "mainAfterSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377",
+          "requiredReleaseSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "2905b8f5c5ec083835b58b95e20a068e0f673df72e27b3eae6fff87fdb57e7e9",
+          "mainAfterSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb",
+          "requiredReleaseSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "243e7d3a40f5787c3c34a9143cc60840ea1c41f0f7cd4a12585841042706ae3a",
+          "mainAfterSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227",
+          "requiredReleaseSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227"
+        },
+        {
+          "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+          "mainBeforeSha256": "b19884a18b8e1b03398b159251e9b0255d0fad4184c6b659bd2c24a5f3d9c3f7",
+          "mainAfterSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76",
+          "requiredReleaseSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch10-acceptance-test-support.ts",
+          "mainBeforeSha256": "e6466c9bac1200f98bd1429eaa65b0264de69b29a9039eefce48fbd9bc97cb52",
+          "mainAfterSha256": "5243504e14d2c32984d6158694417f36cb9bc67d9c9cbbacbd403b6f9189137d",
+          "requiredReleaseSha256": "1ec0bb8f944e4882bd5bbfaca8565506c7c17981c263e0402656fdeb68a785c3"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch10-acceptance-20261113.test.ts",
+          "mainBeforeSha256": "6b41a987e0927cf594c82df8153e4756599d25031d01f980706aca9f744df81d",
+          "mainAfterSha256": "96a35c551115934793c7d7726bd2d0edc3aa9fc91b963d7394338a78133e9960",
+          "requiredReleaseSha256": "98b9b6c907566e4522021363a6e80292b04a8ba89bdf899325f8b49f1faef7d9"
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-parathyroid-localization-and-preservation-20261112.test.ts",
+          "mainBeforeSha256": "91e582fd8dbcadc062fac2663752df0aff4be74dbfd32324378d1ce1ee257b00",
+          "mainAfterSha256": "f48664f72f03fae736564d516d9ca6835aa6a9de077400a7e0b9f4ee6992cfec",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-polypectomy-technique-and-bleeding-20261112.test.ts",
+          "mainBeforeSha256": "682047e6543568c88af408962ab7b92ddeaca2d709f5c635edce7ad122aacfb9",
+          "mainAfterSha256": "45baff69198c8d44432473a38cc7cfa31067e9565ee5dd3cf02f567a774f9093",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "2f134b963295d1f859780dbee88d662036a4fbccff00fc033bfe7ce83d46a06f",
+          "mainAfterSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc",
+          "requiredReleaseSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc"
+        },
+        {
+          "path": "apps/player/src/session/topicRuntimeBindings.test.ts",
+          "mainBeforeSha256": "e0be29b7162c00b9cfc9b9ba2d976367f0a6a656e40d014211b58bbea8702d0c",
+          "mainAfterSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9",
+          "requiredReleaseSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9"
+        }
+      ],
+      "reason": "manager-approved port37 final-minute capture correction; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization.",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch10-acceptance-20261113.test.ts",
+          "releaseBeforeSha256": "98b9b6c907566e4522021363a6e80292b04a8ba89bdf899325f8b49f1faef7d9",
+          "previousRequirement": "98b9b6c907566e4522021363a6e80292b04a8ba89bdf899325f8b49f1faef7d9",
+          "releaseAfterSha256": "2f9db8eb354ea9bd3c8b220e0953047572fcca2e202974037b3a6b7231836eca",
+          "reason": "manager-approved port37 final-minute capture correction; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+        }
+      ]
+    }
+  ],
+  "repairedTopicTestArchivePath": "tools/question-quality/fixtures/question-intraop-batches9-11-retained-authoring-tests-20261113.json",
+  "repairedTopicTestArchiveSha256": "cf1295b6156d128d02a202ec4be44c4d41543f39c8c190cd2e26aa3671b9541b",
+  "testSupportSha256": "8b67dec28fdc17ed7503b62ef920aa587913bfbe95ca23767c6416a41eb1e042"
+}

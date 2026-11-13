@@ -89,6 +89,7 @@ import {
 import { DIAGNOSTIC_READING_WORKSTATIONS, SERVICE_INCOME_CATALOG, RADIOLOGIST_IN_HOUSE_INCOME_LINE_ID, RADIOLOGIST_OUTSIDE_INCOME_LINE_ID, RADIOLOGIST_READ_INCOME, getCurrentRoomUpgradeDefinition } from "@gamify-surgery/balance-config";
 import type { FacilityActorSupportRole } from "../facility/types";
 import { pediatricActorSupport } from "./pediatricFamilyPresentation";
+import { procedureChartDetails } from "./procedureContextPresentation";
 import { isTouchupImagingDimRoom } from "../facility/roomTouchups";
 import type { FacilityBuildDoorSlotView, FacilityViewModel } from "../facility";
 import { createClinicFeedView, createNeedsYouView } from "./alertsEventsViewModel";
@@ -1286,10 +1287,10 @@ function createChartView(
     id: encounter.id,
     clinicalCaseId: encounter.frozenCase.id,
     patientName: encounter.patientDisplayName,
-    patientDetails:
+    patientDetails: procedureChartDetails(state, encounter) ?? (
       encounter.arrivalClass === "tutorial"
         ? "Tutorial patient"
-        : "Clinic patient",
+        : "Clinic patient"),
     ageLabel: encounter.frozenCase.prototypeDemographics
       ? `${encounter.frozenCase.prototypeDemographics.ageYears} years`
       : undefined,
@@ -2027,6 +2028,9 @@ function derivePrototypePlayerView(
         const visitors = new Set<string>();
         for (const operation of state.serviceOperations) {
           const phase = operationPhase(operation);
+          // Child visits use their frozen child sprite on the empty table,
+          // never the occupied room variant's baked adult patient.
+          if (operation.procedureContext?.pediatricFamilyContext) continue;
           if (
             (phase?.roomDefinitionId !== "room.endoscopy" && phase?.roomDefinitionId !== "room.ambulatory_or") ||
             (phase.roomDefinitionId === "room.ambulatory_or"

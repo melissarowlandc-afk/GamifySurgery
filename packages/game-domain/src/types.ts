@@ -759,6 +759,8 @@ export interface PeriopNurseAttentionState {
 }
 
 export interface ServiceOperationState {
+  /** Opt-in scheduled family/profile; legacy operations omit it byte-for-byte. */
+  procedureContext?: ProcedureVisitContext;
   /** A routine visitor may become this scored consult without a second actor. */
   consultEncounterId?: string;
   executiveComfort?: import("./level-five-types").ExecutiveComfortQuote;
@@ -991,9 +993,17 @@ export interface ProcedureCompanionState {
   amenityDwellEndsAtFacilityTick: number | null;
 }
 
+export interface ProcedureVisitContext {
+  version: "procedure-visit.v1";
+  familyId: string;
+  kind: "operation" | "endoscopy";
+  demographics: {ageYears: number; sexLabel: "Female" | "Male"};
+  pediatricFamilyContext?: Extract<NonNullable<SyntheticClinicalCase["procedureContext"]>, {mode: "live"}>["pediatricFamilyContext"];
+}
+
 export interface ClinicVisitState {
   version: "clinic-visit.v1";
-  kind: "adult_appointment" | "pediatric_consult" | "wound_care" | "ostomy_support" | "mri";
+  kind: "adult_appointment" | "pediatric_consult" | "pediatric_procedure" | "wound_care" | "ostomy_support" | "mri";
   demographics: { ageYears: number; sexLabel: PatientSexLabel };
   /** Pediatric visits alone require a family; adults never gain one by default. */
   pediatricFamilyId?: string;
@@ -1003,6 +1013,14 @@ export interface ClinicVisitState {
 
 /** One patient admission and one adult companion, independent of peri-op excursions. */
 export interface PediatricFamilyState {
+  /** Explicit exception to clinic same-room travel, tied to one frozen source. */
+  procedureFlow?: {
+    version: "pediatric-procedure-flow.v1";
+    serviceOperationId: string;
+    familyId: string;
+    phase: "arriving" | "consent" | "waiting" | "update" | "recovery" | "departing" | "departed";
+    parentCheckpoint: {roomInstanceId: string; location: GridPoint} | null;
+  };
   version: "pediatric-family.v1";
   id: string;
   child: { kind: "encounter" | "service_visitor"; id: string };

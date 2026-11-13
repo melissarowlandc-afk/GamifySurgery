@@ -1,0 +1,21 @@
+import {readFileSync} from "node:fs";
+import {createHash} from "node:crypto";
+import type {SyntheticClinicalCase} from "@gamify-surgery/clinical-content";
+const root=new URL("../../../",import.meta.url);
+const read=(path:string,hash:string)=>{
+  const bytes=readFileSync(new URL(path,root));
+  if(createHash("sha256").update(bytes).digest("hex")!==hash)throw new Error("Frozen ENG acceptance source changed: "+path);
+  return JSON.parse(bytes.toString("utf8"));
+};
+const before10=read("tools/question-quality/fixtures/question-intraop-acceptance-batch10-before-20261113.json","f9bbbba11ae4771b592757bda2ff59e81652bdb9f16cd896b531a4cf32361cdc");
+const before11=read("tools/question-quality/fixtures/question-intraop-acceptance-batch11-before-20261113.json","06ed3e08c3afd839d05eef33a375d6527813735e31e7fb046a19488c40a4898e");
+const cases=(slug:string):SyntheticClinicalCase[]=>before10.modules[slug].cases;
+export const INTRAOP_BILIARY_CASES=cases("biliary-safety-and-duct-decisions");
+export const ASC_ACCESS_INTRAOP_CASES=cases("asc-access-and-soft-tissue-surprises");
+export const ENDOSCOPIC_INJURY_CASES=cases("endoscopic-perforation-and-injury");
+export const I15_CASES=cases("suspicious-polyps-retrieval-and-tattoo");
+type ProcedureProposal={caseId:string;familyId:string;allowedIncomeLineIds:string[];requiredCapabilityIds:string[]};
+export const I07_SALVAGE:{cases:SyntheticClinicalCase[];procedureContextProposals:Array<ProcedureProposal&{familyResourceGate:{proposedAdditionalCapabilityIds:string[]}}>}=before11.modules["parathyroid-localization-and-preservation"].salvage;
+export const I07_SALVAGE_CASES:SyntheticClinicalCase[]=I07_SALVAGE.cases;
+export const INTRAOP_ANORECTAL_SALVAGE:{cases:SyntheticClinicalCase[];procedureContextProposals:Array<{caseId:string;proposedContext:Omit<ProcedureProposal,"caseId">}>}=before11.modules["anorectal-eua-and-fistula"].salvage;
+export const INTRAOP_ANORECTAL_SALVAGE_CASES:SyntheticClinicalCase[]=INTRAOP_ANORECTAL_SALVAGE.cases;

@@ -160,10 +160,12 @@ export function runLevelFiveIntegrationJourney(context: DomainContext, progress?
     journey.apply({ type: "BOOK_INSPECTION" });
     if (attempt === 0) journey.checkpoint("integration-preparing");
     for (let i = 0; i < 3061 && ["preparing", "running"].includes(journey.state.levelFive!.inspection.status); i++) {
-      journey.pump(); journey.tick();
+      journey.pump();
+      const beforeTickMinutes = journey.state.levelFive!.inspection.run?.accumulators.observedActiveMinutes;
+      if (beforeTickMinutes === 2999 && attempt < 2) journey.checkpoint(attempt === 0 ? "integration-final" : "integration-repeat-final");
+      journey.tick();
       const minutes = journey.state.levelFive!.inspection.run?.accumulators.observedActiveMinutes;
       if (attempt === 0 && minutes === 80) journey.checkpoint("integration-running");
-      if (minutes === 2999 && attempt < 2) journey.checkpoint(attempt === 0 ? "integration-final" : "integration-repeat-final");
     }
     const report = journey.state.levelFive!.inspection.lastReport!;
     if (report.outcome !== "completed") throw new Error(`M9 inspection ${attempt + 1}: ${report.outcome}, ${report.qualifyingScoredPatientCount} patients`);

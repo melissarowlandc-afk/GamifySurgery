@@ -3,6 +3,7 @@ import { APPROVED_LEVEL4_SUPPORT_NAVIGATION, APPROVED_PEDIATRIC_SUPPORT_ROUTES,
 import { createPatientDisplayName, createPatientPixelAppearance, getPatientAppearanceSelectionContext,
   getPresentPatientDisplayNames } from "./appearance";
 import { deterministicInteger, RANDOM_STREAMS } from "./randomness";
+import { reconcilePediatricProcedureFamily } from "./pediatric-procedure-flow";
 import { getRoomDefinition, isRoomOperationalForFacilityWork } from "./selectors";
 import { getDoorCells } from "./doors";
 import { findCareAwareFacilityPath } from "./care-room-access";
@@ -336,6 +337,7 @@ export function advancePediatricPair(state: GameState, context: DomainContext, f
 export function reconcilePediatricFamilies(state: GameState, context: DomainContext): void {
   for (const family of Object.values(state.pediatricFamilies ?? {})) {
     if (family.phase === "departed") continue;
+    if (family.procedureFlow) { reconcilePediatricProcedureFamily(state, context, family); continue; }
     const child = childRecord(state, family);
     const parent = state.retailExternalActors.find(actor => actor.id === family.parentActorId);
     if (!parent) continue;
@@ -405,6 +407,7 @@ export function planPediatricRoomSale(state: GameState, context: DomainContext, 
   const plans = new Map<string, PediatricPairPlan>();
   const soldDoors = new Set(state.doors.filter(door => door.roomId === roomId).map(door => door.id));
   for (const family of Object.values(state.pediatricFamilies ?? {})) {
+    if (family.procedureFlow) continue; // Service flow evacuates the child; its parent owns a separate checkpoint.
     const child = childRecord(state, family);
     if (family.phase === "departed" || family.reservation?.roomInstanceId !== roomId &&
       pediatricRoomAtPoint(state, context, child.location)?.id !== roomId) continue;

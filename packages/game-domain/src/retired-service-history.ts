@@ -181,6 +181,9 @@ function referencedServiceOperationIds(state: GameState): Set<string> {
   for (const actor of state.retailExternalActors) {
     if (actor.lifecycle !== "departed") add(actor.linkedServiceOperationId);
   }
+  for (const family of Object.values(state.pediatricFamilies ?? {})) {
+    if (family.procedureFlow && family.phase !== "departed") add(family.procedureFlow.serviceOperationId);
+  }
   const environment = state.environment;
   add(environment.founderActivity?.targetId);
   add(environment.suspendedFounderActivity?.targetId);

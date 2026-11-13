@@ -27,7 +27,7 @@ function levelFourContext(): DomainContext {
   return { ...PROTOTYPE_DOMAIN_CONTEXT, balanceRelease: prototypeBalanceReleaseSchema.parse(balance) };
 }
 
-function clinicOperation(kind: ClinicVisitState["kind"]): ServiceOperationState {
+function clinicOperation(kind: Exclude<ClinicVisitState["kind"], "pediatric_procedure">): ServiceOperationState {
   const incomeByKind = { adult_appointment: "income.app_consult", pediatric_consult: "income.pediatric_consult",
     wound_care: "income.wound_care", ostomy_support: "income.ostomy_support", mri: "income.mri" } as const;
   const pediatric = kind === "pediatric_consult";

@@ -1,0 +1,900 @@
+{
+  "target": {
+    "schemaVersion": 1,
+    "linterVersion": "question-cue-lint.2026-11-04.v8",
+    "releaseId": "clinical.synthetic.prototype.v1",
+    "scope": "Every case/node and canonical/finite profile in the assembled default release, including unapproved prototype content. Prior feedback is a visible-history cue candidate; future results/current feedback are excluded.",
+    "exposureBasis": "Structural priority proxy only: earlier entry stage, tutorial sequence, case-reference count, then cue findings. No player exposure data collected.",
+    "totals": {
+      "cases": 14,
+      "nodeOccurrences": 17,
+      "uniqueVariants": 17,
+      "concepts": 17,
+      "profileContexts": 34,
+      "variantsWithFindings": 0,
+      "findings": 0,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 6,
+      "approvalRecordOnlyMetadata": 0,
+      "variantsWithCompleteRationales": 17,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 4,
+        "1": 1,
+        "2": 4,
+        "3": 6,
+        "4": 2
+      },
+      "byOptionCount": {
+        "3": 16,
+        "4": 1
+      },
+      "variantsByRule": {}
+    },
+    "variants": [
+      {
+        "questionVariantId": "question.intraop.operative-hemorrhage.pringle-persistent-posterior.20261112.v1",
+        "conceptId": "concept.intraop.operative-hemorrhage.pringle-persistent-posterior.v1",
+        "conceptName": "Temporize posterior hepatic bleeding after an inflow clamp",
+        "conceptType": "management",
+        "educationalTier": null,
+        "facilityStages": [
+          0
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.intraop.operative-hemorrhage-and-splenic-injury.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.operative-hemorrhage.posterior-liver-record.20261112.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "8094a325285305f730b5017790571b00657fc9f6b085428ef26f7a528eb4e1e2"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.operative-hemorrhage.hepatic-arterial-ligation",
+          "claim.intraop.operative-hemorrhage.hepatic-packing",
+          "claim.intraop.operative-hemorrhage.hepatic-repacking",
+          "claim.intraop.operative-hemorrhage.hepatic-repair-boundary",
+          "claim.intraop.operative-hemorrhage.pringle-inflow",
+          "claim.intraop.operative-hemorrhage.pringle-posterior",
+          "claim.intraop.operative-hemorrhage.pringle-variant-artery"
+        ],
+        "findings": [],
+        "wordingFingerprint": "fbda3b4fffdd388e88a83c6e6a6e369455355deae6624325b4ec504aeaeb9905",
+        "priorityStage": 0,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.thyroid-nerve-monitoring.proximal-verification.v1",
+        "conceptId": "concept.intraop.thyroid-nerve-monitoring.proximal-verification.v1",
+        "conceptName": "Resolve whether the recorded first-side check verifies the operated pathway before deciding the next operative step.",
+        "conceptType": "workup",
+        "educationalTier": 2,
+        "facilityStages": [
+          0
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.intraop.thyroid-nerve-monitoring.2026-11-12.revision1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.thyroid-nerve-monitoring.distal-response-coverage.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "8c415394a695e379034b0e8a83990ab2a99dbc25b7b496e808d9b5e44b2404f3"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.thyroid.defer-contralateral",
+          "claim.intraop.thyroid.distal-bypass",
+          "claim.intraop.thyroid.reassess-recovery",
+          "claim.intraop.thyroid.verified-ipsilateral",
+          "claim.intraop.thyroid.whole-path"
+        ],
+        "findings": [],
+        "wordingFingerprint": "6fcf0c1beaf55c8dcffdc29810a714a8e04c06e9e20b8b17bca493bf8cf7ec67",
+        "priorityStage": 0,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.thyroid-nerve-monitoring.recording-check.v1",
+        "conceptId": "concept.intraop.thyroid-nerve-monitoring.recording-check.v1",
+        "conceptName": "Localize discordant physical and recorded responses before changing the operative plan.",
+        "conceptType": "workup",
+        "educationalTier": 2,
+        "facilityStages": [
+          0
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.intraop.thyroid-nerve-monitoring.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.thyroid-nerve-monitoring.two-signal-events.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "585d37e5b2990bd55205ec30d86b1682711eb398eaefbe54431b4eaae9503b1f"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.thyroid.blockade",
+          "claim.intraop.thyroid.electrode-contact",
+          "claim.intraop.thyroid.stimulus-reaches-muscle",
+          "claim.intraop.thyroid.twitch-recording"
+        ],
+        "findings": [],
+        "wordingFingerprint": "1985909b38ced0229c0027862659376da9c2b184004e20060460842e5cb5b8e6",
+        "priorityStage": 0,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.thyroid-nerve-monitoring.verified-loss-extent.v1",
+        "conceptId": "concept.intraop.thyroid-nerve-monitoring.verified-loss-extent.v1",
+        "conceptName": "Choose operative extent after a verified first-side proximal conduction failure.",
+        "conceptType": "management",
+        "educationalTier": 2,
+        "facilityStages": [
+          0
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.intraop.thyroid-nerve-monitoring.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.thyroid-nerve-monitoring.two-signal-events.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "e29685f4e2fbe25c7f654e6be7b8db69b9ebe00e77867fc9d1532f76ef62906a"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.thyroid.defer-contralateral",
+          "claim.intraop.thyroid.distal-bypass",
+          "claim.intraop.thyroid.electrode-contact",
+          "claim.intraop.thyroid.no-permanence",
+          "claim.intraop.thyroid.reassess-recovery",
+          "claim.intraop.thyroid.verified-ipsilateral",
+          "claim.intraop.thyroid.visual-continuity"
+        ],
+        "findings": [],
+        "wordingFingerprint": "664a88c8e7bd72ff89be6ea03a2a7557b39b94f072a0833fff4c81e62ca2f320",
+        "priorityStage": 0,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.lap-access.major-access-injury.20261112.v1",
+        "conceptId": "concept.intraop.lap-access.major-access-injury.v1",
+        "conceptName": "Preserve a suspected injury track while obtaining hospital vascular control",
+        "conceptType": "management",
+        "educationalTier": 1,
+        "facilityStages": [
+          1
+        ],
+        "optionCounts": [
+          4
+        ],
+        "authoredVersions": [
+          "clinical.intraop.laparoscopic-access-and-insufflation.2026-11-12.v2"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.lap-access.outside-access-rescue.20261112.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "442ba92c34d009effed89158ebe48afc3c5d77466074aa26f5c720b802c4c074"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.lap-access.access-cannula-retention",
+          "claim.intraop.lap-access.major-control",
+          "claim.intraop.lap-access.major-injury"
+        ],
+        "findings": [],
+        "wordingFingerprint": "a219f2023ead2ebc749f916f0f2b68dbcdc6e156019238caf7f172d01f8006e1",
+        "priorityStage": 1,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.postclosure-gas-observation.v1",
+        "conceptId": "concept.intraop.endoscopic-perforation-and-injury.postclosure-gas-observation.v1",
+        "conceptName": "Post-closure gas: reassess the patient",
+        "conceptType": "management",
+        "educationalTier": null,
+        "facilityStages": [
+          2
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-intraop-endoscopic-perforation-and-injury.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.endoscopic-perforation-and-injury.postclip-hospital-record.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "601c7a5e68db79f98300439f278c86149ffd20118a751cc7d83602db08cdc520"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.endoscopic-perforation-and-injury.colonic-contrast-assessment",
+          "claim.intraop.endoscopic-perforation-and-injury.conservative-colon-selection",
+          "claim.intraop.endoscopic-perforation-and-injury.deterioration-after-closure",
+          "claim.intraop.endoscopic-perforation-and-injury.early-colon-closure",
+          "claim.intraop.endoscopic-perforation-and-injury.gas-after-closure",
+          "claim.intraop.endoscopic-perforation-and-injury.perforation-support"
+        ],
+        "findings": [],
+        "wordingFingerprint": "71ee44fcd2cce310caaf0fa532f854beac4241b0a4c8292d20c4d4ddd148d4e6",
+        "priorityStage": 2,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.ercp-access-and-adverse-events.collection-after-diversion.v1",
+        "conceptId": "concept.intraop.ercp-access-and-adverse-events.collection-after-diversion.v1",
+        "conceptName": "Collection drainage after ERCP diversion",
+        "conceptType": "management",
+        "educationalTier": null,
+        "facilityStages": [
+          2
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-intraop-ercp-access-and-adverse-events.2026-11-12.v1.r1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.ercp-access-and-adverse-events.periampullary-injury-course.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "3190ffc243562785fbf7ddc94b8f79ddea3ecbc25bcfd36d1ca90c1b1c5a5e70"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.ercp-access-and-adverse-events.collection-after-diversion",
+          "claim.intraop.ercp-access-and-adverse-events.collection-percutaneous",
+          "claim.intraop.ercp-access-and-adverse-events.ct-injury-assessment",
+          "claim.intraop.ercp-access-and-adverse-events.failed-source-control-surgery",
+          "claim.intraop.ercp-access-and-adverse-events.hospital-perforation-care"
+        ],
+        "findings": [],
+        "wordingFingerprint": "8c514c9fa432572c830c6fe52b3004df62c9adb960da35a69080a9f709ef0268",
+        "priorityStage": 2,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.ercp-access-and-adverse-events.pancreatic-protection-after-access.v1",
+        "conceptId": "concept.intraop.ercp-access-and-adverse-events.pancreatic-protection-after-access.v1",
+        "conceptName": "Pancreatic protection after difficult access",
+        "conceptType": "management",
+        "educationalTier": null,
+        "facilityStages": [
+          2
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-intraop-ercp-access-and-adverse-events.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.ercp-access-and-adverse-events.pancreatic-protection.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "58ef049954eecb20a305b315f5e9fd03b10c715be0409e4480d6f1819934daa4"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.ercp-access-and-adverse-events.hydration-not-substitute",
+          "claim.intraop.ercp-access-and-adverse-events.pancreatic-access-risk",
+          "claim.intraop.ercp-access-and-adverse-events.pancreatic-stent-prophylaxis"
+        ],
+        "findings": [],
+        "wordingFingerprint": "383d11a29e80a53169ce4e73c4d730512aea9b28d2c3fddadf257aa3629796d3",
+        "priorityStage": 2,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.ercp-access-and-adverse-events.periampullary-diversion.v1",
+        "conceptId": "concept.intraop.ercp-access-and-adverse-events.periampullary-diversion.v1",
+        "conceptName": "Initial diversion for a recognized ERCP injury",
+        "conceptType": "management",
+        "educationalTier": null,
+        "facilityStages": [
+          2
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-intraop-ercp-access-and-adverse-events.2026-11-12.v1.r1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.ercp-access-and-adverse-events.periampullary-injury-course.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "37cf146278776e46890e11045ac73ee09bdda813f5bd670fb8aa8f9f45948608"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.ercp-access-and-adverse-events.failed-source-control-surgery",
+          "claim.intraop.ercp-access-and-adverse-events.hospital-perforation-care",
+          "claim.intraop.ercp-access-and-adverse-events.periampullary-pattern",
+          "claim.intraop.ercp-access-and-adverse-events.selected-endoscopic-diversion",
+          "claim.intraop.ercp-access-and-adverse-events.sphincterotomy-margin-origin"
+        ],
+        "findings": [],
+        "wordingFingerprint": "566f2846de9fc7ea1f7af7d8b301792b22c8e332825531b6f10a3538f8d0d09b",
+        "priorityStage": 2,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.anesthetic-intraoperative-crises.mh-potassium-cardiotoxicity.v1",
+        "conceptId": "concept.intraop.anesthetic-intraoperative-crises.mh-potassium-cardiotoxicity.v1",
+        "conceptName": "Apply the calcium-salt versus calcium-channel-blocker distinction when cardiac toxicity develops during malignant hyperthermia treatment.",
+        "conceptType": "management",
+        "educationalTier": null,
+        "facilityStages": [
+          3
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-intraop-anesthetic-intraoperative-crises.2026-11-12.v1.r1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.anesthetic-intraoperative-crises.mh-electrolyte.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "0d6393c33ed802d78854440ff4b85cef6fe9b8c20a919d521b4f5d51bb2a0262"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.i11.calcium-cardioprotection",
+          "claim.intraop.i11.calcium-not-removal",
+          "claim.intraop.i11.calcium-versus-ccb",
+          "claim.intraop.i11.mh-bicarbonate-complications",
+          "claim.intraop.i11.mh-pattern",
+          "claim.intraop.i11.mh-potassium",
+          "claim.intraop.i11.mh-treatment",
+          "claim.intraop.i11.repeat-dantrolene"
+        ],
+        "findings": [],
+        "wordingFingerprint": "4adf398d936cc461936c060c580a6b02a3433bd38ce1f96b73f85ccdd220b871",
+        "priorityStage": 3,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.groin-hernia.adherent-distal-sac.20261112.v1",
+        "conceptId": "concept.intraop.groin-hernia.adherent-sac-cord-preservation.v1",
+        "conceptName": "adherent distal sac",
+        "conceptType": "management",
+        "educationalTier": 1,
+        "facilityStages": [
+          3
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.question-intraop-groin-hernia-anatomy-and-injury.2026-11-12.v1.r1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.groin-hernia.sliding-sac.20261112.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "28cc46b86a44cba4dc7e9da2cc270d64c93a82a775ec77fa173624a7f971cbb9"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.groin-hernia.cord-sac",
+          "claim.intraop.groin-hernia.dense-sac-plane",
+          "claim.intraop.groin-hernia.distal-seroma"
+        ],
+        "findings": [],
+        "wordingFingerprint": "007af3aaf282659fc38bb5ee0d69caba6f377eb4d330ce779148b9ae0ba38f93",
+        "priorityStage": 3,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.groin-hernia.sliding-sigmoid-plane.20261112.v1",
+        "conceptId": "concept.intraop.groin-hernia.sliding-content-dissection.v1",
+        "conceptName": "sliding sigmoid plane",
+        "conceptType": "management",
+        "educationalTier": 1,
+        "facilityStages": [
+          3
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.question-intraop-groin-hernia-anatomy-and-injury.2026-11-12.v1.r1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.groin-hernia.sliding-sac.20261112.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "8d888d96887bce036ae270e86a0c57039795c3bf8042706387a97c32c7a2b847"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.groin-hernia.ring-release-boundary",
+          "claim.intraop.groin-hernia.sliding-plane",
+          "claim.intraop.groin-hernia.sliding-wall"
+        ],
+        "findings": [],
+        "wordingFingerprint": "17fd2c3a65369389e05e1f0d8944bc8c5055e2f4c776ef937f03f891adc945be",
+        "priorityStage": 3,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.groin-hernia.urinary-leak-localization.20261112.v1",
+        "conceptId": "concept.intraop.groin-hernia.suspected-bladder-injury-localization.v1",
+        "conceptName": "urinary leak localization",
+        "conceptType": "workup",
+        "educationalTier": 1,
+        "facilityStages": [
+          3
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.question-intraop-groin-hernia-anatomy-and-injury.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.groin-hernia.urinary-findings.20261112.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "3db798fa8f466bfac5dffeed01834af9669447aa3a9d633b5453ce15bae59f46"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.groin-hernia.bladder-fill",
+          "claim.intraop.groin-hernia.bladder-sign",
+          "claim.intraop.groin-hernia.ureter-testing"
+        ],
+        "findings": [],
+        "wordingFingerprint": "3356dc4bd73c982b1c34d2f6da030567979be07002bbd4b9ea545c473c2c7f58",
+        "priorityStage": 3,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.unexpected-bowel.base-margin.20261112.v1",
+        "conceptId": "concept.intraop.unexpected-bowel.appendiceal-base-margin.v1",
+        "conceptName": "Initial excision at an abnormal appendiceal base",
+        "conceptType": "management",
+        "educationalTier": 1,
+        "facilityStages": [
+          3
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.question-intraop-unexpected-appendix-and-bowel-findings.2026-11-12.v2"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.unexpected-bowel.base-margin.20261112.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "aa2455596f0b4ff8429cd74b299edef1338934a69ebc600b8328879a64aff138"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.unexpected-bowel.abnormal-appendix",
+          "claim.intraop.unexpected-bowel.base-margin",
+          "claim.intraop.unexpected-bowel.histology-before-colectomy",
+          "claim.intraop.unexpected-bowel.intact-specimen"
+        ],
+        "findings": [],
+        "wordingFingerprint": "9fd4f4561dc04ae23b17cde45130c158492c8dab0eda7f67089d94477b8551e1",
+        "priorityStage": 3,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.unexpected-bowel.ileitis-restraint.20261112.v1",
+        "conceptId": "concept.intraop.unexpected-bowel.unexpected-ileitis-operative-restraint.v1",
+        "conceptName": "Limit intervention for unsuspected terminal ileitis",
+        "conceptType": "management",
+        "educationalTier": 1,
+        "facilityStages": [
+          3
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.question-intraop-unexpected-appendix-and-bowel-findings.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.unexpected-bowel.ileitis-restraint.20261112.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "fc7ea9126c44e891f55786d914ce9e1eb8eac771c12a1e2cccb0bb260b68f218"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.unexpected-bowel.ibd-emergency-boundary",
+          "claim.intraop.unexpected-bowel.ileitis-nonspecific",
+          "claim.intraop.unexpected-bowel.ileitis-resection-boundary",
+          "claim.intraop.unexpected-bowel.normal-appendix-boundary"
+        ],
+        "findings": [],
+        "wordingFingerprint": "08de379237cb7899734d8bf5b9d5bc84d07cdf32885085040ece7d3b4ee4e9af",
+        "priorityStage": 3,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.i24.battery-injury-imaging.20261112.v1",
+        "conceptId": "concept.intraop.i24.battery-injury-imaging.20261112.v1",
+        "conceptName": "Assessment beyond the lumen after battery removal",
+        "conceptType": "workup",
+        "educationalTier": 1,
+        "facilityStages": [
+          4
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-intraop-pediatric-endoscopy-foreign-body.2026-11-12.v1.r1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.i24.battery-injury-record.20261112.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "87b998e9910037accab1400d14fb0a4f352fb50a50de5f92755354e6bf3d16d0"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.i24.battery-catheter-angiography.20261112.v1",
+          "claim.intraop.i24.battery-cross-sectional.20261112.v1",
+          "claim.intraop.i24.battery-injury-assessment.20261112.v1",
+          "claim.intraop.i24.battery-observation.20261112.v1",
+          "claim.intraop.i24.battery-swallow-role.20261112.v1"
+        ],
+        "findings": [],
+        "wordingFingerprint": "598f95e222bd8a5f62bc5989b0f2a579082f49578b12135be34e0fa163ea9a24",
+        "priorityStage": 4,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.i25.anatomy-before-dilation.20261112.v1",
+        "conceptId": "concept.intraop.i25.anatomy-before-dilation.20261112.v1",
+        "conceptName": "An incomplete luminal survey before pediatric EoE dilation",
+        "conceptType": "workup",
+        "educationalTier": 1,
+        "facilityStages": [
+          4
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-intraop-pediatric-egd-food-impaction-eoe.2026-11-12.revision1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.i25.unmapped-narrowing.20261112.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "a0304db7582bab1a9992f763cd376fa33d6ec0a0a62268c27c8768b1d4a9392e"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.i25.anatomy-before-dilation.20261112.v1",
+          "claim.intraop.i25.biopsy-scope.20261112.v1",
+          "claim.intraop.i25.motility-scope.20261112.v1",
+          "claim.intraop.i25.structural-histology.20261112.v1",
+          "claim.intraop.i25.topical-response.20261112.v1"
+        ],
+        "findings": [],
+        "wordingFingerprint": "e990267144b020a6763d759cc7f13ab782d15a2c6d69ef6809d44f453ee43e58",
+        "priorityStage": 4,
+        "caseReferenceCount": 1
+      }
+    ]
+  },
+  "beforeTotals": {
+    "cases": 1407,
+    "nodeOccurrences": 1610,
+    "uniqueVariants": 1605,
+    "concepts": 909,
+    "profileContexts": 5067,
+    "variantsWithFindings": 870,
+    "findings": 1824,
+    "tutorialSequenceVariants": 0,
+    "missingAuthoredVersion": 0,
+    "missingEducationalTier": 314,
+    "approvalRecordOnlyMetadata": 35,
+    "variantsWithCompleteRationales": 896,
+    "variantsWithMultipleDefinitions": 0,
+    "byPriorityStage": {
+      "0": 764,
+      "1": 374,
+      "2": 225,
+      "3": 183,
+      "4": 59
+    },
+    "byOptionCount": {
+      "3": 810,
+      "4": 795
+    },
+    "variantsByRule": {
+      "ambiguous-cervical-term": 24,
+      "availability-permission-cue": 9,
+      "case-detail-key-rationale-overlap": 44,
+      "convergence": 91,
+      "heterogeneous-option-category": 84,
+      "key-length-disparity": 57,
+      "key-only-phrase-overlap": 70,
+      "key-only-word-overlap": 369,
+      "key-test-name-in-context": 16,
+      "lead-in-decision-principle": 15,
+      "near-duplicate-options": 39,
+      "negative-aligned-to-distractor": 87,
+      "option-absolute": 62,
+      "option-alone": 56,
+      "option-explanation": 26,
+      "option-generic-individualization": 8,
+      "option-length-disparity": 187,
+      "option-specificity-disparity": 14,
+      "supplied-clinical-conclusion": 4,
+      "unexplained-negative-imaging": 5,
+      "unique-key-abbreviation": 102,
+      "unique-key-test-name": 30,
+      "unnamed-treatment-action": 3
+    }
+  },
+  "afterTotals": {
+    "cases": 1421,
+    "nodeOccurrences": 1627,
+    "uniqueVariants": 1622,
+    "concepts": 926,
+    "profileContexts": 5101,
+    "variantsWithFindings": 870,
+    "findings": 1824,
+    "tutorialSequenceVariants": 0,
+    "missingAuthoredVersion": 0,
+    "missingEducationalTier": 320,
+    "approvalRecordOnlyMetadata": 35,
+    "variantsWithCompleteRationales": 913,
+    "variantsWithMultipleDefinitions": 0,
+    "byPriorityStage": {
+      "0": 768,
+      "1": 375,
+      "2": 229,
+      "3": 189,
+      "4": 61
+    },
+    "byOptionCount": {
+      "3": 826,
+      "4": 796
+    },
+    "variantsByRule": {
+      "ambiguous-cervical-term": 24,
+      "availability-permission-cue": 9,
+      "case-detail-key-rationale-overlap": 44,
+      "convergence": 91,
+      "heterogeneous-option-category": 84,
+      "key-length-disparity": 57,
+      "key-only-phrase-overlap": 70,
+      "key-only-word-overlap": 369,
+      "key-test-name-in-context": 16,
+      "lead-in-decision-principle": 15,
+      "near-duplicate-options": 39,
+      "negative-aligned-to-distractor": 87,
+      "option-absolute": 62,
+      "option-alone": 56,
+      "option-explanation": 26,
+      "option-generic-individualization": 8,
+      "option-length-disparity": 187,
+      "option-specificity-disparity": 14,
+      "supplied-clinical-conclusion": 4,
+      "unexplained-negative-imaging": 5,
+      "unique-key-abbreviation": 102,
+      "unique-key-test-name": 30,
+      "unnamed-treatment-action": 3
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { procedureConsultPresentations, serviceConsultBlocksPhase } from "./founder-consults";
+import { declaredProcedurePresentation, procedureConsultPresentations, serviceConsultBlocksPhase } from "./founder-consults";
 import { bindRoutineClinicWork } from "./clinic-work";
 import { clinicConsultPresentations } from "./clinic-consults";
 import { pediatricConsultPresentations } from "./clinic-consult-topics";
@@ -60,6 +60,7 @@ import { advancePediatricPair, commitPediatricPairPlan, createPediatricFamily, p
   reconcilePediatricFamilies } from "./pediatric-family";
 import { characterStillCatalogEntryById, PEDIATRIC_CHARACTER_STILLS } from "./characterStillCatalog";
 import { pediatricServiceIsUnsupported } from "./pediatric-eligibility";
+import { pediatricProcedureParentReady } from "./pediatric-procedure-flow";
 import { planDiagnosticOrder } from "./diagnostic-timing";
 
 const WAIT_TIMEOUT_MINUTES = 60;
@@ -1105,8 +1106,8 @@ function tryReserveInRooms(
   const reservedRoomIds = new Set(rooms.map((room) => room!.id));
   const family = pediatricFamilyForActor(state, operation.actorKind === "encounter" ? "encounter" : "service_visitor",
     operation.actorKind === "encounter" ? operation.actorId : operation.id);
-  const familyPlan = family ? planPediatricExam(state, context, family, firstRoom) : null;
-  if (family && !familyPlan) return false;
+  const familyPlan = family && !family.procedureFlow ? planPediatricExam(state, context, family, firstRoom) : null;
+  if (family && !family.procedureFlow && !familyPlan) return false;
   const patientTarget = preferred?.patientAnchor ?? (bedReservation
     ? bedReservation.endpoint
     : desiredStation === "periop_preparation"
@@ -1372,7 +1373,7 @@ function advanceActorMovement(state: GameState, operation: ServiceOperationState
   if (operation.pathIndex >= operation.path.length - 1) return;
   const elapsed = Math.max(1, state.facilityTick - operation.lastMovedAtFacilityTick);
   const family = pediatricFamilyForActor(state, operation.actorKind === "encounter" ? "encounter" : "service_visitor", operation.actorKind === "encounter" ? operation.actorId : operation.id);
-  operation.pathIndex = family ? advancePediatricPair(state, context, family, operation.path, operation.pathIndex, operation.lastMovedAtFacilityTick)
+  operation.pathIndex = family && !family.procedureFlow ? advancePediatricPair(state, context, family, operation.path, operation.pathIndex, operation.lastMovedAtFacilityTick)
     : Math.min(operation.path.length - 1, operation.pathIndex + elapsed * context.balanceRelease.facility.characterTravelTilesPerTick);
   operation.lastMovedAtFacilityTick = state.facilityTick;
   const location = operation.path[operation.pathIndex];
@@ -1432,7 +1433,7 @@ function ensureCompleteVisitorDeparture(
       !pathEntersUnauthorizedProtectedRoom(
          state, context, operation.path, operation.pathIndex,
        )) return true;
-  if (family) {
+  if (family && !family.procedureFlow) {
     const plan = planPediatricPair(state, context, family, null, travel.offscreenEndpoint);
     if (plan) {
       setOperationPath(state, operation, commitPediatricPairPlan(family, plan), "leaving");
@@ -1489,7 +1490,7 @@ function operationActorTarget(
 ): { point: GridPoint; roomIds: Set<string> } | null {
   const family = pediatricFamilyForActor(state, operation.actorKind === "encounter" ? "encounter" : "service_visitor",
     operation.actorKind === "encounter" ? operation.actorId : operation.id);
-  if (family?.reservation) return { point: { ...family.reservation.childLocation }, roomIds: new Set([family.reservation.roomInstanceId]) };
+  if (family?.reservation && !family.procedureFlow) return { point: { ...family.reservation.childLocation }, roomIds: new Set([family.reservation.roomInstanceId]) };
   if (operation.periopBedReservation && isPeriopBedPhase(operation, line)) {
     return {
       point: { ...operation.periopBedReservation.endpoint },
@@ -1528,7 +1529,7 @@ function reconcileOperationActorRoute(
   if (!location || !target) return;
   const family = pediatricFamilyForActor(state, operation.actorKind === "encounter" ? "encounter" : "service_visitor",
     operation.actorKind === "encounter" ? operation.actorId : operation.id);
-  if (family) {
+  if (family && !family.procedureFlow) {
     if (family.movement && samePoint(operation.path.at(-1) ?? null, target.point)) return;
     const plan = planPediatricPair(state, context, family, family.reservation);
     if (plan) setOperationPath(state, operation, commitPediatricPairPlan(family, plan), operation.status);
@@ -1631,7 +1632,7 @@ export function reconcileServiceOperationFlow(state: GameState, context: DomainC
 function resourcesArrived(state: GameState, operation: ServiceOperationState, line: ServiceIncomeLine, context: DomainContext): boolean {
   const family = pediatricFamilyForActor(state, operation.actorKind === "encounter" ? "encounter" : "service_visitor",
     operation.actorKind === "encounter" ? operation.actorId : operation.id);
-  if (family && !pediatricPairAtReservation(state, family)) return false;
+  if (family && !(family.procedureFlow ? pediatricProcedureParentReady(state, family) : pediatricPairAtReservation(state, family))) return false;
   const phaseRoomIds = currentOperationRoomIds(state, operation, line);
   const actorLocation = operationLocation(state, operation);
   const actorTarget = operationActorTarget(state, operation, line, context);
@@ -1954,6 +1955,12 @@ function cancel(
       operation.testChoiceOrder?.purpose === "result_gate")
   ) {
     operation.status = "cancelled";
+  } else if (operation.actorKind === "encounter" && operation.procedureContext &&
+      state.encounters[operation.actorId]?.resolutionReason === null) {
+    // A new live source can be cancelled without discharging its unanswered
+    // frozen chart. Existing unsourced/legacy operation behavior is unchanged.
+    operation.status = "cancelled";
+    state.encounters[operation.actorId]!.patientMovement = null;
   } else if (operation.actorKind === "encounter") {
     operation.status = "leaving";
     if (startResolvedEncounterDeparture(state, operation, context, departurePlanner)) {
@@ -2336,16 +2343,18 @@ function createOperation(state: GameState, line: ServiceIncomeLine, actorKind: "
   const childStill = appointment && line.id === PEDIATRIC_APPOINTMENT_INCOME_LINE_ID
     ? PEDIATRIC_CHARACTER_STILLS[deterministicInteger(state.campaignSeed, RANDOM_STREAMS.patientIdentity, `${id}:child-presentation.v1`, PEDIATRIC_CHARACTER_STILLS.length)] : undefined;
   const childDemographics = pediatricPresentation?.prototypeDemographics ?? (childStill ? { sexLabel: childStill.compatibleSexLabel, ageYears: childStill.intendedVisualAge } : undefined);
+  const declaredProcedure = actorKind === "visitor" && context ? declaredProcedurePresentation(state, context, line.id, id) : undefined;
   const procedureProfiles = actorKind === "visitor" && context ? [...procedureConsultPresentations(state, context, line.id), ...clinicConsultPresentations(state, context, line.id)] : [];
   const procedureDemographics = procedureProfiles.length ? procedureProfiles[deterministicInteger(state.campaignSeed, RANDOM_STREAMS.patientIdentity, `${id}:procedure-presentation.v1`, procedureProfiles.length)] : undefined;
-  const appearance = encounter?.patientAppearance ?? (actorKind === "visitor" ? createPatientPixelAppearance(state.campaignSeed, actualActorId, childDemographics ?? procedureDemographics ?? {}, "patient", getPatientAppearanceSelectionContext(state)) : null);
+  const appearance = encounter?.patientAppearance ?? (actorKind === "visitor" ? createPatientPixelAppearance(state.campaignSeed, actualActorId, declaredProcedure?.demographics ?? childDemographics ?? procedureDemographics ?? {}, "patient", getPatientAppearanceSelectionContext(state)) : null);
+  if (appearance && declaredProcedure?.pediatricFamilyContext) appearance.stillId = declaredProcedure.pediatricFamilyContext.childStillId;
   if (appearance && pediatricPresentation) appearance.stillId = pediatricPresentation.childStillId;
   const still = characterStillCatalogEntryById(appearance?.stillId);
-  const demographics = childDemographics ?? (appointment ? procedureDemographics : undefined) ?? ((appointment || mri) && still?.category === "patient" ? { sexLabel: still.compatibleSexLabel,
+  const demographics = declaredProcedure?.demographics ?? childDemographics ?? (appointment ? procedureDemographics : undefined) ?? ((appointment || mri) && still?.category === "patient" ? { sexLabel: still.compatibleSexLabel,
     ageYears: still.intendedAge ?? (still.ageBand === "young_adult" ? 24 : still.ageBand === "adult" ? 38 : still.ageBand === "middle_aged" ? 54 : 70) } : undefined);
   if ((appointment || mri) && !demographics) return null;
   const operation: ServiceOperationState = { periopNurseAttention: periopPhases ? createPeriopNurseAttention(state, frozenPhases, trainingTiming?.categoryPercents["staff.periop_nurse"]) : undefined, roomUpgradeRecovery: actorKind === "encounter" ? createRoomUpgradeRecoveryQuote(state, frozenPhases) : undefined, id, incomeLineId: line.id, catalogVersion: 1, actorKind, actorId: actualActorId, displayName: encounter?.patientDisplayName ?? (actorKind === "visitor" ? createPatientDisplayName(state.campaignSeed, actualActorId, (demographics ?? procedureDemographics)?.sexLabel, excludedDisplayNames, { ...(demographics ?? procedureDemographics ?? getNamePresentationProfile(appearance)), occupiedDisplayNames: getPresentColleagueDisplayNames(state) }) : line.displayName), appearance, status: actorKind === "visitor" ? "arriving" : "waiting_for_resources", createdAtFacilityTick: state.facilityTick, waitDeadlineFacilityTick: state.facilityTick + WAIT_TIMEOUT_MINUTES, startedAtFacilityTick: null, completedAtFacilityTick: null, cancelledAtFacilityTick: null, quoteFee: actorKind === "visitor" ? line.scheduledVisitorFee ?? line.fee : line.fee, roomUpgradeRevenue: createRoomUpgradeRevenueQuote(state, actorKind === "visitor" ? line.scheduledVisitorFee ?? line.fee : line.fee, frozenPhases.map((phase) => phase.roomDefinitionId)), phaseIndex: 0, phaseStartedAtFacilityTick: null, phaseEndsAtFacilityTick: null, reservedRoomInstanceIds: [], reservedEmployeeIds: [], providerReservation: null, location: actorKind === "visitor" ? endpoint : encounter?.patientLocation ?? entrance?.outside ?? null, path: arrivalPath, pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, cancellationReason: null, frozenOperationPhases: frozenPhases, trainingTiming, ...(actorKind === "visitor" && endpoint ? { visitorTravel: { version: "service-visitor-travel.v1" as const, offscreenEndpoint: endpoint, arrivedAtFacilityTick: null } } : {}), ...(actorKind === "encounter" ? { resourceQueueVersion: 1 as const } : {}), ...(periopPhases ? { phaseFlowVersion: 1 as const, periopBedFlowVersion: 1 as const, nextPhaseReadyAtFacilityTick: null, transitionHeldRoomInstanceIds: [] } : {}) };
-  if (demographics) {
+  if (demographics && !declaredProcedure) {
     operation.clinicVisit = { version: "clinic-visit.v1", kind: mri ? "mri" : appAppointmentKind(line.id)!, demographics };
     if (pediatricPresentation) operation.displayName = pediatricPresentation.childName;
     if (childDemographics) createPediatricFamily(state, operation, "service_visitor", pediatricPresentation
@@ -2353,6 +2362,20 @@ function createOperation(state: GameState, line: ServiceIncomeLine, actorKind: "
     operation.phaseFlowVersion = 1;
     operation.resourceQueueVersion = 1;
     operation.waitDeadlineFacilityTick = Number.MAX_SAFE_INTEGER;
+  }
+  if (declaredProcedure) {
+    operation.procedureContext = {version: "procedure-visit.v1", ...declaredProcedure};
+    const parentContext = declaredProcedure.pediatricFamilyContext;
+    if (parentContext) {
+      operation.clinicVisit = {version: "clinic-visit.v1", kind: "pediatric_procedure", demographics: declaredProcedure.demographics};
+      operation.displayName = parentContext.childName;
+      const family = createPediatricFamily(state, operation, "service_visitor", {displayName: parentContext.parentName,
+        sexLabel: parentContext.parentRelationship === "mother" ? "Female" : "Male"});
+      family.procedureFlow = {version: "pediatric-procedure-flow.v1", serviceOperationId: operation.id,
+        familyId: declaredProcedure.familyId, phase: "arriving", parentCheckpoint: null};
+      operation.resourceQueueVersion = 1;
+      operation.waitDeadlineFacilityTick = Number.MAX_SAFE_INTEGER;
+    }
   }
   if (appointment) {
     operation.trainingTiming = undefined;

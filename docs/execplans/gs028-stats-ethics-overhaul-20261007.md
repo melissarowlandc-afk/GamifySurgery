@@ -14430,3 +14430,123 @@ game-domain
 ```
 
 Commands, raw outputs and hashes are retained in `.local-dev/release-port36-20261112/round4/validation-summary.json` and per-command logs. Updated dispositions: `.local-dev/release-verify/port36-20261112.json`; Round4 snapshot manifest and patch are preserved beside these receipts. The Node checks do not prove the manager's browser reload-to-chooser <5s acceptance: rerun the unchanged room-upgrades browser cases and phone/Pages smoke checks. No e2e expectation or timeout changed. No Git, commit/push, install, network, agent, deploy, real-save access or opening-origin change.
+
+
+## rebind 37 (release worktree, ENG-I01/I01b/I01c + frozen intraop batches 9-11) - 2026-11-13
+
+Port and native evidence written; release validation has one unresolved unchanged QA checkpoint assertion. Manager base3ba1504c; Main read-only. Default1436cases/1644nodes/1142meanings/811rows; all34new nodes needs_clinician_review. Exact clinical SHA`4da0db5dd2a1a268440d5a5abc1ea81412224a249d7c089ec98a684442cf654f` and manifest SHA`5340b68f91005a22f3e75bf4208f566e1ccf948d40ced5578887ca83945ce9a9` match acceptance11. Compression writes remain false; manager clinical Vitest config preserved. Recorded ENG hunks, accepted frozen builders/data/source ledgers,32exact choice-order records/13timed nodes (including batch11's5bindings) and batch8 repairs are included; mutable/unaccepted authoring and unrelated work excluded.
+
+Rebind36 ->37:35,236 ->35,342commands /6,829,124 ->6,966,492closing cents /550 ->551completed /0 ->0walkouts; first26,312 ->26,377. Cash reconciles exactly. Pacing passes both manager26312+/-10% and unchangedCLI26281+/-10%. Both old-content controls reproduce every old save/report/number; new content is necessary for the delta. Only the new I24 chart-review variant records scored answers(3); no new live variant is scored in this seed. Three scores62.66208410363534/66.65484360849828/45.540643592859844, patients52/50/49. Allnine checkpoints regenerated; history31->32 keeps all earlier entries and616prior input hashes; current629/476clinical. Guard/assertions/drivers unchanged. All25actual legacy comparisons, old L4/L5 frozen/FSRS/goal saves, real pediatric pre/post room-purchase continuation and9production codec/capacity roundtrips pass.
+
+| Artifact | Before SHA-256 | After SHA-256 |
+|---|---|---|
+| `tools/qa/level-five-integration-results-20261012.json` | `106448a2bd9e4a3a4161297c7e714fcbe6cd7e42833c2c5ae6ac01443e53b091` | `2c5e14414ab76d6f4de66744da4c930c0bfc27d78cca4c4512a5f1e4803d5f1c` |
+| `tests/fixtures/level-five-integration-checkpoints-20261012.json` | `53fd4a90f888c250466c4817433c2e4b7e57d8c198eb2dd14b5c442cef07ef4a` | `7b9ae187b2cebe7aebf0eeb472eec2bcc66d91337946fce4b7c3bf7d1ec0a374` |
+| `tests/fixtures/level-five-legacy-behavior-20261012.json` | `09d571f52111f9c12ef85a39cf1bbe2d877e061b66bbd3f38245b023897ae3d8` | `9099f0ab228161a6e1a7fa90a3d0167801ea4d83cad892b69e4e40898839c457` |
+
+Raw seven-suite output866files/13,822passed/2failed/1existing skip. The exact concept-list failure was subsequently repaired by appending only33frozen accepted IDs (7/7isolated pass); full domain was not repeated afterward. One QA capture assertion remains: minute2999 checkpoint precedes a real OPEN_CHART pump before the final tick. Raw and reloaded arms without that command score66.99967119470519; both with it reproduce native66.65484360849828. No persistence mutation or timeout is involved. Proposed capture-point fix changes a bound QA driver outside recorded port hunks and is unapplied. Evidence/proposal: `.local-dev/release-port37-20261113/final-minute-pump-proof.json` and `final-checkpoint-proposal.patch`. Canonical artifacts are already written; preserve the staging/original preimages for a fresh manager-authorized correction run.
+
+Final clinical145files/1768tests, player452files/5541tests, seven types, boundaries/launcher and build pass. Focused ENG105, player save/journal1075 and pediatric purchase/FSRS1pass. Current targeted binding guard1pass/35filtered skips. No timeouts/budgets relaxed. All328absence entries/242unique paths and prior source authorizations remain strict. Exact files and hashes: `docs/research/release-port37-validation-20261113.json`; complete path list/blocker: `docs/research/release-port37-20261113.md`; all dispositions/exclusions: `.local-dev/release-verify/port37-20261113.json`. No Git/install/network/agents/browser/commit/push/deploy; uncommitted, no backup created. No owner-origin change.
+
+Exact native full-suite summaries (clinical is the final closure; domain is the recorded full run before its concept-list correction):
+
+```text
+clinical-context-workbench
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  02:07:45
+   Duration  1.34s (transform 501ms, setup 0ms, import 1.23s, tests 521ms, environment 1ms)
+player
+ Test Files  452 passed (452)
+      Tests  5541 passed (5541)
+   Start at  02:16:07
+   Duration  882.95s (transform 39.34s, setup 0ms, import 1064.30s, tests 2408.32s, environment 38ms)
+balance-config
+ Test Files  26 passed (26)
+      Tests  168 passed (168)
+   Start at  02:07:47
+   Duration  3.26s (transform 789ms, setup 0ms, import 3.39s, tests 233ms, environment 2ms)
+clinical-authoring
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  02:07:51
+   Duration  722ms (transform 153ms, setup 0ms, import 440ms, tests 344ms, environment 0ms)
+clinical-content
+ Test Files  145 passed (145)
+      Tests  1768 passed (1768)
+   Start at  02:34:50
+   Duration  208.00s (transform 10.91s, setup 0ms, import 325.08s, tests 76.15s, environment 12ms)
+clinical-research
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  02:07:52
+   Duration  2.48s (transform 213ms, setup 0ms, import 584ms, tests 1.17s, environment 0ms)
+game-domain
+ Test Files  2 failed | 218 passed (220)
+      Tests  2 failed | 6138 passed | 1 skipped (6141)
+   Start at  02:16:07
+   Duration  1080.34s (transform 22.68s, setup 0ms, import 608.27s, tests 1527.82s, environment 15ms)
+```
+
+All seven final typechecks exited0. Boundaries: `Verified runtime dependency boundaries and 7982 tracked path(s).` and `Verified launcher health contract gamify-surgery-player protocol 1.` Build: ✓ 686 modules transformed.; ✓ built in 11.83s. Build warnings are nonfatal existing chunk/dynamic-import/timing diagnostics. Full command outputs and SHA-256 receipts are in `.local-dev/release-port37-20261113/validation-summary.json` and per-command logs.
+
+
+## Port37 blocker resolved - manager-approved final-minute capture correction (2026-11-13)
+
+Applied the exact approved post-pump/pre-tick capture patch. No gameplay/save/clinical/player code or assertion change. Fresh guarded native journey/lower keeps35,342commands /6,966,492cents /551completed /0walkouts, first26,377; pacing passes26312+/-10% and the unchanged26281CLI. All native numbers/3reports and the entire final native save are byte-identical. Eight of9checkpoints are byte-identical; only integration-repeat-final changes18paths to include the actual OPEN_CHART/question58 at tick30033. Both final saves reproduce their actual report in one resumed tick. No report hand-edit.
+
+| File | Before SHA-256 | After SHA-256 |
+|---|---|---|
+| `tests/fixtures/level-five-integration.ts` | `38343c35a731349487b28045bc8a9e1fc46004564febdfbf95a5fb9157ead15a` | `0903b828a072f8d2614a9fedd69a44fe5881eb61447646b754815c80e4e44faf` |
+| `tools/qa/level-five-integration-results-20261012.json` | `2c5e14414ab76d6f4de66744da4c930c0bfc27d78cca4c4512a5f1e4803d5f1c` | `90e4cb56d75bf20785138c8d99d7172bcb83348048ef1632ca506eea98c9c55c` |
+| `tests/fixtures/level-five-integration-checkpoints-20261012.json` | `7b9ae187b2cebe7aebf0eeb472eec2bcc66d91337946fce4b7c3bf7d1ec0a374` | `04587f7d88309ffad208cb39854bd67b7b4aa6a441a0ba4650e514f0333001a3` |
+
+History32->33 appends prior629inputs and retains every earlier entry;476clinical hashes, clinical JSON4da0db5d..., compression writes false and manager Vitest config unchanged. Both stats1 live results pins and their16fixture/16test closure record the exact manager-approved delta. All9old before captures stay byte-exact; stale driver fields are not live pins and were not edited.
+
+Final fresh seven-suite output: **866files /13,824passed /0failed /1existing skip**. Full domain220files/6140passed/0failed/1skip; focused Level5 file36/0/0; player452files/5541/0; clinical145files/1768/0. All seven types, boundaries/launcher and build exit0. Player tests consume all9QA checkpoints, so the full player suite was rerun. No timeouts or assertions relaxed. Both initial port37 failures are resolved.
+
+```text
+clinical-context-workbench
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  03:12:29
+   Duration  1.58s (transform 629ms, setup 0ms, import 1.46s, tests 639ms, environment 1ms)
+
+player
+ Test Files  452 passed (452)
+      Tests  5541 passed (5541)
+   Start at  03:10:09
+   Duration  839.73s (transform 44.35s, setup 0ms, import 1045.05s, tests 2255.86s, environment 39ms)
+
+balance-config
+ Test Files  26 passed (26)
+      Tests  168 passed (168)
+   Start at  03:12:31
+   Duration  3.92s (transform 1.02s, setup 0ms, import 4.16s, tests 258ms, environment 2ms)
+
+clinical-authoring
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  03:12:35
+   Duration  852ms (transform 180ms, setup 0ms, import 501ms, tests 408ms, environment 1ms)
+
+clinical-content
+ Test Files  145 passed (145)
+      Tests  1768 passed (1768)
+   Start at  03:10:09
+   Duration  231.00s (transform 13.58s, setup 0ms, import 361.84s, tests 83.42s, environment 12ms)
+
+clinical-research
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  03:12:36
+   Duration  2.98s (transform 253ms, setup 0ms, import 709ms, tests 1.42s, environment 1ms)
+
+game-domain
+ Test Files  220 passed (220)
+      Tests  6140 passed | 1 skipped (6141)
+   Start at  03:15:53
+   Duration  1027.15s (transform 19.08s, setup 0ms, import 585.16s, tests 1444.88s, environment 15ms)
+```
+
+40follow-up files (driver+2evidence+16pin fixtures+16guards+5docs); overall159public port37 paths. Full list/hashes/exact output: `docs/research/release-port37-20261113.md`, its validationJSON and `.local-dev/release-verify/port37-20261113.json`. Fresh staging/verification/process receipts: `.local-dev/release-port37-20261113/capture-correction/`. No remaining failing assertion; one existing skip and nonfatal build warnings remain. No browser/Git/commit/push/install/network/agent/deploy or owner-origin change. Work stays uncommitted.

@@ -1,0 +1,719 @@
+{
+  "target": {
+    "schemaVersion": 1,
+    "linterVersion": "question-cue-lint.2026-11-04.v8",
+    "releaseId": "clinical.synthetic.prototype.v1",
+    "scope": "Every case/node and canonical/finite profile in the assembled default release, including unapproved prototype content. Prior feedback is a visible-history cue candidate; future results/current feedback are excluded.",
+    "exposureBasis": "Structural priority proxy only: earlier entry stage, tutorial sequence, case-reference count, then cue findings. No player exposure data collected.",
+    "totals": {
+      "cases": 11,
+      "nodeOccurrences": 13,
+      "uniqueVariants": 13,
+      "concepts": 13,
+      "profileContexts": 26,
+      "variantsWithFindings": 0,
+      "findings": 0,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 5,
+      "approvalRecordOnlyMetadata": 0,
+      "variantsWithCompleteRationales": 13,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "2": 5,
+        "3": 3,
+        "4": 5
+      },
+      "byOptionCount": {
+        "3": 12,
+        "4": 1
+      },
+      "variantsByRule": {}
+    },
+    "variants": [
+      {
+        "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.fresh-sigmoid-closure.v1",
+        "conceptId": "concept.intraop.endoscopic-perforation-and-injury.fresh-sigmoid-closure.v1",
+        "conceptName": "Fresh sigmoid defect: immediate local strategy",
+        "conceptType": "management",
+        "educationalTier": null,
+        "facilityStages": [
+          2
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-intraop-endoscopic-perforation-and-injury.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.endoscopic-perforation-and-injury.sigmoid-defect-and-reassessment.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "c58212646690a6ae5753216161dc725b0553055def06f345415861149b8ff18e"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.endoscopic-perforation-and-injury.colonic-surgical-boundary",
+          "claim.intraop.endoscopic-perforation-and-injury.conservative-colon-selection",
+          "claim.intraop.endoscopic-perforation-and-injury.early-colon-closure",
+          "claim.intraop.endoscopic-perforation-and-injury.limit-extraluminal-insufflation",
+          "claim.intraop.endoscopic-perforation-and-injury.observed-wall-breach",
+          "claim.intraop.endoscopic-perforation-and-injury.perforation-support"
+        ],
+        "findings": [],
+        "wordingFingerprint": "ccd2f20138601b61a7fe580a3031392064f4d01d6b0f7a868a4702ac668ffe10",
+        "priorityStage": 2,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.observed-esophageal-primary-closure.v1",
+        "conceptId": "concept.intraop.endoscopic-perforation-and-injury.observed-esophageal-primary-closure.v1",
+        "conceptName": "Dilation injury: closure strategy",
+        "conceptType": "management",
+        "educationalTier": null,
+        "facilityStages": [
+          2
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-intraop-endoscopic-perforation-and-injury.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.endoscopic-perforation-and-injury.dilation-observed-defect.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "77097e5a81eb0362ff949267a5d97a87d132ba82786890776f08bdd4bfacdaaa"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.endoscopic-perforation-and-injury.esophageal-operative-boundary",
+          "claim.intraop.endoscopic-perforation-and-injury.esophageal-primary-clips",
+          "claim.intraop.endoscopic-perforation-and-injury.esophageal-stent-boundary",
+          "claim.intraop.endoscopic-perforation-and-injury.esophageal-support"
+        ],
+        "findings": [],
+        "wordingFingerprint": "f06aaac6de150b871a4a9bf4de33f8fe8c54b51ef4b0f07fb944a1a5111e06bb",
+        "priorityStage": 2,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.postclip-tension-rescue.v1",
+        "conceptId": "concept.intraop.endoscopic-perforation-and-injury.postclip-tension-rescue.v1",
+        "conceptName": "New cardiopulmonary compromise during closure",
+        "conceptType": "management",
+        "educationalTier": null,
+        "facilityStages": [
+          2
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-intraop-endoscopic-perforation-and-injury.2026-11-12.v1.r1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.endoscopic-perforation-and-injury.sigmoid-defect-and-reassessment.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "3512ae6aec1e0f3c83cb57b398b94042e9c11ec08383271186ed1b8189f4250c"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.endoscopic-perforation-and-injury.gas-compartment",
+          "claim.intraop.endoscopic-perforation-and-injury.limit-extraluminal-insufflation",
+          "claim.intraop.endoscopic-perforation-and-injury.rescue-is-not-seal",
+          "claim.intraop.endoscopic-perforation-and-injury.tension-physiology",
+          "claim.intraop.endoscopic-perforation-and-injury.tension-rescue"
+        ],
+        "findings": [],
+        "wordingFingerprint": "01a8ab2fea80beefc17d7fbb0e0eeaa69d2e14e56c04cf8b7af30f0fe7803d2c",
+        "priorityStage": 2,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.suspicious-polyps.deep-pattern-before-resection.20261112.v1",
+        "conceptId": "concept.intraop.suspicious-polyps.deep-pattern-before-resection.20261112.v1",
+        "conceptName": "Changed surface findings before resection",
+        "conceptType": "management",
+        "educationalTier": null,
+        "facilityStages": [
+          2
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.question-intraop-suspicious-polyps-retrieval-and-tattoo.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.suspicious-polyps.new-descending-colon-focus.20261112.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "c9ab06972ef09bd7755c3bc81c9ac55124713b70a5b96c13657ce8f2651dfc8d"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.suspicious-polyps.amorphous-pit-pattern",
+          "claim.intraop.suspicious-polyps.benign-piecemeal-boundary",
+          "claim.intraop.suspicious-polyps.limited-biopsy-scope",
+          "claim.intraop.suspicious-polyps.nonpedunculated-surgical-route",
+          "claim.intraop.suspicious-polyps.superficial-enbloc-boundary",
+          "claim.intraop.suspicious-polyps.targeted-sampling"
+        ],
+        "findings": [],
+        "wordingFingerprint": "fea9e8f897455a674784d028bf201e4ff86f638a0fab8e87921d7725979fa1c1",
+        "priorityStage": 2,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.upper-gi-hemostasis.esophageal-plug-treatment.20261112.v1",
+        "conceptId": "concept.intraop.upper-gi-hemostasis.esophageal-plug-treatment.20261112.v1",
+        "conceptName": "A projecting plug",
+        "conceptType": "management",
+        "educationalTier": 1,
+        "facilityStages": [
+          2
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.question-intraop-endoscopic-upper-gi-hemostasis.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.upper-gi-hemostasis.esophageal-variceal-record.20261112-salvage.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "a9edd2a8ab1a24e5118c15bcd6870fc7b71b454a30e3a79a10ff78e16f72e658"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.upper-gi-hemostasis.esophageal-band-treatment",
+          "claim.intraop.upper-gi-hemostasis.fundal-treatment-boundary",
+          "claim.intraop.upper-gi-hemostasis.hospital-background",
+          "claim.intraop.upper-gi-hemostasis.variceal-plug-source"
+        ],
+        "findings": [],
+        "wordingFingerprint": "b132831a388c3e24268a5a99fabf21e53ed2567b689349231056a62a68d42364",
+        "priorityStage": 2,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.anesthetic-intraoperative-crises.anaphylaxis-infusion.v1",
+        "conceptId": "concept.intraop.anesthetic-intraoperative-crises.periop-anaphylaxis-sustained-rescue.v1",
+        "conceptName": "Use repeated short-lived rescue responses to select sustained titratable circulatory support before second-vasopressor escalation.",
+        "conceptType": "management",
+        "educationalTier": null,
+        "facilityStages": [
+          3
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-intraop-anesthetic-intraoperative-crises.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.anesthetic-intraoperative-crises.anaphylaxis-response-salvage.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "c2381d6558823d593a89340b2dbbf5f02fa8d2ee87b341db75f9ce2cac322b8b"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.i11.epi-fluid",
+          "claim.intraop.i11.epi-infusion",
+          "claim.intraop.i11.second-vasopressor"
+        ],
+        "findings": [],
+        "wordingFingerprint": "f96b7c3f760aa3961683eb57be327e49b6538eff09ba03d5c4db8f51be009065",
+        "priorityStage": 3,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.asc-access.anterior-port-course.20261112.v1",
+        "conceptId": "concept.intraop.asc-access.orthogonal-port-course-correction.v1",
+        "conceptName": "anterior port course",
+        "conceptType": "management",
+        "educationalTier": 1,
+        "facilityStages": [
+          3
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.question-intraop-asc-access-and-soft-tissue-surprises.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.asc-access.port-course.20261112.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "6eabc6c15e8aee40f489bce9cf750f6add3d9f06b7f5b64867f20da4dbf74fb5"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.asc-access.port-aspiration-limit",
+          "claim.intraop.asc-access.port-orthogonal-course",
+          "claim.intraop.asc-access.port-reposition",
+          "claim.intraop.asc-access.port-route-constraint",
+          "claim.intraop.asc-access.port-tributary"
+        ],
+        "findings": [],
+        "wordingFingerprint": "122192fe939517f562f55c344c1d0bf94718a9645bbeb1113ad150335dd295bd",
+        "priorityStage": 3,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.biliary-safety.stone-clearance-route.20261112.v1",
+        "conceptId": "concept.intraop-biliary.stone-clearance-route.v1",
+        "conceptName": "Use cystic-duct condition and common-duct caliber to choose a CBD-stone clearance route after attempted transcystic clearance.",
+        "conceptType": "management",
+        "educationalTier": 2,
+        "facilityStages": [
+          3
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.intraop.biliary-safety-and-duct-decisions.2026-11-12.salvage"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.biliary-safety.stone-clearance.20261112.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "aa73f4aede035e4f981acbef8f28457ad63c4308b3c1270cf4bd216ed0b78796"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop-biliary.friable-cystic-route.v1",
+          "claim.intraop-biliary.narrow-common-duct.v1",
+          "claim.intraop-biliary.stone-route-options.v1"
+        ],
+        "findings": [],
+        "wordingFingerprint": "ed95833847d619587829b6c46655146b3cc3d29b9874aed7af812fd788ae4a7c",
+        "priorityStage": 3,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.biliary-safety.major-injury-transfer.20261112.v1",
+        "conceptId": "concept.n2.bile-leak-duct-continuity-boundary",
+        "conceptName": "Duct continuity before a minor-leak stent pathway",
+        "conceptType": "management",
+        "educationalTier": 2,
+        "facilityStages": [
+          4
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.intraop.biliary-safety-and-duct-decisions.2026-11-12.salvage"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.biliary-safety.new-bile.20261112.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "67daa298ea5bda1df573ed683a83a4188f61532193f28de0c976aaa5edb662f0"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop-biliary.expert-transfer.v1",
+          "claim.intraop-biliary.limited-repair.v1",
+          "claim.intraop-biliary.major-discontinuity.v1",
+          "claim.intraop-biliary.papillary-continuity.v1",
+          "claim.intraop-biliary.staging-conversion.v1"
+        ],
+        "findings": [],
+        "wordingFingerprint": "f558eb4474e7970a1804d2c8a1aed3c2e5e427a5a63538e6f72e6332f8275eb5",
+        "priorityStage": 4,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.biliary-safety.unexplained-bile.20261112.v1",
+        "conceptId": "concept.intraop-biliary.unexplained-bile-imaging.v1",
+        "conceptName": "Recognize an unexplained intraoperative bile source and select ductal mapping before choosing a repair or bailout.",
+        "conceptType": "workup",
+        "educationalTier": 2,
+        "facilityStages": [
+          4
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.intraop.biliary-safety-and-duct-decisions.2026-11-12.salvage"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.biliary-safety.new-bile.20261112.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "8064cd589c891895e2a23a4da4c6c623286e5ef45c20f3739d394e69b577eba0"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop-biliary.injury-imaging.v1",
+          "claim.intraop-biliary.ioc-access-route.v1",
+          "claim.intraop-biliary.ioc-versus-fluorescence.v1",
+          "claim.intraop-biliary.unexplained-bile.v1"
+        ],
+        "findings": [],
+        "wordingFingerprint": "6756e8be48c9506d50541824ff375ec9d6f280bd22a4b636dd74644ed6143597",
+        "priorityStage": 4,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.pediatric-anesthesia-events.persistent-laryngeal-closure.v1",
+        "conceptId": "concept.intraop.pediatric-anesthesia-events.persistent-laryngeal-closure.v1",
+        "conceptName": "Escalate treatment for persistent pediatric functional upper-airway closure after initial oxygenation measures and deeper anesthesia.",
+        "conceptType": "management",
+        "educationalTier": 1,
+        "facilityStages": [
+          4
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.question-intraop-pediatric-anesthesia-events.2026-11-12.v1.r1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.pediatric-anesthesia-events.egd-airway-salvage.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "1ca7d843fad199a2a462228fe5d326475254dcf0faaa63876779a111f892ffe2"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.pediatric-anesthesia-events.airway-stimulation.v1",
+          "claim.intraop.pediatric-anesthesia-events.inhaled-albuterol.v1",
+          "claim.intraop.pediatric-anesthesia-events.initial-laryngospasm.v1",
+          "claim.intraop.pediatric-anesthesia-events.laryngeal-pattern.v1",
+          "claim.intraop.pediatric-anesthesia-events.laryngospasm-escalation.v1",
+          "claim.intraop.pediatric-anesthesia-events.systemic-escalation.v1"
+        ],
+        "findings": [],
+        "wordingFingerprint": "bc184cc7e10e85466b001a6d9c9822d48ea28da79d7b49d92b8c4ee368c04638",
+        "priorityStage": 4,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.pediatric-anesthesia-events.ventilated-expiratory-wheeze.v1",
+        "conceptId": "concept.intraop.pediatric-anesthesia-events.ventilated-expiratory-wheeze.v1",
+        "conceptName": "Select initial bronchodilator treatment for a ventilated older child after assessing mechanical airway causes.",
+        "conceptType": "management",
+        "educationalTier": 1,
+        "facilityStages": [
+          4
+        ],
+        "optionCounts": [
+          4
+        ],
+        "authoredVersions": [
+          "clinical.question-intraop-pediatric-anesthesia-events.2026-11-12.v1.r1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.pediatric-anesthesia-events.hernia-airflow-salvage.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "4e87c62c5b12a8055a4bf5485d0fc6199fdf266144a8285984a32135f12a8f59"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.pediatric-anesthesia-events.bronchospasm-pattern.v1",
+          "claim.intraop.pediatric-anesthesia-events.inhaled-albuterol.v1",
+          "claim.intraop.pediatric-anesthesia-events.magnesium-role.v1",
+          "claim.intraop.pediatric-anesthesia-events.mechanical-check.v1",
+          "claim.intraop.pediatric-anesthesia-events.r1.ipratropium-adjunct.v1",
+          "claim.intraop.pediatric-anesthesia-events.systemic-escalation.v1"
+        ],
+        "findings": [],
+        "wordingFingerprint": "f1771536d3f7d0457073a1f6f16b8faa62aa04b6889017deb177e86c2d9e6bdd",
+        "priorityStage": 4,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.pediatric-orchiopexy.residual-cord-bands.20261112.v1",
+        "conceptId": "concept.intraop.pediatric-orchiopexy.residual-cord-mobilization.v1",
+        "conceptName": "residual cord bands",
+        "conceptType": "management",
+        "educationalTier": 1,
+        "facilityStages": [
+          4
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.question-intraop-pediatric-orchiopexy-findings.2026-11-12.v1.r1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.pediatric-orchiopexy.inguinal-descent.20261112-salvage.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "f4246b85a3cff8039dfa07e88ece904c001e680678263f8050953eb64a5aacf2"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.pediatric-orchiopexy.fs-length-boundary",
+          "claim.intraop.pediatric-orchiopexy.length-mobilization",
+          "claim.intraop.pediatric-orchiopexy.r1.medial-descent-route",
+          "claim.intraop.pediatric-orchiopexy.vascular-protection"
+        ],
+        "findings": [],
+        "wordingFingerprint": "03d6ce303d0fd4df0292d3d5f8f1a80ee27058c89cd13fb333d49e2273d17bf7",
+        "priorityStage": 4,
+        "caseReferenceCount": 1
+      }
+    ]
+  },
+  "beforeTotals": {
+    "cases": 1421,
+    "nodeOccurrences": 1627,
+    "uniqueVariants": 1622,
+    "concepts": 926,
+    "profileContexts": 5101,
+    "variantsWithFindings": 870,
+    "findings": 1824,
+    "tutorialSequenceVariants": 0,
+    "missingAuthoredVersion": 0,
+    "missingEducationalTier": 320,
+    "approvalRecordOnlyMetadata": 35,
+    "variantsWithCompleteRationales": 913,
+    "variantsWithMultipleDefinitions": 0,
+    "byPriorityStage": {
+      "0": 768,
+      "1": 375,
+      "2": 229,
+      "3": 189,
+      "4": 61
+    },
+    "byOptionCount": {
+      "3": 826,
+      "4": 796
+    },
+    "variantsByRule": {
+      "ambiguous-cervical-term": 24,
+      "availability-permission-cue": 9,
+      "case-detail-key-rationale-overlap": 44,
+      "convergence": 91,
+      "heterogeneous-option-category": 84,
+      "key-length-disparity": 57,
+      "key-only-phrase-overlap": 70,
+      "key-only-word-overlap": 369,
+      "key-test-name-in-context": 16,
+      "lead-in-decision-principle": 15,
+      "near-duplicate-options": 39,
+      "negative-aligned-to-distractor": 87,
+      "option-absolute": 62,
+      "option-alone": 56,
+      "option-explanation": 26,
+      "option-generic-individualization": 8,
+      "option-length-disparity": 187,
+      "option-specificity-disparity": 14,
+      "supplied-clinical-conclusion": 4,
+      "unexplained-negative-imaging": 5,
+      "unique-key-abbreviation": 102,
+      "unique-key-test-name": 30,
+      "unnamed-treatment-action": 3
+    }
+  },
+  "afterTotals": {
+    "cases": 1432,
+    "nodeOccurrences": 1640,
+    "uniqueVariants": 1635,
+    "concepts": 939,
+    "profileContexts": 5127,
+    "variantsWithFindings": 870,
+    "findings": 1824,
+    "tutorialSequenceVariants": 0,
+    "missingAuthoredVersion": 0,
+    "missingEducationalTier": 325,
+    "approvalRecordOnlyMetadata": 35,
+    "variantsWithCompleteRationales": 926,
+    "variantsWithMultipleDefinitions": 0,
+    "byPriorityStage": {
+      "0": 768,
+      "1": 375,
+      "2": 234,
+      "3": 192,
+      "4": 66
+    },
+    "byOptionCount": {
+      "3": 838,
+      "4": 797
+    },
+    "variantsByRule": {
+      "ambiguous-cervical-term": 24,
+      "availability-permission-cue": 9,
+      "case-detail-key-rationale-overlap": 44,
+      "convergence": 91,
+      "heterogeneous-option-category": 84,
+      "key-length-disparity": 57,
+      "key-only-phrase-overlap": 70,
+      "key-only-word-overlap": 369,
+      "key-test-name-in-context": 16,
+      "lead-in-decision-principle": 15,
+      "near-duplicate-options": 39,
+      "negative-aligned-to-distractor": 87,
+      "option-absolute": 62,
+      "option-alone": 56,
+      "option-explanation": 26,
+      "option-generic-individualization": 8,
+      "option-length-disparity": 187,
+      "option-specificity-disparity": 14,
+      "supplied-clinical-conclusion": 4,
+      "unexplained-negative-imaging": 5,
+      "unique-key-abbreviation": 102,
+      "unique-key-test-name": 30,
+      "unnamed-treatment-action": 3
+    }
+  }
+}

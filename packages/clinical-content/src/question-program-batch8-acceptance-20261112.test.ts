@@ -1,9 +1,10 @@
+import {beforeProgramBatch9AcceptanceRelease,beforeProgramBatch9AcceptanceManifest,beforeProgramBatch9AcceptanceTimings} from "./question-program-batch9-acceptance-test-support";
 import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
 import {describe,expect,it} from "vitest";
-import {SYNTHETIC_CLINICAL_RELEASE as live,QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
-import {QUESTION_SHIP_MANIFEST as manifest,type QuestionShipManifest} from "./question-ship-manifest";
-import {ANSWER_CHOICE_TIMING_REGISTRY as timing} from "./answer-choice-timing";
+import {SYNTHETIC_CLINICAL_RELEASE as activeLive,QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
+import {QUESTION_SHIP_MANIFEST as activeManifest,type QuestionShipManifest} from "./question-ship-manifest";
+import {ANSWER_CHOICE_TIMING_REGISTRY as activeTiming} from "./answer-choice-timing";
 import type {SyntheticClinicalCase,SyntheticClinicalRelease,AnswerChoiceTimingRegistryEntry} from "./schema";
 import type {QuestionVariant} from "./pilot-schema";
 import {
@@ -20,6 +21,8 @@ import {beforeProgramBatch8AcceptanceRelease as previous,beforeProgramBatch8Acce
   beforeProgramBatch8AcceptanceTimings as previousTiming,beforeProgramBatch8AcceptanceSource as previousSource,programBatch8HistoricalMembership}
   from "./question-program-batch8-acceptance-test-support";
 
+// Preserve the exact batch8 epoch; batches9-11 independently pin current acceptance.
+const live=beforeProgramBatch9AcceptanceRelease(activeLive),manifest=beforeProgramBatch9AcceptanceManifest(activeManifest),timing=beforeProgramBatch9AcceptanceTimings(activeTiming);
 const raw=(p:string)=>readFileSync(new URL("../../../"+p,import.meta.url));
 const read=(p:string)=>JSON.parse(raw(p).toString("utf8"));
 const sha=(value:string|Buffer)=>createHash("sha256").update(value).digest("hex");
@@ -189,7 +192,7 @@ describe("batch8 exact owner-directed acceptance and preserved history",()=>{
 
   it("pins exact release source deltas, presence and every immutable epoch preimage",()=>{
     const bytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch8-release-source-pins-20261112.json",import.meta.url));
-    expect(createHash("sha256").update(bytes).digest("hex")).toBe("a6ab73ab4b2f19c9040e1541792924fc9217e7162f1563801b1819c23c0aaaa9");
+    expect(createHash("sha256").update(bytes).digest("hex")).toBe("e820d2ff5d72639ed416b7865b688bed9a1267600dbb27b9d7e8916e18af5843");
     const pins=JSON.parse(bytes.toString("utf8"));
     const hash=(path:string)=>createHash("sha256").update(readFileSync(new URL("../../../"+path,import.meta.url))).digest("hex");
     expect(hash(pins.capturePath)).toBe(pins.capturedFixtureSha256);

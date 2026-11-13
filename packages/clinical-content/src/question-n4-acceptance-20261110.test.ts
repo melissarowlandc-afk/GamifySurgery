@@ -79,7 +79,7 @@ describe("N4 exact eight independent PASS acceptances",()=>{
  it("pins ten explicit clinical-only preimages/postimages without changing previous captures",()=>{
   const migration=read("tools/question-quality/fixtures/question-n4-acceptance-source-migration-20261110.json");expect(migration.files).toHaveLength(10);
   const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-n4-release-source-pins-20261110.json",import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("f65eaf6c101d6507f41637c4527a581a93de8c733e73b2095f2172b9012a7604");
+  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("2c5fda5d30d63ed31586c3a7f5ff462dd093606658538da0b58b9a4da4e60fb2");
   const releasePins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;testSupportSha256:string;paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string|null}>};
   expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-n4-acceptance-source-migration-20261110.json",import.meta.url))).digest("hex")).toBe(releasePins.capturedFixtureSha256);
   expect(createHash("sha256").update(readFileSync(new URL("./question-n4-acceptance-test-support.ts",import.meta.url))).digest("hex")).toBe(releasePins.testSupportSha256);

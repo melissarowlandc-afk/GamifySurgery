@@ -115,9 +115,10 @@ function preservedHistories(actual: GameState, old: GameState) {
 }
 
 async function finish(session: CloudGameSession, frozen: Frozen) {
+  // Load and continue historical frozen bytes against the actual current default.
   const histories = structuredClone(session.state.learningHistories);
   const execute = (command: GameCommand) => {
-    const next = session.execute(command, current);
+    const next = session.execute(command, activeDefault);
     expect(next, command.operationId).not.toBeNull();
     expect(next!.operationReceipts[command.operationId], command.operationId).toMatchObject({status:"applied"});
     expect(session.syncView.failure).toBeNull();
@@ -137,14 +138,14 @@ async function finish(session: CloudGameSession, frozen: Frozen) {
       }
       expect(session.state.facilityTick).toBe(dueTick);
     }
-    let question = getCurrentQuestion(session.state, encounterId, current);
+    let question = getCurrentQuestion(session.state, encounterId, activeDefault);
     for (let tick = 0; tick < 240 && !question; tick++) {
       execute({type:"ADVANCE_TICK", operationId:`topic4.tick.${index}.${tick}`, advancedAtRealMs:now});
       const encounter = session.state.encounters[encounterId]!;
       if (session.state.openChartEncounterId !== encounterId && encounter.checkInStatus === "checked_in" && !encounter.patientMovement)
         execute({type:"OPEN_CHART", operationId:`topic4.open.${index}.${tick}`, encounterId});
       if (tick % 32 === 31) expect(await session.durable()).toBe(true);
-      question = getCurrentQuestion(session.state, encounterId, current);
+      question = getCurrentQuestion(session.state, encounterId, activeDefault);
     }
     expect(question, "Frozen node reaches the existing240-tick readiness bound: "+JSON.stringify({
       tick:session.state.facilityTick,encounter:session.state.encounters[encounterId],
@@ -153,7 +154,7 @@ async function finish(session: CloudGameSession, frozen: Frozen) {
     expect(question!.node).toEqual(node);
     const classification = timings.find(entry => entry.questionVariantId === node.questionVariantId)?.classification;
     if (classification) for (const choice of node.answerChoices) {
-      const preview = getAnswerChoiceServicePreview(session.state, encounterId, choice.id, current);
+      const preview = getAnswerChoiceServicePreview(session.state, encounterId, choice.id, activeDefault);
       if (classification.kind === "no_test") {
         expect(preview).toBeNull();
         continue;

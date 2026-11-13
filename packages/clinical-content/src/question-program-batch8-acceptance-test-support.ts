@@ -1,3 +1,4 @@
+import {beforeProgramBatch9AcceptanceRelease,beforeProgramBatch9AcceptanceManifest,beforeProgramBatch9AcceptanceTimings,beforeProgramBatch9AcceptanceSource} from "./question-program-batch9-acceptance-test-support";
 import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
 import {expect} from "vitest";
@@ -13,6 +14,7 @@ const migration=read("tools/question-quality/fixtures/question-topic-acceptance-
 const sha=(s:string)=>createHash("sha256").update(s).digest("hex");
 const digest=(v:unknown)=>sha(JSON.stringify(v));
 export function beforeProgramBatch8AcceptanceRelease(release:SyntheticClinicalRelease):SyntheticClinicalRelease{
+  if(release.cases.some(c=>c.procedureContext&&c.id.startsWith("case.intraop.")))release=beforeProgramBatch9AcceptanceRelease(release);
   if(digest(release)===before.defaultSha256)return release;
   const ids=new Set(before.candidates.map((c:{question:{id:string}})=>c.question.id));
   if(!release.cases.some(c=>c.decisionNodes.some(n=>ids.has(n.questionVariantId))))return release;
@@ -21,12 +23,14 @@ export function beforeProgramBatch8AcceptanceRelease(release:SyntheticClinicalRe
   return structuredClone(before.defaultRelease);
 }
 export function beforeProgramBatch8AcceptanceManifest<T extends QuestionShipManifest>(manifest:T):T{
+  if(manifest.accepted.some(r=>r.sourceView.startsWith("intraop-batch9-")))manifest=beforeProgramBatch9AcceptanceManifest(manifest);
   if(!manifest.accepted.some(r=>r.sourceView==="owner-decisions-batch8"))return manifest;
   expect(digest(manifest),"complete exact batch8 authority postimage").toBe(after.manifestSha256);
   expect(digest(before.manifest),"immutable batch8 authority preimage").toBe(before.manifestSha256);
   return structuredClone(before.manifest) as T;
 }
 export function beforeProgramBatch8AcceptanceTimings(actual:readonly AnswerChoiceTimingRegistryEntry[]):AnswerChoiceTimingRegistryEntry[]{
+  actual=beforeProgramBatch9AcceptanceTimings(actual);
   // Earlier inverse steps call this again on already historical arrays. Their
   // original guards still verify those preimages; this step owns only batch8.
   if(!actual.some(t=>PROGRAM_BATCH8_ROWS.some(r=>r.questionVariantId===t.questionVariantId)))return [...actual];
@@ -39,6 +43,7 @@ export function beforeProgramBatch8AcceptanceSource(path:string,current:string):
 export function beforeProgramBatch8AcceptanceSource(path:string,current:undefined):string|undefined;
 export function beforeProgramBatch8AcceptanceSource(path:string,current:string|undefined):string|undefined;
 export function beforeProgramBatch8AcceptanceSource(path:string,current:string|undefined):string|undefined{
+  current=beforeProgramBatch9AcceptanceSource(path,current);
   const row=migration.files.find(r=>r.path===path);if(!row)return current;
   const hash=(value:string)=>createHash("sha256").update(value).digest("hex");
   const pins=read("tools/question-quality/fixtures/question-program-batch8-release-source-pins-20261112.json");

@@ -7592,7 +7592,7 @@ export class FacilityScene extends Phaser.Scene {
     const supportDisplay = this.getApprovedActorSupportDisplayPosition(location, moving, visitor.supportRole ?? waitingSupport?.supportRole,
       visitor.supportId, visitor.supportRoomInstanceId ?? waitingSupport?.supportRoomInstanceId);
     const centerX = supportDisplay?.centerX ?? this.worldLayout.originX + (location.x + 0.5) * this.worldLayout.tileSize;
-    const pose = supportDisplay?.pose ?? this.characterPose(moving, direction, this.characterGaitOffset(key, 300 + index));
+    const pose = supportDisplay?.pose ?? (!moving ? visitor.pose : undefined) ?? this.characterPose(moving, direction, this.characterGaitOffset(key, 300 + index));
     const renderedDirection = supportDisplay?.direction ?? stationaryFloorDirection(moving, direction, false);
     const baseY = this.drawCharacterPresentation(graphics, key, {
       centerX,

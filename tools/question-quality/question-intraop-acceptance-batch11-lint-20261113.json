@@ -1,0 +1,314 @@
+{
+  "target": {
+    "schemaVersion": 1,
+    "linterVersion": "question-cue-lint.2026-11-04.v8",
+    "releaseId": "clinical.synthetic.prototype.v1",
+    "scope": "Every case/node and canonical/finite profile in the assembled default release, including unapproved prototype content. Prior feedback is a visible-history cue candidate; future results/current feedback are excluded.",
+    "exposureBasis": "Structural priority proxy only: earlier entry stage, tutorial sequence, case-reference count, then cue findings. No player exposure data collected.",
+    "totals": {
+      "cases": 4,
+      "nodeOccurrences": 4,
+      "uniqueVariants": 4,
+      "concepts": 4,
+      "profileContexts": 8,
+      "variantsWithFindings": 0,
+      "findings": 0,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 1,
+      "approvalRecordOnlyMetadata": 0,
+      "variantsWithCompleteRationales": 4,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "2": 1,
+        "3": 3
+      },
+      "byOptionCount": {
+        "3": 3,
+        "4": 1
+      },
+      "variantsByRule": {}
+    },
+    "variants": [
+      {
+        "questionVariantId": "question.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+        "conceptId": "concept.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+        "conceptName": "Right-colon defect completion",
+        "conceptType": "management",
+        "educationalTier": null,
+        "facilityStages": [
+          2
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.question-intraop-polypectomy-technique-and-bleeding.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.polypectomy.ascending-emr-completion.20261112-salvage.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "b879bea95d99b16d8fd6ea387dca9c4c48b9d062110e8a88ec15397191eda03f"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.polypectomy.intraprocedural-bleeding-tools",
+          "claim.intraop.polypectomy.right-colon-defect-closure",
+          "claim.intraop.polypectomy.vessel-coagulation-boundary"
+        ],
+        "findings": [],
+        "wordingFingerprint": "b4f112a2ac259beff0ed0d3aa7968a4223bfdb4f5f40e39cc4eba24d571e7cee",
+        "priorityStage": 2,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+        "conceptId": "concept.intraop.anorectal-eua.crohn-rectal-activity.v1",
+        "conceptName": "Use the current rectal inflammatory findings to reconsider closure of an otherwise favorable low Crohn fistula.",
+        "conceptType": "management",
+        "educationalTier": 4,
+        "facilityStages": [
+          3
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "question-intraop.anorectal-eua-and-fistula.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.anorectal-eua.crohn-checkpoints.20261112-salvage.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "2fe4fb7a07b7a614fa6dc9281dcf332bf60f08f9861c6b89ab2f4a082b2f5f93"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.anorectal-eua.crohn-flap",
+          "claim.intraop.anorectal-eua.crohn-rectal-activity",
+          "claim.intraop.anorectal-eua.crohn-staging",
+          "claim.intraop.anorectal-eua.low-tract-function"
+        ],
+        "findings": [],
+        "wordingFingerprint": "5256bc35ed8adc7294ee0ec5ebb0206db160dfe0304afed5b64d99233909d5b1",
+        "priorityStage": 3,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.parathyroid.sample-integrity.v1",
+        "conceptId": "concept.intraop.parathyroid.sample-integrity.v1",
+        "conceptName": "PTH collection provenance before operative completion",
+        "conceptType": "workup",
+        "educationalTier": 2,
+        "facilityStages": [
+          3
+        ],
+        "optionCounts": [
+          3
+        ],
+        "authoredVersions": [
+          "clinical.question-intraop.parathyroid-localization-and-preservation.2026-11-12.v1"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.parathyroid.missing-gland-salvage.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "be57cfe38ad3e5323aa25524590e042293abcaa9575f60ee79c75689767295f2"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.parathyroid.miami-protocol",
+          "claim.intraop.parathyroid.recollect-before-extent",
+          "claim.intraop.parathyroid.saline-contamination",
+          "claim.intraop.parathyroid.washout-identity"
+        ],
+        "findings": [],
+        "wordingFingerprint": "02907187daef3e24ef860f5e34239aee186a19e57f6bddf4bd2a1535023c30fe",
+        "priorityStage": 3,
+        "caseReferenceCount": 1
+      },
+      {
+        "questionVariantId": "question.intraop.parathyroid.selective-salvage.v1",
+        "conceptId": "concept.intraop.parathyroid.selective-salvage.v1",
+        "conceptName": "Choose distinct pre-closure dispositions for attached and removed glands",
+        "conceptType": "management",
+        "educationalTier": 2,
+        "facilityStages": [
+          3
+        ],
+        "optionCounts": [
+          4
+        ],
+        "authoredVersions": [
+          "clinical.question-intraop.parathyroid-localization-and-preservation.2026-11-12.v2"
+        ],
+        "reviewStatuses": [
+          "needs_clinician_review"
+        ],
+        "caseIds": [
+          "case.intraop.parathyroid.gland-preservation-salvage.v1"
+        ],
+        "nodeOccurrences": 1,
+        "profileContexts": 2,
+        "metadataOrigins": [
+          "authored_question"
+        ],
+        "tutorialSequence": false,
+        "tutorialEligible": false,
+        "educationalIntent": "unclassified_pending_review",
+        "rationaleComparisonAvailable": true,
+        "definitionFingerprints": [
+          "bf0e2e8ebcc7fa360a4620b3f03e4b647265dd6ba1afea6153c910debe18547c"
+        ],
+        "supportingEvidenceClaimIds": [
+          "claim.intraop.parathyroid.color-limitation",
+          "claim.intraop.parathyroid.in-situ-function",
+          "claim.intraop.parathyroid.muscle-graft-technique",
+          "claim.intraop.parathyroid.removed-gland-graft",
+          "claim.intraop.parathyroid.reperfusion-observation",
+          "claim.intraop.parathyroid.tissue-confirmation"
+        ],
+        "findings": [],
+        "wordingFingerprint": "f308f9ae3bf4197936af9d9c2511c79af12b1f8d1d7f3a58208d8e2d336619d9",
+        "priorityStage": 3,
+        "caseReferenceCount": 1
+      }
+    ]
+  },
+  "beforeTotals": {
+    "cases": 1432,
+    "nodeOccurrences": 1640,
+    "uniqueVariants": 1635,
+    "concepts": 939,
+    "profileContexts": 5127,
+    "variantsWithFindings": 870,
+    "findings": 1824,
+    "tutorialSequenceVariants": 0,
+    "missingAuthoredVersion": 0,
+    "missingEducationalTier": 325,
+    "approvalRecordOnlyMetadata": 35,
+    "variantsWithCompleteRationales": 926,
+    "variantsWithMultipleDefinitions": 0,
+    "byPriorityStage": {
+      "0": 768,
+      "1": 375,
+      "2": 234,
+      "3": 192,
+      "4": 66
+    },
+    "byOptionCount": {
+      "3": 838,
+      "4": 797
+    },
+    "variantsByRule": {
+      "ambiguous-cervical-term": 24,
+      "availability-permission-cue": 9,
+      "case-detail-key-rationale-overlap": 44,
+      "convergence": 91,
+      "heterogeneous-option-category": 84,
+      "key-length-disparity": 57,
+      "key-only-phrase-overlap": 70,
+      "key-only-word-overlap": 369,
+      "key-test-name-in-context": 16,
+      "lead-in-decision-principle": 15,
+      "near-duplicate-options": 39,
+      "negative-aligned-to-distractor": 87,
+      "option-absolute": 62,
+      "option-alone": 56,
+      "option-explanation": 26,
+      "option-generic-individualization": 8,
+      "option-length-disparity": 187,
+      "option-specificity-disparity": 14,
+      "supplied-clinical-conclusion": 4,
+      "unexplained-negative-imaging": 5,
+      "unique-key-abbreviation": 102,
+      "unique-key-test-name": 30,
+      "unnamed-treatment-action": 3
+    }
+  },
+  "afterTotals": {
+    "cases": 1436,
+    "nodeOccurrences": 1644,
+    "uniqueVariants": 1639,
+    "concepts": 943,
+    "profileContexts": 5135,
+    "variantsWithFindings": 870,
+    "findings": 1824,
+    "tutorialSequenceVariants": 0,
+    "missingAuthoredVersion": 0,
+    "missingEducationalTier": 326,
+    "approvalRecordOnlyMetadata": 35,
+    "variantsWithCompleteRationales": 930,
+    "variantsWithMultipleDefinitions": 0,
+    "byPriorityStage": {
+      "0": 768,
+      "1": 375,
+      "2": 235,
+      "3": 195,
+      "4": 66
+    },
+    "byOptionCount": {
+      "3": 841,
+      "4": 798
+    },
+    "variantsByRule": {
+      "ambiguous-cervical-term": 24,
+      "availability-permission-cue": 9,
+      "case-detail-key-rationale-overlap": 44,
+      "convergence": 91,
+      "heterogeneous-option-category": 84,
+      "key-length-disparity": 57,
+      "key-only-phrase-overlap": 70,
+      "key-only-word-overlap": 369,
+      "key-test-name-in-context": 16,
+      "lead-in-decision-principle": 15,
+      "near-duplicate-options": 39,
+      "negative-aligned-to-distractor": 87,
+      "option-absolute": 62,
+      "option-alone": 56,
+      "option-explanation": 26,
+      "option-generic-individualization": 8,
+      "option-length-disparity": 187,
+      "option-specificity-disparity": 14,
+      "supplied-clinical-conclusion": 4,
+      "unexplained-negative-imaging": 5,
+      "unique-key-abbreviation": 102,
+      "unique-key-test-name": 30,
+      "unnamed-treatment-action": 3
+    }
+  }
+}

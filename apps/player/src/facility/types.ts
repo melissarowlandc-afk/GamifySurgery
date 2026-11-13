@@ -241,6 +241,7 @@ export interface FacilityServiceVisitorView {
   path?: GridPoint[];
   pathIndex?: number;
   moving?: boolean;
+  pose?: FacilityPatientView["pose"];
   direction?: "front" | "side" | "back";
   rightFacing?: boolean;
   supportRole?: FacilityActorSupportRole;

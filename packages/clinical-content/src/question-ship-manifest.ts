@@ -41,7 +41,7 @@ export interface QuestionShipManifest {
   retirements?: readonly QuestionShipCaseRetirement[];
 }
 export const QUESTION_SHIP_MANIFEST = {
-  id: "question-ship.2026-11-12.v17",
+  id: "question-ship.2026-11-13.v20",
   clinicalApproval: false,
   legacyDecision: "Carry forward the existing live bank before the owner-flag rewrite program; user-directed fallback on 2026-11-05. This does not independently accept prior drafts or grant clinical approval.",
   legacyBindings: [
@@ -15538,6 +15538,324 @@ export const QUESTION_SHIP_MANIFEST = {
     "decision": "docs/research/question-topic-acceptance-batch8-20261112.md"
   }
 ,
+
+  // Batch9: exact reviewed, whole-case, ENG-I01-compatible intraop/record drafts.
+
+  {
+    "acceptanceId": "question.intraop.anesthetic-intraoperative-crises.mh-potassium-cardiotoxicity.v1",
+    "caseId": "case.intraop.anesthetic-intraoperative-crises.mh-electrolyte.v1",
+    "nodeId": "node.intraop.anesthetic-intraoperative-crises.mh-potassium-cardiotoxicity.v1",
+    "questionVariantId": "question.intraop.anesthetic-intraoperative-crises.mh-potassium-cardiotoxicity.v1",
+    "conceptId": "concept.intraop.anesthetic-intraoperative-crises.mh-potassium-cardiotoxicity.v1",
+    "sourceView": "intraop-batch9-anesthetic-intraoperative-crises",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.endoscopic-perforation-and-injury.postclosure-gas-observation.v1",
+    "caseId": "case.intraop.endoscopic-perforation-and-injury.postclip-hospital-record.v1",
+    "nodeId": "node.intraop.endoscopic-perforation-and-injury.postclosure-gas-observation.v1",
+    "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.postclosure-gas-observation.v1",
+    "conceptId": "concept.intraop.endoscopic-perforation-and-injury.postclosure-gas-observation.v1",
+    "sourceView": "intraop-batch9-endoscopic-perforation-and-injury",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.ercp-access-and-adverse-events.periampullary-diversion.v1",
+    "caseId": "case.intraop.ercp-access-and-adverse-events.periampullary-injury-course.v1",
+    "nodeId": "node.intraop.ercp-access-and-adverse-events.periampullary-diversion.v1",
+    "questionVariantId": "question.intraop.ercp-access-and-adverse-events.periampullary-diversion.v1",
+    "conceptId": "concept.intraop.ercp-access-and-adverse-events.periampullary-diversion.v1",
+    "sourceView": "intraop-batch9-ercp-access-and-adverse-events",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.ercp-access-and-adverse-events.collection-after-diversion.v1",
+    "caseId": "case.intraop.ercp-access-and-adverse-events.periampullary-injury-course.v1",
+    "nodeId": "node.intraop.ercp-access-and-adverse-events.collection-after-diversion.v1",
+    "questionVariantId": "question.intraop.ercp-access-and-adverse-events.collection-after-diversion.v1",
+    "conceptId": "concept.intraop.ercp-access-and-adverse-events.collection-after-diversion.v1",
+    "sourceView": "intraop-batch9-ercp-access-and-adverse-events",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.ercp-access-and-adverse-events.pancreatic-protection-after-access.v1",
+    "caseId": "case.intraop.ercp-access-and-adverse-events.pancreatic-protection.v1",
+    "nodeId": "node.intraop.ercp-access-and-adverse-events.pancreatic-protection-after-access.v1",
+    "questionVariantId": "question.intraop.ercp-access-and-adverse-events.pancreatic-protection-after-access.v1",
+    "conceptId": "concept.intraop.ercp-access-and-adverse-events.pancreatic-protection-after-access.v1",
+    "sourceView": "intraop-batch9-ercp-access-and-adverse-events",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.groin-hernia.sliding-sigmoid-plane.20261112.v1",
+    "caseId": "case.intraop.groin-hernia.sliding-sac.20261112.v1",
+    "nodeId": "node.intraop.groin-hernia.sliding-sigmoid-plane.20261112.v1",
+    "questionVariantId": "question.intraop.groin-hernia.sliding-sigmoid-plane.20261112.v1",
+    "conceptId": "concept.intraop.groin-hernia.sliding-content-dissection.v1",
+    "sourceView": "intraop-batch9-groin-hernia-anatomy-and-injury",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.groin-hernia.adherent-distal-sac.20261112.v1",
+    "caseId": "case.intraop.groin-hernia.sliding-sac.20261112.v1",
+    "nodeId": "node.intraop.groin-hernia.adherent-distal-sac.20261112.v1",
+    "questionVariantId": "question.intraop.groin-hernia.adherent-distal-sac.20261112.v1",
+    "conceptId": "concept.intraop.groin-hernia.adherent-sac-cord-preservation.v1",
+    "sourceView": "intraop-batch9-groin-hernia-anatomy-and-injury",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.groin-hernia.urinary-leak-localization.20261112.v1",
+    "caseId": "case.intraop.groin-hernia.urinary-findings.20261112.v1",
+    "nodeId": "node.intraop.groin-hernia.urinary-leak-localization.20261112.v1",
+    "questionVariantId": "question.intraop.groin-hernia.urinary-leak-localization.20261112.v1",
+    "conceptId": "concept.intraop.groin-hernia.suspected-bladder-injury-localization.v1",
+    "sourceView": "intraop-batch9-groin-hernia-anatomy-and-injury",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.lap-access.major-access-injury.20261112.v1",
+    "caseId": "case.intraop.lap-access.outside-access-rescue.20261112.v1",
+    "nodeId": "node.intraop.lap-access.major-access-injury.20261112.v1",
+    "questionVariantId": "question.intraop.lap-access.major-access-injury.20261112.v1",
+    "conceptId": "concept.intraop.lap-access.major-access-injury.v1",
+    "sourceView": "intraop-batch9-laparoscopic-access-and-insufflation",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.operative-hemorrhage.pringle-persistent-posterior.20261112.v1",
+    "caseId": "case.intraop.operative-hemorrhage.posterior-liver-record.20261112.v1",
+    "nodeId": "node.intraop.operative-hemorrhage.pringle-persistent-posterior.20261112.v1",
+    "questionVariantId": "question.intraop.operative-hemorrhage.pringle-persistent-posterior.20261112.v1",
+    "conceptId": "concept.intraop.operative-hemorrhage.pringle-persistent-posterior.v1",
+    "sourceView": "intraop-batch9-operative-hemorrhage-and-splenic-injury",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.i25.anatomy-before-dilation.20261112.v1",
+    "caseId": "case.intraop.i25.unmapped-narrowing.20261112.v1",
+    "nodeId": "node.intraop.i25.anatomy-before-dilation.20261112.v1",
+    "questionVariantId": "question.intraop.i25.anatomy-before-dilation.20261112.v1",
+    "conceptId": "concept.intraop.i25.anatomy-before-dilation.20261112.v1",
+    "sourceView": "intraop-batch9-pediatric-egd-food-impaction-eoe",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.i24.battery-injury-imaging.20261112.v1",
+    "caseId": "case.intraop.i24.battery-injury-record.20261112.v1",
+    "nodeId": "node.intraop.i24.battery-injury-imaging.20261112.v1",
+    "questionVariantId": "question.intraop.i24.battery-injury-imaging.20261112.v1",
+    "conceptId": "concept.intraop.i24.battery-injury-imaging.20261112.v1",
+    "sourceView": "intraop-batch9-pediatric-endoscopy-foreign-body",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.thyroid-nerve-monitoring.proximal-verification.v1",
+    "caseId": "case.intraop.thyroid-nerve-monitoring.distal-response-coverage.v1",
+    "nodeId": "node.intraop.thyroid-nerve-monitoring.proximal-verification.v1",
+    "questionVariantId": "question.intraop.thyroid-nerve-monitoring.proximal-verification.v1",
+    "conceptId": "concept.intraop.thyroid-nerve-monitoring.proximal-verification.v1",
+    "sourceView": "intraop-batch9-thyroid-nerve-monitoring",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.thyroid-nerve-monitoring.recording-check.v1",
+    "caseId": "case.intraop.thyroid-nerve-monitoring.two-signal-events.v1",
+    "nodeId": "node.intraop.thyroid-nerve-monitoring.recording-check.v1",
+    "questionVariantId": "question.intraop.thyroid-nerve-monitoring.recording-check.v1",
+    "conceptId": "concept.intraop.thyroid-nerve-monitoring.recording-check.v1",
+    "sourceView": "intraop-batch9-thyroid-nerve-monitoring",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.thyroid-nerve-monitoring.verified-loss-extent.v1",
+    "caseId": "case.intraop.thyroid-nerve-monitoring.two-signal-events.v1",
+    "nodeId": "node.intraop.thyroid-nerve-monitoring.verified-loss-extent.v1",
+    "questionVariantId": "question.intraop.thyroid-nerve-monitoring.verified-loss-extent.v1",
+    "conceptId": "concept.intraop.thyroid-nerve-monitoring.verified-loss-extent.v1",
+    "sourceView": "intraop-batch9-thyroid-nerve-monitoring",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.unexpected-bowel.base-margin.20261112.v1",
+    "caseId": "case.intraop.unexpected-bowel.base-margin.20261112.v1",
+    "nodeId": "node.intraop.unexpected-bowel.base-margin.20261112.v1",
+    "questionVariantId": "question.intraop.unexpected-bowel.base-margin.20261112.v1",
+    "conceptId": "concept.intraop.unexpected-bowel.appendiceal-base-margin.v1",
+    "sourceView": "intraop-batch9-unexpected-appendix-and-bowel-findings",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  },
+  {
+    "acceptanceId": "question.intraop.unexpected-bowel.ileitis-restraint.20261112.v1",
+    "caseId": "case.intraop.unexpected-bowel.ileitis-restraint.20261112.v1",
+    "nodeId": "node.intraop.unexpected-bowel.ileitis-restraint.20261112.v1",
+    "questionVariantId": "question.intraop.unexpected-bowel.ileitis-restraint.20261112.v1",
+    "conceptId": "concept.intraop.unexpected-bowel.unexpected-ileitis-operative-restraint.v1",
+    "sourceView": "intraop-batch9-unexpected-appendix-and-bowel-findings",
+    "decision": "docs/research/question-intraop-acceptance-batch9-20261112.md"
+  }
+,
+
+  // Batch10 exact whole-case ENG-I01b and standalone salvage acceptance.
+
+  {
+    "acceptanceId": "question.intraop.asc-access.anterior-port-course.20261112.v1",
+    "caseId": "case.intraop.asc-access.port-course.20261112.v1",
+    "nodeId": "node.intraop.asc-access.anterior-port-course.20261112.v1",
+    "questionVariantId": "question.intraop.asc-access.anterior-port-course.20261112.v1",
+    "conceptId": "concept.intraop.asc-access.orthogonal-port-course-correction.v1",
+    "sourceView": "intraop-batch10-asc-access-and-soft-tissue-surprises",
+    "decision": "docs/research/question-intraop-acceptance-batch10-20261113.md"
+  },
+  {
+    "acceptanceId": "question.intraop.biliary-safety.unexplained-bile.20261112.v1",
+    "caseId": "case.intraop.biliary-safety.new-bile.20261112.v1",
+    "nodeId": "node.intraop.biliary-safety.unexplained-bile.20261112.v1",
+    "questionVariantId": "question.intraop.biliary-safety.unexplained-bile.20261112.v1",
+    "conceptId": "concept.intraop-biliary.unexplained-bile-imaging.v1",
+    "sourceView": "intraop-batch10-biliary-safety-and-duct-decisions",
+    "decision": "docs/research/question-intraop-acceptance-batch10-20261113.md"
+  },
+  {
+    "acceptanceId": "question.intraop.biliary-safety.major-injury-transfer.20261112.v1",
+    "caseId": "case.intraop.biliary-safety.new-bile.20261112.v1",
+    "nodeId": "node.intraop.biliary-safety.major-injury-transfer.20261112.v1",
+    "questionVariantId": "question.intraop.biliary-safety.major-injury-transfer.20261112.v1",
+    "conceptId": "concept.n2.bile-leak-duct-continuity-boundary",
+    "sourceView": "intraop-batch10-biliary-safety-and-duct-decisions",
+    "decision": "docs/research/question-intraop-acceptance-batch10-20261113.md"
+  },
+  {
+    "acceptanceId": "question.intraop.biliary-safety.stone-clearance-route.20261112.v1",
+    "caseId": "case.intraop.biliary-safety.stone-clearance.20261112.v1",
+    "nodeId": "node.intraop.biliary-safety.stone-clearance-route.20261112.v1",
+    "questionVariantId": "question.intraop.biliary-safety.stone-clearance-route.20261112.v1",
+    "conceptId": "concept.intraop-biliary.stone-clearance-route.v1",
+    "sourceView": "intraop-batch10-biliary-safety-and-duct-decisions",
+    "decision": "docs/research/question-intraop-acceptance-batch10-20261113.md"
+  },
+  {
+    "acceptanceId": "question.intraop.endoscopic-perforation-and-injury.fresh-sigmoid-closure.v1",
+    "caseId": "case.intraop.endoscopic-perforation-and-injury.sigmoid-defect-and-reassessment.v1",
+    "nodeId": "node.intraop.endoscopic-perforation-and-injury.fresh-sigmoid-closure.v1",
+    "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.fresh-sigmoid-closure.v1",
+    "conceptId": "concept.intraop.endoscopic-perforation-and-injury.fresh-sigmoid-closure.v1",
+    "sourceView": "intraop-batch10-endoscopic-perforation-and-injury",
+    "decision": "docs/research/question-intraop-acceptance-batch10-20261113.md"
+  },
+  {
+    "acceptanceId": "question.intraop.endoscopic-perforation-and-injury.postclip-tension-rescue.v1",
+    "caseId": "case.intraop.endoscopic-perforation-and-injury.sigmoid-defect-and-reassessment.v1",
+    "nodeId": "node.intraop.endoscopic-perforation-and-injury.postclip-tension-rescue.v1",
+    "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.postclip-tension-rescue.v1",
+    "conceptId": "concept.intraop.endoscopic-perforation-and-injury.postclip-tension-rescue.v1",
+    "sourceView": "intraop-batch10-endoscopic-perforation-and-injury",
+    "decision": "docs/research/question-intraop-acceptance-batch10-20261113.md"
+  },
+  {
+    "acceptanceId": "question.intraop.endoscopic-perforation-and-injury.observed-esophageal-primary-closure.v1",
+    "caseId": "case.intraop.endoscopic-perforation-and-injury.dilation-observed-defect.v1",
+    "nodeId": "node.intraop.endoscopic-perforation-and-injury.observed-esophageal-primary-closure.v1",
+    "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.observed-esophageal-primary-closure.v1",
+    "conceptId": "concept.intraop.endoscopic-perforation-and-injury.observed-esophageal-primary-closure.v1",
+    "sourceView": "intraop-batch10-endoscopic-perforation-and-injury",
+    "decision": "docs/research/question-intraop-acceptance-batch10-20261113.md"
+  },
+  {
+    "acceptanceId": "question.intraop.suspicious-polyps.deep-pattern-before-resection.20261112.v1",
+    "caseId": "case.intraop.suspicious-polyps.new-descending-colon-focus.20261112.v1",
+    "nodeId": "node.intraop.suspicious-polyps.deep-pattern-before-resection.20261112.v1",
+    "questionVariantId": "question.intraop.suspicious-polyps.deep-pattern-before-resection.20261112.v1",
+    "conceptId": "concept.intraop.suspicious-polyps.deep-pattern-before-resection.20261112.v1",
+    "sourceView": "intraop-batch10-suspicious-polyps-retrieval-and-tattoo",
+    "decision": "docs/research/question-intraop-acceptance-batch10-20261113.md"
+  },
+  {
+    "acceptanceId": "question.intraop.anesthetic-intraoperative-crises.anaphylaxis-infusion.v1",
+    "caseId": "case.intraop.anesthetic-intraoperative-crises.anaphylaxis-response-salvage.v1",
+    "nodeId": "node.intraop.anesthetic-intraoperative-crises.anaphylaxis-infusion.v1",
+    "questionVariantId": "question.intraop.anesthetic-intraoperative-crises.anaphylaxis-infusion.v1",
+    "conceptId": "concept.intraop.anesthetic-intraoperative-crises.periop-anaphylaxis-sustained-rescue.v1",
+    "sourceView": "intraop-batch10-anesthetic-intraoperative-crises",
+    "decision": "docs/research/question-intraop-acceptance-batch10-20261113.md"
+  },
+  {
+    "acceptanceId": "question.intraop.upper-gi-hemostasis.esophageal-plug-treatment.20261112.v1",
+    "caseId": "case.intraop.upper-gi-hemostasis.esophageal-variceal-record.20261112-salvage.v1",
+    "nodeId": "node.intraop.upper-gi-hemostasis.esophageal-plug-treatment.20261112.v1",
+    "questionVariantId": "question.intraop.upper-gi-hemostasis.esophageal-plug-treatment.20261112.v1",
+    "conceptId": "concept.intraop.upper-gi-hemostasis.esophageal-plug-treatment.20261112.v1",
+    "sourceView": "intraop-batch10-endoscopic-upper-gi-hemostasis",
+    "decision": "docs/research/question-intraop-acceptance-batch10-20261113.md"
+  },
+  {
+    "acceptanceId": "question.intraop.pediatric-anesthesia-events.persistent-laryngeal-closure.v1",
+    "caseId": "case.intraop.pediatric-anesthesia-events.egd-airway-salvage.v1",
+    "nodeId": "node.intraop.pediatric-anesthesia-events.persistent-laryngeal-closure.v1",
+    "questionVariantId": "question.intraop.pediatric-anesthesia-events.persistent-laryngeal-closure.v1",
+    "conceptId": "concept.intraop.pediatric-anesthesia-events.persistent-laryngeal-closure.v1",
+    "sourceView": "intraop-batch10-pediatric-anesthesia-events",
+    "decision": "docs/research/question-intraop-acceptance-batch10-20261113.md"
+  },
+  {
+    "acceptanceId": "question.intraop.pediatric-anesthesia-events.ventilated-expiratory-wheeze.v1",
+    "caseId": "case.intraop.pediatric-anesthesia-events.hernia-airflow-salvage.v1",
+    "nodeId": "node.intraop.pediatric-anesthesia-events.ventilated-expiratory-wheeze.v1",
+    "questionVariantId": "question.intraop.pediatric-anesthesia-events.ventilated-expiratory-wheeze.v1",
+    "conceptId": "concept.intraop.pediatric-anesthesia-events.ventilated-expiratory-wheeze.v1",
+    "sourceView": "intraop-batch10-pediatric-anesthesia-events",
+    "decision": "docs/research/question-intraop-acceptance-batch10-20261113.md"
+  },
+  {
+    "acceptanceId": "question.intraop.pediatric-orchiopexy.residual-cord-bands.20261112.v1",
+    "caseId": "case.intraop.pediatric-orchiopexy.inguinal-descent.20261112-salvage.v1",
+    "nodeId": "node.intraop.pediatric-orchiopexy.residual-cord-bands.20261112.v1",
+    "questionVariantId": "question.intraop.pediatric-orchiopexy.residual-cord-bands.20261112.v1",
+    "conceptId": "concept.intraop.pediatric-orchiopexy.residual-cord-mobilization.v1",
+    "sourceView": "intraop-batch10-pediatric-orchiopexy-findings",
+    "decision": "docs/research/question-intraop-acceptance-batch10-20261113.md"
+  }
+,
+
+  // Batch11 exact whole-case ENG-I01b and standalone salvage acceptance.
+
+  {
+    "acceptanceId": "question.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+    "caseId": "case.intraop.anorectal-eua.crohn-checkpoints.20261112-salvage.v1",
+    "nodeId": "node.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+    "questionVariantId": "question.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+    "conceptId": "concept.intraop.anorectal-eua.crohn-rectal-activity.v1",
+    "sourceView": "intraop-batch11-anorectal-eua-and-fistula",
+    "decision": "docs/research/question-intraop-acceptance-batch11-20261113.md"
+  },
+  {
+    "acceptanceId": "question.intraop.parathyroid.sample-integrity.v1",
+    "caseId": "case.intraop.parathyroid.missing-gland-salvage.v1",
+    "nodeId": "node.intraop.parathyroid.sample-integrity.v1",
+    "questionVariantId": "question.intraop.parathyroid.sample-integrity.v1",
+    "conceptId": "concept.intraop.parathyroid.sample-integrity.v1",
+    "sourceView": "intraop-batch11-parathyroid-localization-and-preservation",
+    "decision": "docs/research/question-intraop-acceptance-batch11-20261113.md"
+  },
+  {
+    "acceptanceId": "question.intraop.parathyroid.selective-salvage.v1",
+    "caseId": "case.intraop.parathyroid.gland-preservation-salvage.v1",
+    "nodeId": "node.intraop.parathyroid.selective-salvage.v1",
+    "questionVariantId": "question.intraop.parathyroid.selective-salvage.v1",
+    "conceptId": "concept.intraop.parathyroid.selective-salvage.v1",
+    "sourceView": "intraop-batch11-parathyroid-localization-and-preservation",
+    "decision": "docs/research/question-intraop-acceptance-batch11-20261113.md"
+  },
+  {
+    "acceptanceId": "question.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+    "caseId": "case.intraop.polypectomy.ascending-emr-completion.20261112-salvage.v1",
+    "nodeId": "node.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+    "questionVariantId": "question.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+    "conceptId": "concept.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+    "sourceView": "intraop-batch11-polypectomy-technique-and-bleeding",
+    "decision": "docs/research/question-intraop-acceptance-batch11-20261113.md"
+  }
+,
 ] satisfies QuestionShipAcceptance[],
   // BEGIN FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   retirements: [
@@ -16487,6 +16805,44 @@ export const QUESTION_SHIP_MANIFEST = {
     "case.gs028f.gynecology.c1-late-period": "owner-decisions-batch8",
     "case.topic.perioperative-risk-recovery.awake-gas.v3": "owner-decisions-batch8",
     "case.gs028b.ptld.b-pathology-returned": "owner-decisions-batch8",
+
+
+  "case.intraop.anesthetic-intraoperative-crises.mh-electrolyte.v1": "intraop-batch9-anesthetic-intraoperative-crises",
+  "case.intraop.endoscopic-perforation-and-injury.postclip-hospital-record.v1": "intraop-batch9-endoscopic-perforation-and-injury",
+  "case.intraop.ercp-access-and-adverse-events.periampullary-injury-course.v1": "intraop-batch9-ercp-access-and-adverse-events",
+  "case.intraop.ercp-access-and-adverse-events.pancreatic-protection.v1": "intraop-batch9-ercp-access-and-adverse-events",
+  "case.intraop.groin-hernia.sliding-sac.20261112.v1": "intraop-batch9-groin-hernia-anatomy-and-injury",
+  "case.intraop.groin-hernia.urinary-findings.20261112.v1": "intraop-batch9-groin-hernia-anatomy-and-injury",
+  "case.intraop.lap-access.outside-access-rescue.20261112.v1": "intraop-batch9-laparoscopic-access-and-insufflation",
+  "case.intraop.operative-hemorrhage.posterior-liver-record.20261112.v1": "intraop-batch9-operative-hemorrhage-and-splenic-injury",
+  "case.intraop.i25.unmapped-narrowing.20261112.v1": "intraop-batch9-pediatric-egd-food-impaction-eoe",
+  "case.intraop.i24.battery-injury-record.20261112.v1": "intraop-batch9-pediatric-endoscopy-foreign-body",
+  "case.intraop.thyroid-nerve-monitoring.distal-response-coverage.v1": "intraop-batch9-thyroid-nerve-monitoring",
+  "case.intraop.thyroid-nerve-monitoring.two-signal-events.v1": "intraop-batch9-thyroid-nerve-monitoring",
+  "case.intraop.unexpected-bowel.base-margin.20261112.v1": "intraop-batch9-unexpected-appendix-and-bowel-findings",
+  "case.intraop.unexpected-bowel.ileitis-restraint.20261112.v1": "intraop-batch9-unexpected-appendix-and-bowel-findings"
+
+,
+
+  "case.intraop.asc-access.port-course.20261112.v1": "intraop-batch10-asc-access-and-soft-tissue-surprises",
+  "case.intraop.biliary-safety.new-bile.20261112.v1": "intraop-batch10-biliary-safety-and-duct-decisions",
+  "case.intraop.biliary-safety.stone-clearance.20261112.v1": "intraop-batch10-biliary-safety-and-duct-decisions",
+  "case.intraop.endoscopic-perforation-and-injury.sigmoid-defect-and-reassessment.v1": "intraop-batch10-endoscopic-perforation-and-injury",
+  "case.intraop.endoscopic-perforation-and-injury.dilation-observed-defect.v1": "intraop-batch10-endoscopic-perforation-and-injury",
+  "case.intraop.suspicious-polyps.new-descending-colon-focus.20261112.v1": "intraop-batch10-suspicious-polyps-retrieval-and-tattoo",
+  "case.intraop.anesthetic-intraoperative-crises.anaphylaxis-response-salvage.v1": "intraop-batch10-anesthetic-intraoperative-crises",
+  "case.intraop.upper-gi-hemostasis.esophageal-variceal-record.20261112-salvage.v1": "intraop-batch10-endoscopic-upper-gi-hemostasis",
+  "case.intraop.pediatric-anesthesia-events.egd-airway-salvage.v1": "intraop-batch10-pediatric-anesthesia-events",
+  "case.intraop.pediatric-anesthesia-events.hernia-airflow-salvage.v1": "intraop-batch10-pediatric-anesthesia-events",
+  "case.intraop.pediatric-orchiopexy.inguinal-descent.20261112-salvage.v1": "intraop-batch10-pediatric-orchiopexy-findings"
+
+,
+
+  "case.intraop.anorectal-eua.crohn-checkpoints.20261112-salvage.v1": "intraop-batch11-anorectal-eua-and-fistula",
+  "case.intraop.parathyroid.missing-gland-salvage.v1": "intraop-batch11-parathyroid-localization-and-preservation",
+  "case.intraop.parathyroid.gland-preservation-salvage.v1": "intraop-batch11-parathyroid-localization-and-preservation",
+  "case.intraop.polypectomy.ascending-emr-completion.20261112-salvage.v1": "intraop-batch11-polypectomy-technique-and-bleeding"
+
 } as Record<string,string>,
 } as const;
 

@@ -4,6 +4,12 @@ import type { FacilityActorSupportRole } from "../facility/types";
 export function pediatricActorSupport(state: GameState, kind: "encounter" | "service_visitor" | "companion", id: string,
   location: GridPoint | null | undefined, moving: boolean) {
   const family = pediatricFamilyForActor(state, kind, id);
+  if (family?.procedureFlow && kind !== "companion" && location && !moving) {
+    const source = state.serviceOperations.find(operation => operation.id === family.procedureFlow!.serviceOperationId);
+    const phase = source?.frozenOperationPhases?.[source.phaseIndex];
+    if (source && ["in_service", "waiting_for_next_phase"].includes(source.status) &&
+        ["room.endoscopy", "room.ambulatory_or"].includes(phase?.roomDefinitionId ?? "")) return {pose: "exam-table" as const, seated: false};
+  }
   const reservation = family?.reservation;
   if (!reservation || !location || moving) return {};
   const parent = kind === "companion";

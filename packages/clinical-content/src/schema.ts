@@ -332,10 +332,38 @@ export const patientPresentationRevisionSchema = z
   })
   .strict();
 
+/** Optional source contract. Omission preserves every existing frozen case. */
+const procedureContextSchema = z.discriminatedUnion("mode", [
+  z.object({
+    version: z.literal("procedure-context.v1"),
+    mode: z.literal("live"),
+    familyId: stableIdSchema,
+    kind: z.enum(["operation", "endoscopy"]),
+    phase: z.literal("procedure"),
+    allowedIncomeLineIds: z.array(stableIdSchema).min(1).max(8),
+    requiredCapabilityIds: z.array(stableIdSchema).max(16),
+    pediatricFamilyContext: z.object({
+      profileId: stableIdSchema,
+      childName: z.string().min(1).max(80),
+      childStillId: stableIdSchema,
+      parentName: z.string().min(1).max(80),
+      parentRelationship: z.enum(["mother", "father"]),
+    }).strict().optional(),
+  }).strict(),
+  z.object({
+    version: z.literal("procedure-context.v1"),
+    mode: z.literal("chart_review"),
+    familyId: stableIdSchema,
+    recordKind: z.enum(["operative_note", "anesthesia_record", "endoscopy_report"]),
+    recordCheckpoint: z.string().min(1).max(240),
+  }).strict(),
+]);
+
 export const syntheticClinicalCaseSchema = z
   .object({
     id: stableIdSchema,
     pediatricProfile: pediatricPatientProfileSchema.optional(),
+    procedureContext: procedureContextSchema.optional(),
     displayName: z.string().min(1).max(160),
     patientPresentationVariantId: stableIdSchema,
     /**

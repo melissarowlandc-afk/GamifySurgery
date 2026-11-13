@@ -1,0 +1,629 @@
+{
+  "capturePath": "tools/question-quality/fixtures/question-intraop-acceptance-batch10-source-migration-20261113.json",
+  "capturedFixtureSha256": "cf4ba16c4102b2cfde953286596081efdc1b79dc59116c1ee28311bb2739324f",
+  "paths": [
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "mainBeforeSha256": "aabb1463ed7634557e1abdebfc72a7f559d485500cc8a686b02fc1a657bd3347",
+      "mainAfterSha256": "b84a76bc5920c1f95c704b2787901b9635e4e2b3ffc7f63141de97b1641d9edc",
+      "requiredReleaseSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "mainBeforeSha256": "fbec53164c3bfcc12d6c0a5e0e57b28a9c102ec7b25990c4a4939c9327c86b34",
+      "mainAfterSha256": "cd8d023c72bb445cc154dc8a6ea35a01f60b4f5b15f10980fe58f50e7ab404cc",
+      "requiredReleaseSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "mainBeforeSha256": "2a0d4fe95613674ee092a0d5cee79410a2822a1e2d5cc940263c3b79417fb95c",
+      "mainAfterSha256": "8cb558cfff5a82244d481ce5aa1b303456b8418a0d787313f8cd701dc231d8aa",
+      "requiredReleaseSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "mainBeforeSha256": "8a3795167915fa8cc4e091988faae70b54779793a094961fc9e95164ebce51b1",
+      "mainAfterSha256": "78c3a41071dd1ae87ac6b18404538fed63ddb152a2fadf19d23a45f446726d83",
+      "requiredReleaseSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "mainBeforeSha256": "8f82f7281a67276056df37f504ccb1ea45c383805127e913bcdd3cdf38f4d2d2",
+      "mainAfterSha256": "2905b8f5c5ec083835b58b95e20a068e0f673df72e27b3eae6fff87fdb57e7e9",
+      "requiredReleaseSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "mainBeforeSha256": "077f1652c6a53ff732293315a0c0c85c84bbc3f3a634420da079f299c61e389d",
+      "mainAfterSha256": "243e7d3a40f5787c3c34a9143cc60840ea1c41f0f7cd4a12585841042706ae3a",
+      "requiredReleaseSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227"
+    },
+    {
+      "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+      "mainBeforeSha256": "6dca6d20088963fa080c78c05bbe8c3078c7ea9895fef22f3d706a4749ef02f5",
+      "mainAfterSha256": "b19884a18b8e1b03398b159251e9b0255d0fad4184c6b659bd2c24a5f3d9c3f7",
+      "requiredReleaseSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch9-acceptance-test-support.ts",
+      "mainBeforeSha256": "eeed49a2727fc0c7ab26c80cf8aa1af2f005bc26076d84de5dc88ad8f9961acc",
+      "mainAfterSha256": "2112bdc125ff86a10b1d174d1aa4ae11fcc8ce541710f2828549700139681092",
+      "requiredReleaseSha256": "628d174f19ecf4b73de652b9ee8eaa20f33faa566ffaa19a21396fec4f8b897c"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch9-acceptance-20261112.test.ts",
+      "mainBeforeSha256": "2c5e0f6ea1e4f340bc8e17509859b071aaa76a017f117fea5841c92b89c0810a",
+      "mainAfterSha256": "406abfaf8b623c98c99b13cc562e94db23753fa34afd56f265f96bd83f889019",
+      "requiredReleaseSha256": "9d2209b338854fc5abe558812ef740ef32221311fd14d476efb32e4ba6acb565"
+    },
+    {
+      "path": "packages/clinical-content/src/question-intraop-anesthetic-intraoperative-crises-20261112.test.ts",
+      "mainBeforeSha256": "572abf647668c6c69a4921464f88bcd17ffa9e846266d9f485eab2eafe61ed15",
+      "mainAfterSha256": "3795b36a8c3ccdd1931a4bdf5f0f59030ed98dbc4cec8097a91a4c9c9ea15661",
+      "requiredReleaseSha256": null
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "mainBeforeSha256": "13f27aa5d0b902d7992bb8b92bc1a83219dcb3dffff250d4dde2284528d06b6e",
+      "mainAfterSha256": "2f134b963295d1f859780dbee88d662036a4fbccff00fc033bfe7ce83d46a06f",
+      "requiredReleaseSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc"
+    },
+    {
+      "path": "apps/player/src/session/topicRuntimeBindings.test.ts",
+      "mainBeforeSha256": "ff6f354f63c9ebfcf81bf201288826444697e38e20f525c1dae7bc4dab874142",
+      "mainAfterSha256": "e0be29b7162c00b9cfc9b9ba2d976367f0a6a656e40d014211b58bbea8702d0c",
+      "requiredReleaseSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9"
+    },
+    {
+      "path": "packages/clinical-content/src/playable-patient-narrative.test.ts",
+      "mainBeforeSha256": "04141a1080adefe0ecfdee92549659ca42ab69252659baae005bb50246bc8ceb",
+      "mainAfterSha256": "550c830c1b445613208534c76d342b4bb3c6e6e12afb72e924844c80f1ebebb4",
+      "requiredReleaseSha256": "550c830c1b445613208534c76d342b4bb3c6e6e12afb72e924844c80f1ebebb4"
+    },
+    {
+      "path": "packages/clinical-content/src/question-intraop-asc-access-and-soft-tissue-surprises-20261112.test.ts",
+      "mainBeforeSha256": "347de6b060cec4729478009fd60467dca3179e7c0239e9096bb62e884cfd2cf8",
+      "mainAfterSha256": "f1ed69ddf1e9b7f27a9073bafdb0bf9bc254b3908f610455b105c33f77cd0f91",
+      "requiredReleaseSha256": null
+    },
+    {
+      "path": "packages/clinical-content/src/question-intraop-endoscopic-upper-gi-hemostasis-20261112.test.ts",
+      "mainBeforeSha256": "e69f844f337ba6da2deca428b29d0ed341b898649b4360b866e5accf23f3af15",
+      "mainAfterSha256": "299fb1480768ae4ae03f3024a24d71098a15c8fb791655a88b241cf1e2aee857",
+      "requiredReleaseSha256": null
+    },
+    {
+      "path": "packages/clinical-content/src/question-intraop-pediatric-anesthesia-events-20261112.test.ts",
+      "mainBeforeSha256": "73d8df9505b18485187604875d0636b5e0e904560fc030f30dd985bc9c6265ec",
+      "mainAfterSha256": "8e1518f334045c0a5cbc12217ec6094fd0742a42a71e4f140c695af87e9fd83b",
+      "requiredReleaseSha256": null
+    },
+    {
+      "path": "packages/clinical-content/src/question-intraop-pediatric-orchiopexy-findings-20261112.test.ts",
+      "mainBeforeSha256": "3fe5f608fa228a8b1417534c7c6090e9ba68d5d201be8b4573e7f6dd49c86ddc",
+      "mainAfterSha256": "4ae553334e97e9a0597b8fd3c9a3dccbb8b445286675c4170a86517ef70aaa0b",
+      "requiredReleaseSha256": null
+    },
+    {
+      "path": "packages/clinical-content/src/question-intraop-suspicious-polyps-retrieval-and-tattoo-20261112.test.ts",
+      "mainBeforeSha256": "4c84ed0db70b2e5d5387ec73a30dde3a61d6719d783b01d509c9fc203b995eb9",
+      "mainAfterSha256": "185b50c469d4011dba88a9ae9397033d2795cfad28700cda7d7ead5f4e041eb4",
+      "requiredReleaseSha256": null
+    },
+    {
+      "path": "packages/clinical-content/src/question-intraop-polypectomy-technique-and-bleeding-20261112.test.ts",
+      "mainBeforeSha256": "26601732b34f84c2097c7f2858398ee66853ce76410ade9a6f2942b3429a424b",
+      "mainAfterSha256": "682047e6543568c88af408962ab7b92ddeaca2d709f5c635edce7ad122aacfb9",
+      "requiredReleaseSha256": null
+    }
+  ],
+  "authorizationHistory": [
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port37-initial",
+      "priorFixtureSha256": null,
+      "priorPaths": [],
+      "reason": "Exact accepted ENG-I01 and frozen intraop9-11 postimages and release-only strict source guards. Captures, required absences and all prior authorizations preserved."
+    },
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port37-bridge",
+      "priorFixtureSha256": "4b98ac16f90ecaf88b6071a95ec5304b371b4e822ea4f12a10bf3a29562d2717",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "aabb1463ed7634557e1abdebfc72a7f559d485500cc8a686b02fc1a657bd3347",
+          "mainAfterSha256": "b84a76bc5920c1f95c704b2787901b9635e4e2b3ffc7f63141de97b1641d9edc",
+          "requiredReleaseSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "fbec53164c3bfcc12d6c0a5e0e57b28a9c102ec7b25990c4a4939c9327c86b34",
+          "mainAfterSha256": "cd8d023c72bb445cc154dc8a6ea35a01f60b4f5b15f10980fe58f50e7ab404cc",
+          "requiredReleaseSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "2a0d4fe95613674ee092a0d5cee79410a2822a1e2d5cc940263c3b79417fb95c",
+          "mainAfterSha256": "8cb558cfff5a82244d481ce5aa1b303456b8418a0d787313f8cd701dc231d8aa",
+          "requiredReleaseSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "8a3795167915fa8cc4e091988faae70b54779793a094961fc9e95164ebce51b1",
+          "mainAfterSha256": "78c3a41071dd1ae87ac6b18404538fed63ddb152a2fadf19d23a45f446726d83",
+          "requiredReleaseSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "8f82f7281a67276056df37f504ccb1ea45c383805127e913bcdd3cdf38f4d2d2",
+          "mainAfterSha256": "2905b8f5c5ec083835b58b95e20a068e0f673df72e27b3eae6fff87fdb57e7e9",
+          "requiredReleaseSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "077f1652c6a53ff732293315a0c0c85c84bbc3f3a634420da079f299c61e389d",
+          "mainAfterSha256": "243e7d3a40f5787c3c34a9143cc60840ea1c41f0f7cd4a12585841042706ae3a",
+          "requiredReleaseSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227"
+        },
+        {
+          "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+          "mainBeforeSha256": "6dca6d20088963fa080c78c05bbe8c3078c7ea9895fef22f3d706a4749ef02f5",
+          "mainAfterSha256": "b19884a18b8e1b03398b159251e9b0255d0fad4184c6b659bd2c24a5f3d9c3f7",
+          "requiredReleaseSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch9-acceptance-test-support.ts",
+          "mainBeforeSha256": "eeed49a2727fc0c7ab26c80cf8aa1af2f005bc26076d84de5dc88ad8f9961acc",
+          "mainAfterSha256": "2112bdc125ff86a10b1d174d1aa4ae11fcc8ce541710f2828549700139681092",
+          "requiredReleaseSha256": "98e6498013859172c350ce42b2eae881e4af7102b8dbf8d01bebb97f6ab6f754"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch9-acceptance-20261112.test.ts",
+          "mainBeforeSha256": "2c5e0f6ea1e4f340bc8e17509859b071aaa76a017f117fea5841c92b89c0810a",
+          "mainAfterSha256": "406abfaf8b623c98c99b13cc562e94db23753fa34afd56f265f96bd83f889019",
+          "requiredReleaseSha256": "8413401661791102cb599daf1ca86d4f867ed88a266304db6a26fab4b113b7c1"
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-anesthetic-intraoperative-crises-20261112.test.ts",
+          "mainBeforeSha256": "572abf647668c6c69a4921464f88bcd17ffa9e846266d9f485eab2eafe61ed15",
+          "mainAfterSha256": "3795b36a8c3ccdd1931a4bdf5f0f59030ed98dbc4cec8097a91a4c9c9ea15661",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "13f27aa5d0b902d7992bb8b92bc1a83219dcb3dffff250d4dde2284528d06b6e",
+          "mainAfterSha256": "2f134b963295d1f859780dbee88d662036a4fbccff00fc033bfe7ce83d46a06f",
+          "requiredReleaseSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc"
+        },
+        {
+          "path": "apps/player/src/session/topicRuntimeBindings.test.ts",
+          "mainBeforeSha256": "ff6f354f63c9ebfcf81bf201288826444697e38e20f525c1dae7bc4dab874142",
+          "mainAfterSha256": "e0be29b7162c00b9cfc9b9ba2d976367f0a6a656e40d014211b58bbea8702d0c",
+          "requiredReleaseSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9"
+        },
+        {
+          "path": "packages/clinical-content/src/playable-patient-narrative.test.ts",
+          "mainBeforeSha256": "04141a1080adefe0ecfdee92549659ca42ab69252659baae005bb50246bc8ceb",
+          "mainAfterSha256": "550c830c1b445613208534c76d342b4bb3c6e6e12afb72e924844c80f1ebebb4",
+          "requiredReleaseSha256": "550c830c1b445613208534c76d342b4bb3c6e6e12afb72e924844c80f1ebebb4"
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-asc-access-and-soft-tissue-surprises-20261112.test.ts",
+          "mainBeforeSha256": "347de6b060cec4729478009fd60467dca3179e7c0239e9096bb62e884cfd2cf8",
+          "mainAfterSha256": "f1ed69ddf1e9b7f27a9073bafdb0bf9bc254b3908f610455b105c33f77cd0f91",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-endoscopic-upper-gi-hemostasis-20261112.test.ts",
+          "mainBeforeSha256": "e69f844f337ba6da2deca428b29d0ed341b898649b4360b866e5accf23f3af15",
+          "mainAfterSha256": "299fb1480768ae4ae03f3024a24d71098a15c8fb791655a88b241cf1e2aee857",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-pediatric-anesthesia-events-20261112.test.ts",
+          "mainBeforeSha256": "73d8df9505b18485187604875d0636b5e0e904560fc030f30dd985bc9c6265ec",
+          "mainAfterSha256": "8e1518f334045c0a5cbc12217ec6094fd0742a42a71e4f140c695af87e9fd83b",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-pediatric-orchiopexy-findings-20261112.test.ts",
+          "mainBeforeSha256": "3fe5f608fa228a8b1417534c7c6090e9ba68d5d201be8b4573e7f6dd49c86ddc",
+          "mainAfterSha256": "4ae553334e97e9a0597b8fd3c9a3dccbb8b445286675c4170a86517ef70aaa0b",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-suspicious-polyps-retrieval-and-tattoo-20261112.test.ts",
+          "mainBeforeSha256": "4c84ed0db70b2e5d5387ec73a30dde3a61d6719d783b01d509c9fc203b995eb9",
+          "mainAfterSha256": "185b50c469d4011dba88a9ae9397033d2795cfad28700cda7d7ead5f4e041eb4",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-polypectomy-technique-and-bleeding-20261112.test.ts",
+          "mainBeforeSha256": "26601732b34f84c2097c7f2858398ee66853ce76410ade9a6f2942b3429a424b",
+          "mainAfterSha256": "682047e6543568c88af408962ab7b92ddeaca2d709f5c635edce7ad122aacfb9",
+          "requiredReleaseSha256": null
+        }
+      ],
+      "reason": "Exact accepted ENG-I01 and frozen intraop9-11 postimages and release-only strict source guards. Captures, required absences and all prior authorizations preserved."
+    },
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port37-evidence",
+      "priorFixtureSha256": "6a11ffec8ed2c78cb316e910a94e1c48a08eb320f634ffd6439fe4f28feb51f0",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "aabb1463ed7634557e1abdebfc72a7f559d485500cc8a686b02fc1a657bd3347",
+          "mainAfterSha256": "b84a76bc5920c1f95c704b2787901b9635e4e2b3ffc7f63141de97b1641d9edc",
+          "requiredReleaseSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "fbec53164c3bfcc12d6c0a5e0e57b28a9c102ec7b25990c4a4939c9327c86b34",
+          "mainAfterSha256": "cd8d023c72bb445cc154dc8a6ea35a01f60b4f5b15f10980fe58f50e7ab404cc",
+          "requiredReleaseSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "2a0d4fe95613674ee092a0d5cee79410a2822a1e2d5cc940263c3b79417fb95c",
+          "mainAfterSha256": "8cb558cfff5a82244d481ce5aa1b303456b8418a0d787313f8cd701dc231d8aa",
+          "requiredReleaseSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "8a3795167915fa8cc4e091988faae70b54779793a094961fc9e95164ebce51b1",
+          "mainAfterSha256": "78c3a41071dd1ae87ac6b18404538fed63ddb152a2fadf19d23a45f446726d83",
+          "requiredReleaseSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "8f82f7281a67276056df37f504ccb1ea45c383805127e913bcdd3cdf38f4d2d2",
+          "mainAfterSha256": "2905b8f5c5ec083835b58b95e20a068e0f673df72e27b3eae6fff87fdb57e7e9",
+          "requiredReleaseSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "077f1652c6a53ff732293315a0c0c85c84bbc3f3a634420da079f299c61e389d",
+          "mainAfterSha256": "243e7d3a40f5787c3c34a9143cc60840ea1c41f0f7cd4a12585841042706ae3a",
+          "requiredReleaseSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227"
+        },
+        {
+          "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+          "mainBeforeSha256": "6dca6d20088963fa080c78c05bbe8c3078c7ea9895fef22f3d706a4749ef02f5",
+          "mainAfterSha256": "b19884a18b8e1b03398b159251e9b0255d0fad4184c6b659bd2c24a5f3d9c3f7",
+          "requiredReleaseSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch9-acceptance-test-support.ts",
+          "mainBeforeSha256": "eeed49a2727fc0c7ab26c80cf8aa1af2f005bc26076d84de5dc88ad8f9961acc",
+          "mainAfterSha256": "2112bdc125ff86a10b1d174d1aa4ae11fcc8ce541710f2828549700139681092",
+          "requiredReleaseSha256": "628d174f19ecf4b73de652b9ee8eaa20f33faa566ffaa19a21396fec4f8b897c"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch9-acceptance-20261112.test.ts",
+          "mainBeforeSha256": "2c5e0f6ea1e4f340bc8e17509859b071aaa76a017f117fea5841c92b89c0810a",
+          "mainAfterSha256": "406abfaf8b623c98c99b13cc562e94db23753fa34afd56f265f96bd83f889019",
+          "requiredReleaseSha256": "d184ab9721fa711765c8db86702d5897a582c791648415c04eabb20e3d72bd78"
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-anesthetic-intraoperative-crises-20261112.test.ts",
+          "mainBeforeSha256": "572abf647668c6c69a4921464f88bcd17ffa9e846266d9f485eab2eafe61ed15",
+          "mainAfterSha256": "3795b36a8c3ccdd1931a4bdf5f0f59030ed98dbc4cec8097a91a4c9c9ea15661",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "13f27aa5d0b902d7992bb8b92bc1a83219dcb3dffff250d4dde2284528d06b6e",
+          "mainAfterSha256": "2f134b963295d1f859780dbee88d662036a4fbccff00fc033bfe7ce83d46a06f",
+          "requiredReleaseSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc"
+        },
+        {
+          "path": "apps/player/src/session/topicRuntimeBindings.test.ts",
+          "mainBeforeSha256": "ff6f354f63c9ebfcf81bf201288826444697e38e20f525c1dae7bc4dab874142",
+          "mainAfterSha256": "e0be29b7162c00b9cfc9b9ba2d976367f0a6a656e40d014211b58bbea8702d0c",
+          "requiredReleaseSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9"
+        },
+        {
+          "path": "packages/clinical-content/src/playable-patient-narrative.test.ts",
+          "mainBeforeSha256": "04141a1080adefe0ecfdee92549659ca42ab69252659baae005bb50246bc8ceb",
+          "mainAfterSha256": "550c830c1b445613208534c76d342b4bb3c6e6e12afb72e924844c80f1ebebb4",
+          "requiredReleaseSha256": "550c830c1b445613208534c76d342b4bb3c6e6e12afb72e924844c80f1ebebb4"
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-asc-access-and-soft-tissue-surprises-20261112.test.ts",
+          "mainBeforeSha256": "347de6b060cec4729478009fd60467dca3179e7c0239e9096bb62e884cfd2cf8",
+          "mainAfterSha256": "f1ed69ddf1e9b7f27a9073bafdb0bf9bc254b3908f610455b105c33f77cd0f91",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-endoscopic-upper-gi-hemostasis-20261112.test.ts",
+          "mainBeforeSha256": "e69f844f337ba6da2deca428b29d0ed341b898649b4360b866e5accf23f3af15",
+          "mainAfterSha256": "299fb1480768ae4ae03f3024a24d71098a15c8fb791655a88b241cf1e2aee857",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-pediatric-anesthesia-events-20261112.test.ts",
+          "mainBeforeSha256": "73d8df9505b18485187604875d0636b5e0e904560fc030f30dd985bc9c6265ec",
+          "mainAfterSha256": "8e1518f334045c0a5cbc12217ec6094fd0742a42a71e4f140c695af87e9fd83b",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-pediatric-orchiopexy-findings-20261112.test.ts",
+          "mainBeforeSha256": "3fe5f608fa228a8b1417534c7c6090e9ba68d5d201be8b4573e7f6dd49c86ddc",
+          "mainAfterSha256": "4ae553334e97e9a0597b8fd3c9a3dccbb8b445286675c4170a86517ef70aaa0b",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-suspicious-polyps-retrieval-and-tattoo-20261112.test.ts",
+          "mainBeforeSha256": "4c84ed0db70b2e5d5387ec73a30dde3a61d6719d783b01d509c9fc203b995eb9",
+          "mainAfterSha256": "185b50c469d4011dba88a9ae9397033d2795cfad28700cda7d7ead5f4e041eb4",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-polypectomy-technique-and-bleeding-20261112.test.ts",
+          "mainBeforeSha256": "26601732b34f84c2097c7f2858398ee66853ce76410ade9a6f2942b3429a424b",
+          "mainAfterSha256": "682047e6543568c88af408962ab7b92ddeaca2d709f5c635edce7ad122aacfb9",
+          "requiredReleaseSha256": null
+        }
+      ],
+      "reason": "Exact accepted ENG-I01 and frozen intraop9-11 postimages and release-only strict source guards. Captures, required absences and all prior authorizations preserved."
+    },
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port37-admission",
+      "priorFixtureSha256": "0d6ad15f505d508657fae2f05171edeef537a83e4fb1c9d949ac09460c85edae",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "aabb1463ed7634557e1abdebfc72a7f559d485500cc8a686b02fc1a657bd3347",
+          "mainAfterSha256": "b84a76bc5920c1f95c704b2787901b9635e4e2b3ffc7f63141de97b1641d9edc",
+          "requiredReleaseSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "fbec53164c3bfcc12d6c0a5e0e57b28a9c102ec7b25990c4a4939c9327c86b34",
+          "mainAfterSha256": "cd8d023c72bb445cc154dc8a6ea35a01f60b4f5b15f10980fe58f50e7ab404cc",
+          "requiredReleaseSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "2a0d4fe95613674ee092a0d5cee79410a2822a1e2d5cc940263c3b79417fb95c",
+          "mainAfterSha256": "8cb558cfff5a82244d481ce5aa1b303456b8418a0d787313f8cd701dc231d8aa",
+          "requiredReleaseSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "8a3795167915fa8cc4e091988faae70b54779793a094961fc9e95164ebce51b1",
+          "mainAfterSha256": "78c3a41071dd1ae87ac6b18404538fed63ddb152a2fadf19d23a45f446726d83",
+          "requiredReleaseSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "8f82f7281a67276056df37f504ccb1ea45c383805127e913bcdd3cdf38f4d2d2",
+          "mainAfterSha256": "2905b8f5c5ec083835b58b95e20a068e0f673df72e27b3eae6fff87fdb57e7e9",
+          "requiredReleaseSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "077f1652c6a53ff732293315a0c0c85c84bbc3f3a634420da079f299c61e389d",
+          "mainAfterSha256": "243e7d3a40f5787c3c34a9143cc60840ea1c41f0f7cd4a12585841042706ae3a",
+          "requiredReleaseSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227"
+        },
+        {
+          "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+          "mainBeforeSha256": "6dca6d20088963fa080c78c05bbe8c3078c7ea9895fef22f3d706a4749ef02f5",
+          "mainAfterSha256": "b19884a18b8e1b03398b159251e9b0255d0fad4184c6b659bd2c24a5f3d9c3f7",
+          "requiredReleaseSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch9-acceptance-test-support.ts",
+          "mainBeforeSha256": "eeed49a2727fc0c7ab26c80cf8aa1af2f005bc26076d84de5dc88ad8f9961acc",
+          "mainAfterSha256": "2112bdc125ff86a10b1d174d1aa4ae11fcc8ce541710f2828549700139681092",
+          "requiredReleaseSha256": "628d174f19ecf4b73de652b9ee8eaa20f33faa566ffaa19a21396fec4f8b897c"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch9-acceptance-20261112.test.ts",
+          "mainBeforeSha256": "2c5e0f6ea1e4f340bc8e17509859b071aaa76a017f117fea5841c92b89c0810a",
+          "mainAfterSha256": "406abfaf8b623c98c99b13cc562e94db23753fa34afd56f265f96bd83f889019",
+          "requiredReleaseSha256": "f05e9f895f63514f480ab251e05a2049d47e3700f3db24eb69ea9cb612aed30e"
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-anesthetic-intraoperative-crises-20261112.test.ts",
+          "mainBeforeSha256": "572abf647668c6c69a4921464f88bcd17ffa9e846266d9f485eab2eafe61ed15",
+          "mainAfterSha256": "3795b36a8c3ccdd1931a4bdf5f0f59030ed98dbc4cec8097a91a4c9c9ea15661",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "13f27aa5d0b902d7992bb8b92bc1a83219dcb3dffff250d4dde2284528d06b6e",
+          "mainAfterSha256": "2f134b963295d1f859780dbee88d662036a4fbccff00fc033bfe7ce83d46a06f",
+          "requiredReleaseSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc"
+        },
+        {
+          "path": "apps/player/src/session/topicRuntimeBindings.test.ts",
+          "mainBeforeSha256": "ff6f354f63c9ebfcf81bf201288826444697e38e20f525c1dae7bc4dab874142",
+          "mainAfterSha256": "e0be29b7162c00b9cfc9b9ba2d976367f0a6a656e40d014211b58bbea8702d0c",
+          "requiredReleaseSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9"
+        },
+        {
+          "path": "packages/clinical-content/src/playable-patient-narrative.test.ts",
+          "mainBeforeSha256": "04141a1080adefe0ecfdee92549659ca42ab69252659baae005bb50246bc8ceb",
+          "mainAfterSha256": "550c830c1b445613208534c76d342b4bb3c6e6e12afb72e924844c80f1ebebb4",
+          "requiredReleaseSha256": "550c830c1b445613208534c76d342b4bb3c6e6e12afb72e924844c80f1ebebb4"
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-asc-access-and-soft-tissue-surprises-20261112.test.ts",
+          "mainBeforeSha256": "347de6b060cec4729478009fd60467dca3179e7c0239e9096bb62e884cfd2cf8",
+          "mainAfterSha256": "f1ed69ddf1e9b7f27a9073bafdb0bf9bc254b3908f610455b105c33f77cd0f91",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-endoscopic-upper-gi-hemostasis-20261112.test.ts",
+          "mainBeforeSha256": "e69f844f337ba6da2deca428b29d0ed341b898649b4360b866e5accf23f3af15",
+          "mainAfterSha256": "299fb1480768ae4ae03f3024a24d71098a15c8fb791655a88b241cf1e2aee857",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-pediatric-anesthesia-events-20261112.test.ts",
+          "mainBeforeSha256": "73d8df9505b18485187604875d0636b5e0e904560fc030f30dd985bc9c6265ec",
+          "mainAfterSha256": "8e1518f334045c0a5cbc12217ec6094fd0742a42a71e4f140c695af87e9fd83b",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-pediatric-orchiopexy-findings-20261112.test.ts",
+          "mainBeforeSha256": "3fe5f608fa228a8b1417534c7c6090e9ba68d5d201be8b4573e7f6dd49c86ddc",
+          "mainAfterSha256": "4ae553334e97e9a0597b8fd3c9a3dccbb8b445286675c4170a86517ef70aaa0b",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-suspicious-polyps-retrieval-and-tattoo-20261112.test.ts",
+          "mainBeforeSha256": "4c84ed0db70b2e5d5387ec73a30dde3a61d6719d783b01d509c9fc203b995eb9",
+          "mainAfterSha256": "185b50c469d4011dba88a9ae9397033d2795cfad28700cda7d7ead5f4e041eb4",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-polypectomy-technique-and-bleeding-20261112.test.ts",
+          "mainBeforeSha256": "26601732b34f84c2097c7f2858398ee66853ce76410ade9a6f2942b3429a424b",
+          "mainAfterSha256": "682047e6543568c88af408962ab7b92ddeaca2d709f5c635edce7ad122aacfb9",
+          "requiredReleaseSha256": null
+        }
+      ],
+      "reason": "Exact accepted ENG-I01 and frozen intraop9-11 postimages and release-only strict source guards. Captures, required absences and all prior authorizations preserved."
+    },
+    {
+      "on": "2026-11-13",
+      "milestone": "release-port37-final-minute-capture",
+      "priorFixtureSha256": "3677bb685e772a598319e7a6751411777af37e15e5d78d8fddf520bd2ccafd37",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "aabb1463ed7634557e1abdebfc72a7f559d485500cc8a686b02fc1a657bd3347",
+          "mainAfterSha256": "b84a76bc5920c1f95c704b2787901b9635e4e2b3ffc7f63141de97b1641d9edc",
+          "requiredReleaseSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "fbec53164c3bfcc12d6c0a5e0e57b28a9c102ec7b25990c4a4939c9327c86b34",
+          "mainAfterSha256": "cd8d023c72bb445cc154dc8a6ea35a01f60b4f5b15f10980fe58f50e7ab404cc",
+          "requiredReleaseSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "2a0d4fe95613674ee092a0d5cee79410a2822a1e2d5cc940263c3b79417fb95c",
+          "mainAfterSha256": "8cb558cfff5a82244d481ce5aa1b303456b8418a0d787313f8cd701dc231d8aa",
+          "requiredReleaseSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "8a3795167915fa8cc4e091988faae70b54779793a094961fc9e95164ebce51b1",
+          "mainAfterSha256": "78c3a41071dd1ae87ac6b18404538fed63ddb152a2fadf19d23a45f446726d83",
+          "requiredReleaseSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "8f82f7281a67276056df37f504ccb1ea45c383805127e913bcdd3cdf38f4d2d2",
+          "mainAfterSha256": "2905b8f5c5ec083835b58b95e20a068e0f673df72e27b3eae6fff87fdb57e7e9",
+          "requiredReleaseSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "077f1652c6a53ff732293315a0c0c85c84bbc3f3a634420da079f299c61e389d",
+          "mainAfterSha256": "243e7d3a40f5787c3c34a9143cc60840ea1c41f0f7cd4a12585841042706ae3a",
+          "requiredReleaseSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227"
+        },
+        {
+          "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+          "mainBeforeSha256": "6dca6d20088963fa080c78c05bbe8c3078c7ea9895fef22f3d706a4749ef02f5",
+          "mainAfterSha256": "b19884a18b8e1b03398b159251e9b0255d0fad4184c6b659bd2c24a5f3d9c3f7",
+          "requiredReleaseSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch9-acceptance-test-support.ts",
+          "mainBeforeSha256": "eeed49a2727fc0c7ab26c80cf8aa1af2f005bc26076d84de5dc88ad8f9961acc",
+          "mainAfterSha256": "2112bdc125ff86a10b1d174d1aa4ae11fcc8ce541710f2828549700139681092",
+          "requiredReleaseSha256": "628d174f19ecf4b73de652b9ee8eaa20f33faa566ffaa19a21396fec4f8b897c"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch9-acceptance-20261112.test.ts",
+          "mainBeforeSha256": "2c5e0f6ea1e4f340bc8e17509859b071aaa76a017f117fea5841c92b89c0810a",
+          "mainAfterSha256": "406abfaf8b623c98c99b13cc562e94db23753fa34afd56f265f96bd83f889019",
+          "requiredReleaseSha256": "5500663925e225e4b644a0fa81be5bef9827654c450d53fc259dbd3c45e18db1"
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-anesthetic-intraoperative-crises-20261112.test.ts",
+          "mainBeforeSha256": "572abf647668c6c69a4921464f88bcd17ffa9e846266d9f485eab2eafe61ed15",
+          "mainAfterSha256": "3795b36a8c3ccdd1931a4bdf5f0f59030ed98dbc4cec8097a91a4c9c9ea15661",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "13f27aa5d0b902d7992bb8b92bc1a83219dcb3dffff250d4dde2284528d06b6e",
+          "mainAfterSha256": "2f134b963295d1f859780dbee88d662036a4fbccff00fc033bfe7ce83d46a06f",
+          "requiredReleaseSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc"
+        },
+        {
+          "path": "apps/player/src/session/topicRuntimeBindings.test.ts",
+          "mainBeforeSha256": "ff6f354f63c9ebfcf81bf201288826444697e38e20f525c1dae7bc4dab874142",
+          "mainAfterSha256": "e0be29b7162c00b9cfc9b9ba2d976367f0a6a656e40d014211b58bbea8702d0c",
+          "requiredReleaseSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9"
+        },
+        {
+          "path": "packages/clinical-content/src/playable-patient-narrative.test.ts",
+          "mainBeforeSha256": "04141a1080adefe0ecfdee92549659ca42ab69252659baae005bb50246bc8ceb",
+          "mainAfterSha256": "550c830c1b445613208534c76d342b4bb3c6e6e12afb72e924844c80f1ebebb4",
+          "requiredReleaseSha256": "550c830c1b445613208534c76d342b4bb3c6e6e12afb72e924844c80f1ebebb4"
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-asc-access-and-soft-tissue-surprises-20261112.test.ts",
+          "mainBeforeSha256": "347de6b060cec4729478009fd60467dca3179e7c0239e9096bb62e884cfd2cf8",
+          "mainAfterSha256": "f1ed69ddf1e9b7f27a9073bafdb0bf9bc254b3908f610455b105c33f77cd0f91",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-endoscopic-upper-gi-hemostasis-20261112.test.ts",
+          "mainBeforeSha256": "e69f844f337ba6da2deca428b29d0ed341b898649b4360b866e5accf23f3af15",
+          "mainAfterSha256": "299fb1480768ae4ae03f3024a24d71098a15c8fb791655a88b241cf1e2aee857",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-pediatric-anesthesia-events-20261112.test.ts",
+          "mainBeforeSha256": "73d8df9505b18485187604875d0636b5e0e904560fc030f30dd985bc9c6265ec",
+          "mainAfterSha256": "8e1518f334045c0a5cbc12217ec6094fd0742a42a71e4f140c695af87e9fd83b",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-pediatric-orchiopexy-findings-20261112.test.ts",
+          "mainBeforeSha256": "3fe5f608fa228a8b1417534c7c6090e9ba68d5d201be8b4573e7f6dd49c86ddc",
+          "mainAfterSha256": "4ae553334e97e9a0597b8fd3c9a3dccbb8b445286675c4170a86517ef70aaa0b",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-suspicious-polyps-retrieval-and-tattoo-20261112.test.ts",
+          "mainBeforeSha256": "4c84ed0db70b2e5d5387ec73a30dde3a61d6719d783b01d509c9fc203b995eb9",
+          "mainAfterSha256": "185b50c469d4011dba88a9ae9397033d2795cfad28700cda7d7ead5f4e041eb4",
+          "requiredReleaseSha256": null
+        },
+        {
+          "path": "packages/clinical-content/src/question-intraop-polypectomy-technique-and-bleeding-20261112.test.ts",
+          "mainBeforeSha256": "26601732b34f84c2097c7f2858398ee66853ce76410ade9a6f2942b3429a424b",
+          "mainAfterSha256": "682047e6543568c88af408962ab7b92ddeaca2d709f5c635edce7ad122aacfb9",
+          "requiredReleaseSha256": null
+        }
+      ],
+      "reason": "manager-approved port37 final-minute capture correction; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization.",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch9-acceptance-20261112.test.ts",
+          "releaseBeforeSha256": "5500663925e225e4b644a0fa81be5bef9827654c450d53fc259dbd3c45e18db1",
+          "previousRequirement": "5500663925e225e4b644a0fa81be5bef9827654c450d53fc259dbd3c45e18db1",
+          "releaseAfterSha256": "9d2209b338854fc5abe558812ef740ef32221311fd14d476efb32e4ba6acb565",
+          "reason": "manager-approved port37 final-minute capture correction; exact regenerated native artifact hashes and downstream guard checksum closure only. Preserve every original capture, required absence, previous pin and authorization."
+        }
+      ]
+    }
+  ],
+  "repairedTopicTestArchivePath": "tools/question-quality/fixtures/question-intraop-batches9-11-retained-authoring-tests-20261113.json",
+  "repairedTopicTestArchiveSha256": "cf1295b6156d128d02a202ec4be44c4d41543f39c8c190cd2e26aa3671b9541b",
+  "testSupportSha256": "1ec0bb8f944e4882bd5bbfaca8565506c7c17981c263e0402656fdeb68a785c3"
+}

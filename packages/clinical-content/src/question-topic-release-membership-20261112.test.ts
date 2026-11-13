@@ -1,11 +1,14 @@
+import {beforeProgramBatch9AcceptanceRelease,beforeProgramBatch9AcceptanceManifest} from "./question-program-batch9-acceptance-test-support";
 import {beforeProgramBatch8AcceptanceRelease,beforeProgramBatch8AcceptanceManifest,programBatch8HistoricalMembership} from "./question-program-batch8-acceptance-test-support";
 import {createHash} from "node:crypto";
 import {existsSync,readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
-import {QUESTION_SHIP_MANIFEST as currentManifest} from "./question-ship-manifest";
-import {SYNTHETIC_CLINICAL_RELEASE as currentLive} from "./synthetic-content";
+import {QUESTION_SHIP_MANIFEST as activeManifest} from "./question-ship-manifest";
+import {SYNTHETIC_CLINICAL_RELEASE as activeLive} from "./synthetic-content";
 import {topicQuestionAcceptance,topicCaseIsExplicitlyLive,retainedTopicCase} from "./question-program-batch6-acceptance-test-support";
 
+// Batches9-11 independently bind every new row; preserve the complete release36 topic epoch.
+const currentManifest=beforeProgramBatch9AcceptanceManifest(activeManifest),currentLive=beforeProgramBatch9AcceptanceRelease(activeLive);
 const manifest=beforeProgramBatch8AcceptanceManifest(currentManifest);
 const live=beforeProgramBatch8AcceptanceRelease(currentLive);
 const read=(path:string)=>JSON.parse(readFileSync(new URL("../../../"+path,import.meta.url),"utf8"));

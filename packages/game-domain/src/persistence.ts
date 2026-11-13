@@ -1,4 +1,5 @@
 import { normalizeFounderConsult } from "./founder-consults";
+import { normalizeProcedureVisit } from "./procedure-context";
 import { normalizeRoutineClinicWork } from "./clinic-work";
 import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
 import { syntheticClinicalCaseSchema } from "@gamify-surgery/clinical-content";
@@ -141,11 +142,12 @@ function readClinicVisit(value: unknown, operation: Record<string, unknown>): Cl
   if (value === undefined) return undefined;
   const incomeByKind = {
     adult_appointment: "income.app_consult", pediatric_consult: "income.pediatric_consult",
-    wound_care: "income.wound_care", ostomy_support: "income.ostomy_support", mri: "income.mri",
+    wound_care: "income.wound_care", ostomy_support: "income.ostomy_support", mri: "income.mri", pediatric_procedure: null,
   } as const;
   if (!hasContractKeys(value, ["version", "kind", "demographics", "pediatricFamilyId", "requestedRoomInstanceId"]) ||
       value.version !== "clinic-visit.v1" || typeof value.kind !== "string" || !(value.kind in incomeByKind) ||
-      operation.incomeLineId !== incomeByKind[value.kind as keyof typeof incomeByKind] ||
+      (value.kind === "pediatric_procedure" ? !normalizeProcedureVisit(operation.procedureContext, String(operation.incomeLineId))?.pediatricFamilyContext
+        : operation.incomeLineId !== incomeByKind[value.kind as keyof typeof incomeByKind]) ||
       !(operation.actorKind === "visitor" || value.kind !== "mri" && operation.actorKind === "encounter" &&
         typeof operation.consultEncounterId === "string" && operation.consultEncounterId === operation.actorId) ||
       !isPixelAppearance(operation.appearance) ||
@@ -154,7 +156,7 @@ function readClinicVisit(value: unknown, operation: Record<string, unknown>): Cl
       (value.demographics.sexLabel !== "Female" && value.demographics.sexLabel !== "Male")) {
     throw new Error("The saved clinic visit is invalid.");
   }
-  const pediatric = value.kind === "pediatric_consult";
+  const pediatric = value.kind === "pediatric_consult" || value.kind === "pediatric_procedure";
   const age = value.demographics.ageYears;
   const familyId = readPediatricFamilyId(value.pediatricFamilyId);
   if (age < (pediatric ? 5 : 18) || age > (pediatric ? 17 : 120) || pediatric !== Boolean(familyId)) {
@@ -209,7 +211,7 @@ function readPediatricFamilies(value: unknown): Record<string, PediatricFamilySt
   if (value === undefined) return undefined;
   if (!isRecord(value) || Array.isArray(value)) throw new Error("The saved pediatric families are invalid.");
   return Object.fromEntries(Object.entries(value).map(([id, family]) => {
-    if (!isSpecialtyId(id) || !hasContractKeys(family, ["version", "id", "child", "parentActorId", "phase", "reservation", "movement"]) ||
+    if (!isSpecialtyId(id) || !hasContractKeys(family, ["version", "id", "child", "parentActorId", "phase", "reservation", "movement", "procedureFlow"]) ||
         family.version !== "pediatric-family.v1" || family.id !== id || !isSpecialtyId(family.parentActorId) ||
         !hasContractKeys(family.child, ["kind", "id"]) || !isSpecialtyId(family.child.id) ||
         (family.child.kind !== "encounter" && family.child.kind !== "service_visitor") ||
@@ -225,6 +227,13 @@ function readPediatricFamilies(value: unknown): Record<string, PediatricFamilySt
       throw new Error("The saved pediatric pair reservation is invalid.");
     }
     const checkedReservation = reservation as PediatricFamilyState["reservation"];
+    const flow = family.procedureFlow;
+    if (flow !== undefined && (!hasContractKeys(flow, ["version", "serviceOperationId", "familyId", "phase", "parentCheckpoint"]) ||
+        flow.version !== "pediatric-procedure-flow.v1" || !isSpecialtyId(flow.serviceOperationId) || !isSpecialtyId(flow.familyId) ||
+        !["arriving", "consent", "waiting", "update", "recovery", "departing", "departed"].includes(String(flow.phase)) ||
+        flow.parentCheckpoint !== null && (!hasContractKeys(flow.parentCheckpoint, ["roomInstanceId", "location"]) ||
+          !isSpecialtyId(flow.parentCheckpoint.roomInstanceId) || !isGridPoint(flow.parentCheckpoint.location)) ||
+        reservation !== null || family.movement !== undefined)) throw new Error("The saved pediatric procedure flow is invalid.");
     const movement = family.movement;
     if (movement !== undefined && (!hasContractKeys(movement, ["version", "childPath", "parentPath", "pathIndex", "lastMovedAtFacilityTick", "doorIds"]) ||
       movement.version !== "pediatric-pair-travel.v1" || !Array.isArray(movement.childPath) || !movement.childPath.every(isGridPoint) ||
@@ -253,10 +262,30 @@ function validatePediatricFamilyLinks(state: GameState, context: DomainContext):
     const operation = family.child.kind === "service_visitor" ? state.serviceOperations.find((op) => op.id === family.child.id) : undefined;
     if (!parent || parent.kind !== "companion" || parent.pediatricFamilyId !== family.id || parent.procedureCompanion || parent.activeRetailOperationId !== null ||
         (encounter ? encounter.pediatricFamilyId !== family.id || !encounter.frozenCase.pediatricProfile || parent.linkedEncounterId !== encounter.id
-          : !operation || operation.clinicVisit?.kind !== "pediatric_consult" || operation.clinicVisit.pediatricFamilyId !== family.id || parent.linkedServiceOperationId !== operation.id)) {
+          : !operation || !(operation.clinicVisit?.kind === "pediatric_consult" || family.procedureFlow && operation.clinicVisit?.kind === "pediatric_procedure") || operation.clinicVisit.pediatricFamilyId !== family.id || parent.linkedServiceOperationId !== operation.id)) {
       throw new Error("The saved pediatric family has missing or incompatible actors.");
     }
     const childLocation = encounter?.patientLocation ?? operation?.location;
+    if (family.procedureFlow) {
+      const flow = family.procedureFlow;
+      const source = state.serviceOperations.find(op => op.id === flow.serviceOperationId);
+      const frozen = source?.procedureContext;
+      if (!source || source.clinicVisit?.kind !== "pediatric_procedure" || source.clinicVisit.pediatricFamilyId !== family.id ||
+          frozen?.familyId !== flow.familyId || !frozen.pediatricFamilyContext ||
+          parent.displayName !== frozen.pediatricFamilyContext.parentName ||
+          (operation ? source.id !== operation.id : source.actorId !== encounter?.id || source.consultEncounterId && source.consultEncounterId !== encounter?.id) ||
+          (encounter && encounter.frozenCase.procedureContext?.mode !== "live") ||
+          source.appearance?.stillId !== frozen.pediatricFamilyContext.childStillId ||
+          source.clinicVisit.demographics.ageYears !== frozen.demographics.ageYears ||
+          source.clinicVisit.demographics.sexLabel !== frozen.demographics.sexLabel ||
+          (flow.parentCheckpoint && (pediatricRoomAtPoint(state, context, flow.parentCheckpoint.location)?.id !== flow.parentCheckpoint.roomInstanceId ||
+            !state.rooms.some(room => room.id === flow.parentCheckpoint!.roomInstanceId &&
+              (room.roomDefinitionId === "room.periop_recovery" || source.status === "cancelled" &&
+                ["room.waiting", "room.pediatric_waiting", "room.pediatric_examination"].includes(room.roomDefinitionId)))))) {
+        throw new Error("The saved pediatric procedure has incompatible frozen actors or source.");
+      }
+      continue; // The validated opt-in flow alone permits cross-room separation.
+    }
     if (pediatricRoomAtPoint(state, context, childLocation)?.id !== pediatricRoomAtPoint(state, context, parent.location)?.id ||
       Boolean(childLocation) !== Boolean(parent.location)) throw new Error("The saved pediatric child and parent must stay together.");
     if (family.movement?.childPath.slice(family.movement.pathIndex).some((point, index) =>
@@ -1296,6 +1325,7 @@ function normalizeServiceOperations(
       displayName: raw.displayName,
       appearance: isPixelAppearance(raw.appearance) ? raw.appearance : null,
       ...(clinicVisit ? { clinicVisit } : {}),
+      ...(raw.procedureContext !== undefined ? {procedureContext: normalizeProcedureVisit(raw.procedureContext, raw.incomeLineId)!} : {}),
       ...(typeof raw.consultEncounterId === "string" ? { consultEncounterId: raw.consultEncounterId } : {}),
       ...(gardenVisitBenefit ? { gardenVisitBenefit } : {}),
       ...(executiveComfort ? { executiveComfort } : {}),

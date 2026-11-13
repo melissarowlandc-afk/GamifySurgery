@@ -14,6 +14,7 @@ import type {
   WorkloadSnapshot,
 } from "./types";
 import { pediatricServiceIsUnsupported } from "./pediatric-eligibility";
+import { PROCEDURE_ROOM_CAPABILITIES } from "./procedure-room-capabilities";
 import { getRoomStaffCapacity } from "./room-capacity";
 import { getActiveExecutiveTerms } from "./executive-management";
 import { getAverageEffectiveStaffMorale } from "./level-five-support";
@@ -378,6 +379,9 @@ function computeCurrentCapabilities(state: GameState, context: DomainContext): S
     }
     const definition = getRoomDefinition(placedRoom.roomDefinitionId, context);
     for (const capabilityId of definition?.capabilityIds ?? []) {
+      capabilities.add(capabilityId);
+    }
+    for (const capabilityId of PROCEDURE_ROOM_CAPABILITIES[placedRoom.roomDefinitionId] ?? []) {
       capabilities.add(capabilityId);
     }
   }

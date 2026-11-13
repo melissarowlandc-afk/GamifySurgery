@@ -1,0 +1,407 @@
+{
+  "census": [
+    {
+      "batch": 9,
+      "cases": 14,
+      "nodes": 17,
+      "liveCases": 4,
+      "liveNodes": 5,
+      "chartCases": 10,
+      "chartNodes": 12
+    },
+    {
+      "batch": 10,
+      "cases": 11,
+      "nodes": 13,
+      "liveCases": 10,
+      "liveNodes": 12,
+      "chartCases": 1,
+      "chartNodes": 1
+    },
+    {
+      "batch": 11,
+      "cases": 4,
+      "nodes": 4,
+      "liveCases": 4,
+      "liveNodes": 4,
+      "chartCases": 0,
+      "chartNodes": 0
+    }
+  ],
+  "nodes": [
+    {
+      "batch": 9,
+      "caseId": "case.intraop.anesthetic-intraoperative-crises.mh-electrolyte.v1",
+      "nodeId": "node.intraop.anesthetic-intraoperative-crises.mh-potassium-cardiotoxicity.v1",
+      "questionVariantId": "question.intraop.anesthetic-intraoperative-crises.mh-potassium-cardiotoxicity.v1",
+      "conceptId": "concept.intraop.anesthetic-intraoperative-crises.mh-potassium-cardiotoxicity.v1",
+      "mode": "live",
+      "familyId": "procedure.groin_hernia_repair",
+      "caseSha256": "32128bc33c1f68b0b51d52467c10b27331900531bc1dea08b5ab01f30ea667a4",
+      "nodeSha256": "f27b4aa72eeacff8d092d3901e7c52efa4ba36d550dc66e33d7fa8a5d98dea8d"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.endoscopic-perforation-and-injury.postclip-hospital-record.v1",
+      "nodeId": "node.intraop.endoscopic-perforation-and-injury.postclosure-gas-observation.v1",
+      "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.postclosure-gas-observation.v1",
+      "conceptId": "concept.intraop.endoscopic-perforation-and-injury.postclosure-gas-observation.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "52f7bb2fe3fc3f448be552c364ee5feb5c31c0bce8847dd2d715abaee2cf7b1c",
+      "nodeSha256": "44f6e67479ee9e76e255de875306a6d721201bb8506bbac8b009a7da1f80228c"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.ercp-access-and-adverse-events.periampullary-injury-course.v1",
+      "nodeId": "node.intraop.ercp-access-and-adverse-events.periampullary-diversion.v1",
+      "questionVariantId": "question.intraop.ercp-access-and-adverse-events.periampullary-diversion.v1",
+      "conceptId": "concept.intraop.ercp-access-and-adverse-events.periampullary-diversion.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "27588c92cd127131a253a748510235ca665d6549712c6388b67bd4f1dc5d56bd",
+      "nodeSha256": "1b567269458d0171c28ab050a581930cb41aa5c5f70e96c31da9955c520653bd"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.ercp-access-and-adverse-events.periampullary-injury-course.v1",
+      "nodeId": "node.intraop.ercp-access-and-adverse-events.collection-after-diversion.v1",
+      "questionVariantId": "question.intraop.ercp-access-and-adverse-events.collection-after-diversion.v1",
+      "conceptId": "concept.intraop.ercp-access-and-adverse-events.collection-after-diversion.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "27588c92cd127131a253a748510235ca665d6549712c6388b67bd4f1dc5d56bd",
+      "nodeSha256": "6566450ab9fb420b27b1ceff66e97fdaa68c7fa6d4f712b4f0b2fe2f2b6ef6db"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.ercp-access-and-adverse-events.pancreatic-protection.v1",
+      "nodeId": "node.intraop.ercp-access-and-adverse-events.pancreatic-protection-after-access.v1",
+      "questionVariantId": "question.intraop.ercp-access-and-adverse-events.pancreatic-protection-after-access.v1",
+      "conceptId": "concept.intraop.ercp-access-and-adverse-events.pancreatic-protection-after-access.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "6409ab76d5ce1fc1e4ba6dda1e7cd97bcd3ccca94beaa9de458838bf25dd3aac",
+      "nodeSha256": "fe4f5c52b1c321c9e2e371c7d4c3870bb9c71db602b9ae6b06ece535e19539f9"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.groin-hernia.sliding-sac.20261112.v1",
+      "nodeId": "node.intraop.groin-hernia.sliding-sigmoid-plane.20261112.v1",
+      "questionVariantId": "question.intraop.groin-hernia.sliding-sigmoid-plane.20261112.v1",
+      "conceptId": "concept.intraop.groin-hernia.sliding-content-dissection.v1",
+      "mode": "live",
+      "familyId": "procedure.groin_hernia_repair",
+      "caseSha256": "6070a1dc663ec1b4070daf2d1683bf00c95d2b74d726226925d1ee8d5aa8293a",
+      "nodeSha256": "bbdb23c3385eb6b822b934dfc084e616de6ab680b43ab3604c9c605b89ad566e"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.groin-hernia.sliding-sac.20261112.v1",
+      "nodeId": "node.intraop.groin-hernia.adherent-distal-sac.20261112.v1",
+      "questionVariantId": "question.intraop.groin-hernia.adherent-distal-sac.20261112.v1",
+      "conceptId": "concept.intraop.groin-hernia.adherent-sac-cord-preservation.v1",
+      "mode": "live",
+      "familyId": "procedure.groin_hernia_repair",
+      "caseSha256": "6070a1dc663ec1b4070daf2d1683bf00c95d2b74d726226925d1ee8d5aa8293a",
+      "nodeSha256": "c5df9b49914ffe61fe59265f63153ae1f128eb5d2031e15cbe0eea7bc7504e45"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.groin-hernia.urinary-findings.20261112.v1",
+      "nodeId": "node.intraop.groin-hernia.urinary-leak-localization.20261112.v1",
+      "questionVariantId": "question.intraop.groin-hernia.urinary-leak-localization.20261112.v1",
+      "conceptId": "concept.intraop.groin-hernia.suspected-bladder-injury-localization.v1",
+      "mode": "live",
+      "familyId": "procedure.groin_hernia_repair",
+      "caseSha256": "b30d75990626e08f9185bfba8b56ca91f1c933d6a7bb43341e45aef967aa1232",
+      "nodeSha256": "43a1608d6f2390b61761576df2cbe7fb2800f801888bad1dafce1a629207af41"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.lap-access.outside-access-rescue.20261112.v1",
+      "nodeId": "node.intraop.lap-access.major-access-injury.20261112.v1",
+      "questionVariantId": "question.intraop.lap-access.major-access-injury.20261112.v1",
+      "conceptId": "concept.intraop.lap-access.major-access-injury.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "44024bf626963884e399498cfe1c7f8056d84eefa6206f01fec1c68bd3e0eb43",
+      "nodeSha256": "136fd5645735f2c21e922133e9bf5c079109faaee38f5c9b78a8a313c29bb6e3"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.operative-hemorrhage.posterior-liver-record.20261112.v1",
+      "nodeId": "node.intraop.operative-hemorrhage.pringle-persistent-posterior.20261112.v1",
+      "questionVariantId": "question.intraop.operative-hemorrhage.pringle-persistent-posterior.20261112.v1",
+      "conceptId": "concept.intraop.operative-hemorrhage.pringle-persistent-posterior.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "d76c87924fb446278ceb9486ed01303e477bb8d4684fd133dd9929d8daf315dc",
+      "nodeSha256": "43958412e3116740dfbb4a4158e8abb975bd45c055d6b552145f993f4feefc8d"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.i25.unmapped-narrowing.20261112.v1",
+      "nodeId": "node.intraop.i25.anatomy-before-dilation.20261112.v1",
+      "questionVariantId": "question.intraop.i25.anatomy-before-dilation.20261112.v1",
+      "conceptId": "concept.intraop.i25.anatomy-before-dilation.20261112.v1",
+      "mode": "live",
+      "familyId": "procedure.egd",
+      "caseSha256": "152570421683457289f546c0b9f1d893c42b2303c95b22f28e824f547a4ec6e3",
+      "nodeSha256": "0f8ab6b0bf3f676be4f6107ff62207e9603850dccb1814f82db36457555e9f4a"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.i24.battery-injury-record.20261112.v1",
+      "nodeId": "node.intraop.i24.battery-injury-imaging.20261112.v1",
+      "questionVariantId": "question.intraop.i24.battery-injury-imaging.20261112.v1",
+      "conceptId": "concept.intraop.i24.battery-injury-imaging.20261112.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.egd",
+      "caseSha256": "3f4e618e34bdff958cd0593200abde27b999aa0ca6f9ef5c85a6e0d3e3c9184b",
+      "nodeSha256": "2a8b0b4b9037985b5b3f5a5dc799a13359a590716b9d2ab16ea08a1387be1a84"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.thyroid-nerve-monitoring.distal-response-coverage.v1",
+      "nodeId": "node.intraop.thyroid-nerve-monitoring.proximal-verification.v1",
+      "questionVariantId": "question.intraop.thyroid-nerve-monitoring.proximal-verification.v1",
+      "conceptId": "concept.intraop.thyroid-nerve-monitoring.proximal-verification.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.thyroidectomy",
+      "caseSha256": "678e12444baed1785ae036c1dea0318322ca48638ef39177e36e92de7c181a8d",
+      "nodeSha256": "317a75863248209c38d09b4aa6afe8b51e04d0f1ab7ffbc69d8bb9d49afcabd1"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.thyroid-nerve-monitoring.two-signal-events.v1",
+      "nodeId": "node.intraop.thyroid-nerve-monitoring.recording-check.v1",
+      "questionVariantId": "question.intraop.thyroid-nerve-monitoring.recording-check.v1",
+      "conceptId": "concept.intraop.thyroid-nerve-monitoring.recording-check.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.thyroidectomy",
+      "caseSha256": "53af779615f00161287215746e2995fef09808ede79d433f6ead30e27f7299b2",
+      "nodeSha256": "8537bc54f8d2de20aa1c338fe4ebbd12c83ef76b29dd57c1cdf5da1061b5d6eb"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.thyroid-nerve-monitoring.two-signal-events.v1",
+      "nodeId": "node.intraop.thyroid-nerve-monitoring.verified-loss-extent.v1",
+      "questionVariantId": "question.intraop.thyroid-nerve-monitoring.verified-loss-extent.v1",
+      "conceptId": "concept.intraop.thyroid-nerve-monitoring.verified-loss-extent.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.thyroidectomy",
+      "caseSha256": "53af779615f00161287215746e2995fef09808ede79d433f6ead30e27f7299b2",
+      "nodeSha256": "8a8ea52665d7507ee1fcea359554e594a4817b647ca7d7dac05daa13eb9c4fd9"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.unexpected-bowel.base-margin.20261112.v1",
+      "nodeId": "node.intraop.unexpected-bowel.base-margin.20261112.v1",
+      "questionVariantId": "question.intraop.unexpected-bowel.base-margin.20261112.v1",
+      "conceptId": "concept.intraop.unexpected-bowel.appendiceal-base-margin.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "80daf8f67a392cb3e1b3a39cb3b350df772a6913f2024ff872c40d031377b087",
+      "nodeSha256": "c2dbdfcfbfa9d53310df459dbda0477580d51dd9c44072edeec240bad22de8e7"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.unexpected-bowel.ileitis-restraint.20261112.v1",
+      "nodeId": "node.intraop.unexpected-bowel.ileitis-restraint.20261112.v1",
+      "questionVariantId": "question.intraop.unexpected-bowel.ileitis-restraint.20261112.v1",
+      "conceptId": "concept.intraop.unexpected-bowel.unexpected-ileitis-operative-restraint.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "e8e57cbae4ac8d387504b9441181d79d1e6d6f47247db66da78ca589eae87b1f",
+      "nodeSha256": "ffb431e69b61bcf621e4d823a83571a8605683ef902263f91f289bc857110b7f"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.asc-access.port-course.20261112.v1",
+      "nodeId": "node.intraop.asc-access.anterior-port-course.20261112.v1",
+      "questionVariantId": "question.intraop.asc-access.anterior-port-course.20261112.v1",
+      "conceptId": "concept.intraop.asc-access.orthogonal-port-course-correction.v1",
+      "mode": "live",
+      "familyId": "procedure.central_venous_port_insertion",
+      "caseSha256": "b1e0618d1e83f15359d55caf4b3295b96ee8acfdd69669ebd9fff06a0bb75053",
+      "nodeSha256": "0cfbb14fcbaac7105a046e62c703fb4c597e76531109aade07e4d2301a81420b"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.biliary-safety.new-bile.20261112.v1",
+      "nodeId": "node.intraop.biliary-safety.unexplained-bile.20261112.v1",
+      "questionVariantId": "question.intraop.biliary-safety.unexplained-bile.20261112.v1",
+      "conceptId": "concept.intraop-biliary.unexplained-bile-imaging.v1",
+      "mode": "live",
+      "familyId": "procedure.laparoscopic_cholecystectomy",
+      "caseSha256": "bfefcd7048be4437a0a39726baebe95e2bd128a44b6c48896e5896aa3f2e6ae3",
+      "nodeSha256": "6f79afd415e085b0658e38955dbbdfdbde8730dbdc96690bb7e4544c60fe23b2"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.biliary-safety.new-bile.20261112.v1",
+      "nodeId": "node.intraop.biliary-safety.major-injury-transfer.20261112.v1",
+      "questionVariantId": "question.intraop.biliary-safety.major-injury-transfer.20261112.v1",
+      "conceptId": "concept.n2.bile-leak-duct-continuity-boundary",
+      "mode": "live",
+      "familyId": "procedure.laparoscopic_cholecystectomy",
+      "caseSha256": "bfefcd7048be4437a0a39726baebe95e2bd128a44b6c48896e5896aa3f2e6ae3",
+      "nodeSha256": "25d991dc06e6564924ed91c74643b1c497ea3f6d96169202c2e836333a91969b"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.biliary-safety.stone-clearance.20261112.v1",
+      "nodeId": "node.intraop.biliary-safety.stone-clearance-route.20261112.v1",
+      "questionVariantId": "question.intraop.biliary-safety.stone-clearance-route.20261112.v1",
+      "conceptId": "concept.intraop-biliary.stone-clearance-route.v1",
+      "mode": "live",
+      "familyId": "procedure.laparoscopic_cholecystectomy",
+      "caseSha256": "7e54c99a842ea0e0e2f954fdc555dbf6bf3d6bef2ab8d17123ee5b45223f11f2",
+      "nodeSha256": "06af50db7b7fdf7ff0b5f410a2f19e986c3345ab511e28b9d1edbf15738b2f04"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.endoscopic-perforation-and-injury.sigmoid-defect-and-reassessment.v1",
+      "nodeId": "node.intraop.endoscopic-perforation-and-injury.fresh-sigmoid-closure.v1",
+      "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.fresh-sigmoid-closure.v1",
+      "conceptId": "concept.intraop.endoscopic-perforation-and-injury.fresh-sigmoid-closure.v1",
+      "mode": "live",
+      "familyId": "procedure.colonoscopy_polypectomy",
+      "caseSha256": "4485ff0d19ad6ae775fe7e9b3db9b4649ab32a55adce85c4e9d7801e3ea55983",
+      "nodeSha256": "b91d09cf3394862fa4305d29a19a1c23d71d8da2e7f69318b6a8bbffaae68177"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.endoscopic-perforation-and-injury.sigmoid-defect-and-reassessment.v1",
+      "nodeId": "node.intraop.endoscopic-perforation-and-injury.postclip-tension-rescue.v1",
+      "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.postclip-tension-rescue.v1",
+      "conceptId": "concept.intraop.endoscopic-perforation-and-injury.postclip-tension-rescue.v1",
+      "mode": "live",
+      "familyId": "procedure.colonoscopy_polypectomy",
+      "caseSha256": "4485ff0d19ad6ae775fe7e9b3db9b4649ab32a55adce85c4e9d7801e3ea55983",
+      "nodeSha256": "359c9213eee02dcea01a6ce0f00ff8fe0df17a655118498d4a9fe449a0bc6565"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.endoscopic-perforation-and-injury.dilation-observed-defect.v1",
+      "nodeId": "node.intraop.endoscopic-perforation-and-injury.observed-esophageal-primary-closure.v1",
+      "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.observed-esophageal-primary-closure.v1",
+      "conceptId": "concept.intraop.endoscopic-perforation-and-injury.observed-esophageal-primary-closure.v1",
+      "mode": "live",
+      "familyId": "procedure.egd",
+      "caseSha256": "25048561106c68e9331fa7bb34c538d4d1a06d6e6ca25290eb62b286d5d4fc3d",
+      "nodeSha256": "76346d8bbc5764aa9bb3e5deeca717cc92bad7b68c30cb24c0f1b535111d3692"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.suspicious-polyps.new-descending-colon-focus.20261112.v1",
+      "nodeId": "node.intraop.suspicious-polyps.deep-pattern-before-resection.20261112.v1",
+      "questionVariantId": "question.intraop.suspicious-polyps.deep-pattern-before-resection.20261112.v1",
+      "conceptId": "concept.intraop.suspicious-polyps.deep-pattern-before-resection.20261112.v1",
+      "mode": "live",
+      "familyId": "procedure.colonoscopy_polypectomy",
+      "caseSha256": "8e4eb22e0426b31ceed70f028360dbb3d4c5c033d49a327af591d82914c067fd",
+      "nodeSha256": "7c27a159f2b5cbdebf0795c90cc4dc698d39697fbb51ce5f2563cd874fe763ac"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.anesthetic-intraoperative-crises.anaphylaxis-response-salvage.v1",
+      "nodeId": "node.intraop.anesthetic-intraoperative-crises.anaphylaxis-infusion.v1",
+      "questionVariantId": "question.intraop.anesthetic-intraoperative-crises.anaphylaxis-infusion.v1",
+      "conceptId": "concept.intraop.anesthetic-intraoperative-crises.periop-anaphylaxis-sustained-rescue.v1",
+      "mode": "live",
+      "familyId": "procedure.groin_hernia_repair",
+      "caseSha256": "5c142d2d71182a395a076566fc4cca794305f7eb12ace9adc0c19c797dd683c4",
+      "nodeSha256": "3016b47c1bf77ad6df154c23a1144e2d93f156d34388c24bc5d02d7919b6ffd6"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.upper-gi-hemostasis.esophageal-variceal-record.20261112-salvage.v1",
+      "nodeId": "node.intraop.upper-gi-hemostasis.esophageal-plug-treatment.20261112.v1",
+      "questionVariantId": "question.intraop.upper-gi-hemostasis.esophageal-plug-treatment.20261112.v1",
+      "conceptId": "concept.intraop.upper-gi-hemostasis.esophageal-plug-treatment.20261112.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.egd",
+      "caseSha256": "964c3ef7d17ec34b34a74653242524952e652d9b1c37e4b990c1e2863666c9bb",
+      "nodeSha256": "f2f50c9309b9352183cebc7fd158db8e047fe8d0209955e162c7f1c178f9b301"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.pediatric-anesthesia-events.egd-airway-salvage.v1",
+      "nodeId": "node.intraop.pediatric-anesthesia-events.persistent-laryngeal-closure.v1",
+      "questionVariantId": "question.intraop.pediatric-anesthesia-events.persistent-laryngeal-closure.v1",
+      "conceptId": "concept.intraop.pediatric-anesthesia-events.persistent-laryngeal-closure.v1",
+      "mode": "live",
+      "familyId": "procedure.egd",
+      "caseSha256": "d6c21bf2863128c21c897cac7d7bb6c837eec2917df820cce6e6bec4515da22b",
+      "nodeSha256": "972aee52a00ae933a162189798725e9093afcece6c82a263b8298b8a57e52c57"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.pediatric-anesthesia-events.hernia-airflow-salvage.v1",
+      "nodeId": "node.intraop.pediatric-anesthesia-events.ventilated-expiratory-wheeze.v1",
+      "questionVariantId": "question.intraop.pediatric-anesthesia-events.ventilated-expiratory-wheeze.v1",
+      "conceptId": "concept.intraop.pediatric-anesthesia-events.ventilated-expiratory-wheeze.v1",
+      "mode": "live",
+      "familyId": "procedure.groin_hernia_repair",
+      "caseSha256": "9d3c88a6803b32a90791ccd6a621c3dbbb6e702dc8bdc237531b9fd1a359e744",
+      "nodeSha256": "c908c3814e9aae61c02a7b53018c0479315fe8bea792020498c04484f9e8fa8c"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.pediatric-orchiopexy.inguinal-descent.20261112-salvage.v1",
+      "nodeId": "node.intraop.pediatric-orchiopexy.residual-cord-bands.20261112.v1",
+      "questionVariantId": "question.intraop.pediatric-orchiopexy.residual-cord-bands.20261112.v1",
+      "conceptId": "concept.intraop.pediatric-orchiopexy.residual-cord-mobilization.v1",
+      "mode": "live",
+      "familyId": "procedure.orchiopexy",
+      "caseSha256": "fd288acfd3f919806c05f7427dcf49083c2e7bedf758f2a36d217f57e5d4f86d",
+      "nodeSha256": "c343e18df5e8941db00be5bc1d3983430a80dbee444f2f0f27bef55adc6b3530"
+    },
+    {
+      "batch": 11,
+      "caseId": "case.intraop.anorectal-eua.crohn-checkpoints.20261112-salvage.v1",
+      "nodeId": "node.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+      "questionVariantId": "question.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+      "conceptId": "concept.intraop.anorectal-eua.crohn-rectal-activity.v1",
+      "mode": "live",
+      "familyId": "procedure.anorectal_eua",
+      "caseSha256": "962af58a2588246ba0a84c276f8073024b85b846eefd39f36915a227d677167c",
+      "nodeSha256": "2dbe16d9fa0627c3630a2c2b41d9cc83819e7c1da7d318cbe5dc870e687e87ca"
+    },
+    {
+      "batch": 11,
+      "caseId": "case.intraop.parathyroid.missing-gland-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.sample-integrity.v1",
+      "questionVariantId": "question.intraop.parathyroid.sample-integrity.v1",
+      "conceptId": "concept.intraop.parathyroid.sample-integrity.v1",
+      "mode": "live",
+      "familyId": "procedure.parathyroidectomy",
+      "caseSha256": "fb3c87bdae6738508d6cf22be659f0cf12e2538c7046a5403dac5ac766279d74",
+      "nodeSha256": "810b6144fab1f52c24a344d4c0b7c57967548d6fcdb57cfaf0e3eec89a9bf7bf"
+    },
+    {
+      "batch": 11,
+      "caseId": "case.intraop.parathyroid.gland-preservation-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.selective-salvage.v1",
+      "questionVariantId": "question.intraop.parathyroid.selective-salvage.v1",
+      "conceptId": "concept.intraop.parathyroid.selective-salvage.v1",
+      "mode": "live",
+      "familyId": "procedure.thyroidectomy",
+      "caseSha256": "1c3091fd4b0b877fc618b21d08b243fbaef901822d2bc258d4f6163f548f99d6",
+      "nodeSha256": "41410757bdc392961f9896f3fe509275f72df75da0cf6ca03a021e146b8063c6"
+    },
+    {
+      "batch": 11,
+      "caseId": "case.intraop.polypectomy.ascending-emr-completion.20261112-salvage.v1",
+      "nodeId": "node.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      "questionVariantId": "question.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      "conceptId": "concept.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      "mode": "live",
+      "familyId": "procedure.colonoscopy_polypectomy",
+      "caseSha256": "02fa2324bccf5f81f5aff80b0c891906917ee6db0961c9e2bea98aeea6441096",
+      "nodeSha256": "32c4b69e378927d3677f9fbc09793921346e3874f01bf47f37556bee6a5d0b4d"
+    }
+  ]
+}

@@ -62,6 +62,7 @@ export function reconcileProcedureCompanions(state: GameState): void {
     actor.activeRetailOperationId ??= state.retailOperations.find((trip) => trip.actorId === actor.id && trip.actorKind === actor.kind &&
       !["completed", "cancelled", "abandoned"].includes(trip.status))?.id ?? null;
     if (actor.kind !== "companion") continue;
+    if (actor.pediatricFamilyId) continue;
     const operation = state.serviceOperations.find((op) => op.id === actor.linkedServiceOperationId) ??
       state.serviceOperations.find((op) => op.actorKind === "encounter" && op.actorId === actor.linkedEncounterId &&
         op.periopBedFlowVersion === 1 && !["completed", "cancelled"].includes(op.status));

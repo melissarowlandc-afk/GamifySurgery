@@ -7,11 +7,14 @@ import { pediatricCaseHasCompatibleIdentity } from "./pediatric-eligibility";
 import { pediatricStillEligibleEntries } from "./characterStillCatalog";
 import { getCurrentCapabilities, isRoomOperationalForFacilityWork } from "./selectors";
 import { getExactTestChoiceOrderRecordForCase } from "./test-choice-orders";
+import { pediatricProcedureFamilyContext, supportedProcedureContext } from "./procedure-context";
 import type { DomainContext, GameState } from "./types";
 
 /** Exact editorial identities, never an input to disease selection or FSRS. */
 export function getPediatricClinicFamilyContext(clinicalCase: SyntheticClinicalCase) {
   if (!clinicalCase.pediatricProfile) return undefined;
+  const procedural = pediatricProcedureFamilyContext(clinicalCase);
+  if (procedural) return procedural;
   const family = PEDIATRIC_CLINIC_FAMILY_CONTEXTS.find(row => row.caseId === clinicalCase.id &&
     row.profileId === (clinicalCase.selectedInstantiationProfileId ?? clinicalCase.approvedInstantiationProfiles?.[0]?.id));
   const demographics = clinicalCase.prototypeDemographics;
@@ -29,7 +32,10 @@ export function getPediatricClinicFamilyContext(clinicalCase: SyntheticClinicalC
 export function clinicalCaseHasSupportedPatientSemantics(clinicalCase: SyntheticClinicalCase): boolean {
   if (!pediatricCaseHasCompatibleIdentity(clinicalCase)) return false;
   if (!clinicalCase.pediatricProfile) return clinicalCase.releasePointId !== "release.l4.pediatrics";
-  if (clinicalCase.requiredClinicalSetting !== "clinic" || clinicalCase.participant) return false;
+  if (clinicalCase.pediatricProfile.requiresParent !== true) return false;
+  const liveProcedure = supportedProcedureContext(clinicalCase);
+  if ((clinicalCase.requiredClinicalSetting !== "clinic" && !liveProcedure) || clinicalCase.participant) return false;
+  if (clinicalCase.procedureContext?.mode === "live" && (!liveProcedure || !pediatricProcedureFamilyContext(clinicalCase))) return false;
   if (clinicalCase.decisionNodes.some(node => node.resultGateAfter || node.answerChoices.some(choice => choice.serviceRequest))) return false;
   const pediatricRelease = clinicalCase.releasePointId === "release.l4.pediatrics";
   if (pediatricRelease && !getPediatricClinicFamilyContext(clinicalCase)) return false;
@@ -63,6 +69,16 @@ export function getClinicalCaseEligibilityIssue(
   context: DomainContext,
   capabilities = getCurrentCapabilities(state, context),
 ): string | null {
+  if (clinicalCase.procedureContext?.mode === "live" && !supportedProcedureContext(clinicalCase)) {
+    return "This live case needs a supported declared procedure family and observation-only steps.";
+  }
+  if (clinicalCase.procedureContext?.mode === "chart_review" && clinicalCase.requiredClinicalSetting !== "clinic") {
+    return "A hospital procedure record review must use the clinic setting.";
+  }
+  if (clinicalCase.procedureContext?.mode === "chart_review" && clinicalCase.decisionNodes.some(node =>
+    node.resultGateAfter || node.answerChoices.some(choice => choice.serviceRequest))) {
+    return "A procedure record review uses recorded observations, not an executed procedure or result gate.";
+  }
   if (!pediatricCaseHasCompatibleIdentity(clinicalCase)) {
     return "This patient needs compatible, explicit pediatric demographics and child art.";
   }

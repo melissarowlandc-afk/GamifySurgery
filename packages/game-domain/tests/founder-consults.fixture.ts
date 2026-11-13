@@ -27,11 +27,15 @@ export function preparedProcedureConsult(kind: "endoscopy" | "operation" = "endo
   const published = context.clinicalRelease.cases.find(c => c.id === "case.l2.colonic-lipoma.direct.typical-a")!;
   // Mechanical OR context only. Reuses unchanged question/answers; no case is
   // added to the shipped release and no new medical prose is authored.
-  const mechanical = { ...published, id: "case.mechanical.operative-consult", requiredClinicalSetting: "ambulatory_surgery" as const, requiredCapabilityIds: [] };
+  const mechanical = { ...published, id: "case.mechanical.operative-consult", requiredClinicalSetting: "ambulatory_surgery" as const, requiredCapabilityIds: [],
+    procedureContext: {version: "procedure-context.v1" as const, mode: "live" as const, familyId: "procedure.laparoscopic_cholecystectomy",
+      kind: "operation" as const, phase: "procedure" as const, allowedIncomeLineIds: [op.incomeLineId], requiredCapabilityIds: []}};
   const ctx: DomainContext = kind === "operation" ? { ...context, clinicalRelease: { ...context.clinicalRelease, cases: [...context.clinicalRelease.cases, mechanical] } } : context;
   const c = kind === "operation" ? mechanical : published;
   if (kind === "operation") op.appearance = createPatientPixelAppearance(state.campaignSeed, "compatible.consult.actor",
     c.approvedInstantiationProfiles?.[0]?.prototypeDemographics ?? c.prototypeDemographics ?? {});
+  if (kind === "operation") op.procedureContext = {version: "procedure-visit.v1", familyId: mechanical.procedureContext.familyId,
+    kind: "operation", demographics: {...(c.approvedInstantiationProfiles?.[0]?.prototypeDemographics ?? c.prototypeDemographics)!} as {ageYears: number; sexLabel: "Female" | "Male"}};
   const id = op.id, originalAppearance = structuredClone(op.appearance), originalName = op.displayName;
   state.nextRoutineArrivalTick = state.facilityTick + 1;
   for (let i = 0; i < 5 && !state.serviceOperations.find(op => op.id === id)?.consultEncounterId; i++) state = consultTick(state, 1, ctx);

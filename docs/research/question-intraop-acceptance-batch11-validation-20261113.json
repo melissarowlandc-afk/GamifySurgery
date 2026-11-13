@@ -1,0 +1,1006 @@
+{
+  "checkedOn": "2026-11-13",
+  "results": {
+    "clinical-full": {
+      "passed": 3514,
+      "failed": 11,
+      "skipped": 0,
+      "total": 3525,
+      "files": 235,
+      "exitCode": 1,
+      "exactSummary": "Test Files  10 failed | 225 passed (235)\r\n      Tests  11 failed | 3514 passed (3525)\r\n   Start at  01:05:42\r\n   Duration  331.01s (transform 36.34s, setup 0ms, import 529.18s, tests 105.87s, environment 16ms)",
+      "logSha256": "4f99cec3578ecc5ef4a9f8f56044f3d674de28fafdf3e1cf3a82d44c79a01ee5",
+      "failures": [
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-flags3-20261107.test.ts",
+          "title": "flags3 exact owner-flag candidates and retained live source leaves every existing protected source and decision file byte-exact",
+          "failureMessages": [
+            "AssertionError: packages/clinical-content/src/schema.ts: expected '530198fa3bb3f9270ba1eaee74974011736d9…' to be 'c4d1640ba549c49b6a3dc7bfdf9155504611d…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-flags3-20261107.test.ts:124:210\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+          "title": "exact harden1 H1-03 and two N3R4 PASS acceptances pins each explicit authorized preimage without changing immutable captures",
+          "failureMessages": [
+            "AssertionError: packages/game-domain/src/test-choice-orders.ts exact authorized acceptance postimage: expected '793450bed94248300965c719be76fd068d35b…' to be '573f4c6156d7c1819db74ad87e9a6413482a8…' // Object.is equality\n    at beforeHarden1N3r4AcceptanceSource (C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-harden1-n3r4-acceptance-test-support.ts:51:69)\n    at C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts:64:39\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+          "title": "topic batch5 final exact manager acceptance freezes the original reviewed serializations and full source file hashes",
+          "failureMessages": [
+            "AssertionError: packages/clinical-content/src/question-topic-pediatric-neck-thoracic-gu-20261111.ts: expected 'cc088d37bf249056798b48ab7c88182c7f71d…' to be 'a856c174d6b5e7630ecf5ada86699a00ad7a0…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts:144:136\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+          "title": "topic batch5 final exact manager acceptance binds every scoped existing-source correction to its captured preimage",
+          "failureMessages": [
+            "AssertionError: packages/clinical-content/src/question-topic-ethics-professionalism-20261111.test.ts batch5 postimage: expected '30635a058a1fdb4f1c9c4122f917081be4bde…' to be '12f37fe405bdfece7d4c28c90ab6c521eee13…' // Object.is equality\n    at beforeProgramBatch5AcceptanceSource (C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-program-batch5-acceptance-test-support.ts:92:53)\n    at C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts:201:42\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-stats1-20261108.test.ts",
+          "title": "stats1 short single-skill candidates without live acceptance preserves every protected source/capture through the exact authorized standard/test-hook migration",
+          "failureMessages": [
+            "AssertionError: packages/clinical-content/src/schema.ts: expected '530198fa3bb3f9270ba1eaee74974011736d9…' to be 'c4d1640ba549c49b6a3dc7bfdf9155504611d…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-stats1-20261108.test.ts:182:93\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts",
+          "title": "stats1 exact manager acceptance and frozen identities pins each authorized existing-source delta before preserving old capture assertions",
+          "failureMessages": [
+            "AssertionError: apps/player/src/session/cloud/automaticResolution.test.ts: expected '09726190a2b74f2c10864ea2b97bb1d3ac5d4…' to be '090773dee1e725c0c90a8d49fe7a0127f8583…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-stats1-acceptance-20261108.test.ts:98:156\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-topic-esophagus-gerd-barrett-hiatal-20261111.test.ts",
+          "title": "two returned salvage revisions rechecks only the two returned contexts and preserves the nine earlier accepted items",
+          "failureMessages": [
+            "AssertionError: expected '2b50af4969797a5071cb5b9ca88e9de7c06e5…' to be '2ea566efc586d806d9c2a284f21b35df35d41…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-topic-esophagus-gerd-barrett-hiatal-20261111.test.ts:305:43\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-topic-esophagus-motility-achalasia-20261111.test.ts",
+          "title": "esophagus motility and achalasia authoring sidecar freezes the passed salvage context and every pre-revision export while submitting only the returned case",
+          "failureMessages": [
+            "AssertionError: expected '0645031a589cf15b2e92318856c5ccdf0a73a…' to be '3ca89049c1d1cda6ad90dadb434e7b200ae45…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-topic-esophagus-motility-achalasia-20261111.test.ts:731:40\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-topic-pediatric-gi-abdominal-wall-20261111.test.ts",
+          "title": "pediatric GI and abdominal-wall topic sidecar repairs only the intussusception timepoint and excludes gastroschisis from further review",
+          "failureMessages": [
+            "AssertionError: expected 'daa3005e5021e3b4025700f043e87ec59152a…' to be '809e8362400762de8e6d03c294b36d2061980…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-topic-pediatric-gi-abdominal-wall-20261111.test.ts:416:84\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-topic-surgical-infection-antibiotics-20261111.test.ts",
+          "title": "surgical infection and antibiotics authoring sidecar keeps the three reviewed salvage identities in the current revision queue",
+          "failureMessages": [
+            "AssertionError: expected [ { …(11) }, { …(11) }, { …(11) } ] to deeply equal [ { …(11) }, { …(11) }, { …(11) } ]\n    at C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-topic-surgical-infection-antibiotics-20261111.test.ts:396:52\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-topic-trauma-initial-abdomen-20261111.test.ts",
+          "title": "trauma initial abdomen: reviewed clinic chart-review sidecar validates the exact shared acceptance epoch and keeps salvage out of the default release",
+          "failureMessages": [
+            "AssertionError: packages/clinical-content/src/schema.ts: expected '530198fa3bb3f9270ba1eaee74974011736d9…' to be 'c4d1640ba549c49b6a3dc7bfdf9155504611d…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-topic-trauma-initial-abdomen-20261111.test.ts:83:75\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:20"
+          ],
+          "presentInBatch10Baseline": true
+        }
+      ],
+      "focused": [
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/patient-library-wording-repair.test.ts",
+          "tests": 7,
+          "failed": 0
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/playable-patient-narrative.test.ts",
+          "tests": 4,
+          "failed": 0
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-program-batch10-acceptance-20261113.test.ts",
+          "tests": 6,
+          "failed": 0
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-program-batch11-acceptance-20261113.test.ts",
+          "tests": 6,
+          "failed": 0
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-ship-manifest.test.ts",
+          "tests": 12,
+          "failed": 0
+        }
+      ],
+      "receiptName": "clinical-complete"
+    },
+    "domain-full": {
+      "passed": 6125,
+      "failed": 27,
+      "skipped": 1,
+      "total": 6153,
+      "files": 226,
+      "exitCode": 1,
+      "exactSummary": "Test Files  2 failed | 224 passed (226)\r\n      Tests  27 failed | 6125 passed | 1 skipped (6153)\r\n   Start at  00:58:20\r\n   Duration  1036.91s (transform 20.69s, setup 0ms, import 587.64s, tests 1460.29s, environment 15ms)",
+      "logSha256": "7020ab33204fc0fecb5389c8488302758f6e8da4c1742b7abf6140bf57954bb3",
+      "failures": [
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/approved-clinical-admission.test.ts",
+          "title": "approved clinical admission boundaries keeps the unapproved prototype runtime release limited to explicitly admitted concepts",
+          "failureMessages": [
+            "AssertionError: expected [ …(1142) ] to deeply equal [ …(587) ]\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/approved-clinical-admission.test.ts:166:7\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 connected Level 5 reducer journey binds the actual run to its current game, balance, clinical and driver inputs and reconciles cash",
+          "failureMessages": [
+            "AssertionError: packages/balance-config/src/employee-training.ts: expected '2d2886b1b2f3615a2513b98f892c339394489…' to be '9daacd4783b15e7fa5ee85c1348a313e6454b…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:47:71\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2955:64"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level +0/schema 5",
+          "failureMessages": [
+            "AssertionError: expected 'a260139e4e5c4c9bf251ca4cf996b06c53419…' to be '92728e650dc9a0f02b005470db49ab566769a…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level +0/schema 6",
+          "failureMessages": [
+            "AssertionError: expected 'a260139e4e5c4c9bf251ca4cf996b06c53419…' to be '92728e650dc9a0f02b005470db49ab566769a…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level +0/schema 7",
+          "failureMessages": [
+            "AssertionError: expected 'a260139e4e5c4c9bf251ca4cf996b06c53419…' to be '92728e650dc9a0f02b005470db49ab566769a…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level +0/schema 8",
+          "failureMessages": [
+            "AssertionError: expected 'a260139e4e5c4c9bf251ca4cf996b06c53419…' to be '92728e650dc9a0f02b005470db49ab566769a…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level +0/schema 9",
+          "failureMessages": [
+            "AssertionError: expected 'a260139e4e5c4c9bf251ca4cf996b06c53419…' to be '92728e650dc9a0f02b005470db49ab566769a…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 1/schema 5",
+          "failureMessages": [
+            "AssertionError: expected '9fbdc1b2445d05617a9802c7942ef026892b7…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 1/schema 6",
+          "failureMessages": [
+            "AssertionError: expected '9fbdc1b2445d05617a9802c7942ef026892b7…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 1/schema 7",
+          "failureMessages": [
+            "AssertionError: expected '9fbdc1b2445d05617a9802c7942ef026892b7…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 1/schema 8",
+          "failureMessages": [
+            "AssertionError: expected '9fbdc1b2445d05617a9802c7942ef026892b7…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 1/schema 9",
+          "failureMessages": [
+            "AssertionError: expected '9fbdc1b2445d05617a9802c7942ef026892b7…' to be '5b2c0785dfcbc2ddad65e3f56683dae5e7f9a…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 2/schema 5",
+          "failureMessages": [
+            "AssertionError: expected '6b23d68987466059f3ff44a0784f057e36892…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 2/schema 6",
+          "failureMessages": [
+            "AssertionError: expected '6b23d68987466059f3ff44a0784f057e36892…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 2/schema 7",
+          "failureMessages": [
+            "AssertionError: expected '6b23d68987466059f3ff44a0784f057e36892…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 2/schema 8",
+          "failureMessages": [
+            "AssertionError: expected '6b23d68987466059f3ff44a0784f057e36892…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 2/schema 9",
+          "failureMessages": [
+            "AssertionError: expected '6b23d68987466059f3ff44a0784f057e36892…' to be 'a157ed60cc08d3cddd0428b11ac11f87121e4…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 3/schema 5",
+          "failureMessages": [
+            "AssertionError: expected '187e16d802c150e432e7dbe570725728ffc0e…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 3/schema 6",
+          "failureMessages": [
+            "AssertionError: expected '187e16d802c150e432e7dbe570725728ffc0e…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 3/schema 7",
+          "failureMessages": [
+            "AssertionError: expected '187e16d802c150e432e7dbe570725728ffc0e…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 3/schema 8",
+          "failureMessages": [
+            "AssertionError: expected '187e16d802c150e432e7dbe570725728ffc0e…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 3/schema 9",
+          "failureMessages": [
+            "AssertionError: expected '187e16d802c150e432e7dbe570725728ffc0e…' to be '259feb3aba6e3d09bb369cc458620cd3d78f2…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 4/schema 5",
+          "failureMessages": [
+            "AssertionError: expected 'e3336a67aa596968e82ac29727263910f8e0b…' to be '3d3603171902d39a439090f0026ae33ac7654…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 4/schema 6",
+          "failureMessages": [
+            "AssertionError: expected 'e3336a67aa596968e82ac29727263910f8e0b…' to be '3d3603171902d39a439090f0026ae33ac7654…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 4/schema 7",
+          "failureMessages": [
+            "AssertionError: expected 'e3336a67aa596968e82ac29727263910f8e0b…' to be '3d3603171902d39a439090f0026ae33ac7654…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 4/schema 8",
+          "failureMessages": [
+            "AssertionError: expected 'e3336a67aa596968e82ac29727263910f8e0b…' to be '3d3603171902d39a439090f0026ae33ac7654…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts",
+          "title": "M9 Level 0-4 intake behavior after the ordinary cap-5 switch matches the actual pre-M9 load and next 120 minutes for level 4/schema 9",
+          "failureMessages": [
+            "AssertionError: expected 'e3336a67aa596968e82ac29727263910f8e0b…' to be '3d3603171902d39a439090f0026ae33ac7654…' // Object.is equality\n    at C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/level-five-integration.test.ts:183:78\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2027:60\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:302:11\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:1903:26\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2326:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2323:10)\n    at file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2305:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///C:/Users/rowla/Projects/GamifySurgery/node_modules/@vitest/runner/dist/chunk-artifact.js:2272:10)"
+          ],
+          "presentInBatch10Baseline": true
+        }
+      ],
+      "focused": [
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/question-program-batch11-integration.test.ts",
+          "tests": 5,
+          "failed": 0
+        }
+      ],
+      "receiptName": "domain-full"
+    },
+    "player-full": {
+      "passed": 5552,
+      "failed": 0,
+      "skipped": 0,
+      "total": 5552,
+      "files": 457,
+      "exitCode": 0,
+      "exactSummary": "Test Files  457 passed (457)\r\n      Tests  5552 passed (5552)\r\n   Start at  00:58:20\r\n   Duration  1580.91s (transform 26.68s, setup 0ms, import 905.44s, tests 2208.53s, environment 34ms)",
+      "logSha256": "2241ce84686b28f277294ff8ddcbc2ab798647a11f441669969f724a01e87fbf",
+      "failures": [],
+      "focused": [
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/apps/player/src/questionProgramBatch11SaveCompatibility.test.ts",
+          "tests": 8,
+          "failed": 0
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/apps/player/src/session/topicRuntimeBindings.test.ts",
+          "tests": 12,
+          "failed": 0
+        }
+      ],
+      "receiptName": "player-complete"
+    },
+    "clinical-focused": {
+      "passed": 109,
+      "failed": 0,
+      "skipped": 0,
+      "total": 109,
+      "files": 10,
+      "exitCode": 0,
+      "exactSummary": "Test Files  10 passed (10)\r\n      Tests  109 passed (109)\r\n   Start at  01:05:42\r\n   Duration  27.65s (transform 14.06s, setup 0ms, import 37.30s, tests 16.29s, environment 1ms)",
+      "logSha256": "26c371d39df1a6e692034c700739d8f25a022b20881070464651f62755722a82",
+      "failures": [],
+      "focused": [
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/patient-library-wording-repair.test.ts",
+          "tests": 7,
+          "failed": 0
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/playable-patient-narrative.test.ts",
+          "tests": 4,
+          "failed": 0
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-program-batch10-acceptance-20261113.test.ts",
+          "tests": 6,
+          "failed": 0
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-program-batch11-acceptance-20261113.test.ts",
+          "tests": 6,
+          "failed": 0
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/clinical-content/src/question-ship-manifest.test.ts",
+          "tests": 12,
+          "failed": 0
+        }
+      ],
+      "receiptName": "clinical-focused-complete"
+    },
+    "domain-focused": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "total": 5,
+      "files": 1,
+      "exitCode": 0,
+      "exactSummary": "Test Files  1 passed (1)\r\n      Tests  5 passed (5)\r\n   Start at  00:57:02\r\n   Duration  10.53s (transform 6.65s, setup 0ms, import 9.31s, tests 1.12s, environment 0ms)",
+      "logSha256": "95f139c3d134c344270b71f8b156495d17a0fd04e100e26afe6e113ed75eca2f",
+      "failures": [],
+      "focused": [
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/packages/game-domain/tests/question-program-batch11-integration.test.ts",
+          "tests": 5,
+          "failed": 0
+        }
+      ],
+      "receiptName": "domain-focused-final"
+    },
+    "player-focused": {
+      "passed": 20,
+      "failed": 0,
+      "skipped": 0,
+      "total": 20,
+      "files": 2,
+      "exitCode": 0,
+      "exactSummary": "Test Files  2 passed (2)\r\n      Tests  20 passed (20)\r\n   Start at  00:58:55\r\n   Duration  25.13s (transform 23.51s, setup 0ms, import 32.46s, tests 11.13s, environment 0ms)",
+      "logSha256": "0c7ac9984e3dfa909449d82fcf192f2438abee807f833d23ab3ad98f6b4fd85f",
+      "failures": [],
+      "focused": [
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/apps/player/src/questionProgramBatch11SaveCompatibility.test.ts",
+          "tests": 8,
+          "failed": 0
+        },
+        {
+          "file": "C:/Users/rowla/Projects/GamifySurgery/apps/player/src/session/topicRuntimeBindings.test.ts",
+          "tests": 12,
+          "failed": 0
+        }
+      ],
+      "receiptName": "player-focused"
+    },
+    "typecheck": {
+      "exitCode": 0,
+      "output": "> gamify-surgery@0.0.1 typecheck\r\n> npm run typecheck --workspaces --if-present\r\n\r\n\r\n> @gamify-surgery/clinical-context-workbench@0.0.1 typecheck\r\n> tsc --noEmit -p tsconfig.client.json && tsc --noEmit -p tsconfig.server.json\r\n\r\n\r\n> @gamify-surgery/player@0.0.1 typecheck\r\n> tsc --noEmit -p tsconfig.json\r\n\r\n\r\n> @gamify-surgery/balance-config@0.0.1 typecheck\r\n> tsc --noEmit -p tsconfig.json\r\n\r\n\r\n> @gamify-surgery/clinical-authoring@0.0.1 typecheck\r\n> tsc --noEmit -p tsconfig.json\r\n\r\n\r\n> @gamify-surgery/clinical-content@0.0.1 typecheck\r\n> tsc --noEmit -p tsconfig.json\r\n\r\n\r\n> @gamify-surgery/clinical-research@0.0.1 typecheck\r\n> tsc --noEmit -p tsconfig.json\r\n\r\n\r\n> @gamify-surgery/game-domain@0.0.1 typecheck\r\n> tsc --noEmit -p tsconfig.json",
+      "logSha256": "66bca81fe35e4fc77a39370b653222d3241d71c32f51bd7540dc37514c304a06"
+    },
+    "pacing": {
+      "exitCode": 0,
+      "output": "{\r\n  \"firstFinishTick\": 26377,\r\n  \"closingCashCents\": 5913995,\r\n  \"completions\": 442,\r\n  \"walkouts\": 0,\r\n  \"referenceTick\": 26281,\r\n  \"driftPercent\": 0.3652829039990868,\r\n  \"clinicalSha256\": \"4da0db5dd2a1a268440d5a5abc1ea81412224a249d7c089ec98a684442cf654f\",\r\n  \"caseCount\": 1436,\r\n  \"registeredMeanings\": 1142\r\n}",
+      "logSha256": "3b047d0f6a1376979535f48c7d2a01e3d9adf47a5417445d18c84a7513713d84"
+    },
+    "lint-tests": {
+      "exitCode": 0,
+      "output": "> gamify-surgery@0.0.1 clinical:lint:test\r\n> node --test --test-isolation=none tools/question-quality/lint.test.mjs\r\n\r\n✔ reports key-only phrases and exact reconstructable spans (9.8561ms)\r\n✔ owner rule flags X alone in either key or distractor, with exact spans (0.5046ms)\r\n✔ owner rule compares generic individualization with concrete options (0.8384ms)\r\n✔ owner rule asks for a named treatment while retaining exact candidate spans (0.689ms)\r\n✔ image inventory checks visible descriptions and captions, excluding the asset path (0.5084ms)\r\n✔ investigation categories recognize full modality names and physiological/pathological studies (0.5646ms)\r\n✔ owner availability cues are found in presentation, task, update and exhibit without using feedback metadata (1.1969ms)\r\n✔ owner findings rule flags supplied eligibility and named rejection but permits a supplied diagnosis for management (0.525ms)\r\n✔ owner clarity rules distinguish bare negative imaging and unqualified cervical from actual findings and explicit sites (0.9491ms)\r\n✔ bounded anatomy screen detects the actual remote nerve distractors without claiming to validate new choices (0.4481ms)\r\n✔ owner's actual flagged records trigger each new targeted rule and reconstruct source spans (67.9786ms)\r\n✔ round-one draft contexts remove owner-rule giveaways; the retained held FNA keeps its original cue (1969.913ms)\r\n✔ detects length and qualifier disparity without requiring a long key (0.2775ms)\r\n✔ reports abbreviation, named-test aliases, explanatory clauses and absolutes (0.3918ms)\r\n✔ compares abbreviation tokens consistently and does not invent a B-cell abbreviation (0.2601ms)\r\n✔ heterogeneous categories and subtotal scope are advisory (0.3297ms)\r\n✔ convergence and near duplicate report the competing option evidence (0.2647ms)\r\n✔ a complete balanced component matrix does not uniquely converge on the key (0.2821ms)\r\n✔ diagnosis disclosure is conditional on task and metadata (0.3567ms)\r\n✔ negative match requires exactly one distractor and stops at contrast (0.2181ms)\r\n✔ three and four balanced options both accepted; malformed keys rejected (0.3322ms)\r\n✔ visible history includes prior feedback but excludes future/current feedback (0.0762ms)\r\n✔ census deduplicates variant identity while preserving cases and profile-specific cues (0.9767ms)\r\n✔ legacy approval metadata applies only to explicitly named old identities (0.0818ms)\r\n✔ flags the reviewed A17 principle cue without pretending its rationale match is key-exclusive (3.6072ms)\r\n✔ reports an alias-matched principle only when every explicit rationale is available and the key is unique (0.3592ms)\r\n✔ reviews named comparison principles without banning ordinary timing or leaking rationale words into context (0.6398ms)\r\n✔ uses explicit authoring rationale metadata and refuses missing or conflicting key reasons (0.3516ms)\r\n✔ flags the owner's actual round-one preference, availability and mechanism cues outside the task (5.472ms)\r\n✔ rationale overlap requires complete explicit reasons and reports separate exact metadata spans (0.4604ms)\r\n✔ retains raw observations without inventing semantic paraphrase detection or treating prior feedback as a new case detail (0.1576ms)\r\n✔ flags an explicit cross-field ulcer-site conflict and returns exact spans (0.2729ms)\r\n✔ flags repeated complete case findings but excludes legitimate returned-result history (0.2125ms)\r\nnpm.cmd : (node:44148) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any \r\ntime\r\nAt line:2 char:1\r\n+ npm.cmd run clinical:lint:test *> C:/Users/rowla/Projects/GamifySurge ...\r\n+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\r\n    + CategoryInfo          : NotSpecified: ((node:44148) Ex...nge at any time:String) [], RemoteException\r\n    + FullyQualifiedErrorId : NativeCommandError\r\n \r\n(Use `node --trace-warnings ...` to show where the warning was created)\r\nℹ tests 33\r\nℹ suites 0\r\nℹ pass 33\r\nℹ fail 0\r\nℹ cancelled 0\r\nℹ skipped 0\r\nℹ todo 0\r\nℹ duration_ms 2113.872",
+      "logSha256": "51ef20f5c89ea4b2e43b807854fa0cd1efca48067c30ea22dddc8290747dfaef"
+    }
+  },
+  "pacing": {
+    "firstFinishTick": 26377,
+    "closingCashCents": 5913995,
+    "completions": 442,
+    "walkouts": 0,
+    "referenceTick": 26281,
+    "driftPercent": 0.3652829039990868,
+    "clinicalSha256": "4da0db5dd2a1a268440d5a5abc1ea81412224a249d7c089ec98a684442cf654f",
+    "caseCount": 1436,
+    "registeredMeanings": 1142
+  },
+  "census": [
+    {
+      "batch": 9,
+      "cases": 14,
+      "nodes": 17,
+      "liveCases": 4,
+      "liveNodes": 5,
+      "chartCases": 10,
+      "chartNodes": 12
+    },
+    {
+      "batch": 10,
+      "cases": 11,
+      "nodes": 13,
+      "liveCases": 10,
+      "liveNodes": 12,
+      "chartCases": 1,
+      "chartNodes": 1
+    },
+    {
+      "batch": 11,
+      "cases": 4,
+      "nodes": 4,
+      "liveCases": 4,
+      "liveNodes": 4,
+      "chartCases": 0,
+      "chartNodes": 0
+    }
+  ],
+  "cumulative": [
+    {
+      "batch": 9,
+      "caseId": "case.intraop.anesthetic-intraoperative-crises.mh-electrolyte.v1",
+      "nodeId": "node.intraop.anesthetic-intraoperative-crises.mh-potassium-cardiotoxicity.v1",
+      "questionVariantId": "question.intraop.anesthetic-intraoperative-crises.mh-potassium-cardiotoxicity.v1",
+      "conceptId": "concept.intraop.anesthetic-intraoperative-crises.mh-potassium-cardiotoxicity.v1",
+      "mode": "live",
+      "familyId": "procedure.groin_hernia_repair",
+      "caseSha256": "32128bc33c1f68b0b51d52467c10b27331900531bc1dea08b5ab01f30ea667a4",
+      "nodeSha256": "f27b4aa72eeacff8d092d3901e7c52efa4ba36d550dc66e33d7fa8a5d98dea8d"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.endoscopic-perforation-and-injury.postclip-hospital-record.v1",
+      "nodeId": "node.intraop.endoscopic-perforation-and-injury.postclosure-gas-observation.v1",
+      "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.postclosure-gas-observation.v1",
+      "conceptId": "concept.intraop.endoscopic-perforation-and-injury.postclosure-gas-observation.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "52f7bb2fe3fc3f448be552c364ee5feb5c31c0bce8847dd2d715abaee2cf7b1c",
+      "nodeSha256": "44f6e67479ee9e76e255de875306a6d721201bb8506bbac8b009a7da1f80228c"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.ercp-access-and-adverse-events.periampullary-injury-course.v1",
+      "nodeId": "node.intraop.ercp-access-and-adverse-events.periampullary-diversion.v1",
+      "questionVariantId": "question.intraop.ercp-access-and-adverse-events.periampullary-diversion.v1",
+      "conceptId": "concept.intraop.ercp-access-and-adverse-events.periampullary-diversion.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "27588c92cd127131a253a748510235ca665d6549712c6388b67bd4f1dc5d56bd",
+      "nodeSha256": "1b567269458d0171c28ab050a581930cb41aa5c5f70e96c31da9955c520653bd"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.ercp-access-and-adverse-events.periampullary-injury-course.v1",
+      "nodeId": "node.intraop.ercp-access-and-adverse-events.collection-after-diversion.v1",
+      "questionVariantId": "question.intraop.ercp-access-and-adverse-events.collection-after-diversion.v1",
+      "conceptId": "concept.intraop.ercp-access-and-adverse-events.collection-after-diversion.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "27588c92cd127131a253a748510235ca665d6549712c6388b67bd4f1dc5d56bd",
+      "nodeSha256": "6566450ab9fb420b27b1ceff66e97fdaa68c7fa6d4f712b4f0b2fe2f2b6ef6db"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.ercp-access-and-adverse-events.pancreatic-protection.v1",
+      "nodeId": "node.intraop.ercp-access-and-adverse-events.pancreatic-protection-after-access.v1",
+      "questionVariantId": "question.intraop.ercp-access-and-adverse-events.pancreatic-protection-after-access.v1",
+      "conceptId": "concept.intraop.ercp-access-and-adverse-events.pancreatic-protection-after-access.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "6409ab76d5ce1fc1e4ba6dda1e7cd97bcd3ccca94beaa9de458838bf25dd3aac",
+      "nodeSha256": "fe4f5c52b1c321c9e2e371c7d4c3870bb9c71db602b9ae6b06ece535e19539f9"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.groin-hernia.sliding-sac.20261112.v1",
+      "nodeId": "node.intraop.groin-hernia.sliding-sigmoid-plane.20261112.v1",
+      "questionVariantId": "question.intraop.groin-hernia.sliding-sigmoid-plane.20261112.v1",
+      "conceptId": "concept.intraop.groin-hernia.sliding-content-dissection.v1",
+      "mode": "live",
+      "familyId": "procedure.groin_hernia_repair",
+      "caseSha256": "6070a1dc663ec1b4070daf2d1683bf00c95d2b74d726226925d1ee8d5aa8293a",
+      "nodeSha256": "bbdb23c3385eb6b822b934dfc084e616de6ab680b43ab3604c9c605b89ad566e"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.groin-hernia.sliding-sac.20261112.v1",
+      "nodeId": "node.intraop.groin-hernia.adherent-distal-sac.20261112.v1",
+      "questionVariantId": "question.intraop.groin-hernia.adherent-distal-sac.20261112.v1",
+      "conceptId": "concept.intraop.groin-hernia.adherent-sac-cord-preservation.v1",
+      "mode": "live",
+      "familyId": "procedure.groin_hernia_repair",
+      "caseSha256": "6070a1dc663ec1b4070daf2d1683bf00c95d2b74d726226925d1ee8d5aa8293a",
+      "nodeSha256": "c5df9b49914ffe61fe59265f63153ae1f128eb5d2031e15cbe0eea7bc7504e45"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.groin-hernia.urinary-findings.20261112.v1",
+      "nodeId": "node.intraop.groin-hernia.urinary-leak-localization.20261112.v1",
+      "questionVariantId": "question.intraop.groin-hernia.urinary-leak-localization.20261112.v1",
+      "conceptId": "concept.intraop.groin-hernia.suspected-bladder-injury-localization.v1",
+      "mode": "live",
+      "familyId": "procedure.groin_hernia_repair",
+      "caseSha256": "b30d75990626e08f9185bfba8b56ca91f1c933d6a7bb43341e45aef967aa1232",
+      "nodeSha256": "43a1608d6f2390b61761576df2cbe7fb2800f801888bad1dafce1a629207af41"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.lap-access.outside-access-rescue.20261112.v1",
+      "nodeId": "node.intraop.lap-access.major-access-injury.20261112.v1",
+      "questionVariantId": "question.intraop.lap-access.major-access-injury.20261112.v1",
+      "conceptId": "concept.intraop.lap-access.major-access-injury.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "44024bf626963884e399498cfe1c7f8056d84eefa6206f01fec1c68bd3e0eb43",
+      "nodeSha256": "136fd5645735f2c21e922133e9bf5c079109faaee38f5c9b78a8a313c29bb6e3"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.operative-hemorrhage.posterior-liver-record.20261112.v1",
+      "nodeId": "node.intraop.operative-hemorrhage.pringle-persistent-posterior.20261112.v1",
+      "questionVariantId": "question.intraop.operative-hemorrhage.pringle-persistent-posterior.20261112.v1",
+      "conceptId": "concept.intraop.operative-hemorrhage.pringle-persistent-posterior.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "d76c87924fb446278ceb9486ed01303e477bb8d4684fd133dd9929d8daf315dc",
+      "nodeSha256": "43958412e3116740dfbb4a4158e8abb975bd45c055d6b552145f993f4feefc8d"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.i25.unmapped-narrowing.20261112.v1",
+      "nodeId": "node.intraop.i25.anatomy-before-dilation.20261112.v1",
+      "questionVariantId": "question.intraop.i25.anatomy-before-dilation.20261112.v1",
+      "conceptId": "concept.intraop.i25.anatomy-before-dilation.20261112.v1",
+      "mode": "live",
+      "familyId": "procedure.egd",
+      "caseSha256": "152570421683457289f546c0b9f1d893c42b2303c95b22f28e824f547a4ec6e3",
+      "nodeSha256": "0f8ab6b0bf3f676be4f6107ff62207e9603850dccb1814f82db36457555e9f4a"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.i24.battery-injury-record.20261112.v1",
+      "nodeId": "node.intraop.i24.battery-injury-imaging.20261112.v1",
+      "questionVariantId": "question.intraop.i24.battery-injury-imaging.20261112.v1",
+      "conceptId": "concept.intraop.i24.battery-injury-imaging.20261112.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.egd",
+      "caseSha256": "3f4e618e34bdff958cd0593200abde27b999aa0ca6f9ef5c85a6e0d3e3c9184b",
+      "nodeSha256": "2a8b0b4b9037985b5b3f5a5dc799a13359a590716b9d2ab16ea08a1387be1a84"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.thyroid-nerve-monitoring.distal-response-coverage.v1",
+      "nodeId": "node.intraop.thyroid-nerve-monitoring.proximal-verification.v1",
+      "questionVariantId": "question.intraop.thyroid-nerve-monitoring.proximal-verification.v1",
+      "conceptId": "concept.intraop.thyroid-nerve-monitoring.proximal-verification.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.thyroidectomy",
+      "caseSha256": "678e12444baed1785ae036c1dea0318322ca48638ef39177e36e92de7c181a8d",
+      "nodeSha256": "317a75863248209c38d09b4aa6afe8b51e04d0f1ab7ffbc69d8bb9d49afcabd1"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.thyroid-nerve-monitoring.two-signal-events.v1",
+      "nodeId": "node.intraop.thyroid-nerve-monitoring.recording-check.v1",
+      "questionVariantId": "question.intraop.thyroid-nerve-monitoring.recording-check.v1",
+      "conceptId": "concept.intraop.thyroid-nerve-monitoring.recording-check.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.thyroidectomy",
+      "caseSha256": "53af779615f00161287215746e2995fef09808ede79d433f6ead30e27f7299b2",
+      "nodeSha256": "8537bc54f8d2de20aa1c338fe4ebbd12c83ef76b29dd57c1cdf5da1061b5d6eb"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.thyroid-nerve-monitoring.two-signal-events.v1",
+      "nodeId": "node.intraop.thyroid-nerve-monitoring.verified-loss-extent.v1",
+      "questionVariantId": "question.intraop.thyroid-nerve-monitoring.verified-loss-extent.v1",
+      "conceptId": "concept.intraop.thyroid-nerve-monitoring.verified-loss-extent.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.thyroidectomy",
+      "caseSha256": "53af779615f00161287215746e2995fef09808ede79d433f6ead30e27f7299b2",
+      "nodeSha256": "8a8ea52665d7507ee1fcea359554e594a4817b647ca7d7dac05daa13eb9c4fd9"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.unexpected-bowel.base-margin.20261112.v1",
+      "nodeId": "node.intraop.unexpected-bowel.base-margin.20261112.v1",
+      "questionVariantId": "question.intraop.unexpected-bowel.base-margin.20261112.v1",
+      "conceptId": "concept.intraop.unexpected-bowel.appendiceal-base-margin.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "80daf8f67a392cb3e1b3a39cb3b350df772a6913f2024ff872c40d031377b087",
+      "nodeSha256": "c2dbdfcfbfa9d53310df459dbda0477580d51dd9c44072edeec240bad22de8e7"
+    },
+    {
+      "batch": 9,
+      "caseId": "case.intraop.unexpected-bowel.ileitis-restraint.20261112.v1",
+      "nodeId": "node.intraop.unexpected-bowel.ileitis-restraint.20261112.v1",
+      "questionVariantId": "question.intraop.unexpected-bowel.ileitis-restraint.20261112.v1",
+      "conceptId": "concept.intraop.unexpected-bowel.unexpected-ileitis-operative-restraint.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.hospital_operation",
+      "caseSha256": "e8e57cbae4ac8d387504b9441181d79d1e6d6f47247db66da78ca589eae87b1f",
+      "nodeSha256": "ffb431e69b61bcf621e4d823a83571a8605683ef902263f91f289bc857110b7f"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.asc-access.port-course.20261112.v1",
+      "nodeId": "node.intraop.asc-access.anterior-port-course.20261112.v1",
+      "questionVariantId": "question.intraop.asc-access.anterior-port-course.20261112.v1",
+      "conceptId": "concept.intraop.asc-access.orthogonal-port-course-correction.v1",
+      "mode": "live",
+      "familyId": "procedure.central_venous_port_insertion",
+      "caseSha256": "b1e0618d1e83f15359d55caf4b3295b96ee8acfdd69669ebd9fff06a0bb75053",
+      "nodeSha256": "0cfbb14fcbaac7105a046e62c703fb4c597e76531109aade07e4d2301a81420b"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.biliary-safety.new-bile.20261112.v1",
+      "nodeId": "node.intraop.biliary-safety.unexplained-bile.20261112.v1",
+      "questionVariantId": "question.intraop.biliary-safety.unexplained-bile.20261112.v1",
+      "conceptId": "concept.intraop-biliary.unexplained-bile-imaging.v1",
+      "mode": "live",
+      "familyId": "procedure.laparoscopic_cholecystectomy",
+      "caseSha256": "bfefcd7048be4437a0a39726baebe95e2bd128a44b6c48896e5896aa3f2e6ae3",
+      "nodeSha256": "6f79afd415e085b0658e38955dbbdfdbde8730dbdc96690bb7e4544c60fe23b2"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.biliary-safety.new-bile.20261112.v1",
+      "nodeId": "node.intraop.biliary-safety.major-injury-transfer.20261112.v1",
+      "questionVariantId": "question.intraop.biliary-safety.major-injury-transfer.20261112.v1",
+      "conceptId": "concept.n2.bile-leak-duct-continuity-boundary",
+      "mode": "live",
+      "familyId": "procedure.laparoscopic_cholecystectomy",
+      "caseSha256": "bfefcd7048be4437a0a39726baebe95e2bd128a44b6c48896e5896aa3f2e6ae3",
+      "nodeSha256": "25d991dc06e6564924ed91c74643b1c497ea3f6d96169202c2e836333a91969b"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.biliary-safety.stone-clearance.20261112.v1",
+      "nodeId": "node.intraop.biliary-safety.stone-clearance-route.20261112.v1",
+      "questionVariantId": "question.intraop.biliary-safety.stone-clearance-route.20261112.v1",
+      "conceptId": "concept.intraop-biliary.stone-clearance-route.v1",
+      "mode": "live",
+      "familyId": "procedure.laparoscopic_cholecystectomy",
+      "caseSha256": "7e54c99a842ea0e0e2f954fdc555dbf6bf3d6bef2ab8d17123ee5b45223f11f2",
+      "nodeSha256": "06af50db7b7fdf7ff0b5f410a2f19e986c3345ab511e28b9d1edbf15738b2f04"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.endoscopic-perforation-and-injury.sigmoid-defect-and-reassessment.v1",
+      "nodeId": "node.intraop.endoscopic-perforation-and-injury.fresh-sigmoid-closure.v1",
+      "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.fresh-sigmoid-closure.v1",
+      "conceptId": "concept.intraop.endoscopic-perforation-and-injury.fresh-sigmoid-closure.v1",
+      "mode": "live",
+      "familyId": "procedure.colonoscopy_polypectomy",
+      "caseSha256": "4485ff0d19ad6ae775fe7e9b3db9b4649ab32a55adce85c4e9d7801e3ea55983",
+      "nodeSha256": "b91d09cf3394862fa4305d29a19a1c23d71d8da2e7f69318b6a8bbffaae68177"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.endoscopic-perforation-and-injury.sigmoid-defect-and-reassessment.v1",
+      "nodeId": "node.intraop.endoscopic-perforation-and-injury.postclip-tension-rescue.v1",
+      "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.postclip-tension-rescue.v1",
+      "conceptId": "concept.intraop.endoscopic-perforation-and-injury.postclip-tension-rescue.v1",
+      "mode": "live",
+      "familyId": "procedure.colonoscopy_polypectomy",
+      "caseSha256": "4485ff0d19ad6ae775fe7e9b3db9b4649ab32a55adce85c4e9d7801e3ea55983",
+      "nodeSha256": "359c9213eee02dcea01a6ce0f00ff8fe0df17a655118498d4a9fe449a0bc6565"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.endoscopic-perforation-and-injury.dilation-observed-defect.v1",
+      "nodeId": "node.intraop.endoscopic-perforation-and-injury.observed-esophageal-primary-closure.v1",
+      "questionVariantId": "question.intraop.endoscopic-perforation-and-injury.observed-esophageal-primary-closure.v1",
+      "conceptId": "concept.intraop.endoscopic-perforation-and-injury.observed-esophageal-primary-closure.v1",
+      "mode": "live",
+      "familyId": "procedure.egd",
+      "caseSha256": "25048561106c68e9331fa7bb34c538d4d1a06d6e6ca25290eb62b286d5d4fc3d",
+      "nodeSha256": "76346d8bbc5764aa9bb3e5deeca717cc92bad7b68c30cb24c0f1b535111d3692"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.suspicious-polyps.new-descending-colon-focus.20261112.v1",
+      "nodeId": "node.intraop.suspicious-polyps.deep-pattern-before-resection.20261112.v1",
+      "questionVariantId": "question.intraop.suspicious-polyps.deep-pattern-before-resection.20261112.v1",
+      "conceptId": "concept.intraop.suspicious-polyps.deep-pattern-before-resection.20261112.v1",
+      "mode": "live",
+      "familyId": "procedure.colonoscopy_polypectomy",
+      "caseSha256": "8e4eb22e0426b31ceed70f028360dbb3d4c5c033d49a327af591d82914c067fd",
+      "nodeSha256": "7c27a159f2b5cbdebf0795c90cc4dc698d39697fbb51ce5f2563cd874fe763ac"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.anesthetic-intraoperative-crises.anaphylaxis-response-salvage.v1",
+      "nodeId": "node.intraop.anesthetic-intraoperative-crises.anaphylaxis-infusion.v1",
+      "questionVariantId": "question.intraop.anesthetic-intraoperative-crises.anaphylaxis-infusion.v1",
+      "conceptId": "concept.intraop.anesthetic-intraoperative-crises.periop-anaphylaxis-sustained-rescue.v1",
+      "mode": "live",
+      "familyId": "procedure.groin_hernia_repair",
+      "caseSha256": "5c142d2d71182a395a076566fc4cca794305f7eb12ace9adc0c19c797dd683c4",
+      "nodeSha256": "3016b47c1bf77ad6df154c23a1144e2d93f156d34388c24bc5d02d7919b6ffd6"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.upper-gi-hemostasis.esophageal-variceal-record.20261112-salvage.v1",
+      "nodeId": "node.intraop.upper-gi-hemostasis.esophageal-plug-treatment.20261112.v1",
+      "questionVariantId": "question.intraop.upper-gi-hemostasis.esophageal-plug-treatment.20261112.v1",
+      "conceptId": "concept.intraop.upper-gi-hemostasis.esophageal-plug-treatment.20261112.v1",
+      "mode": "chart_review",
+      "familyId": "procedure.egd",
+      "caseSha256": "964c3ef7d17ec34b34a74653242524952e652d9b1c37e4b990c1e2863666c9bb",
+      "nodeSha256": "f2f50c9309b9352183cebc7fd158db8e047fe8d0209955e162c7f1c178f9b301"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.pediatric-anesthesia-events.egd-airway-salvage.v1",
+      "nodeId": "node.intraop.pediatric-anesthesia-events.persistent-laryngeal-closure.v1",
+      "questionVariantId": "question.intraop.pediatric-anesthesia-events.persistent-laryngeal-closure.v1",
+      "conceptId": "concept.intraop.pediatric-anesthesia-events.persistent-laryngeal-closure.v1",
+      "mode": "live",
+      "familyId": "procedure.egd",
+      "caseSha256": "d6c21bf2863128c21c897cac7d7bb6c837eec2917df820cce6e6bec4515da22b",
+      "nodeSha256": "972aee52a00ae933a162189798725e9093afcece6c82a263b8298b8a57e52c57"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.pediatric-anesthesia-events.hernia-airflow-salvage.v1",
+      "nodeId": "node.intraop.pediatric-anesthesia-events.ventilated-expiratory-wheeze.v1",
+      "questionVariantId": "question.intraop.pediatric-anesthesia-events.ventilated-expiratory-wheeze.v1",
+      "conceptId": "concept.intraop.pediatric-anesthesia-events.ventilated-expiratory-wheeze.v1",
+      "mode": "live",
+      "familyId": "procedure.groin_hernia_repair",
+      "caseSha256": "9d3c88a6803b32a90791ccd6a621c3dbbb6e702dc8bdc237531b9fd1a359e744",
+      "nodeSha256": "c908c3814e9aae61c02a7b53018c0479315fe8bea792020498c04484f9e8fa8c"
+    },
+    {
+      "batch": 10,
+      "caseId": "case.intraop.pediatric-orchiopexy.inguinal-descent.20261112-salvage.v1",
+      "nodeId": "node.intraop.pediatric-orchiopexy.residual-cord-bands.20261112.v1",
+      "questionVariantId": "question.intraop.pediatric-orchiopexy.residual-cord-bands.20261112.v1",
+      "conceptId": "concept.intraop.pediatric-orchiopexy.residual-cord-mobilization.v1",
+      "mode": "live",
+      "familyId": "procedure.orchiopexy",
+      "caseSha256": "fd288acfd3f919806c05f7427dcf49083c2e7bedf758f2a36d217f57e5d4f86d",
+      "nodeSha256": "c343e18df5e8941db00be5bc1d3983430a80dbee444f2f0f27bef55adc6b3530"
+    },
+    {
+      "batch": 11,
+      "caseId": "case.intraop.anorectal-eua.crohn-checkpoints.20261112-salvage.v1",
+      "nodeId": "node.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+      "questionVariantId": "question.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+      "conceptId": "concept.intraop.anorectal-eua.crohn-rectal-activity.v1",
+      "mode": "live",
+      "familyId": "procedure.anorectal_eua",
+      "caseSha256": "962af58a2588246ba0a84c276f8073024b85b846eefd39f36915a227d677167c",
+      "nodeSha256": "2dbe16d9fa0627c3630a2c2b41d9cc83819e7c1da7d318cbe5dc870e687e87ca"
+    },
+    {
+      "batch": 11,
+      "caseId": "case.intraop.parathyroid.missing-gland-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.sample-integrity.v1",
+      "questionVariantId": "question.intraop.parathyroid.sample-integrity.v1",
+      "conceptId": "concept.intraop.parathyroid.sample-integrity.v1",
+      "mode": "live",
+      "familyId": "procedure.parathyroidectomy",
+      "caseSha256": "fb3c87bdae6738508d6cf22be659f0cf12e2538c7046a5403dac5ac766279d74",
+      "nodeSha256": "810b6144fab1f52c24a344d4c0b7c57967548d6fcdb57cfaf0e3eec89a9bf7bf"
+    },
+    {
+      "batch": 11,
+      "caseId": "case.intraop.parathyroid.gland-preservation-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.selective-salvage.v1",
+      "questionVariantId": "question.intraop.parathyroid.selective-salvage.v1",
+      "conceptId": "concept.intraop.parathyroid.selective-salvage.v1",
+      "mode": "live",
+      "familyId": "procedure.thyroidectomy",
+      "caseSha256": "1c3091fd4b0b877fc618b21d08b243fbaef901822d2bc258d4f6163f548f99d6",
+      "nodeSha256": "41410757bdc392961f9896f3fe509275f72df75da0cf6ca03a021e146b8063c6"
+    },
+    {
+      "batch": 11,
+      "caseId": "case.intraop.polypectomy.ascending-emr-completion.20261112-salvage.v1",
+      "nodeId": "node.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      "questionVariantId": "question.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      "conceptId": "concept.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      "mode": "live",
+      "familyId": "procedure.colonoscopy_polypectomy",
+      "caseSha256": "02fa2324bccf5f81f5aff80b0c891906917ee6db0961c9e2bea98aeea6441096",
+      "nodeSha256": "32c4b69e378927d3677f9fbc09793921346e3874f01bf47f37556bee6a5d0b4d"
+    }
+  ],
+  "levelFiveInputs": [
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "cd8d023c72bb445cc154dc8a6ea35a01f60b4f5b15f10980fe58f50e7ab404cc",
+      "afterSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02",
+      "retainedEvidenceSha256": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c",
+      "alreadyUnboundAtIntake": true
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "8cb558cfff5a82244d481ce5aa1b303456b8418a0d787313f8cd701dc231d8aa",
+      "afterSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623",
+      "retainedEvidenceSha256": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4",
+      "alreadyUnboundAtIntake": true
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "78c3a41071dd1ae87ac6b18404538fed63ddb152a2fadf19d23a45f446726d83",
+      "afterSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377",
+      "retainedEvidenceSha256": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245",
+      "alreadyUnboundAtIntake": true
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "beforeSha256": "2f134b963295d1f859780dbee88d662036a4fbccff00fc033bfe7ce83d46a06f",
+      "afterSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc",
+      "retainedEvidenceSha256": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639",
+      "alreadyUnboundAtIntake": true
+    }
+  ],
+  "sourceChanges": [
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+      "beforeSha256": "2905b8f5c5ec083835b58b95e20a068e0f673df72e27b3eae6fff87fdb57e7e9",
+      "afterSha256": "83fb9b709a13bdc79f1fb45f8d6894054bd3c1591bc5d5efb8df95f203d5adfb"
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "78c3a41071dd1ae87ac6b18404538fed63ddb152a2fadf19d23a45f446726d83",
+      "afterSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377"
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "8cb558cfff5a82244d481ce5aa1b303456b8418a0d787313f8cd701dc231d8aa",
+      "afterSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623"
+    },
+    {
+      "path": "packages/clinical-content/src/patient-library-wording-repair.test.ts",
+      "beforeSha256": "b19884a18b8e1b03398b159251e9b0255d0fad4184c6b659bd2c24a5f3d9c3f7",
+      "afterSha256": "4856fa7441abab60d1c74041fed8b2042f600da45d36f9a991751d23877b7d76"
+    },
+    {
+      "path": "packages/clinical-content/src/question-intraop-parathyroid-localization-and-preservation-20261112.test.ts",
+      "beforeSha256": "91e582fd8dbcadc062fac2663752df0aff4be74dbfd32324378d1ce1ee257b00",
+      "afterSha256": "f48664f72f03fae736564d516d9ca6835aa6a9de077400a7e0b9f4ee6992cfec"
+    },
+    {
+      "path": "packages/clinical-content/src/question-intraop-polypectomy-technique-and-bleeding-20261112.test.ts",
+      "beforeSha256": "682047e6543568c88af408962ab7b92ddeaca2d709f5c635edce7ad122aacfb9",
+      "afterSha256": "45baff69198c8d44432473a38cc7cfa31067e9565ee5dd3cf02f567a774f9093"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch10-acceptance-20261113.test.ts",
+      "beforeSha256": "6b41a987e0927cf594c82df8153e4756599d25031d01f980706aca9f744df81d",
+      "afterSha256": "96a35c551115934793c7d7726bd2d0edc3aa9fc91b963d7394338a78133e9960"
+    },
+    {
+      "path": "packages/clinical-content/src/question-program-batch10-acceptance-test-support.ts",
+      "beforeSha256": "e6466c9bac1200f98bd1429eaa65b0264de69b29a9039eefce48fbd9bc97cb52",
+      "afterSha256": "5243504e14d2c32984d6158694417f36cb9bc67d9c9cbbacbd403b6f9189137d"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+      "beforeSha256": "243e7d3a40f5787c3c34a9143cc60840ea1c41f0f7cd4a12585841042706ae3a",
+      "afterSha256": "c6e4f05f307e3802323991b280d17a8a5323d47a98f94f01638edcc64b0e9227"
+    },
+    {
+      "path": "packages/clinical-content/src/question-ship-manifest.ts",
+      "beforeSha256": "b84a76bc5920c1f95c704b2787901b9635e4e2b3ffc7f63141de97b1641d9edc",
+      "afterSha256": "36a23adedab8cef6c1a3c1b20714c324bc453a17dfcb123499f28683b2d37bc0"
+    },
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "cd8d023c72bb445cc154dc8a6ea35a01f60b4f5b15f10980fe58f50e7ab404cc",
+      "afterSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02"
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "beforeSha256": "2f134b963295d1f859780dbee88d662036a4fbccff00fc033bfe7ce83d46a06f",
+      "afterSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc"
+    },
+    {
+      "path": "apps/player/src/session/topicRuntimeBindings.test.ts",
+      "beforeSha256": "e0be29b7162c00b9cfc9b9ba2d976367f0a6a656e40d014211b58bbea8702d0c",
+      "afterSha256": "c64d4fde6a6c87541e2c55ba51b597419435ae790b0afff5f86b1a17b826f8c9"
+    }
+  ],
+  "preservedConcurrentChanges": [],
+  "reconciliation": "Every original capture and assertion is retained through strict complete-postimage to immutable-preimage adapters. ENG-I01c family/plan additions are bound separately. Mutation controls test unrelated changes.",
+  "timingCorrection": "Two source timing.test.biopsy_pathology proposals map to the existing timing.test.pathology_review runtime profile. All five planning waits are tested, including distractors."
+}

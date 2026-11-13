@@ -1,0 +1,131 @@
+{
+  "accepted": [
+    {
+      "acceptanceId": "question.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+      "caseId": "case.intraop.anorectal-eua.crohn-checkpoints.20261112-salvage.v1",
+      "nodeId": "node.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+      "questionVariantId": "question.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+      "conceptId": "concept.intraop.anorectal-eua.crohn-rectal-activity.v1",
+      "sourceView": "intraop-batch11-anorectal-eua-and-fistula",
+      "decision": "docs/research/question-intraop-acceptance-batch11-20261113.md"
+    },
+    {
+      "acceptanceId": "question.intraop.parathyroid.sample-integrity.v1",
+      "caseId": "case.intraop.parathyroid.missing-gland-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.sample-integrity.v1",
+      "questionVariantId": "question.intraop.parathyroid.sample-integrity.v1",
+      "conceptId": "concept.intraop.parathyroid.sample-integrity.v1",
+      "sourceView": "intraop-batch11-parathyroid-localization-and-preservation",
+      "decision": "docs/research/question-intraop-acceptance-batch11-20261113.md"
+    },
+    {
+      "acceptanceId": "question.intraop.parathyroid.selective-salvage.v1",
+      "caseId": "case.intraop.parathyroid.gland-preservation-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.selective-salvage.v1",
+      "questionVariantId": "question.intraop.parathyroid.selective-salvage.v1",
+      "conceptId": "concept.intraop.parathyroid.selective-salvage.v1",
+      "sourceView": "intraop-batch11-parathyroid-localization-and-preservation",
+      "decision": "docs/research/question-intraop-acceptance-batch11-20261113.md"
+    },
+    {
+      "acceptanceId": "question.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      "caseId": "case.intraop.polypectomy.ascending-emr-completion.20261112-salvage.v1",
+      "nodeId": "node.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      "questionVariantId": "question.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      "conceptId": "concept.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      "sourceView": "intraop-batch11-polypectomy-technique-and-bleeding",
+      "decision": "docs/research/question-intraop-acceptance-batch11-20261113.md"
+    }
+  ],
+  "skipped": [],
+  "excluded": [],
+  "corrections": [
+    {
+      "path": "case.intraop.parathyroid.missing-gland-salvage.v1.displayName",
+      "before": "Live parathyroidectomy: Simon Reed",
+      "after": "Live parathyroidectomy: {patientName}",
+      "kind": "patient_name_placeholder"
+    },
+    {
+      "path": "case.intraop.parathyroid.gland-preservation-salvage.v1.displayName",
+      "before": "Live thyroidectomy: Lydia Hayes",
+      "after": "Live thyroidectomy: {patientName}",
+      "kind": "patient_name_placeholder"
+    },
+    {
+      "path": "node.intraop.parathyroid.selective-salvage.v1.timing.choice.intraop.parathyroid.selective-salvage.2",
+      "kind": "runtime_timing_profile_mapping",
+      "before": "timing.test.biopsy_pathology",
+      "after": "timing.test.pathology_review"
+    },
+    {
+      "path": "node.intraop.parathyroid.selective-salvage.v1.timing.choice.intraop.parathyroid.selective-salvage.3",
+      "kind": "runtime_timing_profile_mapping",
+      "before": "timing.test.biopsy_pathology",
+      "after": "timing.test.pathology_review"
+    }
+  ],
+  "orders": [
+    {
+      "caseId": "case.intraop.parathyroid.missing-gland-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.sample-integrity.v1",
+      "questionVariantId": "question.intraop.parathyroid.sample-integrity.v1",
+      "choiceId": "choice.intraop.parathyroid.sample-integrity.1",
+      "choiceLabel": "PTH assay using newly collected venous blood.",
+      "timingProfileId": "timing.test.basic_labs",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.intraop.parathyroid.missing-gland-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.sample-integrity.v1",
+      "questionVariantId": "question.intraop.parathyroid.sample-integrity.v1",
+      "choiceId": "choice.intraop.parathyroid.sample-integrity.2",
+      "choiceLabel": "PTH assay using retained postexcision venous blood.",
+      "timingProfileId": "timing.test.basic_labs",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.intraop.parathyroid.missing-gland-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.sample-integrity.v1",
+      "questionVariantId": "question.intraop.parathyroid.sample-integrity.v1",
+      "choiceId": "choice.intraop.parathyroid.sample-integrity.3",
+      "choiceLabel": "PTH assay using aspirate from the removed nodule.",
+      "timingProfileId": "timing.test.basic_labs",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.intraop.parathyroid.gland-preservation-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.selective-salvage.v1",
+      "questionVariantId": "question.intraop.parathyroid.selective-salvage.v1",
+      "choiceId": "choice.intraop.parathyroid.selective-salvage.2",
+      "choiceLabel": "Autotransplant the upper gland into neck muscle and submit the remaining lower-gland tissue in full for permanent histology.",
+      "timingProfileId": "timing.test.pathology_review",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    },
+    {
+      "caseId": "case.intraop.parathyroid.gland-preservation-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.selective-salvage.v1",
+      "questionVariantId": "question.intraop.parathyroid.selective-salvage.v1",
+      "choiceId": "choice.intraop.parathyroid.selective-salvage.3",
+      "choiceLabel": "Retain the upper gland in situ and submit the remaining lower-gland tissue in full for permanent histology.",
+      "timingProfileId": "timing.test.pathology_review",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      }
+    }
+  ],
+  "families": []
+}

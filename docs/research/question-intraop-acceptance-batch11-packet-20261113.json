@@ -1,0 +1,1143 @@
+{
+  "checkedOn": "2026-11-13",
+  "reviewDisplay": "Key shown first for review only. Runtime choices are randomized.",
+  "clinicalApproval": false,
+  "clinicalSignOff": "Melissa Rowland. Editorial acceptance confers no named version approval.",
+  "accepted": [
+    {
+      "id": "node.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+      "title": "question.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+      "group": "salvage",
+      "slug": "anorectal-eua-and-fistula",
+      "caseId": "case.intraop.anorectal-eua.crohn-checkpoints.20261112-salvage.v1",
+      "nodeId": "node.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+      "questionVariantId": "question.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+      "conceptId": "concept.intraop.anorectal-eua.crohn-rectal-activity.v1",
+      "contentVersion": "question-intraop.anorectal-eua-and-fistula.2026-11-12.v1",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "review": {
+        "path": "docs/research/question-intraop-salvage-review-20261113.json",
+        "record": {
+          "caseId": "case.intraop.anorectal-eua.crohn-checkpoints.20261112-salvage.v1",
+          "nodeId": "node.intraop.anorectal-eua.crohn-rectal-activity.20261112.v1",
+          "verdict": "PASS",
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "Known Crohn disease, a freely draining seton, no fluid cavity, favorable tract anatomy, preserved continence and the ulcerated/friable rectal mucosa are all visible in this standalone checkpoint. The removed later sampling decision contributes no fact needed for the current tract-treatment choice.",
+            "The presentation does not label the current mucosa as active proctitis or recommend deferral. The contrast between previously controlled outpatient symptoms and current observed mucosal findings preserves the interpretation task.",
+            "The adult ambulatory EUA with possible tract treatment is consistent with the presentation and current observations.",
+            "Compared with the hash-matched source node, only terminal no-outcome metadata changes. The review2 PASS is verified; the stem, observations, choices and key remain unchanged: Keep the seton and defer tract closure."
+          ],
+          "suggestions": []
+        }
+      },
+      "before": {
+        "Presentation": "{patientName}, a 48-year-old woman with Crohn disease and a longstanding seton-drained fistula, is undergoing EUA with possible tract treatment in the clinic’s ambulatory OR. Her outpatient bowel symptoms had been considered controlled.",
+        "Current update": "EUA shows a single posterior tract beneath a thin distal sphincter bridge. The loose seton drains freely; palpation finds no fluid cavity. Her preoperative continence record documents control of gas, liquid and solid stool.",
+        "Exhibit": {
+          "kind": "keyValue",
+          "caption": "Constructed observations during the current EUA",
+          "items": [
+            {
+              "label": "Internal opening",
+              "value": "One opening; no branch is found on gentle examination."
+            },
+            {
+              "label": "Lower rectal mucosa",
+              "value": "Several irregular ulcers with friable edges bleed on light contact."
+            }
+          ]
+        },
+        "Task": "Which tract-treatment plan should be used at this checkpoint in {patientName}’s current anorectal EUA?",
+        "Options": [
+          "**KEY:** Keep the seton and defer tract closure",
+          "Remove the seton and lay open the tract",
+          "Remove the seton and advance a rectal flap"
+        ]
+      },
+      "after": {
+        "Presentation": "{patientName}, a 48-year-old woman with Crohn disease and a longstanding seton-drained fistula, is undergoing EUA with possible tract treatment in the clinic’s ambulatory OR. Her outpatient bowel symptoms had been considered controlled.",
+        "Current update": "EUA shows a single posterior tract beneath a thin distal sphincter bridge. The loose seton drains freely; palpation finds no fluid cavity. Her preoperative continence record documents control of gas, liquid and solid stool.",
+        "Exhibit": {
+          "kind": "keyValue",
+          "caption": "Constructed observations during the current EUA",
+          "items": [
+            {
+              "label": "Internal opening",
+              "value": "One opening; no branch is found on gentle examination."
+            },
+            {
+              "label": "Lower rectal mucosa",
+              "value": "Several irregular ulcers with friable edges bleed on light contact."
+            }
+          ]
+        },
+        "Task": "Which tract-treatment plan should be used at this checkpoint in {patientName}’s current anorectal EUA?",
+        "Options": [
+          "**KEY:** Keep the seton and defer tract closure",
+          "Remove the seton and lay open the tract",
+          "Remove the seton and advance a rectal flap"
+        ]
+      },
+      "explanation": "Apply the rectal findings as well as the tract map and continence record. Current ulceration argues for continued drainage and reassessment of medical control before closure. This is a staging decision, not a recommendation for indefinite seton treatment.",
+      "rationalePairs": [
+        {
+          "choiceId": "retain-seton",
+          "choice": "Keep the seton and defer tract closure",
+          "isCorrect": true,
+          "rationale": "The mucosal findings indicate current rectal inflammatory activity. Favorable tract geometry and function do not remove that concern; drainage can continue while medical control is reassessed.",
+          "distractorRationale": null
+        },
+        {
+          "choiceId": "fistulotomy",
+          "choice": "Remove the seton and lay open the tract",
+          "isCorrect": false,
+          "rationale": "Limited muscle crossing and intact continence favor this option in a selected low fistula, but Crohn-specific selection also requires attention to rectal activity.",
+          "distractorRationale": "Limited muscle crossing and intact continence favor this option in a selected low fistula, but Crohn-specific selection also requires attention to rectal activity."
+        },
+        {
+          "choiceId": "rectal-flap",
+          "choice": "Remove the seton and advance a rectal flap",
+          "isCorrect": false,
+          "rationale": "A flap can avoid laying open the tract, but using inflamed rectal tissue does not solve the current closure problem.",
+          "distractorRationale": "A flap can avoid laying open the tract, but using inflamed rectal tissue does not solve the current closure problem."
+        }
+      ],
+      "inference": "Use the current rectal inflammatory findings to reconsider closure of an otherwise favorable low Crohn fistula.",
+      "focus": "live",
+      "whatChanged": "Exact reviewed node admitted with runtime patient-name placeholders and an explicit supported source contract.",
+      "selfCheck": {
+        "wholeCasePass": true,
+        "latestIndependentPass": true,
+        "cueFindings": [],
+        "runtimeRandomization": true,
+        "procedureAdmissionTest": true,
+        "frozenFormat3AndJournalTest": true,
+        "pediatricChecks": [],
+        "sourceClosure": "Unchanged existing atomic claims and source records. Device, operative-anatomy and rescue feasibility remain needs_clinician_review."
+      },
+      "evidenceMapping": [
+        {
+          "claimId": "claim.intraop.anorectal-eua.low-tract-function",
+          "claimSha256": "d9bb8e25c1035c03c0a0ae4476f580bace75d22b582fba8524d8241b0d2a4593",
+          "sourceIds": [
+            "source.anorectal-benign-pelvic-floor.ascrs-abscess-2022",
+            "source.intraop.anorectal-eua.ecco-surgery-2024"
+          ]
+        },
+        {
+          "claimId": "claim.intraop.anorectal-eua.crohn-rectal-activity",
+          "claimSha256": "a72b11162314969472e80e7bc3a740c01278f4a1687e18ec9759c7e5a3929ce1",
+          "sourceIds": [
+            "source.intraop.anorectal-eua.ecco-surgery-2024"
+          ]
+        },
+        {
+          "claimId": "claim.intraop.anorectal-eua.crohn-flap",
+          "claimSha256": "b41210e0a100ce8d4d77a6754d9cd970a4c369942aa6244c5be6e550030f9ed8",
+          "sourceIds": [
+            "source.intraop.anorectal-eua.ecco-surgery-2024"
+          ]
+        },
+        {
+          "claimId": "claim.intraop.anorectal-eua.crohn-staging",
+          "claimSha256": "c18fcef83a11292abd78ba0a7b99e2abe66283b4ce21c02cb698c95785074c63",
+          "sourceIds": [
+            "source.intraop.anorectal-eua.ecco-surgery-2024"
+          ]
+        }
+      ],
+      "procedureContext": {
+        "version": "procedure-context.v1",
+        "mode": "live",
+        "kind": "operation",
+        "phase": "procedure",
+        "familyId": "procedure.anorectal_eua",
+        "allowedIncomeLineIds": [
+          "income.ambulatory_operation"
+        ],
+        "requiredCapabilityIds": [
+          "capability.ambulatory_or",
+          "capability.staff.or_nurse",
+          "capability.periop_recovery"
+        ]
+      },
+      "sourceHashes": {
+        "question": "5d13c7af944efd5d739fa2482b4890885991399ca84350956d66c864fd74952a",
+        "node": "2dbe16d9fa0627c3630a2c2b41d9cc83819e7c1da7d318cbe5dc870e687e87ca",
+        "case": "148220997770fcc91535b8aa68f6ababc008b32350d2ca16eeee7229e3671957"
+      },
+      "acceptedHashes": {
+        "question": "5d13c7af944efd5d739fa2482b4890885991399ca84350956d66c864fd74952a",
+        "node": "2dbe16d9fa0627c3630a2c2b41d9cc83819e7c1da7d318cbe5dc870e687e87ca",
+        "case": "962af58a2588246ba0a84c276f8073024b85b846eefd39f36915a227d677167c"
+      }
+    },
+    {
+      "id": "node.intraop.parathyroid.sample-integrity.v1",
+      "title": "question.intraop.parathyroid.sample-integrity.v1",
+      "group": "salvage",
+      "slug": "parathyroid-localization-and-preservation",
+      "caseId": "case.intraop.parathyroid.missing-gland-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.sample-integrity.v1",
+      "questionVariantId": "question.intraop.parathyroid.sample-integrity.v1",
+      "conceptId": "concept.intraop.parathyroid.sample-integrity.v1",
+      "contentVersion": "clinical.question-intraop.parathyroid-localization-and-preservation.2026-11-12.v1",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "review": {
+        "path": "docs/research/question-intraop-salvage-review-20261113.json",
+        "record": {
+          "caseId": "case.intraop.parathyroid.missing-gland-salvage.v1",
+          "nodeId": "node.intraop.parathyroid.sample-integrity.v1",
+          "verdict": "PASS",
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The presentation establishes sporadic primary hyperparathyroidism and ongoing parathyroidectomy. The update states that the cervical thymic-tongue nodule has been removed, and supplies the team's interpretation rule. The exhibit supplies both baseline values, the postexcision value and the collection circumstances. The earlier localization decision is unnecessary.",
+            "Changing first aspirate to initial aspirate preserves the collection observation without calling the sample diluted or telling the learner to recollect. The added disease/procedure context does not disclose the key.",
+            "A 62-year-old man at an open-operation sampling checkpoint during ambulatory parathyroidectomy is internally coherent; the removed nodule is explicitly in the neck.",
+            "The original review PASS and receipt hash are verified. Comparison with the hash-matched source node finds only the declared exhibit synonym. The same sample-integrity decision remains keyed to PTH assay using newly collected venous blood."
+          ],
+          "suggestions": []
+        }
+      },
+      "before": {
+        "Presentation": "{patientName}, a 62-year-old man with established sporadic primary hyperparathyroidism, is undergoing parathyroidectomy in the clinic's ambulatory OR.",
+        "Current update": "An enlarged nodule has now been removed from the left thymic tongue in the neck. The operation remains open while the team reviews the sampling record. The team uses conventional Miami interpretation: a fall greater than 50% from the higher preincision or preexcision value at 10 minutes.",
+        "Exhibit": {
+          "kind": "table",
+          "caption": "Constructed operative sampling record",
+          "columnHeaders": [
+            "PTH (pg/mL)",
+            "Collection record"
+          ],
+          "rowHeaders": [
+            "Before incision",
+            "Before nodule excision",
+            "10 minutes after excision"
+          ],
+          "cells": [
+            [
+              "150",
+              "Fresh peripheral venipuncture"
+            ],
+            [
+              "200",
+              "Fresh peripheral venipuncture"
+            ],
+            [
+              "30",
+              "Peripheral cannula flushed with saline; the initial aspirate from its extension entered the assay tube"
+            ]
+          ]
+        },
+        "Task": "Which next test should guide completion of {patientName}'s parathyroid exploration after the supplied sampling record?",
+        "Options": [
+          "**KEY:** PTH assay using newly collected venous blood.",
+          "PTH assay using retained postexcision venous blood.",
+          "PTH assay using aspirate from the removed nodule."
+        ]
+      },
+      "after": {
+        "Presentation": "{patientName}, a 62-year-old man with established sporadic primary hyperparathyroidism, is undergoing parathyroidectomy in the clinic's ambulatory OR.",
+        "Current update": "An enlarged nodule has now been removed from the left thymic tongue in the neck. The operation remains open while the team reviews the sampling record. The team uses conventional Miami interpretation: a fall greater than 50% from the higher preincision or preexcision value at 10 minutes.",
+        "Exhibit": {
+          "kind": "table",
+          "caption": "Constructed operative sampling record",
+          "columnHeaders": [
+            "PTH (pg/mL)",
+            "Collection record"
+          ],
+          "rowHeaders": [
+            "Before incision",
+            "Before nodule excision",
+            "10 minutes after excision"
+          ],
+          "cells": [
+            [
+              "150",
+              "Fresh peripheral venipuncture"
+            ],
+            [
+              "200",
+              "Fresh peripheral venipuncture"
+            ],
+            [
+              "30",
+              "Peripheral cannula flushed with saline; the initial aspirate from its extension entered the assay tube"
+            ]
+          ]
+        },
+        "Task": "Which next test should guide completion of {patientName}'s parathyroid exploration after the supplied sampling record?",
+        "Options": [
+          "**KEY:** PTH assay using newly collected venous blood.",
+          "PTH assay using retained postexcision venous blood.",
+          "PTH assay using aspirate from the removed nodule."
+        ]
+      },
+      "explanation": "Saline carried into the first aspirate can create a falsely low PTH. A new properly collected circulating sample, with its actual collection time recorded, is needed before interpreting the apparent decline as an operative endpoint. Rerunning the stored tube addresses an analytical error, but retains any saline dilution introduced during collection. Reproducibility of that value would not resolve the operative uncertainty. A nodule washout can establish parathyroid tissue identity. It cannot replace a valid circulating PTH trajectory when deciding whether further hyperfunctioning tissue remains.",
+      "rationalePairs": [
+        {
+          "choiceId": "choice.intraop.parathyroid.sample-integrity.1",
+          "choice": "PTH assay using newly collected venous blood.",
+          "isCorrect": true,
+          "rationale": "Saline carried into the first aspirate can create a falsely low PTH. A new properly collected circulating sample, with its actual collection time recorded, is needed before interpreting the apparent decline as an operative endpoint.",
+          "distractorRationale": null
+        },
+        {
+          "choiceId": "choice.intraop.parathyroid.sample-integrity.2",
+          "choice": "PTH assay using retained postexcision venous blood.",
+          "isCorrect": false,
+          "rationale": "Rerunning the stored tube addresses an analytical error, but retains any saline dilution introduced during collection. Reproducibility of that value would not resolve the operative uncertainty.",
+          "distractorRationale": "Rerunning the stored tube addresses an analytical error, but retains any saline dilution introduced during collection. Reproducibility of that value would not resolve the operative uncertainty."
+        },
+        {
+          "choiceId": "choice.intraop.parathyroid.sample-integrity.3",
+          "choice": "PTH assay using aspirate from the removed nodule.",
+          "isCorrect": false,
+          "rationale": "A nodule washout can establish parathyroid tissue identity. It cannot replace a valid circulating PTH trajectory when deciding whether further hyperfunctioning tissue remains.",
+          "distractorRationale": "A nodule washout can establish parathyroid tissue identity. It cannot replace a valid circulating PTH trajectory when deciding whether further hyperfunctioning tissue remains."
+        }
+      ],
+      "inference": "Distinguish a reassuring PTH number from an adequately collected systemic sample before deciding operative completion.",
+      "focus": "live",
+      "whatChanged": "Exact reviewed node admitted with runtime patient-name placeholders and an explicit supported source contract.",
+      "selfCheck": {
+        "wholeCasePass": true,
+        "latestIndependentPass": true,
+        "cueFindings": [],
+        "runtimeRandomization": true,
+        "procedureAdmissionTest": true,
+        "frozenFormat3AndJournalTest": true,
+        "pediatricChecks": [],
+        "sourceClosure": "Unchanged existing atomic claims and source records. Device, operative-anatomy and rescue feasibility remain needs_clinician_review."
+      },
+      "evidenceMapping": [
+        {
+          "claimId": "claim.intraop.parathyroid.miami-protocol",
+          "claimSha256": "d24e2de77487bc50e201826a843eab946f9d372fcac56f298dbc626254378985",
+          "sourceIds": [
+            "source.intraop.parathyroid.khan-lew-2019",
+            "source.intraop.parathyroid.barczynski-2015"
+          ]
+        },
+        {
+          "claimId": "claim.intraop.parathyroid.saline-contamination",
+          "claimSha256": "efdd0fe02835fec4301884ada285aba9547770c37e1184c2095c3481a700250b",
+          "sourceIds": [
+            "source.intraop.parathyroid.khan-lew-2019",
+            "source.intraop.parathyroid.barczynski-2015"
+          ]
+        },
+        {
+          "claimId": "claim.intraop.parathyroid.recollect-before-extent",
+          "claimSha256": "8f6dadc8cdd730e66a8e4655fd918ac79b3b297083ab751a4fa786ec278845a5",
+          "sourceIds": [
+            "source.intraop.parathyroid.khan-lew-2019",
+            "source.intraop.parathyroid.barczynski-2015"
+          ]
+        },
+        {
+          "claimId": "claim.intraop.parathyroid.washout-identity",
+          "claimSha256": "e299d7c2c313a8a9782b745b34c88fc345a42eb5c4a60afbf5cbb3c9391b516e",
+          "sourceIds": [
+            "source.intraop.parathyroid.khan-lew-2019",
+            "source.intraop.parathyroid.barczynski-2015"
+          ]
+        }
+      ],
+      "procedureContext": {
+        "version": "procedure-context.v1",
+        "mode": "live",
+        "kind": "operation",
+        "phase": "procedure",
+        "familyId": "procedure.parathyroidectomy",
+        "allowedIncomeLineIds": [
+          "income.ambulatory_operation",
+          "income.ambulatory_operation_extended"
+        ],
+        "requiredCapabilityIds": [
+          "capability.ambulatory_or",
+          "capability.staff.or_nurse",
+          "capability.periop_recovery",
+          "capability.endocrine_surgery",
+          "capability.intraoperative_pth",
+          "capability.intraoperative_ultrasound"
+        ]
+      },
+      "sourceHashes": {
+        "question": "8ba2b124795aa6f4cb74daa723a0b3c8ff499cb881efb6825818150970d294d4",
+        "node": "810b6144fab1f52c24a344d4c0b7c57967548d6fcdb57cfaf0e3eec89a9bf7bf",
+        "case": "b664590810ec73c8ffbf7c604123610e73cd9ff67825abe0beb8b1165e236e74"
+      },
+      "acceptedHashes": {
+        "question": "8ba2b124795aa6f4cb74daa723a0b3c8ff499cb881efb6825818150970d294d4",
+        "node": "810b6144fab1f52c24a344d4c0b7c57967548d6fcdb57cfaf0e3eec89a9bf7bf",
+        "case": "fb3c87bdae6738508d6cf22be659f0cf12e2538c7046a5403dac5ac766279d74"
+      }
+    },
+    {
+      "id": "node.intraop.parathyroid.selective-salvage.v1",
+      "title": "question.intraop.parathyroid.selective-salvage.v1",
+      "group": "salvage",
+      "slug": "parathyroid-localization-and-preservation",
+      "caseId": "case.intraop.parathyroid.gland-preservation-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.selective-salvage.v1",
+      "questionVariantId": "question.intraop.parathyroid.selective-salvage.v1",
+      "conceptId": "concept.intraop.parathyroid.selective-salvage.v1",
+      "contentVersion": "clinical.question-intraop.parathyroid-localization-and-preservation.2026-11-12.v2",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "review": {
+        "path": "docs/research/question-intraop-salvage-review-20261113.json",
+        "record": {
+          "caseId": "case.intraop.parathyroid.gland-preservation-salvage.v1",
+          "nodeId": "node.intraop.parathyroid.selective-salvage.v1",
+          "verdict": "PASS",
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The standalone thyroidectomy presentation, pre-closure update and exhibit specify both glands' current states: an attached upper gland with fresh bleeding and recovered color, and detached lower-gland tissue retained sterile after a separate portion confirmed benign parathyroid tissue. The earlier branch-control decision is not needed.",
+            "Retained tissue describes tissue still available on the sterile field; it does not instruct the learner to retain either gland in situ or disclose autotransplantation. The observation-only substitution for remaining tissue preserves meaning.",
+            "The 57-year-old woman's total thyroidectomy for bilateral symptomatic nodular disease and subsequent field/specimen check form a coherent ambulatory operative scene.",
+            "The review2 PASS and receipt hash are verified. Only the declared exhibit synonym differs from the hash-matched source node. The key remains retaining the upper gland in situ and autotransplanting the remaining lower-gland tissue into neck muscle."
+          ],
+          "suggestions": []
+        }
+      },
+      "before": {
+        "Presentation": "{patientName}, a 57-year-old woman, is undergoing total thyroidectomy for bilateral symptomatic nodular thyroid disease in the clinic's ambulatory OR.",
+        "Current update": "At the pre-closure check after thyroid removal, the team examines the upper gland in the field and the lower-gland tissue on the fresh specimen. The portion used for frozen section is separate from the remaining lower-gland tissue.",
+        "Exhibit": {
+          "kind": "table",
+          "caption": "Constructed current field and specimen observations",
+          "columnHeaders": [
+            "Attachment and response",
+            "Tissue identity"
+          ],
+          "rowHeaders": [
+            "Left upper gland",
+            "Remaining left lower-gland tissue"
+          ],
+          "cells": [
+            [
+              "Still attached by its vascular pedicle; initially dusky. After a small capsular incision, fresh blood oozes and the gland becomes pink.",
+              "Recognized during dissection as normal parathyroid"
+            ],
+            [
+              "Found detached on the fresh sterile thyroid specimen; the retained tissue is on the sterile field.",
+              "Completed frozen section of a separate portion reports benign parathyroid tissue."
+            ]
+          ]
+        },
+        "Task": "Which plan should be used for the two left parathyroid glands at the pre-closure checkpoint of {patientName}'s thyroidectomy?",
+        "Options": [
+          "**KEY:** Retain the upper gland in situ and autotransplant the remaining lower-gland tissue into neck muscle.",
+          "Autotransplant the upper gland into neck muscle and submit the remaining lower-gland tissue in full for permanent histology.",
+          "Retain the upper gland in situ and submit the remaining lower-gland tissue in full for permanent histology.",
+          "Autotransplant the upper gland into neck muscle and autotransplant the remaining lower-gland tissue into neck muscle."
+        ]
+      },
+      "after": {
+        "Presentation": "{patientName}, a 57-year-old woman, is undergoing total thyroidectomy for bilateral symptomatic nodular thyroid disease in the clinic's ambulatory OR.",
+        "Current update": "At the pre-closure check after thyroid removal, the team examines the upper gland in the field and the lower-gland tissue on the fresh specimen. The portion used for frozen section is separate from the remaining lower-gland tissue.",
+        "Exhibit": {
+          "kind": "table",
+          "caption": "Constructed current field and specimen observations",
+          "columnHeaders": [
+            "Attachment and response",
+            "Tissue identity"
+          ],
+          "rowHeaders": [
+            "Left upper gland",
+            "Remaining left lower-gland tissue"
+          ],
+          "cells": [
+            [
+              "Still attached by its vascular pedicle; initially dusky. After a small capsular incision, fresh blood oozes and the gland becomes pink.",
+              "Recognized during dissection as normal parathyroid"
+            ],
+            [
+              "Found detached on the fresh sterile thyroid specimen; the retained tissue is on the sterile field.",
+              "Completed frozen section of a separate portion reports benign parathyroid tissue."
+            ]
+          ]
+        },
+        "Task": "Which plan should be used for the two left parathyroid glands at the pre-closure checkpoint of {patientName}'s thyroidectomy?",
+        "Options": [
+          "**KEY:** Retain the upper gland in situ and autotransplant the remaining lower-gland tissue into neck muscle.",
+          "Autotransplant the upper gland into neck muscle and submit the remaining lower-gland tissue in full for permanent histology.",
+          "Retain the upper gland in situ and submit the remaining lower-gland tissue in full for permanent histology.",
+          "Autotransplant the upper gland into neck muscle and autotransplant the remaining lower-gland tissue into neck muscle."
+        ]
+      },
+      "explanation": "The attached upper gland shows fresh inflow after decompression, supporting retention in situ. The remaining lower-gland tissue is detached and sterile, with benign parathyroid reported in the sampled portion, supporting salvage by muscle autotransplantation. Transplanting the upper gland would disregard its current response. Submitting all remaining lower tissue for permanent histology would forfeit that salvage option. These observations do not guarantee long-term gland or graft function.",
+      "rationalePairs": [
+        {
+          "choiceId": "choice.intraop.parathyroid.selective-salvage.1",
+          "choice": "Retain the upper gland in situ and autotransplant the remaining lower-gland tissue into neck muscle.",
+          "isCorrect": true,
+          "rationale": "The upper gland retains its pedicle and shows inflow after decompression, supporting in-situ retention. The remaining lower tissue is detached and sterile, with benign parathyroid reported in the sampled portion, supporting muscle autotransplantation of the remaining tissue.",
+          "distractorRationale": null
+        },
+        {
+          "choiceId": "choice.intraop.parathyroid.selective-salvage.2",
+          "choice": "Autotransplant the upper gland into neck muscle and submit the remaining lower-gland tissue in full for permanent histology.",
+          "isCorrect": false,
+          "rationale": "Transplanting the upper gland would disregard its current attached perfusion response. Submitting all remaining lower tissue for permanent histology would also forfeit the salvage opportunity after the supplied benign parathyroid report.",
+          "distractorRationale": "Transplanting the upper gland would disregard its current attached perfusion response. Submitting all remaining lower tissue for permanent histology would also forfeit the salvage opportunity after the supplied benign parathyroid report."
+        },
+        {
+          "choiceId": "choice.intraop.parathyroid.selective-salvage.3",
+          "choice": "Retain the upper gland in situ and submit the remaining lower-gland tissue in full for permanent histology.",
+          "isCorrect": false,
+          "rationale": "Retaining the upper gland follows its current findings. Complete submission of the remaining lower tissue, rather than partial sampling followed by grafting, would remove the tissue available for salvage.",
+          "distractorRationale": "Retaining the upper gland follows its current findings. Complete submission of the remaining lower tissue, rather than partial sampling followed by grafting, would remove the tissue available for salvage."
+        },
+        {
+          "choiceId": "choice.intraop.parathyroid.selective-salvage.4",
+          "choice": "Autotransplant the upper gland into neck muscle and autotransplant the remaining lower-gland tissue into neck muscle.",
+          "isCorrect": false,
+          "rationale": "Autotransplantation addresses the detached lower tissue. Removing the upper gland responds to its earlier discoloration rather than its retained pedicle and subsequent inflow response.",
+          "distractorRationale": "Autotransplantation addresses the detached lower tissue. Removing the upper gland responds to its earlier discoloration rather than its retained pedicle and subsequent inflow response."
+        }
+      ],
+      "inference": "Use observed perfusion and specimen provenance to choose selective preservation and salvage at the final thyroidectomy checkpoint.",
+      "focus": "live",
+      "whatChanged": "Exact reviewed node admitted with runtime patient-name placeholders and an explicit supported source contract. Two authored pathology profile names resolve to the existing runtime pathology-review mapping.",
+      "selfCheck": {
+        "wholeCasePass": true,
+        "latestIndependentPass": true,
+        "cueFindings": [],
+        "runtimeRandomization": true,
+        "procedureAdmissionTest": true,
+        "frozenFormat3AndJournalTest": true,
+        "pediatricChecks": [],
+        "sourceClosure": "Unchanged existing atomic claims and source records. Device, operative-anatomy and rescue feasibility remain needs_clinician_review."
+      },
+      "evidenceMapping": [
+        {
+          "claimId": "claim.intraop.parathyroid.in-situ-function",
+          "claimSha256": "a4420a22dfd131573cb36467ca204d70806f2253eb81a501c0040f1f17c4e432",
+          "sourceIds": [
+            "source.intraop.parathyroid.jaes-2025",
+            "source.intraop.parathyroid.rao-2023"
+          ]
+        },
+        {
+          "claimId": "claim.intraop.parathyroid.color-limitation",
+          "claimSha256": "24a1ffd696b197619cc7ea4800f1a5f85749df206e9987f1f0ea5f7d1473d5fb",
+          "sourceIds": [
+            "source.intraop.parathyroid.rao-2023",
+            "source.intraop.parathyroid.uludag-2019"
+          ]
+        },
+        {
+          "claimId": "claim.intraop.parathyroid.reperfusion-observation",
+          "claimSha256": "55617c1cc2005df5b1c2cf7eec206c7032a24009693885655c8e9d25a8e73f37",
+          "sourceIds": [
+            "source.intraop.parathyroid.uludag-2019"
+          ]
+        },
+        {
+          "claimId": "claim.intraop.parathyroid.removed-gland-graft",
+          "claimSha256": "223863c3da8ca3d8df695a4ebf0d60739f757abb6f3f89f243785b7dee72f058",
+          "sourceIds": [
+            "source.intraop.parathyroid.jaes-2025",
+            "source.intraop.parathyroid.rao-2023"
+          ]
+        },
+        {
+          "claimId": "claim.intraop.parathyroid.muscle-graft-technique",
+          "claimSha256": "8431141872f65fd104abb42c11adc33a7b9266ed5d6159ab3279e52fe1326f28",
+          "sourceIds": [
+            "source.intraop.parathyroid.jaes-2025",
+            "source.intraop.parathyroid.rao-2023"
+          ]
+        },
+        {
+          "claimId": "claim.intraop.parathyroid.tissue-confirmation",
+          "claimSha256": "a989d558e651c36c7123a826c602dcec73c25f71bc59ccd63ed777021e0ba02c",
+          "sourceIds": [
+            "source.intraop.parathyroid.rao-2023"
+          ]
+        }
+      ],
+      "procedureContext": {
+        "version": "procedure-context.v1",
+        "mode": "live",
+        "kind": "operation",
+        "phase": "procedure",
+        "familyId": "procedure.thyroidectomy",
+        "allowedIncomeLineIds": [
+          "income.ambulatory_operation",
+          "income.ambulatory_operation_extended"
+        ],
+        "requiredCapabilityIds": [
+          "capability.ambulatory_or",
+          "capability.staff.or_nurse",
+          "capability.periop_recovery",
+          "capability.endocrine_surgery",
+          "capability.intraoperative_frozen_pathology"
+        ]
+      },
+      "sourceHashes": {
+        "question": "e645d30b121896514ba365ed06deb5c36cde666e3a3d860eec8243addad45814",
+        "node": "41410757bdc392961f9896f3fe509275f72df75da0cf6ca03a021e146b8063c6",
+        "case": "f01ac26a5133aa4692c9437bc5df5f46169dddad1badaa9c82709402436d3da1"
+      },
+      "acceptedHashes": {
+        "question": "e645d30b121896514ba365ed06deb5c36cde666e3a3d860eec8243addad45814",
+        "node": "41410757bdc392961f9896f3fe509275f72df75da0cf6ca03a021e146b8063c6",
+        "case": "1c3091fd4b0b877fc618b21d08b243fbaef901822d2bc258d4f6163f548f99d6"
+      }
+    },
+    {
+      "id": "node.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      "title": "question.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      "group": "salvage",
+      "slug": "polypectomy-technique-and-bleeding",
+      "caseId": "case.intraop.polypectomy.ascending-emr-completion.20261112-salvage.v1",
+      "nodeId": "node.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      "questionVariantId": "question.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      "conceptId": "concept.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      "contentVersion": "clinical.question-intraop-polypectomy-technique-and-bleeding.2026-11-12.v1",
+      "reviewStatus": "needs_clinician_review",
+      "lastClinicianReview": null,
+      "review": {
+        "path": "docs/research/question-intraop-salvage-review2-20261113.json",
+        "record": {
+          "caseId": "case.intraop.polypectomy.ascending-emr-completion.20261112-salvage.v1",
+          "nodeId": "node.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+          "verdict": "PASS",
+          "clarityIssues": [],
+          "cues": [],
+          "fairness": [
+            "The added sentence identifies a raised residual mucosal tongue at the resection edge and its tubular surface openings before snare retrieval. Both antecedents in the retained update now have explicit referents. The update then states retrieval, absence of the matching surface on reinspection and completed clear-margin treatment. No removed question, exhibit or answer feedback is needed to understand the completion checkpoint.",
+            "The standalone presentation supplies piecemeal hot-snare EMR of a 28-mm ascending-colon adenoma. The retained exhibit supplies the 30-mm defect, approximating edges and nonbleeding vessels after irrigation. Together with completed lesion and margin treatment, these state the facts needed for the previously reviewed defect-management decision. The canonical presentation and finite profile contain identical repaired context, and the Markdown records the same added sentence.",
+            "The added observation does not mention clips, recommend closure, explain delayed-bleeding prevention or echo a completion-plan answer. It identifies what was removed and what reinspection compares against. Calling the earlier tongue residual does not disclose the current defect-management key. The retained apposition and nonbleeding findings remain relevant decision evidence rather than new wrapper cues.",
+            "Maya Dalton remains a 60-year-old woman undergoing therapeutic colonoscopy with EMR in the clinic endoscopy room, with endoscopy and perioperative recovery capabilities specified. The sequence from residual-tissue retrieval through reinspection and margin treatment to defect management is internally coherent. This is an adult case; pediatric age and parent-presence requirements do not apply.",
+            "Direct comparison confirms that the entire retained node and question equal both the archived pre-fix salvage versions and the original exportsSnapshot versions. The original independent review contains PASS for this node, and its file SHA-256 matches the recorded receipt. The decision, choices, correctness flags, update, exhibit and explanation are unchanged. The key remains Close the mucosal defect with endoscopic clips.",
+            "This verdict addresses only the repaired standalone context and preservation of the previously reviewed decision using local artifacts. It does not revalidate medical sources or grant clinical approval; needs_clinician_review remains applicable."
+          ],
+          "suggestions": []
+        }
+      },
+      "before": {
+        "Presentation": "{patientName}, a 60-year-old woman, is undergoing piecemeal hot-snare EMR of a 28-mm ascending-colon adenoma in the clinic's endoscopy room. Before snare retrieval, a raised residual mucosal tongue at the resection edge showed tubular surface openings on image-enhanced inspection.",
+        "Current update": "The raised tongue has been retrieved by snare. Reinspection shows no matching tubular surface remaining; adjuvant treatment of the clear mucosal edge has been completed. The scope remains at the ascending-colon site.",
+        "Exhibit": {
+          "kind": "table",
+          "caption": "Constructed endoscopy observations",
+          "columnHeaders": [
+            "Observed finding"
+          ],
+          "rowHeaders": [
+            "Defect",
+            "Base"
+          ],
+          "cells": [
+            [
+              "The mucosal defect spans 30 mm. Its edges come together as insufflation is reduced."
+            ],
+            [
+              "Blue-stained fibers extend across the bed. Two small vessels are visible, with no bleeding after irrigation."
+            ]
+          ]
+        },
+        "Task": "Before ending {patientName}'s ascending-colon EMR, which completion plan should be used for the resection bed?",
+        "Options": [
+          "**KEY:** Close the mucosal defect with endoscopic clips",
+          "Treat the exposed vessels with coagulation forceps",
+          "Leave the mucosal defect open following inspection"
+        ]
+      },
+      "after": {
+        "Presentation": "{patientName}, a 60-year-old woman, is undergoing piecemeal hot-snare EMR of a 28-mm ascending-colon adenoma in the clinic's endoscopy room. Before snare retrieval, a raised residual mucosal tongue at the resection edge showed tubular surface openings on image-enhanced inspection.",
+        "Current update": "The raised tongue has been retrieved by snare. Reinspection shows no matching tubular surface remaining; adjuvant treatment of the clear mucosal edge has been completed. The scope remains at the ascending-colon site.",
+        "Exhibit": {
+          "kind": "table",
+          "caption": "Constructed endoscopy observations",
+          "columnHeaders": [
+            "Observed finding"
+          ],
+          "rowHeaders": [
+            "Defect",
+            "Base"
+          ],
+          "cells": [
+            [
+              "The mucosal defect spans 30 mm. Its edges come together as insufflation is reduced."
+            ],
+            [
+              "Blue-stained fibers extend across the bed. Two small vessels are visible, with no bleeding after irrigation."
+            ]
+          ]
+        },
+        "Task": "Before ending {patientName}'s ascending-colon EMR, which completion plan should be used for the resection bed?",
+        "Options": [
+          "**KEY:** Close the mucosal defect with endoscopic clips",
+          "Treat the exposed vessels with coagulation forceps",
+          "Leave the mucosal defect open following inspection"
+        ]
+      },
+      "explanation": "The visible lesion and margin have been addressed, so this is now a defect-management decision. For a right-colon EMR defect at least 20 mm in size, closure is supported when approximation is possible. A dry base is not the same as absence of delayed-bleeding risk. Preventive coagulation of nonbleeding vessels has not established the same benefit.",
+      "rationalePairs": [
+        {
+          "choiceId": "choice.intraop.polypectomy.right-colon-defect-after-clearance.close.20261112.v1",
+          "choice": "Close the mucosal defect with endoscopic clips",
+          "isCorrect": true,
+          "rationale": "This is the large proximal EMR setting in which prophylactic defect closure is supported. Cessation of bleeding does not remove the separate purpose of reducing later hemorrhage.",
+          "distractorRationale": null
+        },
+        {
+          "choiceId": "choice.intraop.polypectomy.right-colon-defect-after-clearance.vessels.20261112.v1",
+          "choice": "Treat the exposed vessels with coagulation forceps",
+          "isCorrect": false,
+          "rationale": "Preventive vessel coagulation has not established the benefit sought from closing a large proximal defect. The vessels described are not currently bleeding.",
+          "distractorRationale": "Preventive vessel coagulation has not established the benefit sought from closing a large proximal defect. The vessels described are not currently bleeding."
+        },
+        {
+          "choiceId": "choice.intraop.polypectomy.right-colon-defect-after-clearance.observe.20261112.v1",
+          "choice": "Leave the mucosal defect open following inspection",
+          "isCorrect": false,
+          "rationale": "Selective omission of clips can be reasonable after other resections, but a clear, dry bed does not erase the large right-colon EMR indication offered here.",
+          "distractorRationale": "Selective omission of clips can be reasonable after other resections, but a clear, dry bed does not erase the large right-colon EMR indication offered here."
+        }
+      ],
+      "inference": "Use the completed-resection findings and large right-colon defect to choose prophylactic closure rather than vessel-only treatment.",
+      "focus": "live",
+      "whatChanged": "Exact reviewed node admitted with runtime patient-name placeholders and an explicit supported source contract.",
+      "selfCheck": {
+        "wholeCasePass": true,
+        "latestIndependentPass": true,
+        "cueFindings": [],
+        "runtimeRandomization": true,
+        "procedureAdmissionTest": true,
+        "frozenFormat3AndJournalTest": true,
+        "pediatricChecks": [],
+        "sourceClosure": "Unchanged existing atomic claims and source records. Device, operative-anatomy and rescue feasibility remain needs_clinician_review."
+      },
+      "evidenceMapping": [
+        {
+          "claimId": "claim.intraop.polypectomy.right-colon-defect-closure",
+          "claimSha256": "37a610a4ad4b9c23215ddb1cb10627caad1346814e416bf964cea863bcf0931d",
+          "sourceIds": [
+            "source.intraop.polypectomy.usmstf-removal-2020",
+            "source.intraop.polypectomy.ams-polyp-guidance-2022"
+          ]
+        },
+        {
+          "claimId": "claim.intraop.polypectomy.vessel-coagulation-boundary",
+          "claimSha256": "0b9da0181e70d69400f2e93416065afb8a803536f7d475642847fbe00b13da57",
+          "sourceIds": [
+            "source.intraop.polypectomy.usmstf-removal-2020"
+          ]
+        },
+        {
+          "claimId": "claim.intraop.polypectomy.intraprocedural-bleeding-tools",
+          "claimSha256": "34726c354426a400bbd7d4d44a63ea1a925f8f5fbb80d81dc2943979d848a3c2",
+          "sourceIds": [
+            "source.intraop.polypectomy.usmstf-removal-2020"
+          ]
+        }
+      ],
+      "procedureContext": {
+        "version": "procedure-context.v1",
+        "mode": "live",
+        "kind": "endoscopy",
+        "phase": "procedure",
+        "familyId": "procedure.colonoscopy_polypectomy",
+        "allowedIncomeLineIds": [
+          "income.endoscopy"
+        ],
+        "requiredCapabilityIds": [
+          "capability.endoscopy",
+          "capability.periop_recovery",
+          "capability.endoscopic_closure",
+          "capability.endoscopic_rescue",
+          "capability.chromoendoscopy"
+        ]
+      },
+      "sourceHashes": {
+        "question": "4abe1b3aeca837de5fa2c400959c415ab4dc439c2290552d38ebba0fcc97dee3",
+        "node": "32c4b69e378927d3677f9fbc09793921346e3874f01bf47f37556bee6a5d0b4d",
+        "case": "41825207ab24b8be824eb112658c9d09930049cf718bf70088254f93c9d6307b"
+      },
+      "acceptedHashes": {
+        "question": "4abe1b3aeca837de5fa2c400959c415ab4dc439c2290552d38ebba0fcc97dee3",
+        "node": "32c4b69e378927d3677f9fbc09793921346e3874f01bf47f37556bee6a5d0b4d",
+        "case": "02fa2324bccf5f81f5aff80b0c891906917ee6db0961c9e2bea98aeea6441096"
+      }
+    }
+  ],
+  "skipped": [],
+  "excluded": [],
+  "sourceInputs": [
+    {
+      "path": "docs/research/question-intraop-salvage-review-20261113.json",
+      "sha256": "1928672f95aaaff709fe078bfac39897b5a8eb7b1bc378557a0ba08ef03a625b"
+    },
+    {
+      "path": "docs/research/question-intraop-salvage-review2-20261113.json",
+      "sha256": "c32c6c99c274af783ea1cccd4073aca33c7985ec7bdfb483b3b91bd061880812"
+    },
+    {
+      "path": "packages/clinical-content/src/question-intraop-anorectal-eua-and-fistula-20261112.ts",
+      "sha256": "13871528ad211dce9598c09e36071f4b8d7cedaa50ae66a7b467aae0f463a807"
+    },
+    {
+      "path": "docs/research/question-intraop-anorectal-eua-and-fistula-20261112.json",
+      "sha256": "1a471fcc7970d925e31e7ba7658e29b47106c17631cf953ea9748b887dc5ad05"
+    },
+    {
+      "path": "docs/research/sources-question-intraop-anorectal-eua-and-fistula-20261112.json",
+      "sha256": "690da2ab713c097850cf1a5c93ff88967cd63f36b1f40e5c822b6208235fad2b"
+    },
+    {
+      "path": "docs/research/question-intraop-anorectal-eua-and-fistula-20261112.md",
+      "sha256": "03f28ce9974445d73b44031b2e9b9744546234cac04920c83a25c75f2892ba99"
+    },
+    {
+      "path": "docs/research/question-intraop-anorectal-eua-and-fistula-review-20261112.json",
+      "sha256": "eb49631ce3baf2a473a0bbfada9ee6e561541e00245ce8e0a8d3c9c5371abdfc"
+    },
+    {
+      "path": "docs/research/question-intraop-anorectal-eua-and-fistula-review2-20261112.json",
+      "sha256": "33f0409bb59ce26b31692d90fd782a5aaf318145c599229233acd9c6492df296"
+    },
+    {
+      "path": "packages/clinical-content/src/question-intraop-parathyroid-localization-and-preservation-20261112.ts",
+      "sha256": "96a4fee02ca65c09db32d5244c9392dfb6dd6e55110cb00018511b5238219bcc"
+    },
+    {
+      "path": "docs/research/question-intraop-parathyroid-localization-and-preservation-20261112.json",
+      "sha256": "73192b9e488b4c110df9a4fc1c5f1c99b95aed6c5159d2dbacf586315d43abf7"
+    },
+    {
+      "path": "docs/research/sources-question-intraop-parathyroid-localization-and-preservation-20261112.json",
+      "sha256": "14d613d60deec4135cfc4074213130085377495f1e0137d43dbdc29ba888bda7"
+    },
+    {
+      "path": "docs/research/question-intraop-parathyroid-localization-and-preservation-20261112.md",
+      "sha256": "49004ac5667731f68de610eab233e0a5c911d715b3ef03f1d43cfdff33b8c65e"
+    },
+    {
+      "path": "docs/research/question-intraop-parathyroid-localization-and-preservation-review-20261112.json",
+      "sha256": "a805a60befde7249bda1da9976a177dbda29bf2b8a101b698a53d30d49ffb940"
+    },
+    {
+      "path": "docs/research/question-intraop-parathyroid-localization-and-preservation-review2-20261112.json",
+      "sha256": "3e12d8b9a7a02236c6064805b9b8704d849be27f77d327b0af7cc288f8d38bff"
+    },
+    {
+      "path": "packages/clinical-content/src/question-intraop-polypectomy-technique-and-bleeding-20261112.ts",
+      "sha256": "77f866e3f7fee49b31b82c1d196bda336be9099a283cedb8505117a72810a271"
+    },
+    {
+      "path": "docs/research/question-intraop-polypectomy-technique-and-bleeding-20261112.json",
+      "sha256": "42a41fe0584f0ba3c2be63964275a866309e12720ee80c41171ec2983e8f72bd"
+    },
+    {
+      "path": "docs/research/sources-question-intraop-polypectomy-technique-and-bleeding-20261112.json",
+      "sha256": "5a21c6ee5145a7fb76fac7f266356ecd9409f3d32c1028e6f4f7f5fede010f79"
+    },
+    {
+      "path": "docs/research/question-intraop-polypectomy-technique-and-bleeding-20261112.md",
+      "sha256": "1ba27e6f0d6e9396e36a5c0868e9660c111e2961c50dccdf1f4ad7f019079e96"
+    },
+    {
+      "path": "docs/research/question-intraop-polypectomy-technique-and-bleeding-review-20261112.json",
+      "sha256": "960408f702c8932a7bae6f5a4d219a39a8267ef491a06442f8f3429e6014d932"
+    },
+    {
+      "path": "docs/research/question-intraop-polypectomy-technique-and-bleeding-review2-20261112.json",
+      "sha256": "aa71fb415cef3c34441232bea66b5202a1f45a1555fd06fdc454a4e785aab341"
+    },
+    {
+      "path": "docs/execplans/eng-i01-live-procedure-questions-20261112.md",
+      "sha256": "99680b92e882545394c16672c499b7eb2405eb7383b47aa1330ec74d7a5c3bc1"
+    }
+  ],
+  "presentationCorrections": [
+    {
+      "path": "case.intraop.parathyroid.missing-gland-salvage.v1.displayName",
+      "before": "Live parathyroidectomy: Simon Reed",
+      "after": "Live parathyroidectomy: {patientName}",
+      "kind": "patient_name_placeholder"
+    },
+    {
+      "path": "case.intraop.parathyroid.gland-preservation-salvage.v1.displayName",
+      "before": "Live thyroidectomy: Lydia Hayes",
+      "after": "Live thyroidectomy: {patientName}",
+      "kind": "patient_name_placeholder"
+    },
+    {
+      "path": "node.intraop.parathyroid.selective-salvage.v1.timing.choice.intraop.parathyroid.selective-salvage.2",
+      "kind": "runtime_timing_profile_mapping",
+      "before": "timing.test.biopsy_pathology",
+      "after": "timing.test.pathology_review"
+    },
+    {
+      "path": "node.intraop.parathyroid.selective-salvage.v1.timing.choice.intraop.parathyroid.selective-salvage.3",
+      "kind": "runtime_timing_profile_mapping",
+      "before": "timing.test.biopsy_pathology",
+      "after": "timing.test.pathology_review"
+    }
+  ],
+  "waitBindings": [
+    {
+      "caseId": "case.intraop.parathyroid.missing-gland-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.sample-integrity.v1",
+      "questionVariantId": "question.intraop.parathyroid.sample-integrity.v1",
+      "choiceId": "choice.intraop.parathyroid.sample-integrity.1",
+      "choiceLabel": "PTH assay using newly collected venous blood.",
+      "timingProfileId": "timing.test.basic_labs",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    },
+    {
+      "caseId": "case.intraop.parathyroid.missing-gland-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.sample-integrity.v1",
+      "questionVariantId": "question.intraop.parathyroid.sample-integrity.v1",
+      "choiceId": "choice.intraop.parathyroid.sample-integrity.2",
+      "choiceLabel": "PTH assay using retained postexcision venous blood.",
+      "timingProfileId": "timing.test.basic_labs",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    },
+    {
+      "caseId": "case.intraop.parathyroid.missing-gland-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.sample-integrity.v1",
+      "questionVariantId": "question.intraop.parathyroid.sample-integrity.v1",
+      "choiceId": "choice.intraop.parathyroid.sample-integrity.3",
+      "choiceLabel": "PTH assay using aspirate from the removed nodule.",
+      "timingProfileId": "timing.test.basic_labs",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    },
+    {
+      "caseId": "case.intraop.parathyroid.gland-preservation-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.selective-salvage.v1",
+      "questionVariantId": "question.intraop.parathyroid.selective-salvage.v1",
+      "choiceId": "choice.intraop.parathyroid.selective-salvage.2",
+      "choiceLabel": "Autotransplant the upper gland into neck muscle and submit the remaining lower-gland tissue in full for permanent histology.",
+      "timingProfileId": "timing.test.pathology_review",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    },
+    {
+      "caseId": "case.intraop.parathyroid.gland-preservation-salvage.v1",
+      "nodeId": "node.intraop.parathyroid.selective-salvage.v1",
+      "questionVariantId": "question.intraop.parathyroid.selective-salvage.v1",
+      "choiceId": "choice.intraop.parathyroid.selective-salvage.3",
+      "choiceLabel": "Retain the upper gland in situ and submit the remaining lower-gland tissue in full for permanent histology.",
+      "timingProfileId": "timing.test.pathology_review",
+      "disposition": {
+        "kind": "not_executed",
+        "reason": "future_planned"
+      },
+      "installed": true
+    }
+  ],
+  "remainingWaitBindings": [],
+  "counts": {
+    "before": {
+      "cases": 1432,
+      "nodes": 1640,
+      "registeredMeanings": 1138,
+      "scoredMeanings": 939,
+      "acceptedRows": 807,
+      "timingRows": 2962
+    },
+    "after": {
+      "cases": 1436,
+      "nodes": 1644,
+      "registeredMeanings": 1142,
+      "scoredMeanings": 943,
+      "acceptedRows": 811,
+      "timingRows": 2966
+    }
+  },
+  "manifestId": "question-ship.2026-11-13.v20",
+  "manifestSha256": "5340b68f91005a22f3e75bf4208f566e1ccf948d40ced5578887ca83945ce9a9",
+  "defaultSha256": "4da0db5dd2a1a268440d5a5abc1ea81412224a249d7c089ec98a684442cf654f",
+  "timingSha256": "dcf61801c053b1a7c72ed38929099df83a9ecf9534a20f0e12ea04e8ee931f42",
+  "catalogSha256": "3e0d1bb346abc1579e5c24400565c36c158d90304b60171b24b6a88f64b2ed40",
+  "levelFiveInputs": [
+    {
+      "path": "packages/clinical-content/src/synthetic-content.ts",
+      "beforeSha256": "cd8d023c72bb445cc154dc8a6ea35a01f60b4f5b15f10980fe58f50e7ab404cc",
+      "afterSha256": "8138cc7fb13ccd1b22d84d9f44946ccc3cd52ed359d6f40aa6e6ab4f1ac64b02",
+      "retainedEvidenceSha256": "6d9870d53383af7da6ee7547ba702410a2545882876faa1696c0e1217fae311c",
+      "alreadyUnboundAtIntake": true
+    },
+    {
+      "path": "packages/clinical-content/src/index.ts",
+      "beforeSha256": "8cb558cfff5a82244d481ce5aa1b303456b8418a0d787313f8cd701dc231d8aa",
+      "afterSha256": "21f7bde921f364390bc5e052d7bb64a4f90b293e4a5dd0a019adaa9690e4a623",
+      "retainedEvidenceSha256": "a57ffcec34d75e2e337790f1ac0d71e4bfdc8f79d53cdb28596e00ead60413e4",
+      "alreadyUnboundAtIntake": true
+    },
+    {
+      "path": "packages/clinical-content/src/answer-choice-timing.ts",
+      "beforeSha256": "78c3a41071dd1ae87ac6b18404538fed63ddb152a2fadf19d23a45f446726d83",
+      "afterSha256": "4bf693582b64fd94a8cabf5d6dc704b84da58500f90cc09898135667b899a377",
+      "retainedEvidenceSha256": "7db1b1253c7d3064adb0602360925c0739bb65c719603507c3fa09a6732ba245",
+      "alreadyUnboundAtIntake": true
+    },
+    {
+      "path": "packages/game-domain/src/test-choice-orders.ts",
+      "beforeSha256": "2f134b963295d1f859780dbee88d662036a4fbccff00fc033bfe7ce83d46a06f",
+      "afterSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc",
+      "retainedEvidenceSha256": "522c3fbd3b3503f4b6d74f38e7dbd994b98727a3037b0374f86e58dbf5a41639",
+      "alreadyUnboundAtIntake": true
+    }
+  ],
+  "lint": {
+    "target": {
+      "cases": 4,
+      "nodeOccurrences": 4,
+      "uniqueVariants": 4,
+      "concepts": 4,
+      "profileContexts": 8,
+      "variantsWithFindings": 0,
+      "findings": 0,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 1,
+      "approvalRecordOnlyMetadata": 0,
+      "variantsWithCompleteRationales": 4,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "2": 1,
+        "3": 3
+      },
+      "byOptionCount": {
+        "3": 3,
+        "4": 1
+      },
+      "variantsByRule": {}
+    },
+    "before": {
+      "cases": 1432,
+      "nodeOccurrences": 1640,
+      "uniqueVariants": 1635,
+      "concepts": 939,
+      "profileContexts": 5127,
+      "variantsWithFindings": 870,
+      "findings": 1824,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 325,
+      "approvalRecordOnlyMetadata": 35,
+      "variantsWithCompleteRationales": 926,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 768,
+        "1": 375,
+        "2": 234,
+        "3": 192,
+        "4": 66
+      },
+      "byOptionCount": {
+        "3": 838,
+        "4": 797
+      },
+      "variantsByRule": {
+        "ambiguous-cervical-term": 24,
+        "availability-permission-cue": 9,
+        "case-detail-key-rationale-overlap": 44,
+        "convergence": 91,
+        "heterogeneous-option-category": 84,
+        "key-length-disparity": 57,
+        "key-only-phrase-overlap": 70,
+        "key-only-word-overlap": 369,
+        "key-test-name-in-context": 16,
+        "lead-in-decision-principle": 15,
+        "near-duplicate-options": 39,
+        "negative-aligned-to-distractor": 87,
+        "option-absolute": 62,
+        "option-alone": 56,
+        "option-explanation": 26,
+        "option-generic-individualization": 8,
+        "option-length-disparity": 187,
+        "option-specificity-disparity": 14,
+        "supplied-clinical-conclusion": 4,
+        "unexplained-negative-imaging": 5,
+        "unique-key-abbreviation": 102,
+        "unique-key-test-name": 30,
+        "unnamed-treatment-action": 3
+      }
+    },
+    "after": {
+      "cases": 1436,
+      "nodeOccurrences": 1644,
+      "uniqueVariants": 1639,
+      "concepts": 943,
+      "profileContexts": 5135,
+      "variantsWithFindings": 870,
+      "findings": 1824,
+      "tutorialSequenceVariants": 0,
+      "missingAuthoredVersion": 0,
+      "missingEducationalTier": 326,
+      "approvalRecordOnlyMetadata": 35,
+      "variantsWithCompleteRationales": 930,
+      "variantsWithMultipleDefinitions": 0,
+      "byPriorityStage": {
+        "0": 768,
+        "1": 375,
+        "2": 235,
+        "3": 195,
+        "4": 66
+      },
+      "byOptionCount": {
+        "3": 841,
+        "4": 798
+      },
+      "variantsByRule": {
+        "ambiguous-cervical-term": 24,
+        "availability-permission-cue": 9,
+        "case-detail-key-rationale-overlap": 44,
+        "convergence": 91,
+        "heterogeneous-option-category": 84,
+        "key-length-disparity": 57,
+        "key-only-phrase-overlap": 70,
+        "key-only-word-overlap": 369,
+        "key-test-name-in-context": 16,
+        "lead-in-decision-principle": 15,
+        "near-duplicate-options": 39,
+        "negative-aligned-to-distractor": 87,
+        "option-absolute": 62,
+        "option-alone": 56,
+        "option-explanation": 26,
+        "option-generic-individualization": 8,
+        "option-length-disparity": 187,
+        "option-specificity-disparity": 14,
+        "supplied-clinical-conclusion": 4,
+        "unexplained-negative-imaging": 5,
+        "unique-key-abbreviation": 102,
+        "unique-key-test-name": 30,
+        "unnamed-treatment-action": 3
+      }
+    }
+  },
+  "retirements": [],
+  "newClinicalClaims": [],
+  "newSourceRecords": []
+}

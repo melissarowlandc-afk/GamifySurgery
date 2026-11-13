@@ -1,4 +1,5 @@
 import { founderConsultClockKey, founderProcedureConsultPath, procedureConsultKind, reconcileFounderConsultSources, selectProcedureConsult, sourceConsultOperation } from "./founder-consults";
+import { procedureCaseRequiresSource } from "./procedure-context";
 import { createLateProgressionState, readLateProgressionState, upgradeLateProgressionState } from "./late-progression";
 import { clinicFounderPath, clinicFounderWaitsForSeat, isClinicFounderConsult, reconcileClinicConsultClosures,
   releaseClinicConsult, returnClinicProvider, selectClinicConsult, vacateClinicProvider } from "./clinic-consults";
@@ -876,7 +877,7 @@ function pathFromLocationToOffscreen(
     return [];
   }
   const family = pediatricFamilyForActor(state, "encounter", encounterId);
-  if (family) {
+  if (family && !family.procedureFlow) {
     const plan = planPediatricPair(state, context, family, null, endpoint);
     return plan ? commitPediatricPairPlan(family, plan) : [];
   }
@@ -1015,7 +1016,7 @@ function chooseCareRoom(
     .flatMap((room) => {
       const definition = getRoomDefinition(room.roomDefinitionId, context);
       if (!definition) return [];
-      const familyPlan = family ? planPediatricExam(state, context, family, room) : null;
+      const familyPlan = family && !family.procedureFlow ? planPediatricExam(state, context, family, room) : null;
       const patientPath = family ? familyPlan?.movement.childPath ?? [] : pathFromLocationToFacilityPoint(
         state, context, start, getRoomCareAnchor(room, definition, "patient"), new Set([room.id]),
       );
@@ -3625,7 +3626,7 @@ function reduceOpenChart(
             : null;
           if (!room || !definition) return null;
           const family = pediatricFamilyForActor(next, "encounter", nextEncounter.id);
-          const familyPlan = family ? planPediatricExam(next, context, family, room) : null;
+          const familyPlan = family && !family.procedureFlow ? planPediatricExam(next, context, family, room) : null;
           const patientPath = nextEncounter.patientLocation
             ? family ? familyPlan?.movement.childPath ?? [] : pathFromLocationToFacilityPoint(
                 next,
@@ -6105,6 +6106,7 @@ function maybeAdmitAutomaticPatient(
         // Only selectProcedureConsult can supply that patient and source; an
         // installed room alone must not offer them as a new clinic arrival.
         procedureConsultKind(clinicalCase) === null &&
+        !procedureCaseRequiresSource(clinicalCase) &&
         getClinicalCaseEligibilityIssue(state, clinicalCase, context, capabilities) === null &&
         clinicalCase.decisionNodes.every(
           (node) =>
@@ -7819,7 +7821,7 @@ function advancePatientMovements(
       state.facilityTick - movement.lastMovedAtFacilityTick,
     );
     const family = pediatricFamilyForActor(state, "encounter", encounter.id);
-    movement.pathIndex = family ? advancePediatricPair(state, context, family, movement.path, movement.pathIndex, movement.lastMovedAtFacilityTick) : Math.min(
+    movement.pathIndex = family && !family.procedureFlow ? advancePediatricPair(state, context, family, movement.path, movement.pathIndex, movement.lastMovedAtFacilityTick) : Math.min(
       Math.max(0, movement.path.length - 1),
       movement.pathIndex + elapsedTicks * tilesPerTick,
     );
@@ -9844,6 +9846,9 @@ function reduceAdmitPatient(
       command,
       "Employee discussion content cannot be admitted as a patient.",
     );
+  }
+  if (procedureCaseRequiresSource(clinicalCase)) {
+    return rejectCommand(state, command, "This live procedure case requires a matching scheduled OR or endoscopy source.");
   }
   const eligibilityIssue = getClinicalCaseEligibilityIssue(state, clinicalCase, context);
   if (eligibilityIssue) return rejectCommand(state, command, eligibilityIssue);
