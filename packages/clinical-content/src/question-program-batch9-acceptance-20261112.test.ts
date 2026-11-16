@@ -135,7 +135,7 @@ describe("batch9 exact whole-case intraop acceptance",()=>{
 
   it("pins exact release source deltas, presence and every immutable epoch preimage",()=>{
     const bytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch9-release-source-pins-20261112.json",import.meta.url));
-    expect(createHash("sha256").update(bytes).digest("hex")).toBe("59849945f6c61f6b3fd35e6dc7478270500d6878a74521af9ae9f842b902759d");
+    expect(createHash("sha256").update(bytes).digest("hex")).toBe("a6ee0174649c3e1575551fcfa2bffa4bfcffca4340fddc9f0321bfd4147a0603");
     const pins=JSON.parse(bytes.toString("utf8"));
     const hash=(path:string)=>createHash("sha256").update(readFileSync(new URL("../../../"+path,import.meta.url))).digest("hex");
     expect(hash(pins.capturePath)).toBe(pins.capturedFixtureSha256);

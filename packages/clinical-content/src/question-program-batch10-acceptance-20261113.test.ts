@@ -169,7 +169,7 @@ describe("batch10 exact whole-case procedure and salvage acceptance", () => {
 
   it("pins exact release source deltas, presence and every immutable epoch preimage",()=>{
     const bytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch10-release-source-pins-20261113.json",import.meta.url));
-    expect(createHash("sha256").update(bytes).digest("hex")).toBe("4ff9d9606216bfb1bc1e77ad6b41151857662dc447152409e00e13c0ac4a91e1");
+    expect(createHash("sha256").update(bytes).digest("hex")).toBe("08a8c05015b3fe5ec84228676bf6ebb7156955db62567fb65b99077c885598f9");
     const pins=JSON.parse(bytes.toString("utf8"));
     const hash=(path:string)=>createHash("sha256").update(readFileSync(new URL("../../../"+path,import.meta.url))).digest("hex");
     expect(hash(pins.capturePath)).toBe(pins.capturedFixtureSha256);

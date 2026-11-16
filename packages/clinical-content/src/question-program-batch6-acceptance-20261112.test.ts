@@ -213,7 +213,7 @@ describe("topic batch6 exact pediatric salvage acceptance", () => {
     }
     const migration = read(root + "source-migration-20261112.json");
     const pinBytes = readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch6-release-source-pins-20261112.json", import.meta.url));
-    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("ceae9e1cc1e7677d126e2bc1d27cf49c41ecb2263c495f04be59289af85773fd");
+    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("480e5735c87b453be47f9c0ae5ccb96b69145f94e9a4fd8b498579011b72515b");
     const releasePins = JSON.parse(pinBytes.toString("utf8")) as {
       capturedFixtureSha256: string; testSupportSha256: string; repairedTopicTestArchivePath: string; repairedTopicTestArchiveSha256: string;
       paths: Array<{path: string; mainBeforeSha256: string; mainAfterSha256: string; requiredReleaseSha256: string | null}>;

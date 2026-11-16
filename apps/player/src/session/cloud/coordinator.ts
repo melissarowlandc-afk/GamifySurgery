@@ -116,6 +116,7 @@ export class CloudSyncCoordinator {
   private journalDirty = false;
   private lastAutomaticCheckpoint: TimePair | null = null;
   private openedJournalHighWater: number | null = null;
+  private overCapacityJournal = false;
   private backupRetryAfter: TimePair | null = null;
   private journalOwner: string | null = null;
   private snapshotSaves = false;
@@ -148,6 +149,7 @@ export class CloudSyncCoordinator {
   }
   get codec(): CloudCodecExecutor { return this.options.codec ?? cloudCodec; }
   get journal() { return this.options.cache.journal; }
+  get hasOverCapacityJournal(): boolean { return this.overCapacityJournal; }
   get journalWriterGeneration(): string { return (this.window?.lease ?? this.suspendedLease ?? this.retainedWriter)?.writerGeneration ?? this.recovery()?.writerGeneration ?? "0"; }
   bindJournalOwner(owner: string): void { this.journalOwner = owner; }
   releaseJournalOwner(owner: string): void { if (this.journalOwner === owner) this.journalOwner = null; }
@@ -518,6 +520,7 @@ export class CloudSyncCoordinator {
       await this.admitted(); if (!this.live(epoch)) return false;
       this.openedJournalHighWater = (await this.journal?.head(cloudCampaignStorageKey(this.scope)))?.highWater ?? null;
       const stored = await this.options.cache.read(this.scope); if (!this.live(epoch)) return false;
+      this.overCapacityJournal = stored?.journalCapacity === true;
       this.record = stored;
       this.offlineBase = Boolean(await this.options.entryStore?.read(`offline-base:${this.scope.campaignId}`));
       const identity = await readWriterIdentity(this.options.entryStore, this.scope); if (!this.live(epoch)) return false;
@@ -621,15 +624,25 @@ export class CloudSyncCoordinator {
         if (this.recovery()) await this.preserveCopies(account);
         const loaded = await this.codec.run({ kind: "verify", input: { ...chosen, expectedRevision: chosen.revision,
           expectedCampaignId: this.scope.campaignId, expectedBaselineId: chosen.baselineId } });
-        const candidate: CloudCandidate = { ...(isSnapshotCopy(chosen) ? { saveFormat: 3 as const, lineage: chosen.lineage } : {}), campaign: loaded.campaign, snapshot: chosen.snapshot,
+        let candidate: CloudCandidate = { ...(isSnapshotCopy(chosen) ? { saveFormat: 3 as const, lineage: chosen.lineage } : {}), campaign: loaded.campaign, snapshot: chosen.snapshot,
           evidence: isSnapshotCopy(chosen) ? { headerSha256: chosen.evidence.header.uncompressedSha256, fromRecord: 0, toRecord: 0, records: [] } : { headerSha256: account.evidence.header.uncompressedSha256, fromRecord: account.evidence.records.length,
             toRecord: chosen.evidence.records.length, records: chosen.evidence.records.slice(account.evidence.records.length) }, usageQuestions };
-        await this.codec.run({ kind: "candidate", input: { candidate, confirmed: account, scope: this.scope } });
+        const replacesHead = chosen.snapshot.uncompressedSha256 !== account.snapshot.uncompressedSha256 || candidate.evidence.records.length > 0;
+        // An unchanged, fully verified stored head is not a new upload. When
+        // adopting different stored bytes, compact the owned native copy before
+        // asking the unchanged wire-size gate to admit its new candidate.
+        if (replacesHead || usageQuestions.length) {
+          if (isSnapshotCopy(chosen) && (chosen.snapshot.uncompressedBytes > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes ||
+            chosen.snapshot.compressedBytes > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes)) {
+            candidate = { ...await this.codec.run({ kind: "snapshotUpgrade", input: { confirmed: chosen, candidate: null } }), usageQuestions };
+          }
+          await this.codec.run({ kind: "candidate", input: { candidate, confirmed: account, scope: this.scope } });
+        }
         const sent = this.now(), lease = await this.acquire(head, head.writerActive, epoch);
         if (!this.live(epoch)) return false;
         this.installLease(lease, sent); await this.rememberWriter(epoch);
         this.offlineLocal = false;
-        const changed = chosen.snapshot.uncompressedSha256 !== account.snapshot.uncompressedSha256 || candidate.evidence.records.length > 0;
+        const changed = candidate.snapshot.uncompressedSha256 !== account.snapshot.uncompressedSha256 || candidate.evidence.records.length > 0 || usageQuestions.length > 0;
         await this.persist({ schemaVersion: 1, scope: this.scope, confirmed: account, recovery: changed ? {
           baseRevision: account.revision, writerGeneration: lease.writerGeneration, inFlight: null, following: candidate } : null });
         if (this.offlineBase) await this.options.entryStore?.write(`offline-base:${this.scope.campaignId}`, null);

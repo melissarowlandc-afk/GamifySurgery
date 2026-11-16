@@ -9,10 +9,10 @@ import { type CloudCampaignMetadata } from "./codec";
 import type { CloudSourceProvenance } from "./codecEvidence";
 import type { VerifiedSessionSnapshot } from "./verifiedCopyCache";
 import { CloudSyncCoordinator, type CloudCheckpointReason, type CloudSyncView } from "./coordinator";
-import { logicalJsonText } from "./codecJson";
+import { CloudCodecError, logicalJsonText } from "./codecJson";
 import { cloudCheckDeadline } from "./checkDeadline";
 import { CloudSyncError, type SnapshotLineage } from "./transport";
-import { SNAPSHOT_BASELINE, isSnapshotCopy } from "./snapshotCodec";
+import { SNAPSHOT_BASELINE, isSnapshotCopy, readSnapshotLineage } from "./snapshotCodec";
 import type { CloudCompressedText } from "./codecCompression";
 import { LocalJournalDrain, LOCAL_COMPACTION_MS, LOCAL_NATIVE_PREPARE_MS, LOCAL_SNAPSHOT_TAIL_LIMIT, freezeJournalCheckpoint, journalWorkerAddress } from "../localJournal";
 import { CloudCacheError } from "./codecCache";
@@ -151,6 +151,25 @@ export class CloudGameSession {
     // still show the raw selected copy rather than an adapted playable seed.
     if (loaded.learningAdapted && (!coordinator.view.canExecute || coordinator.hasPriorRecovery))
       loaded = await coordinator.codec.run({ kind: "hydrate", input: hydrateInput });
+    let localCapacity = false, recoveredUsage: readonly QuestionUsageReceipt[] = [];
+    if (coordinator.hasOverCapacityJournal && coordinator.view.canExecute && !coordinator.hasPriorRecovery && coordinator.journal) {
+      // No cloud candidate could represent this verified durable journal. Re-read
+      // and validate it before binding a compacted session-owned baseline. Never
+      // restore it over another account head, newer selected copy or local writer.
+      const local = await prepareJournal(coordinator.journal, cloudCampaignStorageKey(coordinator.scope), coordinator.codec, { local: true, encode: false });
+      const seed = local?.seed, policy = seed?.snapshotPolicy;
+      if (!seed || !policy || !local.state || !loaded.snapshotLineage ||
+        seed.confirmed?.revision !== confirmed.revision || seed.confirmed.snapshot.uncompressedSha256 !== confirmed.snapshot.uncompressedSha256 ||
+        seed.campaign.campaignId !== coordinator.scope.campaignId || await coordinator.journalChangedSinceOpen()) throw new CloudCacheError("conflict");
+      const lineage = readSnapshotLineage({ ...policy.lineage, sequence: policy.lineage.sequence + seed.checkpoint.snapshot.head.sequence });
+      if (lineage.sequence < loaded.snapshotLineage.sequence ||
+        lineage.branchId !== loaded.snapshotLineage.branchId && !lineage.parents.includes(confirmed.snapshot.uncompressedSha256)) throw new CloudCacheError("conflict");
+      const state = completeSnapshotLearning(local.state);
+      localCapacity = true; // The worker deferred only a verified post-compaction size failure.
+      loaded = { ...loaded, state, campaign: seed.campaign, snapshotLineage: lineage,
+        checkpoint: createGameEvidenceCheckpoint(state), learningAdapted: true };
+      recoveredUsage = seed.usageQuestions;
+    }
     // Hydrate the selected snapshot + committed journal first. Apply the same
     // additive concept defaults as local loading only at this playable boundary;
     // raw copies, checksums, lineage and every supplied review stay exact.
@@ -164,6 +183,7 @@ export class CloudGameSession {
     const session = new CloudGameSession(coordinator, adapted ? { ...loaded, state: playable,
       checkpoint: playable !== loaded.state ? createGameEvidenceCheckpoint(playable) : loaded.checkpoint } : loaded,
       [openedSnapshot.uncompressedSha256, confirmed.snapshot.uncompressedSha256], switchTo, automaticReconnect, !useEngine);
+    for (const receipt of recoveredUsage) session.questions.set(receipt.receipt_id, receipt);
     const journal = coordinator.journal;
     if (journal && options.journal !== false && !coordinator.hasPriorRecovery && coordinator.view.canExecute) {
       try {
@@ -190,6 +210,7 @@ export class CloudGameSession {
       for (const code of loaded.numberRepairs ?? []) problemDiagnostics.event("codec-repair", code);
       if (loaded.numberRepairs?.length) coordinator.requireFreshUploadHead();
     }
+    if (localCapacity) coordinator.reportPreparationFailure(new CloudCodecError("capacity", "Current clinic exceeds the snapshot limit."));
     if (useEngine) {
       // In recovery mode do not overlap the just-used codec realm and engine
       // startup heaps. IndexedDB and the verified returned seed remain intact.

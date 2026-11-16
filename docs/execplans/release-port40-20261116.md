@@ -72,3 +72,17 @@ Initial new-test import of unshipped character-room QA produced collection/TS230
 Combined389public paths/266PNGs/23code-test hunk ports. Manager QA build and .orig patch backup preserved and excluded; manager cleanup before commit. Exact paths/hashes/output/risks in docs/research/release-port40-20261116.md and validationJSON. Uncommitted; no Git writes/push/deploy/network/install/agents/browser storage.
 
 Final scope audit: three pre-existing management-mode screenshot updates remain byte-identical to follow-up entry and outside the 389 scoped release paths. They are preserved as shared manager work; no screenshot was edited by this worker.
+
+## Urgent follow-up: over-cap durable journal opening (2026-11-16)
+
+Manager-authorized fix after release 40 local commit 1967e269. Prior verification reproduced a genuine capacity failure before owned-state compaction. Goal: validate original proofs/checksums/replay first, compact the owned opening state before size decisions, retain a genuinely over-cap clinic as playable with durable local progress and the existing honest cloud-capacity status. No cloud ceiling, integrity assertion or clinical text may be weakened.
+
+Owned milestone: audit native/legacy journal/cache/inspection opening; implement the focused client fix; add only public synthetic regressions; rerun the three private reproductions under ignored `.local-dev/over-cap-fix-20261116/`; verify the unchanged Level 5 journey; reconcile exact protected pins; seven full CI/thread suites, seven typechecks, boundaries/build, pacing alone last. No Git writes, network, installs, agents, deploys or browser storage. Shared edits are preserved.
+
+Completed: verified replay compaction, non-blocking genuine capacity recovery and same/child/unrelated lineage fencing; public synthetic regressions, exact-pin reconciliation, all private normal-opening reproductions, native evidence verification and full final validation. See the final result below.
+
+### Over-cap opening follow-up final result
+
+PASS: 13,954 tests / zero failures / one unchanged skip across seven workspaces; 36 focused tests including 13 new public synthetic regressions; all seven final typechecks; boundaries (fresh 8,382-path hash-bound read-only inventory because Node Git spawn is EPERM); player build; pacing alone last at 26,377 against unchanged 26,281 reference (0.365283% drift). All private normal journal and actual release-39 full-snapshot constructions open playable under 2 MB and commit a proof-valid fresh revision. Genuine capacity remains playable/local-durable with honest status; same/verified child branches pass and unrelated branches remain fenced. Original proofs, checksums, continuity, replay, cloud limits and source epochs remain strict.
+
+Five client runtime paths + one new synthetic test + 34 exact-pin fixture/guard paths changed; no clinical data, game-domain input, canonical evidence, inputHistory, guard or QA driver change. Native journey/lower remain 35,342 / 6,966,492 / 551 / zero, nine byte-identical checkpoints and three byte-identical reports, 634 unchanged bound inputs / 476 clinical. Public report contains every path/hash and exact runtime/test hunks. Ignored source patches and complete receipts are under `.local-dev/over-cap-fix-20261116/`. Read the public report and final validation summary before manager backport/commit; main pins require main preimages. No private payload copied to public files, no Git writes/network/installs/agents/deploy/browser storage.

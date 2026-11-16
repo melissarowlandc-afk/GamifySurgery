@@ -25,7 +25,11 @@ export interface CloudCacheEntry {
   confirmed: CloudConfirmed;
   recovery: CloudRecovery | null;
 }
-export interface CloudCacheRead { cacheRevision: number; entry: CloudCacheEntry }
+export interface CloudCacheRead {
+  cacheRevision: number; entry: CloudCacheEntry;
+  /** Reply-only: verified local journal needs session hydration, not a cloud candidate. */
+  journalCapacity?: true;
+}
 export interface CloudCache {
   readonly journal?: JournalStorage;
   read(scope: CloudScope): Promise<CloudCacheRead | null>;
@@ -38,9 +42,9 @@ export interface CloudCache {
 /** Only open/recovery paths hydrate the append journal. Ordinary cache readback
  * verifies the exact legacy cache bytes without scanning or encoding it. */
 const journalReads = new WeakMap<JournalStorage, Map<string, { version: string; result: ReturnType<typeof prepareJournal> }>>();
-async function withJournal(entry: CloudCacheEntry, journal: JournalStorage, rawHash: string): Promise<CloudCacheEntry> {
+async function withJournal(entry: CloudCacheEntry, journal: JournalStorage, rawHash: string): Promise<Pick<CloudCacheRead, "entry" | "journalCapacity">> {
   const key = cloudCampaignStorageKey(entry.scope);
-  const head = await journal.head(key); if (!head) return entry;
+  const head = await journal.head(key); if (!head) return { entry };
   let reads = journalReads.get(journal); if (!reads) { reads = new Map(); journalReads.set(journal, reads); }
   // The packed cache checksum is verified before this call. A new cache byte,
   // owner, commit, compaction or acknowledgement invalidates preparation.
@@ -48,7 +52,7 @@ async function withJournal(entry: CloudCacheEntry, journal: JournalStorage, rawH
   let preparedRead = reads.get(key);
   if (preparedRead?.version !== version) {
     const result = timeCloudEntry("journal-recovery", async () => {
-      const prepared = await prepareJournal(journal, key, cloudCodec, { base: entry.confirmed });
+      const prepared = await prepareJournal(journal, key, cloudCodec, { base: entry.confirmed, allowCapacity: true });
       // Verification precedes reclamation. Keep the current/prior full seeds,
       // live suffix and immutable operation; only covered native rows/chunks
       // are redundant. This frees space BEFORE the opening cache write/bind.
@@ -63,17 +67,18 @@ async function withJournal(entry: CloudCacheEntry, journal: JournalStorage, rawH
     void result.catch(() => { if (reads!.get(key)?.result === result) reads!.delete(key); });
   }
   const prepared = await preparedRead.result;
-  if (!prepared?.candidate || !prepared.base) return entry;
+  if (prepared?.capacity) return { entry, journalCapacity: true };
+  if (!prepared?.candidate || !prepared.base) return { entry };
   const candidate = prepared.candidate;
   if (candidate.saveFormat === 3 && candidate.snapshot.uncompressedSha256 === entry.confirmed.snapshot.uncompressedSha256 &&
-    !candidate.usageQuestions.length && !entry.recovery?.inFlight) return { ...entry, recovery: null };
+    !candidate.usageQuestions.length && !entry.recovery?.inFlight) return { entry: { ...entry, recovery: null } };
   const represented = entry.recovery?.following ?? (entry.recovery?.inFlight ? JSON.parse(entry.recovery.inFlight.requestText) as CloudCandidate : null);
   if (represented?.snapshot.uncompressedSha256 === candidate.snapshot.uncompressedSha256 &&
-    candidate.usageQuestions.every(row => represented.usageQuestions.some(other => other.receipt_id === row.receipt_id))) return entry;
+    candidate.usageQuestions.every(row => represented.usageQuestions.some(other => other.receipt_id === row.receipt_id))) return { entry };
   const sameBase = prepared.base.revision === entry.confirmed.revision;
-  return { ...entry, confirmed: prepared.base, recovery: { baseRevision: prepared.base.revision,
+  return { entry: { ...entry, confirmed: prepared.base, recovery: { baseRevision: prepared.base.revision,
     writerGeneration: entry.recovery?.writerGeneration ?? prepared.writerGeneration ?? "0", inFlight: sameBase ? entry.recovery?.inFlight ?? null : null,
-    following: prepared.candidate } };
+      following: prepared.candidate } } };
 }
 const copy = <T>(value: T): T => structuredClone(value);
 const pack = (entry: CloudCacheEntry, expected: number | null) => cloudCodec.run({ kind: "packCache", input: {
@@ -121,7 +126,7 @@ export class IndexedDbCloudCache implements CloudCache {
     return observeStorage("cache.read", async () => {
       const checked = await retrySlowStorage(() => this.readChecked(scope, expectedText));
       if (!checked) return null;
-      return expectedText === undefined ? { ...checked.value, entry: await withJournal(checked.value.entry, this.journal, checked.rawHash) } : checked.value;
+      return expectedText === undefined ? { ...checked.value, ...await withJournal(checked.value.entry, this.journal, checked.rawHash) } : checked.value;
     });
   }
   private async readChecked(scope: CloudScope, expectedText?: string): Promise<{ value: CloudCacheRead; rawHash: string } | null> {
@@ -185,7 +190,7 @@ export class IndexedDbCloudCache implements CloudCache {
     const entries: CloudCacheEntry[] = [];
     for (const raw of records.filter(row => row.key.startsWith(prefix))) {
       const campaignId = decodeURIComponent(raw.key.slice(prefix.length));
-      entries.push(await withJournal((await unpack(raw, cloudScopeData(scope, campaignId))).entry, this.journal, raw.sha256));
+      entries.push((await withJournal((await unpack(raw, cloudScopeData(scope, campaignId))).entry, this.journal, raw.sha256)).entry);
     }
     return entries;
   }
@@ -219,7 +224,7 @@ export class MemoryCloudCache implements CloudCache {
     const raw = this.records.get(cloudCampaignStorageKey(scope));
     if (!raw) return null;
     const value = await unpack(copy(raw), scope);
-    return rawOnly ? value : { ...value, entry: await withJournal(value.entry, this.journal, raw.sha256) };
+    return rawOnly ? value : { ...value, ...await withJournal(value.entry, this.journal, raw.sha256) };
   }
   async write(entry: CloudCacheEntry, expected: number | null): Promise<CloudCacheRead> {
     const stored = await pack(entry, expected);
@@ -235,7 +240,7 @@ export class MemoryCloudCache implements CloudCache {
     const prefix = cloudCampaignStorageKey(cloudScopeData(scope, "_")).slice(0, -1);
     const result: CloudCacheEntry[] = [];
     for (const row of this.records.values()) if (row.key.startsWith(prefix)) {
-      result.push(await withJournal((await unpack(row, cloudScopeData(scope, decodeURIComponent(row.key.slice(prefix.length))))).entry, this.journal, row.sha256));
+      result.push((await withJournal((await unpack(row, cloudScopeData(scope, decodeURIComponent(row.key.slice(prefix.length))))).entry, this.journal, row.sha256)).entry);
     }
     return result;
   }

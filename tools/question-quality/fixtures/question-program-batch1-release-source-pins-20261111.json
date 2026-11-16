@@ -16,7 +16,7 @@
       "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
       "mainBeforeSha256": "9a99b4b85cd738baaa37c1ffdc7a261e6b6dab61db80d965fc647877ba24e735",
       "mainAfterSha256": "b15ca90c435e9b60417b871d335a73bed647fb76eadfa2a566d5190725aaad02",
-      "requiredReleaseSha256": "ff8f3e7bd1bab5e33934b88ccbe531cc3271c172b7d06acabfc610c7c830fc9e",
+      "requiredReleaseSha256": "e76d4bc26cdbf1ab150c1713239b22ecd6482c49e4608b6c7382fc1ef7172a59",
       "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
     }
   ],
@@ -945,6 +945,37 @@
           "previousRequirement": "488e37174a623b9c33752e971d949033ad77d462f50842abdc073a52c5d8ff83",
           "releaseAfterSha256": "ff8f3e7bd1bab5e33934b88ccbe531cc3271c172b7d06acabfc610c7c830fc9e",
           "reason": "manager-approved release 40 reduced-mode furniture scale fix"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release40-over-cap-journal-open-fix",
+      "priorFixtureSha256": "011de447041d041e45593512b0079cf652c5a42fab2fc66eb5adbd8db2e89167",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-test-support.ts",
+          "mainBeforeSha256": "8cf0f25391eeda7684c625b9b1d63785ed06880321408940ef33beb8c2fb75db",
+          "mainAfterSha256": "20e940a5fc00771040ba3dbfb228aa0f6d1d2cca0d3da8b5d2c063e753e8c5f2",
+          "requiredReleaseSha256": "4ee3ae3ec72ac2623e54502b35a6dbabb81450cd54ac6ba551219d54ce0d7997",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+          "mainBeforeSha256": "9a99b4b85cd738baaa37c1ffdc7a261e6b6dab61db80d965fc647877ba24e735",
+          "mainAfterSha256": "b15ca90c435e9b60417b871d335a73bed647fb76eadfa2a566d5190725aaad02",
+          "requiredReleaseSha256": "ff8f3e7bd1bab5e33934b88ccbe531cc3271c172b7d06acabfc610c7c830fc9e",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "release 40 over-cap journal open fix",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+          "releaseBeforeSha256": "ff8f3e7bd1bab5e33934b88ccbe531cc3271c172b7d06acabfc610c7c830fc9e",
+          "previousRequirement": "ff8f3e7bd1bab5e33934b88ccbe531cc3271c172b7d06acabfc610c7c830fc9e",
+          "releaseAfterSha256": "e76d4bc26cdbf1ab150c1713239b22ecd6482c49e4608b6c7382fc1ef7172a59",
+          "reason": "release 40 over-cap journal open fix"
         }
       ]
     }

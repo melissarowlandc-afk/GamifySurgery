@@ -1,4 +1,4 @@
-import { serializeGameState } from "@gamify-surgery/game-domain";
+import { compactGameState, serializeGameState } from "@gamify-surgery/game-domain";
 import { loadCloudEvidenceCheckpoint } from "./codecEvidence";
 import { inspectLoadedCopy } from "./copySelection";
 import { CloudCodecError, sha256Utf8, utf8Bytes } from "./codecJson";
@@ -78,7 +78,9 @@ export class VerifiedCopyCache {
     if (!request) {
       request = this.load(input).then(async loaded => {
         this.remember(key, loaded);
-        return { inspection: await inspectLoadedCopy(loaded), decodedGameBytes: utf8Bytes(serializeGameState(loaded.state)),
+        // Raw projection/inspection and source proofs stay untouched. Capacity
+        // describes the owned playable copy, as in the native snapshot encoder.
+        return { inspection: await inspectLoadedCopy(loaded), decodedGameBytes: utf8Bytes(serializeGameState(compactGameState(loaded.state))),
           evidenceRecords: loaded.snapshotLineage ? 0 : loaded.checkpoint.evidence.records.length };
       });
       this.copies.set(key, request);

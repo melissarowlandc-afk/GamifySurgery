@@ -1,5 +1,5 @@
 import { encodeJournalValue } from "../journalEncoding";
-import { createGameEvidenceCheckpoint, importGameEvidence, restoreGameEvidenceJournal } from "@gamify-surgery/game-domain";
+import { compactGameState, createGameEvidenceCheckpoint, importGameEvidence, restoreGameEvidenceJournal } from "@gamify-surgery/game-domain";
 import { journalWorkerStore, journalQuotaRetry, journalRowText, type JournalAddress, type JournalHead, type JournalRead, type JournalSeed, type JournalStorage, type JournalWorkerAddress } from "../localJournal";
 import { CloudCacheError } from "./codecCache";
 import { encodeCloudEvidenceCheckpoint, loadCloudEvidenceCheckpoint } from "./codecEvidence";
@@ -20,6 +20,8 @@ export interface JournalPreparationInput {
   compact?: boolean;
   local?: boolean;
   encode?: boolean;
+  /** Opening may defer only a genuine post-compaction cloud size limit. */
+  allowCapacity?: boolean;
 }
 export interface JournalPreparation {
   through: number;
@@ -32,6 +34,7 @@ export interface JournalPreparation {
   writerGeneration?: string;
   profileOrder?: number;
   numberRepairs?: readonly string[];
+  capacity?: true;
 }
 export async function rebaseJournalInWorker(input: { address: JournalWorkerAddress; owner: string; through: number; seed: JournalSeed }) {
   const store = journalWorkerStore(input.address), head = await store.head(input.address.key);
@@ -85,32 +88,41 @@ export async function prepareJournalInWorker(input: JournalPreparationInput): Pr
       checkpoint = createGameEvidenceCheckpoint(repaired.state); seed.checkpoint = checkpoint;
     }
   }
-  let base = input.base ?? seed.confirmed, candidate: CloudCandidate | null = null;
+  let base = input.base ?? seed.confirmed, candidate: CloudCandidate | null = null, capacity = false;
   if (input.encode !== false && base && seed.snapshotPolicy) {
-    const state = nativeState!;
+    const rawState = nativeState!;
     const lineage = readSnapshotLineage({ ...seed.snapshotPolicy.lineage,
       sequence: seed.snapshotPolicy.lineage.sequence + checkpoint.snapshot.head.sequence });
     readCloudCampaignMetadata(parseCodecJson(JSON.stringify(seed.campaign)));
-    assertMappedGameFields(state as unknown as CodecObject);
-    if (state.campaignId !== seed.campaign.campaignId)
+    assertMappedGameFields(rawState as unknown as CodecObject);
+    if (rawState.campaignId !== seed.campaign.campaignId)
       throw new CloudCodecError("campaign_identity", "Snapshot belongs to another campaign.");
-    if (utf8Bytes(serializeSnapshotState(state)) > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes)
-      throw new CloudCodecError("capacity", "Current clinic exceeds the snapshot limit.");
     const loaded = isSnapshotCopy(base) ? await verifiedCopies.projection({ ...base, expectedRevision: base.revision,
       expectedCampaignId: base.campaignId, expectedBaselineId: base.baselineId }) : null;
-    // Both states have passed the evidence boundary. The usual unchanged open
-    // needs neither another canonical text tree nor a discarded gzip snapshot.
-    // Retain JSON serialization semantics for generic inline/test callers.
-    const same = (left: unknown, right: unknown) => equalParsedJson(left as CodecJson, right as CodecJson) ||
-      logicalJsonText(JSON.parse(JSON.stringify(left))) === logicalJsonText(JSON.parse(JSON.stringify(right)));
-    const equal = loaded && same(loaded.state, state) && same(loaded.campaign, seed.campaign);
-    const encoded = equal ? { snapshot: base.snapshot, lineage, evidence: await snapshotEvidence() } :
-      await encodeCloudSnapshot({ state, campaign: seed.campaign, lineage });
-    const older = loaded?.snapshotLineage && loaded.snapshotLineage.branchId === encoded.lineage.branchId && loaded.snapshotLineage.sequence > encoded.lineage.sequence;
-    if (!older || seed.usageQuestions.length) candidate = { saveFormat: 3, lineage: equal ? loaded!.snapshotLineage : encoded.lineage,
-      campaign: seed.campaign, snapshot: equal ? base.snapshot : encoded.snapshot,
-      evidence: { headerSha256: encoded.evidence.header.uncompressedSha256, fromRecord: 0, toRecord: 0, records: [] }, usageQuestions: seed.usageQuestions,
-      ...(!isSnapshotCopy(base) && seed.snapshotPolicy.legacyBaseSnapshot ? { legacyBaseSnapshot: seed.snapshotPolicy.legacyBaseSnapshot } : {}) };
+    // Original seed/row hashes, continuity, replay and base proof have passed.
+    // Keep their checkpoint byte-faithful; only the derived owned copy retires history.
+    const state = compactGameState(rawState);
+    if (utf8Bytes(serializeSnapshotState(state)) > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes) {
+      if (!input.allowCapacity) throw new CloudCodecError("capacity", "Current clinic exceeds the snapshot limit.");
+      capacity = true; // No oversized cloud candidate is created or uploaded.
+    } else {
+      // Both states have passed the evidence boundary. The usual unchanged open
+      // needs neither another canonical text tree nor a discarded gzip snapshot.
+      // Retain JSON serialization semantics for generic inline/test callers.
+      const same = (left: unknown, right: unknown) => equalParsedJson(left as CodecJson, right as CodecJson) ||
+        logicalJsonText(JSON.parse(JSON.stringify(left))) === logicalJsonText(JSON.parse(JSON.stringify(right)));
+      const equal = loaded && same(loaded.state, state) && same(loaded.campaign, seed.campaign);
+      const encoded = equal ? { snapshot: base.snapshot, lineage, evidence: await snapshotEvidence() } :
+        await encodeCloudSnapshot({ state, campaign: seed.campaign, lineage });
+      const older = loaded?.snapshotLineage && loaded.snapshotLineage.branchId === encoded.lineage.branchId && loaded.snapshotLineage.sequence > encoded.lineage.sequence;
+      if (encoded.snapshot.uncompressedBytes > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes || encoded.snapshot.compressedBytes > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes) {
+        if (!input.allowCapacity) throw new CloudCodecError("capacity", "Current clinic exceeds the snapshot limit.");
+        capacity = true;
+      } else if (!older || seed.usageQuestions.length) candidate = { saveFormat: 3, lineage: equal ? loaded!.snapshotLineage : encoded.lineage,
+        campaign: seed.campaign, snapshot: equal ? base.snapshot : encoded.snapshot,
+        evidence: { headerSha256: encoded.evidence.header.uncompressedSha256, fromRecord: 0, toRecord: 0, records: [] }, usageQuestions: seed.usageQuestions,
+        ...(!isSnapshotCopy(base) && seed.snapshotPolicy.legacyBaseSnapshot ? { legacyBaseSnapshot: seed.snapshotPolicy.legacyBaseSnapshot } : {}) };
+    }
   } else if (input.encode !== false && base && seed.source) {
     const loaded = await loadCloudEvidenceCheckpoint({ ...base, expectedRevision: base.revision, expectedCampaignId: base.campaignId, expectedBaselineId: base.baselineId });
     const actual = checkpoint.evidence.records, accepted = loaded.checkpoint.evidence.records;
@@ -136,7 +148,7 @@ export async function prepareJournalInWorker(input: JournalPreparationInput): Pr
   }
   if (input.compact && store) await store.compact(input.address!.key, data.head.owner, data.head.highWater, seed, await sha256Utf8(JSON.stringify(seed)), await encodeJournalValue(seed));
   return { through: data.head.highWater, ...(seed.snapshotPolicy ? { snapshotOnly: true } : {}), ...(numberRepairs ? { numberRepairs } : {}), base: store && input.encode === false && !input.local ? null : base,
-    candidate, writerGeneration: seed.writerGeneration, profileOrder: data.head.profileOrder,
+    candidate, ...(capacity ? { capacity: true as const } : {}), writerGeneration: seed.writerGeneration, profileOrder: data.head.profileOrder,
     ...(!store || input.local ? { seed } : {}), ...(input.local ? { state: nativeState ?? importGameEvidence(checkpoint.snapshot, checkpoint.evidence) } : {}) };
 }
 
