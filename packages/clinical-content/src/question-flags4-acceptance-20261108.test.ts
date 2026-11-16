@@ -77,10 +77,10 @@ describe("flags4 exact manager acceptance and preserved legacy identity",()=>{
   const migration=read("tools/question-quality/fixtures/question-flags4-acceptance-source-migration-20261108.json");
   expect(migration.files).toHaveLength(9);
   const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json",import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("ee2d4f503de534fa3fcb1154a5bc145e0a0d4084db13d70a98be9d378a47a365");
+  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("2a43b214ec40f34a87b3bbc934fd7693044f374904b342aa374584ffb3bac3a1");
   const pins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;paths:Array<{path:string;capturedMainSha256:string;requiredReleaseSha256:string}>};
   expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-flags4-acceptance-before-20261108.json",import.meta.url))).digest("hex")).toBe(pins.capturedFixtureSha256);
-  expect(pins.paths).toHaveLength(22);
+  expect(pins.paths).toHaveLength(32);
   for(const row of pins.paths)expect(before.files[row.path]).toBe(row.capturedMainSha256);
   for(const file of migration.files){
    const current=readFileSync(new URL("../../../"+file.path,import.meta.url),"utf8"),row=pins.paths.find(r=>r.path===file.path);

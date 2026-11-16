@@ -19,7 +19,7 @@ import { deferred, TestCloudClock } from "./syncTestSupport";
 import { cloudEntryTimings } from "./entryTimings";
 
 it("opens 9,119 immutable records without an upload barrier and prepares only a verified suffix", async () => {
-  const f = await largeEntryFixture(3_200, false), count = f.copy.evidence.records.length;
+  const f = await largeEntryFixture(3_200, false, { compactHistory: false }), count = f.copy.evidence.records.length;
   expect(count).toBeGreaterThan(8_500); expect(count).toBe(9_357);
   const checkpoint = applyGameEvidenceCommand(f.prepared.checkpoint,
     { type: "SET_SIMULATION_SPEED", speed: 4, operationId: "large.open.delta" }).checkpoint;

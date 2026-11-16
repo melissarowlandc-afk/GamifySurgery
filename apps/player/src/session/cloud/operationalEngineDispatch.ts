@@ -4,15 +4,16 @@ import { encodeJournalValue } from "../journalEncoding";
 import { LOCAL_STORAGE_COMPRESSION_WRITES } from "../localStorageBuildPolicy";
 import { sha256Utf8 } from "./codecJson";
 import type { OperationalEngineProcessor } from "./operationalEngineProcessor";
-import type { OperationalEngineReply, OperationalEngineRequest } from "./operationalEngineProtocol";
+import type { OperationalEngineProgress, OperationalEngineReply, OperationalEngineRequest } from "./operationalEngineProtocol";
 
 /** Hashing immutable journal rows is independent of the game version. It may
  * await WebCrypto without holding a player command behind storage preparation. */
 export function dispatchOperationalEngineRequest(engine: OperationalEngineProcessor, request: OperationalEngineRequest,
-  post: (reply: OperationalEngineReply) => void): void {
+  post: (reply: OperationalEngineReply) => void, progress?: (reply: OperationalEngineProgress) => void): void {
   if (request.kind !== "journalHashes") {
-    if (!runtimeCaseCatalogueEnabled()) { post(engine.handle(request)); return; }
-    void withRuntimeCaseSlices(() => engine.handle(request)).then(post)
+    const run = () => engine.handle(request, stage => progress?.({ id: request.id, progress: stage }));
+    if (!runtimeCaseCatalogueEnabled()) { post(run()); return; }
+    void withRuntimeCaseSlices(run).then(post)
       .catch(() => post({ id: request.id, kind: "failure", code: "engine-catalogue" })); return;
   }
   try {
@@ -24,10 +25,20 @@ export function dispatchOperationalEngineRequest(engine: OperationalEngineProces
       versions.push(input.deltaVersion); return { ...input.row, delta };
     });
     if (rows.some(row => row === null)) { post({ id: request.id, kind: "journalHashes", missing: true }); return; }
-    void Promise.all(rows.map(async row => {
-      const sha256 = await sha256Utf8(journalRowText(row!));
-      return { sha256, ...(LOCAL_STORAGE_COMPRESSION_WRITES ? { value: { ...await encodeJournalValue({ ...row!, sha256 }), version: row!.version } } : {}) };
-    })).then(values => {
+    // One compression stream at a time. Await each row's native crypto/stream
+    // work before starting the next, rather than serializing a whole batch in
+    // one turn ahead of newly admitted player commands.
+    void (async () => {
+      const values = [];
+      for (const row of rows) {
+        progress?.({ id: request.id, progress: "journal-hash" });
+        const sha256 = await sha256Utf8(journalRowText(row!));
+        progress?.({ id: request.id, progress: "journal-encode" });
+        values.push({ sha256, ...(LOCAL_STORAGE_COMPRESSION_WRITES ? { value: { ...await encodeJournalValue({ ...row!, sha256 }), version: row!.version } } : {}) });
+        progress?.({ id: request.id, progress: "journal-row" });
+      }
+      return values;
+    })().then(values => {
       post({ id: request.id, kind: "journalHashes", hashes: values.map(value => value.sha256),
         ...(LOCAL_STORAGE_COMPRESSION_WRITES ? { encodedRows: values.map(value => value.value) } : {}) }); engine.releaseJournalDeltas(versions);
     }).catch(() => post({ id: request.id, kind: "failure", code: "engine-journal-hash" }));

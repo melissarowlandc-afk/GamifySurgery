@@ -10,19 +10,35 @@ export type OperationalStatePatch =
   | { kind: "array"; length: number; segments: ({ from: number; count: number } | { values: unknown[] })[]; changes: [number, OperationalStatePatch][] };
 
 const record = (value: unknown): value is Record<string, unknown> => value !== null && typeof value === "object" && !Array.isArray(value);
-const id = (value: unknown): string | undefined => {
+const ownString = (value: unknown, key: string): string | undefined => {
   if (!record(value)) return undefined;
-  const descriptor = Object.getOwnPropertyDescriptor(value, "id");
+  const descriptor = Object.getOwnPropertyDescriptor(value, key);
   return descriptor && "value" in descriptor && typeof descriptor.value === "string" ? descriptor.value : undefined;
 };
+const patchPath = (value: unknown): string | undefined => {
+  if (!record(value)) return undefined;
+  const path = Object.getOwnPropertyDescriptor(value, "path"), present = Object.getOwnPropertyDescriptor(value, "present");
+  if (path && "value" in path && Array.isArray(path.value) && path.value.every(part => typeof part === "string") &&
+      present && "value" in present && typeof present.value === "boolean") return JSON.stringify(path.value);
+  return undefined;
+};
+function arrayIdentity(before: unknown[], after: unknown[]): ((value: unknown) => string | undefined) | undefined {
+  // Select one key family per collection, without probing/allocating all key
+  // variants for every coordinate/primitive row. Mixed/duplicate keys fall
+  // back to positional diffs; identity never substitutes for comparing values.
+  for (const key of ["id", "transactionKey", "instanceId"])
+    if (ownString(before[0], key) !== undefined || ownString(after[0], key) !== undefined) return value => ownString(value, key);
+  return patchPath(before[0]) !== undefined || patchPath(after[0]) !== undefined ? patchPath : undefined;
+}
 
 export function operationalStatePatch(before: unknown, after: unknown): OperationalStatePatch | undefined {
   if (Object.is(before, after)) return undefined;
   if (Array.isArray(before) && Array.isArray(after)) {
+    const id = arrayIdentity(before, after);
     if (before.length === after.length) {
       let aligned = true, edits: [number, OperationalStatePatch][] | undefined;
       for (let i = 0; i < after.length; i++) {
-        if (!Object.is(before[i], after[i]) && id(before[i]) !== id(after[i])) { aligned = false; break; }
+        if (!Object.is(before[i], after[i]) && id && id(before[i]) !== id(after[i])) { aligned = false; break; }
         const patch = operationalStatePatch(before[i], after[i]);
         if (patch) (edits ??= []).push([i, patch]);
       }
@@ -31,14 +47,14 @@ export function operationalStatePatch(before: unknown, after: unknown): Operatio
     const changes: [number, OperationalStatePatch][] = [];
     const segments: ({ from: number; count: number } | { values: unknown[] })[] = [];
     let byId: Map<string, number> | undefined;
-    if (before.length && after.length && before.every(row => id(row) !== undefined) && after.every(row => id(row) !== undefined)) {
+    if (id && before.length && after.length && before.every(row => id(row) !== undefined) && after.every(row => id(row) !== undefined)) {
       const oldIds = before.map(row => id(row)!), newIds = after.map(row => id(row)!);
       if (new Set(oldIds).size === oldIds.length && new Set(newIds).size === newIds.length)
         byId = new Map(oldIds.map((key, index) => [key, index]));
     }
     let changedOrder = before.length !== after.length;
     for (let i = 0; i < after.length; i++) {
-      const prior = byId ? byId.get(id(after[i])!) : i < before.length ? i : undefined;
+      const prior = byId ? byId.get(id!(after[i])!) : i < before.length ? i : undefined;
       const last = segments.at(-1);
       if (prior === undefined) {
         if (last && "values" in last) last.values.push(after[i]);

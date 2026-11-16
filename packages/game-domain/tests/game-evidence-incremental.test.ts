@@ -26,7 +26,9 @@ describe("incremental evidence with the unchanged pre-refactor oracle", () => {
   }, 60_000);
   it.each(["integration-preparing", "integration-final", "integration-finish"])("matches seeded late-game fuzz at %s", name => {
     const fixtures = JSON.parse(readFileSync(new URL("../../../tests/fixtures/level-five-integration-checkpoints-20261012.json", import.meta.url), "utf8"));
-    runEvidenceFuzz(12345, 80, fixtures[name]);
+    // Retain the frozen oracle and all ordinary byte guards; the harness also
+    // verifies exact approved review retirement and source proof at rebases.
+    runEvidenceFuzz(12345, 80, fixtures[name], true);
   }, 120_000);
   it.skipIf(process.env.EVIDENCE_FULL_REPLAY !== "1")("matches all 26,710 Level 5 commands and byte-identical earned checkpoints", () => {
     runFullEvidenceDifferential();

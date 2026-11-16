@@ -9476,3 +9476,34 @@ Manager base2f0b5e4d. Only35accepted public paths ported:10copies/12new/13exact 
 Rebind39 fresh journey/lower is byte-identical to38:35342commands/6966492cents/551completed/0walkouts, all9checkpoints/3reports/final native save/every number. Cash reconciles. First26377 passes unchanged26281+/-10%. All629inputs/476clinical hashes unchanged. Results history34->35 plus established liveCap correction only; checkpoints/guard/drivers untouched.
 
 Full CI=true thread suites:873files/13875passed/0failed/1existing skip. Domain6140/0/1 (Level5 integration36/36), player5592/0, clinical1768/0. Focused opening/delivery32files/294passed; final seven types, boundaries/launcher and build exit0. No failure/timeout needed an isolated rerun.75public changed paths; exact13hunk list/all files/hashes/output in docs/research/release-port39-20261115.md, its validationJSON and .local-dev/release-verify/port39-20261115.json. Proofs/logs/staging: .local-dev/release-port39-20261115/. No clinical/domain/balance/format/DB/RPC change. Physical iPhone/PWA/WebKit acceptance remains manager follow-up; no owner storage/origin change. Work is uncommitted; no Git process/write, commit, push, install, external network/live DB, agent or deploy.
+
+
+## Release port 40 - accepted lanes; QA scope decision pending (2026-11-16)
+
+Base9c6535ed. Both accepted lanes ported:339paths/266derived approved PNGs/15hunk ports, preserving release-only scene/workload differences. Main handoff/private data excluded. Rebind40 fresh old/new control:35342commands/6966492cents/551completed/0walkouts,3reports/allnumbers/41gameplay-card-count-financial samples/commandstream identical. All9checkpoint deltas equal approved compaction; decoded final2244832->1517911B. Pacing alone PASS26377vs26281+/-10%.634bindings/19deltas/5newhelpers,476clinical hashes unchanged;history36;guard/drivers/legacy fixture unchanged. Strict source pins reconciled, original captures/authorizations retained.
+
+Full7CIthread suites:883files/13908passed/3failed/1existing skip. Domain6151/0/1 (Level5 36/36);player5614/3;clinical1768/0. Seven types,boundaries,build,266asset verification pass. Three stale large-opening fixture limits fail after intentional shrink:7985records<8500,4347659B<5000000,4432314B<4900000. No timeout/threshold weakening. A tested three-path QA repair is private/unapplied because outside accepted manifests; scope authorization requested. Accepted port NOT green/release-ready.
+
+Full380paths,15hunk list,hashes/exact outputs/failures/risks:docs/research/release-port40-20261116.md, its validationJSON and .local-dev/release-verify/port40-20261116.json. Receipts/staging/proposal in .local-dev/release-port40-20261116/. Main B review and physical acceptance remain manager follow-up; no fix received yet. No clinical/Git writes/commit/push/deploy/network/install/agents/browser storage/origin change. Uncommitted.
+
+
+## Release port 40 - reviewed follow-up resolved (2026-11-16)
+
+Manager-approved five-file compaction review patch and exact earnings tie-break applied; strict source pins reconciled using release preimages. Workload-only opt-out cannot restore already retired checkpoint history (506 vs657 reviews). Approved fallback is a plain 780,045-byte synthetic history delta; it reconstructs the exact previous public reducer state. All original size/count/time and opening assertions remain; six opening tests, three snapshot-consumer checks and 26 review tests pass.
+
+Fresh guarded rebind keeps35,342commands/6,966,492cents/551completed/0walkouts, identical3reports/every native number/41gameplay-card-count-financial samples/command hash. Nine checkpoint differences vs39 are approved retention-only;7change vs initial port40,2unchanged. Final decoded1,518,246B (-726,586 vs39). One exact boundary-read transfer makes the derived partial-day display+500cents at integration-preparing; lifetime cash/income, rolling and radiology are unchanged. Cash reconciles.634bindings/476unchangedclinical;history35->36->37 preserves all entries;guard/drivers/compression policy unchanged.
+
+Final seven CI/thread suites:883files/13,934passed/0failed/1existing skip. Domain6151/0/1,player5640/0,clinical1768/0;Level5 36/36. Seven typechecks,boundaries/launcher and build pass. Pacing ALONE LAST passes26377against26281+/-10%. All initial3pressure failures resolved.386public paths/266PNGs/21hunk ports; full hashes/exact output:docs/research/release-port40-20261116.md and validationJSON; independent final hashes .local-dev/release-verify/port40-20261116.json. Fresh receipts/staging in .local-dev/release-port40-final-20261116/.
+
+No Git writes/commit/push/deploy/network/install/agent/browser storage or owner-origin change. Uncommitted; physical phone/WebKit acceptance and finite future-bank headroom remain manager follow-up.
+
+
+## Release port40 follow-up3 - reduced texture geometry (2026-11-16)
+
+Manager-applied four-file patch verified: all hunks exact over the release baseline, FacilityScene offsets -71/-63/-3 only. Three original file copies match frozen Main bytes. The geometry test needed a local, identical synthetic appearance descriptor because its Main helper belongs to excluded QA; all7checks remain. Copied only the chair ExecPlan section; manager's2e2e repairs retained/typechecked. Main handoff and concurrent lanes excluded.
+
+Fresh journey/lower byte-identical to prior reviewed40:35342commands/6966492cents/551completed/0walkouts; all9checkpoints/3reports/native save/41samples unchanged. Cash reconciles.634bound inputs/476clinical hashes unchanged, history37->38 preserves all entries; checkpoints not rewritten. Source-pin metadata closure16fixtures/16checksum literals; counts,20captures,58prior exact pin additions and322absences strict.
+
+Final7CI/thread suites:884files/13941passed/0failed/1existing skip; domain6151/0/1,player5647/0,clinical1768/0; Level5 integration36/36. Focused2files/11tests, seven typechecks, touched-e2e typecheck, boundaries8382paths and build pass. Pacing ALONE LAST26377vs26281+/-10% PASS. Initial missing-module collection/TS2307 is recorded and resolved.389combined paths/266PNGs/23hunk code/test paths; exact final hashes/output:docs/research/release-port40-20261116.md and validationJSON, .local-dev/release-verify/port40-20261116.json. Fresh stage/receipts in .local-dev/release-port40-chair-20261116/.
+
+Manager QA build and unchanged FacilityScene.ts.orig backup preserved/excluded; manager cleanup before commit. No owner save/browser/storage, Main writes, Git writes/commit/push/deploy/network/install/agent. Uncommitted. Native geometry proof is not an independent device/GPU/thermal measurement; manager browser301/303match/two rounding evidence is attributed in the handoff.

@@ -4,6 +4,7 @@ import { createHash } from "node:crypto";
 import {
   createGameEvidenceCheckpoint, applyGameEvidenceCommand, applyGameEvidenceBuildUndo, importGameEvidence,
   createInitialGameState, getCurrentQuestion, serializeGameState, type DomainContext, type GameCommand, type GameState,
+  gameReducer, getConceptReviewCount, restoreGameEvidenceImportSource,
 } from "../../src";
 import * as legacy from "./game-evidence-legacy";
 import { LevelFiveIntegrationJourney, runLevelFiveIntegrationJourney } from "../../../../tests/fixtures/level-five-integration";
@@ -13,23 +14,66 @@ export class EvidenceDifferential {
   old: ReturnType<typeof legacy.createGameEvidenceCheckpoint>;
   current: ReturnType<typeof createGameEvidenceCheckpoint>;
   steps = 0;
-  constructor(state: GameState) {
+  constructor(state: GameState, readonly historyCompaction = false) {
     this.old = legacy.createGameEvidenceCheckpoint(state);
     this.current = createGameEvidenceCheckpoint(state);
-    assert.equal(JSON.stringify(this.current), JSON.stringify(this.old));
+    this.equalCheckpoint(this.current, this.old);
+  }
+  private comparable<T>(value: T): T {
+    if (!this.historyCompaction) return value;
+    const copy = structuredClone(value) as T & { evidence?: { baseline: { openingLearning: Record<string, { retiredReviews?: number }> } }; checkpoint?: { evidence: { baseline: { openingLearning: Record<string, { retiredReviews?: number }> } } } };
+    const baseline = copy.evidence?.baseline ?? copy.checkpoint?.evidence.baseline;
+    // The frozen oracle predates this additive count projection. State/card/
+    // review payloads and every other archive field still compare byte-exact.
+    if (baseline) for (const history of Object.values(baseline.openingLearning)) delete history.retiredReviews;
+    return copy;
+  }
+  private equalCheckpoint(current: unknown, old: unknown): void {
+    assert.equal(JSON.stringify(this.comparable(current)), JSON.stringify(old));
   }
   apply(command: GameCommand, context?: DomainContext) {
     const before = this.current;
-    const old = legacy.applyGameEvidenceCommand(this.old, command, context);
     const current = applyGameEvidenceCommand(this.current, command, context);
+    const beforeState: GameState | null = this.historyCompaction ? importGameEvidence(before.snapshot, before.evidence) : null;
+    const retired = beforeState && Object.entries(current.state.learningHistories).some(([id, h]) =>
+      (h.retiredReviewCount ?? 0) > (beforeState.learningHistories[id]?.retiredReviewCount ?? 0));
+    if (retired) {
+      // A pre-compaction oracle cannot encode the new retirement witness.
+      // Prove the real reducer, exact suffix/count/card, complete untrusted
+      // import and original source/prefix first; only then rebase BOTH test
+      // branches at the same snapshot-only boundary. No frozen oracle edits.
+      assert.deepStrictEqual(current.state, gameReducer(beforeState!, command, context));
+      assert.deepStrictEqual(importGameEvidence(current.checkpoint.snapshot, current.checkpoint.evidence), current.state);
+      assert.deepStrictEqual(restoreGameEvidenceImportSource(current.checkpoint.evidence), restoreGameEvidenceImportSource(before.evidence));
+      assert.deepStrictEqual(current.checkpoint.evidence.records.slice(0, before.evidence.records.length), before.evidence.records);
+      for (const [id, after] of Object.entries(current.state.learningHistories)) {
+        const prior: GameState["learningHistories"][string] = beforeState!.learningHistories[id]!;
+        assert.deepStrictEqual(after.card, prior.card);
+        assert.equal(getConceptReviewCount(after), getConceptReviewCount(prior));
+        assert.deepStrictEqual(after.reviews, prior.reviews.slice(-3));
+      }
+      assert.equal(before.snapshot.head.sequence + 1, current.checkpoint.snapshot.head.sequence);
+      const oldBase = legacy.createGameEvidenceCheckpoint(current.state), base = createGameEvidenceCheckpoint(current.state);
+      // Keep all prior command witnesses as unused/orphan records in BOTH
+      // rebased archives. Retries and changed-operation reuse must remain
+      // checked across this test boundary, not disappear with the old head.
+      const commands = current.checkpoint.evidence.records.filter(record => record.kind === "transition");
+      this.old = { ...oldBase, evidence: { ...oldBase.evidence, records: [...oldBase.evidence.records,
+        ...commands.map((record, i) => ({ ...record, id: `e${(oldBase.evidence.records.length + i + 1).toString(36)}` }))] as typeof oldBase.evidence.records } };
+      this.current = { ...base, evidence: { ...base.evidence, records: [...base.evidence.records,
+        ...commands.map((record, i) => ({ ...record, id: `e${(base.evidence.records.length + i + 1).toString(36)}` }))] } };
+      this.equalCheckpoint(this.current, this.old); this.steps++;
+      return current;
+    }
+    const old = legacy.applyGameEvidenceCommand(this.old, command, context);
     // Full deep equality at EVERY step, including the complete evidence prefix.
-    assert.deepStrictEqual(current, old, `step ${this.steps}: ${command.operationId}`);
+    assert.deepStrictEqual(this.comparable(current), old, `step ${this.steps}: ${command.operationId}`);
     assert.equal(serializeGameState(current.state), serializeGameState(old.state));
     assert.equal(JSON.stringify(current.checkpoint.snapshot), JSON.stringify(old.checkpoint.snapshot));
     assert.equal(JSON.stringify(current.appendedEvidence), JSON.stringify(old.appendedEvidence));
     // By induction, the unchanged frozen archive prefix plus these exact new
     // bytes and exact snapshot bytes prove every saved checkpoint byte too.
-    if (this.steps % 1000 === 0) assert.equal(JSON.stringify(current.checkpoint), JSON.stringify(old.checkpoint));
+    if (this.steps % 1000 === 0) this.equalCheckpoint(current.checkpoint, old.checkpoint);
     assert.equal(before.snapshot.head.sequence + (current.replayed ? 0 : 1), current.checkpoint.snapshot.head.sequence);
     this.old = old.checkpoint; this.current = current.checkpoint; this.steps++;
     return current;
@@ -43,16 +87,16 @@ export class EvidenceDifferential {
     return current;
   }
   verify() {
-    assert.equal(JSON.stringify(this.current), JSON.stringify(this.old));
+    this.equalCheckpoint(this.current, this.old);
     assert.deepStrictEqual(importGameEvidence(this.current.snapshot, this.current.evidence), legacy.importGameEvidence(this.old.snapshot, this.old.evidence));
   }
 }
 
-export function runEvidenceFuzz(seed: number, count: number, state?: GameState) {
+export function runEvidenceFuzz(seed: number, count: number, state?: GameState, historyCompaction = false) {
   let value = seed >>> 0;
   const random = (max: number) => { value ^= value << 13; value ^= value >>> 17; value ^= value << 5; return (value >>> 0) % max; };
   const initial = state ?? createInitialGameState(undefined, { campaignId: `campaign.fuzz.${seed}`, campaignSeed: `evidence.fuzz.${seed}`, createdAtRealMs: 0 });
-  const pair = new EvidenceDifferential(initial), commands: GameCommand[] = [];
+  const pair = new EvidenceDifferential(initial, historyCompaction), commands: GameCommand[] = [];
   let current = initial;
   for (let index = 0; index < count; index++) {
     const operationId = `fuzz.${seed}.${index}`, type = random(12);

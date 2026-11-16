@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 import { readFileSync } from "node:fs";
-import { applyGameEvidenceCommand, createGameEvidenceCheckpoint, deserializeGameState, gameEvidenceDelta,
+import { applyGameEvidenceCommand, createGameEvidenceCheckpoint, deserializeGameState, gameEvidenceDelta, getConceptReviewCount,
   type GameCommand, type GameState } from "@gamify-surgery/game-domain";
 import { createDiagnosticWorkload } from "../../../../../tests/fixtures/diagnostic-workload";
 import { OperationalEngineProcessor } from "./operationalEngineProcessor";
@@ -46,6 +46,12 @@ it.each([3, 4, 5])("preserves every raw-state and journal byte over a long evolv
       expect(JSON.stringify(recovered.checkpoint), `${level}:${i} fallback archive`).toBe(JSON.stringify(reference.checkpoint));
     }
   }
-  expect(JSON.stringify(visible.learningHistories)).toBe(learning);
+  for (const [conceptId, history] of Object.entries(state.learningHistories)) {
+    const after = visible.learningHistories[conceptId]!;
+    expect(JSON.stringify(after.card)).toBe(JSON.stringify(history.card));
+    expect(getConceptReviewCount(after)).toBe(getConceptReviewCount(history));
+    expect(after.reviews).toEqual(history.reviews.slice(-3));
+  }
+  expect(JSON.stringify(state.learningHistories)).toBe(learning);
   expect(JSON.stringify(state)).toBe(original);
 }, hostedTime(120_000));

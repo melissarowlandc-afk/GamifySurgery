@@ -1,6 +1,7 @@
 import type { PlacedRoom } from "./types";
 import type { RoomDefinition } from "@gamify-surgery/balance-config";
 import { preferAvailableHomeStaff } from "./diagnosticCandidatePriority";
+import { DiagnosticCalendarIndex } from "./diagnosticCalendarIndex";
 import { facilityDefinitionReader } from "./facilityNavigation";
 import { hasSettledStateQueries, settledStateQuery, withSettledStateQueries } from "./settledStateQueries";
 import {
@@ -99,9 +100,10 @@ type ReadingForecastRequest = {
   preferred: DiagnosticResourceChoice | null; operationId: string | null;
   current: { resource: DiagnosticResourceChoice; starts: number; ends: number; continuous: boolean } | null;
 };
-type ReadingProjection = { baseline: Calendar; requests: Map<string, ReadingForecastRequest>; results: Map<string, DiagnosticOrderPhase | null> };
+type ReadingProjection = { baseline: Calendar; requests: Map<string, ReadingForecastRequest>; results: Map<string, DiagnosticOrderPhase | null>;
+  revision: number; computedRevision?: number };
 type Calendar = {
-  intervals: Map<string, Interval[]>;
+  intervals: DiagnosticCalendarIndex<Interval[]>;
   actors: Map<string, ActorInterval[]>;
   /** Occupied beds/transfer rooms must be claimed before future chains are seeded. */
   heldResources: Map<string, Set<string>>;
@@ -114,14 +116,17 @@ const copy = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
 const activeOperation = (operation: ServiceOperationState) => operation.status !== "completed" && operation.status !== "cancelled";
 
 function cloneCalendar(calendar: Calendar): Calendar {
-  return { intervals: new Map([...calendar.intervals].map(([key, intervals]) => [key, copy(intervals)])),
-    actors: new Map([...calendar.actors].map(([key, intervals]) => [key, copy(intervals)])),
+  // Reservations append to private arrays; interval/forecast records are read
+  // only. Fork the mutable collections, not every historical point/JSON tree.
+  return { intervals: new DiagnosticCalendarIndex([...calendar.intervals].map(([key, intervals]) => [key, intervals.slice()])),
+    actors: new Map([...calendar.actors].map(([key, intervals]) => [key, intervals.slice()])),
     heldResources: new Map([...calendar.heldResources].map(([key, owners]) => [key, new Set(owners)])),
-    operationCompletions: new Map([...calendar.operationCompletions].map(([id, value]) => [id, { ...copy({ ...value, phases: undefined }), phases: new Map(value.phases) }])),
-    readingHandoffs: new Map([...calendar.readingHandoffs].map(([id, value]) => [id, copy(value)])),
+    operationCompletions: new Map(calendar.operationCompletions),
+    readingHandoffs: new Map(calendar.readingHandoffs),
     readingProjection: calendar.readingProjection ? { baseline: cloneCalendar(calendar.readingProjection.baseline),
-      requests: new Map([...calendar.readingProjection.requests].map(([id, value]) => [id, copy(value)])),
-      results: new Map([...calendar.readingProjection.results].map(([id, value]) => [id, copy(value)])) } : null };
+      requests: new Map(calendar.readingProjection.requests),
+      results: new Map(calendar.readingProjection.results), revision: calendar.readingProjection.revision,
+      computedRevision: calendar.readingProjection.computedRevision } : null };
 }
 
 function holdResource(calendar: Calendar, key: string, ownerId: string): void {
@@ -164,9 +169,9 @@ function reservationKeys(resource: DiagnosticResourceChoice): string[] {
 function availabilityKeys(calendar: Calendar, resource: DiagnosticResourceChoice): string[] {
   return [
     ...reservationKeys(resource), `room:${resource.roomInstanceId}`,
-    ...(resource.stationId === null ? [...calendar.intervals.keys()].filter((key) => key.startsWith(`station:${resource.roomInstanceId}:`)) : []),
+    ...(resource.stationId === null ? calendar.intervals.keysWithPrefix(`station:${resource.roomInstanceId}:`) : []),
     ...resource.employeeIds.map((id) => `employee:${id}`),
-    ...resource.employeeIds.flatMap((id) => [...calendar.intervals.keys()].filter((key) => key.startsWith(`coverage:${id}:`) && key !== `coverage:${id}:${resource.roomInstanceId}`)),
+    ...resource.employeeIds.flatMap((id) => calendar.intervals.keysWithPrefix(`coverage:${id}:`).filter(key => key !== `coverage:${id}:${resource.roomInstanceId}`)),
   ].filter((key) => !sharedPeriop(resource) || !key.startsWith(`coverage:`) || !resource.employeeIds.some((id) => key === `coverage:${id}:${resource.roomInstanceId}`));
 }
 
@@ -181,7 +186,10 @@ function reserve(calendar: Calendar, resource: DiagnosticResourceChoice, starts:
     intervals.push({ starts, ends, destination: resource.staffAnchor });
     calendar.actors.set(id, intervals);
   }
-  if (calendar.readingProjection) reserve(calendar.readingProjection.baseline, resource, starts, ends);
+  if (calendar.readingProjection) {
+    reserve(calendar.readingProjection.baseline, resource, starts, ends);
+    calendar.readingProjection.revision++;
+  }
 }
 
 function actorOrigin(calendar: Calendar, actorId: string, atTick: number, fallback: GridPoint): GridPoint {
@@ -342,10 +350,13 @@ function schedulePhase(state: GameState, context: DomainContext, calendar: Calen
     const key: ReadingQueueKey = { readyAtTick: work.readyAtTick ?? ready, acceptedAtTick: work.acceptedAtTick,
       orderId: ownerId ?? draft.id, phaseId: draft.id, operationId: `forecast:${ownerId ?? draft.id}:${draft.id}` };
     const id = readingRequestId(key);
-    if (!calendar.readingProjection.requests.has(id)) calendar.readingProjection.requests.set(id, {
-      key, draft: copy(draft), ready: work.readyAtTick ?? ready, remaining, origin: copy(patientOrigin),
-      preferred: preferred ? copy(preferred) : null, operationId: null, current: null,
-    });
+    if (!calendar.readingProjection.requests.has(id)) {
+      calendar.readingProjection.requests.set(id, {
+        key, draft: copy(draft), ready: work.readyAtTick ?? ready, remaining, origin: copy(patientOrigin),
+        preferred: preferred ? copy(preferred) : null, operationId: null, current: null,
+      });
+      calendar.readingProjection.revision++;
+    }
     projectReadingCalendar(state, context, calendar);
     return copy(calendar.readingProjection.results.get(id) ?? null);
   }
@@ -460,6 +471,7 @@ function scheduleNewPhase(state: GameState, context: DomainContext, calendar: Ca
     if (!owners.size) structural.readingProjection.baseline.heldResources.delete(key);
   }
   if (!relaxed) return null;
+  if (structural.readingProjection) structural.readingProjection.revision++;
   // Nominal clocks allow acceptance, never a player ETA or completion witness.
   const nominal = schedulePhase(state, context, structural, draft, ready, origin, preferred, draft.durationMinutes, ownerId, false, initialTiming);
   if (nominal) { calendar.intervals = structural.intervals; calendar.actors = structural.actors; }
@@ -551,12 +563,14 @@ function currentFacilityDutyEnd(state: GameState, employee: EmployeeState, conte
 /** Replays only Reading/training predictions from fixed reservations, never real controllers. */
 function projectReadingCalendar(state: GameState, context: DomainContext, calendar: Calendar): void {
   const projection = calendar.readingProjection!;
+  if (projection.computedRevision === projection.revision) return;
   // With no accepted or prospective reads, the baseline is already the full
   // calendar. Avoid cloning the campaign and projecting unrelated staff duties
   // for every non-reading order/ETA. Later reads still project from that baseline.
   if (projection.requests.size === 0) {
     projection.results.clear();
     calendar.readingHandoffs.clear();
+    projection.computedRevision = projection.revision;
     return;
   }
   const working = cloneCalendar(projection.baseline);
@@ -566,7 +580,8 @@ function projectReadingCalendar(state: GameState, context: DomainContext, calend
   const predicted: GameState = {
     ...state,
     employees: copy(state.employees),
-    serviceOperations: copy(state.serviceOperations),
+    // Only status is assigned below. Frozen work/plans/paths remain read-only.
+    serviceOperations: state.serviceOperations.map(operation => ({ ...operation })),
   };
   const requests = [...projection.requests.values()].sort((a, b) => compareReadingQueueKeys(a.key, b.key));
   const pending = requests.filter(request => !request.current);
@@ -631,7 +646,10 @@ function projectReadingCalendar(state: GameState, context: DomainContext, calend
     const segment = { request, phase, continuous: Boolean(request.draft.readingUpgradeWork && carries(phase.resource!)) };
     busy(segment); return segment;
   };
-  const schedule = (request: ReadingForecastRequest, boundary: number, token?: { resource: DiagnosticResourceChoice; atTick: number }) => {
+  // Predicted employees change between event boundaries. Each trial is a
+  // settled read: share its candidate/path queries, then discard that scope
+  // before accept() changes the predicted duty/travel state.
+  const schedule = (request: ReadingForecastRequest, boundary: number, token?: { resource: DiagnosticResourceChoice; atTick: number }) => withSettledStateQueries(predicted, () => {
     const trial = cloneCalendar(working);
     trial.readingHandoffs.clear();
     if (token) trial.readingHandoffs.set(token.resource.employeeIds[0]!, copy(token));
@@ -657,7 +675,7 @@ function projectReadingCalendar(state: GameState, context: DomainContext, calend
     phase.forecast.readyAtTick = forecastReady;
     phase.forecast.queueMinutes = phase.forecast.startsAtTick - phase.forecast.walkingMinutes - forecastReady;
     return accept(request, phase);
-  };
+  });
   while (events.size && (pending.length || active.length)) {
     const boundary = Math.min(...events); events.delete(boundary); processedBoundary = boundary; predicted.facilityTick = boundary;
     const due = active.filter(segment => segment.phase.forecast.endsAtTick <= boundary)
@@ -742,6 +760,7 @@ function projectReadingCalendar(state: GameState, context: DomainContext, calend
       ...(request.draft.readingUpgradeWork?.durationMinutes === null ? { readingQuote: { roomInstanceId: phase.resource!.roomInstanceId, durationMinutes: phase.durationMinutes } } : {}) }
       : { endsAtTick: state.facilityTick, phases: new Map(), blocked: true });
   }
+  projection.computedRevision = projection.revision;
 }
 
 const calendarQuery = Symbol("diagnostic-calendar");
@@ -753,8 +772,8 @@ function calendarFor(state: GameState, context: DomainContext, ignoredOrderId: s
   return cloneCalendar(settledStateQuery(state, context, calendarQuery, JSON.stringify([ignored, encounterId]),
     () => buildCalendar(state, context, ignoredOrderId, encounterId)));
 }
-function buildServiceCalendar(state: GameState, context: DomainContext, encounterId: string): Calendar {
-  const calendar: Calendar = { intervals: new Map(), actors: new Map(), heldResources: new Map(), operationCompletions: new Map(), readingHandoffs: new Map(), readingProjection: null };
+function buildServiceCalendar(state: GameState, context: DomainContext): Calendar {
+  const calendar: Calendar = { intervals: new DiagnosticCalendarIndex(), actors: new Map(), heldResources: new Map(), operationCompletions: new Map(), readingHandoffs: new Map(), readingProjection: null };
   const now = state.facilityTick;
   const operations = state.serviceOperations.filter(activeOperation).sort((a, b) =>
     Number(b.phaseEndsAtFacilityTick !== null) - Number(a.phaseEndsAtFacilityTick !== null) || a.createdAtFacilityTick - b.createdAtFacilityTick || a.id.localeCompare(b.id));
@@ -965,7 +984,7 @@ function buildServiceCalendar(state: GameState, context: DomainContext, encounte
     b.phaseIndex - a.phaseIndex || Number(b.status === "waiting_for_next_phase") - Number(a.status === "waiting_for_next_phase") ||
     (a.phaseEndsAtFacilityTick ?? now) - (b.phaseEndsAtFacilityTick ?? now) || a.createdAtFacilityTick - b.createdAtFacilityTick || a.id.localeCompare(b.id))) scheduleOperation(operation);
   // Separate insertion lane; unrelated service ordering never switches comparators.
-  calendar.readingProjection = { baseline: cloneCalendar(calendar), requests: new Map(), results: new Map() };
+  calendar.readingProjection = { baseline: cloneCalendar(calendar), requests: new Map(), results: new Map(), revision: 0 };
   for (const operation of operations.filter(entry => entry.diagnosticPhaseWork?.kind === "interpretation")) {
     const work = operation.diagnosticPhaseWork!, key = readingOperationQueueKey(operation), current = currentClaims.get(operation.id);
     calendar.readingProjection.requests.set(readingRequestId(key), { key, operationId: operation.id,
@@ -994,9 +1013,12 @@ function buildServiceCalendar(state: GameState, context: DomainContext, encounte
 
 const serviceCalendarQuery = Symbol("diagnostic-service-calendar");
 function buildCalendar(state: GameState, context: DomainContext, ignoredOrderId: string, encounterId: string): Calendar {
-  const founderKey = state.environment.founderActivity?.kind === "attend_encounter" ? encounterId : null;
-  const calendar = cloneCalendar(settledStateQuery(state, context, serviceCalendarQuery, founderKey,
-    () => buildServiceCalendar(state, context, encounterId)));
+  // Service reservations no longer depend on which chart is being quoted:
+  // encounter/discussion attendance is always released above. In particular,
+  // the founder attending a chart must not rebuild this same baseline for
+  // every other encounter in one settled projection.
+  const calendar = cloneCalendar(settledStateQuery(state, context, serviceCalendarQuery, null,
+    () => buildServiceCalendar(state, context)));
   for (const plan of getDiagnosticOrderPlans(state).filter((entry) => entry.orderId !== ignoredOrderId)) {
     forecastFrozenPlan(state, plan, context, calendar);
   }

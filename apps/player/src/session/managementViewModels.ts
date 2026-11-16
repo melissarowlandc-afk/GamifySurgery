@@ -239,6 +239,11 @@ export function createManagementFinanceView(
     entry.count += 1;
     byLine.set(displayName, entry);
   }
+  for (const [, count, cents] of state.historyCompaction?.outsideReadReceipts ?? []) {
+    const displayName = receiptDisplayName("income.radiologist_outside_read");
+    const entry = byLine.get(displayName) ?? { displayName, net: 0, count: 0 };
+    entry.net += cents / 100; entry.count += count; byLine.set(displayName, entry);
+  }
   return {
     cashLabel: dollars(state.cash),
     ...(state.facilityLevel >= 5 ? { supplierSavingsLabel: `Actual posted supplier savings: stock ${dollars((state.levelFive?.management.supplierSavings.stockCents ?? 0) / 100)} · upkeep ${dollars((state.levelFive?.management.supplierSavings.upkeepSixtiethCents ?? 0) / 6000)}. Already included in lower costs; payroll unchanged.` } : {}),
@@ -282,8 +287,8 @@ export function createManagementFinanceView(
         ? "Cash covers less than 1 hour of running costs."
         : `Cash covers about ${runwayHours} hour${runwayHours === 1 ? "" : "s"} of running costs with no new income.`,
     recentEarnings: [...byLine.values()]
-      .sort((a, b) => b.net - a.net)
+      .sort((a, b) => b.net - a.net || (a.displayName < b.displayName ? -1 : a.displayName > b.displayName ? 1 : 0))
       .map((entry) => ({ ...entry, netLabel: dollars(Math.round(entry.net * 100) / 100) })),
-    recentEarningsReceiptCount: state.serviceIncomeReceipts.length,
+    recentEarningsReceiptCount: state.serviceIncomeReceipts.length + (state.historyCompaction?.outsideReadReceipts ?? []).reduce((sum, [, count]) => sum + count, 0),
   };
 }

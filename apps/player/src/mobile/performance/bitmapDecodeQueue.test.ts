@@ -5,6 +5,15 @@ import { ENVIRONMENT_ATLAS_V1 } from "../../art/bitmapAssetManifest";
 
 afterEach(() => { vi.useRealTimers(); vi.restoreAllMocks(); });
 
+it("accepts an already drawable load without a redundant WebKit decode promise or false timeout", async () => {
+  vi.useFakeTimers(); const decode = vi.fn(() => new Promise<void>(() => {}));
+  const image = { complete: true, naturalWidth: 320, naturalHeight: 400, decode } as unknown as HTMLImageElement;
+  const queue = new BitmapDecodeQueue(), task = queue.load(() => image, "/drawable.png", 0);
+  image.onload!({} as Event); expect(await task.promise).toBe(image); expect(decode).not.toHaveBeenCalled();
+  await vi.advanceTimersByTimeAsync(PHONE_BITMAP_DEADLINE_MS);
+  expect(queue.health).toEqual({ activeDecodes: 0, queuedDecodes: 0, decodeTimeouts: 0 }); expect(vi.getTimerCount()).toBe(0);
+});
+
 it("expires every queued promise even when all four network requests never fire an event", async () => {
   vi.useFakeTimers(); const images: any[] = [];
   const cache = new MobileBitmapCache(() => { const image = {}; images.push(image); return image as HTMLImageElement; });

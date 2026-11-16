@@ -6,7 +6,7 @@
       "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
       "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
       "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
-      "requiredReleaseSha256": "35106fbaf9f8bab8c2c921c3ae2b7f6bebbb5a768511eaf40bf3fb82b9439ae7",
+      "requiredReleaseSha256": "4c96e6e88292535d2da938f88046a921fa5d4044aa0942138c8c6dba6498d44c",
       "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
     },
     {
@@ -1281,6 +1281,158 @@
           "previousRequirement": "8df8f7c26132643fab66dcf66daa24133ee3a6314a1f76d98a0377fe9d40010f",
           "releaseAfterSha256": "35106fbaf9f8bab8c2c921c3ae2b7f6bebbb5a768511eaf40bf3fb82b9439ae7",
           "reason": "manager-approved release 39 cloud-opening fix"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release-port40-phone-performance-history-compaction",
+      "priorFixtureSha256": "bee810854ba8f962a2b4c0bc344db73a79c81fafd809a20705cec6a0aa96f30f",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
+          "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
+          "requiredReleaseSha256": "35106fbaf9f8bab8c2c921c3ae2b7f6bebbb5a768511eaf40bf3fb82b9439ae7",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+          "mainBeforeSha256": "c06b05b6fd567362484b6a588be6047d2633684bc0386a9c0a7d2b6760d61863",
+          "mainAfterSha256": "192d7f712c3fd848ab2fdc43a087c522963e1d9ea60ce6f33a34e5523384ce52",
+          "requiredReleaseSha256": "7ebc3873cd6426d6f295e120529018a5deb39d13518bdf4dd6fe1bc6c975f7b9",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6",
+          "mainAfterSha256": "573f4c6156d7c1819db74ad87e9a6413482a8a4e4f64d0563f3510f50e12a983",
+          "requiredReleaseSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc",
+          "reason": "Manager-accepted exact eight N4 future-planned diagnostic bindings; retain captured main preimage/postimage."
+        }
+      ],
+      "reason": "manager-approved release 40 phone performance + owner-approved history compaction",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "releaseBeforeSha256": "35106fbaf9f8bab8c2c921c3ae2b7f6bebbb5a768511eaf40bf3fb82b9439ae7",
+          "previousRequirement": "35106fbaf9f8bab8c2c921c3ae2b7f6bebbb5a768511eaf40bf3fb82b9439ae7",
+          "releaseAfterSha256": "f2be96084061b3a50e8862f28ce6bbdc37cbda1bd708cd6667491f964343dd5a",
+          "reason": "manager-approved release 40 phone performance + owner-approved history compaction"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release-port40-phone-performance-history-compaction-review-followup",
+      "priorFixtureSha256": "2cc57f0cbbbf1f8726f99426f6d4c64c5ad6f52a5dba247e99f5315bbc2ae43e",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
+          "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
+          "requiredReleaseSha256": "f2be96084061b3a50e8862f28ce6bbdc37cbda1bd708cd6667491f964343dd5a",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+          "mainBeforeSha256": "c06b05b6fd567362484b6a588be6047d2633684bc0386a9c0a7d2b6760d61863",
+          "mainAfterSha256": "192d7f712c3fd848ab2fdc43a087c522963e1d9ea60ce6f33a34e5523384ce52",
+          "requiredReleaseSha256": "7ebc3873cd6426d6f295e120529018a5deb39d13518bdf4dd6fe1bc6c975f7b9",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6",
+          "mainAfterSha256": "573f4c6156d7c1819db74ad87e9a6413482a8a4e4f64d0563f3510f50e12a983",
+          "requiredReleaseSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc",
+          "reason": "Manager-accepted exact eight N4 future-planned diagnostic bindings; retain captured main preimage/postimage."
+        }
+      ],
+      "reason": "manager-approved release 40 phone performance + owner-approved history compaction",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "releaseBeforeSha256": "f2be96084061b3a50e8862f28ce6bbdc37cbda1bd708cd6667491f964343dd5a",
+          "previousRequirement": "f2be96084061b3a50e8862f28ce6bbdc37cbda1bd708cd6667491f964343dd5a",
+          "releaseAfterSha256": "e2087b72bb944c58d064b7ff77cf73890f65733fb7703ac9e8dee475db92fa9b",
+          "reason": "manager-approved release 40 phone performance + owner-approved history compaction"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release-port40-phone-performance-history-compaction-pressure-scope-followup",
+      "priorFixtureSha256": "38fe1313e5b380c5e9650d9eaa23b0adf7839c6202a0d67296b3c8b703ca88ad",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
+          "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
+          "requiredReleaseSha256": "e2087b72bb944c58d064b7ff77cf73890f65733fb7703ac9e8dee475db92fa9b",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+          "mainBeforeSha256": "c06b05b6fd567362484b6a588be6047d2633684bc0386a9c0a7d2b6760d61863",
+          "mainAfterSha256": "192d7f712c3fd848ab2fdc43a087c522963e1d9ea60ce6f33a34e5523384ce52",
+          "requiredReleaseSha256": "7ebc3873cd6426d6f295e120529018a5deb39d13518bdf4dd6fe1bc6c975f7b9",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6",
+          "mainAfterSha256": "573f4c6156d7c1819db74ad87e9a6413482a8a4e4f64d0563f3510f50e12a983",
+          "requiredReleaseSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc",
+          "reason": "Manager-accepted exact eight N4 future-planned diagnostic bindings; retain captured main preimage/postimage."
+        }
+      ],
+      "reason": "manager-approved release 40 phone performance + owner-approved history compaction",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "releaseBeforeSha256": "e2087b72bb944c58d064b7ff77cf73890f65733fb7703ac9e8dee475db92fa9b",
+          "previousRequirement": "e2087b72bb944c58d064b7ff77cf73890f65733fb7703ac9e8dee475db92fa9b",
+          "releaseAfterSha256": "e3d803f8e0f5a6fbd6896760c9802305be08aaa711af9772ee44b33a72f3dc5d",
+          "reason": "manager-approved release 40 phone performance + owner-approved history compaction"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release-port40-reduced-furniture-scale-fix",
+      "priorFixtureSha256": "1e90eb8a3f2be5240a25ae39c41878680880691a4d27e72d9bd4d84c6e33ad02",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
+          "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
+          "requiredReleaseSha256": "e3d803f8e0f5a6fbd6896760c9802305be08aaa711af9772ee44b33a72f3dc5d",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+          "mainBeforeSha256": "c06b05b6fd567362484b6a588be6047d2633684bc0386a9c0a7d2b6760d61863",
+          "mainAfterSha256": "192d7f712c3fd848ab2fdc43a087c522963e1d9ea60ce6f33a34e5523384ce52",
+          "requiredReleaseSha256": "7ebc3873cd6426d6f295e120529018a5deb39d13518bdf4dd6fe1bc6c975f7b9",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6",
+          "mainAfterSha256": "573f4c6156d7c1819db74ad87e9a6413482a8a4e4f64d0563f3510f50e12a983",
+          "requiredReleaseSha256": "84a18f3fc8a0a27cf46f18bd14cf990ef7a9702c592c6d333fd1d3b99436f0fc",
+          "reason": "Manager-accepted exact eight N4 future-planned diagnostic bindings; retain captured main preimage/postimage."
+        }
+      ],
+      "reason": "manager-approved release 40 reduced-mode furniture scale fix",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "releaseBeforeSha256": "e3d803f8e0f5a6fbd6896760c9802305be08aaa711af9772ee44b33a72f3dc5d",
+          "previousRequirement": "e3d803f8e0f5a6fbd6896760c9802305be08aaa711af9772ee44b33a72f3dc5d",
+          "releaseAfterSha256": "4c96e6e88292535d2da938f88046a921fa5d4044aa0942138c8c6dba6498d44c",
+          "reason": "manager-approved release 40 reduced-mode furniture scale fix"
         }
       ]
     }

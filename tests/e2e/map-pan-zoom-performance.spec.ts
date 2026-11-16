@@ -164,6 +164,9 @@ async function stopMeasurement(page: Page) {
   });
 }
 
+// Release 40: reduced phone mode materializes only characters inside the visible
+// actor window, so a pan/zoom may create a few character objects. World draws stay 0.
+const PHONE_ACTOR_WINDOW_OBJECTS = 40;
 for (const level of [4, 5]) test(`Level ${level} map drag and wheel retain the world and meet the frame budget`, async ({ page }, info) => {
   test.skip(!["desktop-chrome", "phone-chrome"].includes(info.project.name), "One desktop and one phone frame-time proof per fixture");
   const phone = info.project.name === "phone-chrome";
@@ -199,7 +202,7 @@ for (const level of [4, 5]) test(`Level ${level} map drag and wheel retain the w
   await info.attach("map-pan-metrics.json", { body: JSON.stringify({ origin: new URL(page.url()).origin, level, phone, mode,
     effectiveP95BudgetMs: hostedTime(phone ? 50 : 25, mode, phone), pan }, null, 2), contentType: "application/json" });
   expect(pan.rooms).toBe(level === 4 ? 42 : 87);
-  expect(pan.draws).toBe(0); expect(pan.objects).toBe(0);
+  expect(pan.draws).toBe(0); expect(pan.objects).toBeLessThanOrEqual(phone ? PHONE_ACTOR_WINDOW_OBJECTS : 0);
   expect(pan.frames.length).toBeGreaterThan(10);
   expect(pan.viewModelChanges).toBe(0);
   expect(pan.p95Ms).toBeLessThan(hostedTime(phone ? 50 : 25, mode, phone));
@@ -213,7 +216,7 @@ for (const level of [4, 5]) test(`Level ${level} map drag and wheel retain the w
   }
   await renderedFrame(page);
   const zoom = await readMeasurement(page);
-  expect(zoom.draws).toBe(0); expect(zoom.objects).toBe(0);
+  expect(zoom.draws).toBe(0); expect(zoom.objects).toBeLessThanOrEqual(phone ? PHONE_ACTOR_WINDOW_OBJECTS : 0);
   expect(zoom.frames.length).toBeGreaterThan(6);
   expect(zoom.p95Ms).toBeLessThan(hostedTime(phone ? 50 : 25, mode, phone));
   expect(zoom.picked).toBe(zoom.expectedPick); expect(zoom.nativeProjectionError).toBeLessThan(.01);

@@ -53,6 +53,9 @@ export class OperationalEngineClient {
   private readonly pending = new Map<number, Waiting>();
   private ready = false;
   private lastResponse: number | null = null;
+  private timeoutRequest: string | null = null;
+  private readonly expiredHashIds = new Map<number, number>();
+  private workerHashing = true;
   private unregister: (() => void) | null = null;
   private readonly delivery = new WorkerDeliveryQueue<OperationalEngineRequest>(message => {
     const waiting = this.pending.get(message.id), at = performance.now();
@@ -101,13 +104,18 @@ export class OperationalEngineClient {
   }
   get state(): GameState { return this.current; }
   get health() { return { alive: !this.closed, ready: this.ready, ...this.delivery.health, pending: this.pending.size,
+    timeoutRequest: this.timeoutRequest, workerHashing: this.workerHashing,
+    requests: [...this.pending.values()].slice(0, 8).map(row => [row.request.kind === "command" ? `command:${row.request.command.type}` : row.request.kind,
+      row.received, Math.round(performance.now() - row.posted)]),
     lastError: this.closed ? this.failure : null, responseAge: this.lastResponse === null ? null : Date.now() - this.lastResponse }; }
   get recoveryCheckpoint(): GameEvidenceCheckpoint { return this.mirror.checkpoint; }
   get view(): PrototypePlayerView | null { return this.currentView; }
   get canAccept(): boolean { return !this.closed && this.queued < this.queueLimit; }
   get isQuiescent(): boolean { return !this.closed && this.queued === 0 && this.pending.size === 0; }
   get queuedCommands(): number { return this.queued; }
+  get canHashJournalRows(): boolean { return !this.closed && this.workerHashing; }
   async hashJournalRows(rows: readonly JournalRow[], full = false): Promise<string[]> {
+    if (!this.workerHashing) throw new OperationalEngineFailure("engine-journal-hash-timeout");
     if (this.closed || this.pending.size >= this.queueLimit) throw new OperationalEngineFailure(this.closed ? this.failure : "engine-backlog");
     // Independent of the stateful queue/version; WebCrypto cannot build a tick backlog.
     const inputs = rows.map(row => {
@@ -187,7 +195,7 @@ export class OperationalEngineClient {
       const waiting: Waiting = { resolve, reject, posted, postMs: 0, request, timeoutMs, received: false,
         // Preserve the existing whole-initialization startup budget. Ordinary
         // execution budgets begin on receipt, separately from delivery retries.
-        timer: request.kind === "initialize" ? setTimeout(() => this.fail("engine-timeout"), timeoutMs) : null };
+        timer: request.kind === "initialize" ? setTimeout(() => this.requestTimedOut(id), timeoutMs) : null };
       this.pending.set(id, waiting);
       try {
         const message = { ...request, id } as OperationalEngineRequest;
@@ -204,11 +212,27 @@ export class OperationalEngineClient {
     if ("ready" in reply) { this.ready = true; this.delivery.start(); return; }
     if (!Number.isSafeInteger(reply.id)) { this.fail("engine-message"); return; }
     const waiting = this.pending.get(reply.id);
-    if ("received" in reply) {
+    if ("received" in reply || "progress" in reply) {
       if (!waiting) return; // A late duplicate receipt cannot republish a result.
       this.delivery.acknowledge(reply.id);
       waiting.received = true; this.updateDeliveryBusy();
-      if (waiting.timer === null) waiting.timer = setTimeout(() => this.fail("engine-timeout"), waiting.timeoutMs);
+      // Startup remains a whole-request budget; play uses an inactivity budget
+      // renewed only by real phase/row progress, never by duplicate receipts.
+      if ("progress" in reply && waiting.request.kind !== "initialize") {
+        if (waiting.timer !== null) clearTimeout(waiting.timer);
+        waiting.timer = null;
+      }
+      if (waiting.timer === null) waiting.timer = setTimeout(() => this.requestTimedOut(reply.id), waiting.timeoutMs);
+      return;
+    }
+    if (!waiting && this.expiredHashIds.has(reply.id)) {
+      const count = this.expiredHashIds.get(reply.id)!; this.expiredHashIds.delete(reply.id);
+      // A late successful completion is useful liveness evidence, but its old
+      // result must never acknowledge/write a row again. Future rows may use
+      // the worker once all expired tasks have drained, without rehydrating it.
+      if (this.expiredHashIds.size === 0 && reply.kind === "journalHashes" && reply.missing !== true &&
+          Array.isArray(reply.hashes) && reply.hashes.length === count &&
+          reply.hashes.every(hash => typeof hash === "string" && /^[a-f0-9]{64}$/.test(hash))) this.workerHashing = true;
       return;
     }
     if (!waiting) { this.fail("engine-message"); return; }
@@ -217,6 +241,9 @@ export class OperationalEngineClient {
     this.updateDeliveryBusy();
     if (reply.kind === "failure") {
       const code = typeof reply.code === "string" && /^[a-z0-9-]{1,80}$/.test(reply.code) ? reply.code : "engine-command";
+      if (waiting.request.kind === "journalHashes") {
+        this.workerHashing = false; waiting.reject(new OperationalEngineFailure(code)); return;
+      }
       waiting.reject(new OperationalEngineFailure(code)); this.fail(code); return;
     }
     try {
@@ -304,6 +331,19 @@ export class OperationalEngineClient {
   }
   private updateDeliveryBusy(): void {
     this.delivery.setBusy([...this.pending.values()].some(row => row.received && row.request.kind !== "journalHashes"));
+  }
+  private requestTimedOut(id: number): void {
+    const waiting = this.pending.get(id); if (!waiting) return;
+    this.timeoutRequest = waiting.request.kind === "command" ? `command:${waiting.request.command.type}` : waiting.request.kind;
+    problemDiagnostics.event("engine-timeout", this.timeoutRequest);
+    if (waiting.request.kind === "journalHashes") {
+      // Hash/encode cannot advance game state. Let the existing journal
+      // fallback retry it; do not destroy a healthy authoritative engine.
+      this.workerHashing = false; this.expiredHashIds.set(id, waiting.request.rows.length);
+      this.pending.delete(id); this.delivery.acknowledge(id); this.updateDeliveryBusy();
+      waiting.reject(new OperationalEngineFailure("engine-journal-hash-timeout")); return;
+    }
+    this.fail("engine-timeout");
   }
   private fail(code: string): void {
     if (this.closed) return;

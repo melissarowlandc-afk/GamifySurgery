@@ -27,6 +27,9 @@ it("keeps the actual account session/controller/view below 16ms at 1x/2x/4x on t
       await controller.action(s=>s.setSimulationSpeed(speed));if(f.session.state.paused)await controller.action(s=>s.togglePause());
       let next=performance.now()+1000/speed;
       for(let i=0;i<12;i++){
+        // Sample an unpressured admitted pulse. Busy-journal pulse skipping is
+        // tested separately; it is not a simulation command to time here.
+        expect(await f.session.durable()).toBe(true);
         const wait=next-performance.now();if(wait>0)await delay(wait);next+=1000/speed;
         controller.reset();await immediate();const utilization=nodePerformance.eventLoopUtilization(),at=performance.now(),tick=f.session.state.facilityTick;
         await controller.tick(speed);await immediate();

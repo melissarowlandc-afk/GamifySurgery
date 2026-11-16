@@ -1,6 +1,6 @@
 import { RuntimeCatalogueRequired, withRuntimeCatalogue } from "../../mobile/performance/runtimeCatalogue";
 import {
-  deserializeGameState, serializeGameState, type DomainContext, type GameState,
+  compactGameState, deserializeGameState, serializeGameState, type DomainContext, type GameState,
 } from "@gamify-surgery/game-domain";
 import type { CampaignTutorialGuidance } from "../tutorialGuidance";
 import { assertMappedGameFields } from "./codecOwnership";
@@ -181,7 +181,7 @@ function domainLoad(source: CodecObject, context?: DomainContext): { state: Game
   }
   assertMappedGameFields(source);
   try {
-    const state = deserializeGameState(JSON.stringify(source), context);
+    const state = deserializeGameState(JSON.stringify(source), context, { compactHistory: false });
     return { state, persisted: persistedState(state) };
   } catch (error) {
     if (error instanceof CloudCodecError || error instanceof RuntimeCatalogueRequired) throw error;
@@ -319,5 +319,7 @@ export async function loadCloudBaselineImport(input: {
   if (!sameLogicalJson(original.persisted, game)) {
     throw new CloudCodecError("baseline_projection_mismatch", "The snapshot does not reconcile with the immutable import baseline.");
   }
-  return { state: loaded.state, campaign, baseline, revision: input.snapshot.revision, liveEvidenceReady: false };
+  // The immutable source/envelope comparisons above still use the original
+  // logical projection. Only the returned playable copy retires approved history.
+  return { state: compactGameState(loaded.state, context), campaign, baseline, revision: input.snapshot.revision, liveEvidenceReady: false };
 }

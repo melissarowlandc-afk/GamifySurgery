@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { syntheticClinicalCaseSchema } from "@gamify-surgery/clinical-content";
 import { clinicalCaseHasSupportedPatientSemantics, deserializeGameState, getClinicalCaseEligibilityIssue,
   getCurrentQuestion, pediatricRoomAtPoint, pediatricStillEligibleEntries, procedureConsultKind, serializeGameState,
-  gameReducer, getRoomSalePreview, PROTOTYPE_DOMAIN_CONTEXT, type GameState } from "../src";
+  gameReducer, getRoomSalePreview, compactGameState, PROTOTYPE_DOMAIN_CONTEXT, type GameState } from "../src";
 import { declaredProcedurePresentation, selectProcedureConsult } from "../src/founder-consults";
 import { clinicCaseMatchesLine, pediatricConsultPresentations } from "../src/clinic-consult-topics";
 import { normalizeProcedureVisit, procedureCaseRequiresSource } from "../src/procedure-context";
@@ -17,7 +17,9 @@ const reload = (state: GameState, context: Parameters<typeof deserializeGameStat
   const loaded = deserializeGameState(serializeGameState(state), context);
   // The existing source-consult reader refreshes its non-decaying live score
   // clock on load; assert all other persisted data and optional metadata.
-  const expected = JSON.parse(serializeGameState(state));
+  // Approved history migration may remove only old/orphan bookkeeping. Keep
+  // exact equality for the entire migrated state and every live source/child.
+  const expected = JSON.parse(serializeGameState(compactGameState(state, context)));
   const actual = JSON.parse(serializeGameState(loaded));
   for (const [id, encounter] of Object.entries(expected.encounters) as Array<[string, {consult?: unknown; lastSatisfactionDecayAtTick: number}]>) {
     if (encounter.consult) {

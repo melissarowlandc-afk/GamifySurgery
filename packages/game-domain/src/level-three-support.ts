@@ -47,8 +47,8 @@ export function getLevelThreeSupportStatus(state: GameState): LevelThreeSupportS
     maintenanceDueRoomIds: state.rooms.filter((room) => room.maintenance?.status === "due").map((room) => room.id),
     maintenanceOutOfServiceRoomIds: state.rooms.filter((room) => room.maintenance?.status === "out_of_service").map((room) => room.id),
     queuedQiReviewCount: reviews.filter((review) => review.status === "queued").length,
-    completedQiReviewCount: reviews.filter((review) => review.status === "completed").length,
-    firstQiReviewCompleted: reviews.some((review) => review.status === "completed"),
+    completedQiReviewCount: (state.historyCompaction?.completedQiReviewCount ?? 0) + reviews.filter((review) => review.status === "completed").length,
+    firstQiReviewCompleted: Boolean(state.historyCompaction?.completedQiReviewCount) || reviews.some((review) => review.status === "completed"),
     occupiedBreakSeats: state.employees.flatMap((employee) =>
       employee.facilityTask?.kind === "take_break" && employee.facilityTask.targetId && employee.facilityTask.seatId &&
       employee.facilityTask.roomUpgradeBreakBenefit?.roomDefinitionId !== "room.staff_gym"

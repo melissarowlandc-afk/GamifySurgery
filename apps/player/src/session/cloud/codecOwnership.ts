@@ -18,6 +18,7 @@ const mixedOperational: CloudFieldRule = { owner: "operational", role: "mixed", 
 
 /** Exhaustive at compile time. A new domain field requires an explicit ownership decision. */
 export const CLOUD_GAME_FIELD_OWNERSHIP = {
+  historyCompaction: evidenceProjection,
   schemaVersion: metadata,
   approvedRoomGeometryMigration: operational,
   approvedRoomNavigationMigration: operational,

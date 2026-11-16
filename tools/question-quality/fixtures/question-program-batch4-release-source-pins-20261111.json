@@ -18,7 +18,7 @@
       "mainBeforeSha256": "f9e621ce2b0937ff147dfb072a7f93fe94033c4744c4af534a3409fb9756064e",
       "mainAfterSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
       "releaseBeforeSha256": "15db60305e031085c1718ff46d7da0844d2052fa074d13987bb83073ac206e39",
-      "requiredReleaseSha256": "0b6f0fc302e71d8c806d192e0bc3cd6f49df5f9f0ed66afbbf25f51f46071a61",
+      "requiredReleaseSha256": "619573ebe7587e9839e3dbdc12123115bbcc69a6baac5825d1ee206b3d3b0c85",
       "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
     }
   ],
@@ -611,6 +611,138 @@
           "previousRequirement": "4e01c47678f2d36b01d259252df89264265287c5cd1f490e661d70d7b2e21e82",
           "releaseAfterSha256": "0b6f0fc302e71d8c806d192e0bc3cd6f49df5f9f0ed66afbbf25f51f46071a61",
           "reason": "manager-approved release 39 cloud-opening fix"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release-port40-phone-performance-history-compaction",
+      "priorFixtureSha256": "5f326a7dc3988748057cc2a66045b8edef974e2b06a031958b4eeeeeed1c6be9",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-test-support.ts",
+          "mainBeforeSha256": "11ef2cfa21b2b386a85cc79093216c762b84e93e7a3478173c2e3c7770115c00",
+          "mainAfterSha256": "3b3bd2c697c495966c8404c83531528b6a3dfc236dfaa08bc72eb78373f8b46e",
+          "releaseBeforeSha256": "0580d2b8a1db317d27fb2f404a45656b29b65b8c94c8f4dcef66bd179ddd431e",
+          "requiredReleaseSha256": "c81cd196af8d4c4dddd28b8bf98dbd8bf659bec839c64feb60b5c9c4bee681fb",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "f9e621ce2b0937ff147dfb072a7f93fe94033c4744c4af534a3409fb9756064e",
+          "mainAfterSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "releaseBeforeSha256": "15db60305e031085c1718ff46d7da0844d2052fa074d13987bb83073ac206e39",
+          "requiredReleaseSha256": "0b6f0fc302e71d8c806d192e0bc3cd6f49df5f9f0ed66afbbf25f51f46071a61",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        }
+      ],
+      "reason": "manager-approved release 40 phone performance + owner-approved history compaction",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "0b6f0fc302e71d8c806d192e0bc3cd6f49df5f9f0ed66afbbf25f51f46071a61",
+          "previousRequirement": "0b6f0fc302e71d8c806d192e0bc3cd6f49df5f9f0ed66afbbf25f51f46071a61",
+          "releaseAfterSha256": "fa125ddae1d8356f8da7fdde4e025029d2cdfbdfc8cf689e23939f6ddcc41806",
+          "reason": "manager-approved release 40 phone performance + owner-approved history compaction"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release-port40-phone-performance-history-compaction-review-followup",
+      "priorFixtureSha256": "5d63ef544f5003dd45b43ae17b13fe23311f1e572aae07a1168a412ebb52dfce",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-test-support.ts",
+          "mainBeforeSha256": "11ef2cfa21b2b386a85cc79093216c762b84e93e7a3478173c2e3c7770115c00",
+          "mainAfterSha256": "3b3bd2c697c495966c8404c83531528b6a3dfc236dfaa08bc72eb78373f8b46e",
+          "releaseBeforeSha256": "0580d2b8a1db317d27fb2f404a45656b29b65b8c94c8f4dcef66bd179ddd431e",
+          "requiredReleaseSha256": "c81cd196af8d4c4dddd28b8bf98dbd8bf659bec839c64feb60b5c9c4bee681fb",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "f9e621ce2b0937ff147dfb072a7f93fe94033c4744c4af534a3409fb9756064e",
+          "mainAfterSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "releaseBeforeSha256": "15db60305e031085c1718ff46d7da0844d2052fa074d13987bb83073ac206e39",
+          "requiredReleaseSha256": "fa125ddae1d8356f8da7fdde4e025029d2cdfbdfc8cf689e23939f6ddcc41806",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        }
+      ],
+      "reason": "manager-approved release 40 phone performance + owner-approved history compaction",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "fa125ddae1d8356f8da7fdde4e025029d2cdfbdfc8cf689e23939f6ddcc41806",
+          "previousRequirement": "fa125ddae1d8356f8da7fdde4e025029d2cdfbdfc8cf689e23939f6ddcc41806",
+          "releaseAfterSha256": "91d3639146bf34c13682f3f2b602ef9311d7b1b192dad308ee1fb661537bc9cc",
+          "reason": "manager-approved release 40 phone performance + owner-approved history compaction"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release-port40-phone-performance-history-compaction-pressure-scope-followup",
+      "priorFixtureSha256": "d44f43e26acf216db055d42c6f4c7cedff92a743548924f470c40ae0166e322a",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-test-support.ts",
+          "mainBeforeSha256": "11ef2cfa21b2b386a85cc79093216c762b84e93e7a3478173c2e3c7770115c00",
+          "mainAfterSha256": "3b3bd2c697c495966c8404c83531528b6a3dfc236dfaa08bc72eb78373f8b46e",
+          "releaseBeforeSha256": "0580d2b8a1db317d27fb2f404a45656b29b65b8c94c8f4dcef66bd179ddd431e",
+          "requiredReleaseSha256": "c81cd196af8d4c4dddd28b8bf98dbd8bf659bec839c64feb60b5c9c4bee681fb",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "f9e621ce2b0937ff147dfb072a7f93fe94033c4744c4af534a3409fb9756064e",
+          "mainAfterSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "releaseBeforeSha256": "15db60305e031085c1718ff46d7da0844d2052fa074d13987bb83073ac206e39",
+          "requiredReleaseSha256": "91d3639146bf34c13682f3f2b602ef9311d7b1b192dad308ee1fb661537bc9cc",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        }
+      ],
+      "reason": "manager-approved release 40 phone performance + owner-approved history compaction",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "91d3639146bf34c13682f3f2b602ef9311d7b1b192dad308ee1fb661537bc9cc",
+          "previousRequirement": "91d3639146bf34c13682f3f2b602ef9311d7b1b192dad308ee1fb661537bc9cc",
+          "releaseAfterSha256": "b4e9dd1b4793344bdecbc3930dc8a1c519fab25a76c6530ae5a322e020a76f65",
+          "reason": "manager-approved release 40 phone performance + owner-approved history compaction"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release-port40-reduced-furniture-scale-fix",
+      "priorFixtureSha256": "e5e01a0411574d1a60d2c7525e0e7fb4d39ff7307e33483c7e60f6e5448cc981",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-test-support.ts",
+          "mainBeforeSha256": "11ef2cfa21b2b386a85cc79093216c762b84e93e7a3478173c2e3c7770115c00",
+          "mainAfterSha256": "3b3bd2c697c495966c8404c83531528b6a3dfc236dfaa08bc72eb78373f8b46e",
+          "releaseBeforeSha256": "0580d2b8a1db317d27fb2f404a45656b29b65b8c94c8f4dcef66bd179ddd431e",
+          "requiredReleaseSha256": "c81cd196af8d4c4dddd28b8bf98dbd8bf659bec839c64feb60b5c9c4bee681fb",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "f9e621ce2b0937ff147dfb072a7f93fe94033c4744c4af534a3409fb9756064e",
+          "mainAfterSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "releaseBeforeSha256": "15db60305e031085c1718ff46d7da0844d2052fa074d13987bb83073ac206e39",
+          "requiredReleaseSha256": "b4e9dd1b4793344bdecbc3930dc8a1c519fab25a76c6530ae5a322e020a76f65",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        }
+      ],
+      "reason": "manager-approved release 40 reduced-mode furniture scale fix",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "b4e9dd1b4793344bdecbc3930dc8a1c519fab25a76c6530ae5a322e020a76f65",
+          "previousRequirement": "b4e9dd1b4793344bdecbc3930dc8a1c519fab25a76c6530ae5a322e020a76f65",
+          "releaseAfterSha256": "619573ebe7587e9839e3dbdc12123115bbcc69a6baac5825d1ee206b3d3b0c85",
+          "reason": "manager-approved release 40 reduced-mode furniture scale fix"
         }
       ]
     }

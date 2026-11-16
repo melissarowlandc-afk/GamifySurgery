@@ -12,6 +12,9 @@ export class CloudCodecError extends Error {
 export function isCloudCodecProcessingError(error: unknown): error is CloudCodecError {
   return error instanceof CloudCodecError && ["worker_unavailable", "worker_data_clone", "worker_payload"].includes(error.code);
 }
+export function isCloudCodecCapacityError(error: unknown): error is CloudCodecError {
+  return error instanceof CloudCodecError && error.code === "capacity";
+}
 
 export const CLOUD_JSON_LIMITS = Object.freeze({
   maxTextBytes: 6_000_000,

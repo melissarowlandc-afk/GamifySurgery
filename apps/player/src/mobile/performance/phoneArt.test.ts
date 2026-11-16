@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 import { expect, it, vi } from 'vitest';
 import { drawFacilityAtlasCrop, facilityAtlasClip, installPhoneArtSource, phoneArtSource } from './phoneArt';
 import variants from './phoneArt.generated.json';
+import reducedVariants from './phoneReducedArt.generated.json';
 import { DESKTOP_FACILITY_ASSETS, selectFacilityAssets } from './roomAssets';
 import { APPROVED_LEVEL5_BITMAP_ASSETS } from '../../art/bitmapAssetManifest';
 import checkpoints from '../../../../../tests/fixtures/level-five-integration-checkpoints-20261012.json';
@@ -12,19 +13,34 @@ const assets = [...DESKTOP_FACILITY_ASSETS, ...APPROVED_LEVEL5_BITMAP_ASSETS];
 const publicRoot = resolve(import.meta.dirname, '../../../public');
 const hash = (value: Uint8Array) => createHash('sha256').update(value).digest('hex');
 
+it('binds reduced sources to the same public originals and caps their complete decoded bank below 24 MB / 1024 pixels', () => {
+  expect(Object.keys(reducedVariants)).toHaveLength(266);
+  let decoded = 0;
+  for (const [id, row] of Object.entries(reducedVariants)) {
+    const asset = assets.find(candidate => candidate.id === id)!;
+    expect(asset, id).toBeDefined(); expect(phoneArtSource(asset, true)).toBe(row);
+    expect(hash(readFileSync(resolve(publicRoot, asset.relativePath!))), id).toBe(row.sourceSha256);
+    const png = readFileSync(resolve(publicRoot, row.path)); expect(hash(png), id).toBe(row.sha256);
+    expect([png.readUInt32BE(16), png.readUInt32BE(20)], id).toEqual([row.width, row.height]);
+    expect(Math.max(row.width, row.height), id).toBeLessThanOrEqual(1024);
+    decoded += row.width * row.height * 4;
+  }
+  expect(decoded).toBeLessThan(24_000_000);
+});
+
 it('binds every phone derivative to its unchanged public source and bounds every texture at 2048 pixels', () => {
   expect(Object.keys(variants)).toHaveLength(142);
   for (const [id, row] of Object.entries(variants)) {
     const asset = assets.find(candidate => candidate.id === id)!;
     expect(asset, id).toBeDefined();
-    expect(phoneArtSource(asset)).toBe(row);
+    expect(phoneArtSource(asset, false)).toBe(row);
     expect(hash(readFileSync(resolve(publicRoot, asset.relativePath!))), id).toBe(row.sourceSha256);
     const bytes = readFileSync(resolve(publicRoot, row.path));
     expect(hash(bytes), id).toBe(row.sha256);
     expect([bytes.readUInt32BE(16), bytes.readUInt32BE(20)], id).toEqual([row.width, row.height]);
     expect(Math.max(row.width, row.height), id).toBeLessThanOrEqual(2048);
     expect(row.width * row.height, id).toBeLessThanOrEqual(Math.ceil(row.sourceWidth / 2) * Math.ceil(row.sourceHeight / 2));
-    expect(phoneArtSource({ ...asset, nativeWidth: asset.nativeWidth + 1 })).toBeUndefined();
+    expect(phoneArtSource({ ...asset, nativeWidth: asset.nativeWidth + 1 }, false)).toBeUndefined();
   }
 });
 

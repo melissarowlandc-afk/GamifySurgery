@@ -458,6 +458,8 @@ export interface ConceptLearningHistory {
   conceptId: string;
   card: SerializedFsrsCard;
   reviews: ConceptReviewEvidence[];
+  /** Older logs compacted without replaying or changing the authoritative card. */
+  retiredReviewCount?: number;
 }
 
 export interface SchedulerPins {
@@ -1740,6 +1742,8 @@ export type LateProgressionState = {
 };
 
 export interface GameState {
+  /** Additive current-state summaries; absent until some history actually retires. */
+  historyCompaction?: HistoryCompactionState;
   schemaVersion: 8 | 9;
   /** Present only when an older campaign required the approved-room geometry migration. */
   approvedRoomGeometryMigration?: {
@@ -1852,6 +1856,15 @@ export interface GameState {
   retiredServiceHistory?: RetiredServiceHistory;
   /** Daily totals survive eviction of the bounded raw event history. */
   clinicDaySummaryBaseline?: { facilityTick: number; completedTotal: number; earnedTotalCents: number };
+}
+
+export interface HistoryCompactionState {
+  version: "history-compaction.v1";
+  retiredReviewIntentCount?: number;
+  settlements?: { count: number; netCents: number; grossCents: number };
+  /** Exact operating-minute buckets: tick, receipt count, gross/net cents. */
+  outsideReadReceipts?: Array<[number, number, number]>;
+  completedQiReviewCount?: number;
 }
 
 export interface RetiredServiceHistory {

@@ -61,8 +61,8 @@ function uniqueSettlements(settlements: readonly EncounterSettlement[]): Encount
 }
 
 /** Actual patient cash payments, including legacy settlement adjustments. */
-export function getPatientEncounterIncomeCents(state: Pick<GameState, "settlements">): number {
-  return uniqueSettlements(state.settlements).reduce((total, settlement) => total + cents(settlement.netCashDelta), 0);
+export function getPatientEncounterIncomeCents(state: Pick<GameState, "settlements" | "historyCompaction">): number {
+  return (state.historyCompaction?.settlements?.netCents ?? 0) + uniqueSettlements(state.settlements).reduce((total, settlement) => total + cents(settlement.netCashDelta), 0);
 }
 
 /**
@@ -77,7 +77,7 @@ export function getPatientEncounterIncomeCents(state: Pick<GameState, "settlemen
  * receipt from the last ten-hour operating day, covering this entire window.
  */
 export function getRollingIncomeSummary(
-  state: Pick<GameState, "facilityTick" | "settlements" | "serviceIncomeReceipts">,
+  state: Pick<GameState, "facilityTick" | "settlements" | "serviceIncomeReceipts" | "historyCompaction">,
 ): RollingIncomeSummary {
   const now = state.facilityTick;
   const observedMinutes = Math.min(ROLLING_INCOME_WINDOW_MINUTES, now);
@@ -104,6 +104,11 @@ export function getRollingIncomeSummary(
     source.stockCostCents += cents(receipt.stockCost);
     source.receiptCount += 1;
     netCashDeltaCents += cents(receipt.netCashDelta);
+  }
+  for (const [tick, count, amount] of state.historyCompaction?.outsideReadReceipts ?? []) {
+    if (!inWindow(tick)) continue;
+    const source = byId.get("reads")!;
+    source.grossCents += amount; source.receiptCount += count; netCashDeltaCents += amount;
   }
   const grossCents = sources.reduce((total, source) => total + source.grossCents, 0);
   const stockCostCents = sources.reduce((total, source) => total + source.stockCostCents, 0);

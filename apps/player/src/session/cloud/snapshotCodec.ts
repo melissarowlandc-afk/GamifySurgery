@@ -1,4 +1,4 @@
-import { createGameEvidenceCheckpoint, importGameEvidence, serializeGameState, type GameState } from "@gamify-surgery/game-domain";
+import { compactGameState, createGameEvidenceCheckpoint, importGameEvidence, serializeGameState, type GameState } from "@gamify-surgery/game-domain";
 import { assertCloudRevision, CLOUD_CAPACITY_LIMITS, readCloudCampaignMetadata, type CloudCampaignMetadata } from "./codec";
 import { compressCloudText, decompressCloudText, type CloudCompressedText } from "./codecCompression";
 import { CloudCodecError, codecObject, logicalJsonText, parseCodecJson, sha256Utf8, utf8Bytes, type CodecJson } from "./codecJson";
@@ -49,7 +49,7 @@ export function readSnapshotLineage(value: unknown): SnapshotLineage {
 
 export async function encodeCloudSnapshot(input: { state: GameState; campaign: CloudCampaignMetadata; lineage: SnapshotLineage }) {
   const campaign = readCloudCampaignMetadata(parseCodecJson(JSON.stringify(input.campaign))), lineage = readSnapshotLineage(input.lineage);
-  const repaired = repairSnapshotNumbers(input.state);
+  const repaired = repairSnapshotNumbers(compactGameState(input.state));
   const stateText = serializeSnapshotState(repaired.state), state = codecObject(parseCodecJson(stateText), "Current clinic");
   assertMappedGameFields(state);
   if (state.campaignId !== campaign.campaignId) throw new CloudCodecError("campaign_identity", "Snapshot belongs to another campaign.");

@@ -239,7 +239,7 @@ export class CloudGameSession {
   }
   /** Real clock pulses only. Explicit ADVANCE_TICK commands keep normal order. */
   advanceClock(command: Extract<GameCommand, { type: "ADVANCE_TICK" }>, context: DomainContext): Promise<GameState | null> {
-    if (this.ordered.pending) { this.skippedClockPulses++; return Promise.resolve(null); }
+    if (this.ordered.pending || this.journalDrain?.queued) { this.skippedClockPulses++; return Promise.resolve(null); }
     return this.executeAsync(command, context);
   }
   get commandPending(): boolean { return this.ordered.pending > 0; }

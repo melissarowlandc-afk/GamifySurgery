@@ -1,4 +1,5 @@
 import { normalizeFounderConsult } from "./founder-consults";
+import { compactGameState } from "./history-compaction";
 import { normalizeProcedureVisit } from "./procedure-context";
 import { normalizeRoutineClinicWork } from "./clinic-work";
 import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
@@ -4822,6 +4823,17 @@ function finishApprovedRoomMigration(
 }
 
 export function deserializeGameState(
+  serialized: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+  options: { compactHistory?: boolean } = {},
+): GameState {
+  const state = deserializeValidatedGameState(serialized, context);
+  // Historical cloud proof comparison must retain its pre-compaction logical
+  // projection. Playable local loads use the ordinary compacting default.
+  return options.compactHistory === false ? state : compactGameState(state, context);
+}
+
+function deserializeValidatedGameState(
   serialized: string,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
 ): GameState {

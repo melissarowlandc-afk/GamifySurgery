@@ -20,6 +20,31 @@ import type {
 export const RETAINED_SERVICE_INCOME_RECEIPT_LIMIT = 50;
 export const RETAINED_FINISHED_SERVICE_OPERATION_LIMIT = 10;
 
+/**
+ * Equivalent to a stable newest-first sort followed by `slice(0, limit)`, but
+ * linear in the receipt history that is re-projected on every facility tick.
+ * Equal timestamps keep insertion order in both the UI and retained anchors.
+ */
+export function newestServiceIncomeReceipts<
+  Receipt extends { completedAtFacilityTick: number },
+>(receipts: readonly Receipt[], limit: number): Receipt[] {
+  const newest: Receipt[] = [];
+  for (const receipt of receipts) {
+    let index = newest.length;
+    while (
+      index > 0 &&
+      newest[index - 1]!.completedAtFacilityTick <
+        receipt.completedAtFacilityTick
+    ) {
+      index -= 1;
+    }
+    if (index >= limit) continue;
+    newest.splice(index, 0, receipt);
+    if (newest.length > limit) newest.pop();
+  }
+  return newest;
+}
+
 const isEndoscopyLine = (lineId: string) =>
   lineId === "income.endoscopy" || lineId === "income.advanced_endoscopy";
 const isAmbulatoryOperationLine = (lineId: string) =>
@@ -64,7 +89,7 @@ export function isCompletedAmbulatoryOperation(operation: ServiceOperationState)
 const toCents = (amount: number) => Math.round(amount * 100);
 
 /** Retired plus live receipt totals, in cents, for the economy panel. */
-export function getServiceIncomeTotalsCents(state: Pick<GameState, "serviceIncomeReceipts" | "retiredServiceHistory">): {
+export function getServiceIncomeTotalsCents(state: Pick<GameState, "serviceIncomeReceipts" | "retiredServiceHistory" | "historyCompaction">): {
   grossCents: number;
   stockCostCents: number;
   netCashDeltaCents: number;
@@ -79,6 +104,9 @@ export function getServiceIncomeTotalsCents(state: Pick<GameState, "serviceIncom
     totals.grossCents += toCents(receipt.grossAmount);
     totals.stockCostCents += toCents(receipt.stockCost);
     totals.netCashDeltaCents += toCents(receipt.netCashDelta);
+  }
+  for (const [, , cents] of state.historyCompaction?.outsideReadReceipts ?? []) {
+    totals.grossCents += cents; totals.netCashDeltaCents += cents;
   }
   return totals;
 }
@@ -107,6 +135,7 @@ const terminalServiceOperation = (operation: ServiceOperationState) =>
  */
 function creditableTransactionKeys(state: GameState): Set<string> {
   const keys = new Set<string>();
+  for (const read of state.outsideRadiologyReads ?? []) keys.add(`income.outside-read.${read.sequence}`);
   for (const encounter of Object.values(state.encounters)) {
     const pending = encounter.pendingResult;
     if (pending && pending.deliveredAtTick === null && pending.serviceIncomeLineId) {
@@ -208,6 +237,43 @@ export function retireFinishedServiceHistory(
   const history = state.retiredServiceHistory ?? createRetiredServiceHistory();
   let changed = false;
 
+  // Outside reads have no chart or stock expense. Preserve recent individual
+  // payments and exact minute sums/counts for the same financial window.
+  const recentIds = new Set(newestServiceIncomeReceipts(state.serviceIncomeReceipts, RETAINED_SERVICE_INCOME_RECEIPT_LIMIT).map(row => row.id));
+  const day = (context.balanceRelease.clock.dayEndHour - context.balanceRelease.clock.dayStartHour) * 60;
+  const priorBuckets = state.historyCompaction?.outsideReadReceipts ?? [];
+  const buckets = new Map<number, [number, number, number]>();
+  let compacted = false;
+  for (const [tick, count, cents] of priorBuckets) {
+    // The legacy day-summary fallback includes the exact (now - day) minute.
+    if (state.facilityTick - tick > day) {
+      history.retiredReceiptCount += count; history.grossCents += cents; history.netCashDeltaCents += cents;
+      changed = true; compacted = true;
+    } else buckets.set(tick, [tick, count, cents]);
+  }
+  const liveReadKeys = new Set((state.outsideRadiologyReads ?? []).map(row => `income.outside-read.${row.sequence}`));
+  const keyCounts = new Map<string, number>();
+  for (const row of state.serviceIncomeReceipts) keyCounts.set(row.transactionKey, (keyCounts.get(row.transactionKey) ?? 0) + 1);
+  const reads = new Set(state.serviceIncomeReceipts.filter(row => row.incomeLineId === "income.radiologist_outside_read" &&
+    row.actorKind === "remote" && row.stockCost === 0 && row.netCashDelta === row.grossAmount && !recentIds.has(row.id) &&
+    !liveReadKeys.has(row.transactionKey) && keyCounts.get(row.transactionKey) === 1));
+  if (reads.size) {
+    for (const row of reads) {
+      if (state.facilityTick - row.completedAtFacilityTick > day) {
+        history.retiredReceiptCount++; history.grossCents += toCents(row.grossAmount); history.netCashDeltaCents += toCents(row.netCashDelta);
+        changed = true; continue;
+      }
+      const bucket = buckets.get(row.completedAtFacilityTick) ?? [row.completedAtFacilityTick, 0, 0];
+      bucket[1]++; bucket[2] += toCents(row.grossAmount); buckets.set(bucket[0], bucket);
+    }
+    state.serviceIncomeReceipts = state.serviceIncomeReceipts.filter(row => !reads.has(row));
+    compacted = true;
+  }
+  if (compacted) {
+    const summary = state.historyCompaction ??= { version: "history-compaction.v1" };
+    summary.outsideReadReceipts = [...buckets.values()].sort((a, b) => a[0] - b[0]);
+  }
+
   // Receipts: keep the newest, every receipt whose source can still credit
   // income, every ambulatory receipt still awaiting its QI review, and
   // anything settled within the last operating day.
@@ -218,23 +284,14 @@ export function retireFinishedServiceHistory(
     );
     const operatingDayMinutes =
       (context.balanceRelease.clock.dayEndHour - context.balanceRelease.clock.dayStartHour) * 60;
-    const newest = new Set(
-      state.serviceIncomeReceipts
-        .map((receipt, index) => ({ receipt, index }))
-        .sort((left, right) =>
-          right.receipt.completedAtFacilityTick - left.receipt.completedAtFacilityTick ||
-          right.index - left.index,
-        )
-        .slice(0, RETAINED_SERVICE_INCOME_RECEIPT_LIMIT)
-        .map(({ receipt }) => receipt),
-    );
+    const newest = new Set(newestServiceIncomeReceipts(state.serviceIncomeReceipts, RETAINED_SERVICE_INCOME_RECEIPT_LIMIT));
     const kept: ServiceIncomeReceipt[] = [];
     for (const receipt of state.serviceIncomeReceipts) {
       const retire =
         !newest.has(receipt) &&
         !creditable.has(receipt.transactionKey) &&
         (!isAmbulatoryOperationReceipt(receipt) || reviewedReceiptIds.has(receipt.id)) &&
-        state.facilityTick - receipt.completedAtFacilityTick >= operatingDayMinutes;
+        state.facilityTick - receipt.completedAtFacilityTick > operatingDayMinutes;
       if (!retire) {
         kept.push(receipt);
         continue;
@@ -256,7 +313,7 @@ export function retireFinishedServiceHistory(
   if (finished.length > RETAINED_FINISHED_SERVICE_OPERATION_LIMIT) {
     const referenced = referencedServiceOperationIds(state);
     const receiptVisitorIds = new Set(
-      state.serviceIncomeReceipts
+      newestServiceIncomeReceipts(state.serviceIncomeReceipts, 8)
         .filter((receipt) => receipt.actorKind === "visitor")
         .map((receipt) => receipt.actorId),
     );

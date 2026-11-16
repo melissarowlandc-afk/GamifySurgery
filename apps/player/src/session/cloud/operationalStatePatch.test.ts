@@ -12,6 +12,35 @@ it("transports shifted history as ranges and changed rows, with exact values/ord
   expect(actual.events[0]).toBe(before.events[1]);
 });
 
+it("aligns receipt, actor and evidence-path histories without retransmitting unchanged values", () => {
+  for (const row of [
+    (i: number) => ({ transactionKey: `receipt.${i}`, grossAmount: i, text: "public".repeat(300) }),
+    (i: number) => ({ instanceId: `actor.${i}`, location: { x: i, y: 2 }, text: "public".repeat(300) }),
+    (i: number) => ({ path: ["receipts", String(i)], present: true, value: { text: "public".repeat(300), i } }),
+  ]) {
+    const before = Array.from({ length: 500 }, (_, i) => row(i));
+    const after = [row(501), ...before.slice(2), row(502)];
+    const patch = operationalStatePatch(before, after)!;
+    const actual = applyOperationalStatePatch(before, structuredClone(patch), true);
+    expect(JSON.stringify(actual)).toBe(JSON.stringify(after));
+    expect(JSON.stringify(patch).length).toBeLessThan(5_000);
+    expect(actual[1]).toBe(before[2]);
+  }
+});
+
+it("keeps alternate-key collisions, reordered properties and ambiguous paths byte exact", () => {
+  const cases = [
+    [[{ transactionKey: "same", n: 1 }, { transactionKey: "same", n: 2 }], [{ n: 3, transactionKey: "same" }]],
+    [[{ id: "x", n: 1 }], [{ transactionKey: "x", n: 2 }]],
+    [[{ path: ["a,b"], present: true, value: 1 }, { path: ["a", "b"], present: true, value: 2 }],
+      [{ path: ["a", "b"], present: false }, { value: undefined, present: true, path: ["a,b"] }]],
+  ];
+  for (const [before, after] of cases) {
+    const result = applyOperationalStatePatch(before, structuredClone(operationalStatePatch(before, after)), true);
+    expect(result).toEqual(after); expect(JSON.stringify(result)).toBe(JSON.stringify(after));
+  }
+});
+
 it("preserves raw property order, undefined presence, prototype-named keys, arrays and duplicate IDs", () => {
   const cases: [unknown, unknown][] = [
     [{ a: 1, b: 2 }, { b: 2, a: 1 }], [{ a: undefined }, {}], [{}, { a: undefined }],

@@ -1,6 +1,7 @@
 import type { SyntheticClinicalCase } from "@gamify-surgery/clinical-content";
 import { deterministicInteger, RANDOM_STREAMS } from "./randomness";
 import type { GameState } from "./types";
+import { getConceptReviewCount } from "./history-counts";
 
 export type RoutineClinicalSelectionKind = "due_review" | "new_concept";
 
@@ -76,7 +77,7 @@ export function selectRoutineClinicalCase(
         const history = state.learningHistories[conceptId];
         return (
           !history ||
-          history.reviews.length === 0 ||
+          getConceptReviewCount(history) === 0 ||
           history.card.dueAtMs <= selectedAtRealMs
         );
       }),
@@ -91,7 +92,7 @@ export function selectRoutineClinicalCase(
       const history = state.learningHistories[conceptId];
       if (
         history &&
-        history.reviews.length > 0 &&
+        getConceptReviewCount(history) > 0 &&
         history.card.dueAtMs <= selectedAtRealMs
       ) {
         dueByConceptId.set(conceptId, history.card.dueAtMs);
@@ -115,7 +116,7 @@ export function selectRoutineClinicalCase(
         compatibleCases.flatMap((clinicalCase) =>
           uniqueConceptIds(clinicalCase).filter((conceptId) => {
             const history = state.learningHistories[conceptId];
-            return !history || history.reviews.length === 0;
+            return getConceptReviewCount(history) === 0;
           }),
         ),
       ),

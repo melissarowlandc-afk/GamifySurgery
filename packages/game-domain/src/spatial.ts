@@ -147,7 +147,13 @@ function roomFixtureHiddenByDoor(
     (candidate) => candidate.fixtureId === fixtureId,
   );
   if (!owner) return false;
-  return owner.doorSlots.some((slot) => {
+  // Geometry-only, bounded by the existing navigation cache. Never retain a
+  // state/room object or scan all doors and rooms again for each fixture.
+  const layout = rooms.includes(room) && getDefinition(room.roomDefinitionId) === definition
+    ? getNavigationLayout(rooms, doors, getDefinition) : null;
+  let hidden = layout?.hiddenFixtures.get(room.id);
+  if (hidden?.has(fixtureId)) return hidden.get(fixtureId)!;
+  const result = owner.doorSlots.some((slot) => {
     const localInside = slot.side === "north"
       ? { x: slot.offset, y: 0 }
       : slot.side === "south"
@@ -162,6 +168,7 @@ function roomFixtureHiddenByDoor(
         : side === "south" ? { x: 0, y: 1 }
           : { x: -1, y: 0 };
     const expected = physicalDoorKey(inside, { x: inside.x + step.x, y: inside.y + step.y });
+    if (layout) return layout.physicalDoors.has(expected);
     return doors.some((door) => {
       const placed = rooms.find((candidate) => candidate.id === door.roomId);
       const placedDefinition = placed ? getDefinition(placed.roomDefinitionId) : null;
@@ -171,6 +178,11 @@ function roomFixtureHiddenByDoor(
       return cells ? physicalDoorKey(cells.inside, cells.outside) === expected : false;
     });
   });
+  if (layout) {
+    if (!hidden) { hidden = new Map(); layout.hiddenFixtures.set(room.id, hidden); }
+    hidden.set(fixtureId, result);
+  }
+  return result;
 }
 
 export function getRoomCareStations(
@@ -1149,6 +1161,8 @@ function getDoorCellsForSpatial(
 }
 
 type NavigationLayout = {
+  physicalDoors: Set<string>;
+  hiddenFixtures: Map<string, Map<string, boolean>>;
   endpointKeys: Set<string>;
   careStations: Map<string, RoomCareStation[]>;
   roomTiles: Map<string, string[]>;
@@ -1162,6 +1176,13 @@ const navigationLayout = createFacilityNavigationCache<NavigationLayout>();
 function getNavigationLayout(rooms: readonly PlacedRoom[], doors: readonly DoorState[], getDefinition: (id: string) => RoomDefinition | null): NavigationLayout {
   return navigationLayout(rooms, doors, getDefinition, () => {
     const endpointKeys = new Set<string>(), roomTiles = new Map<string, string[]>(), roomAt = new Map<string, string>(), roomsAt = new Map<string, number[]>();
+    const byId = new Map<string, PlacedRoom>(), physicalDoors = new Set<string>();
+    for (const room of rooms) if (!byId.has(room.id)) byId.set(room.id, room);
+    for (const door of doors) {
+      const room = byId.get(door.roomId), definition = room ? getDefinition(room.roomDefinitionId) : null;
+      const cells = room && definition ? getDoorCellsForSpatial(door, room, definition) : null;
+      if (cells) physicalDoors.add(physicalDoorKey(cells.inside, cells.outside));
+    }
     for (const room of rooms) {
       const definition = getDefinition(room.roomDefinitionId);
       if (!definition) continue;
@@ -1173,7 +1194,7 @@ function getNavigationLayout(rooms: readonly PlacedRoom[], doors: readonly DoorS
       }
       for (const key of getRoomEndpointOnlyTileKeys(room, definition)) endpointKeys.add(key);
     }
-    return { endpointKeys, roomTiles, roomAt, roomsAt, careStations: new Map(), graphs: new Map(), blockedTiles: new Map(), routes: new Map() };
+    return { physicalDoors, hiddenFixtures: new Map(), endpointKeys, roomTiles, roomAt, roomsAt, careStations: new Map(), graphs: new Map(), blockedTiles: new Map(), routes: new Map() };
   });
 }
 /** Geometry index; return the current state's room, never a stale condition or

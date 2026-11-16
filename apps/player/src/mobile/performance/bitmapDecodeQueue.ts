@@ -50,6 +50,10 @@ export class BitmapDecodeQueue {
             source.decoding = "async";
             source.onload = () => {
               source.onload = null; source.onerror = null;
+              // WebKit can delay decode() promises behind a busy map/worker
+              // even after load has produced a drawable image. Do not reject
+              // already available art on that optional second async boundary.
+              if (source.complete && source.naturalWidth > 0 && source.naturalHeight > 0) { job.finish(source); return; }
               try {
                 const decoded = source.decode?.();
                 if (!decoded) job.finish(source);

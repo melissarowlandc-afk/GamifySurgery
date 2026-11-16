@@ -29,8 +29,11 @@ export function readRevenueHistory(state: GameState, previous?: RevenueHistory,
     settlements.filter(s => s.settledAtFacilityTick >= start && s.settledAtFacilityTick < end)
       .reduce((sum, s) => sum + patientGross(s), 0) +
     receipts.filter(r => r.completedAtFacilityTick >= start && r.completedAtFacilityTick < end)
-      .reduce((sum, r) => sum + cents(r.grossAmount), 0);
+      .reduce((sum, r) => sum + cents(r.grossAmount), 0) +
+    (state.historyCompaction?.outsideReadReceipts ?? []).filter(([tick]) => tick >= start && tick < end).reduce((sum, [, , cents]) => sum + cents, 0);
   const totalGross = (state.retiredServiceHistory?.grossCents ?? 0) +
+    (state.historyCompaction?.settlements?.grossCents ?? 0) +
+    (state.historyCompaction?.outsideReadReceipts ?? []).reduce((sum, [, , cents]) => sum + cents, 0) +
     settlements.reduce((sum, s) => sum + patientGross(s), 0) + receipts.reduce((sum, r) => sum + cents(r.grossAmount), 0);
   const boundaryGrossCents = totalGross - sumBetween(currentStart, Infinity);
   let days: RevenueDay[] = [];

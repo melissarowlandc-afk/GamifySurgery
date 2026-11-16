@@ -1,5 +1,7 @@
 import { founderConsultClockKey, founderProcedureConsultPath, procedureConsultKind, reconcileFounderConsultSources, selectProcedureConsult, sourceConsultOperation } from "./founder-consults";
 import { procedureCaseRequiresSource } from "./procedure-context";
+import { compactCampaignHistory } from "./history-compaction";
+import { getReviewIntentCount } from "./history-counts";
 import { createLateProgressionState, readLateProgressionState, upgradeLateProgressionState } from "./late-progression";
 import { clinicFounderPath, clinicFounderWaitsForSeat, isClinicFounderConsult, reconcileClinicConsultClosures,
   releaseClinicConsult, returnClinicProvider, selectClinicConsult, vacateClinicProvider } from "./clinic-consults";
@@ -3235,7 +3237,7 @@ function reduceSubmitEmployeeDiscussionAnswer(
     command.reviewedAtMs ??
     state.createdAtRealMs +
       state.facilityTick * 60_000 +
-      state.reviewIntents.length;
+    getReviewIntentCount(state);
   if (!Number.isSafeInteger(reviewedAtMs) || reviewedAtMs < 0) {
     return rejectCommand(state, command, "The learning review needs a valid timestamp.");
   }
@@ -3953,7 +3955,7 @@ function reduceSubmitAnswer(
     command.reviewedAtMs ??
     state.createdAtRealMs +
       state.facilityTick * 60_000 +
-      state.reviewIntents.length;
+    getReviewIntentCount(state);
   if (!Number.isSafeInteger(reviewedAtMs) || reviewedAtMs < 0) {
     return rejectCommand(
       state,
@@ -9028,6 +9030,7 @@ function reduceAdvanceTick(
   retireDepartedEncounters(next, context);
   retireFinishedServiceHistory(next, context);
   retireFinishedRetailHistory(next);
+  compactCampaignHistory(next, context);
   acknowledgeLevelFourCompletion(next, context);
   acknowledgeLevelFiveGoals(next, context);
   synchronizeRoomUpkeepOutages(next, context);

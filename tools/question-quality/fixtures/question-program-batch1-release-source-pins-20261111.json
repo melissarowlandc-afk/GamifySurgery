@@ -16,7 +16,7 @@
       "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
       "mainBeforeSha256": "9a99b4b85cd738baaa37c1ffdc7a261e6b6dab61db80d965fc647877ba24e735",
       "mainAfterSha256": "b15ca90c435e9b60417b871d335a73bed647fb76eadfa2a566d5190725aaad02",
-      "requiredReleaseSha256": "e5d8beaf3131bdb71c6cfbca31cf73dc4325136ce546235df1f9cd2546a79e71",
+      "requiredReleaseSha256": "ff8f3e7bd1bab5e33934b88ccbe531cc3271c172b7d06acabfc610c7c830fc9e",
       "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
     }
   ],
@@ -821,6 +821,130 @@
           "previousRequirement": "0a59d2e7442bb7573875ef2103c5c3b7bee0322d84b430785da8b556d97e13aa",
           "releaseAfterSha256": "e5d8beaf3131bdb71c6cfbca31cf73dc4325136ce546235df1f9cd2546a79e71",
           "reason": "manager-approved release 39 cloud-opening fix"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release-port40-phone-performance-history-compaction",
+      "priorFixtureSha256": "d153a41829f0a93a734edf4ebcccf3669432cd4c2306ec376270314a5e092570",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-test-support.ts",
+          "mainBeforeSha256": "8cf0f25391eeda7684c625b9b1d63785ed06880321408940ef33beb8c2fb75db",
+          "mainAfterSha256": "20e940a5fc00771040ba3dbfb228aa0f6d1d2cca0d3da8b5d2c063e753e8c5f2",
+          "requiredReleaseSha256": "4ee3ae3ec72ac2623e54502b35a6dbabb81450cd54ac6ba551219d54ce0d7997",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+          "mainBeforeSha256": "9a99b4b85cd738baaa37c1ffdc7a261e6b6dab61db80d965fc647877ba24e735",
+          "mainAfterSha256": "b15ca90c435e9b60417b871d335a73bed647fb76eadfa2a566d5190725aaad02",
+          "requiredReleaseSha256": "e5d8beaf3131bdb71c6cfbca31cf73dc4325136ce546235df1f9cd2546a79e71",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "manager-approved release 40 phone performance + owner-approved history compaction",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+          "releaseBeforeSha256": "e5d8beaf3131bdb71c6cfbca31cf73dc4325136ce546235df1f9cd2546a79e71",
+          "previousRequirement": "e5d8beaf3131bdb71c6cfbca31cf73dc4325136ce546235df1f9cd2546a79e71",
+          "releaseAfterSha256": "73c3db3b92c7eee16f67af2d61071d0df4a1cd1c7cd9e146a85c9cd61dc2f0aa",
+          "reason": "manager-approved release 40 phone performance + owner-approved history compaction"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release-port40-phone-performance-history-compaction-review-followup",
+      "priorFixtureSha256": "fa136bebcd91a235397764641d9200ce5b6660a736e5b8b6f84731cceab8e820",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-test-support.ts",
+          "mainBeforeSha256": "8cf0f25391eeda7684c625b9b1d63785ed06880321408940ef33beb8c2fb75db",
+          "mainAfterSha256": "20e940a5fc00771040ba3dbfb228aa0f6d1d2cca0d3da8b5d2c063e753e8c5f2",
+          "requiredReleaseSha256": "4ee3ae3ec72ac2623e54502b35a6dbabb81450cd54ac6ba551219d54ce0d7997",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+          "mainBeforeSha256": "9a99b4b85cd738baaa37c1ffdc7a261e6b6dab61db80d965fc647877ba24e735",
+          "mainAfterSha256": "b15ca90c435e9b60417b871d335a73bed647fb76eadfa2a566d5190725aaad02",
+          "requiredReleaseSha256": "73c3db3b92c7eee16f67af2d61071d0df4a1cd1c7cd9e146a85c9cd61dc2f0aa",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "manager-approved release 40 phone performance + owner-approved history compaction",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+          "releaseBeforeSha256": "73c3db3b92c7eee16f67af2d61071d0df4a1cd1c7cd9e146a85c9cd61dc2f0aa",
+          "previousRequirement": "73c3db3b92c7eee16f67af2d61071d0df4a1cd1c7cd9e146a85c9cd61dc2f0aa",
+          "releaseAfterSha256": "53ae99ff77f805b343eb0bb3654459f95f7d77564e0b89237f3a24d6b79e09ab",
+          "reason": "manager-approved release 40 phone performance + owner-approved history compaction"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release-port40-phone-performance-history-compaction-pressure-scope-followup",
+      "priorFixtureSha256": "d4218cdc28efa6d5efe79d69d20ee3fcc0d7bef2152abb7fd34a4d0ef113ced0",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-test-support.ts",
+          "mainBeforeSha256": "8cf0f25391eeda7684c625b9b1d63785ed06880321408940ef33beb8c2fb75db",
+          "mainAfterSha256": "20e940a5fc00771040ba3dbfb228aa0f6d1d2cca0d3da8b5d2c063e753e8c5f2",
+          "requiredReleaseSha256": "4ee3ae3ec72ac2623e54502b35a6dbabb81450cd54ac6ba551219d54ce0d7997",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+          "mainBeforeSha256": "9a99b4b85cd738baaa37c1ffdc7a261e6b6dab61db80d965fc647877ba24e735",
+          "mainAfterSha256": "b15ca90c435e9b60417b871d335a73bed647fb76eadfa2a566d5190725aaad02",
+          "requiredReleaseSha256": "53ae99ff77f805b343eb0bb3654459f95f7d77564e0b89237f3a24d6b79e09ab",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "manager-approved release 40 phone performance + owner-approved history compaction",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+          "releaseBeforeSha256": "53ae99ff77f805b343eb0bb3654459f95f7d77564e0b89237f3a24d6b79e09ab",
+          "previousRequirement": "53ae99ff77f805b343eb0bb3654459f95f7d77564e0b89237f3a24d6b79e09ab",
+          "releaseAfterSha256": "488e37174a623b9c33752e971d949033ad77d462f50842abdc073a52c5d8ff83",
+          "reason": "manager-approved release 40 phone performance + owner-approved history compaction"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release-port40-reduced-furniture-scale-fix",
+      "priorFixtureSha256": "faa96ebf5d3c83814bb08d239910fca184dff67e513abd1e174bf1b50b735d65",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-test-support.ts",
+          "mainBeforeSha256": "8cf0f25391eeda7684c625b9b1d63785ed06880321408940ef33beb8c2fb75db",
+          "mainAfterSha256": "20e940a5fc00771040ba3dbfb228aa0f6d1d2cca0d3da8b5d2c063e753e8c5f2",
+          "requiredReleaseSha256": "4ee3ae3ec72ac2623e54502b35a6dbabb81450cd54ac6ba551219d54ce0d7997",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+          "mainBeforeSha256": "9a99b4b85cd738baaa37c1ffdc7a261e6b6dab61db80d965fc647877ba24e735",
+          "mainAfterSha256": "b15ca90c435e9b60417b871d335a73bed647fb76eadfa2a566d5190725aaad02",
+          "requiredReleaseSha256": "488e37174a623b9c33752e971d949033ad77d462f50842abdc073a52c5d8ff83",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "manager-approved release 40 reduced-mode furniture scale fix",
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+          "releaseBeforeSha256": "488e37174a623b9c33752e971d949033ad77d462f50842abdc073a52c5d8ff83",
+          "previousRequirement": "488e37174a623b9c33752e971d949033ad77d462f50842abdc073a52c5d8ff83",
+          "releaseAfterSha256": "ff8f3e7bd1bab5e33934b88ccbe531cc3271c172b7d06acabfc610c7c830fc9e",
+          "reason": "manager-approved release 40 reduced-mode furniture scale fix"
         }
       ]
     }

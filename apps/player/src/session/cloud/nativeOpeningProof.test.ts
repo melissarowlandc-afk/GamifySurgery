@@ -1,5 +1,5 @@
 import { afterEach, expect, it, vi } from "vitest";
-import { createInitialGameState, PROTOTYPE_DOMAIN_CONTEXT, serializeGameState } from "@gamify-surgery/game-domain";
+import { compactGameState, createInitialGameState, PROTOTYPE_DOMAIN_CONTEXT, serializeGameState } from "@gamify-surgery/game-domain";
 import { codecTestCampaign } from "./codecTestSupport";
 import * as snapshots from "./snapshotCodec";
 import { CloudCodecWorker } from "./codecWorker";
@@ -97,9 +97,10 @@ it("recovers committed native journal commands without repeatedly hydrating the 
 });
 
 it("opens the converted ~5 MB Level 5 fixture with one hydration across a queued MessageChannel", async () => {
-  const started = performance.now(), large = await largeEntryFixture();
+  const started = performance.now(), large = await largeEntryFixture(1_200, true, { compactHistory: false });
   const sourceBytes = Buffer.byteLength(JSON.stringify(large.copy)); expect(sourceBytes).toBeGreaterThan(5_000_000);
   const loaded = await loadCloudEvidenceCheckpoint({ ...large.copy, expectedRevision: "1", expectedCampaignId: large.copy.campaignId, expectedBaselineId: large.copy.baselineId });
+  const expectedState = compactGameState(loaded.state);
   const confirmed = await snapshots.snapshotCopy(loaded.state, loaded.campaign, "1", 0, { branchId: "opening.level5", sequence: 1_200, parents: [] });
   const codec = new CloudCodecWorker(() => new MessageChannelCloudCodecWorker()), clock = new TestCloudClock(), server = new FakeCloudServer(clock.wallNow);
   const scope = { backendId: "opening.level5", accountId: "synthetic", campaignId: confirmed.campaignId };
@@ -110,7 +111,7 @@ it("opens the converted ~5 MB Level 5 fixture with one hydration across a queued
   let session: CloudGameSession | null = null;
   try {
     session = await CloudGameSession.create(coordinator);
-    expect(session.canExecute).toBe(true); expect(session.state).toEqual(loaded.state);
+    expect(session.canExecute).toBe(true); expect(session.state).toEqual(expectedState);
     expect(load).toHaveBeenCalledTimes(1); expect(server.operationCount(scope.accountId)).toBe(0);
     expect(codec.health).toMatchObject({ restarts: 0, lastError: null, inFlight: [] });
     if (process.env.GAMIFY_NATIVE_OPEN_MEASURE === "1") writeFileSync(new URL("../../../../../.local-dev/native-open-proof-reuse-20261104/level5.json", import.meta.url),

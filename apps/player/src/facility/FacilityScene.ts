@@ -328,7 +328,10 @@ import { visiblePhoneAssetIds, visiblePhoneRoomIds } from "../mobile/performance
 import { resolvePublicArtAssetUrl } from "../art/bitmapAssetManifest";
 import { installMobileCanvasResolution } from "../mobile/performance/canvasResolution";
 import { facilityCanvasSurface } from "../mobile/performance/staticCanvasTexture";
-import { drawFacilityAtlasCrop, facilityAtlasClip, installPhoneArtSource, phoneArtSource } from "../mobile/performance/phoneArt";
+import { drawFacilityAtlasCrop, facilityAtlasClip, facilityTileSourceTransform, installPhoneArtSource, phoneArtSource } from "../mobile/performance/phoneArt";
+import { phoneMemoryProfile } from "../mobile/performance/phoneMemoryPolicy";
+import { phoneActorInWindow, phoneActorWindowKey } from "../mobile/performance/phoneRenderWindow";
+import { compactReducedStaticTexture, reducedTextureSource, REDUCED_CHARACTER_SOURCE_SIDE } from "../mobile/performance/reducedTextureSource";
 
 export interface FacilitySceneBridge {
   /** Explicit opt-in; desktop never supplies it. */
@@ -526,6 +529,10 @@ export class FacilityScene extends Phaser.Scene {
   private landscapeGraphics?: Phaser.GameObjects.Graphics;
   private locatorGraphics?: Phaser.GameObjects.Graphics;
   private ghostGraphics?: Phaser.GameObjects.Graphics;
+  /** Separate native command streams allow offscreen floor/wall culling. They
+   * share the existing camera; no raster cache or extra pixel backing store. */
+  private readonly phoneRoomFloors = new Map<string, Phaser.GameObjects.Graphics>();
+  private phoneActorWindow = "";
   private readonly fixtureGraphics = new Map<
     string,
     Phaser.GameObjects.Graphics
@@ -1108,8 +1115,17 @@ export class FacilityScene extends Phaser.Scene {
         const key = getPhaserTextureKey(asset);
         if (!this.sys.isActive() || this.bridge.mobileInput !== true || !this.mobileRequiredAtlases.has(key)) return;
         if (image && !this.textures.exists(key)) {
-          const texture = this.textures.addImage(key, image);
+          // Older Level 3-5 proof sheets have no generated phone variant.
+          // Keep their exact logical crops while retaining half-size pixels.
+          const prepared = !source && phoneMemoryProfile().mode === "reduced"
+            ? reducedTextureSource(image, Math.max(1, Math.ceil(Math.max(image.naturalWidth || image.width, image.naturalHeight || image.height) / 2))) : image;
+          const texture = this.textures.addImage(key, prepared as HTMLImageElement);
           if (texture && source) installPhoneArtSource(texture, source);
+          else if (texture && prepared !== image) {
+            const size = prepared as HTMLCanvasElement;
+            installPhoneArtSource(texture, { path: "", width: size.width, height: size.height,
+              sourceWidth: asset.nativeWidth, sourceHeight: asset.nativeHeight });
+          }
           this.mobileArtFirstTextureAt ??= performance.now();
         }
         this.queueMobileArtRefresh(true);
@@ -1256,7 +1272,8 @@ export class FacilityScene extends Phaser.Scene {
         void mobileBitmapCache.load(asset, resolvePublicArtAssetUrl(asset.relativePath!), PHONE_ART_CHARACTER).then(image => {
           this.pendingCharacterStills.delete(asset.id);
           if (!this.sys.isActive()) return;
-          if (image && !this.textures.exists(textureKey)) this.textures.addImage(textureKey, image);
+          if (image && !this.textures.exists(textureKey)) this.textures.addImage(textureKey,
+            (phoneMemoryProfile().mode === "reduced" ? reducedTextureSource(image, REDUCED_CHARACTER_SOURCE_SIDE) : image) as HTMLImageElement);
           if (image) this.mobileArtFirstTextureAt ??= performance.now();
           if (!image) this.failedCharacterStills.add(asset.id);
           this.queueMobileArtRefresh();
@@ -1313,7 +1330,8 @@ export class FacilityScene extends Phaser.Scene {
           // Phaser may decode this source as an Image, canvas, or ImageBitmap
           // depending on browser/GPU. Canvas 2D accepts all CanvasImageSource
           // variants, so avoid a browser-specific instanceof gate.
-          cleaned.context.drawImage(source as CanvasImageSource, 0, 0);
+          cleaned.context.drawImage(source as CanvasImageSource, 0, 0,
+            LANDSCAPING_ATLAS_V1.nativeWidth, LANDSCAPING_ATLAS_V1.nativeHeight);
           cleaned.update();
           const pixels = cleaned.getData(
             0,
@@ -1330,6 +1348,12 @@ export class FacilityScene extends Phaser.Scene {
           );
           cleaned.putData(pixels, 0, 0);
           cleaned.refresh();
+          if (this.bridge.mobileInput === true && phoneMemoryProfile().mode === "reduced") {
+            compactReducedStaticTexture(this.textures, cleanedKey);
+            const image = this.textures.get(cleanedKey).getSourceImage() as HTMLCanvasElement;
+            installPhoneArtSource(this.textures.get(cleanedKey), { path: "", width: image.width, height: image.height,
+              sourceWidth: LANDSCAPING_ATLAS_V1.nativeWidth, sourceHeight: LANDSCAPING_ATLAS_V1.nativeHeight });
+          }
           this.landscapingTreeCleanupReady = true;
         }
       }
@@ -1404,6 +1428,7 @@ export class FacilityScene extends Phaser.Scene {
     pixels.data.set(deriveBacklessRollingStoolPixels(pixels.data, width, height, stool.derivation));
     texture.putData(pixels, 0, 0);
     texture.refresh();
+    if (this.bridge.mobileInput === true && phoneMemoryProfile().mode === "reduced") compactReducedStaticTexture(this.textures, key);
     return key;
   }
 
@@ -1441,6 +1466,10 @@ export class FacilityScene extends Phaser.Scene {
     foregroundTexture.putData(foregroundPixels, 0, 0);
     rearTexture.refresh();
     foregroundTexture.refresh();
+    if (this.bridge.mobileInput === true && phoneMemoryProfile().mode === "reduced") {
+      compactReducedStaticTexture(this.textures, rear);
+      compactReducedStaticTexture(this.textures, foreground);
+    }
     return { rear, foreground };
   }
 
@@ -1475,8 +1504,14 @@ export class FacilityScene extends Phaser.Scene {
       ];
       const foregroundDepth = getApprovedSideChairForegroundDepth(depths);
       const occupied = foregroundDepth !== undefined;
+      // setTexture changes the native frame size while retaining scale. Atlas
+      // crops and compact masks can have different pixel counts; the already
+      // authored world rectangle/origin must survive every occupancy switch.
+      const { displayWidth, displayHeight, originX, originY } = runtime.baseImage;
       runtime.baseImage
         .setTexture(occupied ? runtime.rearTextureKey : runtime.fullTextureKey, occupied ? undefined : runtime.fullFrame)
+        .setDisplaySize(displayWidth, displayHeight)
+        .setOrigin(originX, originY)
         .setData("approved-draw-id", runtime.drawId)
         .setData("approved-chair-room-instance-id", runtime.roomInstanceId)
         .setData("approved-chair-support-ids", runtime.supportIds)
@@ -1484,6 +1519,7 @@ export class FacilityScene extends Phaser.Scene {
       runtime.foregroundImage
         .setPosition(runtime.baseImage.x, runtime.baseImage.y)
         .setDisplaySize(runtime.baseImage.displayWidth, runtime.baseImage.displayHeight)
+        .setOrigin(originX, originY)
         .setDepth(foregroundDepth ?? runtime.fixtureDepth)
         .setVisible(occupied)
         .setData("approved-chair-layer", "south-arm")
@@ -1597,6 +1633,10 @@ export class FacilityScene extends Phaser.Scene {
     if (this.cameraPreferencePending && !this.isCameraGestureActive()) this.flushCameraChange();
     if (this.bridge.mobileInput === true) this.drawMobileBuildPreview();
     this.reportSelectedRoomRect();
+    if (this.bridge.mobileInput === true && phoneMemoryProfile().mode === "reduced") {
+      const window = phoneActorWindowKey(this.layout, this.scale);
+      if (window !== this.phoneActorWindow) { this.phoneActorWindow = window; this.frozenCharacterLayout = undefined; }
+    }
     if (!motionFrozen || this.frozenCharacterModel !== this.bridge.viewModel || this.frozenCharacterLayout !== this.worldLayout) {
       this.drawCharacters();
       this.frozenCharacterModel = motionFrozen ? this.bridge.viewModel : undefined;
@@ -1857,11 +1897,20 @@ export class FacilityScene extends Phaser.Scene {
           left.instanceId.localeCompare(right.instanceId),
       )
       .forEach((room, index) => {
-        this.drawRoom(graphics, room, index);
+        if (this.bridge.mobileInput !== true || phoneMemoryProfile().mode !== "reduced") {
+          this.drawRoom(graphics, room, index); return;
+        }
+        const active = new Set([room.instanceId]);
+        const floor = this.getSortableGraphics(this.phoneRoomFloors, active, room.instanceId)
+          .setDepth(FACILITY_DEPTH_WORLD + index * .000001);
+        this.drawRoom(floor, room, index);
       });
+    const roomIds = this.bridge.mobileInput === true && phoneMemoryProfile().mode === "reduced"
+      ? new Set(model.rooms.map(room => room.instanceId)) : new Set<string>();
+    this.removeInactiveGraphics(this.phoneRoomFloors, roomIds);
     if (model.buildMode || model.placement) {
       this.drawBuildGridOverlay(
-        this.canRenderAuthoredEnvironment()
+        this.canRenderAuthoredEnvironment() || this.bridge.mobileInput === true && phoneMemoryProfile().mode === "reduced"
           ? (this.architectureGraphics ?? graphics)
           : graphics,
         columns,
@@ -1890,7 +1939,8 @@ export class FacilityScene extends Phaser.Scene {
     // Canvas otherwise replays offscreen Graphics paths on every camera frame.
     // Retain conservative bounds after edits, without baking phone textures.
     for (const graphics of [this.terrainGraphics, this.worldGraphics, this.architectureGraphics, this.landscapeGraphics,
-      ...this.fixtureGraphics.values(), ...this.roomFixtureGraphics.values(), ...this.wallDecorGraphics.values()]) {
+      ...this.fixtureGraphics.values(), ...this.roomFixtureGraphics.values(), ...this.wallDecorGraphics.values(),
+      ...this.phoneRoomFloors.values()]) {
       if (graphics) retainGraphicsViewportBounds(graphics);
     }
   }
@@ -2802,7 +2852,8 @@ export class FacilityScene extends Phaser.Scene {
         frame.anchor.x / Math.max(1, frame.nativeWidth),
         frame.anchor.y / Math.max(1, frame.nativeHeight),
       )
-      .setScale(Math.min(width / frame.nativeWidth, height / frame.nativeHeight))
+      .setDisplaySize(frame.nativeWidth * Math.min(width / frame.nativeWidth, height / frame.nativeHeight),
+        frame.nativeHeight * Math.min(width / frame.nativeWidth, height / frame.nativeHeight))
       .setDepth(depth)
       .setAlpha(alpha)
       .setVisible(true);
@@ -2854,8 +2905,13 @@ export class FacilityScene extends Phaser.Scene {
       this.worldLayout.originY,
       tileScale,
     );
-    sprite.tilePositionX = phase.x;
-    sprite.tilePositionY = phase.y;
+    const source = this.bridge.mobileInput === true
+      ? facilityTileSourceTransform(this.textures.get(textureKey), frameKey, frame.nativeWidth, frame.nativeHeight,
+        Math.max(0.02, tileScale), Math.max(0.02, tileScale), phase.x, phase.y)
+      : { scaleX: Math.max(0.02, tileScale), scaleY: Math.max(0.02, tileScale), positionX: phase.x, positionY: phase.y };
+    sprite.setTileScale(source.scaleX, source.scaleY);
+    sprite.tilePositionX = source.positionX;
+    sprite.tilePositionY = source.positionY;
     this.activeEnvironmentSprites.add(key);
   }
 
@@ -2881,9 +2937,14 @@ export class FacilityScene extends Phaser.Scene {
       sprite.setOrigin(0, 0);
       this.environmentSprites.set(key, sprite);
     }
-    sprite.setTexture(textureKey, getEnvironmentAtlasFrameKey(frame))
+    const frameKey = getEnvironmentAtlasFrameKey(frame);
+    const source = this.bridge.mobileInput === true
+      ? facilityTileSourceTransform(this.textures.get(textureKey), frameKey, frame.nativeWidth, frame.nativeHeight,
+        Math.max(0.02, scaleX), Math.max(0.02, scaleY))
+      : { scaleX: Math.max(0.02, scaleX), scaleY: Math.max(0.02, scaleY) };
+    sprite.setTexture(textureKey, frameKey)
       .setPosition(x, y).setSize(Math.max(1, width), Math.max(1, height))
-      .setTileScale(Math.max(0.02, scaleX), Math.max(0.02, scaleY)).setDepth(depth).setVisible(true);
+      .setTileScale(source.scaleX, source.scaleY).setDepth(depth).setVisible(true);
     sprite.tilePositionX = 0;
     sprite.tilePositionY = 0;
     this.activeEnvironmentSprites.add(key);
@@ -2921,7 +2982,7 @@ export class FacilityScene extends Phaser.Scene {
     }
     image.setTexture(textureKey).setPosition(x, y)
       .setOrigin(asset.anchor.x / asset.nativeWidth, asset.anchor.y / asset.nativeHeight)
-      .setScale(width / asset.nativeWidth).setDepth(depth).setAlpha(alpha).setVisible(true);
+      .setDisplaySize(width, width * asset.nativeHeight / asset.nativeWidth).setDepth(depth).setAlpha(alpha).setVisible(true);
     this.activeLandscapingBitmapImages.add(key);
     return true;
   }
@@ -2947,8 +3008,14 @@ export class FacilityScene extends Phaser.Scene {
     const materialOriginY = id.startsWith("frontage:curb-") ? y : this.worldLayout.originY;
     const phase = getEnvironmentTileLogicalPhase(x, y,
       this.worldLayout.originX, materialOriginY, tileScale, 0.000001);
-    sprite.tilePositionX = phase.x;
-    sprite.tilePositionY = phase.y;
+    const asset = FRONTAGE_V2_ASSETS[id];
+    const source = this.bridge.mobileInput === true
+      ? facilityTileSourceTransform(this.textures.get(textureKey), undefined, asset.nativeWidth, asset.nativeHeight,
+        buffer.tileScaleX, buffer.tileScaleY, phase.x, phase.y)
+      : { scaleX: buffer.tileScaleX, scaleY: buffer.tileScaleY, positionX: phase.x, positionY: phase.y };
+    sprite.setTileScale(source.scaleX, source.scaleY);
+    sprite.tilePositionX = source.positionX;
+    sprite.tilePositionY = source.positionY;
     this.activeEnvironmentSprites.add(key);
     return true;
   }
@@ -5792,7 +5859,8 @@ export class FacilityScene extends Phaser.Scene {
       const clipWidth = getApprovedDrawClipWidth(record);
       if (clipWidth !== undefined) {
         const [cropWidth, cropHeight] = this.bridge.mobileInput === true
-          ? facilityAtlasClip(this.textures.get(textureKey), record.sourceRect, clipWidth)
+          ? facilityAtlasClip(this.textures.get(textureKey), backlessTexture
+            ? [0, 0, record.sourceRect[2], record.sourceRect[3]] : record.sourceRect, clipWidth)
           : [clipWidth, record.sourceRect[3]];
         image.setCrop(0, 0, cropWidth, cropHeight);
       }
@@ -6285,6 +6353,16 @@ export class FacilityScene extends Phaser.Scene {
       { ...candidate, displayScale: candidate.displayScale * identityScale },
       this.worldLayout,
     );
+    if (this.bridge.mobileInput === true && phoneMemoryProfile().mode === "reduced" &&
+      !phoneActorInWindow(this.worldToScreen({ x: resolved.centerX, y: resolved.baseY }), this.scale, this.layout.tileSize)) {
+      // Route/hop advancement already happened. Release only presentation
+      // payloads; an offscreen live identity must not pin full-size stills.
+      graphics.clear(); graphics.setVisible(false);
+      this.activeCharacterBitmapContainers.delete(key);
+      this.characterBitmapContainers.get(key)?.setVisible(false);
+      this.characterMotionSnapshots.delete(key);
+      return resolved.baseY;
+    }
     // A first paused frame has no captured presentation yet. It must not
     // capture an arbitrary breathing/squash phase as its resting size.
     const motion = this.characterStepMotion(key, resolved.pose, this.characterPresentationFrozen());

@@ -363,10 +363,12 @@ for (const layout of ["desktop", "phone"] as const) {
       });
       f.server.faults.push({ method: "commit", at: "before", error: new CloudSyncError("capacity") });
       expect(await page.evaluate(() => window.__cloudQa!.checkpoint())).toBe(false);
-      const dialog = await details(page);
-      await expect(dialog).toContainText("Account storage is full. Your progress is safe on this device.");
-      expect((await snapshot(page)).phase).toBe("capacity"); expect((await snapshot(page)).pending).toBe(true);
-      expect(await page.evaluate(() => window.__cloudQa!.command({ type: "ADVANCE_TICK" }))).toBe(false);
+      // Release 40: a capacity-only failure keeps the durable local journal playable
+      // with an honest, non-blocking status instead of a blocked clinic.
+      await expect(page.getByRole("button", { name: /^Account save status: This clinic has reached the cloud save size limit./ }))
+        .toBeVisible({ timeout: CLOUD_QA_WAIT_MS });
+      await expect(page.getByRole("alert", { name: "Clinic status", exact: true })).toHaveCount(0);
+      { const view = await snapshot(page); expect(view.failure).toBe("capacity"); expect(view.canExecute).toBe(true); expect(view.pending).toBe(true); }
       await exportDeviceCopy(page);
       expect(f.server.account("qa-account-a").campaigns.get(id)!.confirmed).toEqual(before);
       // Simulate deployment of the capability/migration, keeping this device's

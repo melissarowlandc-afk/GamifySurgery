@@ -25,6 +25,8 @@ export function cloudStatusText(view: CloudSyncView): string | null {
   if (view.priorRecovery) return "The latest save could not be verified. Your older copies are safe.";
   if (view.storageRetrying) return "Device saving is delayed. Keep this app open while it retries.";
   if (view.failure === "processing") return "Save processing stopped. Keep this app open and retry.";
+  if (view.failure === "capacity" && view.canExecute && view.localDurable)
+    return "This clinic has reached the cloud save size limit. Progress is saving on this device.";
   if (view.phase === "storage" || !view.localDurable && !view.canExecute) return view.storageQuota
     ? "This browser could not save your progress. Free storage and retry."
     : "This browser could not save your progress. Keep this app open and retry.";

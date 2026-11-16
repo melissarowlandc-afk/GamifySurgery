@@ -8,7 +8,7 @@ import { repairSnapshotNumbers } from "./snapshotNumberRecovery";
 export function publicCloudOpeningWorkload(): GameState {
   const state = createDiagnosticWorkload().state;
   const publicRows = JSON.parse(readFileSync(new URL("../../../../../tests/fixtures/level-five-integration-checkpoints-20261012.json", import.meta.url), "utf8"));
-  const history = deserializeGameState(JSON.stringify(publicRows["integration-lower-repeat"]));
+  const history = deserializeGameState(JSON.stringify(publicRows["integration-lower-repeat"]), undefined, { compactHistory: false });
   state.facilityLevel = 5;
   state.facilityTick = history.facilityTick;
   state.paused = true;
@@ -40,5 +40,7 @@ export function publicCloudOpeningWorkload(): GameState {
   const receipts = [...history.serviceIncomeReceipts!];
   state.serviceIncomeReceipts = Array.from({ length: 1_500 }, (_, index) => ({ ...structuredClone(receipts[index % receipts.length]!),
     id: `cloud-opening.receipt.${index}`, transactionKey: `cloud-opening.transaction.${index}` }));
-  return repairSnapshotNumbers(deserializeGameState(JSON.stringify(state))).state;
+  // Keep the original 1,500-row input pressure. Actual hydration/save compacts
+  // it later; do not weaken the perf guard by pre-trimming its synthetic input.
+  return repairSnapshotNumbers(deserializeGameState(JSON.stringify(state), undefined, { compactHistory: false })).state;
 }

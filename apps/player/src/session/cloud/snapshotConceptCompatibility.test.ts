@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import {
   applyGameEvidenceCommand, createGameEvidenceCheckpoint, createInitialGameState,
-  createNewFsrsCard, gameEvidenceDelta, gameReducer, getCurrentQuestion, PROTOTYPE_DOMAIN_CONTEXT,
+  createNewFsrsCard, gameEvidenceDelta, gameReducer, getCurrentQuestion, PROTOTYPE_DOMAIN_CONTEXT, getConceptReviewCount,
   deserializeGameState, GameEvidenceError,
   type GameCommand, type GameState,
 } from "@gamify-surgery/game-domain";
@@ -142,7 +142,7 @@ it("matches local additive defaults and retains supplied retired cards/reviews w
   expect(state).toEqual(before); expect(completeSnapshotLearning(compatible)).toBe(compatible);
 });
 
-it("opens the actual pre-batch Level 5 snapshot catalog, durably adds only missing histories and survives a kill before the first command", async () => {
+it("opens the actual pre-batch Level 5 catalog, compacts approved history with exact cards and survives a kill before the first command", async () => {
   const state = JSON.parse(readFileSync(new URL("../../../../../tests/fixtures/level-five-economy-checkpoint-20261012.json", import.meta.url), "utf8")) as GameState;
   const absent = PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.concepts.filter(row => !Object.hasOwn(state.learningHistories, row.id));
   expect(absent.length).toBeGreaterThan(0);
@@ -150,8 +150,13 @@ it("opens the actual pre-batch Level 5 snapshot catalog, durably adds only missi
   let session: CloudGameSession | null = await CloudGameSession.create(await f.open());
   try {
     const expected = session.state;
-    expect({ ...expected, learningHistories: state.learningHistories }).toEqual(state);
-    for (const [id, history] of Object.entries(state.learningHistories)) expect(expected.learningHistories[id]).toEqual(history);
+    expect(expected).toEqual(completeSnapshotLearning(state));
+    expect(expected.encounters).toEqual(state.encounters);
+    for (const [id, history] of Object.entries(state.learningHistories)) {
+      expect(expected.learningHistories[id]!.card).toEqual(history.card);
+      expect(getConceptReviewCount(expected.learningHistories[id])).toBe(getConceptReviewCount(history));
+      expect(expected.learningHistories[id]!.reviews).toEqual(history.reviews.slice(-3));
+    }
     expect(await session.durable()).toBe(true);
     const committed = await prepareJournal(f.cache.journal!, cloudCampaignStorageKey(f.scope), cloudCodec, { local: true, encode: false });
     expect(committed!.state).toEqual(expected);

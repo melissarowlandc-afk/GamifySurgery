@@ -5,7 +5,9 @@ import {
   jsonCopy, jsonEqual, jsonObject, type EvidenceJson, type EvidenceObject, type EvidencePatch,
 } from "./game-evidence-json";
 import type { DomainContext, GameCommand, GameState } from "./types";
-import { EvidenceIndex, normalizeEvidence } from "./game-evidence-index";
+import { EvidenceIndex } from "./game-evidence-index";
+import { normalizeEvidenceShared as normalizeEvidence } from "./incrementalEvidenceValues";
+import { RETAINED_CONCEPT_REVIEW_LOGS } from "./history-compaction";
 
 export { GameEvidenceError } from "./game-evidence-json";
 export type { EvidenceJson, EvidenceObject, EvidencePatch } from "./game-evidence-json";
@@ -29,7 +31,7 @@ interface FinanceWitness {
   totalOperatingExpenses: number;
   nextFinancialPostingTick: number;
 }
-interface LearningProjection { [concept: string]: { card: string; reviews: string[] } }
+interface LearningProjection { [concept: string]: { card: string; reviews: string[]; retiredReviews?: number } }
 export interface GameEvidenceArchive {
   readonly version: 1;
   readonly campaignId: string;
@@ -457,7 +459,10 @@ function learning(projected: EvidenceObject, previous?: EvidenceRuntime): Learni
     }
     const history = asObject(value);
     if (!isReference(history.card) || !Array.isArray(history.reviews) || history.reviews.some(review => !isReference(review))) throw new GameEvidenceError("learning-projection");
-    Object.defineProperty(result, id, { value: { card: history.card.$e, reviews: history.reviews.map(review => (review as unknown as Reference).$e) }, enumerable: true, writable: true, configurable: true });
+    const retired = history.retiredReviewCount ?? 0;
+    if (!Number.isSafeInteger(retired) || Number(retired) < 0) throw new GameEvidenceError("learning-projection");
+    Object.defineProperty(result, id, { value: { card: history.card.$e, reviews: history.reviews.map(review => (review as unknown as Reference).$e),
+      ...(retired ? { retiredReviews: Number(retired) } : {}) }, enumerable: true, writable: true, configurable: true });
   }
   return result;
 }
@@ -485,6 +490,15 @@ function validateHead(snapshot: GameEvidenceSnapshot, archive: GameEvidenceArchi
       const current = expectedLearning[change.conceptId]!;
       if (changedConcepts.has(change.conceptId)) throw new GameEvidenceError("learning-chain");
       changedConcepts.add(change.conceptId);
+      if (change.compactedReviews !== undefined) {
+        if (!Array.isArray(change.compactedReviews) || change.compactedReviews.length === 0 || change.appendedReviews.length !== 0 ||
+            current.reviews.length !== RETAINED_CONCEPT_REVIEW_LOGS || current.card !== change.beforeCard ||
+            (current.retiredReviews ?? 0) < change.compactedReviews.length ||
+            change.compactedReviews.some(id => typeof id !== "string" || recordAt(archive, id).kind !== "review")) throw new GameEvidenceError("learning-reconciliation");
+        current.reviews.unshift(...change.compactedReviews as string[]);
+        const count = current.retiredReviews! - change.compactedReviews.length;
+        if (count) current.retiredReviews = count; else delete current.retiredReviews;
+      }
       if (current.card !== change.afterCard || !jsonEqual(asJson(current.reviews.slice(current.reviews.length - change.appendedReviews.length)), change.appendedReviews)) throw new GameEvidenceError("learning-reconciliation");
       current.reviews.splice(current.reviews.length - change.appendedReviews.length, change.appendedReviews.length);
       current.card = change.beforeCard;
@@ -603,10 +617,18 @@ function finishEvidenceTransition(checkpoint: GameEvidenceCheckpoint, runtime: E
     for (const [conceptId, current] of Object.entries(newLearning)) {
       const previous = oldLearning[conceptId];
       if (previous === current) continue;
-      if (!previous || !jsonEqual(asJson(previous.reviews), asJson(current.reviews.slice(0, previous.reviews.length)))) throw new GameEvidenceError("review-removal-or-edit");
-      const appendedReviews = current.reviews.slice(previous.reviews.length);
+      if (!previous) throw new GameEvidenceError("review-removal-or-edit");
+      const retired = (current.retiredReviews ?? 0) - (previous.retiredReviews ?? 0);
+      if (!Number.isSafeInteger(retired) || retired < 0 || retired > previous.reviews.length ||
+          !jsonEqual(asJson(previous.reviews.slice(retired)), asJson(current.reviews.slice(0, previous.reviews.length - retired)))) throw new GameEvidenceError("review-removal-or-edit");
+      const appendedReviews = current.reviews.slice(previous.reviews.length - retired);
+      // Compaction is a card-preserving oldest-prefix retirement, separate
+      // from answer admission. Its exact immutable references stay in the local
+      // evidence chain and reconstruct the original opening proof on export.
+      if (retired && (current.reviews.length !== RETAINED_CONCEPT_REVIEW_LOGS || appendedReviews.length || previous.card !== current.card)) throw new GameEvidenceError("review-removal-or-edit");
       if (previous.card !== current.card && appendedReviews.length === 0) throw new GameEvidenceError("card-change-without-review");
-      if (previous.card !== current.card || appendedReviews.length) learningChanges.push({ conceptId, beforeCard: previous.card, afterCard: current.card, appendedReviews });
+      if (previous.card !== current.card || appendedReviews.length || retired) learningChanges.push({ conceptId, beforeCard: previous.card, afterCard: current.card, appendedReviews,
+        ...(retired ? { compactedReviews: previous.reviews.slice(0, retired) } : {}) });
     }
   }
   const sequence = checkpoint.snapshot.head.sequence + 1;

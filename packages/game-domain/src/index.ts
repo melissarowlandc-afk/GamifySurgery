@@ -70,3 +70,5 @@ export * from "./game-evidence";
 
 export { withSettledStateQueries } from "./settledStateQueries";
 export * from "./founder-consults";
+export * from "./history-compaction";
+export * from "./history-counts";

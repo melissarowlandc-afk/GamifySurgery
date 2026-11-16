@@ -1,4 +1,4 @@
-import type { GameState } from "@gamify-surgery/game-domain";
+import { getConceptReviewCount, type GameState } from "@gamify-surgery/game-domain";
 
 type History = GameState["learningHistories"][string];
 type FormatStatus = (history: History | undefined) => string;
@@ -15,7 +15,7 @@ export function createLearningDevelopmentView(state: GameState,
   let count = counts.get(histories);
   if (!count) {
     const entries = Object.values(histories);
-    count = { reviewed: entries.filter(history => history.reviews.length > 0).length, total: entries.length };
+    count = { reviewed: entries.filter(history => getConceptReviewCount(history) > 0).length, total: entries.length };
     if (Object.isFrozen(histories) && entries.every(history => Object.isFrozen(history) && Object.isFrozen(history.reviews)))
       counts.set(histories, count);
   }

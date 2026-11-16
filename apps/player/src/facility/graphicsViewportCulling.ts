@@ -16,6 +16,8 @@ export function measureGraphicsBounds(buffer: readonly number[]): GraphicsBounds
       case 4: case 5: point(buffer[i++]!, buffer[i++]!); break;
       case 6: stroke = Math.max(stroke, Math.abs(buffer[i]!)); i += 3; break;
       case 7: i += 2; break;
+      case 21: i += 8; break; // Gradient fill changes style, not geometry.
+      case 22: stroke = Math.max(stroke, Math.abs(buffer[i]!)); i += 6; break;
       case 10: case 11: for (let vertex = 0; vertex < 3; vertex++) point(buffer[i++]!, buffer[i++]!); break;
       case 1: case 2: case 8: case 9: case 14: case 15: break;
       default: return null;

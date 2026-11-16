@@ -1,5 +1,5 @@
 import { expect, it, vi } from "vitest";
-import { applyGameEvidenceCommand, importGameEvidence } from "@gamify-surgery/game-domain";
+import { applyGameEvidenceCommand, getConceptReviewCount, importGameEvidence } from "@gamify-surgery/game-domain";
 import { largeEntryFixture } from "./entryPerformanceTestSupport";
 import { FakeCloudServer } from "./fakeTransport";
 import { encodeCloudEvidenceCheckpoint, loadCloudEvidenceCheckpoint } from "./codecEvidence";
@@ -35,7 +35,7 @@ it("round-trips a real legacy current/prior pair through native SQL RPC bytes an
   const legacyHead = await fake.load(id, "2"), legacyPrior = await fake.load(id, "1");
   const expectedPrior = await hydrate(legacyHead), oldPrior = await hydrate(legacyPrior);
   expect(oldPrior.state).not.toEqual(expectedPrior.state);
-  expect(Object.values(expectedPrior.state.learningHistories).reduce((sum, history) => sum + history.reviews.length, 0)).toBeGreaterThan(500);
+  expect(Object.values(expectedPrior.state.learningHistories).reduce((sum, history) => sum + getConceptReviewCount(history), 0)).toBeGreaterThan(500);
   expect(Object.keys(expectedPrior.state.encounters).length).toBeGreaterThan(0);
 
   const next = applyGameEvidenceCommand(checkpoint, { type: "SET_SIMULATION_SPEED", speed: 4, operationId: "rpc.native.action" }).checkpoint;

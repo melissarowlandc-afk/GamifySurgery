@@ -12,7 +12,7 @@ const port = globalThis as unknown as {
 let ready: Promise<void> | undefined;
 const receive = createWorkerReceiptReceiver(reply => port.postMessage(reply), (request: OperationalEngineRequest) => {
   ready ??= prepareRuntimeCaseCatalogue();
-  void ready.then(() => dispatchOperationalEngineRequest(engine, request, reply => port.postMessage(reply)))
+  void ready.then(() => dispatchOperationalEngineRequest(engine, request, reply => port.postMessage(reply), reply => port.postMessage(reply)))
     .catch(() => port.postMessage({ id: request.id, kind: "failure", code: "engine-catalogue" }));
 });
 port.onmessage = event => { receive(event.data); };

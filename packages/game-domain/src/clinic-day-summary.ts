@@ -1,6 +1,7 @@
 import { PROTOTYPE_DOMAIN_CONTEXT } from "./context";
 import { operatingDayMinutes } from "./alert-cadence";
 import { getServiceIncomeTotalsCents } from "./retired-service-history";
+import { getSettlementCount } from "./history-counts";
 import { getDisplayedClinicSatisfaction } from "./selectors";
 import type { DomainContext, DomainEvent, GameState } from "./types";
 
@@ -15,8 +16,9 @@ export function captureClinicDaySummary(
   const prior = (state.clinicDaySummaryBaseline?.facilityTick === start ? state.clinicDaySummaryBaseline : undefined) ?? state.events.find((event) =>
     event.type === "day_rollover" && event.facilityTick === start,
   )?.clinicDaySummary;
-  const completedTotal = state.settlements.length;
+  const completedTotal = getSettlementCount(state);
   const earnedTotalCents = getServiceIncomeTotalsCents(state).netCashDeltaCents +
+    (state.historyCompaction?.settlements?.netCents ?? 0) +
     state.settlements.reduce((sum, settlement) => sum + Math.round(settlement.netCashDelta * 100), 0) +
     state.emergencyGlp1.totalUses * Math.round(context.balanceRelease.emergencyGlp1.payment * 100);
   // A legacy day lacks a starting snapshot. Show retained records honestly,
@@ -34,6 +36,7 @@ export function captureClinicDaySummary(
     moneyEarnedCents: partial
       ? state.serviceIncomeReceipts.filter((receipt) => duringDay(receipt.completedAtFacilityTick))
           .reduce((sum, receipt) => sum + Math.round(receipt.netCashDelta * 100), 0) +
+        (state.historyCompaction?.outsideReadReceipts ?? []).filter(([tick]) => duringDay(tick)).reduce((sum, [, , cents]) => sum + cents, 0) +
         state.settlements.filter((settlement) => duringDay(settlement.settledAtFacilityTick))
           .reduce((sum, settlement) => sum + Math.round(settlement.netCashDelta * 100), 0) +
         state.events.filter((event) => event.type === "emergency_glp1_consultation" && duringDay(event.facilityTick)).length *

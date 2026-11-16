@@ -36,6 +36,7 @@ export class OperationalSessionEngine {
   private nextRetry = 0;
   private stopped = false;
   private parked = false;
+  private consecutiveFailures = 0;
   private args: OperationalViewArguments;
   private currentHead: GameEvidenceCheckpoint["snapshot"]["head"];
   private constructor(checkpoint: GameEvidenceCheckpoint, state: GameState, private readonly context: DomainContext,
@@ -70,7 +71,7 @@ export class OperationalSessionEngine {
     this.diagnose("worker-idle-released"); return true;
   }
   async hashJournalRows(rows: readonly JournalRow[]): Promise<string[] | null> {
-    if (!this.client) return null;
+    if (!this.client?.canHashJournalRows) return null;
     try { return await this.client.hashJournalRows(rows); }
     catch { this.diagnose("engine-journal-hash-fallback"); return null; }
   }
@@ -84,7 +85,7 @@ export class OperationalSessionEngine {
       const client = await OperationalEngineClient.create({ checkpoint, visibleState: this.visible, context: this.context,
         adoptSharedSeed: this.options.adoptSharedSeed, useBundledContext: this.options.useBundledContext,
         atRealMs: this.now(), snapshotOnly: this.snapshotOnly,
-        projection: { revision: 0, args: this.args, followOpenChart: true } }, this.options.createPort, this.options.timeoutMs ?? 5_000, 128,
+        projection: { revision: 0, args: this.args, followOpenChart: true } }, this.options.createPort, this.options.timeoutMs ?? 30_000, 128,
         this.options.startupTimeoutMs ?? CLOUD_WORKER_STARTUP_TIMEOUT_MS);
       if (this.stopped) { client.dispose(); return; }
       client.setProjection(this.args, true);
@@ -92,7 +93,7 @@ export class OperationalSessionEngine {
       if (this.options.useBundledContext) releaseRuntimeCatalogue();
       this.diagnose("worker-ready");
     } catch (error) {
-      this.client = null; this.fallback = checkpoint; this.nextRetry = this.now() + (this.options.retryMs ?? 5_000);
+      this.client = null; this.fallback = checkpoint; this.nextRetry = this.now() + this.retryDelay();
       this.diagnose(error instanceof OperationalEngineFailure ? error.code : "engine-start");
     }
   }
@@ -100,8 +101,11 @@ export class OperationalSessionEngine {
     const checkpoint = this.client?.recoveryCheckpoint ?? this.fallback ?? this.baseline;
     this.client?.dispose(); this.client = null;
     this.fallback = checkpoint;
-    this.nextRetry = this.now() + (this.options.retryMs ?? 5_000);
+    this.nextRetry = this.now() + this.retryDelay();
     return checkpoint;
+  }
+  private retryDelay(): number {
+    return Math.min(60_000, (this.options.retryMs ?? 5_000) * 2 ** Math.min(this.consecutiveFailures++, 4));
   }
   private async ready(): Promise<void> {
     if (this.stopped) throw new OperationalEngineFailure("engine-stopped");
@@ -124,6 +128,7 @@ export class OperationalSessionEngine {
           guidanceAttentionBlocked: context.guidanceAttentionBlocked, guidanceBlockedTopicIds: context.guidanceBlockedTopicIds };
         const catalogChanged = context.balanceRelease !== this.context.balanceRelease || context.clinicalRelease !== this.context.clinicalRelease;
         const result = await this.client.execute(entry.command, catalogChanged ? context : undefined, flags);
+        this.consecutiveFailures = 0;
         if (!result.replayed) { this.visible = result.state; this.currentHead = result.head; }
         return result;
       } catch (error) { this.diagnose(error instanceof OperationalEngineFailure ? error.code : "engine-command"); this.recover(); }
@@ -136,6 +141,7 @@ export class OperationalSessionEngine {
     if (this.client) {
       try {
         const result = await this.client.undo(entry.target, operationId);
+        this.consecutiveFailures = 0;
         if (!result.replayed) { this.visible = result.state; this.currentHead = result.head; }
         return result;
       } catch (error) { this.diagnose(error instanceof OperationalEngineFailure ? error.code : "engine-command"); this.recover(); }

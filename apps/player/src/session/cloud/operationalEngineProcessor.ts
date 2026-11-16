@@ -4,7 +4,7 @@ import { applyGameEvidenceBuildUndo, applyGameEvidenceCommand, createGameEvidenc
 import { equalParsedJson } from "./codecWorkerJsonEqual";
 import type { CodecJson } from "./codecJson";
 import { operationalStatePatch } from "./operationalStatePatch";
-import type { OperationalEngineReply, OperationalEngineRequest, OperationalViewReply, OperationalViewRequest } from "./operationalEngineProtocol";
+import type { OperationalEngineProgress, OperationalEngineReply, OperationalEngineRequest, OperationalViewReply, OperationalViewRequest } from "./operationalEngineProtocol";
 import { createOperationalPlayerView } from "./operationalViewProjection";
 import type { PrototypePlayerView } from "../viewModels";
 import { freezeOperationalValue } from "./operationalFreeze";
@@ -36,7 +36,7 @@ export class OperationalEngineProcessor {
     return { view, reply: { revision: request.revision, asOfRealMs, ...(patch ? { patch } : {}), computeMs, diffMs } };
   }
 
-  handle(request: OperationalEngineRequest): OperationalEngineReply {
+  handle(request: OperationalEngineRequest, progress?: (stage: OperationalEngineProgress["progress"]) => void): OperationalEngineReply {
     try {
       if (!Number.isSafeInteger(request.id) || request.id < 1) throw new GameEvidenceError("engine-message");
       if (request.kind === "initialize") {
@@ -74,19 +74,23 @@ export class OperationalEngineProcessor {
         return { id: request.id, kind: "compacted", baseVersion, version: this.version, checkpoint };
       }
       if (request.kind === "project") {
+        progress?.("projection");
         const projected = this.project(this.visible, request.projection); this.view = projected.view;
         return { id: request.id, kind: "projected", version: this.version, projection: projected.reply };
       }
       if (request.kind !== "command" && request.kind !== "undo") throw new GameEvidenceError("engine-message");
       const before = this.checkpoint, started = performance.now();
+      progress?.("simulation");
       const result = request.kind === "command"
         ? applyGameEvidenceCommand(before, request.command, request.contextFlags ? { ...(request.context ?? this.context!), ...request.contextFlags } : request.context ?? this.context)
         : applyGameEvidenceBuildUndo(before, request.target, request.operationId);
       const computeMs = performance.now() - started, diffStarted = performance.now();
+      progress?.("diff");
       const patch = result.replayed ? undefined : operationalStatePatch(this.visible, result.state);
       const delta = result.replayed ? null : gameEvidenceDelta(before, result.checkpoint);
       const snapshotPatch = result.replayed ? undefined : operationalStatePatch(before.snapshot, result.checkpoint.snapshot);
       const diffMs = performance.now() - diffStarted, baseVersion = this.version;
+      progress?.("projection");
       const projection = request.projection ? this.project(result.replayed ? this.visible : result.state, request.projection) : undefined;
       // Build transport before committing, so a failed diff cannot advance the
       // private head while the caller still owns the old visible state.
@@ -94,6 +98,7 @@ export class OperationalEngineProcessor {
       if (!result.replayed) this.visible = freezeOperationalSnapshot(result.state);
       if (projection) this.view = projection.view;
       this.version++;
+      progress?.("publish");
       if (delta) {
         this.journalDeltas.set(this.version, delta);
         // Larger than the session's128 combined reservations. Standalone

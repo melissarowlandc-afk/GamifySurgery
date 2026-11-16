@@ -11,26 +11,29 @@ import hashlib, json, sys
 
 root = Path(__file__).resolve().parents[2]
 data = json.loads((root / '.local-dev/phone-art-generation/input.json').read_text(encoding='utf-8'))
-output = root / 'apps/player/public/art/phone'
+reduced = '--reduced' in sys.argv
+folder = 'phone-reduced' if reduced else 'phone'
+output = root / 'apps/player/public/art' / folder
 output.mkdir(parents=True, exist_ok=True)
 rows = {}
 verify = '--verify' in sys.argv
 for asset in data:
-    if not asset['id'].startswith(('gs015:', 'level4:', 'level5:', 'room-touchup:')):
+    prefixes = ('gs015:', 'level3:', 'level4:', 'level5:', 'room-touchup:') if reduced else ('gs015:', 'level4:', 'level5:', 'room-touchup:')
+    if not asset['id'].startswith(prefixes):
         continue
-    if asset['nativeWidth'] * asset['nativeHeight'] < 256 * 256:
+    if asset['nativeWidth'] * asset['nativeHeight'] < (64 * 64 if reduced else 256 * 256):
         continue
     source = root / 'apps/player/public' / asset['relativePath']
     name = hashlib.sha256(asset['id'].encode()).hexdigest()[:16] + '.png'
-    relative = 'art/phone/' + name
+    relative = 'art/' + folder + '/' + name
     with Image.open(source) as original:
         original = original.convert('RGBA')
         if original.size != (asset['nativeWidth'], asset['nativeHeight']):
             raise ValueError('Source dimensions changed: ' + asset['id'])
         # Power-of-two sampling keeps authored crop boundaries aligned. PNG
         # premultiplication avoids dark fringes around translucent silhouettes.
-        divisor = 2
-        while max((original.width + divisor - 1) // divisor, (original.height + divisor - 1) // divisor) > 2048:
+        divisor = 4 if reduced else 2
+        while max((original.width + divisor - 1) // divisor, (original.height + divisor - 1) // divisor) > (1024 if reduced else 2048):
             divisor *= 2
         size = ((original.width + divisor - 1) // divisor, (original.height + divisor - 1) // divisor)
         image = original.convert('RGBa').resize(size, Image.Resampling.LANCZOS).convert('RGBA')
@@ -46,7 +49,7 @@ for asset in data:
             'sourceSha256': hashlib.sha256(source.read_bytes()).hexdigest(),
             'sha256': hashlib.sha256(target.read_bytes()).hexdigest(),
             'pixelSha256': hashlib.sha256(image.tobytes()).hexdigest()}
-manifest = root / 'apps/player/src/mobile/performance/phoneArt.generated.json'
+manifest = root / 'apps/player/src/mobile/performance' / ('phoneReducedArt.generated.json' if reduced else 'phoneArt.generated.json')
 text = json.dumps(rows, indent=2, sort_keys=True) + '\n'
 if verify:
     if json.loads(manifest.read_text()) != rows:

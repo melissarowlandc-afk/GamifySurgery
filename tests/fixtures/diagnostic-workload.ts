@@ -119,7 +119,9 @@ export function createDiagnosticWorkload(): { state: GameState; chartId: string 
   // padding. Keep current operational geometry/actors/orders independent.
   const retainedCheckpoints = JSON.parse(readFileSync(new URL("./level-five-integration-checkpoints-20261012.json", import.meta.url), "utf8"));
   const retained = retainedCheckpoints["integration-lower-repeat"];
-  const history = deserializeGameState(JSON.stringify(retained));
+  // Deliberately exercise the full legacy history before the real load/retire
+  // boundary; compaction must not silently shrink this pressure fixture.
+  const history = deserializeGameState(JSON.stringify(retained), undefined, { compactHistory: false });
   const clockOffset = history.facilityTick - state.facilityTick;
   const historyClock = <T,>(value: T, key = ""): T => {
     if (typeof value === "number" && (key === "facilityTick" || key === "dueTick" || key.endsWith("AtTick") || key.endsWith("FacilityTick"))) return Math.max(0, value - clockOffset) as T;
@@ -169,5 +171,5 @@ export function createDiagnosticWorkload(): { state: GameState; chartId: string 
   }
   state.openChartEncounterId = "synthetic.encounter.2"; state.attendedEncounterId = null;
   // Setup-only canonicalization, using the ordinary legacy/public fixture adapter.
-  return { state: deserializeGameState(JSON.stringify(state)), chartId: state.openChartEncounterId };
+  return { state: deserializeGameState(JSON.stringify(state), undefined, { compactHistory: false }), chartId: state.openChartEncounterId };
 }

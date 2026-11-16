@@ -22,7 +22,7 @@ const hostedTime = (ms: number) => (process.env.CI ? ms * 10 : ms);
 vi.mock("../../feedback/TesterFeedback", () => ({ ProblemReportButton: () => null }));
 afterEach(async () => { vi.useRealTimers(); await cleanupPhoneTests(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 it("enables a ~5 MB cached Level 5 row without a codec task, then verifies/opens through real queued clone boundaries", async () => {
-  const f = await largeEntryFixture();
+  const f = await largeEntryFixture(1_200, true, { compactHistory: false });
   vi.stubGlobal("indexedDB", new IDBFactory()); vi.stubGlobal("IDBKeyRange", IDBKeyRange);
   const native = new MessageChannelCloudCodecWorker(), codec = new CloudCodecWorker(() => native);
   vi.spyOn(cloudCodec, "run").mockImplementation(task => codec.run(task));

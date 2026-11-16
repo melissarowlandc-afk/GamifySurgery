@@ -1,5 +1,5 @@
 import { diagnosticChoicePreviews } from "./diagnosticChoicePreviews";
-import { withSettledStateQueries } from "@gamify-surgery/game-domain";
+import { newestServiceIncomeReceipts, withSettledStateQueries } from "@gamify-surgery/game-domain";
 import { questionReviewContext } from "./questionReviewContext";
 import { createLearningDevelopmentView } from "./learningDevelopmentView";
 import { createFacilityDoorViews } from "./buildViewModels";
@@ -1459,29 +1459,8 @@ function createChartView(
   };
 }
 
-/**
- * Equivalent to a stable newest-first sort followed by `slice(0, limit)`, but
- * linear in the receipt history that is re-projected on every facility tick.
- */
-export function newestServiceIncomeReceipts<
-  Receipt extends { completedAtFacilityTick: number },
->(receipts: readonly Receipt[], limit: number): Receipt[] {
-  const newest: Receipt[] = [];
-  for (const receipt of receipts) {
-    let index = newest.length;
-    while (
-      index > 0 &&
-      newest[index - 1]!.completedAtFacilityTick <
-        receipt.completedAtFacilityTick
-    ) {
-      index -= 1;
-    }
-    if (index >= limit) continue;
-    newest.splice(index, 0, receipt);
-    if (newest.length > limit) newest.pop();
-  }
-  return newest;
-}
+// Preserve this presentation export; retirement and the UI share one ordering.
+export { newestServiceIncomeReceipts };
 
 function derivePrototypePlayerView(
   state: GameState,
@@ -2967,7 +2946,7 @@ function derivePrototypePlayerView(
           ? `${state.campaignId.slice(0, 17)}…`
           : state.campaignId,
       learningHistoryLabel: learningDevelopment.learningHistoryLabel,
-      reviewCountLabel: `${state.reviewIntents.length} scored`,
+    reviewCountLabel: `${(state.historyCompaction?.retiredReviewIntentCount ?? 0) + state.reviewIntents.length} scored`,
       fastForwardLabel: `Fast-forward ${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.development.fastForwardTickCount} min`,
       addMoneyLabel: `Add $${PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.development.addMoneyAmount}`,
       learningCards: learningDevelopment.learningCards,

@@ -2,7 +2,7 @@ import { problemDiagnostics } from "../../diagnostics/problemDiagnostics";
 import { GameEvidenceError } from "@gamify-surgery/game-domain";
 import { assertCloudRevision, CLOUD_CAPACITY_LIMITS } from "./codec";
 import { isStorageQuotaError, reclaimAuxiliaryStorage } from "../storagePressure";
-import { isCloudCodecProcessingError, utf8Bytes } from "./codecJson";
+import { isCloudCodecCapacityError, isCloudCodecProcessingError, utf8Bytes } from "./codecJson";
 import { cloudCodec } from "./codecWorker";
 import { cloudScopeData } from "./scopeData";
 import { timeCloudEntry } from "./entryTimings";
@@ -120,6 +120,7 @@ export class CloudSyncCoordinator {
   private journalOwner: string | null = null;
   private snapshotSaves = false;
   private checkUploadHead = false;
+  private preparationCapacity = false;
   get supportsSnapshots(): boolean { return this.snapshotSaves; }
 
   constructor(private readonly options: {
@@ -164,6 +165,13 @@ export class CloudSyncCoordinator {
   }
   reportPreparationFailure(error: unknown): void {
     this.checkTime();
+    if ((isCloudCodecCapacityError(error) || error instanceof CloudSyncError && error.code === "capacity") &&
+      this.journalOwner && this.allowed() && this.localDurable) {
+      // Only the derived cloud checkpoint is too large. The real journal is
+      // still durable; keep every existing lease/admission/storage fence.
+      problemDiagnostics.error("checkpoint-capacity", error);
+      this.preparationCapacity = true; this.backupRetryAfter = this.now(); this.emit(); return;
+    }
     if ((!isCloudCodecProcessingError(error) && !isTransientStorageError(error)) || !this.allowed() || !this.localDurable) { this.reportLocalFailure(error); return; }
     problemDiagnostics.error("checkpoint-preparation", error);
     this.failure = "processing"; this.backupRetryAfter = this.now(); this.emit();
@@ -172,8 +180,10 @@ export class CloudSyncCoordinator {
   }
   preparationRecovered(): void {
     if (this.attempted) return; // A prepared snapshot does not confirm a delayed immutable cache write.
+    const capacity = this.preparationCapacity; this.preparationCapacity = false;
     this.backupRetryAfter = null;
     if (this.failure === "processing" && this.localDurable && this.allowed()) { this.failure = null; this.emit(); }
+    else if (capacity) this.emit();
   }
   reportStorageRetry(error: unknown): void {
     this.storageRetrying = isTransientStorageError(error);
@@ -227,7 +237,7 @@ export class CloudSyncCoordinator {
     return { phase: this.phase, canExecute: this.allowed(), checking: Boolean(this.foregrounding || this.reconnecting) || this.phase === "checking", pending: this.offlineBase || this.recovery() !== null || Boolean(this.record?.entry.recovery),
       localDurable: this.localDurable, revision: this.record?.entry.confirmed.revision ?? null,
       ...(this.storageQuota && this.failure === "storage" ? { storageQuota: true } : {}), ...(this.storageRetrying && this.failure === "processing" ? { storageRetrying: true } : {}),
-      confirmedAtMs: this.record?.entry.confirmed.acceptedAtMs ?? null, failure: this.failure,
+      confirmedAtMs: this.record?.entry.confirmed.acceptedAtMs ?? null, failure: this.failure ?? (this.preparationCapacity ? "capacity" : null),
       ...(this.record?.entry.confirmed.priorRecovery ? { priorRecovery: { verifiedRevision: this.record.entry.confirmed.revision,
         serverRevision: this.record.entry.confirmed.priorRecovery.serverRevision } } : {}), writerElsewhere: this.writerElsewhere,
       ...(this.conflictCopies ? { conflictCopies: clone(this.conflictCopies) } : {}) };
@@ -267,8 +277,14 @@ export class CloudSyncCoordinator {
   private fail(error: unknown, preserveLocalDurability = false): void {
     problemDiagnostics.error("coordinator", error);
     if (this.stopped) return;
-    const code = error instanceof CloudSyncError ? error.code : "network";
+    const code = error instanceof CloudSyncError ? error.code : isCloudCodecCapacityError(error) ? "capacity" : "network";
     this.storageQuota = isStorageQuotaError(error);
+    if (code === "capacity" && this.journalOwner && this.allowed() && this.localDurable) {
+      // Capacity can also be reported while freezing/uploading an already
+      // journaled checkpoint. It does not invalidate those durable local rows
+      // or grant authority beyond the current lease/admission fences.
+      this.preparationCapacity = true; this.backupRetryAfter = this.now(); this.emit(); return;
+    }
     if (isTransientStorageError(error) && this.allowed() && this.localDurable) {
       this.storageRetrying = true; this.failure = "processing"; this.backupRetryAfter = this.now(); this.emit(); return;
     }
@@ -364,7 +380,7 @@ export class CloudSyncCoordinator {
     try { const loaded = await this.codec.run({ kind: "verify", input: { ...confirmed, expectedRevision: confirmed.revision,
       expectedCampaignId: this.scope.campaignId, expectedBaselineId: confirmed.baselineId } });
       if (summary?.name !== undefined && loaded.campaign.name !== summary.name || summary?.status !== undefined && loaded.campaign.status !== summary.status) throw new CloudSyncError("corrupt"); }
-    catch (error) { throw new CloudSyncError(isCloudCodecProcessingError(error) ? "processing" : "corrupt"); }
+      catch (error) { throw new CloudSyncError(isCloudCodecCapacityError(error) ? "capacity" : isCloudCodecProcessingError(error) ? "processing" : "corrupt"); }
   }
   private async verifiedHead(head: Awaited<ReturnType<CloudTransport["head"]>>, cached?: CloudConfirmed): Promise<CloudConfirmed> {
     try {
@@ -1079,7 +1095,7 @@ export class CloudSyncCoordinator {
     // Catalog drift is a recoverable session-baseline mismatch, not evidence of
     // damaged saved bytes. Do not weaken any other evidence/integrity check.
     const catalogChanged = error instanceof GameEvidenceError && error.code === "concept-set-change";
-    this.fail(error instanceof CloudSyncError ? error : new CloudSyncError(isCloudCodecProcessingError(error) || catalogChanged ? "processing" : "corrupt"));
+    this.fail(error instanceof CloudSyncError ? error : new CloudSyncError(isCloudCodecCapacityError(error) ? "capacity" : isCloudCodecProcessingError(error) || catalogChanged ? "processing" : "corrupt"));
   }
   async pulse(): Promise<void> {
     if (!this.enabled || this.stopped || this.closingRequested || this.phase === "closed" || !requestDocumentVisible()) return;

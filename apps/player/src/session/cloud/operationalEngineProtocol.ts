@@ -31,7 +31,8 @@ export type OperationalEngineReply =
   | { id: number; kind: "failure"; code: string };
 
 /** Transport controls never enter the state/version reply contract. */
-export type OperationalEngineWorkerReply = OperationalEngineReply | WorkerReceipt | { ready: true };
+export interface OperationalEngineProgress { id: number; progress: "simulation" | "diff" | "projection" | "publish" | "journal-hash" | "journal-encode" | "journal-row" }
+export type OperationalEngineWorkerReply = OperationalEngineReply | WorkerReceipt | OperationalEngineProgress | { ready: true };
 
 /** Private state snapshots are immutable. The reply contains only an ordered
  * raw-state patch and the existing journal delta, never the full archive/tail.

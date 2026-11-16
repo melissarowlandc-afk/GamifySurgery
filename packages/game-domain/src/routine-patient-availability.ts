@@ -4,6 +4,7 @@ import { clinicalCaseEarliestFacilityStage, clinicalCaseHasSupportedPatientSeman
 import { getEmployeeDiscussions, isEmployeeDiscussionCase } from "./employee-discussions";
 import { canAdmitPatient, getCurrentCapabilities } from "./selectors";
 import type { DomainContext, GameState } from "./types";
+import { getConceptReviewCount } from "./history-counts";
 
 export type RoutinePatientAvailabilityReason =
   | "paused"
@@ -36,7 +37,7 @@ function caseReviewReadyAt(
 ): number {
   return caseConceptIds.reduce((readyAt, conceptId) => {
     const history = state.learningHistories[conceptId];
-    return history && history.reviews.length > 0
+    return history && getConceptReviewCount(history) > 0
       ? Math.max(readyAt, history.card.dueAtMs)
       : readyAt;
   }, asOfRealMs);
