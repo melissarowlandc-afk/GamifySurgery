@@ -14,6 +14,7 @@ export interface OperationalSessionOptions {
   adoptSharedSeed?: boolean;
   /** App and worker load the same released catalogues; explicit contexts still travel. */
   useBundledContext?: boolean;
+  initialProjection?: OperationalViewArguments;
   createPort?: () => OperationalEnginePort;
   timeoutMs?: number;
   startupTimeoutMs?: number;
@@ -40,7 +41,7 @@ export class OperationalSessionEngine {
   private constructor(checkpoint: GameEvidenceCheckpoint, state: GameState, private readonly context: DomainContext,
     private readonly snapshotOnly: boolean, private readonly options: OperationalSessionOptions) {
     this.baseline = checkpoint; this.visible = state; this.currentHead = checkpoint.snapshot.head;
-    this.args = [state.openChartEncounterId, false, null];
+    this.args = structuredClone(options.initialProjection ?? [state.openChartEncounterId, false, null]);
   }
   static async create(checkpoint: GameEvidenceCheckpoint, state: GameState, context: DomainContext, snapshotOnly: boolean,
     options: OperationalSessionOptions = {}): Promise<OperationalSessionEngine> {
@@ -52,6 +53,11 @@ export class OperationalSessionEngine {
     return this.currentHead;
   }
   get mode(): "worker" | "synchronous" { return this.client ? "worker" : "synchronous"; }
+  /** Read immediately after create, before installing different render inputs. */
+  get initialProjection() {
+    const view = this.client?.view;
+    return view ? { args: this.args, view } : null;
+  }
   /** Called only at the session's durable, ordered idle boundary. The exact
    * mirrored prefix stays in memory; the next command restarts before applying. */
   async park(): Promise<boolean> {

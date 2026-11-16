@@ -5,6 +5,7 @@ import { OperationalEngineClient, type OperationalEnginePort } from "./operation
 import { OperationalEngineProcessor } from "./operationalEngineProcessor";
 import type { OperationalEngineReply, OperationalEngineRequest } from "./operationalEngineProtocol";
 import { createPrototypePlayerView } from "../viewModels";
+import { createWorkerReceiptReceiver } from "./workerDelivery";
 
 class Port implements OperationalEnginePort {
   onmessage: OperationalEnginePort["onmessage"] = null;
@@ -14,10 +15,14 @@ class Port implements OperationalEnginePort {
   readonly messages: OperationalEngineRequest[] = [];
   readonly waiting: OperationalEngineRequest[] = [];
   private readonly processor = new OperationalEngineProcessor();
-  postMessage(request: OperationalEngineRequest): void {
-    const captured = structuredClone(request); this.messages.push(captured);
+  private readonly receive = createWorkerReceiptReceiver(reply => this.onmessage?.({ data: reply } as MessageEvent), (captured: OperationalEngineRequest) => {
     if (this.auto) queueMicrotask(() => this.deliver(this.processor.handle(captured)));
     else this.waiting.push(captured);
+  });
+  constructor() { queueMicrotask(() => this.onmessage?.({ data: { ready: true } } as MessageEvent)); }
+  postMessage(request: OperationalEngineRequest): void {
+    const captured = structuredClone(request); this.messages.push(captured);
+    this.receive(captured);
   }
   deliver(reply: OperationalEngineReply): void { this.onmessage?.({ data: structuredClone(reply) } as MessageEvent<OperationalEngineReply>); }
   next(mutate?: (reply: OperationalEngineReply) => void): void {

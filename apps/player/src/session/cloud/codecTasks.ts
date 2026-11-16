@@ -12,8 +12,10 @@ import { verifiedCopies, type VerifiedSessionSnapshot } from "./verifiedCopyCach
 import { bindJournalInWorker, prepareJournalInWorker, rebaseJournalInWorker } from "./journalCodec";
 import { warmJournalInWorker } from "./journalWarm";
 import { encodeCloudSnapshot, isSnapshotCopy, SNAPSHOT_BASELINE, snapshotCopy, snapshotEvidence, prepareSnapshotImport } from "./snapshotCodec";
-import { importGameEvidence } from "@gamify-surgery/game-domain";
+import { createGameEvidenceCheckpoint, importGameEvidence } from "@gamify-surgery/game-domain";
 import type { SnapshotLineage } from "./transport";
+import { completeSnapshotLearning } from "./snapshotLearning";
+import { createWorkerReceiptReceiver, type WorkerReceipt } from "./workerDelivery";
 
 export type CloudCodecTask =
   | { kind: "journalWarm"; input: Parameters<typeof warmJournalInWorker>[0] }
@@ -26,7 +28,7 @@ export type CloudCodecTask =
   | { kind: "snapshotConvert"; input: { copy: CloudConfirmed; base?: CloudConfirmed; convertedBase?: CloudConfirmed; ancestorHashes?: readonly string[] } }
   | { kind: "snapshotImport"; input: Parameters<typeof prepareSnapshotImport>[0] }
   | { kind: "verify"; input: Parameters<typeof loadCloudEvidenceCheckpoint>[0] }
-  | { kind: "hydrate"; input: Parameters<typeof loadCloudEvidenceCheckpoint>[0] }
+  | { kind: "hydrate"; input: Parameters<typeof loadCloudEvidenceCheckpoint>[0] & { preparePlayable?: boolean } }
   | { kind: "inspectCopy"; input: CloudConfirmed }
   | { kind: "candidate"; input: { candidate: CloudCandidate; confirmed: CloudConfirmed; scope: CloudScope } }
   | { kind: "freeze"; input: CloudCommitRequest }
@@ -129,7 +131,16 @@ export async function runCloudCodecTask<T extends CloudCodecTask>(task: T): Prom
         usageQuestions: candidate?.usageQuestions ?? [], ...(!isSnapshotCopy(confirmed) ? { legacyBaseSnapshot: prior.snapshot } : {}) }; break;
     }
     case "verify": result = await verify(task.input); break;
-    case "hydrate": result = await verifiedCopies.hydrate(task.input); break;
+    case "hydrate": {
+      const loaded = await verifiedCopies.hydrate(task.input);
+      // Adapt only the session-owned copy after its raw proof was checked. The
+      // proof cache and account snapshot retain their original bytes. Building
+      // the compatible checkpoint here avoids a full-state main-thread copy.
+      const state = task.input.preparePlayable && loaded.snapshotLineage ? completeSnapshotLearning(loaded.state) : loaded.state;
+      result = state === loaded.state ? loaded : { ...loaded, state,
+        checkpoint: createGameEvidenceCheckpoint(state), learningAdapted: true };
+      break;
+    }
     case "inspectCopy": result = (await verifiedCopies.read({ ...task.input, expectedRevision: task.input.revision,
       expectedCampaignId: task.input.campaignId, expectedBaselineId: task.input.baselineId })).inspection; break;
     case "candidate": {
@@ -196,7 +207,7 @@ export function unpackCodecFailure(error: CloudCodecFailure): Error {
   return new CloudCodecError(error.code, error.message);
 }
 export interface CloudCodecMessage { id: number; task: CloudCodecTask }
-export type CloudCodecReply = { ready: true } | { id: number; started: true } | { id: number; heartbeat: true } |
+export type CloudCodecReply = { ready: true } | WorkerReceipt | { id: number; started: true } | { id: number; heartbeat: true } |
   { id: number; result: unknown; diagnosticCodes?: readonly string[] } | { id: number; error: CloudCodecFailure };
 
 export async function handleCloudCodecMessage(message: CloudCodecMessage): Promise<CloudCodecReply> {
@@ -223,7 +234,7 @@ export async function dispatchCloudCodecMessage(message: CloudCodecMessage, post
 export function createCloudCodecDispatcher(post: (reply: CloudCodecReply) => void,
   run = dispatchCloudCodecMessage): (message: CloudCodecMessage) => Promise<void> {
   let queue = Promise.resolve();
-  return message => {
+  const receive = createWorkerReceiptReceiver(post, (message: CloudCodecMessage) => {
     const next = queue.then(async () => {
       post({ id: message.id, started: true });
       const heartbeat = setInterval(() => post({ id: message.id, heartbeat: true }), 5_000);
@@ -232,5 +243,6 @@ export function createCloudCodecDispatcher(post: (reply: CloudCodecReply) => voi
     });
     queue = next.catch(() => {});
     return next;
-  };
+  });
+  return message => receive(message) ?? Promise.resolve();
 }

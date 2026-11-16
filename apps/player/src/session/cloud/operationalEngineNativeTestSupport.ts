@@ -1,7 +1,7 @@
 import { Worker } from "node:worker_threads";
 import { fileURLToPath } from "node:url";
 import type { OperationalEnginePort } from "./operationalEngineClient";
-import type { OperationalEngineReply } from "./operationalEngineProtocol";
+import type { OperationalEngineWorkerReply } from "./operationalEngineProtocol";
 
 export function nativeOperationalEngineTestPort(): OperationalEnginePort {
   // Vite rewrites import.meta.url; resolving from this checked-in test-support
@@ -10,7 +10,7 @@ export function nativeOperationalEngineTestPort(): OperationalEnginePort {
   let stopped = false;
   const port: OperationalEnginePort = { onmessage: null, onerror: null, onmessageerror: null,
     postMessage: request => worker.postMessage(request), terminate: () => { stopped = true; void worker.terminate(); } };
-  worker.on("message", (data: OperationalEngineReply) => port.onmessage?.({ data } as MessageEvent<OperationalEngineReply>));
+  worker.on("message", (data: OperationalEngineWorkerReply) => port.onmessage?.({ data } as MessageEvent<OperationalEngineWorkerReply>));
   worker.on("error", () => { if (!stopped) port.onerror?.({ preventDefault() {} } as ErrorEvent); });
   worker.on("messageerror", () => { if (!stopped) port.onmessageerror?.({} as MessageEvent); });
   worker.on("exit", code => { if (!stopped && code !== 0) port.onerror?.({ preventDefault() {} } as ErrorEvent); });

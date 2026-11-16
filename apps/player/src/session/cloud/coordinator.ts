@@ -491,8 +491,10 @@ export class CloudSyncCoordinator {
   }
 
   /** Opening/metadata polling never acquires a writer and never falls back to a local game. */
-  open(verifyRemoteHead = false): Promise<boolean> { return this.boundedCheck(epoch => this.openChecked(epoch, verifyRemoteHead)); }
-  private async openChecked(epoch: number, verifyRemoteHead: boolean): Promise<boolean> {
+  open(verifyRemoteHead = false, openingCopy?: CloudConfirmed): Promise<boolean> {
+    return this.boundedCheck(epoch => this.openChecked(epoch, verifyRemoteHead, openingCopy));
+  }
+  private async openChecked(epoch: number, verifyRemoteHead: boolean, openingCopy?: CloudConfirmed): Promise<boolean> {
     if (!this.enabled || this.stopped) return false;
     this.phase = "checking"; this.resumeAuthorized = false; this.emit();
     try {
@@ -517,7 +519,10 @@ export class CloudSyncCoordinator {
         // before installing a verified prior projection in the current cache.
         await this.preserveCopies(stored.entry.confirmed); if (!this.live(epoch)) return false;
       }
-      const confirmed = await this.verifiedHead(head, verifyRemoteHead ? undefined : stored?.entry.confirmed); if (!this.live(epoch)) return false;
+      // Reuse fetched bytes only behind the same fresh-head and full proof
+      // checks as a cached copy. Prior-recovery/forced remote reads stay fresh.
+      const fetched = openingCopy?.campaignId === this.scope.campaignId && !openingCopy.priorRecovery ? openingCopy : undefined;
+      const confirmed = await this.verifiedHead(head, verifyRemoteHead ? undefined : stored?.entry.confirmed ?? fetched); if (!this.live(epoch)) return false;
       if (stored && this.options.entryStore && stored.entry.confirmed.snapshot.uncompressedSha256 !== confirmed.snapshot.uncompressedSha256 &&
         !copyDescendsFrom(confirmed, stored.entry.confirmed)) {
         // A foreground check must not make an older/divergent clean cached

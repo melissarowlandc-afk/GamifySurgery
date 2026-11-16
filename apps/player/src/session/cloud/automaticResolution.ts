@@ -75,8 +75,10 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
     try { if (await runtime.entryStore.read("account-command-block")) await runtime.entryStore.write("account-command-block", null); }
     catch { /* Fresh admission permits online play; an unreadable gate denies offline fallback. */ }
   };
-  const load = async (id: string) => {
-    const head = await timeCloudEntry("head", () => transport.head(id)), copy = await timeCloudEntry("load", () => transport.load(id, head.revision));
+  const load = async (id: string, fetched?: CloudConfirmed) => {
+    const head = await timeCloudEntry("head", () => transport.head(id));
+    const copy = fetched?.campaignId === id && fetched.revision === head.revision && !fetched.priorRecovery ? fetched :
+      await timeCloudEntry("load", () => transport.load(id, head.revision));
     const inspection = await timeCloudEntry("copy-inspect", () => codec.run({ kind: "inspectCopy", input: copy }));
     if (copy.revision !== head.revision || copy.campaignId !== id) throw new CloudSyncError("corrupt");
     if (head.name !== undefined && inspection.campaign.name !== head.name || head.status !== undefined && inspection.campaign.status !== head.status) throw new CloudSyncError("corrupt");
@@ -84,14 +86,14 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
     void rememberCampaignPreview(runtime.entryStore, copy, inspection).catch(() => {});
     return copy;
   };
-  const open = async (id: string, verifyRemoteHead = false) => {
+  const open = async (id: string, verifyRemoteHead = false, openingCopy?: CloudConfirmed) => {
     const coordinator = make(id);
-    if (!await coordinator.open(verifyRemoteHead)) throw coordinator.hasLocalCacheConflict ? new CloudCacheError("conflict") :
+    if (!await coordinator.open(verifyRemoteHead, openingCopy)) throw coordinator.hasLocalCacheConflict ? new CloudCacheError("conflict") :
       new CloudSyncError(coordinator.view.failure as "network" ?? "network");
     return coordinator;
   };
   const ready = async (account: CloudConfirmed, winner: VerifiedClinicCopy) => {
-    const coordinator = await open(account.campaignId);
+    const coordinator = await open(account.campaignId, false, account);
     if (await coordinator.journalChangedSinceOpen()) throw new CloudCacheError("conflict");
     // Resolve an uncertain acknowledgement using its original immutable request
     // before considering a rebase. A failed old lease cannot silently write.
@@ -106,7 +108,7 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
       if (!await coordinator.upgradeSnapshots()) throw new CloudSyncError(coordinator.view.failure as "network" ?? "network");
       return coordinator;
     }
-    const fresh = await load(account.campaignId);
+    const fresh = await load(account.campaignId, account);
     if (await coordinator.journalChangedSinceOpen()) throw new CloudCacheError("conflict");
     if (fresh.snapshot.uncompressedSha256 !== account.snapshot.uncompressedSha256) {
       // Our own acknowledgement is harmless if it is exactly the chosen copy.

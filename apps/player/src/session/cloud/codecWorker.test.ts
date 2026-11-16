@@ -22,9 +22,11 @@ describe("cloud codec module worker boundary", () => {
       expect(codec.health).toMatchObject({ alive: false, idleReleases: 1, restarts: 0, lastError: null });
       expect(vi.getTimerCount()).toBe(0);
       const resumed = codec.run({ kind: "hash", input: "public next" });
-      expect(next.messages.map(m => m.task)).toEqual([{ kind: "hash", input: "public next" }]);
+      expect(next.messages).toEqual([]);
       late({ data: { id: first.messages[0]!.id, result: "obsolete" } } as MessageEvent);
-      next.reply({ ready: true }); next.reply({ id: next.messages[0]!.id, result: "b".repeat(64) });
+      next.reply({ ready: true });
+      expect(next.messages.map(m => m.task)).toEqual([{ kind: "hash", input: "public next" }]);
+      next.reply({ id: next.messages[0]!.id, result: "b".repeat(64) });
       expect(await resumed).toBe("b".repeat(64));
     } finally { codec.dispose(); vi.useRealTimers(); }
   });
@@ -61,6 +63,7 @@ describe("cloud codec module worker boundary", () => {
     const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker);
     try {
       const first = codec.run({ kind: "hash", input: "accepted checkpoint" }).then(value => ({ value }), error => ({ error }));
+      worker.reply({ ready: true });
       const invalid = { kind: "hash" as const, input: "invalid", callback() {} };
       await expect(codec.run(invalid)).rejects.toMatchObject({ code: "worker_data_clone" });
       expect(worker.terminated).toBe(false); expect(worker.messages).toHaveLength(1);
@@ -71,6 +74,7 @@ describe("cloud codec module worker boundary", () => {
     const worker = new FakeCloudCodecWorker(), codec = new CloudCodecWorker(() => worker);
     try {
       const first = codec.run({ kind: "hash", input: "accepted checkpoint" }).then(value => ({ value }), error => ({ error }));
+      worker.reply({ ready: true });
       vi.spyOn(worker, "postMessage").mockImplementationOnce(() => { throw new DOMException("private bytes", "DataCloneError"); });
       await expect(codec.run({ kind: "hash", input: "native rejection" })).rejects.toMatchObject({ code: "worker_data_clone" });
       expect(worker.terminated).toBe(false);
@@ -85,11 +89,12 @@ describe("cloud codec module worker boundary", () => {
     try {
       const request = codec.run({ kind: "hash", input: "first" });
       const lateReply = old.onmessage!, lateError = old.onerror!;
-      old.reply({ ready: true }); await vi.advanceTimersByTimeAsync(CLOUD_WORKER_TASK_TIMEOUT_MS);
+      old.reply({ ready: true }); old.reply({ id: 1, started: true }); await vi.advanceTimersByTimeAsync(CLOUD_WORKER_TASK_TIMEOUT_MS);
       lateReply({ data: { ready: true } } as MessageEvent); lateError({ preventDefault() {} } as ErrorEvent);
       expect(old.terminated).toBe(true); expect(next.terminated).toBe(false);
-      expect(next.messages).toEqual(old.messages);
-      next.reply({ ready: true }); next.reply({ id: next.messages[0]!.id, result: "checked digest" });
+      expect(next.messages).toEqual([]);
+      next.reply({ ready: true }); expect(next.messages).toEqual(old.messages);
+      next.reply({ id: next.messages[0]!.id, result: "checked digest" });
       expect(await request).toBe("checked digest"); expect(vi.getTimerCount()).toBe(0);
     } finally { codec.dispose(); vi.useRealTimers(); }
   });
@@ -102,6 +107,7 @@ describe("cloud codec module worker boundary", () => {
       await vi.advanceTimersByTimeAsync(30_000);
       expect(result).toBe("pending"); expect(worker.terminated).toBe(false);
       worker.reply({ ready: true });
+      worker.reply({ id: 1, started: true });
       await vi.advanceTimersByTimeAsync(CLOUD_WORKER_TASK_TIMEOUT_MS - 1); expect(result).toBe("pending");
       worker.reply({ id: worker.messages[0]!.id, result: "checked digest" }); await completion;
       expect(result).toBe("checked digest"); expect(vi.getTimerCount()).toBe(0);
@@ -124,10 +130,11 @@ describe("cloud codec module worker boundary", () => {
     const suspended = new FakeCloudCodecWorker(), next = new FakeCloudCodecWorker();
     const codec = new CloudCodecWorker(vi.fn().mockReturnValueOnce(suspended).mockReturnValueOnce(next));
     try {
-      const request = codec.run({ kind: "hash", input: "suspended" }); suspended.reply({ ready: true });
+      const request = codec.run({ kind: "hash", input: "suspended" }); suspended.reply({ ready: true }); suspended.reply({ id: 1, started: true });
       await vi.advanceTimersByTimeAsync(CLOUD_WORKER_TASK_TIMEOUT_MS);
-      expect(suspended.terminated).toBe(true); expect(next.messages).toEqual(suspended.messages);
-      next.reply({ ready: true }); next.reply({ id: next.messages[0]!.id, result: "same digest" });
+      expect(suspended.terminated).toBe(true); expect(next.messages).toEqual([]);
+      next.reply({ ready: true }); expect(next.messages).toEqual(suspended.messages);
+      next.reply({ id: next.messages[0]!.id, result: "same digest" });
       expect(await request).toBe("same digest"); expect(vi.getTimerCount()).toBe(0);
     } finally { codec.dispose(); vi.useRealTimers(); }
   });
@@ -155,6 +162,7 @@ describe("cloud codec module worker boundary", () => {
     const stringify = vi.spyOn(JSON, "stringify");
     const result = codec.run({ kind: "encode", input });
     expect(stringify).not.toHaveBeenCalled(); stringify.mockRestore();
+    expect(worker.messages).toEqual([]); worker.reply({ ready: true });
     expect(worker.messages[0]?.task).toEqual({ kind: "encode", input });
     expect(worker.messages[0]?.task.input).not.toBe(input);
     worker.release(); const encoded = await result;

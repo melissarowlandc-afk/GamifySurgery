@@ -18,6 +18,7 @@ function port() {
     const captured = structuredClone(request); messages.push(captured);
     queueMicrotask(() => value.onmessage?.({ data: processor.handle(captured) } as MessageEvent));
   } };
+  queueMicrotask(() => value.onmessage?.({ data: { ready: true } } as MessageEvent));
   return { value, messages };
 }
 

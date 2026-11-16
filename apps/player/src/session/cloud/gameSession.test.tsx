@@ -129,6 +129,7 @@ describe("cloud commands through the shared domain evidence boundary", () => {
     vi.spyOn(f.coordinator, "codec", "get").mockReturnValue(codec);
     f.session.execute({ type: "SET_PAUSED", paused: false, operationId: "live.resume" }, PROTOTYPE_DOMAIN_CONTEXT);
     await Promise.resolve();
+    expect(worker.messages).toEqual([]); worker.reply({ ready: true });
     expect(worker.messages[0]?.task.kind).toBe("encode");
     expect(f.session.canExecute).toBe(true); expect(f.session.state.paused).toBe(false);
     expect(f.session.syncView).toMatchObject({ canExecute: true, pending: true, localDurable: false });

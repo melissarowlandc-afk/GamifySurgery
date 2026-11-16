@@ -3,6 +3,7 @@ import type { OperationalStatePatch } from "./operationalStatePatch";
 import type { PrototypePlayerView } from "../viewModels";
 import type { OperationalViewArguments } from "./operationalViewProjection";
 import type { JournalRow } from "../localJournal";
+import type { WorkerReceipt } from "./workerDelivery";
 
 export type OperationalContextFlags = Pick<DomainContext, "guidanceTipsDeliveryBlocked" | "guidanceAttentionBlocked" | "guidanceBlockedTopicIds">;
 export interface OperationalJournalHashInput { row: JournalRow; deltaVersion?: number }
@@ -28,6 +29,9 @@ export type OperationalEngineReply =
   | { id: number; kind: "journalHashes"; hashes: string[]; encodedRows?: unknown[]; missing?: never }
   | { id: number; kind: "journalHashes"; missing: true; hashes?: never }
   | { id: number; kind: "failure"; code: string };
+
+/** Transport controls never enter the state/version reply contract. */
+export type OperationalEngineWorkerReply = OperationalEngineReply | WorkerReceipt | { ready: true };
 
 /** Private state snapshots are immutable. The reply contains only an ordered
  * raw-state patch and the existing journal delta, never the full archive/tail.

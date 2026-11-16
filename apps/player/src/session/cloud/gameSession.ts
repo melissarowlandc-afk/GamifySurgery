@@ -89,6 +89,9 @@ export class CloudGameSession {
   private lastWarmFailure = -Infinity;
   private lastNativePreparation = -Infinity;
   private backgrounded = false;
+  // The adapted baseline is durable before play. Optional candidate warming
+  // must not restart the codec beside an unpublished engine initialization.
+  private opening = true;
   private lifecycleVersion = 0;
   private snapshotLineage: SnapshotLineage | null = null;
   private legacyBaseSnapshot: CloudCompressedText | undefined;
@@ -130,23 +133,31 @@ export class CloudGameSession {
     this.unsubscribeAutomatic = automaticReconnect ? coordinator.onAutomaticSelection(() => this.reconnect()) : () => {};
   }
   static async create(coordinator: CloudSyncCoordinator, switchTo?: (campaignId: string) => Promise<void>, automaticReconnect?: (checked: boolean) => Promise<boolean>,
-    options: { journal?: boolean; operational?: false | OperationalSessionOptions } = {}): Promise<CloudGameSession> {
+    options: { journal?: boolean; operational?: false | OperationalSessionOptions;
+      initialProjection?: (state: GameState) => OperationalViewArguments } = {}): Promise<CloudGameSession> {
     const confirmed = coordinator.confirmed;
     if (!confirmed || ["off", "checking", "blocked", "auth", "storage"].includes(coordinator.view.phase)) throw new Error("Open and verify the account campaign first.");
     if (coordinator.view.canExecute && !await coordinator.upgradeSnapshots()) throw new CloudSyncError("processing");
     const pending = coordinator.pendingCandidate;
     const openedSnapshot = pending?.snapshot ?? confirmed.snapshot;
-    const loaded = await coordinator.codec.run({ kind: "hydrate", input: { snapshot: openedSnapshot,
+    const hydrateInput = { snapshot: openedSnapshot,
       evidence: pending ? { header: confirmed.evidence.header, records: [...confirmed.evidence.records, ...pending.evidence.records] } : confirmed.evidence,
       revision: confirmed.revision, expectedRevision: confirmed.revision, expectedCampaignId: coordinator.scope.campaignId,
       expectedBaselineId: pending?.saveFormat === 3 ? SNAPSHOT_BASELINE : confirmed.baselineId,
-      lineage: pending ? pending.lineage : confirmed.lineage } });
+      lineage: pending ? pending.lineage : confirmed.lineage };
+    let loaded = await coordinator.codec.run({ kind: "hydrate", input: { ...hydrateInput,
+      preparePlayable: coordinator.view.canExecute && !coordinator.hasPriorRecovery } });
+    // Authority may change while the worker runs. A now-read-only opening must
+    // still show the raw selected copy rather than an adapted playable seed.
+    if (loaded.learningAdapted && (!coordinator.view.canExecute || coordinator.hasPriorRecovery))
+      loaded = await coordinator.codec.run({ kind: "hydrate", input: hydrateInput });
     // Hydrate the selected snapshot + committed journal first. Apply the same
     // additive concept defaults as local loading only at this playable boundary;
     // raw copies, checksums, lineage and every supplied review stay exact.
     const playable = loaded.snapshotLineage && coordinator.view.canExecute && !coordinator.hasPriorRecovery
       ? completeSnapshotLearning(loaded.state) : loaded.state;
-    const adapted = playable !== loaded.state || Boolean(loaded.numberRepairs?.length);
+    const learningAdapted = Boolean(loaded.learningAdapted) || playable !== loaded.state;
+    const adapted = learningAdapted || Boolean(loaded.numberRepairs?.length);
     observePhoneClinic(playable.facilityLevel, playable.rooms.length);
     const useEngine = options.operational !== false && (typeof Worker !== "undefined" || Boolean(options.operational?.createPort));
     if (!useEngine) await ensureRuntimeCatalogue();
@@ -167,7 +178,7 @@ export class CloudGameSession {
         coordinator.bindJournalOwner(owner);
         session.journalDrain.onRecovered = () => { coordinator.confirmJournalDurability(); session.emit(); };
         session.journalDrain.onCommit = () => { coordinator.confirmJournalDurability(); session.emit();
-          if (!session.backgrounded && (typeof document === "undefined" || document.visibilityState !== "hidden")) void session.warmPrepared();
+          if (!session.opening && !session.backgrounded && (typeof document === "undefined" || document.visibilityState !== "hidden")) void session.warmPrepared();
         };
       } catch (error) { session.detach(); coordinator.reportLocalFailure(error); throw error; }
     }
@@ -175,7 +186,7 @@ export class CloudGameSession {
       // A small marker makes the durable adapted baseline eligible for the next
       // normal backup, without inventing a game command or a learning review.
       session.changeVersion++; session.dirty = true; session.queueLocal(); coordinator.noteLocalChange();
-      if (playable !== loaded.state) problemDiagnostics.event("gameSession", "learning-catalog-adapted");
+      if (learningAdapted) problemDiagnostics.event("gameSession", "learning-catalog-adapted");
       for (const code of loaded.numberRepairs ?? []) problemDiagnostics.event("codec-repair", code);
       if (loaded.numberRepairs?.length) coordinator.requireFreshUploadHead();
     }
@@ -184,9 +195,13 @@ export class CloudGameSession {
       // startup heaps. IndexedDB and the verified returned seed remain intact.
       if (phoneMemoryProfile().mode === "reduced") coordinator.codec.releaseIdle?.();
       session.engine = await OperationalSessionEngine.create(session.checkpoint, session.current, PROTOTYPE_DOMAIN_CONTEXT, Boolean(session.snapshotLineage),
-        { ...options.operational, adoptSharedSeed: true, useBundledContext: true,
+        { ...options.operational, ...(options.initialProjection ? { initialProjection: options.initialProjection(session.current) } : {}),
+          adoptSharedSeed: true, useBundledContext: true,
           diagnose: code => { problemDiagnostics.event("operational-engine", code); options.operational && options.operational.diagnose?.(code); } });
+      const projection = session.engine.initialProjection;
+      if (projection) session.projectedView.publish(session.current, projection.args, projection.view);
     } else if (session.snapshotLineage) prepareSnapshotTick(session.checkpoint, session.current.paused, Date.now());
+    session.opening = false;
     session.updateIdleWorker();
     return session;
   }

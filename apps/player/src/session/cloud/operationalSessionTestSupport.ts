@@ -10,9 +10,19 @@ import { dispatchOperationalEngineRequest } from "./operationalEngineDispatch";
 import type { OperationalEnginePort } from "./operationalEngineClient";
 import type { OperationalEngineReply, OperationalEngineRequest } from "./operationalEngineProtocol";
 import type { OperationalSessionOptions } from "./operationalSessionEngine";
+import { createWorkerReceiptReceiver } from "./workerDelivery";
 
 export class ControllableOperationalPort implements OperationalEnginePort {
-  onmessage: OperationalEnginePort["onmessage"] = null;
+  private listener: OperationalEnginePort["onmessage"] = null;
+  private announced = false;
+  get onmessage() { return this.listener; }
+  set onmessage(listener: OperationalEnginePort["onmessage"]) {
+    this.listener = listener;
+    if (listener && !this.announced) {
+      this.announced = true;
+      queueMicrotask(() => { if (!this.stopped) this.listener?.({ data: { ready: true } } as MessageEvent); });
+    }
+  }
   onerror: OperationalEnginePort["onerror"] = null;
   onmessageerror: OperationalEnginePort["onmessageerror"] = null;
   readonly messages: OperationalEngineRequest[] = [];
@@ -20,9 +30,12 @@ export class ControllableOperationalPort implements OperationalEnginePort {
   auto = true;
   stopped = false;
   private readonly processor = new OperationalEngineProcessor();
+  private readonly receive = createWorkerReceiptReceiver(reply => this.onmessage?.({ data: reply } as MessageEvent), (captured: OperationalEngineRequest) => {
+    if (this.auto) queueMicrotask(() => this.deliver(captured)); else this.waiting.push(captured);
+  });
   postMessage(request: OperationalEngineRequest): void {
     const captured = structuredClone(request); this.messages.push(captured);
-    if (this.auto) queueMicrotask(() => this.deliver(captured)); else this.waiting.push(captured);
+    this.receive(captured);
   }
   private deliver(request: OperationalEngineRequest, crash = false): void {
     if (request.kind === "journalHashes") {

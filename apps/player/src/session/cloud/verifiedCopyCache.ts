@@ -8,7 +8,11 @@ import { readSnapshotLineage, SNAPSHOT_BASELINE } from "./snapshotCodec";
 
 type Input = Parameters<typeof loadCloudEvidenceCheckpoint>[0];
 type Loaded = Awaited<ReturnType<typeof loadCloudEvidenceCheckpoint>>;
-export type VerifiedSessionSnapshot = Pick<Loaded, "state" | "campaign" | "checkpoint" | "source" | "snapshotLineage"> & { numberRepairs?: readonly string[] };
+export type VerifiedSessionSnapshot = Pick<Loaded, "state" | "campaign" | "checkpoint" | "source" | "snapshotLineage"> & {
+  numberRepairs?: readonly string[];
+  /** Reply-only: additive learning defaults prepared on a session-owned copy. */
+  learningAdapted?: true;
+};
 type Projection = Pick<Loaded, "state" | "campaign" | "snapshotLineage"> & { sequence: number };
 const packed = (value: CloudCompressedText) => [value.encoding, value.uncompressedSha256, value.uncompressedBytes, value.compressedBytes, value.dataBase64];
 const sessionSnapshot = (loaded: Loaded): VerifiedSessionSnapshot => {

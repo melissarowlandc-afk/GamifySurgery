@@ -38,18 +38,25 @@ await build({ configFile: false, root, logLevel: 'error', build: { ssr: true, mi
   rolldownOptions: { input: resolve(capture ?? root, 'scripts/vite/runtime-clinical-data.ts'), output: { entryFileNames: 'plugin.mjs' } } } });
 const { runtimeClinicalData } = await import(pathToFileURL(pluginFile));
 const path = name => JSON.stringify(resolve(root, name).replaceAll('\\', '/'));
+// Captured older clients predate the control replies. Keep their reference
+// worker unchanged; current production probes exercise ready/receipt delivery.
+const receipts = readFileSync(resolve(capture ?? root, 'apps/player/src/session/cloud/operationalEngineClient.ts'), 'utf8').includes('WorkerDeliveryQueue');
+const processRequest = `await prepareRuntimeCaseCatalogue(); dispatchOperationalEngineRequest(engine,request,reply=>parentPort.postMessage(reply));`;
 const worker = `import {parentPort} from 'node:worker_threads'; import {Session} from 'node:inspector';
 import {prepareRuntimeCaseCatalogue,runtimeCatalogueStatus} from ${path('apps/player/src/mobile/performance/runtimeCatalogue.ts')};
 import {OperationalEngineProcessor} from ${path('apps/player/src/session/cloud/operationalEngineProcessor.ts')};
 import {dispatchOperationalEngineRequest} from ${path('apps/player/src/session/cloud/operationalEngineDispatch.ts')};
+${receipts ? `import {createWorkerReceiptReceiver} from ${path('apps/player/src/session/cloud/workerDelivery.ts')};` : ''}
 const inspector=new Session();inspector.connect();
 const engine=new OperationalEngineProcessor();
 const allocated=()=>new Promise((done,fail)=>inspector.post('HeapProfiler.getSamplingProfile',(e,r)=>{if(e)return fail(e);let bytes=0;const visit=n=>{bytes+=n.selfSize;for(const c of n.children??[])visit(c);};visit(r.profile.head);done(bytes);}));
+${receipts ? `const receive=createWorkerReceiptReceiver(reply=>parentPort.postMessage(reply),async request=>{${processRequest}});` : ''}
 parentPort.on('message',async request=>{if(request.budget){global.gc();const memory=process.memoryUsage();
  const bytes=request.allocations?await allocated():undefined;
  parentPort.postMessage({budget:request.budget,heap:memory.heapUsed,external:memory.external,arrayBuffers:memory.arrayBuffers,catalogue:runtimeCatalogueStatus(),allocated:bytes});
  if(request.start)inspector.post('HeapProfiler.startSampling',{samplingInterval:32768,includeObjectsCollectedByMajorGC:true,includeObjectsCollectedByMinorGC:true});return;}
- await prepareRuntimeCaseCatalogue(); dispatchOperationalEngineRequest(engine,request,reply=>parentPort.postMessage(reply));});`;
+ ${receipts ? 'receive(request);' : processRequest}});
+${receipts ? 'parentPort.postMessage({ready:true});' : ''}`;
 const main = `export {OperationalEngineClient} from ${path('apps/player/src/session/cloud/operationalEngineClient.ts')};
 export {deserializeGameState,createGameEvidenceCheckpoint,PROTOTYPE_DOMAIN_CONTEXT} from '@gamify-surgery/game-domain';`;
 for (const [name, source] of [['main', main], ['engine', worker]]) await build({ configFile: false, root, logLevel: 'error',

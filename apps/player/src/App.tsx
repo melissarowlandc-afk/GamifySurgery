@@ -41,6 +41,7 @@ import { openAutomaticCloudCampaign } from "./session/cloud/automaticResolution"
 import { CloudSyncError } from "./session/cloud/transport";
 import { CloudCacheError } from "./session/cloud/codecCache";
 import { cloudOpeningDiagnostic } from "./session/cloud/openingDiagnostic";
+import { cloudOpeningProjection } from "./session/cloud/openingProjection";
 import { ensureRuntimeCatalogue, RuntimeCatalogueRequired, runtimeCatalogueStatus, yieldRuntimeTask } from "./mobile/performance/runtimeCatalogue";
 
 const MobileEntryPresentation = lazy(() => import("./mobile/MobileEntryPresentation"));
@@ -509,6 +510,7 @@ export function AccountCampaignRouter() {
 
 function CloudCampaignRouter() {
   const cloud = useCloudAccount()!, { runtime } = cloud;
+  const casualMode = useCasualMode();
   const layout = usePresentationLayout();
   const [preparingEntry, setPreparingEntry] = useState(true);
   const [preparationError, setPreparationError] = useState(false), [preparationAttempt, setPreparationAttempt] = useState(0);
@@ -607,7 +609,7 @@ function CloudCampaignRouter() {
           // copies. Full selection remains at open/reopen or changed authority.
           if (checked) return true;
           await openCampaign(selectedId); return true;
-        })); } catch (error) {
+        }, { initialProjection: state => cloudOpeningProjection(state, runtime.accountId, casualMode) })); } catch (error) {
           coordinator.dispose();
           if (error instanceof CloudCacheError && error.reason === "conflict" && attempt < 2) continue;
           throw error;

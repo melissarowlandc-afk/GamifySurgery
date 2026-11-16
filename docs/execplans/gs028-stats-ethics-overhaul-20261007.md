@@ -14614,3 +14614,60 @@ game-domain
 ```
 
 41public changed paths and exact hashes/output: `docs/research/release-port38-20261113.md`, validationJSON and `.local-dev/release-verify/port38-20261113.json`. Proofs/staging/logs in `.local-dev/release-port38-20261113/`. Rollback floor remains the dialect-aware release36+ reader. Existing skip/nonfatal build warnings only; no browser/owner storage/origin change. Uncommitted; no Git/installs/network/agents/commit/push/deploy.
+
+
+## Rebind 39 (release worktree, cloud opening) - 2026-11-15
+
+Manager base2f0b5e4d. Ported only the35accepted public paths:10copies,12new files,13hunk ports (all CRLF/LF baseline differences; normalized content identical). Main handoff excluded; no private data/identifier/archive copied. Release-derived exact pins use reason `manager-approved release 39 cloud-opening fix`:17fixtures/17verifiers, with three strict path counts increased by8; every old pin/capture/authorization/required absence preserved. No clinical/game/balance/DB/RPC changes; compression true unchanged.
+
+Fresh guarded journey/lower: **35,342commands /6,966,492cents /551completed /0walkouts**, unchanged from38. All9checkpoints/3reports/every native result/final native save byte-identical. Cash reconciles1,635,500+19,910,900-491,339-12,842,569-1,246,000=6,966,492. Pacing PASS26,377 against unchanged26,281+/-10% (+0.365282904%). All629bound inputs/476clinical hashes unchanged. History34->35 preserves every earlier entry; only established liveCap correction. Checkpoints/guard/drivers unchanged.
+
+Results SHA256 `5a1e525607542b5bb2179c440dffbdcccb7e82ed3c4d65badb18322fe62d6f3e` -> `a24afb1cb5e7ef5ab589834ae3cf391fd08312157b983e91170da930717f073e`. Checkpoints remain04587f7d...; final save5e4ac495... . All actual bytes/hashes independently verified before canonical metadata publication.
+
+CI=true threads: **873files /13,875passed /0failed /1existing skip**; domain6140/0/1 (Level5 integration36/36), player5592/0, clinical1768/0. Focused opening/delivery32files/294passed. No failure/timeout needed an isolated rerun. Final seven types, boundaries/launcher and build exit0.
+
+```text
+clinical-context-workbench
+ Test Files  8 passed (8)
+      Tests  43 passed (43)
+   Start at  19:01:22
+   Duration  985ms (transform 276ms, setup 0ms, import 797ms, tests 411ms, environment 1ms)
+
+player
+ Test Files  459 passed (459)
+      Tests  5592 passed (5592)
+   Start at  19:05:11
+   Duration  911.84s (transform 49.85s, setup 0ms, import 1101.82s, tests 2484.79s, environment 39ms)
+
+balance-config
+ Test Files  26 passed (26)
+      Tests  168 passed (168)
+   Start at  19:01:23
+   Duration  2.28s (transform 514ms, setup 0ms, import 2.33s, tests 170ms, environment 1ms)
+
+clinical-authoring
+ Test Files  7 passed (7)
+      Tests  81 passed (81)
+   Start at  19:01:26
+   Duration  664ms (transform 134ms, setup 0ms, import 376ms, tests 312ms, environment 0ms)
+
+clinical-content
+ Test Files  145 passed (145)
+      Tests  1768 passed (1768)
+   Start at  19:05:11
+   Duration  250.26s (transform 16.23s, setup 0ms, import 391.55s, tests 88.91s, environment 11ms)
+
+clinical-research
+ Test Files  8 passed (8)
+      Tests  83 passed (83)
+   Start at  19:01:27
+   Duration  3.25s (transform 186ms, setup 0ms, import 526ms, tests 2.11s, environment 0ms)
+
+game-domain
+ Test Files  220 passed (220)
+      Tests  6140 passed | 1 skipped (6141)
+   Start at  19:05:11
+   Duration  1074.36s (transform 24.46s, setup 0ms, import 592.01s, tests 1533.34s, environment 15ms)
+```
+
+75changed public paths, exact13hunk list, hashes and command/results: `docs/research/release-port39-20261115.md`, its validationJSON and `.local-dev/release-verify/port39-20261115.json`. Actual staging/native/pin receipts: `.local-dev/release-port39-20261115/`. Main's accepted plan is historical evidence, not a release performance claim. Physical WebKit/PWA device acceptance remains manager follow-up; no browser/owner storage/origin change. No Git process/write, commit, push, install, external network/live DB, agent or deploy. Uncommitted.

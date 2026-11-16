@@ -1,15 +1,17 @@
 import { PROTOTYPE_DOMAIN_CONTEXT, type DomainContext, type GameCommand, type GameEvidenceCheckpoint, type GameEvidenceDelta, type GameState } from "@gamify-surgery/game-domain";
 import { applyOperationalStatePatch } from "./operationalStatePatch";
-import type { OperationalContextFlags, OperationalEngineReply, OperationalEngineRequest, OperationalEngineResult, OperationalViewReply, OperationalViewRequest } from "./operationalEngineProtocol";
+import type { OperationalContextFlags, OperationalEngineReply, OperationalEngineRequest, OperationalEngineResult, OperationalEngineWorkerReply, OperationalViewReply, OperationalViewRequest } from "./operationalEngineProtocol";
 import type { PrototypePlayerView } from "../viewModels";
 import type { OperationalViewArguments } from "./operationalViewProjection";
 import type { JournalRow } from "../localJournal";
 import { rememberEncodedJournalValues } from "../journalEncoding";
 import { OperationalEvidenceMirror } from "./operationalEvidenceMirror";
 import { freezeOperationalValue as freeze } from "./operationalFreeze";
+import { WorkerDeliveryQueue } from "./workerDelivery";
+import { problemDiagnostics } from "../../diagnostics/problemDiagnostics";
 
 export interface OperationalEnginePort {
-  onmessage: ((event: MessageEvent<OperationalEngineReply>) => void) | null;
+  onmessage: ((event: MessageEvent<OperationalEngineWorkerReply>) => void) | null;
   onerror: ((event: ErrorEvent) => void) | null;
   onmessageerror: ((event: MessageEvent) => void) | null;
   postMessage(request: OperationalEngineRequest): void;
@@ -17,7 +19,7 @@ export interface OperationalEnginePort {
 }
 type Request = OperationalEngineRequest extends infer T ? T extends { id: number } ? Omit<T, "id"> : never : never;
 type Waiting = { resolve(value: OperationalEngineReply | OperationalEngineResult): void; reject(error: unknown): void;
-  timer: ReturnType<typeof setTimeout>; posted: number; postMs: number; request: Request };
+  timer: ReturnType<typeof setTimeout> | null; timeoutMs: number; received: boolean; posted: number; postMs: number; request: Request };
 type Head = GameEvidenceCheckpoint["snapshot"]["head"];
 const sameHead = (left: Head, right: Head) => left.sequence === right.sequence && left.transitionId === right.transitionId;
 const headShape = (value: Head): boolean => value !== null && typeof value === "object" && Number.isSafeInteger(value.sequence) && value.sequence >= 0 &&
@@ -49,6 +51,15 @@ export class OperationalEngineClient {
   private snapshotOnly = false;
   private serial: Promise<void> = Promise.resolve();
   private readonly pending = new Map<number, Waiting>();
+  private ready = false;
+  private lastResponse: number | null = null;
+  private unregister: (() => void) | null = null;
+  private readonly delivery = new WorkerDeliveryQueue<OperationalEngineRequest>(message => {
+    const waiting = this.pending.get(message.id), at = performance.now();
+    this.port.postMessage(message);
+    if (waiting) waiting.postMs += performance.now() - at;
+  }, () => this.fail("engine-receipt"), () => problemDiagnostics.event("worker-delivery", "engine-repost"),
+  () => this.fail("engine-payload"));
   private constructor(private readonly port: OperationalEnginePort, state: GameState, checkpoint: GameEvidenceCheckpoint,
     private readonly timeoutMs: number, private readonly queueLimit: number, adoptSharedSeed: boolean) {
     this.current = freeze(adoptSharedSeed ? state : structuredClone(state));
@@ -57,6 +68,7 @@ export class OperationalEngineClient {
     port.onmessage = event => this.receive(event.data);
     port.onerror = event => { event.preventDefault?.(); this.fail("engine-worker"); };
     port.onmessageerror = () => this.fail("engine-payload");
+    this.unregister = problemDiagnostics.source("engineTransport", () => this.health);
   }
   static async create(seed: { checkpoint: GameEvidenceCheckpoint; visibleState: GameState; context?: DomainContext; atRealMs: number; projection?: OperationalViewRequest; snapshotOnly?: boolean;
       /** Internal session opt-ins; generic callers retain isolated seed copies. */
@@ -76,9 +88,11 @@ export class OperationalEngineClient {
       context.clinicalRelease === PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease;
     // The application binds identical released modules in both realms. Send
     // session flags, not another multi-megabyte copy of their catalogues.
-    try { reply = await client.request({ kind: "initialize", ...initialize, ...(bundled ? { context: undefined,
+    try { reply = await client.request({ kind: "initialize", ...initialize,
+      ...(client.projection ? { projection: client.projection } : {}), ...(bundled ? { context: undefined,
       contextFlags: structuredClone({ guidanceTipsDeliveryBlocked: context.guidanceTipsDeliveryBlocked,
-        guidanceAttentionBlocked: context.guidanceAttentionBlocked, guidanceBlockedTopicIds: context.guidanceBlockedTopicIds }) } : {}) }, startupTimeoutMs); }
+        guidanceAttentionBlocked: context.guidanceAttentionBlocked, guidanceBlockedTopicIds: context.guidanceBlockedTopicIds }) } : {}) }, startupTimeoutMs,
+      seed.adoptSharedSeed === true && Boolean(bundled)); }
     catch (error) { client.dispose(); throw error; }
     if (!("kind" in reply) || reply.kind !== "initialized" || reply.version !== 0 || !headShape(reply.head) || !sameHead(reply.head, client.head)) {
       client.fail("engine-initialize"); throw new OperationalEngineFailure("engine-initialize");
@@ -86,6 +100,8 @@ export class OperationalEngineClient {
     return client;
   }
   get state(): GameState { return this.current; }
+  get health() { return { alive: !this.closed, ready: this.ready, ...this.delivery.health, pending: this.pending.size,
+    lastError: this.closed ? this.failure : null, responseAge: this.lastResponse === null ? null : Date.now() - this.lastResponse }; }
   get recoveryCheckpoint(): GameEvidenceCheckpoint { return this.mirror.checkpoint; }
   get view(): PrototypePlayerView | null { return this.currentView; }
   get canAccept(): boolean { return !this.closed && this.queued < this.queueLimit; }
@@ -109,7 +125,7 @@ export class OperationalEngineClient {
     const at = performance.now(), captured = structuredClone({ command, ...(context ? { context } : {}), ...(contextFlags ? { contextFlags } : {}),
       ...(this.projection ? { projection: this.projection } : {}) }), captureMs = performance.now() - at;
     return this.enqueue(async () => {
-      const result = await this.request({ kind: "command", expectedVersion: this.version, ...captured }) as OperationalEngineResult;
+      const result = await this.request({ kind: "command", expectedVersion: this.version, ...captured }, this.timeoutMs, true) as OperationalEngineResult;
       result.timing.captureMs = captureMs; return result;
     });
   }
@@ -121,7 +137,7 @@ export class OperationalEngineClient {
     if (!this.canAccept) return Promise.reject(new OperationalEngineFailure(this.closed ? this.failure : "engine-backlog"));
     const at = performance.now(), captured = structuredClone({ target, ...(this.projection ? { projection: this.projection } : {}) }), captureMs = performance.now() - at;
     return this.enqueue(async () => {
-      const result = await this.request({ kind: "undo", expectedVersion: this.version, ...captured, operationId }) as OperationalEngineResult;
+      const result = await this.request({ kind: "undo", expectedVersion: this.version, ...captured, operationId }, this.timeoutMs, true) as OperationalEngineResult;
       result.timing.captureMs = captureMs; return result;
     });
   }
@@ -130,14 +146,14 @@ export class OperationalEngineClient {
     const projection = structuredClone({ revision: ++this.projectionRevision, args, ...(asOfRealMs !== undefined ? { asOfRealMs } : {}) });
     this.projection = projection;
     return this.enqueue(async () => {
-      const reply = await this.request({ kind: "project", expectedVersion: this.version, projection });
+      const reply = await this.request({ kind: "project", expectedVersion: this.version, projection }, this.timeoutMs, true);
       if (!("kind" in reply) || reply.kind !== "projected" || !this.currentView) throw new OperationalEngineFailure("engine-projection");
       return this.currentView;
     });
   }
   checkpoint(): Promise<GameEvidenceCheckpoint> {
     return this.enqueue(async () => {
-      const reply = await this.request({ kind: "checkpoint", expectedVersion: this.version });
+      const reply = await this.request({ kind: "checkpoint", expectedVersion: this.version }, this.timeoutMs, true);
       if (!("kind" in reply) || reply.kind !== "checkpoint" || reply.version !== this.version) throw new OperationalEngineFailure("engine-checkpoint");
       this.mirror = OperationalEvidenceMirror.create(reply.checkpoint, true);
       return reply.checkpoint;
@@ -149,7 +165,7 @@ export class OperationalEngineClient {
   compact(): Promise<GameEvidenceCheckpoint> {
     if (!this.snapshotOnly) return Promise.reject(new OperationalEngineFailure("engine-compaction-policy"));
     return this.enqueue(async () => {
-      const reply = await this.request({ kind: "compact", expectedVersion: this.version });
+      const reply = await this.request({ kind: "compact", expectedVersion: this.version }, this.timeoutMs, true);
       if (!("kind" in reply) || reply.kind !== "compacted") throw new OperationalEngineFailure("engine-compaction");
       this.mirror = OperationalEvidenceMirror.create(reply.checkpoint, true);
       return reply.checkpoint;
@@ -164,23 +180,41 @@ export class OperationalEngineClient {
     this.serial = result.then(() => {}, () => {});
     return result;
   }
-  private request(request: Request, timeoutMs = this.timeoutMs): Promise<OperationalEngineReply | OperationalEngineResult> {
+  private request(request: Request, timeoutMs = this.timeoutMs, owned = false): Promise<OperationalEngineReply | OperationalEngineResult> {
     if (this.closed) return Promise.reject(new OperationalEngineFailure(this.failure));
     return new Promise((resolve, reject) => {
       const id = ++this.sequence, posted = performance.now();
-      const waiting: Waiting = { resolve, reject, posted, postMs: 0, request,
-        timer: setTimeout(() => this.fail("engine-timeout"), timeoutMs) };
+      const waiting: Waiting = { resolve, reject, posted, postMs: 0, request, timeoutMs, received: false,
+        // Preserve the existing whole-initialization startup budget. Ordinary
+        // execution budgets begin on receipt, separately from delivery retries.
+        timer: request.kind === "initialize" ? setTimeout(() => this.fail("engine-timeout"), timeoutMs) : null };
       this.pending.set(id, waiting);
-      try { const at = performance.now(); this.port.postMessage({ ...request, id } as OperationalEngineRequest); waiting.postMs = performance.now() - at; }
+      try {
+        const message = { ...request, id } as OperationalEngineRequest;
+        const captured = owned ? message : structuredClone(message);
+        waiting.request = captured; this.delivery.enqueue(captured);
+      }
       catch { this.fail("engine-payload"); }
     });
   }
-  private receive(reply: OperationalEngineReply): void {
+  private receive(reply: OperationalEngineWorkerReply): void {
     if (this.closed) return;
-    if (!reply || typeof reply !== "object" || !Number.isSafeInteger(reply.id)) { this.fail("engine-message"); return; }
+    if (!reply || typeof reply !== "object") { this.fail("engine-message"); return; }
+    this.lastResponse = Date.now();
+    if ("ready" in reply) { this.ready = true; this.delivery.start(); return; }
+    if (!Number.isSafeInteger(reply.id)) { this.fail("engine-message"); return; }
     const waiting = this.pending.get(reply.id);
+    if ("received" in reply) {
+      if (!waiting) return; // A late duplicate receipt cannot republish a result.
+      this.delivery.acknowledge(reply.id);
+      waiting.received = true; this.updateDeliveryBusy();
+      if (waiting.timer === null) waiting.timer = setTimeout(() => this.fail("engine-timeout"), waiting.timeoutMs);
+      return;
+    }
     if (!waiting) { this.fail("engine-message"); return; }
-    this.pending.delete(reply.id); clearTimeout(waiting.timer);
+    this.delivery.acknowledge(reply.id);
+    this.pending.delete(reply.id); if (waiting.timer !== null) clearTimeout(waiting.timer);
+    this.updateDeliveryBusy();
     if (reply.kind === "failure") {
       const code = typeof reply.code === "string" && /^[a-z0-9-]{1,80}$/.test(reply.code) ? reply.code : "engine-command";
       waiting.reject(new OperationalEngineFailure(code)); this.fail(code); return;
@@ -268,10 +302,15 @@ export class OperationalEngineClient {
       throw new OperationalEngineFailure("engine-projection");
     return freeze(view);
   }
+  private updateDeliveryBusy(): void {
+    this.delivery.setBusy([...this.pending.values()].some(row => row.received && row.request.kind !== "journalHashes"));
+  }
   private fail(code: string): void {
     if (this.closed) return;
     this.closed = true; this.failure = code;
-    for (const waiting of this.pending.values()) { clearTimeout(waiting.timer); waiting.reject(new OperationalEngineFailure(code)); }
-    this.pending.clear(); this.port.terminate();
+    for (const waiting of this.pending.values()) { if (waiting.timer !== null) clearTimeout(waiting.timer); waiting.reject(new OperationalEngineFailure(code)); }
+    this.delivery.reset(); this.ready = false;
+    this.port.onmessage = null; this.port.onerror = null; this.port.onmessageerror = null;
+    this.pending.clear(); this.port.terminate(); this.unregister?.(); this.unregister = null;
   }
 }

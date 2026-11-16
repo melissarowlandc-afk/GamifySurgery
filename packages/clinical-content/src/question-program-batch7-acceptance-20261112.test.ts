@@ -151,7 +151,7 @@ describe("batch7 exact final PASS acceptance and owner decisions",()=>{
 
   it("pins exact release source deltas, presence and every immutable epoch preimage",()=>{
     const bytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch7-release-source-pins-20261112.json",import.meta.url));
-    expect(createHash("sha256").update(bytes).digest("hex")).toBe("0c2a964063263486dcb06e024947ffe866e29d369eb7384271490d350d75b041");
+    expect(createHash("sha256").update(bytes).digest("hex")).toBe("930291a4b26370bac3f7d1b9f4e3785ecdb696d54fb2cc47b0c5a9361dbf35dd");
     const pins=JSON.parse(bytes.toString("utf8"));
     const hash=(path:string)=>createHash("sha256").update(readFileSync(new URL("../../../"+path,import.meta.url))).digest("hex");
     expect(hash(pins.capturePath)).toBe(pins.capturedFixtureSha256);
