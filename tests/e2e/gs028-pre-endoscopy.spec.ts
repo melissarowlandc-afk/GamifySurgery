@@ -12,7 +12,7 @@ import {
   type GameState,
 } from "@gamify-surgery/game-domain";
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   getProfile,
   installRememberedLocalAccess,
@@ -39,14 +39,9 @@ async function installSeed(page: Page, state: GameState, campaignName: string, m
   campaign.name = campaignName;
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value, markerKey }) => {
-    if (sessionStorage.getItem(markerKey)) return;
-    sessionStorage.setItem(markerKey, "1");
-    localStorage.setItem(key, JSON.stringify(value));
-  }, { key: PROFILE_KEY, value: profile, markerKey: marker });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
-  const resume = page.getByRole("button", { name: `Resume ${campaignName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
@@ -159,8 +154,7 @@ test("varicose reflux gate keeps the result hidden across reload and releases th
   expect(state.encounters[encounterId]!.deliveredResultNarratives).toEqual([]);
   await page.screenshot({ path: `${SHOTS}/varicose-pending.png`, animations: "disabled" });
   await page.reload();
-  const resumeCampaign = page.getByRole("button", { name: "Resume GS028 Varicose" });
-  if (await resumeCampaign.isVisible()) await resumeCampaign.click();
+  await resumeLocalCampaign(page, "GS028 Varicose");
   state = (await getActiveState(page)) as unknown as GameState;
   expect(state.encounters[encounterId]!.pendingResult).toMatchObject({ dueTick: pending.dueTick, resultTypeId: "service.venous_duplex", deliveredAtTick: null });
   await resume(page);

@@ -7,7 +7,7 @@ import {
   serializeGameState,
 } from "@gamify-surgery/game-domain";
 import { getRadiologistReadingStation } from "../../packages/game-domain/src/reading-stations";
-import { getProfile, PROFILE_KEY, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, getProfile, PROFILE_KEY, startClinic } from "./helpers";
 
 // Owner request (2026-10-07): hired radiologists sit at the four approved
 // Reading Room desks. Hires four through the real HIRE_STAFF reducer, puts
@@ -51,9 +51,9 @@ test("seats hired radiologists at the four Reading Room desks", async ({ page },
   }
   profile.campaigns[index] = { ...profile.campaigns[index]!, serializedState: serializeGameState(state) };
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value }) => localStorage.setItem(key, JSON.stringify(value)), { key: PROFILE_KEY, value: profile });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  await page.getByRole("button", { name: "Resume Reading Room Readers" }).click();
+  await resumeLocalCampaign(page, "Reading Room Readers");
   await page.addStyleTag({ content: ".facility-pause-indicator,.tutorial-overlay,.modal-backdrop { visibility:hidden !important; }" });
   await page.waitForFunction(() => Boolean((document.querySelector("[data-testid='facility-canvas']") as any)?.__facilityGame?.scene?.getScene("facility-scene")));
 

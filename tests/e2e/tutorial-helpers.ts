@@ -6,7 +6,7 @@ import {
   getRoomDefinition,
   type GameState,
 } from "@gamify-surgery/game-domain";
-import { getActiveState, getProfile, waitForDecisionChoices, waitForFirstPatientReady } from "./helpers";
+import { resumeLocalCampaign, getActiveState, getProfile, waitForDecisionChoices, waitForFirstPatientReady } from "./helpers";
 
 export const protectedVisitIds = [TUTORIAL_ENCOUNTER_ID, SECOND_TUTORIAL_ENCOUNTER_ID] as const;
 export const tutorialState = async (page: Page): Promise<GameState> => await getActiveState(page) as unknown as GameState;
@@ -22,7 +22,7 @@ export async function resumeFacility(page: Page): Promise<void> {
 
 export async function reloadTutorialCampaign(page: Page, clinicName: string): Promise<void> {
   await page.reload();
-  await page.getByRole("button", {name: `Resume ${clinicName}`}).click();
+  await resumeLocalCampaign(page, clinicName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 

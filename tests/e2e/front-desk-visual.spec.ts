@@ -3,7 +3,7 @@ import { mkdirSync, readFileSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 
 import {
-  getProfile,
+  leaveLocalFixtureSource, installFreshLocalProfile, resumeLocalCampaign, getProfile,
   PROFILE_KEY,
   setFastFacilitySpeed,
   startClinic,
@@ -103,22 +103,15 @@ test("renders the isolated rebuilt Front Desk with founder seated behind a check
   // This capture deliberately proves the room itself, not tutorial overlay
   // placement. Tutorial behavior has its own focused browser coverage.
   profile.tutorialsEnabled = false;
-  await page.evaluate(
-    ({ profileKey, nextProfile }) => {
-      window.localStorage.setItem(profileKey, JSON.stringify(nextProfile));
-    },
-    { profileKey: PROFILE_KEY, nextProfile: profile },
-  );
-  // Load the controlled profile in a second page. Navigating the source page
-  // would fire its page-hide saver and could overwrite localStorage with the
-  // pre-controlled live state between this write and the capture.
+  
+  // Unmount the source before the receiving page installs its complete copy.
+  // Its pagehide save therefore precedes the fresh seed rather than racing it.
   const capturePage = await page.context().newPage();
   await capturePage.setViewportSize({ width: 1806, height: 1014 });
+  await leaveLocalFixtureSource(page);
+  await installFreshLocalProfile(capturePage, profile);
   await capturePage.goto("/?prototype-tools=0");
-  const resume = capturePage.getByRole("button", {
-    name: "Resume Vale Surgical Clinic",
-  });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(capturePage, "Vale Surgical Clinic");
   const turnOffTutorials = capturePage.getByRole("button", {
     name: "Skip guidance",
   });
@@ -241,19 +234,12 @@ test("renders the isolated rebuilt Front Desk with founder seated behind a check
     patient.pendingResult = null;
   }
   active.serializedState = JSON.stringify(state);
-  await page.evaluate(
-    ({ profileKey, nextProfile }) => {
-      window.localStorage.setItem(profileKey, JSON.stringify(nextProfile));
-    },
-    { profileKey: PROFILE_KEY, nextProfile: profile },
-  );
+  
   const vacantPage = await page.context().newPage();
   await vacantPage.setViewportSize({ width: 1806, height: 1014 });
+  await installFreshLocalProfile(vacantPage, profile);
   await vacantPage.goto("/?prototype-tools=0");
-  const resumeVacant = vacantPage.getByRole("button", {
-    name: "Resume Vale Surgical Clinic",
-  });
-  if (await resumeVacant.isVisible()) await resumeVacant.click();
+  await resumeLocalCampaign(vacantPage, "Vale Surgical Clinic");
   const vacantTutorialDismiss = vacantPage.getByRole("button", {
     name: "Skip guidance",
   });

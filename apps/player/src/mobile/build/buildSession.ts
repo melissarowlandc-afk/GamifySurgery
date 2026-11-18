@@ -1,10 +1,12 @@
 import {
   gameReducer, getRoomDefinition, getRoomInstanceFootprint, PROTOTYPE_DOMAIN_CONTEXT,
-  validateDoorPlacement, type GameCommand, type GameState, type GridPoint, type RoomOrientation,
+  validateDoorPlacement, validateRoomRemodelPlan, rotateDirection,
+  type GameCommand, type GameState, type GridPoint, type RoomOrientation,
 } from "@gamify-surgery/game-domain";
 import { getApprovedPlacementOrientations } from "../../facility/roomVisualLayout";
 import type { BuildValidation, DoorRequest, HallwayCell, HallwayPreview } from "./types";
 import { getRoomAccessWarning } from "../../ui/roomAccessFeedback";
+import { roomRemodelSelectionReason } from "../../session/roomRemodelSelection";
 
 function previewId(state: GameState, prefix: string): string {
   let id = prefix;
@@ -22,13 +24,30 @@ function previewCommand(state: GameState, command: GameCommand): { validation: B
 }
 
 export function previewMobilePlacement(state: GameState, definitionId: string | null, movingId: string | null,
-  x: number, y: number, orientation: RoomOrientation = 0): BuildValidation {
+  x: number, y: number, orientation?: RoomOrientation): BuildValidation {
   if (!definitionId) return { valid: false, reason: "Select a room before choosing its location.", cost: 0 };
+  if (movingId) {
+    const room = state.rooms.find(row => row.id === movingId), definition = room && getRoomDefinition(room.roomDefinitionId);
+    if (!room) return { valid: false, reason: "That room does not exist.", cost: 0 };
+    if (!definition || !Number.isSafeInteger(x) || !Number.isSafeInteger(y)) return { valid: false, reason: "Choose a valid grid location.", cost: 0 };
+    const reason = roomRemodelSelectionReason(state, movingId);
+    if (reason) return { valid: false, reason, cost: 0 };
+    const step = { roomId: movingId, x, y, orientation: orientation ?? room.orientation };
+    const validation = validateRoomRemodelPlan(state, [step], PROTOTYPE_DOMAIN_CONTEXT);
+    if (!validation.valid) return { valid: false, reason: validation.reason, cost: 0 };
+    // Drag previews need only final geometry/access, never a full state clone,
+    // occupant transform or route-repair pass on every pointer movement.
+    const turn = ((step.orientation - room.orientation + 360) % 360) as RoomOrientation;
+    const candidate = { ...state,
+      rooms: state.rooms.map(row => row.id === movingId ? { ...row, x, y, orientation: step.orientation } : row),
+      doors: state.doors.map(door => door.roomId === movingId ? { ...door, side: rotateDirection(door.side, turn) } : door) };
+    const warning = getRoomAccessWarning(candidate, movingId);
+    return { valid: true, reason: null, cost: 0, ...(warning ? { warning } : {}) };
+  }
   const operationId = previewId(state, "mobile.preview.placement");
-  const preview = previewCommand(state, movingId
-    ? { type: "MOVE_ROOM", operationId, roomId: movingId, x, y }
-    : { type: "PLACE_ROOM", operationId, roomId: previewId(state, "room.mobile.preview"), roomDefinitionId: definitionId,
-      x, y, orientation: getApprovedPlacementOrientations(definitionId).includes(orientation) ? orientation : 0 });
+  const preview = previewCommand(state,
+    { type: "PLACE_ROOM", operationId, roomId: previewId(state, "room.mobile.preview"), roomDefinitionId: definitionId,
+      x, y, orientation: getApprovedPlacementOrientations(definitionId).includes(orientation ?? 0) ? orientation ?? 0 : 0 });
   const roomId = movingId ?? previewId(state, "room.mobile.preview");
   const warning = preview.validation.valid ? getRoomAccessWarning(preview.next, roomId) : null;
   return warning ? { ...preview.validation, warning } : preview.validation;

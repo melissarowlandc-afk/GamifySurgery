@@ -104,6 +104,9 @@ export class MobileBitmapCache {
     for (const id of ids) this.promotions.get(id)?.(priority);
   }
 
+  /** Explicit presentation retry only; healthy decoded/live sources stay owned. */
+  forgetFailures(): void { for (const [id, row] of this.completed) if (row.failed) this.completed.delete(id); }
+
   private trim() {
     const limit = this.limits();
     while (this.completed.size > limit.count || this.strongBytes > limit.bytes) {

@@ -10,7 +10,7 @@ import {
   type GameState,
 } from "@gamify-surgery/game-domain";
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   getProfile,
   setFastFacilitySpeed,
@@ -44,12 +44,9 @@ async function installState(
     serializedState: serializeGameState(state),
   };
   profile.tutorialsEnabled = false;
-  await page.addInitScript(
-    ({ key, value }) => localStorage.setItem(key, JSON.stringify(value)),
-    { key: PROFILE_KEY, value: profile },
-  );
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
-  await page.getByRole("button", { name: `Resume ${campaign.name}` }).click();
+  await resumeLocalCampaign(page, campaign.name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   return state;
 }
@@ -360,7 +357,7 @@ test("fresh campaign builds a real Examination Room and door, then retains both"
   const clinicName = "GS-017 Fresh Build Clinic";
   await startClinic(page, "GS-017 Fresh Founder", clinicName);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  await page.getByRole("button", { name: `Resume ${clinicName}` }).click();
+  await resumeLocalCampaign(page, clinicName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   const hasDevFacilityHook = await page.waitForFunction(() => {
     const host = document.querySelector("[data-testid='facility-canvas']");
@@ -433,7 +430,7 @@ test("fresh campaign builds a real Examination Room and door, then retains both"
   await expect(page.getByRole("button", { name: "Enter Build Mode" })).toBeVisible();
   await page.screenshot({ path: `${SCREENSHOTS}/gs-017-player-built-examination-room.png`, animations: "disabled" });
   await page.reload();
-  await page.getByRole("button", { name: `Resume ${clinicName}` }).click();
+  await resumeLocalCampaign(page, clinicName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   const restored = (await getActiveState(page)) as unknown as GameState;
   expect(restored.rooms).toContainEqual(expect.objectContaining({ id: room.id }));

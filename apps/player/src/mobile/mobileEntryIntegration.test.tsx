@@ -1,3 +1,4 @@
+import { LoadingRest } from "../ui/LoadingFlowContext";
 import { act, useEffect, useState } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -14,6 +15,9 @@ const evidence = vi.hoisted(() => ({
   entryImports: 0, shellImports: 0, sessionMounts: 0, sessionCleanups: 0, clockStarts: 0,
   saveAccess: vi.fn(), saveProfile: vi.fn(() => ({ ok: true })), appendCampaign: vi.fn(),
 }));
+
+// Shells below are rendering substitutes; actual first-frame gating has its own integration tests.
+vi.mock("../ui/ClinicPresentationGate", () => ({ ClinicPresentationGate: () => <LoadingRest /> }));
 
 // Observe the lazy module factories, rather than substituting an entry renderer.
 vi.mock("./MobileEntryPresentation", async importOriginal => {
@@ -55,7 +59,7 @@ vi.mock("../session", async importOriginal => {
         const timer = setInterval(() => setTick(value => value + 1), 1000);
         return () => { clearInterval(timer); evidence.sessionCleanups += 1; };
       }, []);
-      return new Proxy({
+      return new Proxy({ localPreparation: "ready",
         state: { tick, paused: false, simulationSpeed: 1, openChartEncounterId: null },
         profile: loaded.profile, summaryVisible: false, buildMode: false, managementMode: false,
         tutorialsEnabled: false, campaigns: [], questionReviewFlags: [], systemNotices: [],

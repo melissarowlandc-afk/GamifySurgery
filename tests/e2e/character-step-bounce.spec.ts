@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
 import {
-  getProfile,
+  installFreshLocalProfile, resumeLocalCampaign, getProfile,
   installLevelOneVisualState,
   PROFILE_KEY,
   startClinic,
@@ -42,18 +42,14 @@ async function openFixture(page: Page): Promise<Page> {
   state.founder.path = [];
   state.founder.moving = false;
   active.serializedState = JSON.stringify(state);
-  await page.goto("/gamify-surgery-launcher-health.json");
-  await page.evaluate(({ key, value }) => localStorage.setItem(key, value), {
-    key: PROFILE_KEY,
-    value: JSON.stringify(profile),
-  });
+  
   const context = page.context();
   await page.close();
   const capture = await context.newPage();
   await capture.setViewportSize({ width: 1440, height: 1000 });
+  await installFreshLocalProfile(capture, profile);
   await capture.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = capture.getByRole("button", { name: /Resume Bounce Proof Clinic/ });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(capture, "Bounce Proof Clinic");
   await expect(capture.getByTestId("facility-canvas")).toBeVisible();
   await capture.waitForFunction(() =>
     typeof (document.querySelector("[data-testid='facility-canvas']") as any)

@@ -1,3 +1,9 @@
+// BEGIN FLAGS5 FINAL PASS — owner-directed flag fixes batch 5
+import {withAcceptedQuestionFlags5FinalConcepts,QUESTION_FLAGS5_FINAL_ACCEPTED_SOURCE_VIEWS} from "./question-flags5-final-accepted-20261116";
+// END FLAGS5 FINAL PASS
+// BEGIN FLAGS5 ACCEPTANCE — owner-directed flag fixes batch 5
+import {withAcceptedQuestionFlags5Concepts,QUESTION_FLAGS5_ACCEPTED_SOURCE_VIEWS} from "./question-flags5-accepted-20261116";
+// END FLAGS5 ACCEPTANCE
 import {QUESTION_PROGRAM_BATCH11_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch11Concepts} from "./question-program-batch11-accepted-20261113";
 import {QUESTION_PROGRAM_BATCH10_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch10Concepts} from "./question-program-batch10-accepted-20261113";
 import {QUESTION_PROGRAM_BATCH9_ACCEPTED_SOURCE_VIEWS,withAcceptedQuestionProgramBatch9Concepts} from "./question-program-batch9-accepted-20261112";
@@ -1594,7 +1600,9 @@ import { QUESTION_FLAGS4_ACCEPTED_SOURCE_RELEASE } from "./question-flags4-accep
 import {QUESTION_HARDEN1_ACCEPTANCE_SOURCE,QUESTION_N3R4_RETAINED_ACCEPTANCE_SOURCE,withAcceptedHarden1N3r4Concepts} from "./question-harden1-n3r4-accepted-20261110";
 // END HARDEN1 / N3R4 accepted exact source integration 20261110
 /** Default runtime content: exact accepted rewrites/new items plus legacy fallback. */
-export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease(projectManagerAcceptedQuestions(withAcceptedQuestionProgramBatch11Concepts(withAcceptedQuestionProgramBatch10Concepts(withAcceptedQuestionProgramBatch9Concepts(withAcceptedQuestionProgramBatch8Concepts(withAcceptedQuestionProgramBatch7Concepts(withAcceptedQuestionProgramBatch6Concepts(withAcceptedQuestionProgramBatch5Concepts(withAcceptedQuestionProgramBatch4Concepts(withAcceptedQuestionProgramBatch3Concepts(withAcceptedQuestionProgramBatch2Concepts(withAcceptedQuestionProgramBatch1Concepts(withAcceptedQuestionN4Concepts(withAcceptedHarden1N3r4Concepts(withAcceptedQuestionFlags3Concepts(withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionStats1Concepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(withAcceptedQuestionNewN3Round2Concepts(QUESTION_CATALOG_RELEASE, QUESTION_NEW_N3_PRE_RELEASE.concepts))))))))))))))))))), QUESTION_FLAGS_PRE_REVISION_RELEASE, {
+export const SYNTHETIC_CLINICAL_RELEASE = validateSyntheticClinicalRelease(projectManagerAcceptedQuestions(withAcceptedQuestionFlags5FinalConcepts(withAcceptedQuestionFlags5Concepts(withAcceptedQuestionProgramBatch11Concepts(withAcceptedQuestionProgramBatch10Concepts(withAcceptedQuestionProgramBatch9Concepts(withAcceptedQuestionProgramBatch8Concepts(withAcceptedQuestionProgramBatch7Concepts(withAcceptedQuestionProgramBatch6Concepts(withAcceptedQuestionProgramBatch5Concepts(withAcceptedQuestionProgramBatch4Concepts(withAcceptedQuestionProgramBatch3Concepts(withAcceptedQuestionProgramBatch2Concepts(withAcceptedQuestionProgramBatch1Concepts(withAcceptedQuestionN4Concepts(withAcceptedHarden1N3r4Concepts(withAcceptedQuestionFlags3Concepts(withAcceptedQuestionFlags2WholeCaseConcepts(withAcceptedQuestionStats1Concepts(withAcceptedQuestionFlags2Concepts(withAcceptedQuestionBankBatch2bRound2Concepts(withAcceptedQuestionNewN3Round2Concepts(QUESTION_CATALOG_RELEASE, QUESTION_NEW_N3_PRE_RELEASE.concepts))))))))))))))))))))), QUESTION_FLAGS_PRE_REVISION_RELEASE, {
+  ...QUESTION_FLAGS5_FINAL_ACCEPTED_SOURCE_VIEWS,
+  ...QUESTION_FLAGS5_ACCEPTED_SOURCE_VIEWS,
   ...QUESTION_PROGRAM_BATCH11_ACCEPTED_SOURCE_VIEWS,
   ...QUESTION_PROGRAM_BATCH10_ACCEPTED_SOURCE_VIEWS,
   ...QUESTION_PROGRAM_BATCH9_ACCEPTED_SOURCE_VIEWS,

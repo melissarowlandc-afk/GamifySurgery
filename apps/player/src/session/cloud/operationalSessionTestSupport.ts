@@ -52,7 +52,7 @@ export class ControllableOperationalPort implements OperationalEnginePort {
   terminate(): void { this.stopped = true; }
 }
 
-export async function operationalSessionFixture(options: OperationalSessionOptions = {}, input?: GameState, operational = true) {
+export async function operationalSessionFixture(options: OperationalSessionOptions = {}, input?: GameState, operational = true, journal = true) {
   const state = input ?? createInitialGameState(undefined, { campaignId: "operational.session.public", campaignSeed: "operational.session", createdAtRealMs: 0 });
   const campaign = { campaignId: state.campaignId, name: "Public synthetic clinic", status: "resumable" as const,
     createdAtRealMs: state.createdAtRealMs, updatedAtRealMs: state.createdAtRealMs,
@@ -66,7 +66,7 @@ export async function operationalSessionFixture(options: OperationalSessionOptio
   const coordinator = new CloudSyncCoordinator({ scope, cache, transport: server.transport(scope.accountId), clock, enabled: true });
   if (!await coordinator.open() || !await coordinator.startWriter() || !coordinator.resume()) throw Error("Synthetic account must be playable");
   const ports: ControllableOperationalPort[] = [];
-  const session = await CloudGameSession.create(coordinator, undefined, undefined, { operational: operational ? { createPort: () => {
+  const session = await CloudGameSession.create(coordinator, undefined, undefined, { journal, operational: operational ? { createPort: () => {
     const port = new ControllableOperationalPort(); ports.push(port); return port;
   }, ...options } : false });
   return { session, coordinator, cache, scope, clock, server, ports };

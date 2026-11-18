@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { getProfile, PROFILE_KEY, startClinic, completeClinicOpening } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, getProfile, PROFILE_KEY, startClinic, completeClinicOpening } from "./helpers";
 import { expectCampaignGuidance, reloadTutorialCampaign, tutorialState } from "./tutorial-helpers";
 
 test("skip, show-here and first-shift replay are scoped to each saved clinic", async ({page}, testInfo) => {
@@ -50,9 +50,9 @@ test("an advanced legacy clinic without a second protected record needs no compl
   campaign.serializedState = JSON.stringify(state);
   delete profile.tutorialGuidanceByCampaign;
   profile.tutorialsEnabled = true;
-  await page.addInitScript(({key, fixture}) => window.localStorage.setItem(key, JSON.stringify(fixture)), {key: PROFILE_KEY, fixture: profile});
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
-  await page.getByRole("button", {name: `Resume ${clinicName}`}).click();
+  await resumeLocalCampaign(page, clinicName);
   await expectCampaignGuidance(page, "complete");
   await expect(page.locator(".tutorial-coach")).toHaveCount(0);
   const restored = await tutorialState(page);

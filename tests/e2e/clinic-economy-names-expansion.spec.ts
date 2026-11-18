@@ -1,7 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 import { gameReducer, getRoomDefinition, getRoomNavigationAnchor, type GameState } from "@gamify-surgery/game-domain";
 import { mkdirSync } from "node:fs";
-import { PROFILE_KEY, getActiveState, getProfile, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY, getActiveState, getProfile, startClinic } from "./helpers";
 
 const SHOTS = ".local-dev/clinic-expansion-browser/screenshots";
 test.beforeAll(() => mkdirSync(SHOTS, { recursive: true }));
@@ -12,13 +12,9 @@ async function installSeed(page: Page, state: GameState, name: string, marker: s
   const profile = await getProfile(page);
   const campaign = profile.campaigns.find((item) => item.campaignId === profile.activeCampaignId)!;
   campaign.name = name; campaign.serializedState = JSON.stringify(state); profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value, marker }) => {
-    if (sessionStorage.getItem(marker)) return;
-    sessionStorage.setItem(marker, "1"); localStorage.setItem(key, JSON.stringify(value));
-  }, { key: PROFILE_KEY, value: profile, marker });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: `Resume ${name}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
@@ -148,13 +144,13 @@ test("one GLP-1 suite hires two NPs at distinct stations, runs full-hour clocks,
   await center(page, "clinic.glp"); await page.screenshot({ path: `${SHOTS}/glp-two-np-distinct-stations.png`, animations: "disabled" });
   await expect.poll(async () => ((await getActiveState(page)) as unknown as GameState).serviceIncomeReceipts.filter((r) => r.incomeLineId === "income.glp1_telehealth").length, { timeout: 45_000 }).toBe(1);
   await pause(page); const before = (await getActiveState(page)) as unknown as GameState; expect(before.environment.glp1AutomationSlots).toHaveLength(2);
-  await page.reload(); let resume = page.getByRole("button", { name: "Resume Economy expansion" }); if (await resume.isVisible()) await resume.click();
+  await page.reload(); await resumeLocalCampaign(page, "Economy expansion");
   let restored = (await getActiveState(page)) as unknown as GameState; expect(restored.environment.glp1AutomationSlots).toEqual(before.environment.glp1AutomationSlots);
   expect(restored.serviceIncomeReceipts.filter((r) => r.incomeLineId === "income.glp1_telehealth")).toEqual(before.serviceIncomeReceipts.filter((r) => r.incomeLineId === "income.glp1_telehealth"));
   await run(page); await expect.poll(async () => ((await getActiveState(page)) as unknown as GameState).serviceIncomeReceipts.filter((r) => r.incomeLineId === "income.glp1_telehealth").length, { timeout: 45_000 }).toBe(2);
   await pause(page); state = (await getActiveState(page)) as unknown as GameState; const receipts = state.serviceIncomeReceipts.filter((r) => r.incomeLineId === "income.glp1_telehealth");
   expect(receipts.map((r) => r.grossAmount)).toEqual([50, 50]); expect(new Set(receipts.map((r) => r.actorId))).toEqual(new Set(nurses.map((e) => e.id)));
-  await page.reload(); resume = page.getByRole("button", { name: "Resume Economy expansion" }); if (await resume.isVisible()) await resume.click();
+  await page.reload(); await resumeLocalCampaign(page, "Economy expansion");
   restored = (await getActiveState(page)) as unknown as GameState; expect(restored.serviceIncomeReceipts.filter((r) => r.incomeLineId === "income.glp1_telehealth")).toHaveLength(2);
 });
 
@@ -171,7 +167,7 @@ test("automatic admissions render different active surnames and preserve exact n
   }
   await installSeed(page, state, "Name expansion", "clinic-expansion.names.seed"); for (const name of names) await expect(page.getByText(name, { exact: true })).toBeVisible();
   await page.screenshot({ path: `${SHOTS}/generated-active-name-variety.png`, animations: "disabled" }); await page.reload();
-  const resume = page.getByRole("button", { name: "Resume Name expansion" }); if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Name expansion");
   expect(Object.values((await getActiveState(page) as unknown as GameState).encounters).map((e) => e.patientDisplayName)).toEqual(names);
 });
 
@@ -185,10 +181,10 @@ test("terminal endoanal ultrasound works 45 minutes for $120, holds departure, a
   expect(op).toMatchObject({ incomeLineId: "income.ultrasound", quoteFee: 120, testChoiceOrder: { purpose: "terminal", serviceId: "service.endoanal_ultrasound" } }); expect(op.phaseEndsAtFacilityTick! - op.phaseStartedAtFacilityTick!).toBe(45);
   const actors = await live(page, "eaus-terminal"); inRoom(actors.patient, actors.rooms, actors.layout, "clinic.ultrasound"); inRoom(actors.staff[0], actors.rooms, actors.layout, "clinic.ultrasound");
   await center(page, "clinic.ultrasound"); await page.screenshot({ path: `${SHOTS}/endoanal-ultrasound-in-service.png`, animations: "disabled" }); await page.reload();
-  let resume = page.getByRole("button", { name: "Resume EAUS expansion" }); if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "EAUS expansion");
   expect(((await getActiveState(page)) as unknown as GameState).serviceOperations.find((o) => o.actorId === "eaus-terminal")).toMatchObject({ id: op.id, phaseStartedAtFacilityTick: op.phaseStartedAtFacilityTick, phaseEndsAtFacilityTick: op.phaseEndsAtFacilityTick });
   await run(page); await expect.poll(async () => ((await getActiveState(page)) as unknown as GameState).serviceIncomeReceipts.filter((r) => r.actorId === "eaus-terminal").length, { timeout: 60_000 }).toBe(1); await pause(page); await page.reload();
-  resume = page.getByRole("button", { name: "Resume EAUS expansion" }); if (await resume.isVisible()) await resume.click(); state = (await getActiveState(page)) as unknown as GameState;
+  await resumeLocalCampaign(page, "EAUS expansion"); state = (await getActiveState(page)) as unknown as GameState;
   expect(state.serviceIncomeReceipts.filter((r) => r.actorId === "eaus-terminal")).toEqual([expect.objectContaining({ grossAmount: 120 })]); expect(state.serviceOperations.filter((o) => o.actorId === "eaus-terminal")).toHaveLength(1);
 });
 
@@ -216,7 +212,7 @@ test("compound breast imaging finishes local ultrasound before one external mamm
   const actors = await live(page, "breast-compound"); inRoom(actors.patient, actors.rooms, actors.layout, "clinic.ultrasound"); inRoom(actors.staff[0], actors.rooms, actors.layout, "clinic.ultrasound"); await center(page, "clinic.ultrasound"); await page.screenshot({ path: `${SHOTS}/compound-breast-ultrasound-in-service.png`, animations: "disabled" });
   await run(page); await expect.poll(async () => ((await getActiveState(page)) as unknown as GameState).encounters["breast-compound"]!.stagedResultOrder?.status, { timeout: 75_000 }).toBe("remainder_pending"); await pause(page);
   state = (await getActiveState(page)) as unknown as GameState; expect(state.encounters["breast-compound"]!.pendingResult).toMatchObject({ routeId: "route.diagnostic_breast_imaging.outsourced", deliveredAtTick: null }); expect(state.encounters["breast-compound"]!.currentNodeIndex).toBe(1); expect(state.serviceIncomeReceipts.filter((r) => r.actorId === "breast-compound")).toEqual([expect.objectContaining({ grossAmount: 120 })]);
-  await page.reload(); const resume = page.getByRole("button", { name: "Resume Breast expansion" }); if (await resume.isVisible()) await resume.click();
+  await page.reload(); await resumeLocalCampaign(page, "Breast expansion");
   state = (await getActiveState(page)) as unknown as GameState; expect(state.encounters["breast-compound"]!.stagedResultOrder?.components[0]?.serviceOperationId).toBe(op.id); expect(state.serviceIncomeReceipts.filter((r) => r.actorId === "breast-compound")).toHaveLength(1);
   await run(page); await expect.poll(async () => ((await getActiveState(page)) as unknown as GameState).encounters["breast-compound"]!.currentNodeIndex, { timeout: 90_000 }).toBe(2); await pause(page);
   state = (await getActiveState(page)) as unknown as GameState; expect(state.serviceIncomeReceipts.filter((r) => r.actorId === "breast-compound")).toEqual([expect.objectContaining({ grossAmount: 120 })]);

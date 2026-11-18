@@ -1,4 +1,5 @@
 import { expect, type Page } from "@playwright/test";
+import { uncoveredUi } from "./helpers";
 
 export const snapshot = (page: Page) => page.evaluate(() => window.__cloudQa?.snapshot() ?? {
   state: null, revision: null, phase: "connecting", pending: false, canExecute: false, failure: null,
@@ -33,7 +34,7 @@ export async function expectPlaying(page: Page) {
   await expect(page.getByRole("heading", { name: "Continue on this device?", exact: true })).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Safe to close this tab", exact: true })).toHaveCount(0);
   await expect(page.getByRole("button", { name: /Account save status:/ })).toHaveCount(0);
-  await expect(page.getByRole("region", { name: "Loading clinic", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("region", { name: "Loading clinic", exact: true, includeHidden: true })).toBeHidden({ timeout: CLOUD_QA_STARTUP_WAIT_MS });
 }
 
 export async function expectAccountSaved(page: Page) {
@@ -41,18 +42,32 @@ export async function expectAccountSaved(page: Page) {
 }
 
 export async function expectResumeReady(page: Page, name: string) {
-  const resume = page.getByRole("button", { name: `Resume ${name}`, exact: true });
-  await expect.poll(async () => ({ ...await status(page), resumeEnabled: await resume.isEnabled({ timeout: 1_000 }).catch(() => false) }),
-    { timeout: CLOUD_QA_STARTUP_WAIT_MS }).toMatchObject({ resumeEnabled: true });
+  const loading = page.getByRole("region", { name: "Loading clinic", exact: true, includeHidden: true });
+  const resume = uncoveredUi(page, page.getByRole("button", { name: `Resume ${name}`, exact: true }));
+  // Re-evaluate the route after each transition; a covered enabled button is
+  // not proof that a chooser will survive automatic selection.
+  await expect(async () => {
+    await expect(loading).toBeHidden({ timeout: 1_000 });
+    if ((await status(page)).canExecute) {
+      await expectPlaying(page);
+      await campaignScreen(page);
+    }
+    await expect(uncoveredUi(page, page.locator('main.cloud-campaign-screen:not([data-entry-state="preparing"])'))).toBeVisible({ timeout: 1_000 });
+    await expect(loading).toBeHidden({ timeout: 1_000 });
+    await expect(resume).toBeVisible({ timeout: 1_000 });
+    await expect(resume).toBeEnabled({ timeout: 1_000 });
+  }).toPass({ timeout: CLOUD_QA_STARTUP_WAIT_MS });
 }
 
 /** Routine opens never click a takeover or recovery choice. A second tab in
  * the same persistent context may already have reopened automatically. */
 export async function openAndContinue(page: Page, name = "Synthetic clinic 1") {
-  const resume = page.getByRole("button", { name: `Resume ${name}`, exact: true });
+  const resume = uncoveredUi(page, page.getByRole("button", { name: `Resume ${name}`, exact: true }));
   await expect(async () => {
     const view = await status(page);
     if (view.hasState && ["ready", "saving", "waiting"].includes(view.phase)) return;
+    await expect(page.getByRole("region", { name: "Loading clinic", exact: true, includeHidden: true })).toBeHidden({ timeout: 1_000 });
+    await expect(resume).toBeVisible({ timeout: 1_000 });
     await expect(resume).toBeEnabled({ timeout: 1_000 });
     // Automatic reopen may detach Resume between this check and the click.
     // Recheck the active projection on the next pass instead of waiting on a
@@ -67,20 +82,32 @@ export async function openAndContinue(page: Page, name = "Synthetic clinic 1") {
 }
 
 export async function accountMenu(page: Page) {
+  const loading = page.getByRole("region", { name: "Loading clinic", exact: true, includeHidden: true });
   const details = page.locator("details.cloud-account");
-  const more = page.getByRole("button", { name: "More clinic options", exact: true });
-  if (!await details.isVisible() && await more.isVisible()) await more.click();
+  const more = uncoveredUi(page, page.getByRole("button", { name: "More clinic options", exact: true }));
+  await expect(loading).toBeHidden({ timeout: CLOUD_QA_STARTUP_WAIT_MS });
+  await expect(async () => {
+    await expect(loading).toBeHidden({ timeout: 1_000 });
+    if (await uncoveredUi(page, details).isVisible()) return;
+    await expect(more).toBeVisible({ timeout: 1_000 });
+    await more.click({ timeout: 1_000 });
+    await expect(uncoveredUi(page, details)).toBeVisible({ timeout: 1_000 });
+  }).toPass({ timeout: CLOUD_QA_STARTUP_WAIT_MS });
   await expect(details).toHaveCount(1);
   await expect(details).toBeVisible();
-  if (await details.getAttribute("open") === null) await details.locator(":scope > summary").click();
+  if (await details.getAttribute("open") === null) await uncoveredUi(page, details.locator(":scope > summary")).click({ timeout: 1_000 });
   return details;
 }
 
 export async function campaignScreen(page: Page) {
-  const dismiss = page.getByRole("dialog").getByRole("button", { name: "Not now", exact: true });
-  if (await dismiss.isVisible()) await dismiss.click();
-  await (await accountMenu(page)).getByRole("button", { name: "Account campaign screen", exact: true }).click();
+  const loading = page.getByRole("region", { name: "Loading clinic", exact: true, includeHidden: true });
+  await expect(loading).toBeHidden({ timeout: CLOUD_QA_STARTUP_WAIT_MS });
+  const dismiss = uncoveredUi(page, page.getByRole("dialog").getByRole("button", { name: "Not now", exact: true }));
+  if (await dismiss.isVisible()) await dismiss.click({ timeout: 1_000 });
+  await uncoveredUi(page, (await accountMenu(page)).getByRole("button", { name: "Account campaign screen", exact: true })).click({ timeout: 1_000 });
   await expect(page.getByRole("heading", { name: "Your campaigns", exact: true })).toBeVisible();
+  await expect(loading).toBeHidden({ timeout: CLOUD_QA_STARTUP_WAIT_MS });
+  await expect(uncoveredUi(page, page.locator('main.cloud-campaign-screen:not([data-entry-state="preparing"])'))).toBeVisible({ timeout: CLOUD_QA_STARTUP_WAIT_MS });
 }
 
 export async function saveDetails(page: Page) {

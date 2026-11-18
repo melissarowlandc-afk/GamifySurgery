@@ -1,3 +1,7 @@
+import { useRemodelBlueprint } from "./useRemodelBlueprint";
+import { roomRemodelSelectionReason } from "./roomRemodelSelection";
+import type { RemodelBlueprintView } from "./remodelBlueprint";
+import type { FacilityRemodelGhost } from "../facility/types";
 import { SessionActions, type SessionActionResult } from "./sessionActions";
 import { bindVisibleInterval } from "../mobile/performance/visibleInterval";
 import { learningReviewCount } from "./learningReviewCount";
@@ -143,6 +147,8 @@ export interface PrototypeSession {
   buildUndoLabel: string | null;
   /** Set while an existing room is being moved with the placement tool. */
   movingRoomInstanceId: string | null;
+  remodelBlueprint: RemodelBlueprintView;
+  remodelGhosts: readonly FacilityRemodelGhost[];
   buildExitBlockedReason: string | null;
   buildExitBlockedIssues: string[];
   facilityCamera: FacilityCameraView;
@@ -976,6 +982,19 @@ export function usePrototypeSession(
     [execute],
   );
 
+  const blueprint = useRemodelBlueprint({
+    state, buildMode, getState: () => stateRef.current,
+    edit: (id, step) => {
+      const room = stateRef.current.rooms.find(row => row.id === id);
+      if (!room) return;
+      setSelectedRoomInstanceId(id); setMovingRoomInstanceId(id);
+      setSelectedRoomDefinitionId(room.roomDefinitionId); setPlacementOrientation(step.orientation);
+    },
+    clearPlacement: () => { setSelectedRoomDefinitionId(null); setMovingRoomInstanceId(null); setPlacementOrientation(0); },
+    commit: rooms => executeBuildCommand({ type: "APPLY_REMODEL_PLAN", rooms }),
+    announce: setAnnouncement,
+  });
+
   const undoBuildAction = useCallback(actions.action(function* () {
     if (!buildMode || buildHistoryRef.current.length === 0) {
       showCommandProblem("There is no build action to undo.", "rejection"); setAnnouncement("There is no build action to undo.");
@@ -1359,6 +1378,7 @@ export function usePrototypeSession(
   }, []);
 
   const beginPlacement = useCallback((roomDefinitionId: string) => {
+    if (blueprint.view.active) { setAnnouncement("Apply or cancel the blueprint before starting construction."); return; }
     if (!buildMode) {
       showCommandProblem("Enter Build Mode before selecting construction.", "rejection"); setAnnouncement("Enter Build Mode before selecting construction.");
       return;
@@ -1372,7 +1392,7 @@ export function usePrototypeSession(
         ? "Hallway tool active. Click individual squares or drag across the map; select Build Hallway again when finished."
         : "Placement tool ready. Choose a clear area; add its doors separately.",
     );
-  }, [buildMode]);
+  }, [buildMode, blueprint.view.active]);
 
   const cancelPlacement = useCallback(() => {
     setSelectedRoomDefinitionId(null);
@@ -1386,6 +1406,8 @@ export function usePrototypeSession(
       showCommandProblem("Select a room before rotating it.", "rejection"); setAnnouncement("Select a room before rotating it.");
       return;
     }
+    const reason = movingRoomInstanceId && roomRemodelSelectionReason(stateRef.current, movingRoomInstanceId);
+    if (reason) { showCommandProblem(reason, "rejection"); setAnnouncement(reason); return; }
     const orientations = getApprovedPlacementOrientations(
       selectedRoomDefinitionId,
     );
@@ -1400,22 +1422,30 @@ export function usePrototypeSession(
       ]!;
     });
     setAnnouncement("Placement rotated 90 degrees.");
-  }, [selectedRoomDefinitionId]);
+  }, [selectedRoomDefinitionId, movingRoomInstanceId]);
 
   const placeRoom = useCallback(
     actions.action(function* (tileX: number, tileY: number, requestedOrientation?: RoomOrientation) {
+      if (!buildMode) { showCommandProblem("Enter Build Mode before moving or placing a room.", "rejection"); setAnnouncement("Enter Build Mode before moving or placing a room."); return false; }
       const roomDefinitionId = selectedRoomDefinitionId;
       if (!roomDefinitionId) {
         showCommandProblem("Select a room before choosing its location.", "rejection"); setAnnouncement("Select a room before choosing its location.");
         return false;
       }
+      const reason = movingRoomInstanceId && roomRemodelSelectionReason(stateRef.current, movingRoomInstanceId);
+      if (reason) { showCommandProblem(reason, "rejection"); setAnnouncement(reason); return false; }
+      if (movingRoomInstanceId && blueprint.view.active) {
+        return blueprint.stage({ roomId: movingRoomInstanceId, x: tileX, y: tileY, orientation: requestedOrientation ?? placementOrientation });
+      }
       if (movingRoomInstanceId) {
-        const status = (yield* executeBuildCommand.steps({
-          type: "MOVE_ROOM",
-          roomId: movingRoomInstanceId,
-          x: tileX,
-          y: tileY,
-        }));
+        const moving = stateRef.current.rooms.find(room => room.id === movingRoomInstanceId);
+        if (!moving || !getRoomDefinition(moving.roomDefinitionId)) {
+          showCommandProblem("That room is no longer available.", "rejection"); setAnnouncement("That room is no longer available."); return false;
+        }
+        const orientation = requestedOrientation ?? placementOrientation;
+        const status = (yield* executeBuildCommand.steps(orientation === moving.orientation ? {
+          type: "MOVE_ROOM", roomId: movingRoomInstanceId, x: tileX, y: tileY,
+        } : { type: "APPLY_REMODEL_PLAN", rooms: [{ roomId: movingRoomInstanceId, x: tileX, y: tileY, orientation }] }));
         if (status === "applied") {
           setSelectedRoomDefinitionId(null);
           setMovingRoomInstanceId(null);
@@ -1460,6 +1490,7 @@ export function usePrototypeSession(
     }),
     [
       executeBuildCommand,
+      blueprint.view.active, blueprint.stage, buildMode,
       movingRoomInstanceId,
       placementOrientation,
       selectedRoomDefinitionId,
@@ -1506,9 +1537,20 @@ export function usePrototypeSession(
     return applied > 0;
   }), [buildMode, cloud, selectedRoomDefinitionId, movingRoomInstanceId, placeRoom, persistActiveState, publishSystemNotice]);
 
-  const previewMobileRoom = useCallback((x: number, y: number, orientation?: RoomOrientation) =>
-    previewMobilePlacement(stateRef.current, selectedRoomDefinitionId, movingRoomInstanceId, x, y, orientation ?? placementOrientation),
-  [selectedRoomDefinitionId, movingRoomInstanceId, placementOrientation]);
+  const previewMobileRoom = useCallback((x: number, y: number, orientation?: RoomOrientation) => {
+    if (blueprint.view.active && movingRoomInstanceId) {
+      const reason = roomRemodelSelectionReason(stateRef.current, movingRoomInstanceId);
+      if (reason) return { valid: false, reason, cost: 0 };
+      const room = stateRef.current.rooms.find(row => row.id === movingRoomInstanceId);
+      const definition = room && getRoomDefinition(room.roomDefinitionId);
+      if (!room || !definition) return { valid: false, reason: "That room is no longer available.", cost: 0 };
+      const size = getRotatedFootprint(definition, orientation ?? placementOrientation);
+      const facility = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility;
+      const valid = Number.isSafeInteger(x) && Number.isSafeInteger(y) && x >= 0 && y >= 0 && x + size.width <= facility.gridWidth && y + size.height <= facility.gridHeight;
+      return { valid, reason: valid ? null : "The room does not fit inside the facility.", cost: 0 };
+    }
+    return previewMobilePlacement(stateRef.current, selectedRoomDefinitionId, movingRoomInstanceId, x, y, orientation ?? placementOrientation);
+  }, [selectedRoomDefinitionId, movingRoomInstanceId, placementOrientation, blueprint.view.active]);
   const previewMobileHallwayCells = useCallback((cells: readonly GridPoint[]) => previewMobileHallway(stateRef.current, cells), []);
   const previewMobileDoorRequest = useCallback<MobileBuildActions["previewDoor"]>(request => previewMobileDoor(stateRef.current, request), []);
 
@@ -1562,6 +1604,10 @@ export function usePrototypeSession(
     if (!buildMode) {
       return;
     }
+    if (blueprint.view.active && blueprint.view.steps.length) {
+      setAnnouncement("Apply or cancel the blueprint before returning to play.");
+      showCommandProblem("Apply or cancel the blueprint before returning to play.", "rejection"); return;
+    }
     const validation = getFacilityAccessValidation(stateRef.current);
     if (!validation.valid) {
       const reason =
@@ -1594,7 +1640,7 @@ export function usePrototypeSession(
         ? "Build Mode closed. The clinic remains paused."
         : "Build Mode closed. Facility operations resumed.",
     );
-  }), [buildMode, cloud, execute]);
+  }), [buildMode, cloud, execute, blueprint.view.active, blueprint.view.steps.length]);
 
   const selectRoom = useCallback((roomInstanceId: string) => {
     setSelectedRoomInstanceId(roomInstanceId);
@@ -1638,24 +1684,28 @@ export function usePrototypeSession(
   }), [buildMode, executeBuildCommand]);
 
   const beginMoveSelectedRoom = useCallback(() => {
+    if (!buildMode) { showCommandProblem("Enter Build Mode before moving a room.", "rejection"); setAnnouncement("Enter Build Mode before moving a room."); return; }
     if (!selectedRoomInstanceId) {
       showCommandProblem("Select a room to move.", "rejection"); setAnnouncement("Select a room to move.");
       return;
     }
+    const reason = roomRemodelSelectionReason(stateRef.current, selectedRoomInstanceId);
+    if (reason) { showCommandProblem(reason, "rejection"); setAnnouncement(reason); return; }
     const room = stateRef.current.rooms.find(
       (candidate) => candidate.id === selectedRoomInstanceId,
     );
-    if (!room) {
+    if (!room || !getRoomDefinition(room.roomDefinitionId)) {
       showCommandProblem("That room is no longer available.", "rejection"); setAnnouncement("That room is no longer available.");
       return;
     }
+    if (blueprint.view.active) { blueprint.view.editRoom(room.id); return; }
     setMovingRoomInstanceId(room.id);
     setSelectedRoomDefinitionId(room.roomDefinitionId);
     setPlacementOrientation(room.orientation);
     setAnnouncement(
       "Move tool ready. Choose a clear destination for the room.",
     );
-  }, [selectedRoomInstanceId]);
+  }, [selectedRoomInstanceId, buildMode, blueprint.view.active, blueprint.view.editRoom]);
 
   const placeDoor = useCallback(
     actions.action(function* (roomId: string, side: CardinalDirection, offset: number) {
@@ -2520,6 +2570,7 @@ export function usePrototypeSession(
     buildUndoCount,
     buildUndoLabel,
     movingRoomInstanceId,
+    remodelBlueprint: blueprint.view, remodelGhosts: blueprint.ghosts,
     buildExitBlockedReason,
     buildExitBlockedIssues,
     facilityCamera,

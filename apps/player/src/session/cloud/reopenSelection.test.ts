@@ -65,3 +65,14 @@ describe("fresh asynchronous last-campaign selection", () => {
     } finally { held.resolve(); vi.useRealTimers(); vi.restoreAllMocks(); }
   });
 });
+
+it("opens the sole remote campaign from a fresh list after enrollment, without decoding copies or trusting context summaries", async () => {
+  const f = await fixture(false), held = deferred(), list = f.runtime.transport.list.bind(f.runtime.transport);
+  const read = vi.spyOn(f.runtime.transport, "list").mockImplementation(async () => { await held.promise; return list(); });
+  let settled = false; const selection = selectCampaignToReopen(f.runtime, false, true); void selection.then(() => { settled = true; });
+  await vi.waitFor(() => expect(read).toHaveBeenCalledOnce()); expect(settled).toBe(false);
+  held.resolve(); expect(await selection).toEqual({ kind: "open", campaignId: f.scope.campaignId });
+  await rememberCampaignToReopen(f.runtime, null);
+  expect(await selectCampaignToReopen(f.runtime, false, true)).toEqual({ kind: "list" });
+  expect(f.server.operationCount(f.scope.accountId)).toBe(0);
+});

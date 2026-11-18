@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
 import {
-  getProfile,
+  installFreshLocalProfile, resumeLocalCampaign, getProfile,
   installLevelOneVisualState,
   PROFILE_KEY,
   startClinic,
@@ -36,20 +36,15 @@ async function openFixture(page: Page, stillId = "patient.adult.039"): Promise<P
   state.founder.path = [];
   state.founder.moving = false;
   active.serializedState = JSON.stringify(state);
-  // Leave the running app before installing the fixture. Its pagehide handler
-  // saves state, so writing storage first would let teardown overwrite it.
-  await page.goto("/gamify-surgery-launcher-health.json");
-  await page.evaluate(({ key, value }) => localStorage.setItem(key, value), {
-    key: PROFILE_KEY,
-    value: JSON.stringify(profile),
-  });
+  // Close the source before the receiving page seeds its fresh fixture.
+  
   const context = page.context();
   await page.close();
   const capture = await context.newPage();
   await capture.setViewportSize({ width: 1440, height: 1000 });
+  await installFreshLocalProfile(capture, profile);
   await capture.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = capture.getByRole("button", { name: /Resume Walk Pilot Clinic/ });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(capture, "Walk Pilot Clinic");
   await expect(capture.getByTestId("facility-canvas")).toBeVisible();
   await capture.waitForFunction(() =>
     typeof (document.querySelector("[data-testid='facility-canvas']") as any)?.__facilityGaitSnapshot === "function",

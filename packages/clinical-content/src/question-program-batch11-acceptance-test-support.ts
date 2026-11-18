@@ -1,3 +1,5 @@
+// Exact append-only inverse: owner-directed flag fixes batch 5.
+import {beforeFlags5AcceptanceRelease,beforeFlags5AcceptanceManifest,beforeFlags5AcceptanceTimings,beforeFlags5AcceptanceSource,beforeFlags5AcceptanceSourceBytes,beforeFlags5AcceptanceCases,beforeFlags5AcceptanceConcepts} from './question-flags5-acceptance-test-support';
 import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
 import {expect} from "vitest";
@@ -14,7 +16,24 @@ const eng = read("tools/question-quality/fixtures/question-intraop-acceptance-ba
 const sha = (value:string|Buffer) => createHash("sha256").update(value).digest("hex");
 const digest = (value:unknown) => sha(JSON.stringify(value));
 
+// Release41 retains this release's exact helper/pin mechanism. The historical
+// flags capture came from main; authorize only the batch9-bound release helper
+// postimage, then restore that immutable flags preimage for the older guards.
+function beforeRelease41MembershipHelper(value:string|Buffer):string|Buffer {
+  const pins=read("tools/question-quality/fixtures/question-program-batch9-release-source-pins-20261112.json");
+  const path="packages/clinical-content/src/question-program-batch8-acceptance-test-support.ts";
+  const pin=pins.paths.find((row:{path:string;requiredReleaseSha256:string|null})=>row.path===path);
+  if(!pin||sha(value)!==pin.requiredReleaseSha256)return value;
+  const flags=read("tools/question-quality/fixtures/question-flags5-acceptance-source-migration-20261116.json");
+  const row=flags.files.find((entry:{path:string})=>entry.path===path);
+  expect(row,path+" immutable flags migration").toBeDefined();
+  expect(sha(row.beforeText),path+" immutable flags preimage").toBe(row.beforeSha256);
+  return Buffer.isBuffer(value)?Buffer.from(row.beforeText):row.beforeText;
+}
+
+
 export function beforeProgramBatch11AcceptanceRelease(release:SyntheticClinicalRelease):SyntheticClinicalRelease {
+  release=beforeFlags5AcceptanceRelease(release);
   if (digest(release) === before.defaultSha256) return release;
   expect(digest(release), "complete batch11 release postimage").toBe(after.defaultSha256);
   expect(digest(before.defaultRelease), "immutable batch11 release preimage").toBe(before.defaultSha256);
@@ -22,6 +41,7 @@ export function beforeProgramBatch11AcceptanceRelease(release:SyntheticClinicalR
 }
 
 export function beforeProgramBatch11AcceptanceManifest<T extends QuestionShipManifest>(manifest:T):T {
+  manifest=beforeFlags5AcceptanceManifest(manifest);
   if (digest(manifest) === before.manifestSha256) return manifest;
   expect(digest(manifest), "complete batch11 authority postimage").toBe(after.manifestSha256);
   expect(digest(before.manifest), "immutable batch11 authority preimage").toBe(before.manifestSha256);
@@ -29,6 +49,7 @@ export function beforeProgramBatch11AcceptanceManifest<T extends QuestionShipMan
 }
 
 export function beforeProgramBatch11AcceptanceTimings(entries:readonly AnswerChoiceTimingRegistryEntry[]):AnswerChoiceTimingRegistryEntry[] {
+  entries=beforeFlags5AcceptanceTimings(entries);
   if (!entries.some(entry => after.newQuestionIds.includes(entry.questionVariantId))) return [...entries];
   expect(digest(entries), "complete batch11 timing postimage").toBe(after.timingSha256);
   expect(digest(before.timing), "immutable batch11 timing preimage").toBe(before.timingSha256);
@@ -39,6 +60,7 @@ export function beforeProgramBatch11AcceptanceSource(path:string,current:string)
 export function beforeProgramBatch11AcceptanceSource(path:string,current:undefined):string|undefined;
 export function beforeProgramBatch11AcceptanceSource(path:string,current:string|undefined):string|undefined;
 export function beforeProgramBatch11AcceptanceSource(path:string,current:string|undefined):string|undefined {
+  if(current!==undefined)current=beforeFlags5AcceptanceSource(path,beforeRelease41MembershipHelper(current) as string);
   const row=migration.files.find(r=>r.path===path);if(!row)return current;
   const pins=read("tools/question-quality/fixtures/question-program-batch11-release-source-pins-20261113.json");
   const pin=pins.paths.find((p:{path:string})=>p.path===path);
@@ -57,6 +79,8 @@ export function beforeProgramBatch11AcceptanceSource(path:string,current:string|
 export function beforeProgramBatch11AcceptanceSourceBytes(value:string):string;
 export function beforeProgramBatch11AcceptanceSourceBytes(value:Buffer):Buffer;
 export function beforeProgramBatch11AcceptanceSourceBytes(value:string|Buffer):string|Buffer {
+  value=beforeRelease41MembershipHelper(value);
+  value=Buffer.isBuffer(value)?beforeFlags5AcceptanceSourceBytes(value):beforeFlags5AcceptanceSourceBytes(value);
   const pins=read("tools/question-quality/fixtures/question-program-batch11-release-source-pins-20261113.json");
   const row=[...migration.files,...eng.records].find(file=>file.afterSha256===sha(value)||pins.paths.some((p:{path:string;requiredReleaseSha256:string|null})=>p.path===file.path&&p.requiredReleaseSha256===sha(value)));
   if (!row) return value;
@@ -65,6 +89,7 @@ export function beforeProgramBatch11AcceptanceSourceBytes(value:string|Buffer):s
 }
 
 export function beforeProgramBatch11AcceptanceCases(cases:readonly SyntheticClinicalCase[]):SyntheticClinicalCase[] {
+  cases=beforeFlags5AcceptanceCases(cases);
   const ids = new Set<string>(after.newCaseIds);
   if (!cases.some(clinicalCase => ids.has(clinicalCase.id))) return [...cases];
   for (const id of ids) {
@@ -76,6 +101,7 @@ export function beforeProgramBatch11AcceptanceCases(cases:readonly SyntheticClin
 }
 
 export function beforeProgramBatch11AcceptanceConcepts(concepts:SyntheticClinicalRelease["concepts"]):SyntheticClinicalRelease["concepts"] {
+  concepts=beforeFlags5AcceptanceConcepts(concepts);
   const ids = new Set<string>(after.newConceptIds);
   if (!concepts.some(concept => ids.has(concept.id))) return concepts;
   for (const id of ids) {

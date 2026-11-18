@@ -78,7 +78,7 @@ describe("clinical service choice labels", () => {
       chart(unavailable).answerChoices.find(
         (candidate) => candidate.id === CORRECT_CHOICE_ID,
       )?.etaLabel,
-    ).toBe("1 hour");
+    ).toBe("If ordered now: about 1 hour");
   });
 
   it("does not label answered or pending history as unavailable", () => {

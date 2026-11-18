@@ -41,7 +41,7 @@ export interface QuestionShipManifest {
   retirements?: readonly QuestionShipCaseRetirement[];
 }
 export const QUESTION_SHIP_MANIFEST = {
-  id: "question-ship.2026-11-13.v20",
+  id: "question-ship.2026-11-16.v22",
   clinicalApproval: false,
   legacyDecision: "Carry forward the existing live bank before the owner-flag rewrite program; user-directed fallback on 2026-11-05. This does not independently accept prior drafts or grant clinical approval.",
   legacyBindings: [
@@ -8585,6 +8585,24 @@ export const QUESTION_SHIP_MANIFEST = {
   ]
 ] as const,
   accepted: [
+  // BEGIN FLAGS5 ACCEPTANCE — owner-directed flag fixes batch 5
+  {"acceptanceId":"question.varicose-veins.intervention-referral-after-axial-reflux.v1.r2","caseId":"case.gs028.varicose-veins.paired-aching-standing","nodeId":"node.gs028.varicose-veins.paired-aching-standing.2","questionVariantId":"question.varicose-veins.intervention-referral-after-axial-reflux.v1.r2","conceptId":"concept.varicose-veins.intervention-referral-after-axial-reflux","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.varicose-veins.intervention-referral-after-axial-reflux.v1.p2e.capacity-refusal.v4.r2","caseId":"case.gs028se.p2e.capacity-refusal.v4.varicose","nodeId":"node.gs028se.p2e.capacity-refusal.v4.varicose.2","questionVariantId":"question.varicose-veins.intervention-referral-after-axial-reflux.v1.p2e.capacity-refusal.v4.r2","conceptId":"concept.varicose-veins.intervention-referral-after-axial-reflux","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.cirrhosis-perioperative-risk.multifactor-assessment.v1.r1","caseId":"case.gs028b.cirrhosis-perioperative.paired-single-albumin","nodeId":"node.gs028b.cirrhosis-perioperative.paired-single-albumin.1","questionVariantId":"question.cirrhosis-perioperative-risk.multifactor-assessment.v1.r1","conceptId":"concept.cirrhosis-perioperative-risk.multifactor-assessment","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.cirrhosis-perioperative-risk.multifactor-assessment.v2.r2","caseId":"case.gs028b.cirrhosis-perioperative.a-compensated","nodeId":"node.gs028b.cirrhosis-perioperative.a-compensated.1","questionVariantId":"question.cirrhosis-perioperative-risk.multifactor-assessment.v2.r2","conceptId":"concept.cirrhosis-perioperative-risk.multifactor-assessment","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.cirrhosis-perioperative-risk.multifactor-assessment.v4.r1","caseId":"case.gs028b.cirrhosis-perioperative.a-center-expertise","nodeId":"node.gs028b.cirrhosis-perioperative.a-center-expertise.1","questionVariantId":"question.cirrhosis-perioperative-risk.multifactor-assessment.v4.r1","conceptId":"concept.cirrhosis-perioperative-risk.multifactor-assessment","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.cirrhosis-perioperative-risk.decompensation-optimization-boundary.v1.r3","caseId":"case.gs028b.cirrhosis-perioperative.paired-single-albumin","nodeId":"node.gs028b.cirrhosis-perioperative.paired-single-albumin.2","questionVariantId":"question.cirrhosis-perioperative-risk.decompensation-optimization-boundary.v1.r3","conceptId":"concept.cirrhosis-perioperative-risk.decompensation-optimization-boundary.v2","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.preoperative-osa.validated-risk-screening.v1.r2","caseId":"case.gs028d.anesthesia.a-snoring-surgery","nodeId":"node.gs028d.anesthesia.a-snoring-surgery.1","questionVariantId":"question.preoperative-osa.validated-risk-screening.v1.r2","conceptId":"concept.preoperative-osa.validated-risk-screening","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.preoperative-osa.validated-risk-screening.v4.r7","caseId":"case.gs028d.anesthesia.a-validated-not-impression","nodeId":"node.gs028d.anesthesia.a-validated-not-impression.1","questionVariantId":"question.preoperative-osa.validated-risk-screening.v4.r7","conceptId":"concept.preoperative-osa.validated-risk-screening","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.ptld.tissue-diagnosis-coordination.v4.r6","caseId":"case.gs028b.ptld.b-pathology-returned","nodeId":"node.gs028b.ptld.b-pathology-returned.1","questionVariantId":"question.ptld.tissue-diagnosis-coordination.v4.r6","conceptId":"concept.ptld.node-specimen-and-ancillary-handling.v1","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.achalasia.manometric-recognition.v4.r6","caseId":"case.achalasia.clinic-referral","nodeId":"node.achalasia.clinic-referral.2","questionVariantId":"question.achalasia.manometric-recognition.v4.r6","conceptId":"concept.achalasia.manometric-recognition","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.lymphangitis.finger-axillary.v1.r1","caseId":"case.lymphangitis.finger-axillary","nodeId":"node.lymphangitis.finger-axillary.v1","questionVariantId":"question.lymphangitis.finger-axillary.v1.r1","conceptId":"concept.lymphangitis.acute-clinical-recognition","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.lymphangitis.heel-inguinal.v1.r7","caseId":"case.lymphangitis.heel-inguinal","nodeId":"node.lymphangitis.heel-inguinal.v1","questionVariantId":"question.lymphangitis.heel-inguinal.v1.r7","conceptId":"concept.lymphangitis.acute-clinical-recognition","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.lymphangitis.palm-axillary.v1.r1","caseId":"case.lymphangitis.palm-axillary","nodeId":"node.lymphangitis.palm-axillary.v1","questionVariantId":"question.lymphangitis.palm-axillary.v1.r1","conceptId":"concept.lymphangitis.acute-clinical-recognition","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.lymphangitis.reverse-axillary.v1.r1","caseId":"case.lymphangitis.reverse-axillary","nodeId":"node.lymphangitis.reverse-axillary.v1","questionVariantId":"question.lymphangitis.reverse-axillary.v1.r1","conceptId":"concept.lymphangitis.acute-clinical-recognition","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.lymphangitis.toe-inguinal.v1.r1","caseId":"case.lymphangitis.toe-inguinal","nodeId":"node.lymphangitis.toe-inguinal.v1","questionVariantId":"question.lymphangitis.toe-inguinal.v1.r1","conceptId":"concept.lymphangitis.acute-clinical-recognition","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v2.r1","caseId":"case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1","nodeId":"node.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1","questionVariantId":"question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v2.r1","conceptId":"concept.mh.nontriggering-plan-and-testing-sequence.v1","sourceView":"flags5-accepted-r2","decision":"docs/execplans/question-flags5-20261116.md"},
+  // END FLAGS5 ACCEPTANCE
   // BEGIN N3 FROZEN REVIEW2 ACCEPTANCES 20261105
   {"acceptanceId":"review.n3.bilateral-carotid-symptom-attribution.v2","caseId":"case.n3.bilateral-carotid-symptom-attribution.v1","nodeId":"node.n3.bilateral-carotid-symptom-attribution.v1","questionVariantId":"question.n3.bilateral-carotid-symptom-attribution.v2","conceptId":"concept.n3.bilateral-carotid-symptom-attribution","sourceView":"n3-round3","decision":"docs/research/question-new-n3-manager-decision-20261105.md"},
   {"acceptanceId":"review.n3.postsplenectomy-nodule-function-before-targeting.v2","caseId":"case.n3.postsplenectomy-nodule-function-before-targeting.v1","nodeId":"node.n3.postsplenectomy-nodule-function-before-targeting.v1","questionVariantId":"question.n3.postsplenectomy-nodule-function-before-targeting.v2","conceptId":"concept.n3.postsplenectomy-nodule-function-before-targeting","sourceView":"n3-round3","decision":"docs/research/question-new-n3-manager-decision-20261105.md"},
@@ -15466,15 +15484,6 @@ export const QUESTION_SHIP_MANIFEST = {
     "decision": "docs/research/question-topic-acceptance-batch8-20261112.md"
   },
   {
-    "acceptanceId": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v2",
-    "caseId": "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",
-    "nodeId": "node.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v1",
-    "questionVariantId": "question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v2",
-    "conceptId": "concept.mh.nontriggering-plan-and-testing-sequence.v1",
-    "sourceView": "owner-decisions-batch8",
-    "decision": "docs/research/question-topic-acceptance-batch8-20261112.md"
-  },
-  {
     "acceptanceId": "question.malignant-hyperthermia-susceptibility.dantrolene-readiness.v1",
     "caseId": "case.owner-decisions.20261112.mh-medication",
     "nodeId": "node.owner-decisions.20261112.mh-medication",
@@ -15528,16 +15537,6 @@ export const QUESTION_SHIP_MANIFEST = {
     "sourceView": "owner-decisions-batch8",
     "decision": "docs/research/question-topic-acceptance-batch8-20261112.md"
   },
-  {
-    "acceptanceId": "question.ptld.tissue-diagnosis-coordination.v4.r4",
-    "caseId": "case.gs028b.ptld.b-pathology-returned",
-    "nodeId": "node.gs028b.ptld.b-pathology-returned.1",
-    "questionVariantId": "question.ptld.tissue-diagnosis-coordination.v4.r4",
-    "conceptId": "concept.ptld.node-specimen-and-ancillary-handling.v1",
-    "sourceView": "owner-decisions-batch8",
-    "decision": "docs/research/question-topic-acceptance-batch8-20261112.md"
-  }
-,
 
   // Batch9: exact reviewed, whole-case, ENG-I01-compatible intraop/record drafts.
 
@@ -15856,6 +15855,15 @@ export const QUESTION_SHIP_MANIFEST = {
     "decision": "docs/research/question-intraop-acceptance-batch11-20261113.md"
   }
 ,
+  // BEGIN FLAGS5 FINAL PASS ACCEPTANCES — owner-directed flag fixes batch 5
+  {"acceptanceId":"question.varicose-veins.intervention-referral-after-axial-reflux.v3.r3","caseId":"case.gs028.varicose-veins.b-prefers-conservative","nodeId":"node.gs028.varicose-veins.b-prefers-conservative.1","questionVariantId":"question.varicose-veins.intervention-referral-after-axial-reflux.v3.r3","conceptId":"concept.varicose-veins.intervention-referral-after-axial-reflux.v2","sourceView":"flags5-accepted-r3","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.palpable-breast.negative-mammogram-targeted-us.v2.r3","caseId":"case.gs028c.palpable-breast.paired-scar-edge","nodeId":"node.gs028c.palpable-breast.paired-scar-edge.1","questionVariantId":"question.palpable-breast.negative-mammogram-targeted-us.v2.r3","conceptId":"concept.palpable-breast.negative-mammogram-targeted-us","sourceView":"flags5-accepted-r3","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.palpable-breast.negative-mammogram-targeted-us.v3.r3","caseId":"case.gs028c.palpable-breast.a-recent-negative","nodeId":"node.gs028c.palpable-breast.a-recent-negative.1","questionVariantId":"question.palpable-breast.negative-mammogram-targeted-us.v3.r3","conceptId":"concept.palpable-breast.negative-mammogram-targeted-us","sourceView":"flags5-accepted-r3","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.palpable-breast.negative-mammogram-targeted-us.v4.r5","caseId":"case.gs028c.palpable-breast.a-discordant-exam","nodeId":"node.gs028c.palpable-breast.a-discordant-exam.1","questionVariantId":"question.palpable-breast.negative-mammogram-targeted-us.v4.r5","conceptId":"concept.palpable-breast.negative-mammogram-targeted-us","sourceView":"flags5-accepted-r3","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v2.r3","caseId":"case.gs028c.palpable-breast.paired-scar-edge","nodeId":"node.gs028c.palpable-breast.paired-scar-edge.2","questionVariantId":"question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v2.r3","conceptId":"concept.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging","sourceView":"flags5-accepted-r3","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v3.r3","caseId":"case.gs028c.palpable-breast.b-enlarging-negative-imaging","nodeId":"node.gs028c.palpable-breast.b-enlarging-negative-imaging.1","questionVariantId":"question.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging.v3.r3","conceptId":"concept.palpable-breast.suspicious-mass-biopsy-despite-negative-imaging","sourceView":"flags5-accepted-r3","decision":"docs/execplans/question-flags5-20261116.md"},
+  {"acceptanceId":"question.achalasia.high-resolution-manometry.v4.r8","caseId":"case.achalasia.clinic-referral","nodeId":"node.achalasia.clinic-referral.1","questionVariantId":"question.achalasia.high-resolution-manometry.v4.r8","conceptId":"concept.achalasia.high-resolution-manometry.v2","sourceView":"flags5-accepted-r3","decision":"docs/execplans/question-flags5-20261116.md"},
+  // END FLAGS5 FINAL PASS ACCEPTANCES
 ] satisfies QuestionShipAcceptance[],
   // BEGIN FLAGS2 WHOLE-CASE ACCEPTANCES 20261105
   retirements: [
@@ -16007,7 +16015,7 @@ export const QUESTION_SHIP_MANIFEST = {
     {"id":"topic-program.batch4.case.topic.wound-healing-immunology.revision-graft-fluid.v2","program":"topic-program","replaces":["case.gs028e.collagen-remodeling.c1-early-matrix-record","case.gs028e.collagen-remodeling.c1-later-matrix-counseling","case.gs028e.collagen-remodeling.c1-maturing-incision","case.gs028e.collagen-remodeling.c1-reversed-diagram","case.gs028f.reconstruction.c1-attached-bridge","case.gs028f.reconstruction.c1-recipient-bed","case.gs028f.reconstruction.c1-reconnected-vessels","case.gs028f.reconstruction.c1-same-donor-different-supply"],"with":"question.topic.wound-healing-immunology.graft-fluid.v2","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
     {"id":"topic-program.batch4.case.topic.biliary-injury-malignancy.communicating-leak.v1","program":"topic-program","replaces":["case.post-cholecystectomy-bile-leak.drain-output","case.post-cholecystectomy-bile-leak.delayed-recovery","case.post-cholecystectomy-bile-leak.outside-followup","case.post-cholecystectomy-bile-leak.painful-recovery"],"with":"question.topic.biliary-injury-malignancy.communicating-leak-stent.v1","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
     {"id":"topic-program.batch4.case.spleen-asplenia.early-itp-pass-standalone.20261111.v1","program":"topic-program","replaces":["case.persistent-itp.four-month","case.persistent-itp.hematology-followup","case.persistent-itp.six-month","case.persistent-itp.stable-count"],"with":"question.spleen-asplenia.itp-etiology.20261111.v1","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
-    {"id":"topic-program.batch4.case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1","program":"topic-program","replaces":["case.gs028d.anesthesia.b-documented-susceptibility","case.gs028d.anesthesia.b-family-testing-record","case.gs028d.anesthesia.b-mh-alert-bracelet","case.gs028d.anesthesia.b-prior-mh-event"],"with":"question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v2","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
+    {"id":"topic-program.batch4.case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1","program":"topic-program","replaces":["case.gs028d.anesthesia.b-documented-susceptibility","case.gs028d.anesthesia.b-family-testing-record","case.gs028d.anesthesia.b-mh-alert-bracelet","case.gs028d.anesthesia.b-prior-mh-event"],"with":"question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v2.r1","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
     {"id":"topic-program.batch4.case.topic.anesthesia-analgesia-pharmacology.last-wide-complex-revision.v2","program":"topic-program","replaces":["case.gs028f.local-anesthetic.c1-awake-biopsy","case.gs028f.local-anesthetic.c1-dental-membrane","case.gs028f.local-anesthetic.c1-regional-report","case.gs028f.local-anesthetic.c1-topical-record"],"with":"question.topic.anesthesia-analgesia-pharmacology.last-wide-complex.v2","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
     {"id":"topic-program.batch4.case.topic.anesthesia-analgesia-pharmacology.nmb-measurement-pass.v1","program":"topic-program","replaces":["case.gs028g.neuromuscular-recovery.paired-four-twitches","case.gs028g.neuromuscular-recovery.c1-future-plan","case.gs028g.neuromuscular-recovery.c1-subjective-fade","case.gs028g.neuromuscular-recovery.paired-head-lift"],"with":"question.topic.anesthesia-analgesia-pharmacology.nmb-measurement.v1","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
     {"id":"topic-program.batch4.case.topic.anesthesia-analgesia-pharmacology.boosted-midazolam-route-revision.v2","program":"topic-program","replaces":["case.gs028g.hiv-perioperative.c2-monitored-iv","case.gs028g.hiv-perioperative.c2-slow-clearance","case.gs028g.hiv-perioperative.paired-postoperative-orders"],"with":"question.topic.anesthesia-analgesia-pharmacology.boosted-midazolam-route.v2","decision":"docs/research/question-topic-acceptance-batch4-20261111.md"},
@@ -16057,6 +16065,30 @@ export const QUESTION_SHIP_MANIFEST = {
   }
 ] satisfies QuestionShipTopicConsolidation[],
   headerSources: {
+  // Final seven PASS source headers, 2026-11-16
+  "case.gs028.varicose-veins.b-prefers-conservative": "flags5-accepted-r3",
+  "case.gs028c.palpable-breast.paired-scar-edge": "flags5-accepted-r3",
+  "case.gs028c.palpable-breast.a-recent-negative": "flags5-accepted-r3",
+  "case.gs028c.palpable-breast.a-discordant-exam": "flags5-accepted-r3",
+  "case.gs028c.palpable-breast.b-enlarging-negative-imaging": "flags5-accepted-r3",
+
+  // BEGIN FLAGS5 ACCEPTANCE headers
+  "case.gs028.varicose-veins.paired-aching-standing": "flags5-accepted-r2",
+  "case.gs028se.p2e.capacity-refusal.v4.varicose": "flags5-accepted-r2",
+  "case.gs028b.cirrhosis-perioperative.paired-single-albumin": "flags5-accepted-r2",
+  "case.gs028b.cirrhosis-perioperative.a-compensated": "flags5-accepted-r2",
+  "case.gs028b.cirrhosis-perioperative.a-center-expertise": "flags5-accepted-r2",
+  "case.gs028d.anesthesia.a-snoring-surgery": "flags5-accepted-r2",
+  "case.gs028d.anesthesia.a-validated-not-impression": "flags5-accepted-r2",
+  "case.gs028b.ptld.b-pathology-returned": "flags5-accepted-r2",
+  "case.achalasia.clinic-referral": "flags5-accepted-r3",
+  "case.lymphangitis.finger-axillary": "flags5-accepted-r2",
+  "case.lymphangitis.heel-inguinal": "flags5-accepted-r2",
+  "case.lymphangitis.palm-axillary": "flags5-accepted-r2",
+  "case.lymphangitis.reverse-axillary": "flags5-accepted-r2",
+  "case.lymphangitis.toe-inguinal": "flags5-accepted-r2",
+  "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1": "flags5-accepted-r2",
+  // END FLAGS5 ACCEPTANCE headers
     "case.topic.statistics.r3.alpha-definition.v1": "topic-batch7-statistics",
     "case.topic.statistics.r3.sample-size-beta.v1": "topic-batch7-statistics",
     "case.topic.statistics.r3.effect-size-power.v1": "topic-batch7-statistics",
@@ -16359,7 +16391,7 @@ export const QUESTION_SHIP_MANIFEST = {
     "case.topic.ethics-professionalism.consent-scope-r2.v2": "topic-batch4-ethics-professionalism",
     "case.topic.ethics-professionalism.reversible-delay-r2.v2": "topic-batch4-ethics-professionalism",
     "case.topic.ethics-professionalism.research-integrity-r2.v2": "topic-batch4-ethics-professionalism",
-    "case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1": "owner-decisions-batch8",
+    
     "case.topic.anesthesia-analgesia-pharmacology.last-seizure-drug-revision.v2": "topic-batch4-anesthesia-analgesia-pharmacology",
     "case.topic.anesthesia-analgesia-pharmacology.last-wide-complex-revision.v2": "topic-batch4-anesthesia-analgesia-pharmacology",
     "case.topic.anesthesia-analgesia-pharmacology.nmb-measurement-pass.v1": "topic-batch4-anesthesia-analgesia-pharmacology",
@@ -16804,7 +16836,7 @@ export const QUESTION_SHIP_MANIFEST = {
     "case.owner-decisions.20261112.mh-medication": "owner-decisions-batch8",
     "case.gs028f.gynecology.c1-late-period": "owner-decisions-batch8",
     "case.topic.perioperative-risk-recovery.awake-gas.v3": "owner-decisions-batch8",
-    "case.gs028b.ptld.b-pathology-returned": "owner-decisions-batch8",
+    
 
 
   "case.intraop.anesthetic-intraoperative-crises.mh-electrolyte.v1": "intraop-batch9-anesthetic-intraoperative-crises",

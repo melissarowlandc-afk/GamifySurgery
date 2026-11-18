@@ -1,3 +1,4 @@
+import { useLoadingFlowSnapshot } from "./LoadingFlowContext";
 import { LoadingScreen } from "./LoadingScreen";
 import { OpeningWordmark } from "./OpeningWordmark";
 import { AccountMenu } from "./AccountMenu";
@@ -61,6 +62,7 @@ export function OpeningSequence({
   onResumeCampaign,
   onRestoreCampaign,
 }: OpeningSequenceProps) {
+  const loading = useLoadingFlowSnapshot();
   const [step, setStep] = useState<OpeningStep>(initialStep);
   const [introTagline, setIntroTagline] = useState<IntroTagline | null>(
     () =>
@@ -103,10 +105,10 @@ export function OpeningSequence({
   );
 
   useEffect(() => {
-    if (step === "main" && introTagline) {
+    if (!loading?.active && step === "main" && introTagline) {
       writeLastIntroTagline(introTagline);
     }
-  }, [introTagline, step]);
+  }, [introTagline, step, loading?.active]);
 
   const beginClinic = () => {
     if (
@@ -239,7 +241,7 @@ export function OpeningSequence({
 
   return (
     <main className="opening-screen founder-creator-screen">
-      <LoadingScreen active={initializing} status="Opening your clinic…" stage="opening" />
+      <LoadingScreen active={initializing} immediate status="Opening your clinic…" stage="opening" />
       <form className="founder-creator" aria-labelledby="founder-title" onSubmit={(event) => { event.preventDefault(); beginClinic(); }}>
         <div className="opening-beta-info"><ClinicalContentNotice /><AccountMenu /></div>
         <h1 id="founder-title">Open Your Clinic</h1>

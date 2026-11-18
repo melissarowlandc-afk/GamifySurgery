@@ -19,6 +19,9 @@ import {
   usePrototypeSession,
 } from "./session";
 import { OpeningSequence } from "./ui";
+import { ContinuousLoading } from "./ui/ContinuousLoading";
+import { LoadingRest, useLoadingFlow } from "./ui/LoadingFlowContext";
+import { ClinicPresentationGate } from "./ui/ClinicPresentationGate";
 import { LoadingCovered, LoadingScreen, type LoadingStage } from "./ui/LoadingScreen";
 import { AuthGate } from "./auth/AuthGate";
 import { useAuthAccountId } from "./auth/AuthAccountContext";
@@ -107,6 +110,7 @@ export function ActivePrototypeGame({
 
   return (
     <>
+    <ClinicPresentationGate campaignId={session.state.campaignId} authorized={!openingCovered && session.localPreparation === "ready" && (!cloudSession || Boolean(session.cloudSyncView?.canExecute))} onRetry={onCloudReload ? () => { void onCloudReload(); } : undefined} />
     <LoadingScreen active={session.localPreparation !== "ready"} status="Getting your device save ready…" stage="opening"
       failure={session.localPreparation === "failed" ? "Device saving could not start. Your saved copies are safe." : null} />
     <LoadingCovered active={session.localPreparation !== "ready"}>
@@ -165,6 +169,8 @@ export function ActivePrototypeGame({
       onFileEmployeeDiscussion={session.fileEmployeeDiscussion}
       facility={{
         ...view.facility,
+        blueprintRemodel: session.remodelBlueprint.active, remodelGhosts: session.remodelGhosts,
+        placement: view.facility.placement ? { ...view.facility.placement, movingRoomId: session.movingRoomInstanceId ?? undefined } : null,
         realMillisecondsPerFacilityMinuteAt1x: view.facility.realMillisecondsPerFacilityMinuteAt1x /
           getTutorialClockMultiplier(session.state, session.tutorialsEnabled),
       }}
@@ -212,6 +218,7 @@ export function ActivePrototypeGame({
       buildUndoCount={session.buildUndoCount}
       buildUndoLabel={session.buildUndoLabel}
       movingRoomInstanceId={session.movingRoomInstanceId}
+      remodelBlueprint={session.remodelBlueprint}
       buildExitBlockedReason={session.buildExitBlockedReason}
       buildExitBlockedIssues={session.buildExitBlockedIssues}
       placementOrientation={session.placementOrientation}
@@ -301,6 +308,7 @@ function initialLaunchState(accountId: string | null): OpeningLaunchState {
 
 export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignId?: string } = {}) {
   const accountId = useAuthAccountId();
+  const flow = useLoadingFlow(), manualEntry = useRef(false);
   const loadLaunch = (): LaunchState => { try {
     const initial = initialLaunchState(accountId);
     if (initialCampaignId && initial.mode === "opening") {
@@ -352,6 +360,7 @@ export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignI
     initialStep: "main" | "founder" = "founder",
     guidanceEnabled?: boolean,
   ) => {
+    manualEntry.current = true;
     setLaunch((current) => ({
       mode: "opening",
       profile,
@@ -367,6 +376,7 @@ export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignI
     campaignId: string,
     notice = "Local campaign restored.",
   ) => {
+    flow?.begin("hydrate");
     const selected = selectLocalCampaign(profile, campaignId);
     const saved = savePrototypeProfileResult(selected, accountId);
     setLaunch({
@@ -378,6 +388,14 @@ export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignI
     });
   };
 
+  const localCandidates = launch.mode === "opening" ? launch.profile.campaigns.filter(row => row.status === "resumable") : [];
+  const localActiveId = launch.mode === "opening" ? getActiveCampaign(launch.profile)?.campaignId : undefined;
+  const automaticLocalId = localCandidates.find(row => row.campaignId === localActiveId)?.campaignId ?? (localCandidates.length === 1 ? localCandidates[0]!.campaignId : undefined);
+  const automaticLocal = Boolean(flow && !manualEntry.current && launch.mode === "opening" && automaticLocalId);
+  useEffect(() => {
+    if (automaticLocal && catalogue === "ready" && localRecovery === "ready" && launch.mode === "opening") openCampaign(launch.profile, automaticLocalId!);
+  }, [automaticLocal, automaticLocalId, catalogue, localRecovery, launch]);
+
   if (catalogue === "failed") return <LoadingScreen status="Opening your clinic data…" stage="opening"
     failure="Clinic data could not load. Your saved copies are safe." onRetry={() => setLocalRecoveryAttempt(n => n + 1)} />;
   if (launch.mode === "preparing") return <LoadingScreen status="Opening your device save…" stage="opening" />;
@@ -386,6 +404,9 @@ export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignI
     onRetry={() => setLocalRecoveryAttempt(n => n + 1)} />;
   if (launch.mode === "opening") {
     return (
+      <>
+      <LoadingScreen active={catalogue !== "ready" || localRecovery !== "ready" || automaticLocal} phase="selection" status="Finding your clinic…" />
+      <LoadingRest ready={catalogue === "ready" && localRecovery === "ready" && !automaticLocal} />
       <OpeningSequence
         key={launch.sequence}
         profile={launch.profile}
@@ -394,6 +415,7 @@ export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignI
         initialStep={launch.initialStep}
         initialGuidanceEnabled={launch.guidanceEnabled}
         onBeginClinic={(founder, clinicName, campaignSeed, guidanceEnabled) => {
+          flow?.begin("hydrate");
           const next = appendLocalCampaign(
             launch.profile,
             founder,
@@ -431,17 +453,20 @@ export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignI
           );
         }}
       />
+      </>
     );
   }
 
   const activeCampaign = getActiveCampaign(launch.loadedProfile.profile);
   if (!activeCampaign) {
     return (
+      <> <LoadingRest />
       <OpeningSequence
         profile={launch.loadedProfile.profile}
         campaignReady={catalogue === "ready"}
         initialStep="main"
         onBeginClinic={(founder, clinicName, campaignSeed, guidanceEnabled) => {
+          flow?.begin("hydrate");
           const next = appendLocalCampaign(
             launch.loadedProfile.profile,
             founder,
@@ -478,7 +503,7 @@ export function AuthenticatedPrototype({ initialCampaignId }: { initialCampaignI
               : `Archived clinic restored, but ${describePrototypeStorageFailure(saved.failure)}`,
           );
         }}
-      />
+      /> </>
     );
   }
 
@@ -511,6 +536,9 @@ export function AccountCampaignRouter() {
 function CloudCampaignRouter() {
   const cloud = useCloudAccount()!, { runtime } = cloud;
   const casualMode = useCasualMode();
+  const flow = useLoadingFlow();
+  const [entryReadiness, setEntryReadiness] = useState<"preparing" | "ready" | "interaction">("preparing");
+  const [automaticSettled, setAutomaticSettled] = useState(false), [selectionFailure, setSelectionFailure] = useState(false);
   const layout = usePresentationLayout();
   const [preparingEntry, setPreparingEntry] = useState(true);
   const [preparationError, setPreparationError] = useState(false), [preparationAttempt, setPreparationAttempt] = useState(0);
@@ -545,6 +573,7 @@ function CloudCampaignRouter() {
   const [automaticRetry, setAutomaticRetry] = useState(0);
   const stopAutomaticOpen = () => {
     attemptedAutomaticOpen.current = true;
+    setAutomaticSettled(true);
     if (automaticDeadline.current !== null) clearTimeout(automaticDeadline.current);
     if (automaticRetryTimer.current !== null) clearTimeout(automaticRetryTimer.current);
     automaticDeadline.current = null; automaticRetryTimer.current = null;
@@ -556,17 +585,18 @@ function CloudCampaignRouter() {
     if (automaticRetryTimer.current !== null) clearTimeout(automaticRetryTimer.current);
     automaticDeadline.current = null; automaticRetryTimer.current = null;
   }, []);
-  const openCampaign = async (campaignId: string) => {
+  const tryOpenCampaign = async (campaignId: string, automatic = false): Promise<boolean> => {
     // Manual Resume and a committed automatic decision both cancel all older
     // selection reads synchronously, before any command durability await.
     stopAutomaticOpen();
+    const previous = current.current?.session;
+    const mountedSelection = Boolean(automatic && previous?.coordinator.view.localDurable && previous.coordinator.view.phase !== "closed");
+    if (!mountedSelection) flow?.begin("copies");
     entryRequested.current = false;
     const epoch = ++generation.current;
-    failedOpening.current = null; setOpeningFailure(null); setLoadingStage("checking");
+    failedOpening.current = null; setOpeningFailure(null); setSelectionFailure(false); setLoadingStage("checking");
     try { runtime.onOpeningDiagnostic?.(null); } catch { /* QA observation cannot affect play. */ }
-    const previous = current.current?.session;
-    previous?.coordinator.pause();
-    setRoute("checking");
+    if (!mountedSelection) { previous?.coordinator.pause(); setRoute("checking"); }
     if (previous) {
       try {
         if (!await cloudCheckDeadline(previous.durable())) {
@@ -574,7 +604,7 @@ function CloudCampaignRouter() {
             failedOpening.current = campaignId;
             setOpeningFailure("This browser could not save your progress. Your saved copies are safe.");
           }
-          return;
+          return false;
         }
       } catch {
         if (live.current && epoch === generation.current) {
@@ -584,31 +614,41 @@ function CloudCampaignRouter() {
         }
         // Keep the still-mounted owner and its accepted bytes. Unmounting it
         // while encoding is stalled would dispose the only in-memory copy.
-        return;
+        return false;
       }
     }
-    if (!live.current || epoch !== generation.current) return;
-    setRoute("checking"); setNotice("");
+    if (!live.current || epoch !== generation.current) return false;
+    if (!mountedSelection) { setRoute("checking"); setNotice(""); }
     opening.current?.dispose(); opening.current = null;
     let coordinator: CloudSyncCoordinator | null = null, openingCancelled = false;
     let openingStage: CloudOpeningDiagnostic["stage"] = "copies";
     try {
       const session = await cloudCheckDeadline((async () => {
         for (let attempt = 0; attempt < 3; attempt++) {
-        coordinator = await timeCloudEntry("open-copies", () => openAutomaticCloudCampaign({ runtime, campaignId, storage: optionalLocalCloudStorage,
+        coordinator = await timeCloudEntry("open-copies", () => openAutomaticCloudCampaign({ runtime, campaignId, storage: optionalLocalCloudStorage, onlineOnly: mountedSelection,
           cancelled: () => openingCancelled || !live.current || epoch !== generation.current }));
         if (!live.current || epoch !== generation.current) throw new Error("Opening cancelled");
         opening.current = coordinator;
         openingStage = "hydrate";
-        if (live.current && epoch === generation.current) setLoadingStage("opening");
+        if (!mountedSelection && live.current && epoch === generation.current) setLoadingStage("opening");
         const selectedId = coordinator.scope.campaignId;
         let created: CloudGameSession;
-        try { created = await timeCloudEntry("open-hydrate", () => CloudGameSession.create(coordinator!, async id => { await openCampaign(id); }, async checked => {
+        try {
+        // Only a verified online replacement crosses the mounted owner boundary.
+        // An outage keeps the same shell, journal and engine; cold/manual opens
+        // continue to offer the existing verified offline fallback.
+        if (mountedSelection) {
+          if (coordinator.playingVerifiedLocal) throw new CloudSyncError("network");
+          previous!.coordinator.pause();
+          if (!await previous!.durable()) throw new CloudSyncError("storage");
+          if (await coordinator.journalChangedSinceOpen()) throw new CloudCacheError("conflict");
+        }
+        created = await timeCloudEntry("open-hydrate", () => CloudGameSession.create(coordinator!, async id => { await openCampaign(id); }, async checked => {
           if (entryRequested.current) return false;
           // Checked same-head authority does not need another scan of retained
           // copies. Full selection remains at open/reopen or changed authority.
           if (checked) return true;
-          await openCampaign(selectedId); return true;
+          return tryOpenCampaign(selectedId, true);
         }, { initialProjection: state => cloudOpeningProjection(state, runtime.accountId, casualMode) })); } catch (error) {
           coordinator.dispose();
           if (error instanceof CloudCacheError && error.reason === "conflict" && attempt < 2) continue;
@@ -619,10 +659,10 @@ function CloudCampaignRouter() {
         }
         throw new CloudCacheError("conflict");
       })(), CLOUD_OPENING_TIMEOUT_MS, () => { openingCancelled = true; coordinator?.dispose(); });
-      if (!live.current || epoch !== generation.current) { session.dispose(); return; }
+      if (!live.current || epoch !== generation.current) { session.dispose(); return false; }
       openingStage = "selection";
       await timeCloudEntry("active-marker", () => rememberCampaignToReopen(runtime, session.coordinator.scope.campaignId));
-      if (!live.current || epoch !== generation.current) { session.dispose(); return; }
+      if (!live.current || epoch !== generation.current) { session.dispose(); return false; }
       opening.current = null;
       const metadata = session.metadata;
       const profile = profileForCloudCampaign(session.state, { ...metadata, status: "resumable" });
@@ -631,6 +671,7 @@ function CloudCampaignRouter() {
       // Reconnection grants commands only after fresh admission/head/lease and
       // pending-copy verification; all failures remain visible in the shell.
       void session.checkpointNow("ordinary");
+      return true;
     } catch (error) {
       (coordinator as CloudSyncCoordinator | null)?.dispose();
       if (live.current && epoch === generation.current) {
@@ -638,12 +679,16 @@ function CloudCampaignRouter() {
         catch { /* Classification-only QA diagnostics cannot replace recovery UI. */ }
         try { problemDiagnostics.error(`campaign-open:${openingStage}:${cloudOpeningDiagnostic(openingStage, error).code}`, error); }
         catch { /* Problem reports are best effort and never block recovery UI. */ }
-        failedOpening.current = campaignId;
-        setNotice("This clinic could not be opened. Your saved copies have been kept. Try again or contact the owner.");
-        setOpeningFailure("This clinic could not be opened. Your saved copies are safe.");
+        if (!mountedSelection) {
+          failedOpening.current = campaignId;
+          setNotice("This clinic could not be opened. Your saved copies have been kept. Try again or contact the owner.");
+          setOpeningFailure("This clinic could not be opened. Your saved copies are safe.");
+        }
       }
+      return false;
     } finally { if (opening.current === coordinator) opening.current = null; }
   };
+  const openCampaign = async (campaignId: string): Promise<void> => { await tryOpenCampaign(campaignId); };
   useEffect(() => {
     const online = () => {
       const failedCheck = currentRoute.current === "checking" && failedOpening.current !== null;
@@ -657,14 +702,14 @@ function CloudCampaignRouter() {
   }, [runtime]);
   useEffect(() => {
     const offline = cloud.phase === "error" && ["network", "throttled"].includes(cloud.error ?? "");
-    if (attemptedAutomaticOpen.current || preparingEntry || preparationError || route !== "entry" ||
+    if (attemptedAutomaticOpen.current || preparingEntry || preparationError || route !== "entry" || flow && entryReadiness === "preparing" ||
       !offline && (cloud.phase !== "available" || !cloud.access?.enabled || cloud.access.writesEnabled === false || !cloud.access.admitted || !cloud.access.noticeAccepted)) return;
     let cancelled = false;
     const epoch = generation.current;
     // Provider/list/enrollment updates may invalidate an attempt, but may not
     // consume it or restart its deadline. No read completion can open after
     // a manual choice, route change, unmount or this bounded selection window.
-    if (automaticDeadline.current === null) automaticDeadline.current = setTimeout(stopAutomaticOpen, CLOUD_CHECK_TIMEOUT_MS);
+    if (automaticDeadline.current === null) automaticDeadline.current = setTimeout(() => { stopAutomaticOpen(); if (flow) setSelectionFailure(true); }, CLOUD_CHECK_TIMEOUT_MS);
     const retry = () => {
       if (!cancelled && live.current && epoch === generation.current && !attemptedAutomaticOpen.current)
         automaticRetryTimer.current = setTimeout(() => setAutomaticRetry(value => value + 1), CLOUD_READ_TIMEOUT_MS);
@@ -672,7 +717,7 @@ function CloudCampaignRouter() {
     void (async () => {
       try {
         if (!automaticSelection.current) {
-          const request = timeCloudEntry("reopen-select", () => selectCampaignToReopen(runtime, offline));
+          const request = timeCloudEntry("reopen-select", () => selectCampaignToReopen(runtime, offline, Boolean(flow)));
           automaticSelection.current = request;
           void request.finally(() => { if (automaticSelection.current === request) automaticSelection.current = null; }).catch(() => {});
         }
@@ -684,7 +729,7 @@ function CloudCampaignRouter() {
       } catch { retry(); /* Temporary IDB/access failure is not a no-campaign decision. */ }
     })();
     return () => { cancelled = true; if (automaticRetryTimer.current !== null) clearTimeout(automaticRetryTimer.current); automaticRetryTimer.current = null; };
-  }, [cloud.phase, cloud.error, cloud.access, cloud.summaries, preparingEntry, preparationError, runtime, route, automaticRetry]);
+  }, [cloud.phase, cloud.error, cloud.access, cloud.summaries, preparingEntry, preparationError, runtime, route, automaticRetry, entryReadiness]);
   const enterCampaignScreen = async () => {
     stopAutomaticOpen();
     entryRequested.current = true;
@@ -697,7 +742,7 @@ function CloudCampaignRouter() {
     }
     await rememberCampaignToReopen(runtime, null);
     if (!live.current || generation.current !== epoch) return;
-    setActive(null); setRoute("entry"); await cloud.refresh();
+    setActive(null); setEntryReadiness("preparing"); setRoute("entry"); await cloud.refresh();
   };
   useEffect(() => {
     cloud.setCampaignNavigation(() => { void enterCampaignScreen(); });
@@ -713,9 +758,9 @@ function CloudCampaignRouter() {
     if (!live.current) return;
     stopAutomaticOpen(); await rememberCampaignToReopen(runtime, null);
     setNotice("Your campaign was archived and still counts toward your 2 account campaigns. Resume it or start a new campaign.");
-    setActive(null); setRoute("entry"); await cloud.refresh();
+    setActive(null); setEntryReadiness("preparing"); setRoute("entry"); await cloud.refresh();
   };
-  if (cloud.phase === "deletion-requested" || cloud.phase === "deleted") return <CloudCampaignEntry onOpen={async () => {}} onCreate={() => {}} />;
+  if (cloud.phase === "deletion-requested" || cloud.phase === "deleted") return <><LoadingRest /><CloudCampaignEntry onOpen={async () => {}} onCreate={() => {}} /></>;
   if (route === "checking" || route === "cloud") return <>
     <LoadingCovered active={route === "checking"}>
       {active ? <ActivePrototypeGame key={`${active.session.coordinator.scope.campaignId}:${active.sequence}`}
@@ -732,10 +777,10 @@ function CloudCampaignRouter() {
         if (current.current) { entryRequested.current = false; setOpeningFailure(null); setRoute("cloud"); return; }
         entryRequested.current = true;
         await rememberCampaignToReopen(runtime, null);
-        if (live.current && generation.current === epoch) { setOpeningFailure(null); setRoute("entry"); }
+        if (live.current && generation.current === epoch) { setOpeningFailure(null); setEntryReadiness("preparing"); setRoute("entry"); }
       })(); }} />
   </>;
-  if (route === "founder") return <><button type="button" className="button button-secondary" onClick={() => { void enterCampaignScreen(); }}>Back to your clinics</button><OpeningSequence profile={createFreshProfile()} initialStep="founder" onResumeCampaign={() => { setRoute("entry"); }} onRestoreCampaign={() => { setRoute("entry"); }}
+  if (route === "founder") return <><LoadingRest /><button type="button" className="button button-secondary" onClick={() => { void enterCampaignScreen(); }}>Back to your clinics</button><OpeningSequence profile={createFreshProfile()} initialStep="founder" onResumeCampaign={() => { setEntryReadiness("preparing"); setRoute("entry"); }} onRestoreCampaign={() => { setEntryReadiness("preparing"); setRoute("entry"); }}
     onBeginClinic={(founder, name, seed, guidance) => { void (async () => {
       const epoch = ++generation.current;
       try {
@@ -746,11 +791,18 @@ function CloudCampaignRouter() {
         await runtime.entryStore.create(`created:${campaign.campaignId}`, source);
         await importLocalCloudCampaign(source, name, runtime.transport, runtime.entryStore);
         if (live.current && epoch === generation.current) { await cloud.refresh(); if (live.current && epoch === generation.current) await openCampaign(campaign.campaignId); }
-      } catch (failure) { if (live.current && epoch === generation.current) { setNotice(cloudEntryError(failure)); setRoute("entry"); } }
+      } catch (failure) { if (live.current && epoch === generation.current) { setNotice(cloudEntryError(failure)); setEntryReadiness("preparing"); setRoute("entry"); } }
     })(); }} /></>;
-  return <CloudCampaignEntry key={notice} notice={notice} preparing={preparingEntry || preparationError} preparationFailure={preparationError}
+  const offlineSelection = cloud.phase === "error" && ["network", "throttled"].includes(cloud.error ?? "");
+  const entryWait = Boolean(flow && !entryRequested.current && !automaticSettled && (entryReadiness !== "interaction" || offlineSelection));
+  return <>
+    <LoadingScreen active={entryWait || Boolean(flow && entryReadiness === "preparing") || selectionFailure} phase="selection" status="Finding your clinic…"
+      failure={selectionFailure ? "Your clinics could not be checked. Your saved copies are safe." : null}
+      onRetry={() => { attemptedAutomaticOpen.current = false; setAutomaticSettled(false); setSelectionFailure(false); setAutomaticRetry(n => n + 1); }} />
+    <LoadingRest ready={!entryWait && !selectionFailure && !preparingEntry && entryReadiness !== "preparing"} />
+    <CloudCampaignEntry key={notice} onOpeningStateChange={setEntryReadiness} notice={notice} preparing={preparingEntry || preparationError} preparationFailure={preparationError}
     onRetryPreparation={() => setPreparationAttempt(value => value + 1)} onOpen={openCampaign}
-    onCreate={() => { stopAutomaticOpen(); entryRequested.current = true; generation.current++; setRoute("founder"); }} />;
+    onCreate={() => { stopAutomaticOpen(); entryRequested.current = true; generation.current++; setRoute("founder"); }} /></>;
 }
 
 export function App() {
@@ -758,7 +810,7 @@ export function App() {
   useEffect(() => problemDiagnostics.source("layout", () => ({ layout })), [layout]);
   useEffect(() => bindProblemDiagnostics(window, document), []);
   return (
-    <>
+    <ContinuousLoading>
       {layout === "phone" ? <Suspense fallback={null}><MobileEntryPresentation /></Suspense> : null}
       <AuthGate>
         <UsageProvider>
@@ -770,6 +822,6 @@ export function App() {
           </QuestionFlagProvider>
         </UsageProvider>
       </AuthGate>
-    </>
+    </ContinuousLoading>
   );
 }

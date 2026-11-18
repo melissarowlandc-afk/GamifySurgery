@@ -1,7 +1,9 @@
+import {beforeProgramBatch9AcceptanceRelease} from "../../../packages/clinical-content/src/question-program-batch9-acceptance-test-support";
 import {materializePatientName} from "../../../packages/game-domain/src/patientText";
 import {describe, expect, it} from "vitest";
 import {
   QUESTION_PROGRAM_BATCH8_ACCEPTED_CASES as cases,
+  QUESTION_FLAGS5_ACCEPTED_CASES as flags5Cases,
   QUESTION_PROGRAM_BATCH8_RETAINED_CASES as retired,
   ANSWER_CHOICE_TIMING_REGISTRY as allTimings, type SyntheticClinicalCase,
 } from "@gamify-surgery/clinical-content";
@@ -36,6 +38,23 @@ const now = 1_800_000_000_000;
 const frozenOldCases=retired;
 const priorRelease=beforeProgramBatch8AcceptanceRelease(current.clinicalRelease);
 const previous: DomainContext = {...current, clinicalRelease:{...priorRelease,cases:[...priorRelease.cases.filter(cs=>!frozenOldCases.some(old=>old.id===cs.id)),...frozenOldCases]}};
+// The batch8 exports are immutable historical definitions. Flags5 supersedes
+// these two exact versions only in fresh supply; it must not rewrite a save.
+const flags5Successors=[
+  {caseId:"case.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence-pass.v1",before:"question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v2",after:"question.topic.anesthesia-analgesia-pharmacology.mh-testing-sequence.v2.r1"},
+  {caseId:"case.gs028b.ptld.b-pathology-returned",before:"question.ptld.tissue-diagnosis-coordination.v4.r4",after:"question.ptld.tissue-diagnosis-coordination.v4.r6"},
+] as const;
+const acceptedAtBatch8:DomainContext={...current,clinicalRelease:beforeProgramBatch9AcceptanceRelease(current.clinicalRelease)};
+const supersededBatch8Cases=cases.filter(c=>flags5Successors.some(s=>s.caseId===c.id));
+function freshAcceptedDefinition(historical:SyntheticClinicalCase):SyntheticClinicalCase {
+  const successor=flags5Successors.find(s=>s.caseId===historical.id);
+  if(!successor)return historical;
+  expect(historical.decisionNodes.map(n=>n.questionVariantId)).toEqual([successor.before]);
+  const accepted=flags5Cases.find(c=>c.id===historical.id)!;
+  expect(accepted.decisionNodes.map(n=>n.questionVariantId)).toEqual([successor.after]);
+  expect(accepted.decisionNodes.map(n=>n.primaryConceptId)).toEqual(historical.decisionNodes.map(n=>n.primaryConceptId));
+  return accepted;
+}
 type Frozen = GameState["encounters"][string]["frozenCase"];
 
 function apply(state: GameState, command: GameCommand, context: DomainContext) {
@@ -192,7 +211,8 @@ async function finish(session: CloudGameSession, frozen: Frozen) {
 }
 
 describe("topic batch8 default admission and all retired frozen identities", () => {
-  it.each(cases.filter(cs => cs.participant?.kind !== "employee_discussion"))("admits $id and completes its exact format3 save", async clinicalCase => {
+  it.each(cases.filter(cs => cs.participant?.kind !== "employee_discussion"))("admits the exact current successor of $id and completes its format3 save", async historicalCase => {
+    const clinicalCase=freshAcceptedDefinition(historicalCase);
     expect(current.clinicalRelease.cases.find(cs => cs.id === clinicalCase.id)).toEqual(clinicalCase);
     const f = fixture(clinicalCase);
     const state = apply(f.state, f.admission, current);
@@ -226,6 +246,30 @@ describe("topic batch8 default admission and all retired frozen identities", () 
     } finally {
       session.dispose();
     }
+  });
+
+  // Keep the original equality assertion and old source bytes. Admit these
+  // captures in their verified batch8 context, then reopen under today's runtime.
+  it.each(supersededBatch8Cases)("keeps exact historical batch8 wording for superseded $id",async clinicalCase=>{
+    expect(acceptedAtBatch8.clinicalRelease.cases.find(cs=>cs.id===clinicalCase.id)).toEqual(clinicalCase);
+    const f=fixture(clinicalCase,acceptedAtBatch8);
+    const state=apply(f.state,f.admission,acceptedAtBatch8);
+    const frozen=structuredClone(state.encounters[encounterId]!.frozenCase);
+    expect(frozen.decisionNodes.map(n=>n.questionVariantId)).toEqual(clinicalCase.decisionNodes.map(n=>n.questionVariantId));
+    for(const node of frozen.decisionNodes){
+      const authored=materializePatientName(clinicalCase,state.encounters[encounterId]!.patientDisplayName).decisionNodes.find(n=>n.id===node.id)!;
+      expect([...node.answerChoices].sort((a,b)=>a.id.localeCompare(b.id))).toEqual([...authored.answerChoices].sort((a,b)=>a.id.localeCompare(b.id)));
+    }
+    const labels=Buffer.from(JSON.stringify(frozen.decisionNodes.map(n=>n.answerChoices.map(c=>c.label))),"utf8");
+    const r=await rig(state);let session=await CloudGameSession.create(await r.open(),undefined,undefined,{operational:false});
+    try{
+      expect(session.state.encounters[encounterId]!.frozenCase).toEqual(frozen);
+      expect(Buffer.from(JSON.stringify(session.state.encounters[encounterId]!.frozenCase.decisionNodes.map(n=>n.answerChoices.map(c=>c.label))),"utf8")).toEqual(labels);
+      preservedHistories(session.state,state);await finish(session,frozen);session.dispose();
+      session=await CloudGameSession.create(await r.open(),undefined,undefined,{operational:false});
+      expect(session.state.encounters[encounterId]!.frozenCase).toEqual(frozen);
+      expect(Buffer.from(JSON.stringify(session.state.encounters[encounterId]!.frozenCase.decisionNodes.map(n=>n.answerChoices.map(c=>c.label))),"utf8")).toEqual(labels);
+    }finally{session.dispose();}
   });
 
   it.each(frozenOldCases.filter(cs=>cs.participant?.kind!=="employee_discussion"))("reopens and completes retired $id with its original questions and FSRS identities", async clinicalCase => {

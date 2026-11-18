@@ -38,18 +38,19 @@ const literalNameCorrections = read("tools/question-quality/fixtures/question-to
 /** Later manager acceptances may change membership without changing authoring.
  * Verify authority against the captured prior manifest plus this exact batch,
  * and verify every resulting case against its frozen accepted serialization. */
-export function topicQuestionAcceptance(questionVariantId:string): {accepted:boolean;live:boolean} {
-  return batch7QuestionAcceptance(questionVariantId);
+type HistoricalMembershipEpoch={release:SyntheticClinicalRelease;manifest:QuestionShipManifest};
+export function topicQuestionAcceptance(questionVariantId:string,epochContext?:HistoricalMembershipEpoch): {accepted:boolean;live:boolean} {
+  return batch7QuestionAcceptance(questionVariantId,epochContext);
 }
 
-export function topicCaseIsExplicitlyLive(caseId:string):boolean {
-  return batch7CaseLive(caseId);
+export function topicCaseIsExplicitlyLive(caseId:string,epochContext?:HistoricalMembershipEpoch):boolean {
+  return batch7CaseLive(caseId,epochContext);
 }
 
 /** An authoring preservation guard may inspect a case later retired from fresh
  * selection. Require an explicit retirement relation and its retained source. */
-export function retainedTopicCase(caseId: string): SyntheticClinicalRelease["cases"][number] | undefined {
-  const historical=programBatch8HistoricalMembership(currentRelease,currentManifest,{caseId});
+export function retainedTopicCase(caseId: string,epochContext?:HistoricalMembershipEpoch): SyntheticClinicalRelease["cases"][number] | undefined {
+  const historical=programBatch8HistoricalMembership(epochContext?.release??currentRelease,epochContext?.manifest??currentManifest,{caseId});
   const current = historical.release.cases.find(clinicalCase => clinicalCase.id === caseId);
   if (current) return current;
   const archived = [...retired1, ...retired2, ...retired3, ...retired4, ...retired5, ...retired, ...retired7]

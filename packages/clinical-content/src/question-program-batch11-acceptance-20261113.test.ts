@@ -1,9 +1,10 @@
 import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
 import {describe, expect, it} from "vitest";
-import {SYNTHETIC_CLINICAL_RELEASE as live, QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
-import {QUESTION_SHIP_MANIFEST as manifest} from "./question-ship-manifest";
-import {ANSWER_CHOICE_TIMING_REGISTRY as timing} from "./answer-choice-timing";
+import {SYNTHETIC_CLINICAL_RELEASE as currentLive, QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
+import {QUESTION_SHIP_MANIFEST as currentManifest} from "./question-ship-manifest";
+import {ANSWER_CHOICE_TIMING_REGISTRY as currentTiming} from "./answer-choice-timing";
+import {beforeFlags5AcceptanceRelease,beforeFlags5AcceptanceManifest,beforeFlags5AcceptanceTimings,beforeFlags5AcceptanceSourceBytes} from "./question-flags5-acceptance-test-support";
 import {syntheticClinicalCaseSchema} from "./schema";
 import {
   QUESTION_PROGRAM_BATCH11_ACCEPTED_ROWS as rows, QUESTION_PROGRAM_BATCH11_ACCEPTED_CASES as cases,
@@ -15,7 +16,10 @@ import {
   beforeProgramBatch11AcceptanceSource, beforeProgramBatch11AcceptanceSourceBytes,
 } from "./question-program-batch11-acceptance-test-support";
 
-const raw = (path:string) => readFileSync(new URL("../../../" + path, import.meta.url));
+// Preserve this historical admission proof through the exact inverse for
+// owner-directed flag fixes batch 5; current admission is tested separately.
+const live=beforeFlags5AcceptanceRelease(currentLive),manifest=beforeFlags5AcceptanceManifest(currentManifest),timing=beforeFlags5AcceptanceTimings(currentTiming);
+const raw = (path:string) => beforeFlags5AcceptanceSourceBytes(readFileSync(new URL("../../../" + path, import.meta.url)));
 const read = (path:string) => JSON.parse(raw(path).toString("utf8"));
 const sha = (value:string|Buffer) => createHash("sha256").update(value).digest("hex");
 const digest = (value:unknown) => sha(JSON.stringify(value));
@@ -152,7 +156,7 @@ describe("batch11 exact whole-case procedure and salvage acceptance", () => {
 
   it("pins exact release source deltas, presence and every immutable epoch preimage",()=>{
     const bytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch11-release-source-pins-20261113.json",import.meta.url));
-    expect(createHash("sha256").update(bytes).digest("hex")).toBe("1d33e8e11d0669d4f0158b58f1024bd7c74a16407e032ff30d733c39984a92d9");
+    expect(createHash("sha256").update(bytes).digest("hex")).toBe("88a78560d5f8059ca5df7405edeef132b2747804046136606d1234a6899806dd");
     const pins=JSON.parse(bytes.toString("utf8"));
     const hash=(path:string)=>createHash("sha256").update(readFileSync(new URL("../../../"+path,import.meta.url))).digest("hex");
     expect(hash(pins.capturePath)).toBe(pins.capturedFixtureSha256);

@@ -31,7 +31,8 @@ const phaseLabels: Record<DiagnosticOrderPhase["kind"], string> = {
   patient_return: "Return to Front Desk",
 };
 
-/** Format the shared quote; never add phase durations to obtain another total. */
+/** A hypothetical quote, not an ordered test's countdown. A new projection may
+ * reflect a changed queue; never add phase durations to obtain another total. */
 export function diagnosticChoiceTimingPresentation(
   preview: ChoicePreview,
   now: number,
@@ -39,7 +40,7 @@ export function diagnosticChoiceTimingPresentation(
 ): { etaLabel?: string; detailLabel?: string } {
   if (!preview) return {};
   if (preview.kind === "no_test") return { etaLabel: "No test wait" };
-  const etaLabel = preview.durationTicks == null ? undefined : formatDuration(preview.durationTicks);
+  const etaLabel = preview.durationTicks == null ? undefined : `If ordered now: about ${formatDuration(preview.durationTicks)}`;
   const plan = "diagnosticTiming" in preview ? preview.diagnosticTiming : undefined;
   if (!plan) return { etaLabel, detailLabel: "Estimated test wait (game time)" };
   const estimateAvailable = preview.durationTicks != null;

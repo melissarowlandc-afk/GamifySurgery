@@ -6,7 +6,7 @@ import {
   type GameState,
 } from "@gamify-surgery/game-domain";
 import { mkdirSync } from "node:fs";
-import { PROFILE_KEY, getActiveState, getProfile, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY, getActiveState, getProfile, startClinic } from "./helpers";
 
 const EVIDENCE = ".local-dev/room-capacity-sales/browser";
 const GRID_WIDTH = 72;
@@ -58,14 +58,9 @@ async function install(page: Page, name: string) {
   active.name = name;
   active.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value, marker }) => {
-    if (sessionStorage.getItem(marker)) return;
-    sessionStorage.setItem(marker, "1");
-    localStorage.setItem(key, JSON.stringify(value));
-  }, { key: PROFILE_KEY, value: profile, marker: `room-capacity.${name}` });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: `Resume ${name}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.waitForFunction(() => Boolean(
     (document.querySelector("[data-testid='facility-canvas']") as any)
@@ -295,8 +290,7 @@ test("a sold staffed room can be rebuilt with a real door while the dismissed em
   const departureBefore = beforeReload.departingEmployees!.find((employee) => employee.id === "employee.capacity.np")!;
 
   await page.reload();
-  const resume = page.getByRole("button", { name: `Resume ${clinicName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, clinicName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   rebuilt = (await getActiveState(page)) as unknown as GameState;
   expect(rebuilt.rooms).toContainEqual(expect.objectContaining({ id: rebuiltRoom!.id }));

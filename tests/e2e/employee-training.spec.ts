@@ -6,7 +6,7 @@ import {
   getFacilityAccessValidation, getRoomDefinition, getRoomNavigationAnchor, serializeGameState,
   type GameCommand, type GameState,
 } from "@gamify-surgery/game-domain";
-import { getActiveState, getProfile, PROFILE_KEY, setFastFacilitySpeed, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, getActiveState, getProfile, PROFILE_KEY, setFastFacilitySpeed, startClinic } from "./helpers";
 
 const EVIDENCE = ".local-dev/gs037-employee-training/browser";
 const EMPLOYEES = ["employee.e2e.training.reception", "employee.e2e.training.evs", "employee.e2e.training.draw"];
@@ -73,13 +73,9 @@ async function persistAndOpen(page: Page, state: GameState): Promise<void> {
   const campaign = profile.campaigns.find((candidate) => candidate.campaignId === profile.activeCampaignId)!;
   campaign.serializedState = serializeGameState(state); profile.tutorialsEnabled = false;
   const oneShotKey = `employee-training-fixture-${fixtureSequence++}`;
-  await page.addInitScript(({ key, profileKey, value }) => {
-    if (sessionStorage.getItem(key)) return;
-    localStorage.setItem(profileKey, JSON.stringify(value)); sessionStorage.setItem(key, "1");
-  }, { key: oneShotKey, profileKey: PROFILE_KEY, value: profile });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: `Resume ${campaign.name}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, campaign.name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
@@ -130,8 +126,7 @@ test("two employees train on separate stools while the paid third request surviv
   await page.screenshot({ path: join(EVIDENCE, "two-active-training-stools.png"), animations: "disabled" });
   const savedBefore = await getActiveState(page) as unknown as GameState;
   await page.reload();
-  const resume = page.getByRole("button", { name: "Resume Employee Training Test" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Employee Training Test");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   const savedAfter = await getActiveState(page) as unknown as GameState;
   expect(savedAfter.cash).toBe(paidCash);

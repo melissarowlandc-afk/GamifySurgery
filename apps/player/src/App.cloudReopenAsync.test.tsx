@@ -1,4 +1,6 @@
-import { act, useState } from "react";
+import { ContinuousLoading, LOADING_SURFACE_ID } from "./ui/ContinuousLoading";
+import { CLINIC_PRESENTATION_EVENT } from "./ui/clinicPresentation";
+import { Profiler, act, useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { AccountCampaignRouter } from "./App";
 import { AuthAccountContext } from "./auth/AuthAccountContext";
@@ -11,12 +13,12 @@ import { encodeCloudEvidenceCheckpoint } from "./session/cloud/codecEvidence";
 import type { CloudGameSession } from "./session/cloud/gameSession";
 import { CLOUD_CHECK_TIMEOUT_MS } from "./session/cloud/checkDeadline";
 
-vi.mock("./facility", () => ({ FacilityCanvas: () => <div>Fixture map</div> }));
-vi.mock("./mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: () => <div>Fixture map</div> }));
+vi.mock("./facility", () => ({ FacilityCanvas: () => <div data-testid="facility-canvas" data-clinic-frame="waiting">Fixture map</div> }));
+vi.mock("./mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: () => <div data-testid="facility-canvas" data-clinic-frame="waiting">Fixture map</div> }));
 afterEach(async () => { vi.restoreAllMocks(); await cleanupPhoneTests(); });
 
 async function fixture(layout: "phone" | "desktop", marker: boolean, partialSummaries: boolean,
-  options: { heldSelection?: ReturnType<typeof deferred>; fakeTimers?: boolean; secondCampaign?: boolean } = {}) {
+  options: { heldSelection?: ReturnType<typeof deferred>; fakeTimers?: boolean; secondCampaign?: boolean; continuous?: boolean } = {}) {
   const h = await syncHarness(), store = new MemoryCloudEntryStore(), transport = h.server.transport(h.scope.accountId);
   const encoded = await encodeCloudEvidenceCheckpoint({ checkpoint: h.prepared.checkpoint,
     source: { sha256: h.prepared.sourceRecovery.sha256, utf8Bytes: h.prepared.sourceRecovery.utf8Bytes,
@@ -58,13 +60,46 @@ async function fixture(layout: "phone" | "desktop", marker: boolean, partialSumm
   }
   const access = await transport.capabilities(), runtime = { ...h.scope, region: "Synthetic", transport, cache: h.cache, entryStore: store };
   if (options.fakeTimers) vi.useFakeTimers();
-  await env.render(<AuthAccountContext.Provider value={h.scope.accountId}><CompetitionClientContext.Provider value={null}><Provider /></CompetitionClientContext.Provider></AuthAccountContext.Provider>);
+  const screens: string[] = [], progress: number[] = [];
+  const record = () => queueMicrotask(() => {
+    const surface = env.doc.getElementById(LOADING_SURFACE_ID);
+    if (!surface) return;
+    const waiting = surface.attributes.hidden === undefined;
+    screens.push(waiting ? "loading" : allElements(env.element, node => node.attributes["data-testid"] === "facility-canvas").length ? "clinic" : "chooser");
+    if (waiting) progress.push(Number(surface.attributes["data-loading-progress"]));
+  });
+  const child = <AuthAccountContext.Provider value={h.scope.accountId}><CompetitionClientContext.Provider value={null}><Provider /></CompetitionClientContext.Provider></AuthAccountContext.Provider>;
+  await env.render(options.continuous ? <ContinuousLoading><Profiler id="screens" onRender={record}>{child}</Profiler></ContinuousLoading> : child);
+  const markFrame = async () => {
+    await vi.waitFor(async () => { await act(async () => {}); expect(allElements(env.element, node => node.attributes["data-testid"] === "facility-canvas")).toHaveLength(1); });
+    await act(async () => {
+    const host = allElements(env.element, node => node.attributes["data-testid"] === "facility-canvas")[0]!;
+    expect(host).toBeDefined(); host.setAttribute("data-clinic-frame", "ready");
+    Object.assign(env.doc, { querySelector: (selector: string) => selector.includes("facility-canvas") ? host : null });
+    env.doc.dispatchEvent(new Event(CLINIC_PRESENTATION_EVENT));
+  }); record(); await act(async () => {}); };
   const playing = () => vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });
-  return { ...h, store, transport, env, readSelection, inventoryRead, complete, playing, get active() { return active; },
+  return { ...h, store, transport, env, screens, progress, markFrame, readSelection, inventoryRead, complete, playing, get active() { return active; },
     publish: () => publish([...complete]) };
 }
 
 describe.each(["phone", "desktop"] as const)("%s asynchronous automatic reopen", layout => {
+  it("keeps selection, verified copies, hydration and shell under one screen until a playable art-ready frame", async () => {
+    const held = deferred(), f = await fixture(layout, true, true, { continuous: true, heldSelection: held });
+    const surface = f.env.doc.getElementById(LOADING_SURFACE_ID)!;
+    await f.readSelection.promise;
+    await act(async () => f.publish());
+    expect(surface.attributes.hidden).toBeUndefined();
+    await act(async () => held.resolve()); await f.playing();
+    // Command authority and background upload can settle before art renders.
+    expect(surface.attributes.hidden).toBeUndefined(); expect(f.screens.every(screen => screen === "loading")).toBe(true);
+    await f.markFrame();
+    expect(f.env.doc.getElementById(LOADING_SURFACE_ID)).toBe(surface);
+    expect(surface.attributes.hidden).toBe("");
+    expect(f.screens.at(-1)).toBe("clinic"); expect(f.screens).not.toContain("chooser");
+    expect(f.progress.every((value, i) => value < 100 && (!i || value >= f.progress[i - 1]!))).toBe(true);
+    expect(f.active!.canExecute).toBe(true);
+  });
   it("can already be playable with no entry heading when a post-navigation observer starts", async () => {
     const f = await fixture(layout, true, false);
     // Like a development-server document reload, navigation can restore the

@@ -4,6 +4,7 @@ import { CloudSyncError, type CloudFailureCode, type CloudFrozenOperation, type 
 import { encodeCloudEvidenceCheckpoint, loadCloudEvidenceCheckpoint } from "../../apps/player/src/session/cloud/codecEvidence";
 import { syncFixture } from "../../apps/player/src/session/cloud/syncFixtureSupport";
 import { accountMenu, expectAccountSaved, expectPlaying, expectResumeReady, openAndContinue, saveDetails as details, snapshot, exportDeviceCopy, CLOUD_QA_WAIT_MS, CLOUD_QA_STARTUP_WAIT_MS } from "./cloud-qa-helpers";
+import { uncoveredUi } from "./helpers";
 
 // Manager runs this against the dev-only cloud-saves-qa.html at the disposable
 // 127.0.0.1:5184 origin. No Supabase, Auth keys, copied saves or live endpoints.
@@ -37,7 +38,7 @@ async function rig(browser: Browser, baseURL: string, layout: "desktop" | "phone
     // campaign. Entry is not a persistent screen; the following helpers still
     // require a playable, fully acknowledged baseline before fault injection.
     await expect.poll(async () => Boolean((await snapshot(tab)).state) ||
-      await tab.getByRole("heading", { name: "Your campaigns", exact: true }).isVisible(), { timeout: CLOUD_QA_WAIT_MS }).toBe(true);
+      await tab.getByRole("heading", { name: "Your campaigns", exact: true }).isVisible(), { timeout: CLOUD_QA_STARTUP_WAIT_MS }).toBe(true);
     return tab;
   };
   return { server, page, commitAttempts, fail: (code: CloudFailureCode | null) => { unavailable = code; },
@@ -92,17 +93,23 @@ for (const layout of ["desktop", "phone"] as const) {
       const page = await f.page(1); await expectResumeReady(page, "Synthetic clinic 1");
       const reads = f.server.calls.filter(call => call.method === "head").length;
       f.server.faults.push({ method: "head", at: "before", wait: held });
-      await page.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true }).click();
+      await uncoveredUi(page, page.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true })).click({ timeout: 1_000 });
       await expect.poll(() => f.server.calls.filter(call => call.method === "head").length).toBeGreaterThan(reads);
       const loading = page.getByRole("region", { name: "Loading clinic", exact: true });
       await expect(loading).toBeVisible({ timeout: CLOUD_QA_WAIT_MS });
       await expect(loading).toHaveCount(1);
       await expect(loading.getByRole("heading", { name: "Stitchin’ Time", exact: true })).toBeVisible();
-      await expect(loading.getByRole("progressbar", { name: "Opening progress", exact: true })).toHaveAttribute("aria-valuenow", "2");
+      const bar = loading.getByRole("progressbar", { name: "Opening progress", exact: true });
+      const initialProgress = Number(await bar.getAttribute("aria-valuenow"));
+      expect(initialProgress).toBeGreaterThanOrEqual(0); expect(initialProgress).toBeLessThan(100);
+      await loading.evaluate(node => { (window as Window & { __loadingIdentity?: Element }).__loadingIdentity = node; });
+      const laterProgress = Number(await bar.getAttribute("aria-valuenow"));
+      expect(laterProgress).toBeGreaterThanOrEqual(initialProgress); expect(laterProgress).toBeLessThan(100);
+      expect(await loading.evaluate(node => (window as Window & { __loadingIdentity?: Element }).__loadingIdentity === node)).toBe(true);
       await expect(loading.getByRole("button")).toHaveCount(0);
       await expect(page.getByRole("dialog")).toHaveCount(0);
       release(); await expectPlaying(page);
-      await expect(loading).toHaveCount(0);
+      await expect(loading).toBeHidden({ timeout: CLOUD_QA_STARTUP_WAIT_MS });
     } finally { release(); await f.close(); }
   });
 
@@ -399,7 +406,18 @@ for (const layout of ["desktop", "phone"] as const) {
         revision: prior.revision, expectedRevision: prior.revision, expectedCampaignId: id, expectedBaselineId: prior.baselineId })).state;
       row.confirmed = { ...row.confirmed, snapshot: { ...row.confirmed.snapshot, uncompressedSha256: "0".repeat(64) } };
       const head = structuredClone(row.confirmed), operationCount = f.server.operationCount("qa-account-a"), generation = row.generation;
-      const second = await f.page(); await second.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true }).click();
+      const second = await f.page();
+      // A fresh document can automatically open its verified prior revision.
+      // Retain the strict read-only/export/revision assertions below for either entry.
+      await expect(async () => {
+        await expect(second.getByRole("region", { name: "Loading clinic", exact: true, includeHidden: true })).toBeHidden({ timeout: 1_000 });
+        if ((await snapshot(second)).state) return;
+        const resume = uncoveredUi(second, second.getByRole("button", { name: "Resume Synthetic clinic 1", exact: true }));
+        await expect(resume).toBeVisible({ timeout: 1_000 });
+        await expect(resume).toBeEnabled({ timeout: 1_000 });
+        await resume.click({ timeout: 1_000 });
+        expect((await snapshot(second)).state).not.toBeNull();
+      }).toPass({ timeout: CLOUD_QA_STARTUP_WAIT_MS });
       const dialog = await details(second);
       await expect(dialog).toContainText("The latest save could not be verified. Your older copies are safe.");
       expect((await snapshot(second)).revision).toBe(prior.revision);

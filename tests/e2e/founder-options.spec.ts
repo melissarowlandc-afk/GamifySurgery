@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { expect, test, type Locator } from "@playwright/test";
 import {
-  getActiveState,
+  resumeLocalCampaign, getActiveState,
   openCampaignScreen,
 } from "./helpers";
 
@@ -115,9 +115,7 @@ test("original option 30 survives the expanded picker, clinic save, and reload",
   });
 
   await page.reload();
-  await page
-    .getByRole("button", { name: "Resume Axolotl Surgery" })
-    .click();
+  await resumeLocalCampaign(page, "Axolotl Surgery");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   const restored = await getActiveState(page);
   expect(restored.founder).toEqual(created.founder);

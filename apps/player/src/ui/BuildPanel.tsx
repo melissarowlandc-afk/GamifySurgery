@@ -1,3 +1,5 @@
+import { RemodelControls } from "./RemodelControls";
+import type { RemodelBlueprintView } from "../session/remodelBlueprint";
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import type {
@@ -22,6 +24,7 @@ export type BuildTab = "new" | "my";
 
 interface BuildPanelProps {
   buildMode: boolean;
+  blueprint?: RemodelBlueprintView;
   showInactiveTrigger?: boolean;
   cashLabel: string;
   roomOptions: RoomBuildOptionView[];
@@ -108,6 +111,7 @@ function isTypingTarget(target: EventTarget | null): boolean {
 
 export function BuildPanel({
   buildMode,
+  blueprint,
   showInactiveTrigger = true,
   cashLabel,
   roomOptions,
@@ -168,7 +172,6 @@ export function BuildPanel({
   const selectedPlacementIsHallway = selectedPlacement?.id === "room.hallway";
   const rotateEnabled = Boolean(
     selectedPlacement &&
-      !movingRoomName &&
       getApprovedPlacementOrientations(selectedPlacement.id).length > 1,
   );
 
@@ -490,7 +493,7 @@ export function BuildPanel({
               className="text-button build-undo-button"
               type="button"
               onClick={onUndoBuildAction}
-              disabled={undoCount === 0}
+              disabled={undoCount === 0 || blueprint?.active}
               title={undoLabel ? `Undo: ${undoLabel}` : undefined}
             >
               {undoLabel ? `Undo: ${undoLabel}` : "Undo"}
@@ -506,9 +509,10 @@ export function BuildPanel({
             </button>
           </div>
         </header>
+        <RemodelControls blueprint={blueprint} />
 
         <div className="build-catalog-navigation">
-        <nav className="build-tool-toolbar" aria-label="Build Mode tools">
+        {blueprint?.active ? null : (<nav className="build-tool-toolbar" aria-label="Build Mode tools">
           <strong className="build-tool-toolbar-label">Tools</strong>
           <button
             className={`button button-secondary${buildDoorTool ? " is-active" : ""}`}
@@ -549,16 +553,16 @@ export function BuildPanel({
               <span className="build-key">Esc</span> to finish.
             </span>
           ) : null}
-        </nav>
+        </nav>)}
 
         {selectedPlacement ? (
           <div className="build-placement-status" role="status">
             <span>
-              {movingRoomName ? "Moving" : "Placing"}{" "}
+              {movingRoomName ? blueprint?.active ? "Staging" : "Moving" : "Placing"}{" "}
               <strong>{movingRoomName ?? selectedPlacement.displayName}</strong>
               {selectedPlacementIsHallway ? " · click or drag across the map" : ""}
             </span>
-            {!selectedPlacementIsHallway && !movingRoomName ? (
+            {!selectedPlacementIsHallway ? (
               <span className="placement-orientation">
                 Orientation {placementOrientation}°
               </span>
@@ -582,7 +586,7 @@ export function BuildPanel({
           />
         ) : null}
 
-        <div className="build-tabs" role="tablist" aria-label="Build Mode lists">
+        {blueprint?.active ? null : (<div className="build-tabs" role="tablist" aria-label="Build Mode lists">
           <button
             className="build-tab"
             type="button"
@@ -610,17 +614,17 @@ export function BuildPanel({
               </span>
             ) : null}
           </button>
-        </div>
+        </div>)}
         </div>
 
-        <div
+        {blueprint?.active ? null : (<div
           className="build-section build-room-catalog"
           role="tabpanel"
           id={tab === "new" ? "build-tabpanel-new" : "build-tabpanel-my"}
           aria-labelledby={tab === "new" ? "build-tab-new" : "build-tab-my"}
         >
           {tab === "new" ? renderNewRooms() : renderMyRooms()}
-        </div>
+        </div>)}
       </section>
 
       {invalidDialogOpen && typeof document !== "undefined"

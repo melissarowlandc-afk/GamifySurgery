@@ -1,11 +1,12 @@
 import { RuntimeCatalogueRequired } from "../../mobile/performance/runtimeCatalogue";
+import { commandProgrammingFailure, encodeCommandFailure, type CommandStage } from "./commandFailure";
 import { applyGameEvidenceBuildUndo, applyGameEvidenceCommand, createGameEvidenceCheckpoint, gameEvidenceDelta, GameEvidenceError,
   importGameEvidence, prepareGameEvidenceCheckpoint, PROTOTYPE_DOMAIN_CONTEXT, type DomainContext, type GameEvidenceCheckpoint, type GameEvidenceDelta, type GameState } from "@gamify-surgery/game-domain";
 import { equalParsedJson } from "./codecWorkerJsonEqual";
 import type { CodecJson } from "./codecJson";
 import { operationalStatePatch } from "./operationalStatePatch";
 import type { OperationalEngineProgress, OperationalEngineReply, OperationalEngineRequest, OperationalViewReply, OperationalViewRequest } from "./operationalEngineProtocol";
-import { createOperationalPlayerView } from "./operationalViewProjection";
+import { OperationalViewReuse } from "./operationalViewReuse";
 import type { PrototypePlayerView } from "../viewModels";
 import { freezeOperationalValue } from "./operationalFreeze";
 
@@ -22,6 +23,7 @@ export class OperationalEngineProcessor {
   private version = 0;
   private snapshotOnly = false;
   private view: PrototypePlayerView | null = null;
+  private readonly projections = new OperationalViewReuse();
   private readonly journalDeltas = new Map<number, GameEvidenceDelta>();
   journalDelta(version: number): GameEvidenceDelta | undefined { return this.journalDeltas.get(version); }
   releaseJournalDeltas(versions: readonly number[]): void { for (const version of versions) this.journalDeltas.delete(version); }
@@ -31,12 +33,13 @@ export class OperationalEngineProcessor {
         request.asOfRealMs !== undefined && !Number.isFinite(request.asOfRealMs)) throw new GameEvidenceError("engine-projection");
     const at = performance.now(), asOfRealMs = request.asOfRealMs ?? Date.now();
     const args = request.followOpenChart ? [state.openChartEncounterId, ...request.args.slice(1)] as typeof request.args : request.args;
-    const view = createOperationalPlayerView(state, args, asOfRealMs), computeMs = performance.now() - at, diffStarted = performance.now();
+    const view = this.projections.project(state, args, asOfRealMs), computeMs = performance.now() - at, diffStarted = performance.now();
     const patch = operationalStatePatch(this.view, view), diffMs = performance.now() - diffStarted;
     return { view, reply: { revision: request.revision, asOfRealMs, ...(patch ? { patch } : {}), computeMs, diffMs } };
   }
 
   handle(request: OperationalEngineRequest, progress?: (stage: OperationalEngineProgress["progress"]) => void): OperationalEngineReply {
+    let stage: CommandStage = "execute";
     try {
       if (!Number.isSafeInteger(request.id) || request.id < 1) throw new GameEvidenceError("engine-message");
       if (request.kind === "initialize") {
@@ -85,31 +88,36 @@ export class OperationalEngineProcessor {
         ? applyGameEvidenceCommand(before, request.command, request.contextFlags ? { ...(request.context ?? this.context!), ...request.contextFlags } : request.context ?? this.context)
         : applyGameEvidenceBuildUndo(before, request.target, request.operationId);
       const computeMs = performance.now() - started, diffStarted = performance.now();
+      stage = "diff";
       progress?.("diff");
       const patch = result.replayed ? undefined : operationalStatePatch(this.visible, result.state);
       const delta = result.replayed ? null : gameEvidenceDelta(before, result.checkpoint);
       const snapshotPatch = result.replayed ? undefined : operationalStatePatch(before.snapshot, result.checkpoint.snapshot);
       const diffMs = performance.now() - diffStarted, baseVersion = this.version;
+      stage = "projection";
       progress?.("projection");
       const projection = request.projection ? this.project(result.replayed ? this.visible : result.state, request.projection) : undefined;
       // Build transport before committing, so a failed diff cannot advance the
       // private head while the caller still owns the old visible state.
-      this.checkpoint = result.checkpoint;
-      if (!result.replayed) this.visible = freezeOperationalSnapshot(result.state);
-      if (projection) this.view = projection.view;
-      this.version++;
+      stage = "publication";
+      const visible = result.replayed ? this.visible : freezeOperationalSnapshot(result.state), version = this.version + 1;
+      const reply: OperationalEngineReply = { id: request.id, kind: "applied", baseVersion, version, head: result.checkpoint.snapshot.head,
+        replayed: result.replayed, ...(patch ? { patch } : {}), ...(snapshotPatch ? { snapshotPatch } : {}), delta, computeMs, diffMs,
+        ...(projection ? { projection: projection.reply } : {}) };
       progress?.("publish");
       if (delta) {
-        this.journalDeltas.set(this.version, delta);
+        this.journalDeltas.set(version, delta);
         // Larger than the session's128 combined reservations. Standalone
         // clients without a journal still have a fixed memory bound.
         if (this.journalDeltas.size > 256) this.journalDeltas.delete(this.journalDeltas.keys().next().value!);
       }
-      return { id: request.id, kind: "applied", baseVersion, version: this.version, head: result.checkpoint.snapshot.head,
-        replayed: result.replayed, ...(patch ? { patch } : {}), ...(snapshotPatch ? { snapshotPatch } : {}), delta, computeMs, diffMs,
-        ...(projection ? { projection: projection.reply } : {}) };
+      this.checkpoint = result.checkpoint; this.visible = visible;
+      if (projection) this.view = projection.view;
+      this.version = version; return reply;
     } catch (error) {
       if (error instanceof RuntimeCatalogueRequired) throw error;
+      const failure = request.kind === "command" || request.kind === "undo" ? commandProgrammingFailure(error, stage, "processor") : null;
+      if (failure) return { id: request.id, kind: "failure", code: encodeCommandFailure(failure) };
       return { id: request.id, kind: "failure", code: error instanceof GameEvidenceError ? error.code : "engine-command" };
     }
   }

@@ -1,3 +1,4 @@
+import { loadingArtwork } from "./ui/loadingArtwork";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { build, normalizePath } from "vite";
@@ -70,7 +71,18 @@ describe("Home Screen install metadata", () => {
     for (const field of ["start_url", "scope"]) {
       expect(new URL(manifest[field], manifestUrl).href).toBe(app.href);
     }
-    expect(manifest.background_color).toBe(tokens.match(/--paper:\s*(#[\da-f]+)/i)![1]);
+    // The OS launch color hands off to the identical pre-React welcome surface.
+    expect(manifest.background_color).toBe(loadingArtwork.palette.background);
+    expect(html).toContain('id="clinic-loading-screen"');
+    expect(html).toContain('aria-label="Opening progress"');
+    const stylesheet = tag(html, "link", "rel", "stylesheet").href!;
+    expect(stylesheet.startsWith(`${base}assets/`)).toBe(true);
+    const openingCss = result.output.find(item => item.type === "asset" && item.fileName === stylesheet.slice(base.length));
+    expect(openingCss?.type).toBe("asset");
+    if (openingCss?.type === "asset") {
+      expect(String(openingCss.source)).toContain(".loading-screen");
+      expect(String(openingCss.source)).toContain(loadingArtwork.palette.background);
+    }
     expect(manifest.theme_color).toBe(tokens.match(/--panel:\s*(#[\da-f]+)/i)![1]);
     expect(tag(html, "meta", "name", "theme-color").content).toBe(manifest.theme_color);
 

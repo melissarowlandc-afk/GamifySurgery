@@ -2,7 +2,7 @@ import { mkdirSync } from "node:fs";
 import { expect, test, type Page, type TestInfo } from "@playwright/test";
 import { gameReducer, type GameState } from "@gamify-surgery/game-domain";
 
-import { PROFILE_KEY, getActiveState, getProfile, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY, getActiveState, getProfile, startClinic } from "./helpers";
 
 const EVIDENCE = ".local-dev/answered-chart-recovery/browser";
 const CASE_ID = "case.desmoid.surveillance-to-progressing-abdominal-wall";
@@ -116,17 +116,9 @@ async function installFinalQuestionFixture(
   };
   profile.tutorialsEnabled = false;
   const marker = `${encounterId}.installed`;
-  await page.addInitScript(
-    ({ key, value, sessionMarker }) => {
-      if (window.sessionStorage.getItem(sessionMarker)) return;
-      window.sessionStorage.setItem(sessionMarker, "1");
-      window.localStorage.setItem(key, JSON.stringify(value));
-    },
-    { key: PROFILE_KEY, value: profile, sessionMarker: marker },
-  );
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: `Resume ${clinicName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, clinicName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
@@ -180,8 +172,7 @@ async function finishCareApproach(page: Page, encounterId: string): Promise<void
 
 async function reloadAndReopen(page: Page, clinicName: string, encounterId: string) {
   await page.reload();
-  const resume = page.getByRole("button", { name: `Resume ${clinicName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, clinicName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   if (!(await page.locator(".chart-sheet").isVisible())) {
     await page.getByText(`${encounterId} Patient`, { exact: true }).click();

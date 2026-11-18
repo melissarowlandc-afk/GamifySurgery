@@ -272,7 +272,7 @@ describe("Build Mode panel", () => {
     expect(placing).toContain(">Esc<");
   });
 
-  it("names the room being moved instead of offering rotation", () => {
+  it("names the moving room and offers its approved rotation without losing Cancel", () => {
     const markup = renderBuildPanel({
       movingRoomName: "Waiting Room B",
       options: roomOptions.map((room) =>
@@ -280,7 +280,9 @@ describe("Build Mode panel", () => {
       ),
     });
     expect(markup).toContain("Moving <strong>Waiting Room B</strong>");
-    expect(markup).not.toContain("Rotate");
+    expect(markup).toContain("Rotate");
+    expect(markup).toContain("Orientation 0");
+    expect(markup).toContain("Cancel");
   });
 
   it("groups New Rooms by purpose and shows next-level rooms as locked", () => {

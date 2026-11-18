@@ -2,7 +2,7 @@ import { mkdirSync } from "node:fs";
 import { expect, test, type Page, type TestInfo } from "@playwright/test";
 
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   getProfile,
   setFastFacilitySpeed,
@@ -100,8 +100,7 @@ async function pollState<T>(
 
 async function reopenPausedCampaignWithLiveBridge(page: Page, clinicName: string): Promise<void> {
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: `Resume ${clinicName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, clinicName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.waitForFunction(() => {
     const host = document.querySelector("[data-testid='facility-canvas']") as (HTMLDivElement & {
@@ -130,12 +129,7 @@ async function installExistingBuiltExaminationFixture(page: Page): Promise<void>
     ...active,
     serializedState: JSON.stringify(state),
   };
-  await page.addInitScript(
-    ({ profileKey, nextProfile }) => {
-      window.localStorage.setItem(profileKey, JSON.stringify(nextProfile));
-    },
-    { profileKey: PROFILE_KEY, nextProfile: profile },
-  );
+  await installFreshLocalProfile(page, profile);
 }
 
 function addExistingBuiltExamination(state: StateSnapshot): void {
@@ -191,12 +185,7 @@ async function installUnstaffedMinuteSixtyFixture(page: Page): Promise<{ encount
     ...active,
     serializedState: JSON.stringify(state),
   };
-  await page.addInitScript(
-    ({ profileKey, nextProfile }) => {
-      window.localStorage.setItem(profileKey, JSON.stringify(nextProfile));
-    },
-    { profileKey: PROFILE_KEY, nextProfile: profile },
-  );
+  await installFreshLocalProfile(page, profile);
   return { encounterId: encounter.id, satisfaction: encounter.patientSatisfaction };
 }
 
@@ -293,7 +282,7 @@ test("unattended check-in waits through minute sixty then emits one Front Desk a
   await page.getByRole("button", { name: "Pause facility time" }).click();
   const fixture = await installUnstaffedMinuteSixtyFixture(page);
   await page.goto("/?prototype-tools=0");
-  await page.getByRole("button", { name: "Resume Unstaffed Proof Clinic" }).click();
+  await resumeLocalCampaign(page, "Unstaffed Proof Clinic");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 
   const minuteSixty = await activeSnapshot(page);
@@ -328,7 +317,7 @@ test("unattended check-in waits through minute sixty then emits one Front Desk a
   // re-install minute sixty instead of testing the persisted post-tick save.
   const verifyPage = await page.context().newPage();
   await verifyPage.goto("/?prototype-tools=0");
-  await verifyPage.getByRole("button", { name: "Resume Unstaffed Proof Clinic" }).click();
+  await resumeLocalCampaign(verifyPage, "Unstaffed Proof Clinic");
   const afterReload = await activeSnapshot(verifyPage);
   expect(afterReload.events.filter((event) => event.definitionId === "alert.patient.check-in-unattended")).toHaveLength(1);
   await verifyPage.close();

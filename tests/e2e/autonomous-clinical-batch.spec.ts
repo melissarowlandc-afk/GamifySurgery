@@ -14,7 +14,7 @@ import {
   type GameState,
 } from "@gamify-surgery/game-domain";
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   setFastFacilitySpeed,
   startClinic,
@@ -155,20 +155,12 @@ async function installPreparedCampaignOnce(
   };
   profile.tutorialsEnabled = false;
   const marker = `autonomous-clinical-batch:${active.campaignId}:${caseId}`;
-  await page.addInitScript(
-    ({ markerKey, profileKey, nextProfile }) => {
-      if (sessionStorage.getItem(markerKey) !== null) return;
-      sessionStorage.setItem(markerKey, "installed");
-      localStorage.setItem(profileKey, JSON.stringify(nextProfile));
-    },
-    { markerKey: marker, profileKey: PROFILE_KEY, nextProfile: profile },
-  );
+  await installFreshLocalProfile(page, profile);
 
   // The guarded script runs in the new document, after the old page has had
   // its normal pagehide/autosave opportunity. Reloads then retain real play.
   await page.goto("/?prototype-tools=0");
-  const resume = page.getByRole("button", { name: `Resume ${active.name}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, active.name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   return prepared.encounter;
 }
@@ -330,8 +322,7 @@ test("celiac pathway preserves a generated patient through two real service wait
   expect(pendingBeforeReload.deliveredAtTick).toBeNull();
   expect(beforeReload.paused).toBe(true);
   await page.reload();
-  const resumeCampaign = page.getByRole("button", { name: /^Resume Celiac E2E Clinic$/ });
-  if (await resumeCampaign.isVisible()) await resumeCampaign.click();
+  await resumeLocalCampaign(page, "Celiac E2E Clinic");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   const afterReload = (await getActiveState(page)) as unknown as GameState;
   const reloaded = afterReload.encounters[prepared.id]!;

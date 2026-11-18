@@ -1,6 +1,6 @@
 import { mkdirSync } from "node:fs";
 import { expect, test } from "@playwright/test";
-import { getProfile, installLevelOneVisualState, PROFILE_KEY, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, getProfile, installLevelOneVisualState, PROFILE_KEY, startClinic } from "./helpers";
 
 test.beforeAll(() => mkdirSync("artifacts/screenshots", { recursive: true }));
 
@@ -27,9 +27,9 @@ test("proves shared tall corners, backed corners, and door gaps in normal and Bu
   ];
   state.environment = { ...state.environment, founderLocation: { x: 36, y: 30 }, founderActivity: null };
   state.paused = true; campaign.serializedState = JSON.stringify(state);
-  await page.addInitScript(({ key, next }) => window.localStorage.setItem(key, JSON.stringify(next)), { key: PROFILE_KEY, next: profile });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: "Resume Wall Corner Clinic" }); if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Wall Corner Clinic");
   const facility = page.getByTestId("facility-canvas"); await expect(facility).toBeVisible();
   await page.addStyleTag({ content: ".facility-pause-indicator { visibility: hidden !important; }" });
   const readLiveProof = () => page.evaluate(() => {

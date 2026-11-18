@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 import type { GameState } from "@gamify-surgery/game-domain";
-import { getActiveState, getProfile, PROFILE_KEY, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, getActiveState, getProfile, PROFILE_KEY, startClinic } from "./helpers";
 
 const EVIDENCE = ".local-dev/gs036-level-three-goals/browser";
 test.beforeAll(() => mkdirSync(EVIDENCE, { recursive: true }));
@@ -12,14 +12,9 @@ async function installState(page: Page, state: GameState, campaignName: string, 
   campaign.name = campaignName;
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value, seedMarker }) => {
-    if (sessionStorage.getItem(seedMarker)) return;
-    sessionStorage.setItem(seedMarker, "1");
-    localStorage.setItem(key, JSON.stringify(value));
-  }, { key: PROFILE_KEY, value: profile, seedMarker: marker });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
-  const resume = page.getByRole("button", { name: `Resume ${campaignName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
@@ -104,8 +99,7 @@ test("retired first-operation credit survives reload while missing setup remains
   expect(await missing.locator("span").nth(1).evaluate((element) => getComputedStyle(element).textDecorationLine)).toBe("none");
   await page.screenshot({ path: `${EVIDENCE}/${testInfo.project.name}-completed.png` });
   await page.reload();
-  const resume = page.getByRole("button", { name: "Resume Level 3 Goal Review" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Level 3 Goal Review");
   await expect(goal).toContainText("1/1");
   expect(((await getActiveState(page)) as unknown as GameState).clinicalXp).toBe(125);
 });

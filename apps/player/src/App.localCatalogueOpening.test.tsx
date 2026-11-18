@@ -1,3 +1,5 @@
+import { ContinuousLoading, LOADING_SURFACE_ID } from "./ui/ContinuousLoading";
+import { CLINIC_PRESENTATION_EVENT } from "./ui/clinicPresentation";
 import { act } from "react";
 import { afterEach, expect, it, vi } from "vitest";
 import { IDBFactory, IDBKeyRange } from "fake-indexeddb";
@@ -7,15 +9,18 @@ import * as catalogue from "./mobile/performance/runtimeCatalogue";
 import * as storage from "./session/prototypeStorage";
 import * as recovery from "./session/localProfileJournal";
 import { deferred } from "./session/cloud/syncTestSupport";
-import { cleanupPhoneTests, phoneTestDom } from "./mobile/screenTestUtils";
+import { allElements, cleanupPhoneTests, phoneTestDom } from "./mobile/screenTestUtils";
 
-vi.mock("./facility", () => ({ FacilityCanvas: () => <div>Fixture map</div> }));
-vi.mock("./mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: () => <div>Fixture map</div> }));
+vi.mock("./ui/TutorialCoach", () => ({ TutorialCoach: () => null }));
+vi.mock("./facility", () => ({ FacilityCanvas: () => <div data-testid="facility-canvas" data-clinic-frame="waiting">Fixture map</div> }));
+vi.mock("./mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: () => <div data-testid="facility-canvas" data-clinic-frame="waiting">Fixture map</div> }));
 afterEach(async () => { vi.restoreAllMocks(); await cleanupPhoneTests(); });
 function fixture() {
   const env = phoneTestDom(), values = new Map<string, string>();
   Object.assign(env.browser, { localStorage: { getItem: (key: string) => values.get(key) ?? null,
     setItem: (key: string, value: string) => values.set(key, value), removeItem: (key: string) => values.delete(key) } });
+  Object.assign(env.browser, { setInterval: () => 1, clearInterval: vi.fn() });
+  vi.stubGlobal("ResizeObserver", class { observe() {} disconnect() {} });
   const state = createInitialGameState(), created = storage.appendLocalCampaign(storage.createFreshProfile(), state.founder, "Public reload", 0);
   expect(storage.savePrototypeProfileResult(created.profile).ok).toBe(true);
   vi.spyOn(catalogue, "runtimeCatalogueStatus").mockReturnValue({ indexed: true, decodedCases: 0, bankBytes: 0 });
@@ -54,4 +59,26 @@ it("waits for missing legacy catalogue fields without replacing the original sav
   await act(async () => warm.resolve());
   await vi.waitFor(() => expect(f.env.button("Resume Public reload").attributes.disabled).toBeUndefined());
   expect(f.values.get(storage.PROTOTYPE_PROFILE_KEY)).toBe(before);
+});
+
+it.each(["phone", "desktop"])("automatically restores the clear local clinic behind one screen until its %s art-ready frame", async layout => {
+  const f = fixture(), warm = deferred(), recovered = deferred();
+  Object.assign(f.env.browser.location, { search: `?layout=${layout}` });
+  vi.stubGlobal("indexedDB", new IDBFactory()); vi.stubGlobal("IDBKeyRange", IDBKeyRange);
+  vi.spyOn(catalogue, "ensureRuntimeCatalogue").mockImplementation(() => warm.promise);
+  const journal = vi.spyOn(recovery, "recoverLocalProfile").mockImplementation(async profile => { await recovered.promise; return profile; });
+  await f.env.render(<ContinuousLoading><AuthenticatedPrototype /></ContinuousLoading>);
+  const surface = f.env.doc.getElementById(LOADING_SURFACE_ID)!;
+  expect(surface.attributes.hidden).toBeUndefined();
+  await vi.waitFor(() => expect(journal).toHaveBeenCalledOnce());
+  await act(async () => recovered.resolve()); expect(surface.attributes.hidden).toBeUndefined();
+  await act(async () => warm.resolve());
+  await vi.waitFor(async () => { await act(async () => {}); expect(allElements(f.env.element, node => node.attributes["data-testid"] === "facility-canvas")).toHaveLength(1); });
+  expect(surface.attributes.hidden).toBeUndefined();
+  const host = allElements(f.env.element, node => node.attributes["data-testid"] === "facility-canvas")[0]!;
+  Object.assign(f.env.doc, { querySelector: (selector: string) => selector.includes("facility-canvas") ? host : null });
+  await act(async () => { host.setAttribute("data-clinic-frame", "ready"); f.env.doc.dispatchEvent(new Event(CLINIC_PRESENTATION_EVENT)); });
+  await vi.waitFor(async () => { await act(async () => {}); expect(surface.attributes.hidden).toBe(""); });
+  expect(f.env.doc.getElementById(LOADING_SURFACE_ID)).toBe(surface);
+  expect(allElements(f.env.element, node => node.tagName === "H1" && node.textContent === "Your campaigns")).toHaveLength(0);
 });

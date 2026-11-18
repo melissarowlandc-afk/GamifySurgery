@@ -288,6 +288,7 @@ export interface FacilityWaterCoolerView {
 }
 
 export interface FacilityPlacementView {
+  movingRoomId?: string;
   definitionId: string;
   displayName: string;
   /**
@@ -325,6 +326,9 @@ export interface FacilityCameraView {
  * asks the owner to place a room through `onPlaceExamRoom`.
  */
 export interface FacilityViewModel {
+  /** Paused, presentation-only outlines. Actual room geometry is untouched. */
+  remodelGhosts?: readonly FacilityRemodelGhost[];
+  blueprintRemodel?: boolean;
   /** Only the displayed live Needs-you cards; commands stay in the session. */
   alertPins?: FacilityAlertPinView[];
   facilityTitle: string;
@@ -377,6 +381,11 @@ export interface FacilityViewModel {
   /** Brief visual locator requested after opening a visible patient's chart. */
   selectedPatientInstanceId?: string | null;
   camera?: FacilityCameraView;
+}
+
+export interface FacilityRemodelGhost {
+  roomId: string; name: string; x: number; y: number;
+  width: number; height: number; orientation: RoomOrientation; valid: boolean;
 }
 
 export interface FacilityAlertPinView {

@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
 import {
-  getProfile,
+  leaveLocalFixtureSource, installFreshLocalProfile, resumeLocalCampaign, getProfile,
   installLevelOneVisualState,
   startClinic,
   PROFILE_KEY,
@@ -44,16 +44,14 @@ async function openFixture(page: Page): Promise<Page> {
   state.founder.path = [];
   state.founder.moving = false;
   active.serializedState = JSON.stringify(state);
-  await page.evaluate(({ key, value }) => localStorage.setItem(key, value), {
-    key: PROFILE_KEY,
-    value: JSON.stringify(profile),
-  });
+  
 
   const capture = await page.context().newPage();
   await capture.setViewportSize({ width: 1440, height: 1000 });
+  await leaveLocalFixtureSource(page);
+  await installFreshLocalProfile(capture, profile);
   await capture.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = capture.getByRole("button", { name: /Resume Loading Scale Clinic/ });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(capture, "Loading Scale Clinic");
   await expect(capture.getByTestId("facility-canvas")).toBeVisible();
   await capture.waitForFunction(() =>
     typeof (document.querySelector("[data-testid='facility-canvas']") as any)?.__facilityGaitSnapshot === "function",

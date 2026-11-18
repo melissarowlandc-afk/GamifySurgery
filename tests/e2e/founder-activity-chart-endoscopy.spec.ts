@@ -12,7 +12,7 @@ import {
 } from "@gamify-surgery/game-domain";
 
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   getProfile,
   setFastFacilitySpeed,
@@ -167,14 +167,9 @@ async function installReturningAmenityFixture(page: Page, name: string) {
   active.name = name;
   active.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value, marker }) => {
-    if (sessionStorage.getItem(marker)) return;
-    sessionStorage.setItem(marker, "1");
-    localStorage.setItem(key, JSON.stringify(value));
-  }, { key: PROFILE_KEY, value: profile, marker: `founder-chart.${name}` });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: `Resume ${name}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.waitForFunction(() => Boolean(
     (document.querySelector("[data-testid='facility-canvas']") as any)
@@ -339,14 +334,9 @@ async function installScheduledEndoscopyFixture(page: Page, name: string) {
   active.name = name;
   active.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value, marker }) => {
-    if (sessionStorage.getItem(marker)) return;
-    sessionStorage.setItem(marker, "1");
-    localStorage.setItem(key, JSON.stringify(value));
-  }, { key: PROFILE_KEY, value: profile, marker: `founder-endoscopy.${name}` });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: `Resume ${name}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.waitForFunction(() => Boolean(
     (document.querySelector("[data-testid='facility-canvas']") as any)
@@ -642,8 +632,7 @@ test("a naturally scheduled endoscopy uses the founder and credits the advertise
   });
 
   await page.reload();
-  const resume = page.getByRole("button", { name: `Resume ${clinic}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, clinic);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   const reloaded = (await getActiveState(page)) as unknown as GameState;
   expect(reloaded.cash).toBe(fixture.initialCash + 600);

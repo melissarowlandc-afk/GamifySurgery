@@ -1,4 +1,6 @@
-import { act, useEffect } from "react";
+import { ContinuousLoading, LOADING_SURFACE_ID } from "../ui/ContinuousLoading";
+import { LoadingRest } from "../ui/LoadingFlowContext";
+import { Profiler, act, useEffect } from "react";
 import type { AuthChangeEvent, Session, User } from "@supabase/supabase-js";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AuthGate } from "./AuthGate";
@@ -44,7 +46,7 @@ function session(id = "account-a"): Session {
 function Clinic() {
   const accountId = useAuthAccountId();
   useEffect(() => { mock.mounts(accountId); return () => { mock.cleanups(accountId); }; }, [accountId]);
-  return <p data-clinic={accountId ?? "local"}>Clinic {accountId ?? "local"}</p>;
+  return <p data-clinic={accountId ?? "local"}>Clinic {accountId ?? "local"}<LoadingRest /></p>;
 }
 
 type Harness = ReturnType<typeof phoneTestDom>;
@@ -62,7 +64,7 @@ async function submit(env: Harness) {
 async function emit(event: AuthChangeEvent, value: Session | null) {
   await act(async () => { mock.listener!(event, value); });
 }
-async function setup(hash = "", layout = "desktop", stored = new Map<string, string>()) {
+async function setup(hash = "", layout = "desktop", stored = new Map<string, string>(), continuous = false, screens: string[] = []) {
   const env = phoneTestDom();
   Object.assign(env.browser.location, { origin: "https://melissarowlandc-afk.github.io", hash, search: `?layout=${layout}`,
     href: `https://melissarowlandc-afk.github.io/GamifySurgery/?layout=${layout}${hash}` });
@@ -76,7 +78,12 @@ async function setup(hash = "", layout = "desktop", stored = new Map<string, str
     removeItem: (key: string) => stored.delete(key),
   });
   vi.stubGlobal("fetch", mock.network);
-  await env.render(<AuthGate><Clinic /></AuthGate>);
+  const child = <AuthGate><Clinic /></AuthGate>;
+  const record = () => queueMicrotask(() => {
+    const surface = env.doc.getElementById(LOADING_SURFACE_ID);
+    screens.push(surface && surface.attributes.hidden === undefined ? "loading" : env.element.textContent.includes("Clinic account") ? "clinic" : "sign-in");
+  });
+  await env.render(continuous ? <ContinuousLoading><Profiler id="auth-screens" onRender={record}>{child}</Profiler></ContinuousLoading> : child);
   return env;
 }
 
@@ -457,5 +464,38 @@ describe("invite-only shared auth gate", () => {
     mock.configured = false; mock.local = createLocalPrototypeSession();
     const env = await setup(); expect(mock.mounts).not.toHaveBeenCalled();
     expect(env.element.textContent).toContain("Local bypass is disabled");
+  });
+});
+
+describe.each(["phone", "desktop"])("%s continuous auth handoff", layout => {
+  it("never exposes a sign-in form between a delayed remembered session and the clinic", async () => {
+    let restore!: (value: unknown) => void, verify!: (value: unknown) => void;
+    mock.getSession.mockReturnValue(new Promise(resolve => { restore = resolve; }));
+    mock.getUser.mockReturnValue(new Promise(resolve => { verify = resolve; }));
+    const screens: string[] = [], env = await setup("", layout, new Map(), true, screens);
+    const host = env.doc.getElementById(LOADING_SURFACE_ID)!;
+    expect(host.attributes.hidden).toBeUndefined();
+    await act(async () => restore({ data: { session: session() }, error: null }));
+    expect(host.attributes.hidden).toBeUndefined(); expect(screens.every(screen => screen === "loading")).toBe(true);
+    await act(async () => verify({ data: { user: session().user }, error: null }));
+    expect(host.attributes.hidden).toBe(""); expect(screens).not.toContain("sign-in");
+    expect(env.doc.getElementById(LOADING_SURFACE_ID)).toBe(host);
+    expect(env.element.textContent).toContain("Clinic account-a");
+  });
+  it("shows real signed-out fields, then covers the submitted sign-in immediately through verification", async () => {
+    vi.useFakeTimers(); const screens: string[] = [], env = await setup("", layout, new Map(), true, screens);
+    await act(async () => { await vi.advanceTimersByTimeAsync(400); });
+    const host = env.doc.getElementById(LOADING_SURFACE_ID)!; expect(host.attributes.hidden).toBe("");
+    let signedIn!: (value: unknown) => void;
+    mock.signIn.mockReturnValue(new Promise(resolve => { signedIn = resolve; }));
+    await input(env, "email", "account-a@example.invalid"); await input(env, "password", "eight888");
+    let submitted!: Promise<void>;
+    await act(async () => { submitted = (testElementProps(env.find(node => node.tagName === "FORM")).onSubmit as (event: unknown) => Promise<void>)({ preventDefault() {} }); });
+    expect(host.attributes.hidden).toBeUndefined();
+    expect(allElements(env.element, node => node.tagName === "FORM")).toHaveLength(0);
+    const afterSubmission = screens.length;
+    await act(async () => { signedIn({ data: { session: session() }, error: null }); await submitted; });
+    expect(host.attributes.hidden).toBe(""); expect(screens.slice(afterSubmission)).not.toContain("sign-in");
+    expect(env.doc.getElementById(LOADING_SURFACE_ID)).toBe(host);
   });
 });

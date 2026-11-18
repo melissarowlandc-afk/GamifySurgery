@@ -2,7 +2,7 @@ import { mkdirSync, readFileSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
 import {
-  getActiveState,
+  leaveLocalFixtureSource, installFreshLocalProfile, resumeLocalCampaign, getActiveState,
   getProfile,
   installLevelOneVisualState,
   openCampaignScreen,
@@ -38,15 +38,15 @@ async function openProofFixture(page: Page): Promise<Page> {
   const patient = Object.values(state.encounters)[0] as any;
   if (patient?.patientAppearance) patient.patientAppearance = { ...patient.patientAppearance, stillId: "gs022-new-person-001", roleStyle: "patient" };
   active.serializedState = JSON.stringify(state);
-  await page.evaluate(({ key, value }) => localStorage.setItem(key, value), { key: PROFILE_KEY, value: JSON.stringify(profile) });
+  
 
-  // Keep the source tab alive: its pagehide handler must not overwrite this
-  // controlled persisted fixture while the capture tab renders it.
+  // Install the complete copy under a fresh identity on the receiving page.
   const capture = await page.context().newPage();
   await capture.setViewportSize({ width: 1440, height: 1000 });
+  await leaveLocalFixtureSource(page);
+  await installFreshLocalProfile(capture, profile);
   await capture.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = capture.getByRole("button", { name: /Resume GS026 Proof Clinic/ });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(capture, "GS026 Proof Clinic");
   await expect(capture.getByTestId("facility-canvas")).toBeVisible();
   await capture.waitForFunction(() => typeof (document.querySelector("[data-testid='facility-canvas']") as any)?.__facilityGaitSnapshot === "function");
   return capture;
@@ -178,6 +178,6 @@ test("founder choice 36 persists its GS-026 portrait across reload", async ({ pa
   await page.getByLabel("Founder name").fill("Extra Founder"); await page.getByRole("button", { name: "Continue" }).click();
   await page.getByRole("button", { name: "Build a Surgery Clinic" }).click(); await page.getByLabel("Clinic name").fill("Extra Founder Clinic"); await page.getByRole("button", { name: "Open the Clinic" }).click();
   expect((await getActiveState(page) as any).founder.appearance.stillId).toBe("mixed-20260910-patient-02");
-  await page.reload(); await page.getByRole("button", { name: /Resume Extra Founder Clinic/ }).click(); await expect(page.getByTestId("facility-canvas")).toBeVisible();
+  await page.reload(); await resumeLocalCampaign(page, "Extra Founder Clinic"); await expect(page.getByTestId("facility-canvas")).toBeVisible();
   expect((await getActiveState(page) as any).founder.appearance.stillId).toBe("mixed-20260910-patient-02");
 });

@@ -43,7 +43,7 @@ describe("phone ghosts use unchanged desktop command rules", () => {
     const direct = gameReducer(state, { type: "PLACE_ROOM", operationId: "fixed", roomId: "fixed-room", roomDefinitionId: "room.examination", x: 0, y: 0, orientation: 0 });
     expect(fixed.valid).toBe(direct.operationReceipts.fixed!.status === "applied");
   });
-  it("move ghosts exclude their own original footprint and preserve occupancy, protected-room and overlap guards", () => {
+  it("move ghosts exclude their own original footprint and carry idle occupants and preserve protected-room and overlap guards", () => {
     const state = fixture(); state.rooms.push({ id: "mobile.move", roomDefinitionId: "room.waiting", x: 3, y: 3,
       orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
     for (const [x, y] of [[3, 3], [0, 0], [-1, 3], [33, 28], [80, 50]] as const) {
@@ -57,7 +57,9 @@ describe("phone ghosts use unchanged desktop command rules", () => {
     const front = state.rooms.find(room => room.roomDefinitionId === "room.front_desk")!;
     expect(previewMobilePlacement(state, front.roomDefinitionId, front.id, 0, 0).reason).toContain("anchored");
     state.environment.founderLocation = { x: 4, y: 4 };
-    expect(previewMobilePlacement(state, "room.waiting", "mobile.move", 9, 9).reason).toContain("clear this room");
+    const before = structuredClone(state);
+    expect(previewMobilePlacement(state, "room.waiting", "mobile.move", 9, 9).valid).toBe(true);
+    expect(state).toEqual(before); // An idle founder is carried only on commit.
   });
 });
 

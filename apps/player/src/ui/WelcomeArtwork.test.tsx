@@ -91,7 +91,10 @@ describe("owner-selected welcome artwork", () => {
       expect(links[index]).toContain('as="image"'); expect(links[index]).toContain('fetchpriority="high"');
       expect(html.indexOf(links[index]!)).toBeLessThan(html.indexOf('<script type="module"'));
     }
-    expect(html).toContain(`body:has(#root:empty) { background: ${loadingArtwork.palette.background}; }`);
+    if (file === "index.html") {
+      expect(html).toContain('id="clinic-loading-screen"'); expect(html).toContain('href="/src/ui/loadingBootstrap.css"');
+      expect(readFileSync(new URL("./loadingBootstrap.css", import.meta.url), "utf8")).toContain(`body { margin: 0; background: ${loadingArtwork.palette.background}; }`);
+    } else expect(html).toContain(`body:has(#root:empty) { background: ${loadingArtwork.palette.background}; }`);
   });
   it("keeps copy and the progress bar contrasting on an opaque surface in either shell theme", () => {
     const palette = loadingArtwork.palette;

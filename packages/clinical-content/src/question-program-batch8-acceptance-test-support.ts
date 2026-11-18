@@ -1,3 +1,5 @@
+// Exact historical scope for owner-directed flag fixes batch 5.
+import {beforeFlags5AcceptanceRelease,beforeFlags5AcceptanceManifest} from './question-flags5-acceptance-test-support';
 import {beforeProgramBatch9AcceptanceRelease,beforeProgramBatch9AcceptanceManifest,beforeProgramBatch9AcceptanceTimings,beforeProgramBatch9AcceptanceSource} from "./question-program-batch9-acceptance-test-support";
 import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
@@ -5,6 +7,9 @@ import {expect} from "vitest";
 import type {SyntheticClinicalRelease,AnswerChoiceTimingRegistryEntry} from "./schema";
 import type {QuestionShipManifest} from "./question-ship-manifest";
 import {PROGRAM_BATCH8_ROWS,PROGRAM_BATCH8_REPLACED_ROWS} from "./question-program-batch8-accepted-data-20261112";
+import {QUESTION_FLAGS5_ACCEPTED_ROWS} from "./question-flags5-accepted-20261116";
+import {QUESTION_FLAGS5_FINAL_ACCEPTED_ROWS} from "./question-flags5-final-accepted-20261116";
+const flags5QuestionIds=new Set<string>([...QUESTION_FLAGS5_ACCEPTED_ROWS,...QUESTION_FLAGS5_FINAL_ACCEPTED_ROWS].map(row=>row.questionVariantId));
 const read=(p:string)=>JSON.parse(readFileSync(new URL("../../../"+p,import.meta.url),"utf8"));
 const before=read("tools/question-quality/fixtures/question-topic-acceptance-batch8-before-20261112.json");
 const after=read("tools/question-quality/fixtures/question-topic-acceptance-batch8-after-20261112.json");
@@ -70,6 +75,15 @@ const membershipCache=new WeakMap<SyntheticClinicalRelease,{manifest:QuestionShi
  * question in ordinary membership tests. No timeout or assertion is relaxed. */
 export function programBatch8HistoricalMembership(release:SyntheticClinicalRelease,manifest:QuestionShipManifest,
   scope:{caseId:string}|{questionVariantId:string}){
+  // Both flags inverses are already no-ops when neither exact accepted version
+  // set occurs. Historical epochs reach this helper hundreds of times; avoid
+  // serializing their entire library merely to rediscover that no-op. Inputs
+  // containing any flags5 version still traverse the complete exact guards.
+  if(manifest.accepted.some(row=>flags5QuestionIds.has(row.questionVariantId))||
+    release.cases.some(cs=>cs.decisionNodes.some(node=>flags5QuestionIds.has(node.questionVariantId)))){
+    release=beforeFlags5AcceptanceRelease(release);
+    manifest=beforeFlags5AcceptanceManifest(manifest);
+  }
   let prior=membershipCache.get(release);
   if(!prior||prior.manifest!==manifest){
     prior={manifest,release:beforeProgramBatch8AcceptanceRelease(release),authority:beforeProgramBatch8AcceptanceManifest(manifest)};

@@ -229,6 +229,12 @@ export function describeBuildUndoAction(
     case "SELL_ROOM":
       action = `Sell ${roomName(beforeNames)}`;
       break;
+    case "APPLY_REMODEL_PLAN":
+      action = "Remodel rooms";
+      break;
+    case "ROTATE_ROOM":
+      action = `Rotate ${roomName(beforeNames)}`;
+      break;
     case "MOVE_ROOM":
       action = `Move ${roomName(beforeNames)}`;
       break;

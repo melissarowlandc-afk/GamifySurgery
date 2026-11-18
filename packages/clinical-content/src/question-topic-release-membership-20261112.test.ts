@@ -5,10 +5,16 @@ import {existsSync,readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
 import {QUESTION_SHIP_MANIFEST as activeManifest} from "./question-ship-manifest";
 import {SYNTHETIC_CLINICAL_RELEASE as activeLive} from "./synthetic-content";
-import {topicQuestionAcceptance,topicCaseIsExplicitlyLive,retainedTopicCase} from "./question-program-batch6-acceptance-test-support";
+import {topicQuestionAcceptance as questionAtEpoch,topicCaseIsExplicitlyLive as caseAtEpoch,retainedTopicCase as retainedAtEpoch} from "./question-program-batch6-acceptance-test-support";
 
 // Batches9-11 independently bind every new row; preserve the complete release36 topic epoch.
 const currentManifest=beforeProgramBatch9AcceptanceManifest(activeManifest),currentLive=beforeProgramBatch9AcceptanceRelease(activeLive);
+// Keep this historical proof in its fully guarded release36 epoch. The flags5
+// current library is independently verified by its complete acceptance tests.
+const historicalEpoch={release:currentLive,manifest:currentManifest};
+const topicQuestionAcceptance=(id:string)=>questionAtEpoch(id,historicalEpoch);
+const topicCaseIsExplicitlyLive=(id:string)=>caseAtEpoch(id,historicalEpoch);
+const retainedTopicCase=(id:string)=>retainedAtEpoch(id,historicalEpoch);
 const manifest=beforeProgramBatch8AcceptanceManifest(currentManifest);
 const live=beforeProgramBatch8AcceptanceRelease(currentLive);
 const read=(path:string)=>JSON.parse(readFileSync(new URL("../../../"+path,import.meta.url),"utf8"));

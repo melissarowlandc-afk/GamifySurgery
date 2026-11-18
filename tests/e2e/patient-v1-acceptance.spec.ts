@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 import {
-  getActiveState,
+  installFreshLocalProfile, resumeLocalCampaign, getActiveState,
   getProfile,
   installLevelOneVisualState,
   startClinic,
@@ -62,15 +62,9 @@ test("patient-v1 keeps the same identity through map/list/chart and reload", asy
   };
   chartState.encounters["encounter.visual.patient.3"]!.checkInStatus = "checked_in";
   campaignForChart.serializedState = JSON.stringify(chartState);
-  await page.evaluate(({ profileKey, nextProfile }) => {
-    window.localStorage.setItem(profileKey, JSON.stringify(nextProfile));
-  }, { profileKey: PROFILE_KEY, nextProfile: profileForChart });
-  await page.addInitScript(({ profileKey, nextProfile }) => {
-    window.localStorage.setItem(profileKey, JSON.stringify(nextProfile));
-  }, { profileKey: PROFILE_KEY, nextProfile: profileForChart });
+  await installFreshLocalProfile(page, profileForChart);
   await page.reload();
-  const resumeCampaign = page.getByRole("button", { name: /Resume Patient Art Clinic/ });
-  if (await resumeCampaign.isVisible()) await resumeCampaign.click();
+  await resumeLocalCampaign(page, "Patient Art Clinic");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 
   const resumeTime = page.getByRole("button", { name: "Resume facility time" });
@@ -99,8 +93,7 @@ test("patient-v1 keeps the same identity through map/list/chart and reload", asy
   });
 
   await page.reload();
-  const resume = page.getByRole("button", { name: /Resume Patient Art Clinic/ });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Patient Art Clinic");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   const after = await getActiveState(page);
   expect(patientIdentity(after, "encounter.visual.patient.3")).toBe(jordanIdentity);
@@ -124,8 +117,7 @@ test("patient-v1 map is responsive and the QA gallery exposes every roster ident
 
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/?prototype-tools=0&visual-qa=characters");
-  const resume = page.getByRole("button", { name: /Resume Patient Art Clinic/ });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Patient Art Clinic", page.getByRole("heading", { name: "Character Visual QA" }));
   await expect(page.getByRole("heading", { name: "Character Visual QA" })).toBeVisible();
   const roster = page.locator('[data-character-id^="patient.adult."]');
   await expect(roster).toHaveCount(50);
@@ -147,8 +139,7 @@ test("character QA exposes explicit static cardinals without mirrored or gait-cy
   await page.setViewportSize({ width: 1374, height: 1000 });
   await openPatientVisualFixture(page);
   await page.goto("/?prototype-tools=0&visual-qa=characters");
-  const resume = page.getByRole("button", { name: /Resume Patient Art Clinic/ });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Patient Art Clinic", page.getByRole("heading", { name: "Character Visual QA" }));
   await expect(page.getByRole("heading", { name: "Character Visual QA" })).toBeVisible();
 
   for (const id of ["patient.adult.001", "gs022-new-employee-001", "founder.01"] as const) {
@@ -172,8 +163,7 @@ test("FacilityScene glides each live non-founder on one phase-invariant lateral 
   await page.setViewportSize({ width: 1374, height: 1000 });
   await openPatientVisualFixture(page);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: /Resume Patient Art Clinic/ });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Patient Art Clinic");
   const facility = page.getByTestId("facility-canvas");
   await expect(facility).toBeVisible();
   await page.waitForFunction(() => {
@@ -306,12 +296,9 @@ test("ambient passer preserves its patient-v1 identity without becoming a chart"
     lastMovedAtFacilityTick: 0,
   }];
   campaign.serializedState = JSON.stringify(state);
-  await page.addInitScript(({ profileKey, nextProfile }) => {
-    window.localStorage.setItem(profileKey, JSON.stringify(nextProfile));
-  }, { profileKey: PROFILE_KEY, nextProfile: profile });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
-  const resume = page.getByRole("button", { name: /Resume Patient Art Clinic/ });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Patient Art Clinic");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   const reloaded = await getActiveState(page) as unknown as {
     environment: { ambientPedestrians: Array<{ id: string; appearance: { patientIdentityId?: string; stillId?: string } }> };

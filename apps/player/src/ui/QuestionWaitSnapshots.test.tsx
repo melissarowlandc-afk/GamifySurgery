@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { gameReducer, getAnswerChoiceServicePreview, type GameState, type ServiceOperationState } from "@gamify-surgery/game-domain";
+import { gameReducer, getAnswerChoiceServicePreview, getDiagnosticOrderPlans, serializeGameState, type GameState, type ServiceOperationState } from "@gamify-surgery/game-domain";
 import { timingFixture } from "../../../../packages/game-domain/tests/diagnostic-timing-fixtures";
 import { diagnosticChoiceTimingPresentation } from "../session/diagnosticTimingPresentation";
 import { MobileChart, MobileTeamDiscussion } from "../mobile/MobileChart";
@@ -121,6 +121,26 @@ function busyUltrasoundQuestion() {
 }
 
 describe.each(["phone", "desktop"] as const)("%s question wait snapshot", (layout) => {
+  it("only quotes every choice; rendering estimates never orders, executes or changes a saved game", async () => {
+    const fixture = busyUltrasoundQuestion();
+    const before = serializeGameState(fixture.state);
+    const orders = structuredClone(getDiagnosticOrderPlans(fixture.state));
+    const services = structuredClone(fixture.state.serviceOperations);
+    const env = mountChart(layout);
+    for (let repeat = 0; repeat < 3; repeat++) {
+      const chart = fixture.chart(fixture.state);
+      await env.renderChart(chart);
+      for (const choice of chart.decisionSteps![0]!.answerChoices) {
+        expect(choice.etaLabel).toMatch(/^If ordered now: about \d+ min$/);
+        expect(choice.etaLabel).not.toMatch(/remaining|in progress|countdown/i);
+      }
+      expect(getDiagnosticOrderPlans(fixture.state)).toEqual(orders);
+      expect(fixture.state.serviceOperations).toEqual(services);
+      expect(serializeGameState(fixture.state)).toBe(before);
+    }
+    expect(env.callbacks.onSubmitAnswer).not.toHaveBeenCalled();
+  });
+
   it("keeps every choice's estimate and breakdown fixed while a busy ultrasound queue advances", async () => {
     const fixture = busyUltrasoundQuestion();
     const { renderChart, waits } = mountChart(layout);
@@ -129,6 +149,7 @@ describe.each(["phone", "desktop"] as const)("%s question wait snapshot", (layou
     await renderChart(before);
     const displayed = waits();
     expect(displayed).toHaveLength(before.decisionSteps![0]!.answerChoices.length);
+    expect(displayed.every(wait => /If ordered now: about \d+ min/.test(wait.text))).toBe(true);
     const afterState = fixture.advance();
     expect(afterState.facilityTick).toBe(fixture.state.facilityTick + 5);
     expect(afterState.serviceOperations.find((operation) => operation.id === "wait-snapshot.busy-ultrasound"))
@@ -140,6 +161,10 @@ describe.each(["phone", "desktop"] as const)("%s question wait snapshot", (layou
     expect(afterPreviews.some((preview, index) => index !== busyIndex && preview.durationTicks === beforePreviews[index]!.durationTicks)).toBe(true);
     await renderChart(fixture.chart(afterState));
     expect(waits()).toEqual(displayed);
+    // A fresh quote remains current with the queue, while the visible chart's
+    // consistent opening snapshot never masquerades as an ordered countdown.
+    expect(fixture.chart(afterState).decisionSteps![0]!.answerChoices[busyIndex]!.etaLabel)
+      .toBe(`If ordered now: about ${afterPreviews[busyIndex]!.durationTicks} min`);
   });
 
   it("refreshes waits on close/reopen, chart change and a new question", async () => {

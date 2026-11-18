@@ -9,7 +9,7 @@ import {
 } from "@gamify-surgery/game-domain";
 import { mkdirSync } from "node:fs";
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   getProfile,
   startClinic,
@@ -244,17 +244,9 @@ async function installFixture(
   campaign.name = campaignName;
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(
-    ({ storageKey, value, sessionMarker }) => {
-      if (sessionStorage.getItem(sessionMarker)) return;
-      sessionStorage.setItem(sessionMarker, "installed");
-      localStorage.setItem(storageKey, JSON.stringify(value));
-    },
-    { storageKey: PROFILE_KEY, value: profile, sessionMarker: marker },
-  );
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: `Resume ${campaignName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 

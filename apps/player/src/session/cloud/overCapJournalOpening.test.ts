@@ -9,7 +9,7 @@ import { IndexedDbCloudCache } from "./cache";
 import { codecTestCampaign } from "./codecTestSupport";
 import { compressCloudText, decompressCloudText } from "./codecCompression";
 import { logicalJsonText, sha256Utf8, type CodecJson } from "./codecJson";
-import { snapshotEvidence, loadCloudSnapshot } from "./snapshotCodec";
+import { snapshotEvidence, loadCloudSnapshot, snapshotCopy } from "./snapshotCodec";
 import { bindJournal, prepareJournal, prepareJournalInWorker } from "./journalCodec";
 import { cloudCodec } from "./codecWorker";
 import { runCloudCodecTask } from "./codecTasks";
@@ -50,6 +50,52 @@ beforeAll(async () => {
 }, 90_000);
 afterEach(() => vi.unstubAllGlobals());
 
+it.each(["trimmable", "capacity", "cache-head-persisted", "offline-marker"])("selects a newer compacted account head over an old journal (%s)", async mode => {
+  const genuineCapacity = mode !== "trimmable";
+  const state = genuineCapacity ? compactGameState(createHistoryCompactionFixture()) : latest;
+  if (genuineCapacity) {
+    const template = Object.values(base.employeeDiscussions!)[0]!;
+    state.employeeDiscussions = {};
+    for (let n = 0; bytes(state) < 3_020_000; n++) {
+      const id = `discussion.public.live.${n}`;
+      state.employeeDiscussions[id] = { ...structuredClone(template), id, lifecycle: "waiting_unopened", firstOpenedAtTick: null,
+        resolvedAtFacilityTick: null, currentNodeIndex: 0, answers: [], steps: template.steps.map(step => ({ ...step, status: "locked", answer: null })) };
+    }
+  }
+  const localSeed: JournalSeed = { ...seed, checkpoint: createGameEvidenceCheckpoint(state), snapshotPolicy: { lineage: {
+    ...confirmed.lineage!, sequence: 20, branchId: "public.local-child", parents: [confirmed.snapshot.uncompressedSha256] } } };
+  const f = await durableFixture(localSeed, []);
+  let session: CloudGameSession | undefined;
+  const remote = compactGameState(latest); remote.facilityTick += 10;
+  const account = await snapshotCopy(remote, seed.campaign, "20", f.clock.wall, { branchId: "public.remote-child", sequence: 60,
+    parents: [confirmed.snapshot.uncompressedSha256] });
+  f.server.seed(f.scope.accountId, account);
+  if (mode === "offline-marker") await f.runtime.entryStore.write(`offline-base:${f.scope.campaignId}`, { snapshotSha256: confirmed.snapshot.uncompressedSha256 });
+  if (mode === "cache-head-persisted") {
+    // Killed after the new verified cache head was durable, before journal bind.
+    const saved = await f.cache.read(f.scope);
+    await f.cache.write({ schemaVersion: 1, scope: f.scope, confirmed: account, recovery: null }, saved!.cacheRevision);
+  }
+  const originalJournal = canonical(await f.cache.journal.read(f.key));
+  const expected = await runCloudCodecTask({ kind: "hydrate", input: { snapshot: account.snapshot, evidence: account.evidence, lineage: account.lineage,
+    revision: account.revision, expectedRevision: account.revision, expectedBaselineId: account.baselineId,
+    expectedCampaignId: account.campaignId, preparePlayable: true } });
+  const load = vi.spyOn(f.runtime.transport, "load"), started = performance.now();
+  try {
+    const coordinator = await openAutomaticCloudCampaign({ runtime: f.runtime, campaignId: f.scope.campaignId, clock: f.clock });
+    session = await CloudGameSession.create(coordinator, undefined, undefined, { operational: false });
+    if (process.env.GS_PHONE_LOOP_PROOF) console.log("PHONE_LARGE_DIVERGENCE", JSON.stringify({ mode, ms: performance.now() - started,
+      loads: load.mock.calls.filter(([id]) => id === f.scope.campaignId).length }));
+    expect(session.canExecute).toBe(true); expect(session.state).toEqual(expected.state); expect(coordinator.view.failure).toBeNull();
+    expect(load.mock.calls.filter(([id]) => id === f.scope.campaignId)).toHaveLength(1);
+    if (genuineCapacity) {
+      expect(coordinator.hasOverCapacityJournal).toBe(false);
+      const backup = (await f.runtime.entryStore.entries()).find(row => row.key.startsWith("conflict:") && (row.value as any).journal);
+      expect(backup).toBeDefined(); expect(canonical((backup!.value as any).journal)).toBe(originalJournal);
+    } else expect((await f.runtime.entryStore.entries()).some(row => row.key.startsWith("older-copy:") || row.key.startsWith("conflict:"))).toBe(true);
+  } finally { load.mockRestore(); session?.dispose(); await f.cache.close(); }
+}, 90_000);
+
 async function durableFixture(inputSeed = seed, tail = rows) {
   const factory = new IDBFactory(); vi.stubGlobal("indexedDB", factory); vi.stubGlobal("IDBKeyRange", IDBKeyRange);
   const cache = new IndexedDbCloudCache(factory, `public.over-cap.${crypto.randomUUID()}`);
@@ -62,6 +108,22 @@ async function durableFixture(inputSeed = seed, tail = rows) {
   const runtime = { ...scope, cache, entryStore: new MemoryCloudEntryStore(), transport: server.transport(scope.accountId), region: "Synthetic" };
   return { cache, scope, key, clock, server, runtime };
 }
+
+it("reuses a large verified compressed journal through repeated opening-cache writes", async () => {
+  const f = await durableFixture(), spy = vi.spyOn(cloudCodec, "run"), started = performance.now();
+  try {
+    const original = canonical(await f.cache.journal.read(f.key));
+    let stored = (await f.cache.read(f.scope))!;
+    for (let n = 0; n < 6; n++) {
+      expect(stored.entry.recovery?.following).toBeDefined();
+      await f.cache.write({ ...stored.entry, recovery: { ...stored.entry.recovery!, writerGeneration: String(n + 1) } }, stored.cacheRevision);
+      stored = (await f.cache.read(f.scope))!;
+    }
+    const prepares = spy.mock.calls.filter(([task]) => task.kind === "journalPrepare").length;
+    if (process.env.GS_PHONE_LOOP_PROOF) console.log("PHONE_LARGE_RECOVERY_REWRITES", JSON.stringify({ ms: performance.now() - started, prepares }));
+    expect(prepares).toBe(1); expect(canonical(await f.cache.journal.read(f.key))).toBe(original);
+  } finally { spy.mockRestore(); await f.cache.close(); }
+}, 90_000);
 
 it.each(["tail", "release-39-local-snapshot"])("opens and commits a verified over-cap %s through normal cache/entry", async mode => {
   const f = await durableFixture(); let session: CloudGameSession | undefined;

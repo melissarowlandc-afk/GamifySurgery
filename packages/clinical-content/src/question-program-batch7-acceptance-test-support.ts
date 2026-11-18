@@ -77,8 +77,9 @@ export function beforeProgramBatch7AcceptanceSource(path:string,current:string|u
 
 /** Validate every exact authority row and fresh binding against the frozen
  * current epoch, including accepted cases deliberately retired in this batch. */
-export function topicQuestionAcceptance(questionVariantId:string):{accepted:boolean;live:boolean}{
-  const historical=programBatch8HistoricalMembership(currentRelease,currentManifest,{questionVariantId});
+type HistoricalMembershipEpoch={release:SyntheticClinicalRelease;manifest:QuestionShipManifest};
+export function topicQuestionAcceptance(questionVariantId:string,epochContext?:HistoricalMembershipEpoch):{accepted:boolean;live:boolean}{
+  const historical=programBatch8HistoricalMembership(epochContext?.release??currentRelease,epochContext?.manifest??currentManifest,{questionVariantId});
   const authorized=[...epoch.before.accepted,...rows] as QuestionShipManifest["accepted"];
   const expectedRows=authorized.filter(r=>r.questionVariantId===questionVariantId);
   expect(historical.manifest.accepted.filter(r=>r.questionVariantId===questionVariantId)).toEqual(expectedRows);
@@ -89,11 +90,11 @@ export function topicQuestionAcceptance(questionVariantId:string):{accepted:bool
   for(const binding of expected){const cs=historical.release.cases.find(c=>c.id===binding[0])!;expect(digest(cs),cs.id+" exact frozen accepted context").toBe(epoch.after.caseHashes[cs.id]);}
   return {accepted:expectedRows.length>0,live:expected.length>0};
 }
-export function topicCaseIsExplicitlyLive(caseId:string):boolean{
-  const historical=programBatch8HistoricalMembership(currentRelease,currentManifest,{caseId});
+export function topicCaseIsExplicitlyLive(caseId:string,epochContext?:HistoricalMembershipEpoch):boolean{
+  const historical=programBatch8HistoricalMembership(epochContext?.release??currentRelease,epochContext?.manifest??currentManifest,{caseId});
   const expected=Object.hasOwn(epoch.after.caseHashes,caseId);
   expect(historical.release.cases.some(c=>c.id===caseId),caseId).toBe(expected);
   const rowsForCase=historical.manifest.accepted.filter(r=>r.caseId===caseId);
-  for(const row of rowsForCase)topicQuestionAcceptance(row.questionVariantId);
+  for(const row of rowsForCase)topicQuestionAcceptance(row.questionVariantId,epochContext);
   return expected;
 }

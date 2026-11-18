@@ -13,6 +13,8 @@ import { numericClinic } from "./unsafeNumberTestSupport";
 import { compressCloudText, decompressCloudText } from "./codecCompression";
 import { logicalJsonText } from "./codecJson";
 import { problemDiagnostics } from "../../diagnostics/problemDiagnostics";
+import { ControllableOperationalPort } from "./operationalSessionTestSupport";
+import { cloudCampaignStorageKey } from "../accountStorageKey";
 
 afterEach(() => { vi.useRealTimers(); vi.restoreAllMocks(); });
 
@@ -53,7 +55,7 @@ it.each(["40001", "54000", "55000", "42501", "XX000"])("bounds repeated failed m
   expect(rpc.mock.calls.filter(([name]) => name === "beta2_cloud_lease")).toHaveLength(3);
 });
 
-async function snapshotDevice(repaired = false) {
+async function snapshotDevice(repaired = false, worker = false) {
   const f = await syncHarness(), entryStore = new MemoryCloudEntryStore(), transport = f.server.transport(f.scope.accountId);
   const state = createInitialGameState(undefined, { campaignId: f.scope.campaignId, campaignSeed: "cloud.test", createdAtRealMs: 0 });
   const campaign = f.prepared.envelope.campaign;
@@ -74,12 +76,44 @@ async function snapshotDevice(repaired = false) {
     expect(loaded.numberRepairs).toHaveLength(1);
   }
   const selected = vi.fn(async () => false);
-  const session = await CloudGameSession.create(coordinator, undefined, selected, { operational: false });
+  const ports: ControllableOperationalPort[] = [];
+  const session = await CloudGameSession.create(coordinator, undefined, selected, { operational: worker ? { createPort: () => {
+    const port = new ControllableOperationalPort(); ports.push(port); return port;
+  } } : false });
   const runtime = { ...f.scope, region: "test", cache: f.cache, entryStore, transport };
-  return { ...f, coordinator, session, transport, entryStore, runtime, selected };
+  return { ...f, coordinator, session, transport, entryStore, runtime, selected, ports };
 }
 
-it("keeps verified local play and exact rejected bytes, then reconciles instead of replaying the stale candidate", async () => {
+it.each(["pulses", "Retry"])("uploads after an unchanged-head revision rejection through %s without disposing the mounted session", async trigger => {
+  const f = await snapshotDevice(false, true), commit = vi.spyOn(f.transport, "commit").mockRejectedValue(new CloudSyncError("revision"));
+  try {
+    const key = cloudCampaignStorageKey(f.scope), owner = (await f.cache.journal!.head(key))!.owner;
+    expect(await f.session.executeAsync({ type: "SET_SIMULATION_SPEED", speed: 2, operationId: "revision-mounted-before" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();
+    expect(await f.session.checkpointNow("purchase")).toBe(false);
+    const rejected = f.coordinator.recoveryEntry!.recovery!.inFlight!;
+    expect(f.session.canExecute).toBe(true);
+    expect(await f.session.executeAsync({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "revision-mounted-after" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();
+    expect(await f.session.durable()).toBe(true);
+    const expected = f.session.state;
+    commit.mockRestore();
+    for (let attempt = 0; attempt < 4 && f.coordinator.view.pending; attempt++) {
+      f.clock.advance(300_000);
+      if (trigger === "pulses") await f.session.pulse(); else await f.session.reconnect();
+    }
+    expect(f.coordinator.view).toMatchObject({ pending: false, failure: null, localDurable: true, canExecute: true });
+    expect(f.session.state).toEqual(expected); expect(f.session.needsReload).toBe(false);
+    expect(f.selected).not.toHaveBeenCalled(); expect(f.ports).toHaveLength(1); expect(f.ports[0]!.stopped).toBe(false);
+    expect((await f.cache.journal!.head(key))!.owner).toBe(owner);
+    expect(f.server.operationCount(f.scope.accountId)).toBe(1);
+    expect((await f.entryStore.entries()).some(row => JSON.stringify(row.value).includes(rejected.requestSha256))).toBe(true);
+    const saved = await f.transport.load(f.scope.campaignId);
+    const loaded = await f.coordinator.codec.run({ kind: "hydrate", input: { ...saved, expectedRevision: saved.revision,
+      expectedCampaignId: saved.campaignId, expectedBaselineId: saved.baselineId } });
+    expect(loaded.state).toEqual(expected);
+  } finally { f.session.dispose(); }
+});
+
+it("bounds repeated same-head rejections while retaining every exact request, then also supports a later cold reopen", async () => {
   const f = await snapshotDevice(), commit = vi.spyOn(f.transport, "commit").mockRejectedValue(new CloudSyncError("revision"));
   let reopened: CloudGameSession | undefined;
   try {
@@ -91,8 +125,16 @@ it("keeps verified local play and exact rejected bytes, then reconciles instead 
     expect(f.session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "local.during.conflict" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();
     expect(await f.session.durable()).toBe(true);
     for (let second = 0; second < 20; second++) { f.clock.advance(1_000); await f.session.pulse(); }
-    expect(commit).toHaveBeenCalledTimes(1); expect(f.selected).toHaveBeenCalledTimes(1);
-    expect(f.coordinator.recoveryEntry!.recovery!.inFlight).toEqual(rejected);
+    // One initial write plus one backoff-governed reconciliation, never a 1 Hz
+    // mutation storm. The original rejected bytes remain in a verified backup.
+    expect(commit).toHaveBeenCalledTimes(2); expect(f.selected).not.toHaveBeenCalled();
+    expect(f.session.canExecute).toBe(true); expect(f.session.needsReload).toBe(false);
+    expect((await f.entryStore.entries()).some(row => JSON.stringify(row.value).includes(rejected.requestSha256))).toBe(true);
+    expect(JSON.parse(f.coordinator.recoveryEntry!.recovery!.inFlight!.requestText).expectedRevision).toBe("57");
+    // Reconciliation preserves release-40 snapshot bytes: provenance is held
+    // by the mounted base/journal proof, never written as new lineage anchors.
+    expect(JSON.parse(f.coordinator.recoveryEntry!.recovery!.inFlight!.requestText).lineage.parents)
+      .not.toContain(JSON.parse(rejected.requestText).snapshot.uncompressedSha256);
     const learning = f.session.state.learningHistories;
     f.session.dispose(); commit.mockRestore();
     const coordinator = await openAutomaticCloudCampaign({ runtime: f.runtime, campaignId: f.scope.campaignId, clock: f.clock });
@@ -140,7 +182,7 @@ it("checks the current head before the first hydrate-repair upload and never fre
     expect(await f.session.checkpointNow("purchase")).toBe(false);
     expect(commit).not.toHaveBeenCalled();
     expect(f.coordinator.recoveryEntry!.recovery!.inFlight).toBeNull();
-    expect(f.coordinator.view).toMatchObject({ canExecute: true, localDurable: true, pending: true });
+    expect(f.coordinator.view).toMatchObject({ canExecute: true, localDurable: true, pending: true, failure: "revision" });
     expect(f.session.state).toEqual(before); expect(f.session.state.learningHistories).toEqual(before.learningHistories);
     for (let second = 0; second < 20; second++) { f.clock.advance(1_000); await f.session.pulse(); }
     expect(commit).not.toHaveBeenCalled(); expect(row.confirmed.revision).toBe("58");

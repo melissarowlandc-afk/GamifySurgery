@@ -17,7 +17,7 @@ import {
 } from "@gamify-surgery/game-domain";
 
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   getProfile,
   setFastFacilitySpeed,
@@ -80,18 +80,10 @@ async function persistState(page: Page, state: GameState): Promise<void> {
   if (!active) throw new Error("Active campaign record is missing.");
   active.serializedState = serializeGameState(state);
   profile.tutorialsEnabled = false;
-  await page.evaluate(({ profileKey, nextProfile }) => {
-    window.localStorage.setItem(profileKey, JSON.stringify(nextProfile));
-  }, { profileKey: PROFILE_KEY, nextProfile: profile });
   const fixtureKey = `level-three-persist-${persistFixtureSequence++}`;
-  await page.addInitScript(({ profileKey, nextProfile, oneShotKey }) => {
-    if (window.sessionStorage.getItem(oneShotKey)) return;
-    window.localStorage.setItem(profileKey, JSON.stringify(nextProfile));
-    window.sessionStorage.setItem(oneShotKey, "1");
-  }, { profileKey: PROFILE_KEY, nextProfile: profile, oneShotKey: fixtureKey });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: new RegExp(`^Resume ${active.name}$`) });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, active.name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
@@ -169,18 +161,9 @@ async function qualifyAndAdvanceToLevelThree(page: Page): Promise<GameState> {
   const normalizedQualificationState = deserializeGameState(active.serializedState);
   expect(getFacilityAccessValidation(normalizedQualificationState)).toMatchObject({ valid: true, issues: [] });
   expect(evaluateFacilityExperienceConditions(normalizedQualificationState).conditions).toEqual([]);
-  await page.evaluate(({ profileKey, nextProfile }) => {
-    window.localStorage.setItem(profileKey, JSON.stringify(nextProfile));
-  }, { profileKey: PROFILE_KEY, nextProfile: profile });
-  await page.addInitScript(({ profileKey, nextProfile }) => {
-    const qualificationFixtureKey = "level-three-qualification-installed";
-    if (window.sessionStorage.getItem(qualificationFixtureKey)) return;
-    window.localStorage.setItem(profileKey, JSON.stringify(nextProfile));
-    window.sessionStorage.setItem(qualificationFixtureKey, "1");
-  }, { profileKey: PROFILE_KEY, nextProfile: profile });
+  await installFreshLocalProfile(page, profile);
   await page.reload();
-  const resume = page.getByRole("button", { name: new RegExp(`^Resume ${active.name}$`) });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, active.name);
   const advance = page.getByRole("button", { name: "Advance to Level 3" });
   await expect(advance).toBeVisible();
   await advance.click();

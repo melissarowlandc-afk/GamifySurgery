@@ -1,3 +1,4 @@
+import {QUESTION_FLAGS5_WITHDRAWN_ROWS,QUESTION_PROGRAM_BATCH8_ACCEPTED_CASES} from "@gamify-surgery/clinical-content";
 import { QUESTION_NEW_N3_ROUND3_CASES } from "@gamify-surgery/clinical-content";
 import { QUESTION_PROGRAM_BATCH8_RETAINED_CASES } from "@gamify-surgery/clinical-content";
 import { QUESTION_NEW_N1_ROUND3_PRE_RELEASE } from "@gamify-surgery/clinical-content";
@@ -18,6 +19,10 @@ const keyOf = (caseId: string, nodeId: string, questionVariantId: string, choice
 const priorDraftCases = applyQuestionQualityRevisions(QUESTION_QUALITY_SOURCE_RELEASE.cases, QUESTION_QUALITY_PRIOR_REVISIONS);
 const ownerRoundOneCases = applyQuestionQualityRevisions(QUESTION_QUALITY_SOURCE_RELEASE.cases, QUESTION_QUALITY_OWNER_ROUND1_REVISIONS);
 const ownerRoundTwoCases = applyQuestionQualityRevisions(QUESTION_QUALITY_SOURCE_RELEASE.cases, QUESTION_QUALITY_OWNER_ROUND2_REVISIONS);
+
+// Only the exact flags5-withdrawn batch8 tuples may supply frozen predecessor choices.
+const flags5FrozenCases=QUESTION_PROGRAM_BATCH8_ACCEPTED_CASES.map(cs=>({...cs,decisionNodes:cs.decisionNodes.filter(n=>
+  QUESTION_FLAGS5_WITHDRAWN_ROWS.some(r=>r.caseId===cs.id&&r.nodeId===n.id&&r.questionVariantId===n.questionVariantId))})).filter(cs=>cs.decisionNodes.length);
 
 const serviceRoutes = new Map(
   PROTOTYPE_BALANCE_RELEASE.services.map((service) => [service.id, new Map(service.routes.map((route) => [route.id, route]))]),
@@ -117,7 +122,7 @@ describe("active-release test-choice order inventory", () => {
     // Round-two encounters retain their exact timed choices after the seven
     // round-three replacements. Validate those tuples against their real stage.
     // N3 v1 choices remain exact frozen inputs after the v2 catalog projection.
-    for (const clinicalCase of [...SYNTHETIC_CLINICAL_RELEASE.cases, ...QUESTION_CATALOG_RELEASE.cases, ...QUESTION_NEW_N3_CASES, ...QUESTION_NEW_N3_ROUND3_CASES, ...QUESTION_NEW_N2_ROUND3_PRE_RELEASE.cases, ...QUESTION_BANK_BATCH2B_ROUND2_SOURCE_RELEASE.cases, ...QUESTION_NEW_N1_ROUND3_PRE_RELEASE.cases, ...QUESTION_BANK_PRE_BATCH2A_ROUND3_RELEASE.cases, ...QUESTION_NEW_N1_ROUND2_PRE_RELEASE.cases, ...QUESTION_FLAGS_PRE_ROUND3_RELEASE.cases, ...QUESTION_FLAGS_ROUND1_RELEASE.cases, ...QUESTION_FLAGS_PRE_REVISION_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R6_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R5_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R3_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_RELEASE.cases, ...QUESTION_QUALITY_PRE_BATCH1_RELEASE.cases, ...legacyCases, ...retainedDraftCases, ...QUESTION_PROGRAM_BATCH8_RETAINED_CASES]) {
+    for (const clinicalCase of [...SYNTHETIC_CLINICAL_RELEASE.cases, ...QUESTION_CATALOG_RELEASE.cases, ...QUESTION_NEW_N3_CASES, ...QUESTION_NEW_N3_ROUND3_CASES, ...QUESTION_NEW_N2_ROUND3_PRE_RELEASE.cases, ...QUESTION_BANK_BATCH2B_ROUND2_SOURCE_RELEASE.cases, ...QUESTION_NEW_N1_ROUND3_PRE_RELEASE.cases, ...QUESTION_BANK_PRE_BATCH2A_ROUND3_RELEASE.cases, ...QUESTION_NEW_N1_ROUND2_PRE_RELEASE.cases, ...QUESTION_FLAGS_PRE_ROUND3_RELEASE.cases, ...QUESTION_FLAGS_ROUND1_RELEASE.cases, ...QUESTION_FLAGS_PRE_REVISION_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R7_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R6_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R5_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R4_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_R3_RELEASE.cases, ...QUESTION_QUALITY_PRE_ADVERSARIAL_RELEASE.cases, ...QUESTION_QUALITY_PRE_BATCH1_RELEASE.cases, ...legacyCases, ...retainedDraftCases, ...QUESTION_PROGRAM_BATCH8_RETAINED_CASES, ...flags5FrozenCases]) {
       for (const node of clinicalCase.decisionNodes) {
         const timingEntry = ANSWER_CHOICE_TIMING_REGISTRY.find((entry) => entry.caseId === clinicalCase.id && entry.nodeId === node.id && entry.questionVariantId === node.questionVariantId);
         if (timingEntry?.classification.kind !== "test_choices") continue;

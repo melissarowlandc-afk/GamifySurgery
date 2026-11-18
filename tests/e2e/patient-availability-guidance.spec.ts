@@ -8,7 +8,7 @@ import {
   serializeGameState,
   type GameState,
 } from "@gamify-surgery/game-domain";
-import { ACCESS_KEY, PROFILE_KEY } from "./helpers";
+import { resumeLocalCampaign, ACCESS_KEY, PROFILE_KEY } from "./helpers";
 
 const EVIDENCE = ".local-dev/gs035/browser-evidence";
 test.beforeAll(() => mkdirSync(EVIDENCE, { recursive: true }));
@@ -88,8 +88,7 @@ async function openSyntheticClinic(page: Page, state: GameState): Promise<void> 
     }));
   }, { profileKey: PROFILE_KEY, accessKey: ACCESS_KEY, seededProfile: profile, issuedAt: now });
   await page.goto("/?prototype-tools=0");
-  const resume = page.getByRole("button", { name: "Resume GS-035 Synthetic Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "GS-035 Synthetic Clinic");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 

@@ -13,6 +13,8 @@
   text-align: center;
 }
 .loading-screen:focus { outline: none; }
+.loading-screen[hidden], .loading-screen-actions[hidden] { display: none; }
+.loading-screen-inner { display: contents; }
 .loading-screen-scene { position: relative; min-height: 0; pointer-events: none; }
 /* Only the quiet bottom of the complete image extends into the copy row.
  * Shrinking the scene row for errors, zoom or a short landscape viewport keeps

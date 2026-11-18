@@ -1,3 +1,4 @@
+import {PROGRAM_BATCH8_ORDERS as historicalBatch8Orders} from "../../clinical-content/src/question-program-batch8-accepted-data-20261112";
 import * as clinical from "@gamify-surgery/clinical-content";
 import {PROGRAM_BATCH3_ORDERS as historicalBatch3Orders} from "../../clinical-content/src/question-program-batch3-accepted-data-20261111";
 import {PROGRAM_BATCH4_ORDERS as historicalBatch4Orders} from "../../clinical-content/src/question-program-batch4-accepted-data-20261111";
@@ -22,8 +23,10 @@ const batches = [
   [4, 292, historicalBatch4Orders],
   [5, 24, clinical.QUESTION_PROGRAM_BATCH5_ACCEPTED_TEST_ORDER_RECORDS],
   [6, 8, clinical.QUESTION_PROGRAM_BATCH6_ACCEPTED_TEST_ORDER_RECORDS],
-  [8, 12, clinical.QUESTION_PROGRAM_BATCH8_ACCEPTED_TEST_ORDER_RECORDS],
+  [8, 12, historicalBatch8Orders],
 ] as const;
+const flags5FrozenCases=clinical.QUESTION_PROGRAM_BATCH8_ACCEPTED_CASES.map(cs=>({...cs,decisionNodes:cs.decisionNodes.filter(n=>
+  clinical.QUESTION_FLAGS5_WITHDRAWN_ROWS.some(r=>r.caseId===cs.id&&r.nodeId===n.id&&r.questionVariantId===n.questionVariantId))})).filter(cs=>cs.decisionNodes.length);
 const keyOf = (record: Pick<ExactTestChoiceOrderRecord, "caseId" | "nodeId" | "questionVariantId" | "choiceId">) =>
   `${record.caseId}|${record.nodeId}|${record.questionVariantId}|${record.choiceId}`;
 const records = new Map(EXACT_TEST_CHOICE_ORDER_RECORDS.map(record => [keyOf(record), record]));
@@ -60,6 +63,14 @@ function ready(clinicalCase: SyntheticClinicalCase, index: number) {
 }
 
 describe("accepted topic runtime diagnostic bindings", () => {
+  it("keeps all twelve frozen batch8 bindings while exposing exactly eight after flags5 withdrawal",()=>{
+    const withdrawn=new Set<string>(clinical.QUESTION_FLAGS5_WITHDRAWN_ROWS.map(row=>row.questionVariantId));
+    expect(withdrawn.size).toBe(2);
+    expect(clinical.QUESTION_PROGRAM_BATCH8_ACCEPTED_TEST_ORDER_RECORDS).toEqual(historicalBatch8Orders.filter(row=>!withdrawn.has(row.questionVariantId)));
+    expect(clinical.QUESTION_PROGRAM_BATCH8_ACCEPTED_TEST_ORDER_RECORDS).toHaveLength(8);
+    const frozen=historicalBatch8Orders.filter(row=>withdrawn.has(row.questionVariantId));expect(frozen).toHaveLength(4);
+    for(const record of frozen)expect(records.get(keyOf(record))).toEqual(record);
+  });
   it("separates superseded fresh exports from all nine exact retained predecessor bindings",()=>{
     const withdrawn=new Set(clinical.QUESTION_PROGRAM_BATCH8_WITHDRAWN_ROWS.map(r=>r.questionVariantId));
     expect(clinical.QUESTION_PROGRAM_BATCH3_ACCEPTED_TEST_ORDER_RECORDS).toEqual(historicalBatch3Orders.filter(r=>!withdrawn.has(r.questionVariantId)));
@@ -170,11 +181,11 @@ describe("accepted topic runtime diagnostic bindings", () => {
     for (const record of accepted) {
       const matches=(c:SyntheticClinicalCase)=>c.id===record.caseId&&c.decisionNodes.some(n=>n.id===record.nodeId&&n.questionVariantId===record.questionVariantId);
       const current=PROTOTYPE_DOMAIN_CONTEXT.clinicalRelease.cases.find(matches);
-      const clinicalCase = current ?? clinical.QUESTION_PROGRAM_BATCH8_RETAINED_CASES.find(matches)!;
+      const clinicalCase = current ?? [...clinical.QUESTION_PROGRAM_BATCH8_RETAINED_CASES,...flags5FrozenCases].find(matches)!;
       expect(clinicalCase,keyOf(record)).toBeDefined();
       if(!current){
         expect(clinical.QUESTION_SHIP_MANIFEST.retirements.some(r=>r.caseId===record.caseId&&r.questionVariantIds.includes(record.questionVariantId))||
-          clinical.QUESTION_PROGRAM_BATCH8_WITHDRAWN_ROWS.some(r=>r.caseId===record.caseId&&r.nodeId===record.nodeId&&r.questionVariantId===record.questionVariantId)).toBe(true);
+          [...clinical.QUESTION_PROGRAM_BATCH8_WITHDRAWN_ROWS,...clinical.QUESTION_FLAGS5_WITHDRAWN_ROWS].some(r=>r.caseId===record.caseId&&r.nodeId===record.nodeId&&r.questionVariantId===record.questionVariantId)).toBe(true);
       }
       const index = clinicalCase.decisionNodes.findIndex(n => n.id === record.nodeId && n.questionVariantId === record.questionVariantId);
       const { state, encounter, node } = ready(clinicalCase, index);

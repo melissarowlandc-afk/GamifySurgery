@@ -118,3 +118,36 @@ describe("phone scene Build projection and input", () => {
     expect(scene.ghostGraphics.lineStyle).toHaveBeenLastCalledWith(4, 0xf7c960, 1);
   });
 });
+
+describe("remodel outlines are presentation-only on both map layouts", () => {
+  it.each([true, false])("draws valid/invalid staged footprints with mobile=%s and issues no room command", mobile => {
+    const { scene, map } = harness(null, mobile);
+    scene.bridge.viewModel.remodelGhosts = [
+      { roomId: "a", name: "Waiting Room", x: 15, y: 10, width: 4, height: 3, orientation: 0, valid: true },
+      { roomId: "b", name: "Waiting Room", x: 25, y: 10, width: 3, height: 4, orientation: 270, valid: false },
+    ];
+    map.ghost = null;
+    if (mobile) scene.drawMobileBuildPreview();
+    else (FacilityScene.prototype as unknown as { drawPlacementGhost: (this: SceneHarness) => void }).drawPlacementGhost.call(scene);
+    expect(scene.ghostGraphics.strokeRect).toHaveBeenCalledTimes(2);
+    expect(scene.ghostGraphics.lineStyle).toHaveBeenCalledWith(3, 0x3d8650, 1);
+    expect(scene.ghostGraphics.lineStyle).toHaveBeenCalledWith(3, 0xc94b43, 1);
+    expect(scene.bridge.onPlaceRoom).not.toHaveBeenCalled();
+    expect(scene.bridge.onSelectRoom).not.toHaveBeenCalled();
+    if (mobile) { scene.drawMobileBuildPreview(); expect(scene.ghostGraphics.strokeRect).toHaveBeenCalledTimes(2); }
+  });
+  it("allows a temporary blueprint overlap but keeps ordinary placement collision and bounds checks", () => {
+    const { scene } = harness("room.waiting", false);
+    const room = scene.bridge.viewModel.rooms[0]!;
+    const evaluate = (FacilityScene.prototype as unknown as { evaluatePlacement: (this: SceneHarness, x: number, y: number) => { valid: boolean } }).evaluatePlacement;
+    expect(evaluate.call(scene, room.tileX, room.tileY).valid).toBe(false);
+    scene.bridge.viewModel.placement!.movingRoomId = room.instanceId;
+    expect(evaluate.call(scene, room.tileX, room.tileY).valid).toBe(true);
+    scene.bridge.viewModel.placement!.movingRoomId = "another.room";
+    expect(evaluate.call(scene, room.tileX, room.tileY).valid).toBe(false);
+    scene.bridge.viewModel.blueprintRemodel = true;
+    expect(evaluate.call(scene, room.tileX, room.tileY).valid).toBe(true);
+    expect(evaluate.call(scene, -1, -1).valid).toBe(false);
+    expect(scene.bridge.onPlaceRoom).not.toHaveBeenCalled();
+  });
+});

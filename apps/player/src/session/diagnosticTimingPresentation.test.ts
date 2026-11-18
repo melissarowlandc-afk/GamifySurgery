@@ -37,7 +37,7 @@ const timing = (overrides: Partial<DiagnosticTimingView> = {}): DiagnosticTiming
 describe("shared diagnostic timing presentation", () => {
   it("uses the quoted total while showing overlapping work, queue delays and earlier visual findings", () => {
     const view = diagnosticChoiceTimingPresentation(preview(), 100, duration);
-    expect(view.etaLabel).toBe("135 min");
+    expect(view.etaLabel).toBe("If ordered now: about 135 min");
     expect(view.detailLabel).toContain("includes queues and walking");
     expect(view.detailLabel).toContain("Recovery 60 min onsite");
     expect(view.detailLabel).toContain("Pathology 60 min offsite (30 min queue)");
@@ -77,7 +77,7 @@ describe("shared diagnostic timing presentation", () => {
   it("preserves legacy quotes, no-test labels and unavailable estimates", () => {
     const legacy = { kind: "test" as const, answerChoiceId: "test", serviceId: null, serviceDisplayName: "Test",
       routeId: null, routeDisplayName: null, timingProfileId: "timing.test.upper_endoscopy", durationTicks: 120 };
-    expect(diagnosticChoiceTimingPresentation(legacy, 100, duration)).toEqual({ etaLabel: "120 min", detailLabel: "Estimated test wait (game time)" });
+    expect(diagnosticChoiceTimingPresentation(legacy, 100, duration)).toEqual({ etaLabel: "If ordered now: about 120 min", detailLabel: "Estimated test wait (game time)" });
     expect(diagnosticChoiceTimingPresentation({ kind: "test", answerChoiceId: "test", serviceId: null, serviceDisplayName: "Test",
       routeId: null, routeDisplayName: null, timingProfileId: null, diagnosticTiming: null, durationTicks: null }, 100, duration).etaLabel).toBeUndefined();
     expect(diagnosticChoiceTimingPresentation({ kind: "no_test", answerChoiceId: "observe", serviceId: null,

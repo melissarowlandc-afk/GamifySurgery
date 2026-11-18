@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { readDurableLocalState } from "./ui-density-helpers";
 import {
   PROTOTYPE_DOMAIN_CONTEXT,
   gameReducer,
@@ -6,7 +7,7 @@ import {
   type GameState,
 } from "@gamify-surgery/game-domain";
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   getProfile,
   startClinic,
@@ -22,13 +23,9 @@ async function installState(page: Page, state: GameState): Promise<void> {
   if (!campaign) throw new Error("Active campaign is missing.");
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(
-    ({ key, value }) => localStorage.setItem(key, JSON.stringify(value)),
-    { key: PROFILE_KEY, value: profile },
-  );
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
-  const resume = page.getByRole("button", { name: new RegExp(`^Resume ${campaign.name}$`) });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, campaign.name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
@@ -100,8 +97,7 @@ test("Level 1 presents ultrasound construction and ordinary doors without contro
   state.nextRoutineArrivalTick = Number.MAX_SAFE_INTEGER;
   await installState(page, state);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resumeCampaign = page.getByRole("button", { name: "Resume GS020 Build Clinic" });
-  if (await resumeCampaign.isVisible()) await resumeCampaign.click();
+  await resumeLocalCampaign(page, "GS020 Build Clinic");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 
   await expect(page.locator(".compact-goals")).toContainText("Build Ultrasound Room");
@@ -196,14 +192,11 @@ test("onsite authored ultrasound stays pending through reload and reveals its re
   const pending = ((await getActiveState(page)) as unknown as GameState).encounters[encounter.id]!.pendingResult!;
   expect(pending.imagingTechnicianId).toBe("employee.gs020.imaging");
   await page.getByRole("button", { name: "Return to clinic" }).click();
-  const latestProfile = await getProfile(page);
-  await page.addInitScript(
-    ({ key, value }) => localStorage.setItem(key, JSON.stringify(value)),
-    { key: PROFILE_KEY, value: latestProfile },
-  );
+  // Wait for the real pending order to commit; a reload must recover it without
+  // a legacy-profile override or another fixture installation.
+  await expect.poll(async () => (await readDurableLocalState(page)).encounters[encounter.id]!.pendingResult).toEqual(pending);
   await page.reload();
-  const resume = page.getByRole("button", { name: "Resume GS020 Service Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "GS020 Service Clinic");
   const restored = ((await getActiveState(page)) as unknown as GameState).encounters[encounter.id]!.pendingResult!;
   expect(restored.operationId).toBe(pending.operationId);
   expect(restored.dueTick).toBe(pending.dueTick);

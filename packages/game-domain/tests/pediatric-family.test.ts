@@ -134,14 +134,24 @@ describe("M5b pediatric families", () => {
       .toBe(pediatricRoomAtPoint(state, context, standing.reservation?.parentLocation)?.id);
   });
 
-  it("blocks moving a reserved family room and reroutes the pair when it is sold", () => {
+  it("carries a waiting family with its room and reroutes the pair when the room is sold", () => {
     let { state, context, encounter, family } = createPediatricFamilyFixture();
     const path = commitPediatricPairPlan(family, planPediatricWaiting(state, context, family)!);
     state.facilityTick += path.length;
     const index = advancePediatricPair(state, context, family, path, 0, 0);
     encounter.patientLocation = { ...path[index]! };
+    const room = { ...state.rooms.find(row => row.id === "room.peds.wait")! };
+    const delta = { x: 29 - room.x, y: 16 - room.y };
+    const carried = (point: { x: number; y: number }) => ({ x: point.x + delta.x, y: point.y + delta.y });
     const moved = gameReducer(state, { type: "MOVE_ROOM", operationId: "peds.move", roomId: "room.peds.wait", x: 29, y: 16 }, context);
-    expect(moved.operationReceipts["peds.move"]?.status).toBe("rejected");
+    expect(moved.operationReceipts["peds.move"]?.status).toBe("applied");
+    const movedFamily = moved.pediatricFamilies![family.id]!;
+    expect(movedFamily.reservation).toEqual({ ...family.reservation,
+      childLocation: carried(family.reservation!.childLocation), parentLocation: carried(family.reservation!.parentLocation) });
+    expect(moved.encounters[encounter.id]!.patientLocation).toEqual(carried(encounter.patientLocation!));
+    expect(moved.retailExternalActors[0]!.location).toEqual(carried(state.retailExternalActors[0]!.location!));
+    expect(deserializeGameState(serializeGameState(moved), context).pediatricFamilies![family.id]).toEqual(movedFamily);
+    expect(state.rooms.find(row => row.id === room.id)).toEqual(room);
     state = gameReducer(state, { type: "SELL_ROOM", operationId: "peds.sell", roomId: "room.peds.wait" }, context);
     expect(state.operationReceipts["peds.sell"]?.status).toBe("applied");
     const savedFamily = state.pediatricFamilies![family.id]!;

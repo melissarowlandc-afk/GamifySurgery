@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 import {
-  completeClinicOpening,
+  installFreshLocalProfile, resumeLocalCampaign, completeClinicOpening,
   getProfile,
   installLevelOneVisualState,
   openCampaignScreen,
@@ -115,19 +115,9 @@ test("the smooth HUD and compact bottom-left advertising leave room for six char
   );
   active.serializedState = JSON.stringify(state);
 
-  await page.addInitScript(
-    ({ profileKey, nextProfile }) => {
-      window.localStorage.setItem(
-        profileKey,
-        JSON.stringify(nextProfile),
-      );
-    },
-    { profileKey: PROFILE_KEY, nextProfile: profile },
-  );
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
-  await page
-    .getByRole("button", { name: `Resume ${active.name}` })
-    .click();
+  await resumeLocalCampaign(page, active.name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 
   const resourceBar = page.getByRole("banner", {

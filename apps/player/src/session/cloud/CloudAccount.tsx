@@ -82,8 +82,9 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
   const [entry, setEntry] = useState<"checking" | "local" | "cloud">("checking");
   const [access, setAccess] = useState<CloudCapabilities | null>(null);
   const [summaries, setSummaries] = useState<readonly CloudCampaignSummary[]>([]);
-  const [phase, setPhase] = useState<CloudAccountValue["phase"]>("checking");
-  const [error, setError] = useState<string | null>(null);
+  const [{ phase, error }, setEntryStatus] = useState<{ phase: CloudAccountValue["phase"]; error: string | null }>({ phase: "checking", error: null });
+  const setPhase = (next: CloudAccountValue["phase"]) => setEntryStatus(current => current.phase === next ? current : { ...current, phase: next });
+  const setError = (next: string | null) => setEntryStatus(current => current.error === next ? current : { ...current, error: next });
   const [active, setActive] = useState<CloudGameSession | null>(null);
   const activeRef = useRef<CloudGameSession | null>(null), navigation = useRef<(() => void) | null>(null);
   const campaignOpening = useRef<((campaignId: string) => Promise<void>) | null>(null);
@@ -185,6 +186,27 @@ function BoundCloudAccount({ runtime, children }: { runtime: CloudAccountRuntime
     };
     guard.current = prepare; return () => { if (guard.current === prepare) guard.current = null; };
   }, [account?.signOutGuard, entry]);
+  useEffect(() => {
+    if (!active) return;
+    const coordinator = active.coordinator;
+    let seen = -1;
+    const checkedConnection = () => {
+      const version = coordinator.verifiedConnectionVersion;
+      if (!version || version === seen || !live.current || stopped.current || deletion.current || activeRef.current !== active) return;
+      const view = coordinator.view;
+      if (view.failure || view.phase !== "ready" || !view.canExecute || !view.localDurable) return;
+      seen = version;
+      // This provider owns the entry/list failure, independently of the game
+      // coordinator's status. A fresh verified lease/ACK recovers connectivity;
+      // ordinary command/journal notifications and stale leases cannot do so.
+      // Evaluate both fields atomically: an auth/deletion refresh queued in the
+      // same React turn must never be erased by a successful lease response.
+      setEntryStatus(current => current.phase === "error" && (current.error === "network" || current.error === "throttled") ?
+        { phase: "available", error: null } : current);
+    };
+    checkedConnection();
+    return coordinator.onConnectionVerified(checkedConnection);
+  }, [active, runtime]);
   const value: CloudAccountValue = {
     runtime: scopedRuntime, access, summaries, phase, error, active, refresh: () => refresh(),
     async acceptNotice() {

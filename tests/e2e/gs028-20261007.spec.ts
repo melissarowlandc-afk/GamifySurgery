@@ -19,7 +19,7 @@ import {
 } from "@gamify-surgery/game-domain";
 import { createPrototypePlayerView } from "../../apps/player/src/session/viewModels";
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   getProfile,
   startClinic,
@@ -109,15 +109,10 @@ async function installSeed(page: Page, state: GameState, name: string) {
   campaign.name = name;
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value, marker }) => {
-    if (sessionStorage.getItem(marker)) return;
-    sessionStorage.setItem(marker, "1");
-    localStorage.setItem(key, JSON.stringify(value));
-  }, { key: PROFILE_KEY, value: profile, marker: `gs028e.${name}.seed` });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
   expect(new URL(page.url()).origin).toBe(ORIGIN);
-  const resume = page.getByRole("button", { name: `Resume ${name}`, exact: true });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
@@ -370,8 +365,7 @@ for (const [caseId, prefix] of [
     await screenshot(page, testInfo, `${prefix}-external-pending`);
     const pendingTick = state.facilityTick;
     await page.reload();
-    const resumeCampaign = page.getByRole("button", { name: `Resume ${name}`, exact: true });
-    if (await resumeCampaign.isVisible()) await resumeCampaign.click();
+    await resumeLocalCampaign(page, name);
     state = await activeState(page);
     expect(state.facilityTick).toBe(pendingTick);
     expect(state.encounters[encounterId]!.pendingResult).toMatchObject({ dueTick: pending!.dueTick, routeId: "route.basic_labs.outsourced", deliveredAtTick: null });

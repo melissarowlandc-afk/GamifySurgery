@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 
-import { startClinic } from "./helpers";
+import { resumeLocalCampaign, startClinic } from "./helpers";
 
 test.beforeAll(() => mkdirSync("artifacts/screenshots", { recursive: true }));
 
@@ -117,7 +117,7 @@ test("desktop splitter reallocates the facility and desk without changing canvas
   await page.getByRole("button", { name: "Done / Save" }).click();
   await expect(buildButton).toBeVisible();
   await page.reload();
-  await page.getByRole("button", { name: "Resume Splitter Clinic" }).click();
+  await resumeLocalCampaign(page, "Splitter Clinic");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await expect(splitter).toHaveAttribute("aria-valuenow", storedShare!);
 });

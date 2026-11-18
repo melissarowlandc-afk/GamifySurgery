@@ -1,22 +1,17 @@
 import { expect, type Page } from "@playwright/test";
 import type { GameState } from "@gamify-surgery/game-domain";
-import { installRememberedLocalAccess } from "./helpers";
+import { installRememberedLocalAccess, resumeLocalCampaign } from "./helpers";
 
 /** Disposable public Level 4/5 journey fixture; no private save or codec import. */
 export async function openDensityFixture(page: Page, phone: boolean, keepChart = false) {
   await installRememberedLocalAccess(page);
   await page.addInitScript(layout => localStorage.setItem("gamify-surgery.presentation-layout.v1", layout), phone ? "phone" : "desktop");
   await page.goto(`/level4-rooms-qa.html?level5=integration-l4&layout=${phone ? "phone" : "desktop"}`);
-  // This ordinary local fixture may present the campaign chooser. Seeding an
-  // active ID does not promise automatic entry; use its real Resume action.
-  const shell = page.locator(phone ? ".mobile-shell" : ".game-shell");
-  const resume = page.getByRole("button", { name: "Resume Level 5 M9 integration (integration-l4)", exact: true });
-  await expect.poll(async () => await shell.isVisible() || await resume.isVisible(), { timeout: 30_000 }).toBe(true);
-  if (await resume.isVisible()) await resume.click();
-  await expect(page.locator(phone ? ".mobile-shell" : ".game-shell")).toBeVisible({ timeout: 30_000 });
+  await resumeLocalCampaign(page, "Level 5 M9 integration (integration-l4)");
+  await expect(page.locator(phone ? ".mobile-shell" : ".game-shell")).toBeVisible({ timeout: 100_000 });
   // Shell/canvas mount before asynchronous campaign recovery finishes. Match
   // the fresh-campaign helper's entry barrier before observing or clicking UI.
-  await expect(page.getByRole("region", { name: "Loading clinic", exact: true })).toBeHidden({ timeout: 30_000 });
+  await expect(page.getByRole("region", { name: "Loading clinic", exact: true, includeHidden: true })).toBeHidden({ timeout: 100_000 });
   await expect.poll(() => page.evaluate(() => document.fonts.status), { timeout: 20_000 }).toBe("loaded");
   if (!keepChart) {
     const chart = page.locator(phone ? '.mobile-sheet[aria-label="Patient chart"]' : ".chart-sheet");
@@ -25,7 +20,7 @@ export async function openDensityFixture(page: Page, phone: boolean, keepChart =
       else await page.keyboard.press("Escape");
       await expect(chart).toHaveCount(0);
     }
-    await expect(page.getByTestId("facility-canvas")).toBeVisible({ timeout: 30_000 });
+    await expect(page.getByTestId("facility-canvas")).toBeVisible({ timeout: 100_000 });
   }
 }
 

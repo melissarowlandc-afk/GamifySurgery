@@ -26,6 +26,9 @@ interface Promotion {
 export interface AutomaticOpenOptions {
   runtime: CloudAccountRuntime; campaignId: string; codec?: CloudCodecExecutor; clock?: CloudClock;
   storage?: Pick<Storage, "getItem">; cancelled?: () => boolean;
+  /** A mounted durable document already owns offline recovery. Never replace
+   * it with another offline coordinator when background selection loses reads. */
+  onlineOnly?: boolean;
 }
 const canonical = (value: unknown) => logicalJsonText(JSON.parse(JSON.stringify(value)));
 const uniqueName = (name: string, ending: string, taken: readonly string[]) => {
@@ -97,7 +100,12 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
     if (await coordinator.journalChangedSinceOpen()) throw new CloudCacheError("conflict");
     // Resolve an uncertain acknowledgement using its original immutable request
     // before considering a rebase. A failed old lease cannot silently write.
-    if (coordinator.view.pending) await coordinator.resumePendingForOpen();
+    // A plain suffix on an older base cannot be uploaded to a newer head. It
+    // has already participated in ranking/protection above; adopt the winner
+    // instead of running a doomed revision check and its conflict preview.
+    // An uncertain immutable operation still needs its exact receipt lookup.
+    if (coordinator.view.pending && (coordinator.confirmedRevision === account.revision || coordinator.recoveryEntry?.recovery?.inFlight))
+      await coordinator.resumePendingForOpen();
     if (coordinator.hasLocalCacheConflict) throw new CloudCacheError("conflict");
     // The ranked bytes are verified, durably stored, and the old immutable
     // operation has been reconciled. A valid lease grants play immediately;
@@ -331,7 +339,7 @@ export async function openAutomaticCloudCampaign(options: AutomaticOpenOptions):
     if (!result || !current()) throw new CloudSyncError("auth");
     return result;
   } catch (error) {
-    if (!(error instanceof CloudSyncError) || !["network", "throttled"].includes(error.code) || options.cancelled?.()) throw error;
+    if (options.onlineOnly || !(error instanceof CloudSyncError) || !["network", "throttled"].includes(error.code) || options.cancelled?.()) throw error;
     // A failed network check cannot erase verified device progress. It grants
     // local durability only; no account writes or invented server lease.
     result = await cloudCheckDeadline((async () => {

@@ -1,3 +1,4 @@
+import { LoadingRest, useLoadingFlow } from "./LoadingFlowContext";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { ProblemReportButton } from "../feedback/TesterFeedback";
@@ -83,7 +84,7 @@ export function CloudSaveControls({ save, closeRequest = 0, showCloseButton = tr
   blockedNoticePlacement?: "overlay" | "inline";
 }) {
   const { view } = save;
-  const covered = useLoadingCovered();
+  const covered = useLoadingCovered(), flow = useLoadingFlow();
   const [open, setOpen] = useState(false), [busy, setBusy] = useState(false);
   const [closed, setClosed] = useState(false), [error, setError] = useState("");
   // The counter is an edge from a mounted shell, not a durable close command.
@@ -111,12 +112,15 @@ export function CloudSaveControls({ save, closeRequest = 0, showCloseButton = tr
   const status = cloudStatusText(view);
   const showClosed = closed && view.phase === "closed";
   const checking = cloudCheckNeedsLoading(view) || busy && !view.canExecute;
+  const restingFailure = !view.canExecute && !checking && !busy;
+  const definitiveFailure = showClosed || Boolean(view.failure || ["blocked", "storage", "auth", "capacity", "closed"].includes(view.phase));
   const controls = <>
+    {flow ? <LoadingRest ready={restingFailure || showClosed} delayMs={definitiveFailure ? 0 : 400} /> : null}
     {!covered && !view.canExecute && !open && !checking ? <CloudCommandBlockNotice key={view.failure ?? view.phase}
       view={view} busy={busy} error={error} onRetry={() => void action(save.onRetry)} placement={blockedNoticePlacement} /> : null}
     <LoadingScreen active={!open && checking} status="Checking your clinic’s saved progress…" stage="checking"
       onRetry={busy ? undefined : () => void action(save.onRetry)} />
-    {view.canExecute && status ? <button type="button" className="cloud-sync-status" disabled={busy}
+    {!covered && view.canExecute && status ? <button type="button" className="cloud-sync-status" disabled={busy}
       onClick={() => void action(save.onRetry)} aria-label={`Account save status: ${status}`}>
       <span role="status">{status}</span>
     </button> : null}

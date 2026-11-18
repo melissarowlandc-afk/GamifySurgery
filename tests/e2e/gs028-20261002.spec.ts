@@ -13,7 +13,7 @@ import {
   type GameState,
 } from "@gamify-surgery/game-domain";
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   getProfile,
   installRememberedLocalAccess,
@@ -111,17 +111,9 @@ async function installSeed(
   campaign.name = campaignName;
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(
-    ({ key, value, markerKey }) => {
-      if (sessionStorage.getItem(markerKey)) return;
-      sessionStorage.setItem(markerKey, "1");
-      localStorage.setItem(key, JSON.stringify(value));
-    },
-    { key: PROFILE_KEY, value: profile, markerKey: marker },
-  );
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
-  const resume = page.getByRole("button", { name: `Resume ${campaignName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
@@ -463,10 +455,7 @@ test("targeted ultrasound survives reload, reveals its result only when returned
   await screenshot(page, "paired-ultrasound-pending.png");
 
   await page.reload();
-  const resume = page.getByRole("button", {
-    name: "Resume GS028C Ultrasound",
-  });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "GS028C Ultrasound");
   state = (await getActiveState(page)) as unknown as GameState;
   expect(state.encounters[encounterId]?.pendingResult).toMatchObject({
     dueTick: pending!.dueTick,

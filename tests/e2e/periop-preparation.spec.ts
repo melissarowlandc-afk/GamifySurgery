@@ -15,7 +15,7 @@ import {
 } from "@gamify-surgery/game-domain";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { PROFILE_KEY, getActiveState, getProfile, startClinic, waitForDecisionChoices } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY, getActiveState, getProfile, startClinic, waitForDecisionChoices } from "./helpers";
 
 const ORIGIN = "http://127.0.0.1:4197";
 const ROOT = process.env.GAMIFY_PERIOP_PROOF_ROOT ?? ".local-dev/gs025-periop-preparation/final";
@@ -176,11 +176,10 @@ async function installState(page: Page, state: GameState, campaignName: string):
   active.name = campaignName;
   active.serializedState = serializeGameState(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value }) => localStorage.setItem(key, JSON.stringify(value)), { key: PROFILE_KEY, value: profile });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
   expect(await page.evaluate(() => location.origin)).toBe(ORIGIN);
-  const resume = page.getByRole("button", { name: `Resume ${campaignName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.addStyleTag({ content: ".tutorial-overlay,.tutorial-card,.prototype-toolbar,.game-announcement,.facility-pause-indicator{display:none!important}" });
 }
@@ -300,7 +299,7 @@ test("actual colonoscopy waits 30 onsite minutes in periop and preserves elapsed
   await installState(page, state, campaignName);
   const beforeReload = (await getActiveState(page)) as unknown as GameState;
   await page.reload();
-  await page.getByRole("button", { name: `Resume ${campaignName}` }).click();
+  await resumeLocalCampaign(page, campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   const afterReload = (await getActiveState(page)) as unknown as GameState;
   expect(linkedQuestionOperation(afterReload).phaseStartedAtFacilityTick).toBe(prepStart);

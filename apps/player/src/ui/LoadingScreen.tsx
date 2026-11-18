@@ -1,9 +1,11 @@
-import { createContext, useContext, useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { ProblemReportButton } from "../feedback/TesterFeedback";
 import { usePresentationLayout } from "../shellPresentation";
 import { WelcomeArtwork, welcomeSurfaceStyle } from "./WelcomeArtwork";
 import { OpeningBrand } from "./OpeningBrand";
+import { useLoadingFlow, useLoadingFlowSnapshot } from "./LoadingFlowContext";
+import type { LoadingPhase } from "./loadingFlow";
 import "./LoadingScreen.css";
 
 export const LOADING_DELAY_MS = 400;
@@ -17,7 +19,7 @@ export function LoadingCovered({ children, active = true }: { children: ReactNod
   const parent = useContext(Covered);
   return <Covered.Provider value={parent || active}>{children}</Covered.Provider>;
 }
-export const useLoadingCovered = () => useContext(Covered);
+export const useLoadingCovered = () => { const local = useContext(Covered), shared = useLoadingFlowSnapshot(); return local || Boolean(shared?.active); };
 
 export interface LoadingScreenProps {
   active?: boolean;
@@ -27,10 +29,31 @@ export interface LoadingScreenProps {
   onRetry?: () => void;
   actionLabel?: string;
   deadlineMs?: number;
+  phase?: LoadingPhase;
+  immediate?: boolean;
+}
+
+export function LoadingScreen(props: LoadingScreenProps) {
+  const flow = useLoadingFlow();
+  return flow ? <SharedLoadingRequest {...props} flow={flow} /> : <StandaloneLoadingScreen {...props} />;
+}
+
+function SharedLoadingRequest({ flow, active = true, status, stage, phase, failure, onRetry,
+  actionLabel, deadlineMs, immediate }: LoadingScreenProps & { flow: NonNullable<ReturnType<typeof useLoadingFlow>> }) {
+  const id = useId(), covered = useContext(Covered), layout = usePresentationLayout();
+  const state = useSyncExternalStore(flow.subscribe, flow.getSnapshot, flow.getSnapshot);
+  const selectedPhase = phase ?? (stage === "opening" ? "hydrate" : stage === "checking" ? "copies" : "auth");
+  useLayoutEffect(() => { flow.request(id, { active: active && !covered, status, phase: selectedPhase,
+    failure, onRetry, actionLabel, deadlineMs, immediate }); }, [flow, id, active, covered, status, selectedPhase, failure, onRetry, actionLabel, deadlineMs, immediate]);
+  useLayoutEffect(() => () => flow.remove(id), [flow, id]);
+  // The report remains in its auth/usage React tree even though its DOM belongs
+  // to the persistent surface. Consent and deletion checks are unchanged.
+  return state.failure && state.selectedId === id && flow.reportSlot
+    ? createPortal(<ProblemReportButton shell={layout} />, flow.reportSlot) : null;
 }
 
 /** Presentation only: a deadline never releases a save/authority gate. */
-export function LoadingScreen({ active = true, status, stage, failure, onRetry,
+function StandaloneLoadingScreen({ active = true, status, stage, failure, onRetry,
   actionLabel = "Try again", deadlineMs = LOADING_DEADLINE_MS }: LoadingScreenProps) {
   const covered = useLoadingCovered(), layout = usePresentationLayout(), id = useId();
   const [delayed, setDelayed] = useState(false), [timedOut, setTimedOut] = useState(false), [attempt, setAttempt] = useState(0);

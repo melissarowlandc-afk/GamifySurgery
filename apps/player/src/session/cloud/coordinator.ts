@@ -1,4 +1,5 @@
 import { problemDiagnostics } from "../../diagnostics/problemDiagnostics";
+import { commandProgrammingFailure, encodeCommandFailure } from "./commandFailure";
 import { GameEvidenceError } from "@gamify-surgery/game-domain";
 import { assertCloudRevision, CLOUD_CAPACITY_LIMITS } from "./codec";
 import { isStorageQuotaError, reclaimAuxiliaryStorage } from "../storagePressure";
@@ -20,6 +21,7 @@ import { CloudCacheError } from "./codecCache";
 import { isTransientStorageError, storageDeadline } from "./storageRetry";
 import { ACCOUNT_READ_REFRESH_MS, healthyLeaseRenewMs, MAX_HEALTHY_LEASE_MS, RequestBackoff, requestDocumentVisible, setAccountRequestsActive } from "../requestBudget";
 import { networkRequestBudget } from "./networkRequestBudget";
+import { prepareJournal } from "./journalCodec";
 import { type CloudCache, type CloudCacheEntry, type CloudCacheRead, type CloudRecovery } from "./cache";
 import {
   CLOUD_CHECKPOINT_MS, CLOUD_GRACE_MS, CLOUD_LEASE_MS, CLOUD_RENEW_MS, CLOUD_SAVES_ENABLED_BY_DEFAULT,
@@ -53,6 +55,12 @@ export type CloudCheckpointReason = "ordinary" | "hidden" | "pagehide" | "save-c
 export const CLOUD_UPLOAD_TIMEOUT_MS = 180_000;
 interface TimePair { wall: number; mono: number }
 interface LeaseWindow { lease: CloudLease; until: TimePair }
+interface ConfirmedSessionBase { campaignId: string; revision: string; snapshotSha256: string }
+interface MountedJournalProof { owner: string; through: number; base: ConfirmedSessionBase; snapshotSha256: string }
+const confirmedBase = (copy: CloudConfirmed): ConfirmedSessionBase => ({ campaignId: copy.campaignId,
+  revision: copy.revision, snapshotSha256: copy.snapshot.uncompressedSha256 });
+const matchesBase = (copy: CloudConfirmed, base: ConfirmedSessionBase | null): boolean => Boolean(base &&
+  copy.campaignId === base.campaignId && copy.revision === base.revision && copy.snapshot.uncompressedSha256 === base.snapshotSha256);
 const clone = <T>(value: T): T => structuredClone(value);
 const same = (a: unknown, b: unknown): boolean => JSON.stringify(a) === JSON.stringify(b);
 
@@ -64,6 +72,7 @@ export class CloudSyncCoordinator {
   private readonly newId: () => string;
   private readonly listeners = new Set<() => void>();
   private readonly receiptListeners = new Set<(receipt: CloudCommitReceipt) => void>();
+  private readonly connectionListeners = new Set<() => void>();
   private record: CloudCacheRead | null = null;
   private attempted: CloudCacheEntry | null = null;
   private window: LeaseWindow | null = null;
@@ -109,6 +118,12 @@ export class CloudSyncCoordinator {
   private writerElsewhere = false;
   private conflictCopies: CloudConflictCopies | undefined;
   private offlineLocal = false;
+  private selectionProbe: Promise<boolean> | null = null;
+  private probedAccount: CloudConfirmed | null = null;
+  private offlineReconnect: Promise<boolean | null> | null = null;
+  private mountedOffline: Promise<boolean> | null = null;
+  private unsubmittedLocalOperation = false;
+  private selectingVerifiedAccount = false;
   private offlineBase = false;
   private automaticSelection: (() => Promise<boolean>) | null = null;
   private prepareCheckpoint: ((reason: CloudCheckpointReason) => Promise<boolean>) | null = null;
@@ -119,10 +134,18 @@ export class CloudSyncCoordinator {
   private overCapacityJournal = false;
   private backupRetryAfter: TimePair | null = null;
   private journalOwner: string | null = null;
+  // In-memory admission proof only; never infer mounted provenance from the
+  // general compatibility predicate or add it to persisted snapshots.
+  private mountedBase: ConfirmedSessionBase | null = null;
+  private offlineOpeningBase: ConfirmedSessionBase | null = null;
   private snapshotSaves = false;
   private checkUploadHead = false;
   private preparationCapacity = false;
+  private commandRepairs = 0;
+  private connectionVersion = 0;
   get supportsSnapshots(): boolean { return this.snapshotSaves; }
+  /** Presentation witness only. Local journal writes cannot advance it. */
+  get verifiedConnectionVersion(): number { return this.connectionVersion; }
 
   constructor(private readonly options: {
     scope: CloudScope; transport: CloudTransport; cache: CloudCache; enabled?: boolean;
@@ -150,9 +173,171 @@ export class CloudSyncCoordinator {
   get codec(): CloudCodecExecutor { return this.options.codec ?? cloudCodec; }
   get journal() { return this.options.cache.journal; }
   get hasOverCapacityJournal(): boolean { return this.overCapacityJournal; }
+  get playingVerifiedLocal(): boolean { return this.offlineLocal; }
+  /** Only a verified replacement or an authority/integrity fence may ask the
+   * mounted session's router to select again. Transient failures are not one. */
+  get automaticReplacementKey(): string | null {
+    const account = this.probedAccount, confirmed = this.record?.entry.confirmed;
+    if (account && !matchesBase(account, this.mountedBase))
+      return `head:${account.revision}:${account.snapshot.uncompressedSha256}`;
+    return ["revision", "account-save-changed", "writer", "writer-elsewhere", "auth", "revoked", "deleted", "disabled", "protocol", "notice", "corrupt", "divergent-history"].includes(this.failure ?? "") ?
+      `fence:${this.failure}:${confirmed?.revision}:${this.conflictCopies?.accountRevision ?? ""}` : null;
+  }
+  /** Admission alone cannot restore account saving. Verify the actual head
+   * while local play stays mounted; its descendant recovers in place. Focus/
+   * pageshow and the periodic retry share this single read-only probe. */
+  probeAutomaticSelection(): Promise<boolean> {
+    // pulse has already performed this read-only probe before reserving its
+    // retry budget. Its session handoff must not probe a second time or be
+    // refused by the very budget that handoff just reserved. No lease granted.
+    if (this.selectingVerifiedAccount && !this.stopped && !this.closingRequested) return Promise.resolve(true);
+    if (this.selectionProbe) return this.selectionProbe;
+    if (!this.offlineLocal) return Promise.resolve(true);
+    if (!this.networkBackoff.ready() || this.stopped || this.closingRequested) return Promise.resolve(false);
+    const epoch = this.epoch;
+    this.probedAccount = null;
+    this.selectionProbe = (async () => {
+      try {
+        await cloudCheckDeadline(this.admitted(), CLOUD_READ_TIMEOUT_MS);
+        const head = await cloudCheckDeadline(this.options.transport.head(this.scope.campaignId), CLOUD_READ_TIMEOUT_MS);
+        const copy = await cloudCheckDeadline(this.options.transport.load(this.scope.campaignId, head.revision), CLOUD_READ_TIMEOUT_MS);
+        if (copy.revision !== head.revision || copy.priorRecovery) throw new CloudSyncError("revision");
+        await this.verify(copy, head);
+        if (this.live(epoch) && !this.closingRequested) this.probedAccount = copy;
+        return this.live(epoch) && !this.closingRequested;
+      } catch (error) {
+        if (this.live(epoch)) {
+          if (error instanceof CloudSyncError && ["network", "throttled", "revision"].includes(error.code))
+            this.retryAfterMs = this.networkBackoff.fail(error.retryAfterMs);
+          else this.fail(error);
+        }
+        return false;
+      }
+    })().finally(() => { this.selectionProbe = null; });
+    return this.selectionProbe;
+  }
+  /** A verified local descendant on the same account revision needs a lease,
+   * not a new session. Different account heads still need ranked selection. */
+  reconnectVerifiedLocal(): Promise<boolean | null> {
+    if (this.offlineReconnect) return this.offlineReconnect;
+    // Install the barrier before work/emission begins. Explicit exit/save
+    // preparation must not stage a newer candidate that adoption then replaces.
+    this.offlineReconnect = Promise.resolve().then(() => this.reconnectVerifiedLocalChecked())
+      .finally(() => { this.offlineReconnect = null; });
+    return this.offlineReconnect;
+  }
+  /** Restore only local admission after a failed mounted-session retry. The
+   * verified journal/cache and any immutable request keep their exact bytes. */
+  resumeMountedOffline(): Promise<boolean> {
+    if (this.offlineLocal) return Promise.resolve(this.allowed());
+    if (this.mountedOffline) return this.mountedOffline;
+    const epoch = this.epoch, version = this.foregroundVersion, owner = this.journalOwner;
+    const current = () => this.live(epoch) && version === this.foregroundVersion && !this.closingRequested;
+    const eligible = () => current() && this.localDurable && !this.localCacheConflict &&
+      ["network", "throttled"].includes(this.failure ?? "") && !this.hasPriorRecovery;
+    if (!eligible() || !owner || !this.journal || !this.options.entryStore || !this.prepareLocalRecovery) return Promise.resolve(false);
+    this.mountedOffline = this.boundedCheck(async () => {
+      try {
+        await this.localQueue;
+        if (!await this.prepareLocalRecovery!() || !eligible()) return false;
+        const store = this.options.entryStore!, journal = this.journal!;
+        const gates = await Promise.all([store.read<{ failure: string | null }>(`command-block:${this.scope.campaignId}`),
+          store.read("deletion-requested"), store.read("account-command-block")]);
+        if (gates[0]?.failure || gates[1] || gates[2] || !eligible() || !this.record) return false;
+        await this.verify(this.record.entry.confirmed);
+        const local = await prepareJournal(journal, cloudCampaignStorageKey(this.scope), this.codec, { local: true, encode: false });
+        const head = await journal.head(cloudCampaignStorageKey(this.scope));
+        if (!local?.state || local.seed?.campaign.campaignId !== this.scope.campaignId || head?.owner !== owner || head.highWater !== local.through)
+          throw new CloudCacheError("conflict");
+        if (!eligible()) return false;
+        await store.write(`offline-base:${this.scope.campaignId}`, { snapshotSha256: this.record.entry.confirmed.snapshot.uncompressedSha256 });
+        if (!eligible() || this.journalOwner !== owner) return false;
+        this.foregroundVersion++; // Fence late online checks, not local journal publication.
+        this.window = null; this.suspendedLease = null; this.offlineBase = true; this.offlineLocal = true;
+        this.unsubmittedLocalOperation = true;
+        this.grace = null; this.phase = "waiting"; this.resumeAuthorized = true; this.emit();
+        return true;
+      } catch (error) {
+        if (current()) this.reportLocalFailure(error instanceof CloudCacheError ? new CloudSyncError(
+          ["checksum", "version"].includes(error.reason) ? "corrupt" : "storage") : error);
+        return false;
+      }
+    }, current).finally(() => { this.mountedOffline = null; });
+    return this.mountedOffline;
+  }
+  private async reconnectVerifiedLocalChecked(): Promise<boolean | null> {
+    const account = this.probedAccount, confirmed = this.record?.entry.confirmed;
+    if (!this.offlineLocal || !account || !confirmed || !matchesBase(account, this.mountedBase) ||
+      this.recovery()?.inFlight && !this.unsubmittedLocalOperation || !this.journalOwner || !this.prepareLocalRecovery) return null;
+    if (this.stopped || this.closingRequested || !this.localDurable) return false;
+    const epoch = this.epoch, playable = this.allowed();
+    try {
+      // The journal, engine and local admission stay live. stage() waits behind
+      // offlineReconnect; commands accepted while the lease is in flight retain
+      // their own durable rows and the session prepares that newer prefix next.
+      if (!await cloudCheckDeadline(this.prepareLocalRecovery()) || !this.live(epoch)) return false;
+      await this.localQueue;
+      const owner = this.journalOwner!, journal = this.journal;
+      if (!journal) return null;
+      // The existing codec verifies seed/row checksums, continuity and replay.
+      // Use this owner's actual journal on the exact confirmed account base,
+      // never an independently valid copy matched only by branch metadata.
+      const local = await prepareJournal(journal, cloudCampaignStorageKey(this.scope), this.codec, { base: account });
+      const localHead = await journal.head(cloudCampaignStorageKey(this.scope));
+      if (!local?.base || !matchesBase(local.base, this.mountedBase)) return null;
+      // Later commands may extend this same durable prefix during codec work.
+      // They remain in the journal and get prepared after the lease handoff.
+      if (localHead?.owner !== owner || localHead.highWater < local.through || this.journalOwner !== owner) throw new CloudCacheError("conflict");
+      if (!this.live(epoch) || this.closingRequested || !matchesBase(account, this.mountedBase)) return false;
+      const flight = this.recovery()?.inFlight;
+      if (flight) {
+        const outcome = await cloudCheckDeadline(this.options.transport.operation(this.scope.campaignId, flight.operationId, flight), CLOUD_READ_TIMEOUT_MS);
+        if (!this.live(epoch) || this.closingRequested) return false;
+        if (outcome.status === "expired") throw new CloudSyncError("operation-expired");
+        if (outcome.status === "committed") {
+          await this.acknowledge(flight, outcome.receipt);
+          this.unsubmittedLocalOperation = false;
+          return false; // The next bounded probe reads this newly acknowledged head.
+        }
+        if (this.recovery()?.baseRevision !== account.revision) throw new CloudSyncError("revision");
+      }
+      const pending = local.candidate;
+      const chosen: CloudConfirmed = pending ? { ...account, snapshot: pending.snapshot,
+        ...(pending.saveFormat === 3 ? { saveFormat: 3, baselineId: SNAPSHOT_BASELINE, lineage: pending.lineage,
+          evidence: await snapshotEvidence() } : { evidence: { header: account.evidence.header,
+          records: [...account.evidence.records, ...pending.evidence.records] } }) } : account;
+      const checked = await this.adoptVerifiedCopy(account, chosen, pending?.usageQuestions ?? [], true, flight ?? undefined,
+        { owner, through: local.through, base: confirmedBase(account), snapshotSha256: chosen.snapshot.uncompressedSha256 });
+      if (checked) this.unsubmittedLocalOperation = false;
+      if (!checked && this.live(epoch) && playable && this.offlineLocal && this.offlineBase && this.localDurable && !this.attempted &&
+        ["network", "throttled"].includes(this.failure ?? "")) {
+        // No base/cache publication occurred. Preserve verified local play;
+        // an unavailable writer endpoint must not remount/hydrate it again.
+        this.grace = null; this.phase = "waiting"; this.resumeAuthorized = true; this.emit();
+      }
+      return checked;
+    } catch (error) {
+      if (this.live(epoch)) this.reportLocalFailure(error instanceof CloudCacheError ? new CloudSyncError(
+        ["checksum", "version"].includes(error.reason) ? "corrupt" : "storage") : error);
+      return false;
+    }
+    finally { this.probedAccount = null; }
+  }
   get journalWriterGeneration(): string { return (this.window?.lease ?? this.suspendedLease ?? this.retainedWriter)?.writerGeneration ?? this.recovery()?.writerGeneration ?? "0"; }
-  bindJournalOwner(owner: string): void { this.journalOwner = owner; }
-  releaseJournalOwner(owner: string): void { if (this.journalOwner === owner) this.journalOwner = null; }
+  bindJournalOwner(owner: string): void {
+    this.journalOwner = owner;
+    const seedBase = this.record ? confirmedBase(this.record.entry.confirmed) : null;
+    this.mountedBase = this.offlineLocal ? this.offlineOpeningBase ?? seedBase : seedBase;
+  }
+  releaseJournalOwner(owner: string): void { if (this.journalOwner === owner) { this.journalOwner = null; this.mountedBase = null; } }
+  usageAcknowledged(id: string): boolean { return this.coveredUsage.has(id); }
+  /** Local command reconciliation owns no new lease authority. A later auth,
+   * writer/revision, storage or clock failure is never undone by releasing it. */
+  beginCommandRecovery(): () => void {
+    this.commandRepairs++; this.emit();
+    let released = false;
+    return () => { if (!released) { released = true; this.commandRepairs--; this.emit(); } };
+  }
   async journalChangedSinceOpen(): Promise<boolean> {
     return ((await this.journal?.head(cloudCampaignStorageKey(this.scope)))?.highWater ?? null) !== this.openedJournalHighWater;
   }
@@ -222,6 +407,13 @@ export class CloudSyncCoordinator {
     this.lastPublishedStatus = this.statusSignature();
     for (const listener of this.listeners) { try { listener(); } catch (error) { problemDiagnostics.error("cloud-observer", error); } }
   }
+  private emitConnection(): void {
+    this.connectionVersion++;
+    for (const listener of this.connectionListeners) { try { listener(); } catch (error) { problemDiagnostics.error("cloud-connection-observer", error); } }
+  }
+  onConnectionVerified(listener: () => void): () => void {
+    this.connectionListeners.add(listener); return () => { this.connectionListeners.delete(listener); };
+  }
   subscribe = (listener: () => void): (() => void) => { this.listeners.add(listener); return () => { this.listeners.delete(listener); }; };
   onAcknowledged(listener: (receipt: CloudCommitReceipt) => void): () => void {
     this.receiptListeners.add(listener); return () => { this.receiptListeners.delete(listener); };
@@ -236,19 +428,24 @@ export class CloudSyncCoordinator {
   }
   get view(): CloudSyncView {
     this.checkTime();
-    return { phase: this.phase, canExecute: this.allowed(), checking: Boolean(this.foregrounding || this.reconnecting) || this.phase === "checking", pending: this.offlineBase || this.recovery() !== null || Boolean(this.record?.entry.recovery),
+    const repair = this.commandRepairs > 0 && ["ready", "saving", "waiting"].includes(this.phase);
+    // A genuine foreground authority fence gets its one bounded check cover.
+    // Subsequent transient/outage retries stay inside the durable shell.
+    const foregroundFence = this.foregrounding && ["clock", "lease-expired"].includes(this.failure ?? "");
+    return { phase: repair ? "paused" : this.phase, canExecute: this.allowed(), checking: repair || Boolean(foregroundFence) || !this.mountedDurable && (Boolean(this.foregrounding || this.reconnecting) || this.phase === "checking"), pending: this.offlineBase || this.recovery() !== null || Boolean(this.record?.entry.recovery),
       localDurable: this.localDurable, revision: this.record?.entry.confirmed.revision ?? null,
       ...(this.storageQuota && this.failure === "storage" ? { storageQuota: true } : {}), ...(this.storageRetrying && this.failure === "processing" ? { storageRetrying: true } : {}),
-      confirmedAtMs: this.record?.entry.confirmed.acceptedAtMs ?? null, failure: this.failure ?? (this.preparationCapacity ? "capacity" : null),
+      confirmedAtMs: this.record?.entry.confirmed.acceptedAtMs ?? null, failure: repair ? "processing" : this.failure ?? (this.preparationCapacity ? "capacity" : null),
       ...(this.record?.entry.confirmed.priorRecovery ? { priorRecovery: { verifiedRevision: this.record.entry.confirmed.revision,
         serverRevision: this.record.entry.confirmed.priorRecovery.serverRevision } } : {}), writerElsewhere: this.writerElsewhere,
       ...(this.conflictCopies ? { conflictCopies: clone(this.conflictCopies) } : {}) };
   }
   private allowed(): boolean {
-    return this.enabled && !this.stopped && !this.closingRequested && this.resumeAuthorized && this.localDurable &&
+    return this.enabled && !this.stopped && !this.closingRequested && !this.commandRepairs && this.resumeAuthorized && this.localDurable &&
       (this.offlineLocal || this.window !== null && this.remaining(this.window.until) > 0) &&
       ["ready", "saving", "waiting"].includes(this.phase) && (!this.grace || this.remaining(this.grace) > 0);
   }
+  private get mountedDurable(): boolean { return Boolean(this.journalOwner && this.localDurable && this.prepareLocalRecovery); }
   private checkTime(): void {
     const now = this.now(), wall = now.wall - this.lastSample.wall, mono = now.mono - this.lastSample.mono;
     this.lastSample = now;
@@ -296,7 +493,10 @@ export class CloudSyncCoordinator {
     this.failure = code;
     if (code === "network" || code === "throttled") {
       const remaining = this.window ? Math.max(0, this.remaining(this.window.until)) : 0;
-      if (!this.grace) { const now = this.now(), duration = Math.min(CLOUD_GRACE_MS, remaining);
+      // Verified offline play has no server lease/grace to extend. A failed
+      // background write endpoint must not momentarily revoke local admission.
+      if (this.offlineLocal && this.localDurable) this.grace = null;
+      else if (!this.grace) { const now = this.now(), duration = Math.min(CLOUD_GRACE_MS, remaining);
         this.grace = { wall: now.wall + duration, mono: now.mono + duration }; }
       this.phase = "waiting";
       this.checkTime();
@@ -481,7 +681,10 @@ export class CloudSyncCoordinator {
         if (!this.live(epoch) || this.closingRequested) return;
         this.foregroundVersion++; // Cancel already-sent checks/renewals without cancelling accepted journal writes.
         this.window = null; this.suspendedLease = null; this.offlineLocal = true; this.offlineBase = true;
-        this.grace = null; this.phase = "waiting"; this.failure = "network"; this.resumeAuthorized = true;
+        // Retain the immutable request until exact operation lookup and fencing
+        // prove that its raw bytes can be kept and superseded safely.
+        this.unsubmittedLocalOperation = true;
+        this.grace = null; this.phase = "waiting"; this.failure = head && head.revision !== this.confirmedRevision ? "revision" : "network"; this.resumeAuthorized = true;
         this.emit(); return;
       } catch (failure) {
         problemDiagnostics.error("conflict-local-recovery", failure);
@@ -541,7 +744,13 @@ export class CloudSyncCoordinator {
       // Reuse fetched bytes only behind the same fresh-head and full proof
       // checks as a cached copy. Prior-recovery/forced remote reads stay fresh.
       const fetched = openingCopy?.campaignId === this.scope.campaignId && !openingCopy.priorRecovery ? openingCopy : undefined;
-      const confirmed = await this.verifiedHead(head, verifyRemoteHead ? undefined : stored?.entry.confirmed ?? fetched); if (!this.live(epoch)) return false;
+      const cached = stored?.entry.confirmed;
+      // Selection already downloaded the new head. An older cache must not
+      // hide it and force a second download. verifiedHead still checks the
+      // fresh revision and the complete proof/metadata before reusing bytes.
+      const confirmed = await this.verifiedHead(head, verifyRemoteHead ? undefined : cached?.revision === head.revision ? cached : fetched ?? cached); if (!this.live(epoch)) return false;
+      if (stored?.journalCapacity && await this.preserveCapacityJournal(confirmed)) this.overCapacityJournal = false;
+      if (!this.live(epoch)) return false;
       if (stored && this.options.entryStore && stored.entry.confirmed.snapshot.uncompressedSha256 !== confirmed.snapshot.uncompressedSha256 &&
         !copyDescendsFrom(confirmed, stored.entry.confirmed)) {
         // A foreground check must not make an older/divergent clean cached
@@ -573,7 +782,7 @@ export class CloudSyncCoordinator {
       if (!this.live(epoch)) return false;
       if (lease.revision !== this.record.entry.confirmed.revision) throw new CloudSyncError("revision");
       this.installLease(lease, sent); await this.rememberWriter(epoch); if (!this.live(epoch)) return false;
-      this.writerElsewhere = false; this.grace = null; this.phase = "ready"; this.failure = null; this.emit(); return true;
+      this.writerElsewhere = false; this.grace = null; this.phase = "ready"; this.failure = null; this.emit(); this.emitConnection(); return true;
     } catch (error) { await this.failChecked(error, epoch); return false; }
     finally { if (this.live(epoch)) this.checking = false; }
   }
@@ -593,6 +802,19 @@ export class CloudSyncCoordinator {
         await this.options.entryStore.read("deletion-requested") || await this.options.entryStore.read("account-command-block")) return false;
       this.record = await this.options.cache.read(this.scope);
       await this.verify(copy);
+      this.offlineOpeningBase = null;
+      // An exact existing base needs no new provenance data or journal pass.
+      // A later probe must still match this same revision AND content hash.
+      if (this.record && matchesBase(copy, confirmedBase(this.record.entry.confirmed))) this.offlineOpeningBase = confirmedBase(copy);
+      else if (this.journal) {
+        // Remember the old journal's base only when its verified projection
+        // actually produced this selected offline copy. Retained unrelated
+        // snapshots must use full selection, not in-place adoption.
+        const local = await prepareJournal(this.journal, cloudCampaignStorageKey(this.scope), this.codec, { allowCapacity: true });
+        if (local?.base && !local.base.priorRecovery && local.base.campaignId === copy.campaignId && local.base.revision === copy.revision &&
+          (local.candidate?.snapshot ?? local.base.snapshot).uncompressedSha256 === copy.snapshot.uncompressedSha256)
+          this.offlineOpeningBase = confirmedBase(local.base);
+      }
       if (this.record) await this.preserveCopies(copy);
       const loaded = await this.codec.run({ kind: "verify", input: { ...copy, expectedRevision: copy.revision,
         expectedCampaignId: this.scope.campaignId, expectedBaselineId: copy.baselineId } });
@@ -611,17 +833,37 @@ export class CloudSyncCoordinator {
    * verified/ranked every copy and protected the originals. Acquire is still a
    * revision+generation CAS; no automatic decision can overwrite a racing head. */
   adoptAutomaticCopy(account: CloudConfirmed, chosen: CloudConfirmed, usageQuestions: CloudCandidate["usageQuestions"] = []): Promise<boolean> {
+    if (this.journalOwner) return Promise.resolve(false); // Cold selection cannot bypass a mounted owner's proof.
+    return this.adoptVerifiedCopy(account, chosen, usageQuestions, false);
+  }
+  private adoptVerifiedCopy(account: CloudConfirmed, chosen: CloudConfirmed, usageQuestions: CloudCandidate["usageQuestions"], keepLocalPlaying: boolean,
+    unsubmitted?: CloudFrozenOperation, proof?: MountedJournalProof): Promise<boolean> {
     return this.boundedCheck(async epoch => {
-      this.pause();
+      if (!keepLocalPlaying) this.pause();
+      const version = this.foregroundVersion;
+      const mountedCurrent = () => !keepLocalPlaying || this.offlineLocal && version === this.foregroundVersion &&
+        proof?.owner === this.journalOwner && matchesBase(account, this.mountedBase) &&
+        (!this.failure || ["network", "throttled"].includes(this.failure));
       try {
         await this.localQueue; await this.admitted();
-        if (!this.live(epoch) || !this.record || !copyDescendsFrom(chosen, account)) throw new CloudSyncError("revision");
+        if (!this.live(epoch) || !this.record) throw new CloudSyncError("revision");
+        if (keepLocalPlaying) {
+          if (!proof || !matchesBase(account, this.mountedBase) || !matchesBase(account, proof.base) ||
+            proof.owner !== this.journalOwner || proof.snapshotSha256 !== chosen.snapshot.uncompressedSha256) throw new CloudSyncError("revision");
+          const head = await this.journal?.head(cloudCampaignStorageKey(this.scope));
+          if (head?.owner !== proof.owner || head.highWater < proof.through) throw new CloudSyncError("storage");
+        } else if (!copyDescendsFrom(chosen, account)) throw new CloudSyncError("revision");
         await this.verify(account); await this.verify(chosen);
         const head = await this.options.transport.head(this.scope.campaignId);
         if (!this.live(epoch) || head.revision !== account.revision) throw new CloudSyncError("revision");
         // A normal clean account open replaces no local branch or uncertain
         // operation. Preserve whole recovery bytes only when replacing them.
-        if (this.recovery()) await this.preserveCopies(account);
+        if (unsubmitted) {
+          if (this.recovery()?.inFlight?.operationId !== unsubmitted.operationId) throw new CloudSyncError("storage");
+          await this.preserveEntry(this.attempted ?? this.record.entry, account, true);
+        } else if (this.recovery()) await this.preserveCopies(account);
+        const displacedCapacityJournal = this.overCapacityJournal && chosen.snapshot.uncompressedSha256 === account.snapshot.uncompressedSha256 &&
+          await this.preserveCapacityJournal(account);
         const loaded = await this.codec.run({ kind: "verify", input: { ...chosen, expectedRevision: chosen.revision,
           expectedCampaignId: this.scope.campaignId, expectedBaselineId: chosen.baselineId } });
         let candidate: CloudCandidate = { ...(isSnapshotCopy(chosen) ? { saveFormat: 3 as const, lineage: chosen.lineage } : {}), campaign: loaded.campaign, snapshot: chosen.snapshot,
@@ -636,22 +878,68 @@ export class CloudSyncCoordinator {
             chosen.snapshot.compressedBytes > CLOUD_CAPACITY_LIMITS.snapshotCeilingBytes)) {
             candidate = { ...await this.codec.run({ kind: "snapshotUpgrade", input: { confirmed: chosen, candidate: null } }), usageQuestions };
           }
-          await this.codec.run({ kind: "candidate", input: { candidate, confirmed: account, scope: this.scope } });
+          if (!keepLocalPlaying) await this.codec.run({ kind: "candidate", input: { candidate, confirmed: account, scope: this.scope } });
         }
-        const sent = this.now(), lease = await this.acquire(head, head.writerActive, epoch);
+        const sent = this.now();
+        let lease: CloudLease;
+        if (keepLocalPlaying && head.writerActive) {
+          // A mounted offline document must prove its OWN still-live token.
+          // Never turn a background retry into a takeover of another device.
+          const identity = await readWriterIdentity(this.options.entryStore, this.scope);
+          const owned = this.retainedWriter ?? identity?.lease;
+          const intent = this.acquisition ?? identity?.acquisition;
+          if (intent && intent.expectedRevision === head.revision && intent.expectedWriterGeneration !== undefined &&
+            (intent.expectedWriterGeneration === head.writerGeneration || BigInt(intent.expectedWriterGeneration) + 1n === BigInt(head.writerGeneration))) {
+            // The preceding grant may have succeeded with its response lost.
+            // Reuse the EXACT durable intent, then renew its token for a fresh
+            // server-time lease proof (never re-date a cached grant receipt).
+            const granted = await cloudCheckDeadline(this.options.transport.acquire(intent));
+            if (granted.writerGeneration !== head.writerGeneration || granted.revision !== head.revision) throw new CloudSyncError("writer");
+            lease = await cloudCheckDeadline(this.options.transport.renew(granted));
+          } else {
+            if (!owned || owned.writerGeneration !== head.writerGeneration) throw new CloudSyncError("writer");
+            lease = await cloudCheckDeadline(this.options.transport.renew(owned));
+          }
+          if (lease.writerGeneration !== head.writerGeneration) throw new CloudSyncError("writer");
+          if (lease.revision !== account.revision) throw new CloudSyncError("revision");
+          if (unsubmitted && this.request(unsubmitted).writerGeneration === lease.writerGeneration) {
+            // Rotate only OUR proved token so a late missing-request delivery
+            // cannot race the newer projection. Revision/generation CAS remains.
+            lease = await this.acquire(head, true, epoch);
+          }
+        } else lease = await this.acquire(head, !keepLocalPlaying && head.writerActive, epoch);
         if (!this.live(epoch)) return false;
+        // Full copy integrity/domain verification already passed above. Finish
+        // candidate-specific checks after the mounted lease barrier, before
+        // installing authority or publishing any cache/base change.
+        if (keepLocalPlaying && (replacesHead || usageQuestions.length))
+          await this.codec.run({ kind: "candidate", input: { candidate, confirmed: account, scope: this.scope } });
+        if (keepLocalPlaying) {
+          const latest = await this.journal?.head(cloudCampaignStorageKey(this.scope));
+          if (latest?.owner !== proof!.owner || latest.highWater < proof!.through) throw new CloudSyncError("storage");
+        }
+        if (!this.live(epoch) || this.closingRequested || !mountedCurrent()) return false;
+        // A valid own-token reply can simply arrive too late. It grants no
+        // authority, but is not proof of another writer. Keep local play and
+        // reconcile the durable acquisition intent on the next bounded probe.
+        if (keepLocalPlaying && lease.campaignId === this.scope.campaignId && lease.writerToken &&
+          Math.min(MAX_HEALTHY_LEASE_MS, lease.expiresAtMs - lease.serverNowMs) <= this.elapsed(sent)) throw new CloudSyncError("network");
         this.installLease(lease, sent); await this.rememberWriter(epoch);
+        if (!this.live(epoch) || this.closingRequested || !mountedCurrent()) return false;
         this.offlineLocal = false;
         const changed = candidate.snapshot.uncompressedSha256 !== account.snapshot.uncompressedSha256 || candidate.evidence.records.length > 0 || usageQuestions.length > 0;
         await this.persist({ schemaVersion: 1, scope: this.scope, confirmed: account, recovery: changed ? {
           baseRevision: account.revision, writerGeneration: lease.writerGeneration, inFlight: null, following: candidate } : null });
         if (this.offlineBase) await this.options.entryStore?.write(`offline-base:${this.scope.campaignId}`, null);
         this.offlineBase = false;
+        // Capacity describes the old device journal, not the selected account
+        // head. Its verified bytes were retained before any replacement.
+        if (displacedCapacityJournal) this.overCapacityJournal = false;
         if (!this.live(epoch)) return false;
         this.writerElsewhere = false; this.conflictCopies = undefined; this.grace = null;
         this.autoReconnect = true; this.phase = "ready"; this.failure = null; this.resumeAuthorized = true;
         if (changed) this.dirtySince = this.now();
-        this.emit(); return true;
+        this.emit(); this.emitConnection(); return true;
       } catch (error) { await this.failChecked(error, epoch); return false; }
     });
   }
@@ -699,6 +987,7 @@ export class CloudSyncCoordinator {
   /** retainAccepted only finishes commands already accepted by CloudGameSession.
    * It preserves bytes across suspension; it never grants new commands or lease time. */
   stage(candidate: CloudCandidate, _reason: CloudCheckpointReason = "ordinary", retainAccepted = false): Promise<boolean> {
+    if (this.offlineReconnect) return this.offlineReconnect.then(() => this.stage(candidate, _reason, retainAccepted));
     this.checkTime();
     const retainedGeneration = this.recovery()?.writerGeneration;
     const writer = this.window?.lease ?? this.suspendedLease ?? this.retainedWriter ??
@@ -745,9 +1034,13 @@ export class CloudSyncCoordinator {
       await this.persist({ ...this.record.entry, recovery });
       this.dirtySince ??= this.now();
       return true;
-    }).catch(error => { if (this.live(epoch)) this.fail(error); return false; }).finally(() => {
-      if (this.live(epoch)) this.emit();
-    });
+    }).catch(error => {
+      if (this.live(epoch)) {
+        if (commandProgrammingFailure(error, "journal", "coordinator")) this.reportLocalFailure(error);
+        else this.fail(error);
+      }
+      return false;
+    }).finally(() => { if (this.live(epoch)) this.emit(); });
   }
   private async freeze(): Promise<CloudFrozenOperation | null> {
     const epoch = this.epoch;
@@ -816,6 +1109,7 @@ export class CloudSyncCoordinator {
       if (!this.live(epoch)) throw new CloudSyncError("auth");
       await this.persist({ ...this.record.entry, confirmed, recovery: following ? { baseRevision: receipt.revision,
         writerGeneration: recovery.writerGeneration, inFlight: null, following } : null });
+      if (this.journalOwner) this.mountedBase = confirmedBase(confirmed); // Verified own ACK; memory only.
       this.coveredUsage = new Set(receipt.usageReceiptIds);
       this.checkUploadHead = false;
       for (const listener of this.receiptListeners) listener(receipt);
@@ -864,7 +1158,8 @@ export class CloudSyncCoordinator {
         if (!this.live(epoch)) return false;
         // A late acknowledgment never grants a new lease or resumes a paused game.
         if (this.phase === "saving") this.phase = "ready";
-        this.checkTime(); this.emit(); return true;
+        if (this.phase === "ready" && ["network", "throttled"].includes(this.failure ?? "")) { this.failure = null; this.grace = null; }
+        this.checkTime(); this.emit(); this.emitConnection(); return true;
       } catch (error) { await this.failChecked(error, epoch); return false; }
     })();
     this.uploading = cloudCheckDeadline(work, CLOUD_UPLOAD_TIMEOUT_MS, () => {
@@ -892,7 +1187,7 @@ export class CloudSyncCoordinator {
     const version = this.foregroundVersion;
     const current = () => this.live(epoch) && version === this.foregroundVersion && !this.closingRequested && this.phase !== "closed";
     this.checking = true; this.resumeAuthorized = false;
-    this.phase = "checking"; this.emit();
+    this.phase = this.mountedDurable ? "waiting" : "checking"; this.emit();
     try {
       await this.localQueue; if (!current()) return false;
       await this.admitted(); if (!current()) return false;
@@ -993,6 +1288,7 @@ export class CloudSyncCoordinator {
       await this.rememberWriter(epoch); if (!current()) return false;
       this.writerElsewhere = false; this.conflictCopies = undefined; this.grace = null; this.phase = "ready"; this.failure = null; this.emit();
       if (resumeWhenChecked && !this.resume()) return false;
+      this.emitConnection();
       if (uploadPending && this.recovery() && !await this.checkpoint()) return false;
       return true;
     } catch (error) { if (current()) await this.failChecked(error, epoch); return false; }
@@ -1053,6 +1349,7 @@ export class CloudSyncCoordinator {
       const changed = !this.allowed() || this.phase !== "ready" || this.failure !== null;
       this.resumeAuthorized = true; this.grace = null; this.phase = "ready"; this.failure = null;
       if (changed) this.emit();
+      this.emitConnection();
       return true;
     };
     this.foregrounding = cloudCheckDeadline(check(), undefined, () => {
@@ -1105,6 +1402,18 @@ export class CloudSyncCoordinator {
     return this.reconnecting;
   }
   reportLocalFailure(error: unknown): void {
+    const programming = commandProgrammingFailure(error, "recovery", "coordinator");
+    if (programming) {
+      problemDiagnostics.event("processing-error", encodeCommandFailure(programming));
+      // A command repair already owns the admission gate and verifies its
+      // durable prefix. Other programming failures pause for checked recovery;
+      // neither case is evidence of corrupt bytes or permission to undo fences.
+      if (!this.commandRepairs && ["ready", "saving", "waiting", "paused"].includes(this.phase)) {
+        this.resumeAuthorized = false;
+        if (!this.failure || this.failure === "processing") { this.phase = "paused"; this.failure = "processing"; }
+      }
+      this.emit(); return;
+    }
     // Catalog drift is a recoverable session-baseline mismatch, not evidence of
     // damaged saved bytes. Do not weaken any other evidence/integrity check.
     const catalogChanged = error instanceof GameEvidenceError && error.code === "concept-set-change";
@@ -1117,14 +1426,18 @@ export class CloudSyncCoordinator {
       this.lastReconnect = this.now(); this.checking = true;
       const epoch = this.epoch;
       try {
-        // Probe without pausing verified local play. A restored connection must
-        // use full selection, never the local checkpoint as a server write base.
-        await cloudCheckDeadline(this.admitted(), CLOUD_READ_TIMEOUT_MS);
+        // Probe without pausing local play. Recovery uses the verified ACCOUNT
+        // head as its server write base; a local descendant stays in place.
+        if (!await this.probeAutomaticSelection()) return;
         // A local-only reopen can replace this coordinator without restoring
         // server authority. Reserve the next interval before that handoff; only
         // a checked server lease clears the shared retry schedule.
         this.retryAfterMs = this.networkBackoff.fail();
-        if (this.live(epoch)) await this.automaticSelection?.();
+        if (this.live(epoch)) {
+          this.selectingVerifiedAccount = true;
+          try { await this.automaticSelection?.(); }
+          finally { this.selectingVerifiedAccount = false; }
+        }
       } catch (error) {
         if (!this.live(epoch)) return;
         if (error instanceof CloudSyncError && ["network", "throttled"].includes(error.code)) this.retryAfterMs = this.networkBackoff.fail(error.retryAfterMs);
@@ -1143,9 +1456,11 @@ export class CloudSyncCoordinator {
       finally { this.checking = false; }
       return;
     }
-    if (this.autoReconnect && !this.closingRequested && !this.allowed() && this.networkBackoff.ready() &&
+    if ((this.autoReconnect || this.automaticSelection) && !this.closingRequested && !this.allowed() && this.networkBackoff.ready() &&
       ["clock", "lease-expired", "lease-check", "network", "throttled", "storage", "processing"].includes(this.failure ?? "") &&
       this.elapsed(this.lastReconnect) >= Math.max(CLOUD_RENEW_MS, this.retryAfterMs)) {
+      // The mounted session owns command draining and verified local fallback.
+      if (this.automaticSelection && this.mountedDurable) { await this.automaticSelection(); return; }
       if (["clock", "lease-expired"].includes(this.failure ?? "")) {
         const checked = await this.foreground();
         if (checked !== null) return;
@@ -1168,6 +1483,7 @@ export class CloudSyncCoordinator {
         this.checkTime();
         if (this.phase === "paused" || this.phase === "conflict") return;
         this.installLease(lease, sent);
+        this.emitConnection();
       } catch (error) {
         if (!current()) return;
         if (error instanceof CloudSyncError && error.code === "revision" && this.live(epoch)) {
@@ -1179,7 +1495,7 @@ export class CloudSyncCoordinator {
             if (!this.uploading) {
               // focus owns its gate. Do not set a new checking phase before
               // joining a check that may already have successfully resumed.
-              if (this.live(epoch) && !await this.focus() && this.phase === "ready") await this.failChecked(error, epoch, previouslyPlayable);
+              if (this.live(epoch) && !await (this.automaticSelection && this.mountedDurable ? this.automaticSelection() : this.focus()) && this.phase === "ready") await this.failChecked(error, epoch, previouslyPlayable);
             } else {
               const head = await cloudCheckDeadline(this.options.transport.head(this.scope.campaignId));
               if (!current()) return;
@@ -1193,6 +1509,7 @@ export class CloudSyncCoordinator {
               this.checkTime();
               if (this.phase === "paused" || this.phase === "conflict") return;
               this.installLease(lease, sent);
+              this.emitConnection();
             }
           } catch (failure) { if (current()) await this.failChecked(failure, epoch); }
         } else await this.failChecked(error, epoch);
@@ -1236,14 +1553,34 @@ export class CloudSyncCoordinator {
   private async preserveCopies(account: CloudConfirmed): Promise<void> {
     return this.preserveEntry(this.attempted ?? this.record!.entry, account);
   }
-  private async preserveEntry(device: CloudCacheEntry, account: CloudConfirmed): Promise<void> {
+  private async preserveCapacityJournal(account: CloudConfirmed): Promise<boolean> {
+    if (!this.options.entryStore || !this.journal) throw new CloudSyncError("storage");
+    const journal = await this.journal.read(cloudCampaignStorageKey(this.scope));
+    if (!journal) throw new CloudCacheError("conflict");
+    // Use the journal's own base, not the cache's current head. A previous open
+    // may have committed that newer cache head just before the page was killed.
+    if (journal.snapshot.seed.confirmed?.snapshot.uncompressedSha256 === account.snapshot.uncompressedSha256) return false;
+    // A capacity result has no encodable following candidate. Keep the entire
+    // original seed AND suffix as a hidden conflict backup, after proof/replay
+    // validation and before acquiring/replacing anything. No cloud size bypass.
+    await this.codec.run({ kind: "journalPrepare", input: { data: journal, encode: false } });
+    if (await this.journalChangedSinceOpen()) throw new CloudCacheError("conflict");
+    const value = { scope: this.scope, device: this.record!.entry, account, journal };
+    const key = `conflict:${this.scope.campaignId}:journal:${await this.codec.run({ kind: "hash", input: JSON.stringify(value) })}`;
+    const retained = await this.options.entryStore.create(key, value);
+    if (!same(retained, value) || !same(await this.options.entryStore.read(key), value)) throw new CloudSyncError("storage");
+    return true;
+  }
+  private async preserveEntry(device: CloudCacheEntry, account: CloudConfirmed, retainImmutable = false): Promise<void> {
     if (!this.options.entryStore) throw new CloudSyncError("storage");
     const value = { scope: this.scope, device, account };
-    const key = `conflict:${this.scope.campaignId}:${await this.codec.run({ kind: "hash", input: JSON.stringify(value) })}`;
-    const backup = this.snapshotSaves ? await snapshotConflictBackup(value, this.codec, key.slice(key.lastIndexOf(":") + 1)) : value;
+    // A pre-existing compacted preview cannot stand in for immutable request
+    // bytes when the active request is about to be fenced/replaced.
+    const key = `conflict:${this.scope.campaignId}:${retainImmutable ? "immutable:" : ""}${await this.codec.run({ kind: "hash", input: JSON.stringify(value) })}`;
+    const backup = this.snapshotSaves && !retainImmutable ? await snapshotConflictBackup(value, this.codec, key.slice(key.lastIndexOf(":") + 1)) : value;
     await this.options.entryStore.create(key, backup);
     const retained = await this.options.entryStore.read<{ compactedFrom?: string }>(key);
-    if (!same(retained, value) && retained?.compactedFrom !== key.slice(key.lastIndexOf(":") + 1)) throw new CloudSyncError("storage");
+    if (!same(retained, value) && (retainImmutable || retained?.compactedFrom !== key.slice(key.lastIndexOf(":") + 1))) throw new CloudSyncError("storage");
   }
   /** Explicit choice only. No evidence is renumbered, merged, dropped or replayed. */
   async keepDeviceProgress(): Promise<boolean> {

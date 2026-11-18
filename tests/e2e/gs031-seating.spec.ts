@@ -8,7 +8,7 @@ import {
   type GameState,
   type RoomOrientation,
 } from "@gamify-surgery/game-domain";
-import { getProfile, PROFILE_KEY, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, getProfile, PROFILE_KEY, startClinic } from "./helpers";
 
 const EVIDENCE = ".local-dev/gs031/browser-seating";
 test.beforeAll(() => mkdirSync(EVIDENCE, { recursive: true }));
@@ -94,13 +94,9 @@ async function openFixture(page: Page, options: FixtureOptions = {}): Promise<vo
   const state = fixture(JSON.parse(campaign.serializedState) as GameState, options);
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ profileKey, value }) => localStorage.setItem(profileKey, JSON.stringify(value)), {
-    profileKey: PROFILE_KEY,
-    value: profile,
-  });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: "Resume GS031 Browser Seating" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "GS031 Browser Seating");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.waitForFunction(() => Boolean((document.querySelector("[data-testid='facility-canvas']") as any)?.__facilityGame?.scene?.getScene("facility-scene")));
 }

@@ -40,7 +40,7 @@ describe("multistep diagnostic choice timing", () => {
       const plan = preview.diagnosticTiming!;
       const total = Math.max(...plan.phases.map((phase) => phase.forecast.endsAtTick)) - state.facilityTick;
       expect(preview.durationTicks).toBe(total);
-      expect(choice.etaLabel).toBe(total >= 60 && total % 60 === 0 ? `${total / 60} hours` : `${total} min`);
+      expect(choice.etaLabel).toBe(`If ordered now: about ${total >= 60 && total % 60 === 0 ? `${total / 60} hours` : `${total} min`}`);
       expect(choice.detailLabel).toContain("Estimated total (game time; includes queues and walking).");
       expect(choice.detailLabel).toContain("Travel to outside service");
     }

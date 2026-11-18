@@ -2,7 +2,7 @@ import { mkdirSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
 import {
-  getProfile,
+  installFreshLocalProfile, resumeLocalCampaign, getProfile,
   installLevelOneVisualState,
   PROFILE_KEY,
   startClinic,
@@ -73,13 +73,9 @@ async function installFloorFixture(page: Page): Promise<void> {
   state.encounters = {};
   state.paused = true;
   campaign.serializedState = JSON.stringify(state);
-  await page.addInitScript(({ key, next }) => window.localStorage.setItem(key, JSON.stringify(next)), {
-    key: PROFILE_KEY,
-    next: profile,
-  });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: "Resume Floor Phase Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Floor Phase Clinic");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.waitForFunction(() => {
     const host = document.querySelector("[data-testid='facility-canvas']") as any;

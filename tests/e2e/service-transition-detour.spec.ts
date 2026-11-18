@@ -11,7 +11,7 @@ import {
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createPrototypePlayerView } from "../../apps/player/src/session/viewModels";
-import { PROFILE_KEY, getActiveState, getProfile, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY, getActiveState, getProfile, startClinic } from "./helpers";
 
 const ROOT = process.env.GAMIFY_SERVICE_DETOUR_ROOT ?? ".local-dev/gs025-service-detour";
 const PHASE = process.env.GAMIFY_SERVICE_DETOUR_PHASE ?? "before";
@@ -200,13 +200,10 @@ async function installFixture(page: Page, state: GameState, name: string): Promi
   campaign.name = name;
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value }) => localStorage.setItem(key, JSON.stringify(value)), {
-    key: PROFILE_KEY, value: profile,
-  });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
   expect(await page.evaluate(() => location.origin)).toBe("http://127.0.0.1:4197");
-  const resume = page.getByRole("button", { name: `Resume ${name}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.addStyleTag({ content: ".tutorial-overlay,.tutorial-card,.prototype-toolbar,.game-announcement,.facility-pause-indicator{display:none!important}" });
 }
@@ -360,7 +357,7 @@ test("ultrasound transition remains route-valid across pause and reload", async 
   const pausedTick = beforeReload.at(-1)!.facilityTick;
   await expect.poll(() => getActiveState(page).then((active) => active.facilityTick)).toBe(pausedTick);
   await page.reload();
-  await page.getByRole("button", { name: `Resume ${name}` }).click();
+  await resumeLocalCampaign(page, name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.addStyleTag({ content: ".tutorial-overlay,.tutorial-card,.prototype-toolbar,.game-announcement,.facility-pause-indicator{display:none!important}" });
   expect(await page.evaluate(() => location.origin)).toBe("http://127.0.0.1:4197");

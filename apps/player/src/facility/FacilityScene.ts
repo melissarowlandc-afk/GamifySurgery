@@ -711,6 +711,7 @@ export class FacilityScene extends Phaser.Scene {
   private mobileGhostInitialized = false;
   private mobileGhostKey = "";
   private mobileGhostFrameKey = "";
+  private lastRemodelGhosts: FacilityViewModel["remodelGhosts"];
   private mobileBuildDrawSignature = "";
   private dragStart:
     | {
@@ -1174,6 +1175,19 @@ export class FacilityScene extends Phaser.Scene {
       this.mobileArtSettledAt ??= performance.now();
   }
 
+  /** Opening observes an actually painted, settled presentation, never a tick. */
+  public openingPresentationStatus(): "waiting" | "ready" | "failed" {
+    if (!this.renderedLayout) return "waiting";
+    if (this.bridge.mobileInput === true) {
+      const art = this.phoneArtLoadingStatus();
+      if (art.settledMs === null || art.pendingRooms || art.pendingCharacters || art.painting) return "waiting";
+      return art.missingRoomSources || art.failedCharacters ? "failed" : "ready";
+    }
+    if (this.load?.isLoading?.() || this.environmentAtlasLoadRequested || this.characterStillLoadRequested || this.pendingCharacterStills.size) return "waiting";
+    if (this.failedCharacterStills.size || this.bridge.viewModel.levelFiveRoomArt && APPROVED_LEVEL5_BITMAP_ASSETS.some(asset => !this.textures.exists(getPhaserTextureKey(asset)))) return "failed";
+    return this.environmentAtlasReady && this.landscapingAtlasReady && this.roomFixtureAtlasesReady ? "ready" : "failed";
+  }
+
   /** Small presentation-only proof/diagnostic; no patient, save or image data. */
   public phoneArtLoadingStatus() {
     const elapsed = (at: number | undefined) => at === undefined || this.mobileArtStartedAt === undefined ? null : at - this.mobileArtStartedAt;
@@ -1632,6 +1646,9 @@ export class FacilityScene extends Phaser.Scene {
     this.refreshLayout();
     if (this.cameraPreferencePending && !this.isCameraGestureActive()) this.flushCameraChange();
     if (this.bridge.mobileInput === true) this.drawMobileBuildPreview();
+    else if (this.lastRemodelGhosts !== this.bridge.viewModel.remodelGhosts) {
+      this.lastRemodelGhosts = this.bridge.viewModel.remodelGhosts; this.drawPlacementGhost();
+    }
     this.reportSelectedRoomRect();
     if (this.bridge.mobileInput === true && phoneMemoryProfile().mode === "reduced") {
       const window = phoneActorWindowKey(this.layout, this.scale);
@@ -8557,10 +8574,10 @@ export class FacilityScene extends Phaser.Scene {
       }
     }
     const signature = JSON.stringify([state.ghost, state.hallway?.cells, state.doors, state.selectedDoorId,
-      placement, this.worldLayout.originX, this.worldLayout.originY, this.worldLayout.tileSize]);
+      placement, model.remodelGhosts, this.worldLayout.originX, this.worldLayout.originY, this.worldLayout.tileSize]);
     if (signature === this.mobileBuildDrawSignature) return;
     this.mobileBuildDrawSignature = signature;
-    graphics.clear(); this.ghostStatusText?.setVisible(false); this.ghostDoorText?.setVisible(false);
+    graphics.clear(); this.drawRemodelGhosts(graphics); this.ghostStatusText?.setVisible(false); this.ghostDoorText?.setVisible(false);
     const footprint = (point: GridPoint, width: number, height: number, valid: boolean) => {
       const rect = this.toPixels({ tileX: point.x, tileY: point.y, width, height });
       const color = valid ? 0x3d8650 : 0xc94b43;
@@ -9180,8 +9197,12 @@ export class FacilityScene extends Phaser.Scene {
       return { valid: false, invalidReason: "outside-grid" };
     }
 
+    // A blueprint is allowed to overlap until all staged rooms have moved.
+    // The shared domain preview/reducer validates the FINAL layout on Apply.
+    if (this.bridge.viewModel.blueprintRemodel && placement.movingRoomId) return { valid: true, invalidReason: null };
+
     const overlaps = this.bridge.viewModel.rooms.some((room) =>
-      rectanglesOverlap(candidate, {
+      room.instanceId !== placement.movingRoomId && rectanglesOverlap(candidate, {
         tileX: room.tileX,
         tileY: room.tileY,
         ...orientedSize(room),
@@ -9218,6 +9239,16 @@ export class FacilityScene extends Phaser.Scene {
     return { x: room.tileX + room.width, y: alongY };
   }
 
+  private drawRemodelGhosts(graphics: Phaser.GameObjects.Graphics): void {
+    if (!this.bridge.viewModel.buildMode) return;
+    for (const ghost of this.bridge.viewModel.remodelGhosts ?? []) {
+      const rect = this.toPixels({ tileX: ghost.x, tileY: ghost.y, width: ghost.width, height: ghost.height });
+      const color = ghost.valid ? 0x3d8650 : 0xc94b43;
+      graphics.fillStyle(color, .18); graphics.fillRect(rect.x, rect.y, rect.width, rect.height);
+      graphics.lineStyle(3, color, 1); graphics.strokeRect(rect.x, rect.y, rect.width, rect.height);
+    }
+  }
+
   private drawPlacementGhost(): void {
     if (this.bridge.mobileInput === true && this.bridge.mobileBuild) {
       this.mobileBuildDrawSignature = "";
@@ -9230,6 +9261,7 @@ export class FacilityScene extends Phaser.Scene {
     }
 
     graphics.clear();
+    this.drawRemodelGhosts(graphics);
     const ghost = this.placementGhost;
     const placement = this.bridge.viewModel.placement;
     if (!ghost || !placement) {

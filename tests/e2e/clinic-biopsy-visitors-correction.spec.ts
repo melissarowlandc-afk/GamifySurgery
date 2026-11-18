@@ -7,7 +7,7 @@ import {
   type GameState,
 } from "@gamify-surgery/game-domain";
 
-import { getActiveState, getProfile, PROFILE_KEY, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, getActiveState, getProfile, PROFILE_KEY, startClinic } from "./helpers";
 
 const SCREENSHOTS = ".local-dev/clinic-playtest-visitors";
 const GRID_WIDTH = 72;
@@ -22,14 +22,9 @@ async function installSeed(page: Page, state: GameState, name: string, marker: s
   campaign.name = name;
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value, seedMarker }) => {
-    if (sessionStorage.getItem(seedMarker)) return;
-    sessionStorage.setItem(seedMarker, "1");
-    localStorage.setItem(key, JSON.stringify(value));
-  }, { key: PROFILE_KEY, value: profile, seedMarker: marker });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: `Resume ${name}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
@@ -244,8 +239,7 @@ test("the exact Paget full-thickness punch choice works in Minor Procedure befor
   await page.screenshot({ path: `${SCREENSHOTS}/paget-punch-in-minor-procedure.png`, animations: "disabled" });
 
   await page.reload();
-  const resumeCampaign = page.getByRole("button", { name: "Resume Paget punch" });
-  if (await resumeCampaign.isVisible()) await resumeCampaign.click();
+  await resumeLocalCampaign(page, "Paget punch");
   expect(((await getActiveState(page)) as unknown as GameState).encounters["paget-punch"]!.pendingResult).toMatchObject({
     patientTravel: { destinationRoomInstanceId: "clinic.minor" },
     serviceIncomeFee: 150,
@@ -321,7 +315,7 @@ async function scheduledVisitorProof(page: Page, wantedSide: -1 | 1): Promise<vo
   await centerOnGridPoint(page, arrivalLocation);
   expect(await actorViewportSnapshot(page, key)).toMatchObject({ visible: true, intersectsViewport: true });
   await page.screenshot({ path: `${SCREENSHOTS}/visitor-${wantedSide}-sidewalk-arrival.png`, animations: "disabled" });
-  await page.reload(); const resumeCampaign = page.getByRole("button", { name: `Resume Visitor ${wantedSide}` }); if (await resumeCampaign.isVisible()) await resumeCampaign.click();
+  await page.reload(); await resumeLocalCampaign(page, `Visitor ${wantedSide}`);
   state = (await getActiveState(page)) as unknown as GameState;
   expect(state.serviceOperations[0]).toMatchObject({
     actorId: operation.actorId,
@@ -356,7 +350,7 @@ async function scheduledVisitorProof(page: Page, wantedSide: -1 | 1): Promise<vo
   await centerOnGridPoint(page, departureLocation);
   expect(await actorViewportSnapshot(page, key)).toMatchObject({ visible: true, intersectsViewport: true });
   await page.screenshot({ path: `${SCREENSHOTS}/visitor-${wantedSide}-sidewalk-departure.png`, animations: "disabled" });
-  await page.reload(); const reloadResume = page.getByRole("button", { name: `Resume Visitor ${wantedSide}` }); if (await reloadResume.isVisible()) await reloadResume.click();
+  await page.reload(); await resumeLocalCampaign(page, `Visitor ${wantedSide}`);
   expect(((await getActiveState(page)) as unknown as GameState).serviceOperations[0]).toMatchObject({
     actorId: operation.actorId,
     status: "leaving",

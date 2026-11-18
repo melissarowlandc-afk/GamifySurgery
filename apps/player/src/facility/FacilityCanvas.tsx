@@ -1,7 +1,10 @@
+import { useLoadingFlowSnapshot } from "../ui/LoadingFlowContext";
+import { bindOpeningFrame, markOpeningFramePending } from "../ui/clinicPresentation";
 import { renderLoopWatchdog, wakePresentationLoop } from "../diagnostics/renderLoopWatchdog";
 import { bindVisibleInterval } from "../mobile/performance/visibleInterval";
 import {
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   type CSSProperties,
@@ -96,7 +99,7 @@ export const DESKTOP_CAMERA_RESIZE_SETTLE_MS = 250;
  */
 export function FacilityCanvas({
   mobileInput,
-  mobileMapCovered,
+  mobileMapCovered: requestedMapCovered,
   mobileFacilityLevel,
   mobilePreviewRoomIds,
   mobileBuild,
@@ -122,6 +125,10 @@ export function FacilityCanvas({
   style,
   ariaLabel,
 }: FacilityCanvasProps): ReactElement {
+  // Paint the first art-ready frame even when a restored chart covers the map.
+  // Once opening ends, the existing offscreen/phone memory policy resumes.
+  const opening = useLoadingFlowSnapshot()?.active === true;
+  const mobileMapCovered = requestedMapCovered === true && !opening;
   const hostRef = useRef<HTMLDivElement>(null);
   const proofCounts = useRef({ canvasRenders: 0, viewModelChanges: 0, model: viewModel });
   if (import.meta.env.DEV || import.meta.env.VITE_FACILITY_PERF_PROOF === "1") {
@@ -196,6 +203,10 @@ export function FacilityCanvas({
     return () => document.removeEventListener("visibilitychange", updateVisibility);
   }, [mobileInput]);
 
+  const [presentationAttempt, setPresentationAttempt] = useState(0);
+  useLayoutEffect(() => {
+    if (canvasNeeded && hostRef.current) markOpeningFramePending(hostRef.current);
+  }, [canvasNeeded, presentationAttempt]);
   useEffect(() => {
     if (!canvasNeeded) return;
     const host = hostRef.current;
@@ -245,6 +256,10 @@ export function FacilityCanvas({
       },
       scene,
     });
+    const stopOpeningFrame = bindOpeningFrame(host, game.events,
+      () => scene.openingPresentationStatus(), () => {
+        mobileBitmapCache.forgetFailures(); setPresentationAttempt(value => value + 1);
+      });
     let mainCanvasLost = false;
     const frameBudget = bridgeRef.current.mobileInput === true ? new PhoneFrameBudget(game, () => ({
       hidden: mainCanvasLost || bridgeRef.current.mobilePresentation?.hidden === true,
@@ -435,6 +450,7 @@ export function FacilityCanvas({
     }) : () => {};
 
     return () => {
+      stopOpeningFrame();
       flushCamera();
       disconnectBitmapSource();
       contextRecovery.dispose(); unbindMemory();
@@ -483,7 +499,7 @@ export function FacilityCanvas({
         ownedCanvas.remove();
       }
     };
-  }, [canvasNeeded]);
+  }, [canvasNeeded, presentationAttempt]);
 
   return (
     <div

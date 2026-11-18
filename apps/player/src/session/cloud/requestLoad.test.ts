@@ -65,8 +65,15 @@ it("preserves exponential recovery backoff across replacement offline coordinato
   try {
     for (let second = 0; second < 1_800; second++) { h.clock.advance(1_000); await current.pulse(); expect(current.view.canExecute).toBe(true); }
     expect(replacements).toBeGreaterThan(5); expect(replacements).toBeLessThanOrEqual(14);
-    expect(h.server.calls.length - before).toBe(replacements);
-    expect(h.server.calls.slice(before).every(row => row.method === "capabilities")).toBe(true);
+    const probes = h.server.calls.slice(before);
+    // The manager-approved phone-loop guard verifies the actual head and copy
+    // before replacing playable offline state. Keep the original retry budget;
+    // every retry gets exactly one admission/head/load probe, and no writes.
+    expect(probes.filter(row => row.method === "capabilities")).toHaveLength(replacements);
+    expect(probes.map(row => row.method)).toEqual(
+      Array.from({ length: replacements }, () => ["capabilities", "head", "load"]).flat(),
+    );
+    expect(probes).toHaveLength(replacements * 3);
     expect(h.server.operationCount(h.scope.accountId)).toBe(0);
   } finally { current.dispose(); h.coordinator.dispose(); }
 });

@@ -57,6 +57,8 @@ export * from "./room-upgrade-experience";
 export * from "./selectors";
 export * from "./service-operations";
 export * from "./spatial";
+export { validateRoomRemodelPlan, roomHasActiveRemodelWork } from "./room-remodel";
+export type { RemodelValidation } from "./room-remodel";
 export * from "./staff";
 export * from "./test-choice-orders";
 export * from "./types";
@@ -69,6 +71,7 @@ export * from "./app-appointments";
 export * from "./game-evidence";
 
 export { withSettledStateQueries } from "./settledStateQueries";
+export { isImmutableEvidenceJson } from "./incrementalEvidenceValues";
 export * from "./founder-consults";
 export * from "./history-compaction";
 export * from "./history-counts";

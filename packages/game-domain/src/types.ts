@@ -23,6 +23,8 @@ export type ArrivalClass = "routine" | "tutorial" | "progression_critical";
 export type ReviewRatingIntent = "Good" | "Again";
 export type SimulationSpeed = 1 | 2 | 4;
 export type RoomOrientation = 0 | 90 | 180 | 270;
+/** Final room transform in one atomic, deterministic blueprint. */
+export interface RoomRemodelStep { roomId: string; x: number; y: number; orientation: RoomOrientation }
 export type CardinalDirection = "north" | "east" | "south" | "west";
 export type RoomUpgradeLevel = 1 | 2 | 3 | 4 | 5;
 
@@ -2023,6 +2025,10 @@ export type GameCommand =
   | (CommandBase & {
       type: "ROTATE_ROOM";
       roomId: string;
+    })
+  | (CommandBase & {
+      type: "APPLY_REMODEL_PLAN";
+      rooms: RoomRemodelStep[];
     })
   | (CommandBase & {
       type: "PLACE_DOOR";

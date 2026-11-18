@@ -58,6 +58,9 @@ async function mount(initialState = initial()) {
     return <MobileShell {...phoneFixture({ ...view, paused: session.state.paused, simulationSpeed: session.state.simulationSpeed,
       buildMode: session.buildMode, managementMode: session.managementMode, buildUndoCount: session.buildUndoCount,
       buildUndoLabel: session.buildUndoLabel, movingRoomInstanceId: session.movingRoomInstanceId,
+      remodelBlueprint: session.remodelBlueprint,
+      facility: { ...view.facility, blueprintRemodel: session.remodelBlueprint.active, remodelGhosts: session.remodelGhosts,
+        placement: view.facility.placement ? { ...view.facility.placement, movingRoomId: session.movingRoomInstanceId ?? undefined } : null },
       buildExitBlockedReason: session.buildExitBlockedReason, buildExitBlockedIssues: session.buildExitBlockedIssues,
       placementOrientation: session.placementOrientation, mobileBuildActions: session.mobileBuildActions,
       campaigns: session.campaigns, announcement: session.announcement,
@@ -446,4 +449,22 @@ describe("native phone Build through the real shared session", () => {
     await env.click("Build"); expect(env.session.state.paused).toBe(true);
     await env.click("Done"); expect(env.session.buildMode).toBe(false); expect(env.session.state.paused).toBe(false);
   });
+});
+
+it("stages and applies a phone blueprint through the shared paused session", async () => {
+  const initial = createInitialGameState(); initial.encounters = {}; initial.openChartEncounterId = null;
+  initial.rooms.push({ id: "phone.remodel", roomDefinitionId: "room.waiting", x: 15, y: 10,
+    orientation: 0, doorSide: null, upgradeLevel: 1, cleanliness: 100 });
+  const env = await mount(initial);
+  await env.call(session => session.enterBuildMode());
+  const before = env.session.state;
+  await env.call(session => session.remodelBlueprint.begin());
+  await env.call(session => session.remodelBlueprint.editRoom("phone.remodel"));
+  await env.intent({ kind: "ghost", point: { x: 25, y: 10 } });
+  await env.confirm("placement");
+  expect(env.session.state).toBe(before);
+  expect(env.map.viewModel.remodelGhosts).toEqual([expect.objectContaining({ roomId: "phone.remodel", x: 25, valid: true })]);
+  await env.click("Apply remodel");
+  expect(env.session.state.rooms.find(room => room.id === "phone.remodel")!.x).toBe(25);
+  expect(env.session.buildUndoCount).toBe(1);
 });

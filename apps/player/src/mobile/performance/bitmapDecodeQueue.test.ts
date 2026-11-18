@@ -14,17 +14,33 @@ it("accepts an already drawable load without a redundant WebKit decode promise o
   expect(queue.health).toEqual({ activeDecodes: 0, queuedDecodes: 0, decodeTimeouts: 0 }); expect(vi.getTimerCount()).toBe(0);
 });
 
-it("expires every queued promise even when all four network requests never fire an event", async () => {
+it("bounds each started request and eventually drains a queue of hung requests", async () => {
   vi.useFakeTimers(); const images: any[] = [];
   const cache = new MobileBitmapCache(() => { const image = {}; images.push(image); return image as HTMLImageElement; });
   const requests = Array.from({ length: 40 }, (_, n) => cache.load({ ...ENVIRONMENT_ATLAS_V1, id: `hung.${n}` }, "/fixture.png"));
   const late = images.map(image => image.onload);
   expect(cache.health).toMatchObject({ activeDecodes: 4, queuedDecodes: 36 });
-  await vi.advanceTimersByTimeAsync(PHONE_BITMAP_DEADLINE_MS);
+  // Waiting for a slot must not consume an image's network/decode allowance.
+  await vi.advanceTimersByTimeAsync(PHONE_BITMAP_DEADLINE_MS * 10);
   expect(await Promise.all(requests)).toEqual(Array(40).fill(null));
   for (const load of late) load();
   expect(cache.health).toMatchObject({ activeDecodes: 0, queuedDecodes: 0, pending: 0, decodeTimeouts: 40 });
   expect(images.every(image => image.onload === null && image.onerror === null && image.src === "")).toBe(true);
+  expect(vi.getTimerCount()).toBe(0);
+});
+
+it("does not discard healthy large-clinic sources merely because four slots have a long queue", async () => {
+  vi.useFakeTimers(); const queue = new BitmapDecodeQueue(), starts: number[] = [];
+  const rows = Array.from({ length: 256 }, (_, n) => queue.load(() => {
+    const image = { complete: true, naturalWidth: 400, naturalHeight: 400, onload: null as null | (() => void),
+      set src(value: string) { if (value) { starts.push(n); setTimeout(() => image.onload?.(), 500); } } };
+    return image as unknown as HTMLImageElement;
+  }, `/healthy.${n}`, n < 4 ? 0 : 1).promise);
+  await vi.advanceTimersByTimeAsync(500);
+  expect(await Promise.all(rows.slice(0, 4))).toHaveLength(4);
+  await vi.advanceTimersByTimeAsync(32_000);
+  expect((await Promise.all(rows)).filter(Boolean)).toHaveLength(256);
+  expect(starts).toHaveLength(256); expect(queue.health).toEqual({ activeDecodes: 0, queuedDecodes: 0, decodeTimeouts: 0 });
   expect(vi.getTimerCount()).toBe(0);
 });
 
@@ -70,7 +86,7 @@ it("serves the oldest background job under continuous higher-priority arrivals w
   for (let n = 0; n < 12; n++) add(`/visible.${n}`, 0);
   for (let n = 0; n < 8; n++) { images[n].onload(); expect(queue.health.activeDecodes).toBeLessThanOrEqual(4); }
   expect(starts.indexOf("/oldest-background")).toBeLessThan(8);
-  await vi.advanceTimersByTimeAsync(PHONE_BITMAP_DEADLINE_MS); await Promise.all(rows);
+  await vi.runAllTimersAsync(); await Promise.all(rows);
   expect(queue.health.activeDecodes).toBe(0);
 });
 

@@ -391,28 +391,31 @@ describe("automatic verified clinic progress selection", () => {
     expect(h.server.operationCount(h.scope.accountId)).toBe(0);
     vi.restoreAllMocks();
   });
-  it("checks for a restored service in the background without pausing offline play, then selects and uploads", async () => {
+  it("checks for a restored service in the background and uploads the same mounted session without selecting again", async () => {
     const h = await rig(), local = await localBranch(h, 1); local.session.dispose();
     const capabilities = h.runtime.transport.capabilities;
     h.runtime.transport.capabilities = async () => { throw new CloudSyncError("network"); };
     const coordinator = await h.resolve();
-    let session!: CloudGameSession, reconnected: CloudSyncCoordinator | null = null;
-    const select = vi.fn(async () => {
-      session.coordinator.pause(); reconnected = await h.resolve(); return true;
-    });
-    session = await CloudGameSession.create(coordinator, undefined, select);
+    const select = vi.fn(async () => false);
+    const session = await CloudGameSession.create(coordinator, undefined, select);
     session.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "background.offline" }, PROTOTYPE_DOMAIN_CONTEXT);
     expect(await session.durable()).toBe(true);
+    expect(h.cache.journal).toBeDefined();
+    const expected = session.state, journalKey = cloudCampaignStorageKey(h.scope), owner = (await h.cache.journal!.head(journalKey))!.owner;
     h.clock.advance(CLOUD_RENEW_MS); await coordinator.pulse();
     expect(session.canExecute).toBe(true); expect(select).not.toHaveBeenCalled();
     expect(h.server.operationCount(h.scope.accountId)).toBe(0);
     h.runtime.transport.capabilities = capabilities;
     h.clock.advance(CLOUD_RENEW_MS); await coordinator.pulse();
-    expect(select).toHaveBeenCalledOnce();
-    const online = await CloudGameSession.create(reconnected!);
-    expect(online.canExecute).toBe(true); expect(online.state.simulationSpeed).toBe(4);
-    expect(await online.checkpointNow("ordinary")).toBe(true);
-    session.dispose(); online.dispose();
+    expect(select).not.toHaveBeenCalled();
+    expect(session.canExecute, JSON.stringify(coordinator.view)).toBe(true); expect(session.state).toEqual(expected); expect(session.state.simulationSpeed).toBe(4);
+    expect((await h.cache.journal!.head(journalKey))!.owner).toBe(owner);
+    expect(await session.checkpointNow("ordinary")).toBe(true);
+    const saved = await h.runtime.transport.load(h.scope.campaignId);
+    const verified = await codec.run({ kind: "hydrate", input: { ...saved, expectedRevision: saved.revision,
+      expectedCampaignId: saved.campaignId, expectedBaselineId: saved.baselineId } });
+    expect(verified.state).toEqual(expected);
+    session.dispose();
   });
   it("shows the moved-writer gate when the real transport classifies a reclaimed head as corrupt/missing", async () => {
     const h = await rig(); await divergent(h, 3, 1);

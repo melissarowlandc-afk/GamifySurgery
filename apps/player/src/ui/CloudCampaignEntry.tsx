@@ -1,3 +1,4 @@
+import { useLoadingFlow } from "./LoadingFlowContext";
 import { useEffect, useId, useRef, useState } from "react";
 import { useCloudAccount } from "../session/cloud/CloudAccount";
 import { cloudCheckDeadline, CLOUD_CHECK_TIMEOUT_MS, CLOUD_READ_TIMEOUT_MS } from "../session/cloud/checkDeadline";
@@ -26,7 +27,8 @@ function ClinicTime({ value }: { value: number }) {
   return Number.isFinite(date.getTime()) ? <time dateTime={date.toISOString()}>{date.toLocaleString()}</time> : <>Time unavailable</>;
 }
 
-export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = false, preparationFailure = false, onRetryPreparation }: {
+export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = false, preparationFailure = false, onRetryPreparation, onOpeningStateChange }: {
+  onOpeningStateChange?(state: "preparing" | "ready" | "interaction"): void;
   onOpen(campaignId: string): Promise<void>;
   onCreate(): void;
   notice?: string;
@@ -35,6 +37,7 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
   onRetryPreparation?(): void;
 }) {
   const cloud = useCloudAccount()!, { runtime } = cloud;
+  const flow = useLoadingFlow();
   const usage = useUsageTracking(), layout = usePresentationLayout(), id = useId();
   const [pendingQuestions, setPendingQuestions] = useState<QuestionUsageReceipt[]>([]);
   const [problems, setProblems] = useState<string[]>([]), [enrollment, setEnrollment] = useState<AutomaticCampaignEnrollment | null>(null);
@@ -152,6 +155,10 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
     cloud.phase === "error" ? "Your campaigns could not be checked. Your saved copies are safe." :
     !cloud.access?.enabled || cloud.access.writesEnabled === false ? "Account saving is currently unavailable. Try again later." :
     !cloud.access.noticeAccepted ? "Accept the notice above to resume or start a campaign." : "";
+  const openingState = needsNotice || enrollmentError || error || replace || enrollment?.phase === "choose" ||
+    ["error", "deleted", "deletion-requested"].includes(cloud.phase) || cloud.access && (!cloud.access.enabled || cloud.access.writesEnabled === false)
+    ? "interaction" : migrationReady ? "ready" : "preparing";
+  useEffect(() => { onOpeningStateChange?.(openingState); }, [onOpeningStateChange, openingState]);
   const action = async (run: () => Promise<void>) => {
     if (working.current) return; working.current = true; setBusy(true); setError("");
     try { await cloudCheckDeadline(run(), 2 * CLOUD_CHECK_TIMEOUT_MS + CLOUD_READ_TIMEOUT_MS); }
@@ -179,6 +186,7 @@ export function CloudCampaignEntry({ onOpen, onCreate, notice = "", preparing = 
     enrollment?.phase === "choose" || cloud.access?.quotaWarning || cloud.access?.enrollmentsEnabled === false);
   return <main className="welcome-surface welcome-entrance cloud-campaign-screen" style={welcomeSurfaceStyle}
     data-entry-state={!migrationReady || busy || enrollmentBusy || preparing ? "preparing" : exceptional ? "notice" : "ready"}>
+    <LoadingScreen active={Boolean(flow && busy)} immediate phase="selection" status="Getting your campaigns ready..." />
     <WelcomeArtwork className="welcome-entrance-art" entrance />
     <div className={`cloud-entry cloud-entry--${layout} cloud-entry--compact welcome-entrance-panel`}>
     <header><OpeningBrand /><h1>Your campaigns</h1><ClinicalContentNotice /></header>

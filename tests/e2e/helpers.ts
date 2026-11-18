@@ -1,17 +1,93 @@
-import { expect, type Locator, type Page } from "@playwright/test";
+import { expect, type Locator, type Page, type Route } from "@playwright/test";
+import { randomUUID } from "node:crypto";
 
 export const PROFILE_KEY = "gamify-surgery.prototype.profile.v1";
 export const ACCESS_KEY = "gamify-surgery.prototype.access.v1";
 
+/** Role/enabled queries do not exclude inert ancestry. Resolve actions only
+ * against uncovered DOM, including when loading changes between samples. */
+export function uncoveredUi(page: Page, target: Locator): Locator {
+  return target.and(page.locator('body:not(:has([role="region"][aria-label="Loading clinic"]:visible)) :not([inert], [inert] *)'));
+}
+
+/** The continuous shell stays mounted; play starts after its first ready frame. */
+export async function waitForClinicReady(page: Page, ready = page.getByTestId("facility-canvas")) {
+  await expect(page.getByRole("region", { name: "Loading clinic", exact: true, includeHidden: true })).toBeHidden({ timeout: 100_000 });
+  await expect(ready).toBeVisible({ timeout: 100_000 });
+}
+
+/** Desktop uses .facility-host; phone uses .mobile-facility-map. Both expose
+ * this same real Phaser host. Require its canvas, including nonzero size. */
+export async function expectFacilityRenderer(page: Page): Promise<void> {
+  const canvas = page.getByTestId("facility-canvas").locator("canvas");
+  await expect(canvas).toBeVisible();
+  await expect.poll(() => canvas.evaluate(node => node.clientWidth > 0 && node.clientHeight > 0)).toBe(true);
+}
+
+/** Use the existing ?facility-gait-proof scene observation hook to click the
+ * center of a grid tile. Map through the current layout/scale without changing
+ * the camera, hiding controls or substituting a reducer/QA command for input. */
+export async function clickFacilityTileCenter(page: Page, tile: { x: number; y: number }): Promise<void> {
+  const point = await page.getByTestId("facility-canvas").evaluate((host, target) => {
+    type SceneProof = {
+      scene: { getScene(key: string): {
+        layout: { originX: number; originY: number; tileSize: number };
+        scale: { width: number; height: number };
+      } };
+    };
+    const game = (host as HTMLElement & { __facilityGame?: SceneProof }).__facilityGame;
+    if (!game) throw new Error("Tile-center input requires ?facility-gait-proof=1.");
+    const scene = game.scene.getScene("facility-scene");
+    const canvas = host.querySelector("canvas");
+    if (!canvas) throw new Error("The facility renderer canvas is missing.");
+    const bounds = canvas.getBoundingClientRect();
+    const { originX, originY, tileSize } = scene.layout;
+    const { width, height } = scene.scale;
+    if (![originX, originY, tileSize, width, height, bounds.width, bounds.height].every(Number.isFinite)
+      || tileSize <= 0 || width <= 0 || height <= 0 || bounds.width <= 0 || bounds.height <= 0) {
+      throw new Error("The facility scene must have a finite, nonzero layout before tile input.");
+    }
+    const point = {
+      x: (originX + (target.x + 0.5) * tileSize) * bounds.width / width,
+      y: (originY + (target.y + 0.5) * tileSize) * bounds.height / height,
+    };
+    if (!Number.isInteger(target.x) || !Number.isInteger(target.y)
+      || point.x <= 0 || point.x >= bounds.width || point.y <= 0 || point.y >= bounds.height) {
+      throw new Error(`Tile (${target.x},${target.y}) must have its center inside the current canvas.`);
+    }
+    if (canvas.closest("[inert]")
+      || document.elementFromPoint(bounds.left + point.x, bounds.top + point.y) !== canvas) {
+      throw new Error(`Tile (${target.x},${target.y}) is covered; ordinary controls must expose it before input.`);
+    }
+    return point;
+  }, tile);
+  await page.getByTestId("facility-canvas").locator("canvas").click({ position: point });
+}
+
 /** Local recovery is asynchronous; wait for either the clinic or its explicit
  * Resume choice instead of checking the chooser before React has rendered it. */
-export async function resumeLocalCampaign(page: Page, name: string) {
-  const canvas = page.getByTestId("facility-canvas");
-  const resume = page.getByRole("button", { name: `Resume ${name}`, exact: true });
-  await expect.poll(async () => await canvas.isVisible() || await resume.isVisible()).toBe(true);
-  if (await resume.isVisible()) await resume.click();
-  await expect(canvas).toBeVisible();
+export async function resumeLocalCampaign(page: Page, name: string, ready = page.getByTestId("facility-canvas")) {
+  const loading = page.getByRole("region", { name: "Loading clinic", exact: true, includeHidden: true });
+  const resume = uncoveredUi(page, page.getByRole("button", { name: `Resume ${name}`, exact: true }));
+  await expect(async () => {
+    await expect(loading).toBeHidden({ timeout: 1_000 });
+    if (await ready.isVisible()) return;
+    await expect(resume).toBeVisible({ timeout: 1_000 });
+    await expect(resume).toBeEnabled({ timeout: 1_000 });
+    await resume.click({ timeout: 1_000 });
+    await expect(ready).toBeVisible({ timeout: 1_000 });
+  }).toPass({ timeout: 100_000 });
+  await waitForClinicReady(page, ready);
+  const profile = await getProfile(page);
+  const expected = profile.campaigns.find(row => row.name === name);
+  expect(expected, `Expected the named campaign ${name}`).toBeDefined();
+  expect(profile.activeCampaignId).toBe(expected!.campaignId);
   await expect.poll(() => page.evaluate(() => document.fonts.status)).toBe("loaded");
+  const fixture = pendingLocalFixtures.get(page);
+  if (fixture) {
+    await expectLocalFixtureContent(page, fixture);
+    pendingLocalFixtures.delete(page);
+  }
 }
 
 export interface PersistedCampaign {
@@ -46,11 +122,129 @@ export interface PersistedGameState {
   learningHistories: Record<string, { reviews: unknown[] }>;
 }
 
-interface MutableVisualGameState extends PersistedGameState {
+export interface LocalFixtureState {
+  campaignId: string;
+  facilityLevel: number;
+  clinicalXp: number;
+  cash: number;
+  cashCents: number;
+  rooms: Array<{ id: string }>;
+  doors: Array<{ id: string }>;
+  events: Array<{ id: string; [key: string]: unknown }>;
+}
+
+const pendingLocalFixtures = new WeakMap<Page, LocalFixtureState>();
+
+interface LocalProfileFixture {
+  activeCampaignId: string | null;
+  campaigns: Array<{ campaignId: string; name: string; serializedState: string }>;
+}
+
+/** Check the actual committed journal/recovery result, not just legacy bytes. */
+export async function expectLocalFixtureContent(page: Page, expected: LocalFixtureState) {
+  await expect.poll(() => page.evaluate(async campaignId => {
+    const modulePath = "/src/session/localJournal.ts";
+    const { IndexedDbJournalStorage } = await import(/* @vite-ignore */ modulePath);
+    return new IndexedDbJournalStorage().head(`local|guest|${encodeURIComponent(campaignId)}`);
+  }, expected.campaignId), { timeout: 100_000 }).not.toBeNull();
+  const actual = await page.evaluate(async () => {
+    const storagePath = "/src/session/prototypeStorage.ts";
+    const journalPath = "/src/session/localProfileJournal.ts";
+    const { loadPrototypeProfile } = await import(/* @vite-ignore */ storagePath);
+    const { recoverLocalProfile } = await import(/* @vite-ignore */ journalPath);
+    const profile = await recoverLocalProfile(loadPrototypeProfile().profile, null);
+    const active = profile.campaigns.find((row: { campaignId: string }) => row.campaignId === profile.activeCampaignId);
+    if (!active) throw new Error("Durable fixture campaign is missing.");
+    return active.state;
+  }) as LocalFixtureState;
+  expect({ campaignId: actual.campaignId, level: actual.facilityLevel, xp: actual.clinicalXp,
+    cash: actual.cash, cashCents: actual.cashCents }).toEqual({ campaignId: expected.campaignId,
+    level: expected.facilityLevel, xp: expected.clinicalXp, cash: expected.cash, cashCents: expected.cashCents });
+  expect(actual.rooms.map(row => row.id).sort()).toEqual(expected.rooms.map(row => row.id).sort());
+  expect(actual.doors.map(row => row.id).sort()).toEqual(expected.doors.map(row => row.id).sort());
+  for (const event of expected.events) expect(actual.events).toContainEqual(expect.objectContaining(event));
+}
+
+/** Seed a complete, already fresh profile once, before this page mounts it.
+ * Reloads must recover ordinary play; no fixture script may restore old state. */
+export async function seedLocalProfileOnce(
+  page: Page, profile: LocalProfileFixture, marker = `fixture-installed:${randomUUID()}`,
+): Promise<LocalFixtureState> {
+  const active = profile.campaigns.find(row => row.campaignId === profile.activeCampaignId);
+  if (!active) throw new Error("Fresh fixture needs an active campaign.");
+  const expected = JSON.parse(active.serializedState) as LocalFixtureState;
+  if (expected.campaignId !== active.campaignId) throw new Error("Fixture row/state identity mismatch.");
+  await page.addInitScript(({ key, value, marker }) => {
+    if (sessionStorage.getItem(marker)) return;
+    const serialized = JSON.stringify(value);
+    localStorage.setItem(key, serialized);
+    if (localStorage.getItem(key) !== serialized) throw new Error("Fresh fixture readback failed.");
+    sessionStorage.setItem(marker, "1");
+  }, { key: PROFILE_KEY, value: profile, marker });
+  pendingLocalFixtures.set(page, expected);
+  return expected;
+}
+
+/** Compose under identities no previous live writer/journal can own. Profile
+ * identity references/metadata keys and campaign event targets follow the new
+ * identity; commands, frozen encounters, FSRS cards and due dates stay intact. */
+export function createFreshLocalProfile<T extends LocalProfileFixture>(profile: T): T {
+  const next = structuredClone(profile);
+  const identities = new Map<string, string>();
+  const states = next.campaigns.map(row => JSON.parse(row.serializedState));
+  next.campaigns.forEach((row, index) => {
+    if (typeof states[index].campaignId !== "string" || !states[index].campaignId) {
+      throw new Error("Fixture state needs its original campaign identity.");
+    }
+    const id = `campaign.fixture.${randomUUID()}`;
+    if (identities.has(row.campaignId) || identities.has(states[index].campaignId)) {
+      throw new Error("Duplicate fixture campaign identity.");
+    }
+    identities.set(row.campaignId, id);
+    identities.set(states[index].campaignId, id);
+  });
+  const rebase = (value: unknown): unknown => {
+    if (typeof value === "string") return identities.get(value) ?? value;
+    if (Array.isArray(value)) return value.map(rebase);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value)
+      .map(([key, item]) => [identities.get(key) ?? key, rebase(item)]));
+    return value;
+  };
+  next.campaigns.forEach((row, index) => {
+    const state = states[index];
+    state.campaignId = identities.get(row.campaignId)!;
+    for (const event of state.events ?? []) {
+      if (event.target?.kind === "campaign") event.target.id = identities.get(event.target.id) ?? event.target.id;
+    }
+    row.serializedState = JSON.stringify(state);
+  });
+  return rebase(next) as T;
+}
+
+export async function installFreshLocalProfile(page: Page, profile: LocalProfileFixture): Promise<LocalFixtureState> {
+  return seedLocalProfileOnce(page, createFreshLocalProfile(profile));
+}
+
+/** Stop the source app before another page seeds its prepared fixture copy.
+ * Fulfill a same-origin inert document: no static-route fallback may mount a
+ * second app, and no source writer/storage listener survives the navigation. */
+export async function leaveLocalFixtureSource(page: Page): Promise<void> {
+  const pattern = "**/__e2e-local-fixture-idle.html";
+  const idle = (route: Route) => route.fulfill({ contentType: "text/html",
+    body: "<!doctype html><title>Synthetic fixture source idle</title>" });
+  await page.route(pattern, idle);
+  try { await page.goto(new URL("/__e2e-local-fixture-idle.html", page.url()).href); }
+  finally { await page.unroute(pattern, idle); }
+}
+
+export interface MutableVisualGameState extends PersistedGameState {
+  facilityTick: number;
   cashCents: number;
   paused: boolean;
   simulationSpeed: number;
   employees: unknown[];
+  doors: Array<{ id: string; [key: string]: unknown }>;
+  events: Array<{ id: string; [key: string]: unknown }>;
   nextRoutineArrivalTick?: number;
   encounters: Record<string, Record<string, unknown>>;
   environment: {
@@ -98,7 +292,7 @@ export async function completeClinicOpening(
   await page.getByLabel("First-shift guidance").setChecked(guidanceEnabled);
   await page.getByLabel("Clinic name").fill(clinicName);
   await page.getByRole("button", { name: "Open the Clinic" }).click();
-  await expect(page.getByTestId("facility-canvas")).toBeVisible();
+  await waitForClinicReady(page);
 }
 
 export async function startClinic(
@@ -454,7 +648,9 @@ export function createLevelOneVisualFixture(state: MutableVisualGameState): Muta
   return state;
 }
 
-export async function installLevelOneVisualState(page: Page): Promise<void> {
+export async function installLevelOneVisualState(
+  page: Page, transform?: (state: MutableVisualGameState) => void,
+): Promise<LocalFixtureState> {
   const profile = await getProfile(page);
   const activeIndex = profile.campaigns.findIndex(
     (campaign) => campaign.campaignId === profile.activeCampaignId,
@@ -464,40 +660,22 @@ export async function installLevelOneVisualState(page: Page): Promise<void> {
   }
   const active = profile.campaigns[activeIndex]!;
   const state = createLevelOneVisualFixture(JSON.parse(active.serializedState) as MutableVisualGameState);
+  transform?.(state);
 
   profile.campaigns[activeIndex] = {
     ...active,
     serializedState: JSON.stringify(state),
   };
   profile.tutorialsEnabled = false;
-  await page.addInitScript(
-    ({ profileKey, nextProfile }) => {
-      window.localStorage.setItem(
-        profileKey,
-        JSON.stringify(nextProfile),
-      );
-    },
-    { profileKey: PROFILE_KEY, nextProfile: profile },
-  );
+  const expected = await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
   await resumeLocalCampaign(page, active.name);
-  await expect(page.locator(".facility-host canvas")).toBeVisible();
-  await expect.poll(() => page.locator(".facility-host canvas").evaluate(canvas => canvas.clientWidth > 0 && canvas.clientHeight > 0)).toBe(true);
+  await expectFacilityRenderer(page);
+  return expected;
 }
 
-/**
- * A paused Level 2 review fixture installed into a campaign that the UI has
- * already created.  It deliberately stays in localStorage: loading it again
- * therefore exercises the normal campaign persistence/migration path.
- */
-export async function installLevelTwoVisualState(page: Page): Promise<void> {
-  const profile = await getProfile(page);
-  const activeIndex = profile.campaigns.findIndex(
-    (campaign) => campaign.campaignId === profile.activeCampaignId,
-  );
-  if (activeIndex < 0) throw new Error("Active campaign record is missing.");
-  const active = profile.campaigns[activeIndex]!;
-  const state = JSON.parse(active.serializedState) as MutableVisualGameState;
+/** Pure builder; complete the fixture before any journal can bind its identity. */
+export function createLevelTwoVisualFixture(state: MutableVisualGameState): MutableVisualGameState {
   const makeRoom = (
     id: string,
     roomDefinitionId: string,
@@ -565,15 +743,25 @@ export async function installLevelTwoVisualState(page: Page): Promise<void> {
   }));
   state.environment = { ...state.environment, founderLocation: { x: 34, y: 29 }, founderActivity: null,
     glp1AutomationNextPayoutTicks: [60], glp1AutomationNextPayoutTick: 60 };
+  return state;
+}
+
+/** A new Level 2 fixture identity is imported once; reloads use real durability. */
+export async function installLevelTwoVisualState(
+  page: Page, transform?: (state: MutableVisualGameState) => void,
+): Promise<LocalFixtureState> {
+  const profile = await getProfile(page);
+  const activeIndex = profile.campaigns.findIndex(row => row.campaignId === profile.activeCampaignId);
+  if (activeIndex < 0) throw new Error("Active campaign record is missing.");
+  const active = profile.campaigns[activeIndex]!;
+  const state = createLevelTwoVisualFixture(JSON.parse(active.serializedState) as MutableVisualGameState);
+  transform?.(state);
   profile.campaigns[activeIndex] = { ...active, serializedState: JSON.stringify(state) };
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ profileKey, nextProfile }) => {
-    window.localStorage.setItem(profileKey, JSON.stringify(nextProfile));
-  }, { profileKey: PROFILE_KEY, nextProfile: profile });
+  const expected = await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
-  const resume = page.getByRole("button", { name: `Resume ${active.name}` });
-  if (await resume.isVisible()) await resume.click();
-  await expect(page.getByTestId("facility-canvas")).toBeVisible();
+  await resumeLocalCampaign(page, active.name);
+  return expected;
 }
 
 export async function installDeterministicCampaignIds(

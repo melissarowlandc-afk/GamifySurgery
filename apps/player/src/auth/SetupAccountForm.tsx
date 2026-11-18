@@ -1,3 +1,5 @@
+import { LoadingScreen } from "../ui/LoadingScreen";
+import { useLoadingFlow } from "../ui/LoadingFlowContext";
 import { useRef, useState, type FormEvent } from "react";
 import { ClinicalContentNotice } from "../ui/ClinicalContentNotice";
 import { OpeningBrand } from "../ui/OpeningBrand";
@@ -10,6 +12,7 @@ import { claimPersonalSetupLink, INVALID_SETUP_LINK, USED_SETUP_LINK, type Perso
 export function SetupAccountForm({ link, onComplete, onReturn }: {
   link: PersonalSetupLink; onComplete: () => void; onReturn: () => void;
 }) {
+  const flow = useLoadingFlow();
   const [password, setPassword] = useState("");
   const [confirmation, setConfirmation] = useState("");
   const [reset, setReset] = useState(false);
@@ -26,7 +29,7 @@ export function SetupAccountForm({ link, onComplete, onReturn }: {
     const configuration = hostedAuthConfiguration();
     if (!configuration) { setMessage("Account setup is unavailable. Contact the person who invited you."); return; }
     submitting.current = true;
-    setPending(true); setMessage(null);
+    setPending(true); flow?.begin("auth"); setMessage(null);
     try {
       if (!claimed.current) {
         const result = await claimPersonalSetupLink(configuration, link, password);
@@ -55,6 +58,7 @@ export function SetupAccountForm({ link, onComplete, onReturn }: {
     } finally { submitting.current = false; setPending(false); }
   };
   return <main className="opening-screen auth-gate-screen welcome-surface welcome-entrance" style={welcomeSurfaceStyle}>
+    <LoadingScreen active={Boolean(flow && pending)} phase="auth" immediate status="Setting up your account..." />
     <WelcomeArtwork className="welcome-entrance-art" entrance="wide" />
     <section className="founder-creator auth-gate-card welcome-entrance-panel">
       <OpeningBrand />

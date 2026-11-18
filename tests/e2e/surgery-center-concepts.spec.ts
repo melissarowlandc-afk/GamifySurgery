@@ -16,7 +16,7 @@ import {
   type PendingResult,
 } from "@gamify-surgery/game-domain";
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   installLevelTwoVisualState,
   setFastFacilitySpeed,
@@ -183,18 +183,10 @@ async function openPreparedCampaign(
   marker: string,
 ): Promise<Page> {
   const page = await context.newPage();
-  await page.addInitScript(
-    ({ markerKey, profileKey, nextProfile }) => {
-      if (sessionStorage.getItem(markerKey) !== null) return;
-      sessionStorage.setItem(markerKey, "installed");
-      localStorage.setItem(profileKey, JSON.stringify(nextProfile));
-    },
-    { markerKey: marker, profileKey: PROFILE_KEY, nextProfile: profile },
-  );
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
   expect(new URL(page.url()).origin).toBe(ORIGIN);
-  const resume = page.getByRole("button", { name: `Resume ${campaignName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   return page;
 }
@@ -472,10 +464,7 @@ test("external skin biopsy preserves its generated patient and pending timer acr
   expect(beforeReload.facilityTick).toBeLessThan(pending.dueTick);
   const fullPendingBeforeReload = beforeReload.encounters[preparedCampaign.encounter.id]!.pendingResult;
   await page.reload();
-  const resumeCampaign = page.getByRole("button", {
-    name: `Resume ${preparedCampaign.campaignName}`,
-  });
-  if (await resumeCampaign.isVisible()) await resumeCampaign.click();
+  await resumeLocalCampaign(page, preparedCampaign.campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   const afterReload = (await getActiveState(page)) as unknown as GameState;
   const reloaded = assertFrozenEncounter(afterReload, preparedCampaign.encounter);

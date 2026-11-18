@@ -1,4 +1,6 @@
-import { act } from "react";
+import { CLINIC_PRESENTATION_EVENT } from "../ui/clinicPresentation";
+import { problemDiagnostics } from "../diagnostics/problemDiagnostics";
+import { act, useLayoutEffect } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { IDBFactory, IDBKeyRange } from "fake-indexeddb";
 import { QaApp } from "./cloudSavesQa";
@@ -15,8 +17,12 @@ import { CloudSyncCoordinator } from "../session/cloud/coordinator";
 import { loadCloudEvidenceCheckpoint } from "../session/cloud/codecEvidence";
 import { IndexedDbCloudEntryStore } from "../session/cloud/entryStorage";
 
-vi.mock("../facility", () => ({ FacilityCanvas: () => <div>Fixture map</div> }));
-vi.mock("../mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: () => <div>Fixture map</div> }));
+function ReadyMap() {
+  useLayoutEffect(() => { document.dispatchEvent(new Event(CLINIC_PRESENTATION_EVENT)); }, []);
+  return <div data-testid="facility-canvas" data-clinic-frame="ready">Fixture map</div>;
+}
+vi.mock("../facility", () => ({ FacilityCanvas: ReadyMap }));
+vi.mock("../mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: ReadyMap }));
 const codecs: CloudCodecWorker[] = [];
 afterEach(async () => { await cleanupPhoneTests(); for (const codec of codecs.splice(0)) codec.dispose(); vi.restoreAllMocks(); });
 
@@ -40,6 +46,15 @@ async function fixture(layout: "phone" | "desktop", needsNotice = false) {
     clearInterval: vi.fn((id: number) => intervals.delete(id)),
     localStorage: { getItem: (key: string) => values.get(key) ?? null, setItem: (key: string, value: string) => values.set(key, value),
       removeItem: (key: string) => values.delete(key), key: (index: number) => [...values.keys()][index] ?? null, get length() { return values.size; } } });
+  // The map is a renderer substitute in these save/transport tests. Expose
+  // its already-rendered frame; real POST_RENDER/art gating is tested separately.
+  Object.assign(env.doc, { querySelector: (selector: string) => selector.includes("facility-canvas")
+    ? allElements(env.element, node => node.attributes["data-testid"] === "facility-canvas")[0] ?? null : null });
+  const entryProbe = { read: undefined as (() => unknown) | undefined }, source = problemDiagnostics.source.bind(problemDiagnostics);
+  vi.spyOn(problemDiagnostics, "source").mockImplementation((name, read) => {
+    if (name === "entry") entryProbe.read = read;
+    return source(name, read);
+  });
   const browser = env.browser as unknown as Window;
   browser.__cloudQaAuthenticate = async () => {};
   browser.__cloudQaCall = async (_account, method, args) => {
@@ -57,13 +72,16 @@ async function fixture(layout: "phone" | "desktop", needsNotice = false) {
     await vi.waitFor(async () => { await act(async () => {}); expect(env.button("Accept and continue").attributes.disabled).toBeUndefined(); }, { timeout: 5_000 });
     await env.click("Accept and continue");
   }
-  await vi.waitFor(async () => { await act(async () => {}); expect(env.button("Resume Synthetic clinic 1").attributes.disabled).toBeUndefined(); }, { timeout: 5_000 });
-  const entryStatus = browser.__cloudQa!.status();
-  await env.click("Resume Synthetic clinic 1");
+  // Routine first enrollment now opens the clear campaign automatically. Never
+  // require or click an incidental chooser row while the opening is covered.
   const playing = () => vi.waitFor(async () => { await act(async () => {});
     expect(browser.__cloudQa?.status()).toMatchObject({ hasState: true, canExecute: true, failure: null, needsReload: false });
+    expect(allElements(env.doc.body, node => node.attributes["aria-label"] === "Loading clinic" && node.attributes.hidden === undefined)).toHaveLength(0);
   }, { timeout: 5_000 });
   await playing();
+  // The chooser has correctly unmounted, so retain its real stage reader rather
+  // than depending on a diagnostic source that only exists while it is visible.
+  const entryStatus = { ...browser.__cloudQa!.status(), entryPreparation: entryProbe.read?.() };
   await vi.waitFor(async () => { await act(async () => {}); expect(browser.__cloudQa?.status().pending).toBe(false); });
   return { env, server, browser, playing, intervals, commits, codec, entryStatus, hold: (method: string, wait: Promise<void>) => { holds.set(method, wait); }, unavailable: (value: boolean) => { unavailable = value; } };
 }
@@ -134,7 +152,7 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
         expect(qa().status().canExecute).toBe(false); expect(qa().snapshot().state!.paused).toBe(true);
         expect(notices()).toHaveLength(0);
         await act(async () => { await vi.advanceTimersByTimeAsync(400); });
-        const loading = allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Loading clinic");
+        const loading = allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Loading clinic" && node.attributes.hidden === undefined);
         expect(loading).toHaveLength(1);
         expect(loading[0]!.textContent).toContain("Checking your clinic’s saved progress");
         expect(allElements(loading[0]!, node => node.tagName === "BUTTON")).toHaveLength(0);
@@ -153,7 +171,7 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     } finally { gate.resolve(); }
     await act(async () => { expect(await checking).toBe(true); });
     await f.playing(); expect(notices()).toHaveLength(0);
-    expect(allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Loading clinic")).toHaveLength(0);
+    expect(allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Loading clinic" && node.attributes.hidden === undefined)).toHaveLength(0);
     vi.useRealTimers();
   });
 
@@ -216,10 +234,30 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
   });
   it("rejects a QA handle replaced during reconnect, and atomically prepares a durably paused copy that stays paused on reopen", async () => {
     const f = await fixture(layout), stale = f.browser.__cloudQa!;
+    const clinicFrame = allElements(f.env.doc.body, node => node.attributes["data-testid"] === "facility-canvas")[0];
+    expect(clinicFrame).toBeDefined();
     await act(async () => { expect(await stale.command({ type: "SET_PAUSED", paused: false })).toBe(true); });
     f.unavailable(true);
     await act(async () => { await stale.focus(); });
     await vi.waitFor(async () => { await act(async () => {}); expect(f.browser.__cloudQa!.status()).toMatchObject({ canExecute: true, failure: "network" }); });
+    // B-009: "loading and saying that saving is offline" must not replace a
+    // verified, durable local owner. Its captured handle still accepts work.
+    expect(f.browser.__cloudQa).toBe(stale);
+    await act(async () => {
+      expect(await stale.command({ type: "SET_PAUSED", paused: true })).toBe(true);
+      expect(await stale.command({ type: "SET_PAUSED", paused: false })).toBe(true);
+    });
+    expect(stale.status()).toMatchObject({ canExecute: true, failure: "network", localDurable: true });
+    expect(f.browser.__cloudQa).toBe(stale);
+    expect(allElements(f.env.doc.body, node => node.attributes["data-testid"] === "facility-canvas")[0]).toBe(clinicFrame);
+    expect(allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Loading clinic" && node.attributes.hidden === undefined)).toHaveLength(0);
+
+    // A real app teardown/reopen replaces the owner; the network check above
+    // does not. Keep the outage and the original running-state assertions.
+    await f.env.render(null); await f.env.render(<QaApp />);
+    await vi.waitFor(async () => { await act(async () => {}); expect(f.browser.__cloudQa!.status()).toMatchObject({ canExecute: true, failure: "network" }); });
+    expect(f.browser.__cloudQa).toBeDefined();
+    expect(f.browser.__cloudQa).not.toBe(stale);
     // The former e2e helper captured this handle, ignored a refused final
     // pause, and could mistake its fenced UI overlay for a persisted pause.
     await act(async () => { expect(await stale.command({ type: "SET_PAUSED", paused: true })).toBe(false); });
@@ -317,6 +355,9 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     const f = await fixture(layout);
     await f.env.click("Save & Close");
     await vi.waitFor(async () => { await act(async () => {}); expect(f.env.element.textContent).toContain("Safe to close this tab"); });
+    await vi.waitFor(async () => { await act(async () => {});
+      expect(allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Loading clinic" && node.attributes.hidden === undefined)).toHaveLength(0);
+    }, { timeout: 5_000 });
     await f.env.click("Not now");
     const notices = allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Clinic status");
     expect(notices).toHaveLength(1);

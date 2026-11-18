@@ -18,10 +18,28 @@
     <meta name="theme-color" content="#f0eddd" />
     <link rel="preload" as="image" type="image/png" href="%BASE_URL%art/welcome/spring-morning-portrait.png" media="(max-aspect-ratio: 1/1)" fetchpriority="high" />
     <link rel="preload" as="image" type="image/png" href="%BASE_URL%art/welcome/spring-morning-landscape.png" media="(aspect-ratio &gt; 1/1)" fetchpriority="high" />
-    <style>body:has(#root:empty) { background: #e3dfcc; }</style>
+    <link rel="stylesheet" href="/src/ui/loadingBootstrap.css" />
   </head>
   <body>
+    <section id="clinic-loading-screen" class="welcome-surface loading-screen" role="region" aria-label="Loading clinic" tabindex="-1" data-loading-state="waiting" data-loading-progress="2">
+      <div class="loading-screen-inner" data-loading-bootstrap>
+        <div class="loading-screen-scene">
+          <picture class="welcome-art loading-screen-art" data-welcome-art="spring-morning-01b" data-welcome-composition="full">
+            <source media="(max-aspect-ratio: 1/1)" srcset="%BASE_URL%art/welcome/spring-morning-portrait.png" width="941" height="1672" />
+            <source media="(aspect-ratio &gt; 1/1)" srcset="%BASE_URL%art/welcome/spring-morning-landscape.png" width="1672" height="941" />
+            <img src="%BASE_URL%art/welcome/spring-morning-portrait.png" alt="A welcoming clinic entrance in spring, with the founder at the open door and a receptionist waving from the front desk." width="941" height="1672" decoding="async" fetchpriority="high" draggable="false" />
+          </picture>
+        </div>
+        <div class="loading-screen-content">
+          <div class="welcome-brand"><h1 class="opening-wordmark">Stitchin’ Time</h1><p class="welcome-tagline" data-loading-tagline-slot></p></div>
+          <p id="clinic-loading-status" role="status" aria-live="polite" aria-atomic="true">Getting your clinic ready…</p>
+          <div class="loading-screen-bar" role="progressbar" aria-label="Opening progress" aria-describedby="clinic-loading-status" aria-valuemin="0" aria-valuemax="100" aria-valuenow="2"><span style="width: 2%"></span></div>
+          <div class="loading-screen-actions" data-loading-boot-actions></div>
+        </div>
+      </div>
+    </section>
     <div id="root"></div>
+    <script type="application/json" id="clinic-loading-taglines">["Saves a bird in the hand.", "Saves $400.", "Saves two in the bush.", "Saves room for dessert.", "Saves daylight in participating states.", "Saves a penny for your thoughts.", "Saves the elephant in the waiting room.", "Saves the chicken before it crosses.", "Saves the backup banana.", "Saves one medium-sized Tuesday.", "Saves the princess, eventually.", "Saves absolutely nothing.", "Saves nine business days.", "Saves nine, pending prior authorization.", "Saves four out of five dentists.", "Saves the world after sign-out.", "Saves one clean pair of scrubs.", "Saves the good trauma shears.", "Saves a turkey sandwich for night shift.", "Saves a parking spot in the next county.", "Saves paper by printing twice.", "Saves a perfectly good clipboard.", "Saves a little treat for later.", "Saves the decaf for administration.", "Saves nine sandwiches. Mayo extra.", "Saves the mystery Tupperware.", "Saves the Oxford comma, reluctantly.", "Saves the appendix for the appendix.", "Saves the spleen on alternating Tuesdays.", "Saves nine hours of mandatory modules.", "Saves the operating room schedule, in theory.", "Saves one extremely local pigeon."]</script>
     <script src="%BASE_URL%startup-recovery.js"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>

@@ -16,7 +16,7 @@ import {
   type GameState,
   type PlacedRoom,
 } from "@gamify-surgery/game-domain";
-import { getActiveState, getProfile, PROFILE_KEY, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, getActiveState, getProfile, PROFILE_KEY, startClinic } from "./helpers";
 
 const EVIDENCE = ".local-dev/gs031/browser-care-flow";
 test.beforeAll(() => mkdirSync(EVIDENCE, { recursive: true }));
@@ -85,14 +85,9 @@ async function install(page: Page, name: string, state: GameState): Promise<void
   campaign.name = name;
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value, marker }) => {
-    if (sessionStorage.getItem(marker)) return;
-    sessionStorage.setItem(marker, "1");
-    localStorage.setItem(key, JSON.stringify(value));
-  }, { key: PROFILE_KEY, value: profile, marker: `gs031-care.${name}` });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: `Resume ${name}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
@@ -415,8 +410,7 @@ test("employee question opens before arrival, answers early, and resumes an expl
   expect(current.operationReceipts["system.open-chart-attendance-retry"]).toBeUndefined();
   const xp = current.clinicalXp;
   await page.reload();
-  const resume = page.getByRole("button", { name: "Resume GS031 Employee Consult" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "GS031 Employee Consult");
   await expect(page.getByRole("button", { name: "Continue", exact: true })).toBeVisible();
   current = await state(page);
   expect(current.clinicalXp).toBe(xp);
@@ -455,8 +449,7 @@ test("staffed Endoscopy result question opens as a concurrent consult after the 
     xp: current.clinicalXp,
   });
   await page.reload();
-  const resume = page.getByRole("button", { name: "Resume GS031 Endoscopy Consult" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "GS031 Endoscopy Consult");
   current = await state(page);
   expect(JSON.stringify({
     answer: current.encounters[fixture.encounterId]!.answers.at(-1),

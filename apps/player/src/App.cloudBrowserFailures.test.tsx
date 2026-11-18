@@ -64,7 +64,10 @@ describe.each(["phone", "desktop"] as const)("%s real account provider and autom
   it("makes a routine selected copy playable and renders one account menu", async () => {
     const f = await fixture(layout), session = await f.open();
     expect(session.canExecute).toBe(true);
-    if (layout === "phone") await f.env.click("More clinic options");
+    if (layout === "phone") {
+      await vi.waitFor(() => expect(f.env.button("More clinic options")).toBeDefined(), { timeout: 5_000 });
+      await f.env.click("More clinic options");
+    }
     expect(allElements(f.env.doc.body, node => node.tagName === "DETAILS" && node.attributes.class?.split(" ").includes("cloud-account") === true)).toHaveLength(1);
     expect(allElements(f.env.doc.body, node => node.tagName === "SUMMARY" && node.textContent === "Account & privacy")).toHaveLength(1);
   });

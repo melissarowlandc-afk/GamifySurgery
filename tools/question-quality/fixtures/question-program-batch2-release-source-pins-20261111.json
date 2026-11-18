@@ -16,7 +16,7 @@
       "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
       "mainBeforeSha256": "b1dbaed6698c006ae5cb88fc3308308da39eec327c0aa9a31eacfefa25888d05",
       "mainAfterSha256": "01b03a00e33fa635bad87150f70afa9bf7907ffd52d0a22f6cc8f5141f182d8f",
-      "requiredReleaseSha256": "e612a637b9b7890ebd651255094e4e18bbc0aef376f366e9ba4a6c8544054e24",
+      "requiredReleaseSha256": "8c603abb521ef741f52d29433d17dcee33824fadb4b9bedd749429930162e92f",
       "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
     }
   ],
@@ -981,6 +981,344 @@
           "previousRequirement": "a9347d0b8a018ab2e4aacf310e4c4ddf255da9367b8a208093624e9e5b5dedf4",
           "releaseAfterSha256": "e612a637b9b7890ebd651255094e4e18bbc0aef376f366e9ba4a6c8544054e24",
           "reason": "release 40 over-cap journal open fix"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release41-flags-loading-remodel-containment",
+      "priorFixtureSha256": "8e402bd569af445ed388e95d8a8ad13f66fcca93ad9ac32433a9fc44ba9987fa",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-test-support.ts",
+          "mainBeforeSha256": "ee579791c0bc964b7e9b5c94079fcd2c2937823224646a4f492d45e4d671a51d",
+          "mainAfterSha256": "a6a642fbdbce085b2636403fa03905d7f77c679384caf792009d0c69d4302ef3",
+          "requiredReleaseSha256": "b9c65a94d3b9d951a1fcf8ffeb74ce265884fc479db7883e34c4a68a3509e4d7",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b1dbaed6698c006ae5cb88fc3308308da39eec327c0aa9a31eacfefa25888d05",
+          "mainAfterSha256": "01b03a00e33fa635bad87150f70afa9bf7907ffd52d0a22f6cc8f5141f182d8f",
+          "requiredReleaseSha256": "e612a637b9b7890ebd651255094e4e18bbc0aef376f366e9ba4a6c8544054e24",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "release 41, owner-directed flag fixes, loading, remodel, containment",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "e612a637b9b7890ebd651255094e4e18bbc0aef376f366e9ba4a6c8544054e24",
+          "previousRequirement": "e612a637b9b7890ebd651255094e4e18bbc0aef376f366e9ba4a6c8544054e24",
+          "releaseAfterSha256": "b5488a38a89cc825cacde9bbf61ac88ee795972e9d392bf8b56ac040bd6f6f46",
+          "reason": "release 41, owner-directed flag fixes, loading, remodel, containment"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release41-flags-loading-remodel-containment",
+      "priorFixtureSha256": "5a78b3fd49691beed3543756fbbd723263e2937165f24b32461fdfe6ece347a6",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-test-support.ts",
+          "mainBeforeSha256": "ee579791c0bc964b7e9b5c94079fcd2c2937823224646a4f492d45e4d671a51d",
+          "mainAfterSha256": "a6a642fbdbce085b2636403fa03905d7f77c679384caf792009d0c69d4302ef3",
+          "requiredReleaseSha256": "b9c65a94d3b9d951a1fcf8ffeb74ce265884fc479db7883e34c4a68a3509e4d7",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b1dbaed6698c006ae5cb88fc3308308da39eec327c0aa9a31eacfefa25888d05",
+          "mainAfterSha256": "01b03a00e33fa635bad87150f70afa9bf7907ffd52d0a22f6cc8f5141f182d8f",
+          "requiredReleaseSha256": "b5488a38a89cc825cacde9bbf61ac88ee795972e9d392bf8b56ac040bd6f6f46",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "release 41, owner-directed flag fixes, loading, remodel, containment",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "b5488a38a89cc825cacde9bbf61ac88ee795972e9d392bf8b56ac040bd6f6f46",
+          "previousRequirement": "b5488a38a89cc825cacde9bbf61ac88ee795972e9d392bf8b56ac040bd6f6f46",
+          "releaseAfterSha256": "57139b1c95c4c087a3909de2badb25c63488eb851e707fb4708873a2d9016b9c",
+          "reason": "release 41, owner-directed flag fixes, loading, remodel, containment"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release41-flags-loading-remodel-containment",
+      "priorFixtureSha256": "199289385a76d3e13ab807157bb3d3eab3b1511ae5b18fe1f708474fc6fdcf9b",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-test-support.ts",
+          "mainBeforeSha256": "ee579791c0bc964b7e9b5c94079fcd2c2937823224646a4f492d45e4d671a51d",
+          "mainAfterSha256": "a6a642fbdbce085b2636403fa03905d7f77c679384caf792009d0c69d4302ef3",
+          "requiredReleaseSha256": "b9c65a94d3b9d951a1fcf8ffeb74ce265884fc479db7883e34c4a68a3509e4d7",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b1dbaed6698c006ae5cb88fc3308308da39eec327c0aa9a31eacfefa25888d05",
+          "mainAfterSha256": "01b03a00e33fa635bad87150f70afa9bf7907ffd52d0a22f6cc8f5141f182d8f",
+          "requiredReleaseSha256": "57139b1c95c4c087a3909de2badb25c63488eb851e707fb4708873a2d9016b9c",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "release 41, owner-directed flag fixes, loading, remodel, containment",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "57139b1c95c4c087a3909de2badb25c63488eb851e707fb4708873a2d9016b9c",
+          "previousRequirement": "57139b1c95c4c087a3909de2badb25c63488eb851e707fb4708873a2d9016b9c",
+          "releaseAfterSha256": "7714585bbe8e6988c274d58c8558e6e94a3917a312a5cc8c868a9145b868b63c",
+          "reason": "release 41, owner-directed flag fixes, loading, remodel, containment"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release41-flags-loading-remodel-containment",
+      "priorFixtureSha256": "387c04b432d45eefa6daa256dd60650d13d19844ea5831b6bc1d725e8bfca4e0",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-test-support.ts",
+          "mainBeforeSha256": "ee579791c0bc964b7e9b5c94079fcd2c2937823224646a4f492d45e4d671a51d",
+          "mainAfterSha256": "a6a642fbdbce085b2636403fa03905d7f77c679384caf792009d0c69d4302ef3",
+          "requiredReleaseSha256": "b9c65a94d3b9d951a1fcf8ffeb74ce265884fc479db7883e34c4a68a3509e4d7",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b1dbaed6698c006ae5cb88fc3308308da39eec327c0aa9a31eacfefa25888d05",
+          "mainAfterSha256": "01b03a00e33fa635bad87150f70afa9bf7907ffd52d0a22f6cc8f5141f182d8f",
+          "requiredReleaseSha256": "7714585bbe8e6988c274d58c8558e6e94a3917a312a5cc8c868a9145b868b63c",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "release 41, owner-directed flag fixes, loading, remodel, containment",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "7714585bbe8e6988c274d58c8558e6e94a3917a312a5cc8c868a9145b868b63c",
+          "previousRequirement": "7714585bbe8e6988c274d58c8558e6e94a3917a312a5cc8c868a9145b868b63c",
+          "releaseAfterSha256": "875ba663cf699bfcc3580d912dfcdf08dfc1f9e259793735c2dcf041bab36dd0",
+          "reason": "release 41, owner-directed flag fixes, loading, remodel, containment"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release41-flags-loading-remodel-containment",
+      "priorFixtureSha256": "127db9ad5d04628e050e193c3e80812b73378d2d104ebb9856bdbd4c20bc2ee0",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-test-support.ts",
+          "mainBeforeSha256": "ee579791c0bc964b7e9b5c94079fcd2c2937823224646a4f492d45e4d671a51d",
+          "mainAfterSha256": "a6a642fbdbce085b2636403fa03905d7f77c679384caf792009d0c69d4302ef3",
+          "requiredReleaseSha256": "b9c65a94d3b9d951a1fcf8ffeb74ce265884fc479db7883e34c4a68a3509e4d7",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b1dbaed6698c006ae5cb88fc3308308da39eec327c0aa9a31eacfefa25888d05",
+          "mainAfterSha256": "01b03a00e33fa635bad87150f70afa9bf7907ffd52d0a22f6cc8f5141f182d8f",
+          "requiredReleaseSha256": "875ba663cf699bfcc3580d912dfcdf08dfc1f9e259793735c2dcf041bab36dd0",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "release 41, owner-directed flag fixes, loading, remodel, containment",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "875ba663cf699bfcc3580d912dfcdf08dfc1f9e259793735c2dcf041bab36dd0",
+          "previousRequirement": "875ba663cf699bfcc3580d912dfcdf08dfc1f9e259793735c2dcf041bab36dd0",
+          "releaseAfterSha256": "e914eeabb5401447c76e7d3623a98d91c78bfd33c590de4e5304157e468031b4",
+          "reason": "release 41, owner-directed flag fixes, loading, remodel, containment"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-17",
+      "milestone": "release40-phone-loop-20261117",
+      "priorFixtureSha256": "e1259dbc28ac5f1f93d56ecc9d7e7543674f52b19336debc7f298deea33a5ab6",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-test-support.ts",
+          "mainBeforeSha256": "ee579791c0bc964b7e9b5c94079fcd2c2937823224646a4f492d45e4d671a51d",
+          "mainAfterSha256": "a6a642fbdbce085b2636403fa03905d7f77c679384caf792009d0c69d4302ef3",
+          "requiredReleaseSha256": "b9c65a94d3b9d951a1fcf8ffeb74ce265884fc479db7883e34c4a68a3509e4d7",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b1dbaed6698c006ae5cb88fc3308308da39eec327c0aa9a31eacfefa25888d05",
+          "mainAfterSha256": "01b03a00e33fa635bad87150f70afa9bf7907ffd52d0a22f6cc8f5141f182d8f",
+          "requiredReleaseSha256": "e914eeabb5401447c76e7d3623a98d91c78bfd33c590de4e5304157e468031b4",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "manager-directed release40 phone-loop fix, 2026-11-17",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "e914eeabb5401447c76e7d3623a98d91c78bfd33c590de4e5304157e468031b4",
+          "previousRequirement": "e914eeabb5401447c76e7d3623a98d91c78bfd33c590de4e5304157e468031b4",
+          "releaseAfterSha256": "ef782b5da14f2968314812c94d6c25ebb3381860a85041d5cc3cecf6cddc747e",
+          "reason": "manager-directed release40 phone-loop fix, 2026-11-17"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-16",
+      "milestone": "release41-flags-loading-remodel-containment",
+      "priorFixtureSha256": "d74e19a38a80f517e617fc9ec764fc2d16f0a6a65c9e4c582aeb7ca2b731eb04",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-test-support.ts",
+          "mainBeforeSha256": "ee579791c0bc964b7e9b5c94079fcd2c2937823224646a4f492d45e4d671a51d",
+          "mainAfterSha256": "a6a642fbdbce085b2636403fa03905d7f77c679384caf792009d0c69d4302ef3",
+          "requiredReleaseSha256": "b9c65a94d3b9d951a1fcf8ffeb74ce265884fc479db7883e34c4a68a3509e4d7",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b1dbaed6698c006ae5cb88fc3308308da39eec327c0aa9a31eacfefa25888d05",
+          "mainAfterSha256": "01b03a00e33fa635bad87150f70afa9bf7907ffd52d0a22f6cc8f5141f182d8f",
+          "requiredReleaseSha256": "ef782b5da14f2968314812c94d6c25ebb3381860a85041d5cc3cecf6cddc747e",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "release 41, owner-directed flag fixes, loading, remodel, containment; test-only alignment with manager-directed read-only phone-loop probe",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "ef782b5da14f2968314812c94d6c25ebb3381860a85041d5cc3cecf6cddc747e",
+          "previousRequirement": "ef782b5da14f2968314812c94d6c25ebb3381860a85041d5cc3cecf6cddc747e",
+          "releaseAfterSha256": "f4ae19eb51368620873b33e2458e3342a18e3f71d5033b3727e17df34cd8f948",
+          "reason": "release 41, owner-directed flag fixes, loading, remodel, containment; test-only alignment with manager-directed read-only phone-loop probe"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-17",
+      "milestone": "release40-phone-loop-20261117-write-outage",
+      "priorFixtureSha256": "58c005405651d4eb307ae1ad344a59bf6d5fd8c153899129450a20020de36ed8",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-test-support.ts",
+          "mainBeforeSha256": "ee579791c0bc964b7e9b5c94079fcd2c2937823224646a4f492d45e4d671a51d",
+          "mainAfterSha256": "a6a642fbdbce085b2636403fa03905d7f77c679384caf792009d0c69d4302ef3",
+          "requiredReleaseSha256": "b9c65a94d3b9d951a1fcf8ffeb74ce265884fc479db7883e34c4a68a3509e4d7",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b1dbaed6698c006ae5cb88fc3308308da39eec327c0aa9a31eacfefa25888d05",
+          "mainAfterSha256": "01b03a00e33fa635bad87150f70afa9bf7907ffd52d0a22f6cc8f5141f182d8f",
+          "requiredReleaseSha256": "f4ae19eb51368620873b33e2458e3342a18e3f71d5033b3727e17df34cd8f948",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "manager-directed release40 phone-loop fix, unchanged-head writer outage containment",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "f4ae19eb51368620873b33e2458e3342a18e3f71d5033b3727e17df34cd8f948",
+          "previousRequirement": "f4ae19eb51368620873b33e2458e3342a18e3f71d5033b3727e17df34cd8f948",
+          "releaseAfterSha256": "1a3d5ee33745483ef15ceeff0db41087d4d698ac7e25414f30cc804dbfd66f00",
+          "reason": "manager-directed release40 phone-loop fix, unchanged-head writer outage containment"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-17",
+      "milestone": "release40-phone-loop-20261117-checkpoint-serialization",
+      "priorFixtureSha256": "71494abcc992a64932c761bd401b7c7f23f2b109512d076d3bc8853be96677fb",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-test-support.ts",
+          "mainBeforeSha256": "ee579791c0bc964b7e9b5c94079fcd2c2937823224646a4f492d45e4d671a51d",
+          "mainAfterSha256": "a6a642fbdbce085b2636403fa03905d7f77c679384caf792009d0c69d4302ef3",
+          "requiredReleaseSha256": "b9c65a94d3b9d951a1fcf8ffeb74ce265884fc479db7883e34c4a68a3509e4d7",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b1dbaed6698c006ae5cb88fc3308308da39eec327c0aa9a31eacfefa25888d05",
+          "mainAfterSha256": "01b03a00e33fa635bad87150f70afa9bf7907ffd52d0a22f6cc8f5141f182d8f",
+          "requiredReleaseSha256": "1a3d5ee33745483ef15ceeff0db41087d4d698ac7e25414f30cc804dbfd66f00",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "manager-directed release40 phone-loop fix, unchanged-head recovery checkpoint serialization and rendered-map readiness",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "releaseBeforeSha256": "1a3d5ee33745483ef15ceeff0db41087d4d698ac7e25414f30cc804dbfd66f00",
+          "previousRequirement": "1a3d5ee33745483ef15ceeff0db41087d4d698ac7e25414f30cc804dbfd66f00",
+          "releaseAfterSha256": "29d3a694f715b84956bb891409abf5864ffa672b8cc7a8e823764f9bb4fa08af",
+          "reason": "manager-directed release40 phone-loop fix, unchanged-head recovery checkpoint serialization and rendered-map readiness"
+        }
+      ]
+    },
+    {
+      "on": "2026-11-17",
+      "milestone": "B-009-C2-C4-authorized-source-pin-bookkeeping",
+      "priorFixtureSha256": "1aaf3c54b6cb83f0c06060f4da00b9b8dbff9833f9775109c3264e585adbd025",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-test-support.ts",
+          "mainBeforeSha256": "ee579791c0bc964b7e9b5c94079fcd2c2937823224646a4f492d45e4d671a51d",
+          "mainAfterSha256": "a6a642fbdbce085b2636403fa03905d7f77c679384caf792009d0c69d4302ef3",
+          "requiredReleaseSha256": "b9c65a94d3b9d951a1fcf8ffeb74ce265884fc479db7883e34c4a68a3509e4d7",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b1dbaed6698c006ae5cb88fc3308308da39eec327c0aa9a31eacfefa25888d05",
+          "mainAfterSha256": "01b03a00e33fa635bad87150f70afa9bf7907ffd52d0a22f6cc8f5141f182d8f",
+          "requiredReleaseSha256": "29d3a694f715b84956bb891409abf5864ffa672b8cc7a8e823764f9bb4fa08af",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "Release 41 manager-accepted B-009 C2-C4 phone-loop fixes; append exact source requirements and propagate only fixture-SHA/path-count guard literals.",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch1-acceptance-20261111.test.ts",
+          "on": "2026-11-17",
+          "releaseBeforeSha256": "29d3a694f715b84956bb891409abf5864ffa672b8cc7a8e823764f9bb4fa08af",
+          "previousRequirement": "29d3a694f715b84956bb891409abf5864ffa672b8cc7a8e823764f9bb4fa08af",
+          "releaseAfterSha256": "8c603abb521ef741f52d29433d17dcee33824fadb4b9bedd749429930162e92f",
+          "milestone": "B-009-C2-C4-authorized-source-pin-bookkeeping",
+          "reason": "Release 41 manager-accepted B-009 C2-C4 phone-loop fixes; append exact source requirements and propagate only fixture-SHA/path-count guard literals. All other bytes of this guard test are unchanged.",
+          "evidence": {
+            "kind": "exact-fixture-sha-and-count-literal-replacement",
+            "replacements": [
+              {
+                "kind": "fixture-sha256",
+                "before": "ac6934921a08f16ad79c3f4e6519f66363d2a37c47e03049af947470242ae57d",
+                "after": "55aa59624e1c16c4164cba5cdcd22171dcdd54e01588719112179ba4fa8b52f1",
+                "line": 82
+              }
+            ],
+            "sourceMilestones": [
+              "B-009-C2-round1",
+              "B-009-C2-round1+B-009-C2-round2+B-009-C3+B-009-C4",
+              "B-009-C3+B-009-C4"
+            ]
+          }
         }
       ]
     }

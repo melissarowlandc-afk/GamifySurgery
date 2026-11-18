@@ -1,3 +1,4 @@
+import { resumeLocalCampaign, waitForClinicReady } from "./helpers";
 import { expect, test, type Page } from "@playwright/test";
 import { startClinic } from "./helpers";
 
@@ -151,8 +152,9 @@ test("desktop splitter is a map shade, follows only the revealed bottom and pres
   expect(reloadView.worldBottom).toBe(reloadView.height);
   await page.reload();
   const resume = page.getByRole("button", { name: "Resume Shade Clinic", exact: true });
+  await resumeLocalCampaign(page, "Shade Clinic");
   await expect.poll(async () => Boolean(await cameraSnapshot(page)) || await resume.isVisible(), { timeout: 20_000 }).toBe(true);
-  if (await resume.isVisible()) await resume.click();
+  await waitForClinicReady(page);
   const reopened = await ready(page);
   stationary(reloadView, reopened); await expectPicking(page, reopened);
   await info.attach("shade-camera-proof", { body: JSON.stringify({ before, grown, keyboard, covered, bottom, follow, noReverse, windowResize, reopened }), contentType: "application/json" });

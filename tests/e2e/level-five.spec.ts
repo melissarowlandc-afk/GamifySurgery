@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import type { GameState } from "@gamify-surgery/game-domain";
-import { getActiveState, installRememberedLocalAccess } from "./helpers";
+import { resumeLocalCampaign, getActiveState, installRememberedLocalAccess } from "./helpers";
 
 // This spec deliberately targets the existing cap-5, disposable QA entry.
 // It never installs a fixture in the owner's 4173 profile or opens the live cap.
@@ -15,7 +15,7 @@ async function openQa(page: Page, scenario: string, phone: boolean) {
   // facility-gait-proof exposes the read-only Phaser handle the map assertions poll.
   await page.goto(`${QA}/level4-rooms-qa.html?level5=${scenario}&layout=${phone ? "phone" : "desktop"}&facility-gait-proof`);
   expect(await page.evaluate(() => location.origin)).toBe(QA);
-  await page.getByRole("button", { name: `Resume Level 5 M9 integration (${scenario})`, exact: true }).click();
+  await resumeLocalCampaign(page, `Level 5 M9 integration (${scenario})`);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await expect.poll(() => page.evaluate(() => Boolean((document.querySelector("[data-testid='facility-canvas']") as any)?.__facilityGame?.scene?.getScene("facility-scene")))).toBe(true);
 }
@@ -108,7 +108,7 @@ for (const phone of [false, true]) {
       await expect(report.locator(".inspection-category-tile")).toHaveCount(10);
     }
     await page.reload();
-    await page.getByRole("button", { name: "Resume Level 5 M9 integration (integration-final)", exact: true }).click();
+    await resumeLocalCampaign(page, "Level 5 M9 integration (integration-final)");
     await expect(page.locator(".finished-game-dialog")).toBeVisible();
     await page.getByRole("button", { name: "Start new campaign", exact: true }).click();
     await page.getByRole("button", { name: "Return to report", exact: true }).click();
@@ -118,7 +118,7 @@ for (const phone of [false, true]) {
     expect(kept.campaignId).toBe(before.campaignId);
     expect(kept.levelFive!.progress.finishPageAcknowledgedAtFacilityTick).not.toBeNull();
     await page.reload();
-    await page.getByRole("button", { name: "Resume Level 5 M9 integration (integration-final)", exact: true }).click();
+    await resumeLocalCampaign(page, "Level 5 M9 integration (integration-final)");
     await expect(page.locator(".finished-game-dialog")).toHaveCount(0);
     await openGoals(page, phone);
     await page.getByRole("button", { name: "View finish report", exact: true }).click();

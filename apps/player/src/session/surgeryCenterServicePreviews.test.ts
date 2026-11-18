@@ -60,8 +60,8 @@ describe("surgery-center test timing previews", () => {
       const preview = getAnswerChoiceServicePreview(state, "encounter.sc.thyroid", choice.id)!;
       const total = preview.durationTicks!;
       expect(choice.detailLabel).toContain("game time");
-      expect(choice.etaLabel).toBe(total >= 60 && total % 60 === 0
-        ? `${total / 60} hour${total === 60 ? "" : "s"}` : `${total} min`);
+      expect(choice.etaLabel).toBe(`If ordered now: about ${total >= 60 && total % 60 === 0
+        ? `${total / 60} hour${total === 60 ? "" : "s"}` : `${total} min`}`);
     }
     for (const choice of view.decisionSteps!.find((step) => step.current)!.answerChoices) {
       expect(choice.detailLabel).toEqual(view.answerChoices.find((entry) => entry.id === choice.id)?.detailLabel);

@@ -6,6 +6,7 @@ import type { OperationalContextFlags, OperationalEngineResult } from "./operati
 import type { OperationalViewArguments } from "./operationalViewProjection";
 import type { JournalRow } from "../localJournal";
 import { CLOUD_WORKER_STARTUP_TIMEOUT_MS } from "./codecWorker";
+import { commandProgrammingFailure, decodeCommandFailure } from "./commandFailure";
 
 type CommandEntry = { command: GameCommand; context: DomainContext };
 type Entry = CommandEntry | { target: GameState; operationId: string };
@@ -54,6 +55,17 @@ export class OperationalSessionEngine {
     return this.currentHead;
   }
   get mode(): "worker" | "synchronous" { return this.client ? "worker" : "synchronous"; }
+  /** Immutable, O(1) token for the last published prefix, not the uncertain
+   * worker head after a failed reply/publication. No serialization on ticks. */
+  recoveryPoint(): { checkpoint: GameEvidenceCheckpoint; state: GameState } {
+    return { checkpoint: this.client?.recoveryCheckpoint ?? this.fallback ?? this.baseline, state: this.visible };
+  }
+  restore(point: { checkpoint: GameEvidenceCheckpoint; state: GameState }): void {
+    const client = this.client; this.client = null; this.parked = false;
+    this.baseline = this.fallback = point.checkpoint; this.visible = point.state; this.currentHead = point.checkpoint.snapshot.head;
+    this.consecutiveFailures = 0; this.nextRetry = this.now();
+    try { client?.dispose(); } catch { this.diagnose("engine-dispose"); }
+  }
   /** Read immediately after create, before installing different render inputs. */
   get initialProjection() {
     const view = this.client?.view;
@@ -122,6 +134,7 @@ export class OperationalSessionEngine {
   }
   async execute(entry: CommandEntry): Promise<OperationalEngineResult> {
     await this.ready();
+    const prior = this.recoveryPoint();
     if (this.client) {
       try {
         const context = entry.context, flags: OperationalContextFlags = { guidanceTipsDeliveryBlocked: context.guidanceTipsDeliveryBlocked,
@@ -131,12 +144,23 @@ export class OperationalSessionEngine {
         this.consecutiveFailures = 0;
         if (!result.replayed) { this.visible = result.state; this.currentHead = result.head; }
         return result;
-      } catch (error) { this.diagnose(error instanceof OperationalEngineFailure ? error.code : "engine-command"); this.recover(); }
+      } catch (error) {
+        this.diagnose(error instanceof OperationalEngineFailure ? error.code : "engine-command");
+        const failure = error instanceof OperationalEngineFailure ? decodeCommandFailure(error.code) : commandProgrammingFailure(error, "execute", "engine");
+        if (failure) { this.restore(prior); throw failure; }
+        this.recover();
+      }
     }
-    return this.synchronous(entry);
+    try { return await this.synchronous(entry); }
+    catch (error) {
+      const failure = commandProgrammingFailure(error, "execute", "engine");
+      if (failure) { this.restore(prior); throw failure; }
+      throw error;
+    }
   }
   async undo(target: GameState, operationId: string): Promise<OperationalEngineResult> {
     await this.ready();
+    const prior = this.recoveryPoint();
     const entry = { target: structuredClone(target), operationId };
     if (this.client) {
       try {
@@ -144,9 +168,19 @@ export class OperationalSessionEngine {
         this.consecutiveFailures = 0;
         if (!result.replayed) { this.visible = result.state; this.currentHead = result.head; }
         return result;
-      } catch (error) { this.diagnose(error instanceof OperationalEngineFailure ? error.code : "engine-command"); this.recover(); }
+      } catch (error) {
+        this.diagnose(error instanceof OperationalEngineFailure ? error.code : "engine-command");
+        const failure = error instanceof OperationalEngineFailure ? decodeCommandFailure(error.code) : commandProgrammingFailure(error, "execute", "engine");
+        if (failure) { this.restore(prior); throw failure; }
+        this.recover();
+      }
     }
-    return this.synchronous(entry);
+    try { return await this.synchronous(entry); }
+    catch (error) {
+      const failure = commandProgrammingFailure(error, "execute", "engine");
+      if (failure) { this.restore(prior); throw failure; }
+      throw error;
+    }
   }
   private async synchronous(entry: Entry): Promise<OperationalEngineResult> {
     await ensureRuntimeCatalogue();

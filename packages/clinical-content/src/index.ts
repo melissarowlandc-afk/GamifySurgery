@@ -207,3 +207,10 @@ export * from "./question-program-batch9-accepted-20261112";
 export * from "./question-program-batch10-accepted-20261113";
 
 export * from "./question-program-batch11-accepted-20261113";
+
+// BEGIN FLAGS5 ACCEPTANCE — owner-directed flag fixes batch 5
+export * from "./question-flags5-accepted-20261116";
+// END FLAGS5 ACCEPTANCE
+
+// Final seven independently passed flags5 versions; unapproved prototype only.
+export * from "./question-flags5-final-accepted-20261116";

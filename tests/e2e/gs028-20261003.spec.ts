@@ -13,7 +13,7 @@ import {
   type GameState,
 } from "@gamify-surgery/game-domain";
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   getProfile,
   installRememberedLocalAccess,
@@ -111,18 +111,10 @@ async function installSeed(
   campaign.name = campaignName;
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(
-    ({ key, value, markerKey }) => {
-      if (sessionStorage.getItem(markerKey)) return;
-      sessionStorage.setItem(markerKey, "1");
-      localStorage.setItem(key, JSON.stringify(value));
-    },
-    { key: PROFILE_KEY, value: profile, markerKey: marker },
-  );
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
   expect(new URL(page.url()).origin).toBe("http://127.0.0.1:4321");
-  const resume = page.getByRole("button", { name: `Resume ${campaignName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
@@ -500,8 +492,7 @@ test("paired access ultrasound stays outsourced despite an onsite room and imagi
   await screenshot(page, "access-ultrasound-outside-pending.png");
 
   await page.reload();
-  const resume = page.getByRole("button", { name: "Resume GS028D Access ultrasound" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "GS028D Access ultrasound");
   state = (await getActiveState(page)) as unknown as GameState;
   expect(state.encounters[encounterId]?.pendingResult).toMatchObject({ dueTick: pending!.dueTick, routeId: "route.ultrasound.outsourced", deliveredAtTick: null });
   await openChart(page, encounterId, patientName);

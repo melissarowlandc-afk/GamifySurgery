@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 
-import { getActiveState, getProfile, PROFILE_KEY, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, getActiveState, getProfile, PROFILE_KEY, startClinic } from "./helpers";
 
 const CAPTURE_STAGE = process.env.WALL_CAPTURE_STAGE ?? "after";
 const SCREENSHOTS = `.local-dev/clinic-playtest-walls/${CAPTURE_STAGE}`;
@@ -37,12 +37,9 @@ test("approved north/south neighbors retain one southern short wall", async ({ p
   campaign.name = "Shared Wall Clinic";
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value }) => {
-    localStorage.setItem(key, JSON.stringify(value));
-  }, { key: PROFILE_KEY, value: profile });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: "Resume Shared Wall Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Shared Wall Clinic");
   const canvas = page.getByTestId("facility-canvas");
   await expect(canvas).toBeVisible();
   await page.waitForFunction(() => Boolean((document.querySelector("[data-testid='facility-canvas']") as any)?.__facilityGame?.scene?.getScene("facility-scene")));

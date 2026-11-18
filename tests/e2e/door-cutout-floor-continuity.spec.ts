@@ -2,7 +2,7 @@ import { mkdirSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 
 import {
-  getProfile,
+  installFreshLocalProfile, resumeLocalCampaign, getProfile,
   installLevelOneVisualState,
   PROFILE_KEY,
   startClinic,
@@ -100,13 +100,9 @@ test("proves floor-only persisted apertures and shared-wall ownership in normal 
   }));
   state.paused = true;
   campaign.serializedState = JSON.stringify(state);
-  await page.addInitScript(({ key, next }) => window.localStorage.setItem(key, JSON.stringify(next)), {
-    key: PROFILE_KEY,
-    next: profile,
-  });
+  await installFreshLocalProfile(page, profile);
   await page.reload();
-  const resume = page.getByRole("button", { name: "Resume Door Cutout Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Door Cutout Clinic");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.addStyleTag({ content: ".facility-pause-indicator { visibility: hidden !important; }" });
   await page.waitForTimeout(180);

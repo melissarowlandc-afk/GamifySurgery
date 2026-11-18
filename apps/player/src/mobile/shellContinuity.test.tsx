@@ -1,8 +1,12 @@
+import { LoadingRest } from "../ui/LoadingFlowContext";
 import { act, useEffect, useState, type ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { App } from "../App";
 import { TestDocument, TestElement, findTestElement } from "./testDom";
 
+// This test substitutes both renderers; their first-frame contract is covered
+// by FacilityCanvas.lifecycle and the continuous-opening integration tests.
+vi.mock("../ui/ClinicPresentationGate", () => ({ ClinicPresentationGate: () => <LoadingRest /> }));
 const evidence = vi.hoisted(() => ({ mobileImports: 0, sessionMounts: 0, sessionCleanups: 0, clockStarts: 0 }));
 vi.mock("../AppShell", () => ({ AppShell: (props: { facility: { tick: number } }) =>
   <section data-shell="desktop" data-tick={props.facility.tick}>Desktop</section> }));
@@ -17,7 +21,7 @@ vi.mock("../ui", () => ({ OpeningSequence: ({ onResumeCampaign }: { onResumeCamp
 } }));
 vi.mock("../session/tutorialTiming", () => ({ getTutorialClockMultiplier: () => 1 }));
 vi.mock("../session", () => ({
-  loadPrototypeProfile: () => ({ profile: {} }),
+  loadPrototypeProfile: () => ({ profile: { campaigns: [{ campaignId: "fixture", campaignSeed: "fixture", status: "resumable" }], activeCampaignId: "fixture", nextCampaignNumber: 2 } }),
   getActiveCampaign: () => ({ campaignId: "fixture", campaignSeed: "fixture" }),
   selectLocalCampaign: (profile: unknown) => profile,
   savePrototypeProfileResult: () => ({ ok: true }),
@@ -31,7 +35,7 @@ vi.mock("../session", () => ({
       return () => { clearInterval(timer); evidence.sessionCleanups += 1; };
     }, []);
     return new Proxy({
-      state: { tick, paused: false, simulationSpeed: 1, openChartEncounterId: null },
+      localPreparation: "ready", state: { campaignId: "fixture", tick, paused: false, simulationSpeed: 1, openChartEncounterId: null },
       profile: {}, summaryVisible: false, buildMode: false, managementMode: false, tutorialsEnabled: false,
       campaigns: [], questionReviewFlags: [], systemNotices: [],
     }, { get(target, key) { return Reflect.has(target, key) ? Reflect.get(target, key) : () => undefined; } });

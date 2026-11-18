@@ -1,0 +1,20 @@
+@import "@fontsource/atkinson-hyperlegible/latin-400.css";
+@import "@fontsource/atkinson-hyperlegible/latin-700.css";
+@import "../styles/tokens.css";
+@import "./WelcomeArtwork.css";
+@import "./OpeningWordmark.css";
+@import "./OpeningBrand.css";
+@import "./LoadingScreen.css";
+
+/* The classic HTML surface and React share these rules, including first paint. */
+body { margin: 0; background: #e3dfcc; }
+.loading-screen {
+  --welcome-background: #e3dfcc;
+  --welcome-ink: #25291f;
+  --welcome-panel: #faf7e8;
+  --welcome-bar-track: #e4e2d2;
+  --welcome-bar-fill: #60764a;
+}
+.loading-screen [data-loading-tagline-slot] { min-height: 1.3em; }
+.loading-screen-bar span { transition: width 180ms ease-out; }
+@media (prefers-reduced-motion: reduce) { .loading-screen-bar span { transition: none; } }

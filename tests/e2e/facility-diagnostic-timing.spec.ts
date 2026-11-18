@@ -6,7 +6,7 @@ import {
   serializeGameState, type GameState,
 } from "@gamify-surgery/game-domain";
 import { getRadiologistReadingStation } from "../../packages/game-domain/src/reading-stations";
-import { getActiveState, getProfile, PROFILE_KEY, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, getActiveState, getProfile, PROFILE_KEY, startClinic } from "./helpers";
 
 // Fresh browser contexts and an externally managed QA server; never owner storage.
 const SHOTS = ".local-dev/facility-diagnostic-timing/browser";
@@ -87,18 +87,15 @@ function advance(state: GameState, predicate: (state: GameState) => boolean): Ga
 async function install(page: Page, state: GameState, name: string, marker: string) {
   const profile = await getProfile(page); const campaign = profile.campaigns.find((entry) => entry.campaignId === profile.activeCampaignId)!;
   campaign.name = name; campaign.serializedState = serializeGameState(state); profile.tutorialsEnabled = false;
-  await page.addInitScript(({ profile, marker, key }) => {
-    if (sessionStorage.getItem(marker)) return; sessionStorage.setItem(marker, "1"); localStorage.setItem(key, JSON.stringify(profile));
-  }, { profile, marker, key: PROFILE_KEY });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  await page.getByRole("button", { name: `Resume ${name}`, exact: true }).click();
+  await resumeLocalCampaign(page, name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   expect(await page.evaluate(() => location.origin)).toBe(process.env.GAMIFY_E2E_BASE_URL);
 }
 async function open(page: Page, id: string) { await page.getByText(`${id} Patient`, { exact: true }).click(); await expect(page.locator(".chart-sheet")).toBeVisible(); }
 async function reload(page: Page, name: string) {
-  await page.reload(); const button = page.getByRole("button", { name: `Resume ${name}`, exact: true });
-  if (await button.isVisible()) await button.click(); await expect(page.getByTestId("facility-canvas")).toBeVisible();
+  await page.reload(); await resumeLocalCampaign(page, name); await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 const format = (minutes: number) => minutes >= 60 && minutes % 60 === 0 ? `${minutes / 60} hour${minutes === 60 ? "" : "s"}` : `${minutes} min`;
 

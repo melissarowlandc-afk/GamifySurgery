@@ -2,7 +2,7 @@ import { mkdirSync } from "node:fs";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 import type { GameState, ServiceOperationState } from "@gamify-surgery/game-domain";
 
-import { getActiveState, getProfile, PROFILE_KEY, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, getActiveState, getProfile, PROFILE_KEY, startClinic } from "./helpers";
 
 const SCREENSHOTS = ".local-dev/endoscopy-goal-browser";
 const MISSING_SETUP_LABELS = [
@@ -26,14 +26,9 @@ async function installState(
   campaign.name = campaignName;
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value, seedMarker }) => {
-    if (sessionStorage.getItem(seedMarker)) return;
-    sessionStorage.setItem(seedMarker, "1");
-    localStorage.setItem(key, JSON.stringify(value));
-  }, { key: PROFILE_KEY, value: profile, seedMarker: marker });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
-  const resume = page.getByRole("button", { name: `Resume ${campaignName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
@@ -211,8 +206,7 @@ test("historical completed endoscopy evidence remains 1/1 after reload without s
   await page.screenshot({ path: `${SCREENSHOTS}/desktop-completed-endoscopy-goal.png`, animations: "disabled" });
 
   await page.reload();
-  const resume = page.getByRole("button", { name: "Resume Historical Endoscopy Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Historical Endoscopy Clinic");
   await expect(page.locator(".goal-list > li").filter({ hasText: "Complete your first endoscopy" })).toContainText("1/1");
 });
 

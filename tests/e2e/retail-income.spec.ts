@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 
-import { getActiveState, getProfile, setFastFacilitySpeed, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, getActiveState, getProfile, setFastFacilitySpeed, startClinic } from "./helpers";
 
 test.beforeAll(() => mkdirSync("artifacts/screenshots", { recursive: true }));
 
@@ -47,15 +47,9 @@ test("an active outside coffee purchase credits once, follows its own sprite, an
     lastMovedAtFacilityTick: state.facilityTick, purchaseEndsAtFacilityTick: state.facilityTick + 20, cancellationReason: null,
   }];
   campaign.serializedState = JSON.stringify(state);
-  await page.addInitScript(({ nextProfile }) => {
-    if (!sessionStorage.getItem("retail-income-fixture-installed")) {
-      window.localStorage.setItem("gamify-surgery.prototype.profile.v1", JSON.stringify(nextProfile));
-      sessionStorage.setItem("retail-income-fixture-installed", "1");
-    }
-  }, { nextProfile: profile });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: "Resume Retail Income Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Retail Income Clinic");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.waitForFunction(() => Boolean((document.querySelector("[data-testid='facility-canvas']") as any)?.__facilityGame));
   await page.evaluate(() => {
@@ -141,15 +135,9 @@ test("autonomous employee and waiting-patient coffee purchases settle once witho
   state.retailOperations = [];
   state.serviceIncomeReceipts = [];
   campaign.serializedState = JSON.stringify(state);
-  await page.addInitScript(({ nextProfile }) => {
-    if (!sessionStorage.getItem("retail-pair-fixture-installed")) {
-      window.localStorage.setItem("gamify-surgery.prototype.profile.v1", JSON.stringify(nextProfile));
-      sessionStorage.setItem("retail-pair-fixture-installed", "1");
-    }
-  }, { nextProfile: profile });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: "Resume Retail Pair Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Retail Pair Clinic");
   const before = await getActiveState(page) as any;
   const encounterIds = Object.keys(before.encounters);
   const xp = before.clinicalXp;
@@ -170,8 +158,7 @@ test("autonomous employee and waiting-patient coffee purchases settle once witho
   const receiptKeys = settled.serviceIncomeReceipts.map((receipt: any) => receipt.transactionKey);
   const cash = settled.cash;
   await page.reload();
-  const resumeAfterReload = page.getByRole("button", { name: "Resume Retail Pair Clinic" });
-  if (await resumeAfterReload.isVisible()) await resumeAfterReload.click();
+  await resumeLocalCampaign(page, "Retail Pair Clinic");
   await expect.poll(async () => (await getActiveState(page) as any).cash).toBe(cash);
   expect((await getActiveState(page) as any).serviceIncomeReceipts.map((receipt: any) => receipt.transactionKey)).toEqual(receiptKeys);
 });

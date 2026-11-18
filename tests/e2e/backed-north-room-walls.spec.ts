@@ -2,7 +2,7 @@ import { mkdirSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 
 import {
-  getProfile,
+  installFreshLocalProfile, resumeLocalCampaign, getProfile,
   installLevelOneVisualState,
   PROFILE_KEY,
   startClinic,
@@ -45,13 +45,9 @@ test("renders short backed north walls, partial joins, a live door gap, and open
   });
   state.paused = true;
   campaign.serializedState = JSON.stringify(state);
-  await page.addInitScript(({ key, next }) => window.localStorage.setItem(key, JSON.stringify(next)), {
-    key: PROFILE_KEY,
-    next: profile,
-  });
+  await installFreshLocalProfile(page, profile);
   await page.reload();
-  const resume = page.getByRole("button", { name: "Resume Backed Wall Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Backed Wall Clinic");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.addStyleTag({ content: ".facility-pause-indicator { visibility: hidden !important; }" });
   await page.waitForTimeout(180);

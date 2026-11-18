@@ -6,7 +6,7 @@ import {
   getRadiologistReadingStation, getRoomDefinition,
   getWorkloadSnapshot, serializeGameState, type GameState,
 } from "@gamify-surgery/game-domain";
-import { PROFILE_KEY, getProfile, resumeLocalCampaign, startClinic } from "./helpers";
+import { createFreshLocalProfile, seedLocalProfileOnce, PROFILE_KEY, getProfile, resumeLocalCampaign, startClinic } from "./helpers";
 import { readDurableLocalState } from "./ui-density-helpers";
 import {
   createRoomUpgradeScenario, getRoomUpgradeFrozenQuantities,
@@ -124,7 +124,9 @@ async function resumeCampaign(page: Page, name: string): Promise<void> {
 
 async function install(page: Page, name: string) {
   await startClinic(page, "Upgrade Browser Founder", name);
-  const profile = await getProfile(page);
+  // Reserve the fresh fixture identity before the scenario builder; the
+  // original→scenario→installed identity assertions below keep their meaning.
+  const profile = createFreshLocalProfile(await getProfile(page));
   const campaign = profile.campaigns.find((entry) => entry.campaignId === profile.activeCampaignId)!;
   const original = deserializeGameState(campaign.serializedState);
   const state = createRoomUpgradeScenario(original);
@@ -133,11 +135,7 @@ async function install(page: Page, name: string) {
   campaign.serializedState = serializeGameState(state);
   profile.tutorialsEnabled = false;
   const marker = `gs038.upgrades.seed.${campaign.campaignId}`;
-  await page.addInitScript(({ key, value, marker }) => {
-    if (sessionStorage.getItem(marker)) return;
-    localStorage.setItem(key, JSON.stringify(value));
-    sessionStorage.setItem(marker, "1");
-  }, { key: PROFILE_KEY, value: profile, marker });
+  await seedLocalProfileOnce(page, profile, marker);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
   await resumeCampaign(page, name);
   expect(await page.evaluate(() => location.origin)).toBe(

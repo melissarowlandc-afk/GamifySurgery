@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 import {
-  installLevelOneVisualState,
+  resumeLocalCampaign, installLevelOneVisualState,
   startClinic,
 } from "./helpers";
 
@@ -107,9 +107,7 @@ test("shows matching representations in the developer visual QA gallery", async 
   );
   await openGoldenSlice(page);
   await page.goto("/?prototype-tools=0&visual-qa=characters");
-  await page
-    .getByRole("button", { name: "Resume Vale Surgical Clinic" })
-    .click();
+  await resumeLocalCampaign(page, "Vale Surgical Clinic", page.getByRole("heading", { name: "Character Visual QA" }));
   await expect(
     page.getByRole("heading", { name: "Character Visual QA" }),
   ).toBeVisible();

@@ -4,7 +4,8 @@ import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
 import { createInterface } from "node:readline/promises";
 import { createClient } from "@supabase/supabase-js";
-import { compileFeedback, setFeedbackStatus, FeedbackToolError, FEEDBACK_STATUSES } from "./beta-feedback.mjs";
+import { compileFeedback, setFeedbackStatus, FeedbackToolError, FEEDBACK_STATUSES,
+  parseFlagStatusCommand, parseFlagStatusFile, setQuestionFlagStatuses } from "./beta-feedback.mjs";
 import { runCloudCommand, CloudToolError } from "./beta-cloud.mjs";
 import { setCasualMode, compileUsageReport, CasualToolError } from "./beta-casual.mjs";
 
@@ -28,6 +29,8 @@ const HELP = `Beta 1 owner invite tool (no automatic emails)
   node scripts/beta-invites/beta-invites.mjs revoke <email>
   node scripts/beta-invites/beta-invites.mjs feedback [--all]
   node scripts/beta-invites/beta-invites.mjs feedback-status <id> <status> [note]
+  node scripts/beta-invites/beta-invites.mjs flag-status <flag-id> <status> [--version <version>] [--user <uuid>] [note]
+  node scripts/beta-invites/beta-invites.mjs flag-status --file <json> [--user <uuid>]
   node scripts/beta-invites/beta-invites.mjs cloud status
   node scripts/beta-invites/beta-invites.mjs cloud enable <email>
   node scripts/beta-invites/beta-invites.mjs cloud disable <email>
@@ -35,6 +38,7 @@ const HELP = `Beta 1 owner invite tool (no automatic emails)
   node scripts/beta-invites/beta-invites.mjs cloud enrollments on|off
   node scripts/beta-invites/beta-invites.mjs cloud default on|off
   Feedback statuses: new, discussed, planned, done, wont_do (owner decision only).
+  Question flag statuses: open, fixed_in_version, needs_owner, no_change (owner decision only).
   Double-click scripts/beta-invites/BETA_INVITES.cmd for prompts.
   Credentials: .local-dev/beta-admin.env (ignored, owner PC only).`;
 
@@ -51,6 +55,7 @@ function normalizeEmail(value) {
 export function parseCommand(args) {
   if (args.length === 0 || (args.length === 1 && ["--help", "-h"].includes(args[0]))) return { command: "help" };
   const [command, ...rest] = args;
+  if (command === "flag-status") return parseFlagStatusCommand(rest);
   if (command === "cloud") {
     if (rest.length === 1 && rest[0] === "status") return { command, action: "status" };
     if (rest.length === 2 && ["enable", "disable"].includes(rest[0])) return { command, action: rest[0], email: normalizeEmail(rest[1]) };
@@ -85,7 +90,7 @@ export function parseCommand(args) {
     }
     if (positional.length === 1 && !positional[0].startsWith("--")) return { command, email: normalizeEmail(positional[0]), local, owner, ...(casual ? { casual: true } : {}) };
   }
-  fail("Use invite <email> [--owner] [--local], invite --file <path> [--local], reset <email> [--local], cancel <email>, list, casual on|off <email>, report, revoke <email>, feedback [--all], or feedback-status <id> <status> [note]. Use --help for details.");
+  fail("Use invite <email> [--owner] [--local], invite --file <path> [--local], reset <email> [--local], cancel <email>, list, casual on|off <email>, report, revoke <email>, feedback [--all], feedback-status <id> <status> [note], or flag-status. Use --help for details.");
 }
 
 /** Parse only the two owner settings; never execute an env file as shell code. */
@@ -142,8 +147,18 @@ export async function runBetaInvites(args, {
   try {
     const options = parseCommand(args);
     if (options.command === "help") { output(HELP); return 0; }
-    let emails;
-    if (options.file) {
+    let emails, flagEntries;
+    if (options.command === "flag-status") {
+      if (options.file) {
+        let file;
+        try { file = await readFileImpl(resolve(options.file), "utf8"); }
+        catch { fail("The question flag JSON file could not be read. No flags were written."); }
+        flagEntries = parseFlagStatusFile(file);
+      } else {
+        const { flagId, status, version, note } = options;
+        flagEntries = [{ flagId, status, ...(version !== undefined ? { version } : {}), ...(note !== undefined ? { note } : {}) }];
+      }
+    } else if (options.file) {
       let file;
       try { file = await readFileImpl(resolve(options.file), "utf8"); }
       catch { fail("The private email file could not be read. Keep it outside the repository; no links were printed."); }
@@ -161,6 +176,10 @@ export async function runBetaInvites(args, {
     });
     if (options.command === "feedback-status") {
       output(await setFeedbackStatus(client, options));
+      return 0;
+    }
+    if (options.command === "flag-status") {
+      output(await setQuestionFlagStatuses(client, flagEntries, { ...feedbackOptions, user: options.user }));
       return 0;
     }
     if (options.command === "cloud") {
@@ -276,7 +295,7 @@ export async function runBetaInvites(args, {
 async function interactiveArgs() {
   const prompt = createInterface({ input: process.stdin, output: process.stdout });
   try {
-    const command = (await prompt.question("Action: invite, reset, cancel, list, casual, report, revoke, feedback, feedback-status, or cloud [invite]: ")).trim().toLowerCase() || "invite";
+    const command = (await prompt.question("Action: invite, reset, cancel, list, casual, report, revoke, feedback, feedback-status, flag-status, or cloud [invite]: ")).trim().toLowerCase() || "invite";
     if (command === "casual") return [command, (await prompt.question("Casual mode: on or off: ")).trim().toLowerCase(), (await prompt.question("Account email: ")).trim()];
     if (command === "cloud") {
       const action = (await prompt.question("Cloud action: status, enable, disable, writes, enrollments, or default [status]: ")).trim().toLowerCase() || "status";
@@ -290,6 +309,13 @@ async function interactiveArgs() {
     if (command === "feedback-status") return [command, (await prompt.question("Feedback ID: ")).trim(),
       (await prompt.question("Owner-decided status (new, discussed, planned, done, wont_do): ")).trim(),
       await prompt.question("Owner note (optional): ")];
+    if (command === "flag-status") {
+      const flagId = (await prompt.question("Question flag ID: ")).trim();
+      const status = (await prompt.question("Owner-decided status (open, fixed_in_version, needs_owner, no_change): ")).trim();
+      const version = status === "fixed_in_version" ? (await prompt.question("Live fixed-in version: ")).trim() : "";
+      const user = (await prompt.question("Player UUID (optional; required for an ambiguous flag ID): ")).trim();
+      return [command, flagId, status, ...(version ? ["--version", version] : []), ...(user ? ["--user", user] : []), await prompt.question("Resolution note (optional): ")];
+    }
     if (!["invite", "reset", "cancel", "revoke"].includes(command)) fail("Choose invite, reset, cancel, list, revoke, feedback, or feedback-status.");
     const email = (await prompt.question("Tester's email: ")).trim();
     const owner = command === "invite" && (await prompt.question("Also add this person to the owner allowlist? [y/N]: ")).trim().toLowerCase() === "y";

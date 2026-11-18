@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
-import { getProfile, PROFILE_KEY, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, getProfile, PROFILE_KEY, startClinic } from "./helpers";
 
 const SCREENSHOTS = "artifacts/screenshots";
 test.beforeAll(() => mkdirSync(SCREENSHOTS, { recursive: true }));
@@ -59,13 +59,9 @@ async function installRoutineFixture(
   }
   active.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(
-    ({ key, value }) => localStorage.setItem(key, JSON.stringify(value)),
-    { key: PROFILE_KEY, value: profile },
-  );
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: new RegExp(`^Resume ${active.name}$`) });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, active.name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.waitForFunction(
     () => typeof (document.querySelector("[data-testid='facility-canvas']") as any)?.__facilityGame === "object",

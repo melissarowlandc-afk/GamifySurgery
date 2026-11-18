@@ -14,10 +14,11 @@ function QuickUpgrade({ room, props }: { room: OwnedRoomBuildView; props: Protot
     </button> : null;
 }
 
-export function MobileBuildCatalog({ props, onChoose, onOpenRoom, onDoors, onSetup, onPreviewRoom }: {
+export function MobileBuildCatalog({ props, onChoose, onOpenRoom, onDoors, onSetup, onPreviewRoom, onBlueprint }: {
   props: PrototypeShellProps; onChoose: (id: string) => void; onOpenRoom: (id: string) => void; onDoors: () => void;
   onSetup?: (action: NonNullable<NonNullable<PrototypeShellProps["progression"]["endoscopySetupRequirements"]>[number]["action"]>) => void;
   onPreviewRoom?: (definitionId: string) => void;
+  onBlueprint?: () => void;
 }) {
   const [tab, setTab] = useState<"new" | "owned">("new");
   useEffect(() => {
@@ -83,12 +84,14 @@ export function MobileBuildCatalog({ props, onChoose, onOpenRoom, onDoors, onSet
             <QuickUpgrade room={room} props={props} />
           </article>;
         });
+  if (props.remodelBlueprint?.active) return <div className="mobile-build-catalog"><p>Room changes are staged on the map.</p><button type="button" onClick={onBlueprint}>Continue blueprint</button></div>;
   return <div className="mobile-build-catalog" data-build-mode-panel="true">
     {!props.buildMode ? <button type="button" onClick={props.onEnterBuildMode}>Enter Build Mode</button> : null}
     <div className="mobile-build-navigation">
     <div className="mobile-build-tools" role="group" aria-label="Construction tools">
       <button type="button" data-build-tool="hallway" aria-label={`Build Hallway · ${hallway?.costLabel ?? ""}/tile`} disabled={!props.buildMode || !hallway?.enabled} onClick={() => onChoose("room.hallway")}>Hallway<small>{hallway?.costLabel ?? ""}/tile</small></button>
       <button type="button" data-phone-anchor="doors" data-build-tool="doors" disabled={!props.buildMode} onClick={onDoors}>Doors · $0</button>
+      {props.buildMode && props.remodelBlueprint ? <button type="button" onClick={onBlueprint}>Blueprint remodel</button> : null}
     </div>
     <div className="mobile-build-tabs" role="tablist" aria-label="Room catalog">
       <button type="button" role="tab" aria-selected={tab === "new"} onClick={() => setTab("new")}>New Rooms</button>

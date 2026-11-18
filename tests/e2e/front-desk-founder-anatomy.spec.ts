@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
-import { installLevelOneVisualState, startClinic } from "./helpers";
+import { resumeLocalCampaign, installLevelOneVisualState, startClinic } from "./helpers";
 
 const SCREENSHOTS = "artifacts/screenshots";
 
@@ -72,8 +72,7 @@ async function openFixture(page: Page): Promise<void> {
   await startClinic(page, "Founder Anatomy Reviewer", "Founder Anatomy Clinic");
   await installLevelOneVisualState(page);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: "Resume Founder Anatomy Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Founder Anatomy Clinic");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.waitForFunction(() => typeof (document.querySelector("[data-testid='facility-canvas']") as any)?.__facilityGaitSnapshot === "function");
   // This is the only DOM styling change: simulation stays paused in Phaser.

@@ -42,13 +42,15 @@ export interface CloudCache {
 /** Only open/recovery paths hydrate the append journal. Ordinary cache readback
  * verifies the exact legacy cache bytes without scanning or encoding it. */
 const journalReads = new WeakMap<JournalStorage, Map<string, { version: string; result: ReturnType<typeof prepareJournal> }>>();
-async function withJournal(entry: CloudCacheEntry, journal: JournalStorage, rawHash: string): Promise<Pick<CloudCacheRead, "entry" | "journalCapacity">> {
+async function withJournal(entry: CloudCacheEntry, journal: JournalStorage, _rawHash: string): Promise<Pick<CloudCacheRead, "entry" | "journalCapacity">> {
   const key = cloudCampaignStorageKey(entry.scope);
   const head = await journal.head(key); if (!head) return { entry };
   let reads = journalReads.get(journal); if (!reads) { reads = new Map(); journalReads.set(journal, reads); }
-  // The packed cache checksum is verified before this call. A new cache byte,
-  // owner, commit, compaction or acknowledgement invalidates preparation.
-  const version = rawHash + JSON.stringify(head);
+  // The packed cache checksum is verified before this call. Preparation uses
+  // the confirmed proof and journal only. Rewriting an immutable request or a
+  // following candidate must not replay/encode that same journal again. Include
+  // ALL confirmed bytes (not just claimed hashes), plus every head fence.
+  const version = JSON.stringify([entry.confirmed, head]);
   let preparedRead = reads.get(key);
   if (preparedRead?.version !== version) {
     const result = timeCloudEntry("journal-recovery", async () => {

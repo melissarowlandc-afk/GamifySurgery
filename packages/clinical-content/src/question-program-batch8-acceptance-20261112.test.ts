@@ -12,10 +12,12 @@ import {
   QUESTION_PROGRAM_BATCH8_ACCEPTED_QUESTIONS as questions,QUESTION_PROGRAM_BATCH8_OWNER_DIRECTIONS as directions,
   QUESTION_PROGRAM_BATCH8_FROZEN_PRESERVATION as frozen,QUESTION_PROGRAM_BATCH8_RETAINED_CASES as retained,
   QUESTION_PROGRAM_BATCH8_RETIREMENTS as retirements,QUESTION_PROGRAM_BATCH8_WITHDRAWN_ROWS as withdrawn,
-  QUESTION_PROGRAM_BATCH8_ACCEPTED_TIMING_ENTRIES as timings,QUESTION_PROGRAM_BATCH8_ACCEPTED_TEST_ORDER_RECORDS as orders,
   QUESTION_PROGRAM_BATCH8_RETAINED_TEST_ORDER_RECORDS as oldOrders,
   QUESTION_PROGRAM_BATCH8_CLAIMS as claims,QUESTION_PROGRAM_BATCH8_SOURCES as sources,
 } from "./question-program-batch8-accepted-20261112";
+// owner-directed flag fixes batch 5 supersede two active rows. This historical
+// proof retains their exact originally accepted waits/orders, not filtered live exports.
+import {PROGRAM_BATCH8_TIMINGS as timings,PROGRAM_BATCH8_ORDERS as orders} from "./question-program-batch8-accepted-data-20261112";
 import {resolveQuestionShipRetirements} from "./question-ship-retirements";
 import {beforeProgramBatch8AcceptanceRelease as previous,beforeProgramBatch8AcceptanceManifest as previousManifest,
   beforeProgramBatch8AcceptanceTimings as previousTiming,beforeProgramBatch8AcceptanceSource as previousSource,programBatch8HistoricalMembership}
@@ -192,7 +194,7 @@ describe("batch8 exact owner-directed acceptance and preserved history",()=>{
 
   it("pins exact release source deltas, presence and every immutable epoch preimage",()=>{
     const bytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch8-release-source-pins-20261112.json",import.meta.url));
-    expect(createHash("sha256").update(bytes).digest("hex")).toBe("b4a807af0ccd6bedbfe2876824f87a04559181d37b3d536460def49d01e10037");
+    expect(createHash("sha256").update(bytes).digest("hex")).toBe("1f28931bba32356551fd194a1ab731229468d9be5d55213ddb717e869af24c2f");
     const pins=JSON.parse(bytes.toString("utf8"));
     const hash=(path:string)=>createHash("sha256").update(readFileSync(new URL("../../../"+path,import.meta.url))).digest("hex");
     expect(hash(pins.capturePath)).toBe(pins.capturedFixtureSha256);

@@ -1,6 +1,6 @@
 import { expect, test, type Locator } from "@playwright/test";
 
-import { openCampaignScreen } from "./helpers";
+import { resumeLocalCampaign, openCampaignScreen } from "./helpers";
 
 interface CursorStyles {
   cursor: string;
@@ -68,7 +68,7 @@ test("keeps passive UI non-editable while preserving naming and map control curs
   }))).cursor).toBe("row-resize");
 
   await page.goto("/?prototype-tools=1");
-  await page.getByRole("button", { name: "Resume Cursor Proof Clinic" }).click();
+  await resumeLocalCampaign(page, "Cursor Proof Clinic");
   await page.locator(".development-panel > summary").click();
   expect((await cursorStyles(page.locator(".prototype-toggle input"))).cursor).toBe("pointer");
 });

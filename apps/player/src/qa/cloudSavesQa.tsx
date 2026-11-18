@@ -1,7 +1,9 @@
+import { ContinuousLoading } from "../ui/ContinuousLoading";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { PROTOTYPE_DOMAIN_CONTEXT, type GameCommand, type GameState } from "@gamify-surgery/game-domain";
 import { LoadingScreen } from "../ui/LoadingScreen";
+import { LoadingRest } from "../ui/LoadingFlowContext";
 import { AccountCampaignRouter } from "../App";
 import { AuthAccountActionsContext, AuthAccountContext } from "../auth/AuthAccountContext";
 import { createQaDeviceCampaign, seedQaDeviceCampaigns } from "./cloudSavesQaSeed";
@@ -57,7 +59,8 @@ declare global {
 const QA_ACCOUNTS = ["qa-account-a", "qa-account-b"] as const;
 
 /** A dev-only bridge to the test runner's FakeCloudServer. It has no Supabase route. */
-export function QaApp() {
+export function QaApp() { return <ContinuousLoading><QaOpening /></ContinuousLoading>; }
+function QaOpening() {
   const [accountId, setAccountId] = useState<string | null>(QA_ACCOUNTS.includes(new URLSearchParams(location.search).get("account") as typeof QA_ACCOUNTS[number]) ? new URLSearchParams(location.search).get("account") : QA_ACCOUNTS[0]);
   const [authenticated, setAuthenticated] = useState(false), [entryKey, setEntryKey] = useState(0);
   const currentAccount = useRef(accountId), signOutGuard = useRef<(() => Promise<void>) | null>(null);
@@ -94,7 +97,7 @@ export function QaApp() {
     currentAccount.current = next; setAccountId(next); setEntryKey(value => value + 1); return true;
   };
   if (!authenticated) return <LoadingScreen status="Connecting to your account…" stage="connecting" />;
-  if (!accountId || !runtime) return <main><h1>Signed out of disposable QA</h1><button onClick={() => void authenticate(QA_ACCOUNTS[0])}>Sign in synthetic account A</button></main>;
+  if (!accountId || !runtime) return <main><LoadingRest /><h1>Signed out of disposable QA</h1><button onClick={() => void authenticate(QA_ACCOUNTS[0])}>Sign in synthetic account A</button></main>;
   return <AuthAccountContext.Provider key={accountId} value={accountId}><AuthAccountActionsContext.Provider value={{ email: `${accountId}@example.invalid`, signOut: () => authenticate(null), signOutGuard, pending: false, message: null }}>
     <CloudAccountProvider runtime={runtime}>
       <QaTools openingFailure={() => openingFailure.current} onCreate={() => setEntryKey(value => value + 1)} onSwitch={() => void authenticate(accountId === QA_ACCOUNTS[0] ? QA_ACCOUNTS[1] : QA_ACCOUNTS[0])} />

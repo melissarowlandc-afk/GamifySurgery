@@ -127,8 +127,8 @@ describe("diagnostic chart and facility presentation", () => {
     for (const choice of chart.answerChoices) {
       const preview = getAnswerChoiceServicePreview(state, encounter.id, choice.id)!;
       const total = preview.durationTicks!;
-      expect(choice.etaLabel).toBe(total >= 60 && total % 60 === 0
-        ? `${total / 60} hour${total === 60 ? "" : "s"}` : `${total} min`);
+      expect(choice.etaLabel).toBe(`If ordered now: about ${total >= 60 && total % 60 === 0
+        ? `${total / 60} hour${total === 60 ? "" : "s"}` : `${total} min`}`);
       expect(stepChoices.find((entry) => entry.id === choice.id)).toMatchObject({ etaLabel: choice.etaLabel, detailLabel: choice.detailLabel });
     }
     expect(chart.answerChoices.find((choice) => choice.id === "egd_1")?.detailLabel).toContain("Pathology");

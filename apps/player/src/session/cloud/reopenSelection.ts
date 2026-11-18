@@ -9,7 +9,7 @@ type LastCampaign = { campaignId: string | null };
 /** Selection is a preference, never permission to play. Automatic opening still
  * verifies admission, every copy, the current head and fenced writer authority.
  * Read fresh sources: the account context may publish access before its list. */
-export async function selectCampaignToReopen(runtime: CloudAccountRuntime, offline: boolean): Promise<CampaignReopenDecision> {
+export async function selectCampaignToReopen(runtime: CloudAccountRuntime, offline: boolean, includeUncached = false): Promise<CampaignReopenDecision> {
   const selected = await timeCloudEntry("reopen-marker", () => cloudCheckDeadline(runtime.entryStore.read<LastCampaign>("last-active-campaign"), CLOUD_READ_TIMEOUT_MS));
   if (selected?.campaignId === null) return { kind: "list" }; // Explicit campaign-screen choice, including across reload.
   if (typeof selected?.campaignId === "string" && selected.campaignId.trim()) return { kind: "open", campaignId: selected.campaignId };
@@ -28,7 +28,14 @@ export async function selectCampaignToReopen(runtime: CloudAccountRuntime, offli
     if (families.has(family)) candidates.set(family, row.campaignId);
   }
   if (candidates.size === 1) return { kind: "open", campaignId: [...candidates.values()][0]! };
-  return { kind: candidates.size > 1 ? "list" : "wait" };
+  if (candidates.size > 1) return { kind: "list" };
+  // After enrollment readiness, a fresh server list is authoritative. Context
+  // summaries can still be an empty/partial earlier render on a new device.
+  if (includeUncached) {
+    const resumable = summaries.filter(row => row.status === "resumable");
+    return resumable.length === 1 ? { kind: "open", campaignId: resumable[0]!.campaignId } : { kind: "list" };
+  }
+  return { kind: "wait" };
 }
 
 /** Tiny auxiliary preference. Failure must never reject a verified campaign or

@@ -1,9 +1,11 @@
 import { expect, test } from "@playwright/test";
 import { mkdirSync } from "node:fs";
 import { join } from "node:path";
+import { getRoomInstanceFootprint } from "@gamify-surgery/game-domain";
 import { readDurableLocalState } from "./ui-density-helpers";
 import {
-  PROFILE_KEY,
+  clickFacilityTileCenter,
+  expectLocalFixtureContent,
   installLevelOneVisualState,
   resumeLocalCampaign,
   startClinic,
@@ -24,30 +26,9 @@ test("Build Mode exposes clear tools, upgrade controls, and every exit issue", a
     "Build Test Founder",
     "Build Test Surgical Clinic",
   );
-  await installLevelOneVisualState(page);
-
-  const mutatedProfile = await page.evaluate((profileKey) => {
-    const profile = JSON.parse(
-      window.localStorage.getItem(profileKey) ?? "{}",
-    ) as {
-      activeCampaignId: string;
-      campaigns: Array<{
-        campaignId: string;
-        serializedState: string;
-      }>;
-    };
-    const campaign = profile.campaigns.find(
-      (candidate) =>
-        candidate.campaignId === profile.activeCampaignId,
-    );
-    if (!campaign) {
-      throw new Error("Active test campaign is missing.");
-    }
-    const state = JSON.parse(campaign.serializedState) as {
-      facilityTick: number;
-      doors: Array<{ id: string }>;
-      events: unknown[];
-    };
+  // Compose the whole synthetic clinic before its fresh identity first mounts.
+  // The installer checks recovered journal content on this original opening.
+  const fixture = await installLevelOneVisualState(page, state => {
     state.doors = state.doors.filter(
       (door) =>
         door.id !== "door.visual.exam.front" &&
@@ -69,22 +50,15 @@ test("Build Mode exposes clear tools, upgrade controls, and every exit issue", a
         id: "room.visual.examination",
       },
     });
-    campaign.serializedState = JSON.stringify(state);
-    window.localStorage.setItem(profileKey, JSON.stringify(profile));
-    return profile;
-  }, PROFILE_KEY);
-  // `installLevelOneVisualState` deliberately installs a reload fixture.
-  // Register this later override so the invalid renovation state wins on the
-  // next navigation as well.
-  await page.addInitScript(
-    ({ profileKey, profile }) => {
-      window.localStorage.setItem(profileKey, JSON.stringify(profile));
-    },
-    { profileKey: PROFILE_KEY, profile: mutatedProfile },
-  );
+  });
 
-  await page.reload();
+  // Keep the ordinary fixture reopen, with the observation-only scene hook
+  // needed to map the later hallway tile's center to native canvas input.
+  const proofUrl = new URL(page.url());
+  proofUrl.searchParams.set("facility-gait-proof", "1");
+  await page.goto(proofUrl.href);
   await resumeLocalCampaign(page, "Build Test Surgical Clinic");
+  await expectLocalFixtureContent(page, fixture);
 
   // Retained historical guidance is readable history, not an active remedy.
   // Use the ordinary owned-room entry to inspect the same upgrade controls.
@@ -154,29 +128,41 @@ test("Build Mode exposes clear tools, upgrade controls, and every exit issue", a
   const placementCanvas = page.locator(".facility-host canvas");
   const placementCanvasBox = await placementCanvas.boundingBox();
   expect(placementCanvasBox).not.toBeNull();
-  let placedHallway = false;
-  // Scan a few ordinary map points. Existing rooms reject placement without
-  // turning off the paint tool; the first empty square should accept it.
-  for (const yRatio of [0.2, 0.35, 0.5, 0.65]) {
-    for (const xRatio of [0.15, 0.3, 0.5, 0.7, 0.85]) {
-      await page.mouse.click(
-        placementCanvasBox!.x + placementCanvasBox!.width * xRatio,
-        placementCanvasBox!.y + placementCanvasBox!.height * yRatio,
-      );
-      // The committed local journal drains asynchronously. The live catalog
-      // count is the immediate UI signal; durable recovery is asserted below.
-      const committedCount = await hallwayCount();
-      if (committedCount > startingHallwayCount || await page.getByRole("button", { name: /^Undo(?::|$)/ }).isEnabled()) {
-        placedHallway = true;
-        break;
-      }
-    }
-    if (placedHallway) {
-      break;
-    }
-  }
+  // The synthetic prototype grid is 72x32. Tile (41,26) lies east of the
+  // Examination Room/Bathroom and two rows north of Minor-Procedure Room.
+  // It is isolated, so its access issue must exercise the generic fallback.
+  // The old 20%-height scan sampled a tile boundary; a harmless 1px camera
+  // centering difference could instead place a hall against Examination Room.
+  const hallwayTile = { x: 41, y: 26 };
+  const fixtureGrid = { width: 72, height: 32 };
+  const beforePlacement = await readDurableLocalState(page);
+  expect(hallwayTile.x).toBeGreaterThanOrEqual(0);
+  expect(hallwayTile.x).toBeLessThan(fixtureGrid.width);
+  expect(hallwayTile.y).toBeGreaterThanOrEqual(0);
+  expect(hallwayTile.y).toBeLessThan(fixtureGrid.height);
+  const roomBounds = beforePlacement.rooms.map(room => {
+    const footprint = getRoomInstanceFootprint(beforePlacement, room.id);
+    if (!footprint) throw new Error(`Missing durable footprint for ${room.id}.`);
+    return { id: room.id, left: room.x, top: room.y,
+      right: room.x + footprint.width, bottom: room.y + footprint.height };
+  });
+  const coversTile = (room: typeof roomBounds[number], padding: number) =>
+    hallwayTile.x >= room.left - padding && hallwayTile.x < room.right + padding
+    && hallwayTile.y >= room.top - padding && hallwayTile.y < room.bottom + padding;
+  expect(roomBounds.filter(room => coversTile(room, 0)), "The hallway fixture tile must be empty.").toEqual([]);
+  // A full one-tile clearance also rejects diagonal neighbors, making a
+  // changed fixture fail before input instead of selecting another hint.
+  expect(roomBounds.filter(room => coversTile(room, 1)), "The hallway fixture tile must not touch any room.").toEqual([]);
+  await clickFacilityTileCenter(page, hallwayTile);
+  // The committed local journal drains asynchronously. Retain the immediate
+  // durable-count/Undo signal and the original durable count poll below.
+  const committedCount = await hallwayCount();
+  const placedHallway = committedCount > startingHallwayCount || await page.getByRole("button", { name: /^Undo(?::|$)/ }).isEnabled();
   expect(placedHallway).toBe(true);
   await expect.poll(hallwayCount).toBe(startingHallwayCount + 1);
+  const previousRoomIds = new Set(beforePlacement.rooms.map(room => room.id));
+  const addedRooms = (await readDurableLocalState(page)).rooms.filter(room => !previousRoomIds.has(room.id));
+  expect(addedRooms).toMatchObject([{ roomDefinitionId: "room.hallway", x: hallwayTile.x, y: hallwayTile.y }]);
   await expect(hallwayTool).toHaveAttribute("aria-pressed", "true");
 
   await page.getByRole("button", { name: "Done / Save" }).click();

@@ -2,7 +2,7 @@ import { mkdirSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
 import {
-  getActiveState,
+  installFreshLocalProfile, resumeLocalCampaign, getActiveState,
   getProfile,
   installLevelTwoVisualState,
   moneyValue,
@@ -26,10 +26,7 @@ test.beforeAll(() => {
 
 async function openGaitProof(page: Page, campaignName: string): Promise<void> {
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", {
-    name: new RegExp(`^Resume ${campaignName}$`),
-  });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.waitForFunction(() => {
     const host = document.querySelector("[data-testid='facility-canvas']") as
@@ -95,9 +92,7 @@ async function placeGlpNpInsideItsExistingSuite(page: Page): Promise<void> {
   np.path = [{ x: 45, y: 26 }];
   np.pathIndex = 0;
   campaign.serializedState = JSON.stringify(state);
-  await page.addInitScript(({ key, nextProfile }) => {
-    window.localStorage.setItem(key, JSON.stringify(nextProfile));
-  }, { key: "gamify-surgery.prototype.profile.v1", nextProfile: profile });
+  await installFreshLocalProfile(page, profile);
 }
 
 async function centerNpForEvidence(page: Page): Promise<void> {
@@ -167,8 +162,7 @@ test("manual GLP-1 credit renders one founder popup above the sprite, expires, a
   await page.waitForTimeout(1_650);
   await waitForNoPopup(page);
   await page.reload();
-  const resume = page.getByRole("button", { name: "Resume Popup Founder Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Popup Founder Clinic");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.waitForTimeout(300);
   await waitForNoPopup(page);

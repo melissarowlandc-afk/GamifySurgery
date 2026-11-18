@@ -4,7 +4,9 @@ import {
   getFacilityAccessValidation,
 } from "@gamify-surgery/game-domain";
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, PROFILE_KEY,
+  expectLocalFixtureContent, type LocalFixtureState,
+  resumeLocalCampaign,
   getActiveState,
   installLevelOneVisualState,
   installLevelTwoVisualState,
@@ -44,10 +46,9 @@ test("a persisted Level 1 campaign advances once, then exposes the Level 2 build
     campaign.serializedState = JSON.stringify(state);
     return profile;
   }, PROFILE_KEY);
-  await page.addInitScript(({ key, profile }) => window.localStorage.setItem(key, JSON.stringify(profile)), { key: PROFILE_KEY, profile: qualifyingProfile });
+  await installFreshLocalProfile(page, qualifyingProfile);
   await page.reload();
-  const resume = page.getByRole("button", { name: "Resume Level Two Surgical Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Level Two Surgical Clinic");
   await expect(page.getByRole("button", { name: "Advance to Level 2" })).toBeVisible();
   const before = await getActiveState(page);
   await page.getByRole("button", { name: "Advance to Level 2" }).click();
@@ -62,13 +63,11 @@ test("a persisted Level 1 campaign advances once, then exposes the Level 2 build
   expect((advanced as any).nextRoutineArrivalTick).toBe((before as any).nextRoutineArrivalTick);
   expect((advanced as any).learningHistories).toEqual((before as any).learningHistories);
   expect((advanced as any).encounters).toEqual((before as any).encounters);
-  const advancedProfile = await page.evaluate((profileKey) =>
-    JSON.parse(window.localStorage.getItem(profileKey) ?? "{}"), PROFILE_KEY);
-  // The qualifying fixture was registered as an init script for its reload;
-  // register the just-saved campaign afterwards so it wins on this reload.
-  await page.addInitScript(({ key, profile }) => window.localStorage.setItem(key, JSON.stringify(profile)), { key: PROFILE_KEY, profile: advancedProfile });
+  // The fixture seeded once. Verify the actual advanced journal, then reload
+  // ordinary progress without reinstalling either the qualifying or new state.
+  await expectLocalFixtureContent(page, advanced as unknown as LocalFixtureState);
   await page.reload();
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Level Two Surgical Clinic");
   const restored = await getActiveState(page);
   expect([restored.facilityLevel, restored.clinicalXp, restored.cash]).toEqual([2, 0, 7_777]);
   await expect(page.getByRole("button", { name: "Advance to Level 2" })).toHaveCount(0);
@@ -87,7 +86,7 @@ test("a persisted Level 1 campaign advances once, then exposes the Level 2 build
   for (const room of levelTwoRooms) await expect(page.getByRole("button", { name: new RegExp(room) })).toBeVisible();
   await page.screenshot({ path: "artifacts/screenshots/level-two-build-mode-desktop.png", animations: "disabled" });
   await page.reload();
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Level Two Surgical Clinic");
   for (const role of levelTwoRoles) await expect(page.getByRole("heading", { name: role })).toBeVisible();
   await expect(page.getByRole("heading", { name: "GLP-1 Consult Automation" })).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Cash-Only GLP-1 Consult" })).toHaveCount(0);

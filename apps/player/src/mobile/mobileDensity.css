@@ -229,9 +229,10 @@
 }
 
 .mobile-shell .mobile-build-catalog > p { font-size: 14px; line-height: 1.2; }
-.mobile-shell .mobile-build-navigation { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 4px; align-items: stretch; margin-bottom: 4px; }
+.mobile-shell .mobile-build-navigation { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 4px; align-items: stretch; margin-bottom: 4px; }
 .mobile-shell .mobile-build-navigation .mobile-build-tools,
 .mobile-shell .mobile-build-navigation .mobile-build-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; gap: 2px; }
+.mobile-shell .mobile-build-navigation .mobile-build-tools { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .mobile-shell .mobile-build-navigation button { min-height: 44px !important; padding: 2px; font-size: 14px; line-height: 1.1; }
 .mobile-shell .mobile-build-tools button > small { display: block; font-size: 14px; }
 .mobile-shell .mobile-build-cards.is-new { grid-template-columns: minmax(0, 1fr); gap: 4px; }

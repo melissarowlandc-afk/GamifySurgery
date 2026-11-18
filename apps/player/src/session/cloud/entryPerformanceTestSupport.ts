@@ -1,4 +1,4 @@
-import { gzipSync } from "node:zlib";
+import { gunzipSync, gzipSync } from "node:zlib";
 import { createHash } from "node:crypto";
 import { applyGameEvidenceCommand, createGameEvidenceCheckpoint, deserializeGameState } from "@gamify-surgery/game-domain";
 import checkpoints from "../../../../../tests/fixtures/level-five-integration-checkpoints-20261012.json";
@@ -13,20 +13,16 @@ const stableJson = (value: unknown): string => value === null || typeof value !=
     : `{${Object.keys(value).sort().map(key => `${JSON.stringify(key)}:${stableJson((value as Record<string, unknown>)[key])}`).join(",")}}`;
 const stateHash = (value: unknown) => createHash("sha256").update(stableJson(value)).digest("hex");
 
-/** Current checkpoints already omit retired rows, so a deserialize opt-out alone
- * cannot recover the original pressure. This <1 MB public synthetic history
- * delta restores exactly the prior reducer-generated state, without padding. */
+/** Later admitted content changes the current journey checkpoints. Preserve the
+ * exact public, reducer-generated large-history workload as a <1 MB compressed
+ * fixture; a deserialize opt-out cannot recreate already retired history. */
 function largeHistorySource(): string {
-  const value = structuredClone(checkpoints["integration-lower-repeat"]);
-  if (stateHash(value) !== pressureHistory.baseStateSha256) throw new Error("Refresh the public opening-pressure history base.");
-  const at = (path: string[]) => path.reduce<unknown>((row, key) => (row as Record<string, unknown>)[key], value);
-  for (const path of pressureHistory.remove) delete (at(path.slice(0, -1)) as Record<string, unknown>)[path.at(-1)!];
-  for (const [path, row] of pressureHistory.set as unknown as [string[], unknown][])
-    (at(path.slice(0, -1)) as Record<string, unknown>)[path.at(-1)!] = structuredClone(row);
-  for (const [path, index, rows] of pressureHistory.insert as unknown as [string[], number, unknown[]][])
-    (at(path) as unknown[]).splice(index, 0, ...structuredClone(rows));
-  if (stateHash(value) !== pressureHistory.restoredStateSha256) throw new Error("Public opening-pressure history changed.");
-  return JSON.stringify(value);
+  const source = gunzipSync(Buffer.from(pressureHistory.gzipBase64, "base64"));
+  if (createHash("sha256").update(source).digest("hex") !== "bf0b0e357e36a94f4753ae31976b0fa3fb2477b2d6aac508ff1ad4e92151530c" ||
+      stateHash(JSON.parse(source.toString("utf8"))) !== "a3710c4f1611256a87607801f1c599e2e3dfe50a147bc2cf22b943ebfa06ef05")
+    throw new Error("Public opening-pressure history changed.");
+  if (source.length !== pressureHistory.sourceUtf8Bytes) throw new Error("Public opening-pressure bytes changed.");
+  return source.toString("utf8");
 }
 
 /** Real retained Level 5 state + reducer-produced operational history. Valid

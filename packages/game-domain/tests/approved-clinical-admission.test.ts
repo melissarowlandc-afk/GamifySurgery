@@ -816,6 +816,9 @@ describe("approved clinical admission boundaries", () => {
       "concept.intraop.parathyroid.sample-integrity.v1",
       "concept.intraop.parathyroid.selective-salvage.v1",
       "concept.intraop.polypectomy.right-colon-defect-after-clearance.20261112.v1",
+      // Release41: only the two exact accepted flags5 meaning versions append.
+      "concept.cirrhosis-perioperative-risk.decompensation-optimization-boundary.v2",
+      "concept.varicose-veins.intervention-referral-after-axial-reflux.v2",
     ]);
   });
 

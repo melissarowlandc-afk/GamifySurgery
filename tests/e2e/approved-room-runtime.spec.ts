@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { expect, test } from "@playwright/test";
-import { getActiveState, getProfile, PROFILE_KEY, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, getActiveState, getProfile, PROFILE_KEY, startClinic } from "./helpers";
 
 const rooms = [
   ["front", "room.front_desk", 2, 2, 0], ["exam", "room.examination", 9, 2, 270],
@@ -31,9 +31,9 @@ test("renders all approved room packs at their canonical orientations", async ({
   state.doors = [];
   profile.campaigns[index] = { ...profile.campaigns[index]!, serializedState: JSON.stringify(state) };
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value }) => localStorage.setItem(key, JSON.stringify(value)), { key: PROFILE_KEY, value: profile });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  await page.getByRole("button", { name: "Resume Approved Room Runtime" }).click();
+  await resumeLocalCampaign(page, "Approved Room Runtime");
   await page.addStyleTag({ content: ".facility-pause-indicator,.tutorial-overlay,.modal-backdrop { visibility:hidden !important; }" });
   const canvas = page.getByTestId("facility-canvas");
   await expect(canvas).toBeVisible();

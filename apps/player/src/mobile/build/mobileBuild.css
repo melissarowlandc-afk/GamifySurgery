@@ -1,4 +1,5 @@
 .mobile-shell .mobile-build-controls { position: absolute; z-index: 4; bottom: 0; left: 0; right: 0; padding: 8px; border-top: 2px solid var(--ink); background: var(--paper-raised); box-shadow: 0 -3px 10px #0003; }
+.mobile-shell .mobile-build-controls { overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; }
 .mobile-shell .mobile-build-controls p { margin: 6px 0; font-size: 13px; line-height: 1.35; }
 .mobile-shell .mobile-sheet:has(.mobile-build-catalog),
 .mobile-shell .mobile-sheet:has(.mobile-build-room),

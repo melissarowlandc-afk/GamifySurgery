@@ -9,7 +9,7 @@ import {
   validateDomainContext,
   type GameState,
 } from "@gamify-surgery/game-domain";
-import { PROFILE_KEY, startClinic, waitForDecisionChoices } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY, startClinic, waitForDecisionChoices } from "./helpers";
 
 const ORIGIN = "http://127.0.0.1:4173";
 const SCREENSHOTS = "artifacts/screenshots";
@@ -114,18 +114,10 @@ async function prepareCase(
   await setupPage.close();
 
   const page = await context.newPage();
-  await page.addInitScript(
-    ({ key, nextProfile, markerKey }) => {
-      if (sessionStorage.getItem(markerKey)) return;
-      sessionStorage.setItem(markerKey, "installed");
-      localStorage.setItem(key, JSON.stringify(nextProfile));
-    },
-    { key: PROFILE_KEY, nextProfile: profile, markerKey: marker },
-  );
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
   expect(new URL(page.url()).origin).toBe(ORIGIN);
-  const resume = page.getByRole("button", { name: `Resume ${active.name}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, active.name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   const patient = page.locator(".patient-folder .patient-tab").filter({ hasText: patientName });
   await expect(patient).toBeVisible();

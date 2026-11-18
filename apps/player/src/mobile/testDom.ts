@@ -7,6 +7,10 @@ export class TestElement extends EventTarget {
   attributes: Record<string, string> = {};
   style: Record<string, unknown> = { setProperty: (key: string, value: string) => { this.style[key] = value; } };
   value = "";
+  selected = false;
+  get options(): TestElement[] {
+    return this.childNodes.flatMap(child => child.tagName === "OPTION" ? [child] : child.options);
+  }
   content = "";
   private text = "";
   constructor(public tagName: string, public ownerDocument: TestDocument) { super(); this.tagName = tagName.toUpperCase(); }
@@ -22,6 +26,10 @@ export class TestElement extends EventTarget {
   insertBefore(child: TestElement, before: TestElement) { child.parentNode?.removeChild(child); this.childNodes.splice(this.childNodes.indexOf(before), 0, child); child.parentNode = this; return child; }
   removeChild(child: TestElement) { this.childNodes.splice(this.childNodes.indexOf(child), 1); child.parentNode = null; return child; }
   setAttribute(key: string, value: string) { this.attributes[key] = String(value); }
+  getAttribute(key: string) { return this.attributes[key] ?? null; }
+  get parentElement() { return this.parentNode; }
+  get children() { return this.childNodes.filter(node => node.nodeType === 1); }
+  remove() { this.parentNode?.removeChild(this); }
   removeAttribute(key: string) { delete this.attributes[key]; }
   setAttributeNS(_ns: string, key: string, value: string) { this.setAttribute(key, value); }
   contains(child: TestElement): boolean { return this === child || this.childNodes.some((node) => node.contains(child)); }
@@ -40,6 +48,7 @@ export class TestDocument extends EventTarget {
   documentElement = new TestElement("html", this);
   activeElement = this.body;
   defaultView: unknown;
+  getElementById(id: string) { return findTestElement(this.body, node => node.attributes.id === id) ?? null; }
   createElement(name: string) { return new TestElement(name, this); }
   createElementNS(_namespace: string, name: string) { return this.createElement(name); }
   createTextNode(text: string) { const node = new TestElement("#text", this); node.nodeType = 3; node.textContent = text; return node; }

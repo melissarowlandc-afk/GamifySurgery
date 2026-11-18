@@ -3,7 +3,7 @@ import { mkdirSync, readFileSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
 import {
-  getProfile,
+  leaveLocalFixtureSource, installFreshLocalProfile, resumeLocalCampaign, getProfile,
   installLevelOneVisualState,
   PROFILE_KEY,
   startClinic,
@@ -20,6 +20,7 @@ async function openVisualRoom(page: Page): Promise<void> {
 type ExaminationDoorProof = { side: "north" | "south"; offset: number };
 
 async function installOrientationForFreshCapture(page: Page, orientation: 0 | 90, partial = false, placedDoor?: ExaminationDoorProof) {
+  // Compose only; openFreshCapture installs this copy on its receiving page.
   const profile = await getProfile(page);
   const active = profile.campaigns.find((campaign) => campaign.campaignId === profile.activeCampaignId);
   if (!active) throw new Error("Active campaign is missing.");
@@ -74,11 +75,6 @@ async function installOrientationForFreshCapture(page: Page, orientation: 0 | 90
   }
   state.paused = true;
   active.serializedState = JSON.stringify(state);
-  // The source page deliberately remains open. Reloading it would run its
-  // page-hide saver and can overwrite this controlled visual state.
-  await page.evaluate(({ key, value }) => {
-    window.localStorage.setItem(key, JSON.stringify(value));
-  }, { key: PROFILE_KEY, value: profile });
   return profile;
 }
 
@@ -91,12 +87,13 @@ async function openFreshCapture(
   const expectedFootprint = orientation === 0
     ? { width: 3, height: 2 }
     : { width: 2, height: 3 };
-  await installOrientationForFreshCapture(source, orientation, partial, placedDoor);
+  const profile = await installOrientationForFreshCapture(source, orientation, partial, placedDoor);
   const capture = await source.context().newPage();
   await capture.setViewportSize({ width: 1374, height: 1273 });
+  await leaveLocalFixtureSource(source);
+  await installFreshLocalProfile(capture, profile);
   await capture.goto("/?prototype-tools=0");
-  const resume = capture.getByRole("button", { name: "Resume Vale Surgical Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(capture, "Vale Surgical Clinic");
   await expect(capture.getByTestId("facility-canvas")).toBeVisible();
   const hydratedProfile = await getProfile(capture);
   const hydrated = hydratedProfile.campaigns.find((campaign) => campaign.campaignId === hydratedProfile.activeCampaignId);

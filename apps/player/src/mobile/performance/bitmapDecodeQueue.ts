@@ -12,7 +12,8 @@ interface DecodeJob {
 
 /** Four sources in flight, including raster decode. Priority only changes the
  * waiting order; every eighth start serves the oldest job to prevent starvation.
- * The deadline starts at enqueue, so a hung decoder cannot strand the tail. */
+ * Each started request has a deadline. Time waiting for a slot is not a decode
+ * failure: large clinics can legitimately enqueue hundreds of sources. */
 export class BitmapDecodeQueue {
   private active = 0;
   private waiting: DecodeJob[] = [];
@@ -27,7 +28,7 @@ export class BitmapDecodeQueue {
     const promise = new Promise<HTMLImageElement | null>(resolve => {
       let done = false, started = false, image: HTMLImageElement | undefined;
       let decodeTimer: ReturnType<typeof setTimeout> | undefined;
-      const deadline = setTimeout(() => job.finish(null, true), PHONE_BITMAP_DEADLINE_MS);
+      let deadline: ReturnType<typeof setTimeout> | undefined;
       job = {
         priority,
         finish: (value, timedOut = false) => {
@@ -45,6 +46,7 @@ export class BitmapDecodeQueue {
         },
         run: () => {
           started = true; this.active++;
+          deadline = setTimeout(() => job.finish(null, true), PHONE_BITMAP_DEADLINE_MS);
           try {
             image = createImage(); const source = image;
             source.decoding = "async";

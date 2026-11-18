@@ -44,6 +44,52 @@ Run the rollback-only `supabase/tests/casual_mode.sql` as postgres and capture
 its final PASS row before rollout. The worker authors SQL offline; the manager
 applies it and checks desktop/phone browsers.
 
+## Question flag status (owner decision)
+
+Question flags use a separate command from `feedback-status` (which continues to
+update only general feedback). Mark a flag fixed only after its fix is live.
+Run from the repository root with the existing private owner credentials:
+
+```powershell
+node scripts/beta-invites/beta-invites.mjs flag-status aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa fixed_in_version --version beta1+2026-11-16 "Fix is live"
+node scripts/beta-invites/beta-invites.mjs flag-status aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa needs_owner "Needs owner review"
+node scripts/beta-invites/beta-invites.mjs flag-status aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa open
+node scripts/beta-invites/beta-invites.mjs flag-status --file C:\private\question-flag-updates.json
+```
+
+Use complete UUIDs. A flag ID may belong to several players; the command refuses
+an ambiguous ID without writing. Add `--user <player-uuid>` to either form to
+scope it to exactly that player. Every update uses both flag ID and player ID.
+The interactive tool also offers `flag-status` for one flag.
+
+Statuses are `open`, `fixed_in_version`, `needs_owner` and `no_change`. A version
+of 1-80 characters is required exactly for `fixed_in_version`; other statuses
+clear the prior fixed version. Non-open statuses get the command's current UTC
+resolution time; reopening clears it. An omitted note preserves the existing
+note; a supplied note replaces it (500 characters maximum; `""` clears it).
+
+The batch file is a JSON array, for example:
+
+```json
+[
+  { "flagId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa", "status": "fixed_in_version", "version": "beta1+2026-11-16", "note": "Fix is live" },
+  { "flagId": "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb", "status": "no_change" }
+]
+```
+
+Use 1-1000 distinct flag IDs, at most 1 MiB of JSON. Keep real IDs/notes in a
+private file outside the repository. All entries are validated and every target
+is checked for existence/ambiguity **before any write**. Updates are sequential,
+not a database transaction: a connection failure can leave a confirmed prefix.
+The command stops, reports how many earlier updates were confirmed, and claims
+no unconfirmed success. Re-read flags before retrying. Each success requires a
+separate read-back matching status, version, note and resolution time.
+
+No SQL change is needed: the existing usage/flags and owner-tool-read migrations
+grant the service-role tool SELECT and UPDATE of these four status columns.
+Tests use synthetic SDK fetches only:
+`node --test --test-isolation=none scripts/beta-invites/*.test.mjs`.
+
 # Owner cloud cohort controls
 
 Run from the repository root. These commands share the invite tool's existing

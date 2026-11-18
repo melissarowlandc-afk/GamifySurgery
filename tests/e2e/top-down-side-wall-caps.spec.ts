@@ -2,7 +2,7 @@ import { mkdirSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
 import {
-  getProfile,
+  leaveLocalFixtureSource, installFreshLocalProfile, resumeLocalCampaign, getProfile,
   installLevelOneVisualState,
   PROFILE_KEY,
   startClinic,
@@ -32,16 +32,14 @@ async function openSideCapProof(source: Page, includeSideDoors: boolean): Promis
   }
   state.paused = true;
   campaign.serializedState = JSON.stringify(state);
-  await source.evaluate(({ key, value }) => window.localStorage.setItem(key, JSON.stringify(value)), {
-    key: PROFILE_KEY,
-    value: profile,
-  });
+  
 
   const capture = await source.context().newPage();
   await capture.setViewportSize({ width: 1600, height: 1100 });
+  await leaveLocalFixtureSource(source);
+  await installFreshLocalProfile(capture, profile);
   await capture.goto("/?prototype-tools=0");
-  const resume = capture.getByRole("button", { name: "Resume Vale Surgical Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(capture, "Vale Surgical Clinic");
   await expect(capture.getByTestId("facility-canvas")).toBeVisible();
   await capture.addStyleTag({ content: ".facility-pause-indicator { visibility: hidden !important; }" });
   await capture.waitForTimeout(180);

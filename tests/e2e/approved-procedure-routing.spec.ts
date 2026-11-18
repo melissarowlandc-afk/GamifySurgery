@@ -10,7 +10,7 @@ import {
 } from "@gamify-surgery/game-domain";
 import { mkdirSync, writeFileSync } from "node:fs";
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   getProfile,
   startClinic,
@@ -98,14 +98,9 @@ async function installOnce(page: Page, state: GameState, name: string, marker: s
   campaign.name = name;
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ storageKey, value, sessionMarker }) => {
-    if (sessionStorage.getItem(sessionMarker)) return;
-    sessionStorage.setItem(sessionMarker, "installed");
-    localStorage.setItem(storageKey, JSON.stringify(value));
-  }, { storageKey: PROFILE_KEY, value: profile, sessionMarker: marker });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: `Resume ${name}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
@@ -348,8 +343,7 @@ test("diagnostic skin biopsy leaves the minor room after 15 minutes and persists
   await page.screenshot({ path: `${SHOTS}/gs023-procedure-skin-returned.png`, animations: "disabled" });
   const beforeReload = JSON.parse(JSON.stringify(current.encounters[encounterId]!.pendingResult));
   await page.reload();
-  const resume = page.getByRole("button", { name: "Resume Procedure Skin Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, "Procedure Skin Clinic");
   const reloaded = (await getActiveState(page)) as unknown as GameState;
   expect(reloaded.encounters[encounterId]!.pendingResult).toEqual(beforeReload);
 });

@@ -1,3 +1,7 @@
+import { ContinuousLoading, LOADING_SURFACE_ID } from "../ui/ContinuousLoading";
+import { ClinicPresentationGate } from "../ui/ClinicPresentationGate";
+import { CLINIC_PRESENTATION_EVENT, CLINIC_PRESENTATION_RETRY } from "../ui/clinicPresentation";
+import { LoadingScreen } from "../ui/LoadingScreen";
 import { afterEach, expect, it, vi } from "vitest";
 import { act } from "react";
 import { phoneFixture, phoneTestDom, cleanupPhoneTests } from "../mobile/screenTestUtils";
@@ -5,6 +9,7 @@ import { DESKTOP_CAMERA_RESIZE_SETTLE_MS, FacilityCanvas } from "./FacilityCanva
 import { bindFacilityCameraPreferenceLifecycle, createFacilityCameraPreferenceSession, readFacilityCameraPreference } from "../session/facilityCameraPreference";
 import type { FacilityCameraView } from "./types";
 import { mobileBitmapCache } from "../mobile/performance/roomAssets";
+import { FacilityScene } from "./FacilityScene";
 
 const captured = vi.hoisted(() => ({ games: [] as any[] }));
 vi.mock("phaser", () => {
@@ -191,4 +196,73 @@ it.each([false, true])("publishes a pending gesture before lifecycle/Save & Clos
   expect(readFacilityCameraPreference("gesture", storage)).toEqual(beforeSave);
   unbind(); await cleanupPhoneTests(); changed.mockClear();
   env.browser.dispatchEvent(new Event("pagehide")); expect(changed).not.toHaveBeenCalled();
+});
+
+it("paints the initial phone frame behind a restored chart, then restores the covered-map memory policy", async () => {
+  observer(); const env = phoneTestDom(), fixture = phoneFixture();
+  const facility = { ...fixture.facility, campaignId: "fixture.presentation" };
+  Object.assign(env.doc, { visibilityState: "visible" }); Object.assign(env.browser, { setInterval, clearInterval });
+  await env.render(<ContinuousLoading><ClinicPresentationGate campaignId={facility.campaignId} authorized onRetry={() => {}} />
+    <FacilityCanvas mobileInput mobileMapCovered viewModel={facility} onPlaceRoom={() => true} /></ContinuousLoading>);
+  expect(captured.games).toHaveLength(1); const game = captured.games[0];
+  const status = vi.spyOn(game.config.scene, "openingPresentationStatus").mockReturnValue("waiting");
+  const surface = env.doc.getElementById(LOADING_SURFACE_ID)!;
+  const host = game.config.parent;
+  Object.assign(env.doc, { querySelector: (selector: string) => selector.includes("facility-canvas") ? host : null });
+  await act(async () => { game.events.emit("poststep"); game.events.emit("postrender"); });
+  expect(surface.attributes.hidden).toBeUndefined();
+  status.mockReturnValue("ready");
+  await act(async () => { game.events.emit("postrender"); env.doc.dispatchEvent(new Event(CLINIC_PRESENTATION_EVENT)); });
+  expect(surface.attributes.hidden).toBe(""); expect(game.events.rows.get("postrender")?.size).toBe(0);
+  expect(captured.games).toHaveLength(1); expect(game.destroy).not.toHaveBeenCalled();
+  expect(game.loop.running).toBe(false);
+});
+
+it("does not declare opening art ready while a loader, room or character is unfinished", () => {
+  phoneTestDom(); const viewModel = phoneFixture().facility;
+  const scene = new FacilityScene({ viewModel, onPlaceRoom: () => true }) as any;
+  expect(scene.openingPresentationStatus()).toBe("waiting");
+  Object.assign(scene, { renderedLayout: {}, environmentAtlasReady: true, landscapingAtlasReady: true,
+    roomFixtureAtlasesReady: true, load: { isLoading: () => false }, textures: { exists: () => true } });
+  expect(scene.openingPresentationStatus()).toBe("ready");
+  scene.load.isLoading = () => true; expect(scene.openingPresentationStatus()).toBe("waiting");
+  scene.load.isLoading = () => false; scene.pendingCharacterStills.set("still", {});
+  expect(scene.openingPresentationStatus()).toBe("waiting"); scene.pendingCharacterStills.clear();
+  scene.failedCharacterStills.add("still"); expect(scene.openingPresentationStatus()).toBe("failed"); scene.failedCharacterStills.clear();
+  scene.bridge.mobileInput = true; scene.mobileArtStartedAt = 0;
+  expect(scene.openingPresentationStatus()).toBe("waiting");
+  scene.mobileArtSettledAt = 1; scene.mobileRequiredAtlases.add("missing"); scene.textures.exists = () => false;
+  expect(scene.openingPresentationStatus()).toBe("failed"); scene.textures.exists = () => true;
+  expect(scene.openingPresentationStatus()).toBe("ready");
+});
+
+it("keeps a resume check covered until a recreated canvas paints, instead of accepting its previous ready frame", async () => {
+  vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] }); observer();
+  const env = phoneTestDom(), facility = { ...phoneFixture().facility, campaignId: "fixture.resume-frame" }, place = vi.fn(() => true);
+  Object.assign(env.doc, { visibilityState: "visible" }); Object.assign(env.browser, { setInterval, clearInterval });
+  const render = (checking: boolean) => env.render(<ContinuousLoading>
+    <ClinicPresentationGate campaignId={facility.campaignId} authorized={!checking} />
+    <LoadingScreen active={checking} phase="copies" status="Checking saved progress" />
+    <FacilityCanvas mobileInput viewModel={facility} onPlaceRoom={place} />
+  </ContinuousLoading>);
+  await render(false); const first = captured.games[0], host = first.config.parent;
+  // Minimal DOM EventTarget does not bubble; forward the actual host protocol.
+  host.addEventListener(CLINIC_PRESENTATION_EVENT, () => env.doc.dispatchEvent(new Event(CLINIC_PRESENTATION_EVENT)));
+  Object.assign(env.doc, { querySelector: (selector: string) => selector.includes("facility-canvas") ? host : null });
+  vi.spyOn(first.config.scene, "openingPresentationStatus").mockReturnValue("ready");
+  await act(async () => first.events.emit("postrender"));
+  const surface = env.doc.getElementById(LOADING_SURFACE_ID)!;
+  expect(surface.attributes.hidden).toBe("");
+  await render(true); await act(async () => { await vi.advanceTimersByTimeAsync(400); });
+  expect(surface.attributes.hidden).toBeUndefined();
+  const before = Number(surface.attributes["data-loading-progress"]);
+  await act(async () => host.dispatchEvent(new Event(CLINIC_PRESENTATION_RETRY)));
+  expect(captured.games).toHaveLength(2);
+  await render(false); // Authority returns before the replacement art/frame.
+  expect(surface.attributes.hidden).toBeUndefined();
+  expect(Number(surface.attributes["data-loading-progress"])).toBeGreaterThanOrEqual(before);
+  const second = captured.games[1]; vi.spyOn(second.config.scene, "openingPresentationStatus").mockReturnValue("ready");
+  await act(async () => second.events.emit("postrender"));
+  expect(surface.attributes.hidden).toBe(""); expect(env.doc.getElementById(LOADING_SURFACE_ID)).toBe(surface);
+  expect(second.config.scene.bridge.viewModel).toBe(facility); expect(place).not.toHaveBeenCalled();
 });

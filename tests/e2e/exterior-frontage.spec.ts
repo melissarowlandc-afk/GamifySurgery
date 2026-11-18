@@ -1,6 +1,6 @@
 import { mkdirSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
-import { getProfile, PROFILE_KEY, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, getProfile, PROFILE_KEY, startClinic } from "./helpers";
 
 const SHOTS = "artifacts/screenshots";
 const CLINIC = "Frontage B QA Clinic";
@@ -52,11 +52,9 @@ async function fixture(page: Page): Promise<void> {
   profile.tutorialsEnabled = false;
   // Isolated Playwright context only. The init script reapplies the paused
   // fixture after the old page's exit saver, avoiding an autosave race.
-  await page.addInitScript(({ key,next }) => localStorage.setItem(key,JSON.stringify(next)),
-    { key:PROFILE_KEY,next:profile });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button",{ name:`Resume ${CLINIC}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, CLINIC);
   await ready(page);
   await expect(page.locator(".tutorial-target-beacon")).toHaveCount(0);
   await page.addStyleTag({ content:".facility-pause-indicator { visibility:hidden !important; }" });
@@ -238,8 +236,7 @@ test("keeps materials and garden contacts world-anchored through pan, Build dimm
   for (const prop of props) expect(prop.alpha).toBeCloseTo(0.38,9);
   await page.getByTestId("facility-canvas").screenshot({ path:`${SHOTS}/exterior-frontage-${testInfo.project.name}-build.png`,animations:"disabled" });
   await page.reload();
-  const resume = page.getByRole("button",{ name:`Resume ${CLINIC}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, CLINIC);
   await ready(page);
   await setZoom(page,110);
   const reloaded = await snapshot(page);

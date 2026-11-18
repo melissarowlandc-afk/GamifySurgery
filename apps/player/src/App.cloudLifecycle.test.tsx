@@ -1,3 +1,5 @@
+import { ContinuousLoading, LOADING_SURFACE_ID } from "./ui/ContinuousLoading";
+import { CLINIC_PRESENTATION_EVENT } from "./ui/clinicPresentation";
 import { act, StrictMode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
@@ -14,12 +16,12 @@ import { deferred, syncFixture, syncHarness } from "./session/cloud/syncTestSupp
 import { cloudCodec } from "./session/cloud/codecWorker";
 import { encodeCloudEvidenceCheckpoint } from "./session/cloud/codecEvidence";
 
-vi.mock("./facility", () => ({ FacilityCanvas: () => <div>Fixture map</div> }));
-vi.mock("./mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: () => <div>Fixture map</div> }));
+vi.mock("./facility", () => ({ FacilityCanvas: () => <div data-testid="facility-canvas" data-clinic-frame="waiting">Fixture map</div> }));
+vi.mock("./mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: () => <div data-testid="facility-canvas" data-clinic-frame="waiting">Fixture map</div> }));
 afterEach(async () => { vi.restoreAllMocks(); await cleanupPhoneTests(); });
 
 describe.each(["phone", "desktop"] as const)("%s account campaign reopen", layout => {
-  it("dismisses opening and mounts play while its first durable account upload is still waiting", async () => {
+  it.each([false, true])("dismisses opening and mounts play while its first durable account upload is still waiting (continuous=%s)", async continuous => {
     const h = await syncHarness(), entryStore = new MemoryCloudEntryStore(), transport = h.server.transport(h.scope.accountId);
     const coordinator = new CloudSyncCoordinator({ scope: h.scope, transport, cache: h.cache, entryStore, enabled: true, clock: h.clock });
     await coordinator.open(); await coordinator.startWriter(); coordinator.resume();
@@ -42,14 +44,27 @@ describe.each(["phone", "desktop"] as const)("%s account campaign reopen", layou
       exportDeviceRecovery: vi.fn(async () => ""), clearDevice: vi.fn(async () => {}), showCampaigns: vi.fn(), setCampaignNavigation: vi.fn(),
     };
     try {
-      await env.render(<AuthAccountContext.Provider value={h.scope.accountId}><CompetitionClientContext.Provider value={null}>
+      const child = <AuthAccountContext.Provider value={h.scope.accountId}><CompetitionClientContext.Provider value={null}>
         <CloudAccountContext.Provider value={account}><AccountCampaignRouter /></CloudAccountContext.Provider>
-      </CompetitionClientContext.Provider></AuthAccountContext.Provider>);
+      </CompetitionClientContext.Provider></AuthAccountContext.Provider>;
+      await env.render(continuous ? <ContinuousLoading>{child}</ContinuousLoading> : child);
       await vi.waitFor(async () => { await act(async () => {}); expect(active?.canExecute).toBe(true); }, { timeout: 5_000 });
       await started.promise;
       expect(active!.coordinator.view).toMatchObject({ canExecute: true, localDurable: true, pending: true, phase: "saving" });
-      expect(allElements(env.doc.body, node => node.attributes["aria-label"] === "Loading clinic")).toHaveLength(0);
-      expect(env.find(node => node.tagName === "DIV" && node.textContent === "Fixture map")).toBeDefined();
+      if (continuous) {
+        const surface = env.doc.getElementById(LOADING_SURFACE_ID)!;
+        expect(surface.attributes.hidden).toBeUndefined();
+        await vi.waitFor(async () => { await act(async () => {}); expect(allElements(env.element, node => node.attributes["data-testid"] === "facility-canvas")).toHaveLength(1); });
+        const host = allElements(env.element, node => node.attributes["data-testid"] === "facility-canvas")[0]!;
+        Object.assign(env.doc, { querySelector: (selector: string) => selector.includes("facility-canvas") ? host : null });
+        await act(async () => { host.setAttribute("data-clinic-frame", "ready"); env.doc.dispatchEvent(new Event(CLINIC_PRESENTATION_EVENT)); });
+        expect(surface.attributes.hidden).toBe("");
+        expect(active!.coordinator.view).toMatchObject({ canExecute: true, pending: true, phase: "saving" });
+      } else expect(allElements(env.doc.body, node => node.attributes["aria-label"] === "Loading clinic")).toHaveLength(0);
+      await vi.waitFor(async () => {
+        await act(async () => {});
+        expect(env.find(node => node.tagName === "DIV" && node.textContent === "Fixture map")).toBeDefined();
+      });
       expect(active!.execute({ type: "SET_SIMULATION_SPEED", speed: 4, operationId: "open.play.while-saving" }, PROTOTYPE_DOMAIN_CONTEXT)).not.toBeNull();
       await act(async () => { held.resolve(); });
       await vi.waitFor(() => expect(active!.coordinator.confirmedRevision).toBe("2"));

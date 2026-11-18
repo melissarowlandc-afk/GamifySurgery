@@ -42,7 +42,7 @@ describe("answer-choice timing presentation", () => {
     ]);
     const minutes = preview.durationTicks!;
     expect(choices.find((choice) => choice.id === "suspect_fhh_genetic_testing")).toMatchObject({
-      etaLabel: minutes >= 60 && minutes % 60 === 0 ? `${minutes / 60} hours` : `${minutes} min`,
+      etaLabel: `If ordered now: about ${minutes >= 60 && minutes % 60 === 0 ? `${minutes / 60} hours` : `${minutes} min`}`,
       detailLabel: expect.stringContaining("Estimated total (game time; includes queues and walking)."),
     });
     const noTests = choices.filter((choice) => choice.id !== "suspect_fhh_genetic_testing");

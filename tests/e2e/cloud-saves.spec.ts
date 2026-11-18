@@ -1,7 +1,8 @@
 import { test, expect, type Browser, type BrowserContext, type Page } from "@playwright/test";
 import { FakeCloudServer } from "../../apps/player/src/session/cloud/fakeTransport";
 import { CloudSyncError, type CloudTransport } from "../../apps/player/src/session/cloud/transport";
-import { accountMenu, campaignScreen, expectPlaying, expectResumeReady, openAndContinue, retryAccountSave, snapshot, status, CLOUD_QA_WAIT_MS, CLOUD_QA_STARTUP_WAIT_MS } from "./cloud-qa-helpers";
+import { accountMenu, campaignScreen, expectAccountSaved, expectPlaying, expectResumeReady, openAndContinue, retryAccountSave, snapshot, status, CLOUD_QA_WAIT_MS, CLOUD_QA_STARTUP_WAIT_MS } from "./cloud-qa-helpers";
+import { uncoveredUi } from "./helpers";
 
 // These contexts authenticate independently to one disposable in-process fake.
 // No Supabase credentials, real Auth, copied localStorage or copied latest saves.
@@ -10,13 +11,26 @@ async function rig(browser: Browser, baseURL: string) {
   server.setAccess("qa-account-a", { snapshotSaves: true }); server.setAccess("qa-account-b", { snapshotSaves: true });
   const transports = new Map<string, CloudTransport>();
   const unavailablePages = new Set<Page>();
-  const page = async (layout: "desktop" | "phone", accountId = "qa-account-a", sameContext?: BrowserContext, deviceCampaigns = 0) => {
+  const page = async (layout: "desktop" | "phone", accountId = "qa-account-a", sameContext?: BrowserContext, deviceCampaigns = 0,
+    entry: "automatic" | "chooser" = "automatic") => {
     const context = sameContext ?? await browser.newContext({ viewport: layout === "phone" ? { width: 390, height: 844 } : { width: 1440, height: 1000 }, isMobile: layout === "phone", hasTouch: layout === "phone" });
     if (!sameContext) contexts.push(context);
     const tab = await context.newPage();
-    await tab.exposeBinding("__cloudQaAuthenticate", ({ page }, account: string | null) => {
+    await tab.exposeBinding("__cloudQaAuthenticate", async ({ page }, account: string | null) => {
       if (account !== null && !["qa-account-a", "qa-account-b"].includes(account)) throw new Error("Unknown synthetic account");
       authenticated.set(page, account);
+      if (entry === "chooser" && account !== null) {
+        // Authentication is awaited before the real router mounts. Install
+        // and verify its actual scoped preference, without acquiring a writer.
+        await page.evaluate(async accountId => {
+          const modulePath = "/src/session/cloud/entryStorage.ts";
+          const { IndexedDbCloudEntryStore } = await import(/* @vite-ignore */ modulePath);
+          const store = new IndexedDbCloudEntryStore({ backendId: "disposable-fake-cloud-qa", accountId });
+          await store.write("last-active-campaign", { campaignId: null });
+          const marker = await store.read("last-active-campaign") as { campaignId: string | null } | null;
+          if (!marker || marker.campaignId !== null) throw new Error("Explicit chooser fixture was not durably installed");
+        }, account);
+      }
     });
     await tab.exposeBinding("__cloudQaCall", async ({ page }, account: string, method: keyof CloudTransport, args: unknown[]) => {
       if (authenticated.get(page) !== account) return { error: { code: "auth" } };
@@ -30,7 +44,7 @@ async function rig(browser: Browser, baseURL: string) {
     });
     await tab.goto(`${baseURL.replace(/\/$/, "")}/cloud-saves-qa.html?layout=${layout}&prototype-tools=0&account=${accountId}&device-campaigns=${deviceCampaigns}`);
     await expect.poll(async () => (await status(tab)).hasState || await tab.getByRole("heading", { name: "Your campaigns", exact: true }).isVisible(),
-      { timeout: CLOUD_QA_WAIT_MS }).toBe(true);
+      { timeout: CLOUD_QA_STARTUP_WAIT_MS }).toBe(true);
     return tab;
   };
   return { server, page, failPage: (page: Page, fail: boolean) => { if (fail) unavailablePages.add(page); else unavailablePages.delete(page); }, close: async () => { await Promise.all(contexts.map(context => context.close())); } };
@@ -117,7 +131,9 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
     const f = await rig(browser, baseURL!);
     try {
       for (const layout of ["phone", "desktop"] as const) {
-        const page = await f.page(layout, "qa-account-a", undefined, layout === "phone" ? count : 0);
+        const page = await f.page(layout, "qa-account-a", undefined, layout === "phone" ? count : 0, "chooser");
+        await expect(page.getByRole("region", { name: "Loading clinic", exact: true, includeHidden: true })).toBeHidden({ timeout: CLOUD_QA_STARTUP_WAIT_MS });
+        await expect(uncoveredUi(page, page.locator('main[data-entry-state="ready"]'))).toBeVisible({ timeout: CLOUD_QA_STARTUP_WAIT_MS });
         await expect(page.locator('main[data-entry-state="ready"]')).toBeVisible({ timeout: CLOUD_QA_STARTUP_WAIT_MS });
         await expect(page.getByRole("button", { name: /^Resume / })).toHaveCount(count);
         const viewports = layout === "phone" ? [{ width: 390, height: 844 }, { width: 375, height: 667 }] : [{ width: 1440, height: 1000 }, { width: 1280, height: 720 }];
@@ -154,6 +170,9 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       expect(f.server.operationCount("qa-account-a")).toBe(0);
       const original = await desktop.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"));
       await acceptAccountNotice(desktop);
+      // Fresh first enrollment must automatically play before this test
+      // deliberately navigates to the chooser. No fallback Resume is allowed.
+      await expectPlaying(desktop); await expectAccountSaved(desktop);
       await expectResumeReady(desktop, "Synthetic clinic 1");
       expect(await desktop.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBe(original);
       await openAndContinue(desktop);
@@ -161,7 +180,8 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       await closeSaved(desktop); const desktopSaved = (await snapshot(desktop)).state!;
       const phone = await f.page("phone");
       expect(await phone.evaluate(() => localStorage.getItem("gamify-surgery.prototype.profile.v1.account.qa-account-a"))).toBeNull();
-      await openAndContinue(phone); expect((await snapshot(phone)).state).toEqual(desktopSaved);
+      await expectPlaying(phone); await expectAccountSaved(phone);
+      expect((await snapshot(phone)).state).toEqual(desktopSaved);
       await phone.getByRole("button", { name: "Facility speed 2x. Cycle speed", exact: true }).click();
       await closeSaved(phone); const phoneSaved = (await snapshot(phone)).state!;
       // Reopening, including after Save & Close, checks the latest account copy
@@ -193,13 +213,14 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       const desktop = await f.page("desktop", "qa-account-a", undefined, 1); await expectAutomaticEnrollment(desktop); await openAndContinue(desktop);
       const campaignId = (await snapshot(desktop)).state!.campaignId;
       await desktop.evaluate(async () => { await window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 2 }); await window.__cloudQa!.checkpoint(); });
-      const phone = await f.page("phone"); await expectResumeReady(phone, "Synthetic clinic 1");
       expect(await desktop.evaluate(() => window.__cloudQa!.checkAuthority())).toBe(true);
       f.failPage(desktop, true);
       expect(await desktop.evaluate(() => window.__cloudQa!.command({ type: "SET_SIMULATION_SPEED", speed: 4 }))).toBe(true);
       expect((await f.server.transport("qa-account-a").head(campaignId)).writerActive).toBe(true);
       const before = f.server.account("qa-account-a").campaigns.get(campaignId)!.generation;
-      await openAndContinue(phone);
+      const phone = await f.page("phone");
+      await expectPlaying(phone); await expectAccountSaved(phone);
+      expect((await snapshot(phone)).state!.campaignId).toBe(campaignId);
       await expect(phone.getByRole("dialog")).toHaveCount(0);
       const generation = f.server.account("qa-account-a").campaigns.get(campaignId)!.generation;
       expect(generation).toBeGreaterThan(before);
@@ -216,6 +237,11 @@ test.describe("Beta 2 disposable fake transport across desktop and phone", () =>
       expect(f.server.account("qa-account-a").campaigns.get(campaignId)!.generation).toBe(generation);
       expect((await snapshot(desktop)).state!.facilityTick).toBe(tick);
       expect((await snapshot(phone)).state!.simulationSpeed).toBe(2);
+      // Check the deliberate chooser only after the automatic takeover and
+      // every original old-writer fencing invariant have been observed.
+      await campaignScreen(phone);
+      await expectResumeReady(phone, "Synthetic clinic 1");
+      await openAndContinue(phone);
       await closeSaved(phone);
     } finally { await f.close(); }
   });

@@ -14,7 +14,7 @@ import {
 } from "@gamify-surgery/game-domain";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { PROFILE_KEY, getActiveState, getProfile, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY, getActiveState, getProfile, startClinic } from "./helpers";
 
 const SCREENSHOT_ROOT = process.env.GAMIFY_SEATING_SCREENSHOT_ROOT ??
   ".local-dev/gs025-seating-browser/screenshots";
@@ -299,18 +299,10 @@ async function installFixture(
   campaign.name = campaignName;
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(
-    ({ storageKey, value, sessionMarker }) => {
-      if (sessionStorage.getItem(sessionMarker)) return;
-      sessionStorage.setItem(sessionMarker, "installed");
-      localStorage.setItem(storageKey, JSON.stringify(value));
-    },
-    { storageKey: PROFILE_KEY, value: profile, sessionMarker: marker },
-  );
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
   expect(await page.evaluate(() => location.origin)).toBe("http://127.0.0.1:4197");
-  const resume = page.getByRole("button", { name: `Resume ${campaignName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.addStyleTag({
     content: ".tutorial-overlay,.tutorial-card,.prototype-toolbar,.game-announcement,.facility-pause-indicator{display:none!important}",

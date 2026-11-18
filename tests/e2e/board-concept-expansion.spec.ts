@@ -2,7 +2,7 @@ import { mkdirSync } from "node:fs";
 import { expect, test, type Browser, type BrowserContext, type Page } from "@playwright/test";
 import { BOARD_EXPANSION_CASES, BOARD_EXPANSION_TESTED_CONCEPTS } from "@gamify-surgery/clinical-content";
 import { deserializeGameState, gameReducer, getCurrentQuestion, serializeGameState, validateDomainContext, PROTOTYPE_DOMAIN_CONTEXT, type GameState } from "@gamify-surgery/game-domain";
-import { PROFILE_KEY, getActiveState, installRememberedLocalAccess, setFastFacilitySpeed, startClinic, waitForDecisionChoices } from "./helpers";
+import { resumeLocalCampaign, PROFILE_KEY, getActiveState, installRememberedLocalAccess, setFastFacilitySpeed, startClinic, waitForDecisionChoices } from "./helpers";
 
 const SCREENSHOTS = "artifacts/screenshots";
 const ORIGIN = "http://127.0.0.1:4173";
@@ -57,8 +57,7 @@ async function launchPreparedCampaign(browser: Browser, prepared: Prepared): Pro
   }, { markerKey: marker, profileKey: PROFILE_KEY, nextProfile: prepared.profile });
   await page.goto("/?prototype-tools=0");
   expect(new URL(page.url()).origin).toBe(ORIGIN);
-  const resume = page.getByRole("button", { name: `Resume ${prepared.campaignName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, prepared.campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   return { context, page };
 }
@@ -134,8 +133,7 @@ test("PAD automatic ABI gate preserves frozen pending encounter through reload",
     await page.screenshot({ path: `${SCREENSHOTS}/board-expansion-pad-pending.png`, animations: "disabled" });
     await page.getByRole("button", { name: "Pause facility time" }).click();
     await page.reload();
-    const resumeCampaign = page.getByRole("button", { name: `Resume ${prepared.campaignName}` });
-    if (await resumeCampaign.isVisible()) await resumeCampaign.click();
+    await resumeLocalCampaign(page, prepared.campaignName);
     const restored = ((await getActiveState(page)) as unknown as GameState).encounters[prepared.id]!;
     expect(restored.pendingResult?.dueTick).toBe(pending.dueTick);
     expect(restored.frozenCase.selectedInstantiationProfileId).toBe(prepared.profileId);

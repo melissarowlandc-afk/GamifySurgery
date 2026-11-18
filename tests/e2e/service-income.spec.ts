@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 import {
-  getActiveState,
+  installFreshLocalProfile, resumeLocalCampaign, getActiveState,
   getProfile,
   setFastFacilitySpeed,
   startClinic,
@@ -37,10 +37,9 @@ test("scheduled ultrasound creates a real visitor operation, receipt, popup, and
   state.lastServiceAppointmentArrivalTick = null;
   state.nextServiceAppointmentTicks = { ...state.nextServiceAppointmentTicks, "income.ultrasound": state.facilityTick + 1 };
   campaign.serializedState = JSON.stringify(state);
-  await page.addInitScript(({ nextProfile }) => window.localStorage.setItem("gamify-surgery.prototype.profile.v1", JSON.stringify(nextProfile)), { nextProfile: profile });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resumeCampaign = page.getByRole("button", { name: "Resume Service Income Clinic" });
-  if (await resumeCampaign.isVisible()) await resumeCampaign.click();
+  await resumeLocalCampaign(page, "Service Income Clinic");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.getByRole("button", { name: "Enter Management Mode" }).click();
   await page.getByRole("tab", { name: "Services & income" }).click();
@@ -60,10 +59,9 @@ test("scheduled ultrasound creates a real visitor operation, receipt, popup, and
   toggledState.lastServiceAppointmentArrivalTick = null;
   toggledState.nextServiceAppointmentTicks = { ...toggledState.nextServiceAppointmentTicks, "income.ultrasound": toggledState.facilityTick + 1 };
   toggledCampaign.serializedState = JSON.stringify(toggledState);
-  await page.addInitScript(({ nextProfile }) => window.localStorage.setItem("gamify-surgery.prototype.profile.v1", JSON.stringify(nextProfile)), { nextProfile: toggledProfile });
+  await installFreshLocalProfile(page, toggledProfile);
   await page.reload();
-  const resumeAfterToggle = page.getByRole("button", { name: "Resume Service Income Clinic" });
-  if (await resumeAfterToggle.isVisible()) await resumeAfterToggle.click();
+  await resumeLocalCampaign(page, "Service Income Clinic");
   await page.waitForFunction(() => Boolean((document.querySelector("[data-testid='facility-canvas']") as any)?.__facilityGame));
   await page.evaluate(() => {
     const scene = (document.querySelector("[data-testid='facility-canvas']") as any).__facilityGame.scene.getScene("facility-scene");

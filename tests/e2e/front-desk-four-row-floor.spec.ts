@@ -2,7 +2,7 @@ import { mkdirSync } from "node:fs";
 import { expect, test } from "@playwright/test";
 
 import {
-  getProfile,
+  leaveLocalFixtureSource, installFreshLocalProfile, resumeLocalCampaign, getProfile,
   installLevelOneVisualState,
   PROFILE_KEY,
   startClinic,
@@ -48,15 +48,13 @@ test("renders the Front Desk's full 5x4 Build Mode floor and destination-aware n
   );
   state.paused = true;
   campaign.serializedState = JSON.stringify(state);
-  await page.evaluate(({ key, next }) => window.localStorage.setItem(key, JSON.stringify(next)), {
-    key: PROFILE_KEY,
-    next: profile,
-  });
+  
   const doorProof = await page.context().newPage();
   await doorProof.setViewportSize({ width: 1600, height: 1100 });
+  await leaveLocalFixtureSource(page);
+  await installFreshLocalProfile(doorProof, profile);
   await doorProof.goto("/?prototype-tools=0");
-  const resume = doorProof.getByRole("button", { name: "Resume Front Desk Tile Clinic" });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(doorProof, "Front Desk Tile Clinic");
   await expect(doorProof.getByTestId("facility-canvas")).toBeVisible();
   await doorProof.addStyleTag({ content: ".facility-pause-indicator { visibility: hidden !important; }" });
   await doorProof.waitForTimeout(180);

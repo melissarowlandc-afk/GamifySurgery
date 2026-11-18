@@ -1,3 +1,4 @@
+import type { RemodelBlueprintView } from "./session/remodelBlueprint";
 import { mapSessionAction } from "./session/sessionActions";
 import type { SubmitQuestionReviewFlag } from "./session/questionReviewFlags";
 import { clinicFeedForTutorial } from "./session/tutorialTipsIntegration";
@@ -129,6 +130,7 @@ interface AppShellProps {
   buildUndoCount: number;
   buildUndoLabel?: string | null;
   movingRoomInstanceId?: string | null;
+  remodelBlueprint?: RemodelBlueprintView;
   buildExitBlockedReason: string | null;
   buildExitBlockedIssues: string[];
   placementOrientation: RoomOrientation;
@@ -257,6 +259,7 @@ export function AppShell({
   buildUndoCount,
   buildUndoLabel = null,
   movingRoomInstanceId = null,
+  remodelBlueprint,
   buildExitBlockedReason,
   buildExitBlockedIssues,
   placementOrientation,
@@ -542,6 +545,7 @@ export function AppShell({
   const roomMenuVisible =
     buildMode && roomMenuOpen && !buildDoorTool && !placementActive;
   const openRoomMenu = (roomInstanceId: string) => {
+    if (remodelBlueprint?.active) { setRoomMenuOpen(false); setBuildDoorTool(null); remodelBlueprint.editRoom(roomInstanceId); return; }
     onSelectRoom(roomInstanceId);
     setBuildDoorTool(null);
     setRoomMenuOpen(true);
@@ -999,6 +1003,10 @@ export function AppShell({
             </div>
             <BuildPanel
               buildMode={buildMode}
+              blueprint={remodelBlueprint && { ...remodelBlueprint,
+                begin: () => { setRoomMenuOpen(false); setBuildDoorTool(null); remodelBlueprint.begin(); },
+                editRoom: id => { setRoomMenuOpen(false); setBuildDoorTool(null); remodelBlueprint.editRoom(id); },
+              }}
               showInactiveTrigger={!chart && !managementMode}
               cashLabel={resourceBar.moneyLabel}
               roomOptions={roomOptions}

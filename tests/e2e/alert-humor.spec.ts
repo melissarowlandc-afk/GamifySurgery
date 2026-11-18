@@ -1,6 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 import {
+  installFreshLocalProfile, resumeLocalCampaign,
   PROFILE_KEY,
   getProfile,
   startClinic,
@@ -276,22 +277,10 @@ async function installMixedAlertCampaign(page: Page): Promise<void> {
     serializedState: JSON.stringify(state),
   };
   profile.tutorialsEnabled = false;
-  await page.addInitScript(
-    ({ profileKey, nextProfile }) => {
-      window.localStorage.setItem(
-        profileKey,
-        JSON.stringify(nextProfile),
-      );
-    },
-    { profileKey: PROFILE_KEY, nextProfile: profile },
-  );
+  await installFreshLocalProfile(page, profile);
 
   await page.goto("/?prototype-tools=0");
-  const resume = page.getByRole("button", {
-    name: `Resume ${active.name}`,
-  });
-  await expect(resume).toBeVisible();
-  await resume.click();
+  await resumeLocalCampaign(page, active.name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await expect(page.locator(".event-message-board")).toBeVisible();
 }

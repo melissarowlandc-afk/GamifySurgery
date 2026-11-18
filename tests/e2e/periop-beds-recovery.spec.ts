@@ -26,7 +26,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import CHARACTER_REGISTRY from "../../apps/player/src/art/characterStillRegistry.generated.json";
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   getProfile,
   startClinic,
@@ -965,18 +965,10 @@ async function installState(page: Page, state: GameState, campaignName: string, 
   active.name = campaignName;
   active.serializedState = serializeGameState({ ...state, paused: true });
   profile.tutorialsEnabled = false;
-  await page.addInitScript(
-    ({ key, value, sessionMarker }) => {
-      if (sessionStorage.getItem(sessionMarker)) return;
-      sessionStorage.setItem(sessionMarker, "installed");
-      localStorage.setItem(key, JSON.stringify(value));
-    },
-    { key: PROFILE_KEY, value: profile, sessionMarker: marker },
-  );
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
   expect(await page.evaluate(() => location.origin)).toBe(ORIGIN);
-  const resume = page.getByRole("button", { name: `Resume ${campaignName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await page.addStyleTag({
     content: ".tutorial-overlay,.tutorial-card,.prototype-toolbar,.game-announcement,.facility-pause-indicator{display:none!important}",
@@ -1139,8 +1131,7 @@ async function installReloadAndRead(
   await installState(page, state, campaignName, marker);
   const before = (await getActiveState(page)) as unknown as GameState;
   await page.reload();
-  const resume = page.getByRole("button", { name: `Resume ${campaignName}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   const after = (await getActiveState(page)) as unknown as GameState;
   expect(after.facilityTick).toBe(before.facilityTick);

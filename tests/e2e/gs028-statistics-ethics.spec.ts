@@ -12,7 +12,7 @@ import {
   type GameState,
 } from "@gamify-surgery/game-domain";
 import {
-  PROFILE_KEY,
+  installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   getProfile,
   installLevelTwoVisualState,
@@ -49,23 +49,15 @@ async function replacePersistedState(
   campaign.serializedState = JSON.stringify(state);
   profile.tutorialsEnabled = false;
   const context = page.context();
-  // The live player periodically persists its in-memory state. Close it before
-  // replacing storage so an autosave cannot overwrite the synthetic fixture.
-  // Use a same-origin static resource to gain localStorage access without
-  // mounting a second player instance.
+  // Close the source writer before the receiving page seeds its fresh copy.
   await page.close();
   const cleanPage = await context.newPage();
-  await cleanPage.goto("/gamify-surgery-launcher-health.json");
-  await cleanPage.evaluate(
-    ({ key, value }) => localStorage.setItem(key, JSON.stringify(value)),
-    { key: PROFILE_KEY, value: profile },
-  );
-  // `installLevelTwoVisualState` installs its fixture on this Page's future
-  // navigations. Use a clean page so reload checks observe the state saved by
-  // the player, rather than reapplying the fixture.
+  
+  // This receiving page seeds once under a fresh identity; subsequent reloads
+  // must observe the player's committed progress without reapplying a fixture.
+  await installFreshLocalProfile(cleanPage, profile);
   await cleanPage.goto("/?prototype-tools=0");
-  const resume = cleanPage.getByRole("button", { name: `Resume ${label}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(cleanPage, label);
   await expect(cleanPage.getByTestId("facility-canvas")).toBeVisible();
   return cleanPage;
 }
@@ -216,8 +208,7 @@ test("a real NP discussion travels from Waiting to Existing and scores once with
   expect(state.employeeDiscussions?.[discussion.id]?.lifecycle).toBe("active_traveling");
   await activePage.screenshot({ path: `${SHOTS}/employee-founder-walking.png`, animations: "disabled" });
   await activePage.reload();
-  const resumeCampaign = activePage.getByRole("button", { name: "Resume GS028 Statistics Employee" });
-  if (await resumeCampaign.isVisible()) await resumeCampaign.click();
+  await resumeLocalCampaign(activePage, "GS028 Statistics Employee");
   // Reload restoration intentionally pauses facility time. Resume the ordinary
   // simulation clock so the saved founder path can finish through real ticks.
   await setFacilityRunning(activePage);
@@ -245,8 +236,7 @@ test("a real NP discussion travels from Waiting to Existing and scores once with
   await expect(discussionPanel.getByText(`Correct answer: ${correctLabel}`, { exact: false }).first()).toBeVisible();
   await activePage.screenshot({ path: `${SHOTS}/employee-feedback.png`, animations: "disabled" });
   await activePage.reload();
-  const resumeAfterFeedbackReload = activePage.getByRole("button", { name: "Resume GS028 Statistics Employee" });
-  if (await resumeAfterFeedbackReload.isVisible()) await resumeAfterFeedbackReload.click();
+  await resumeLocalCampaign(activePage, "GS028 Statistics Employee");
   await expect.poll(async () => ((await getActiveState(activePage)) as unknown as GameState).employeeDiscussions?.[discussion.id]?.lifecycle).toBe("feedback_pending");
   await expect(discussionPanel.getByText(`Correct answer: ${correctLabel}`, { exact: false }).first()).toBeVisible();
   await activePage.getByRole("button", { name: "Continue", exact: true }).click();

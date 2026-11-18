@@ -1,7 +1,7 @@
 import { mkdirSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
-import { installRememberedLocalAccess, startClinic } from "./helpers";
+import { resumeLocalCampaign, installRememberedLocalAccess, startClinic } from "./helpers";
 
 const SCREENSHOT_DIRECTORY = "artifacts/screenshots";
 
@@ -338,7 +338,7 @@ test.describe("desktop goals in the disposable Level 4/5 QA shell", () => {
       await installRememberedLocalAccess(page);
       await page.goto(`${qaOrigin}/level4-rooms-qa.html?level5=${scenario.id}&layout=desktop`);
       expect(await page.evaluate(() => location.origin)).toBe(qaOrigin);
-      await page.getByRole("button", { name: `Resume ${scenario.campaign} (${scenario.id})`, exact: true }).click();
+      await resumeLocalCampaign(page, `${scenario.campaign} (${scenario.id})`);
       await expect(page.getByTestId("facility-canvas")).toBeVisible();
       await expect(page.locator(".goals-panel > .panel-heading")).toContainText(`Level ${scenario.level} goals`);
       await page.evaluate(() => document.fonts.ready);
@@ -419,7 +419,7 @@ test.describe("desktop goals in the disposable Level 4/5 QA shell", () => {
     await installRememberedLocalAccess(page);
     await page.goto(`${qaOrigin}/level4-rooms-qa.html?level5=launch-unmet&layout=phone`);
     expect(await page.evaluate(() => location.origin)).toBe(qaOrigin);
-    await page.getByRole("button", { name: "Resume Level 5 M10 ordinary launch (launch-unmet)", exact: true }).click();
+    await resumeLocalCampaign(page, "Level 5 M10 ordinary launch (launch-unmet)");
     await page.locator(".mobile-goals-chip").click();
     const goals = page.locator(".mobile-goals");
     const toggle = goals.getByRole("button", { name: "✓ 4 of 5 done" });

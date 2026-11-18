@@ -27,7 +27,7 @@ import {
   type PlacedRoom,
 } from "@gamify-surgery/game-domain";
 import { createPrototypePlayerView } from "../../apps/player/src/session/viewModels";
-import { PROFILE_KEY, getActiveState, getProfile, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY, getActiveState, getProfile, startClinic } from "./helpers";
 
 // The parent owns the build/server. Run with GAMIFY_E2E_EXTERNAL_SERVER=1 and
 // GAMIFY_E2E_BASE_URL=http://127.0.0.1:4328 in fresh Playwright contexts only.
@@ -112,15 +112,10 @@ async function installSeed(page: Page, prepared: Prepared) {
   campaign.name = prepared.name;
   campaign.serializedState = serializeGameState(prepared.state);
   profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value, marker }) => {
-    if (sessionStorage.getItem(marker)) return;
-    sessionStorage.setItem(marker, "1");
-    localStorage.setItem(key, JSON.stringify(value));
-  }, { key: PROFILE_KEY, value: profile, marker: `gs028f.${prepared.name}.seed` });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0");
   expect(await page.evaluate(() => location.origin)).toBe(ORIGIN);
-  const resume = page.getByRole("button", { name: `Resume ${prepared.name}`, exact: true });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, prepared.name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   await expect(page.getByRole("note")).toContainText("not clinically approved");
 }
@@ -481,8 +476,7 @@ for (const [caseId, prefix, localCt] of [
     artifact(testInfo, `${prefix}-pending-plan`, { origin: ORIGIN, fixtureCampaign: true, pendingTick, acceptedPlan, quotedPlan: quote });
     await screenshot(page, testInfo, `${prefix}-pending-folder`);
     await page.reload();
-    const resume = page.getByRole("button", { name: `Resume ${prepared.name}`, exact: true });
-    if (await resume.isVisible()) await resume.click();
+    await resumeLocalCampaign(page, prepared.name);
     state = await activeState(page);
     expect(state.paused).toBe(true);
     expect(state.facilityTick).toBe(pendingTick);

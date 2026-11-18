@@ -1,3 +1,8 @@
+// Final seven PASS exact bindings — owner-directed flag fixes batch 5.
+import {QUESTION_FLAGS5_FINAL_ACCEPTED_TEST_ORDER_RECORDS} from "@gamify-surgery/clinical-content";
+// BEGIN FLAGS5 ACCEPTANCE — owner-directed flag fixes batch 5
+import {QUESTION_FLAGS5_ACCEPTED_TEST_ORDER_RECORDS} from "@gamify-surgery/clinical-content";
+// END FLAGS5 ACCEPTANCE
 import {QUESTION_PROGRAM_BATCH11_ACCEPTED_TEST_ORDER_RECORDS} from "@gamify-surgery/clinical-content";
 import {QUESTION_PROGRAM_BATCH10_ACCEPTED_TEST_ORDER_RECORDS} from "@gamify-surgery/clinical-content";
 import {QUESTION_PROGRAM_BATCH9_ACCEPTED_TEST_ORDER_RECORDS} from "@gamify-surgery/clinical-content";
@@ -2259,6 +2264,8 @@ export const EXACT_TEST_CHOICE_ORDER_RECORDS: readonly ExactTestChoiceOrderRecor
   ...QUESTION_PROGRAM_BATCH9_ACCEPTED_TEST_ORDER_RECORDS,
   ...QUESTION_PROGRAM_BATCH10_ACCEPTED_TEST_ORDER_RECORDS,
   ...QUESTION_PROGRAM_BATCH11_ACCEPTED_TEST_ORDER_RECORDS,
+  ...QUESTION_FLAGS5_ACCEPTED_TEST_ORDER_RECORDS,
+  ...QUESTION_FLAGS5_FINAL_ACCEPTED_TEST_ORDER_RECORDS,
 ]);
 
 // BEGIN N3 exact-order append - external-only records, old identities retained.

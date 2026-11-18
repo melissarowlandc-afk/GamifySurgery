@@ -6,7 +6,7 @@ import {
   type GameState,
 } from "@gamify-surgery/game-domain";
 import { mkdirSync } from "node:fs";
-import { PROFILE_KEY, getActiveState, getProfile, startClinic } from "./helpers";
+import { installFreshLocalProfile, resumeLocalCampaign, PROFILE_KEY, getActiveState, getProfile, startClinic } from "./helpers";
 
 const SHOTS = ".local-dev/test-choice-browser/screenshots";
 test.beforeAll(() => mkdirSync(SHOTS, { recursive: true }));
@@ -15,13 +15,9 @@ async function installSeed(page: Page, state: GameState, name: string, marker: s
   const profile = await getProfile(page);
   const campaign = profile.campaigns.find((item) => item.campaignId === profile.activeCampaignId)!;
   campaign.name = name; campaign.serializedState = JSON.stringify(state); profile.tutorialsEnabled = false;
-  await page.addInitScript(({ key, value, marker }) => {
-    if (sessionStorage.getItem(marker)) return;
-    sessionStorage.setItem(marker, "1"); localStorage.setItem(key, JSON.stringify(value));
-  }, { key: PROFILE_KEY, value: profile, marker });
+  await installFreshLocalProfile(page, profile);
   await page.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = page.getByRole("button", { name: `Resume ${name}` });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, name);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
 }
 
@@ -149,12 +145,12 @@ test("one-time seeded terminal order reload does not duplicate its fee", async (
   const id = "fhh-reload"; await prepare(page, "FHH reload order", "case.fhh.suggestive-results-confirmation", id); await answer(page, id); await run(page);
   await expect.poll(async () => { const s = (await getActiveState(page)) as unknown as GameState; const operation = s.serviceOperations.find((o) => o.actorId === id); return Boolean(operation?.status === "in_service" && s.facilityTick < operation.phaseEndsAtFacilityTick!); }, { timeout: 45_000 }).toBe(true);
   await pause(page); const before = (await getActiveState(page)) as unknown as GameState; const operationBefore = before.serviceOperations.find((o) => o.actorId === id)!; const receipts = before.serviceIncomeReceipts.filter((r) => r.actorId === id); expect(receipts).toEqual([]);
-  await page.reload(); const resume = page.getByRole("button", { name: "Resume FHH reload order" }); if (await resume.isVisible()) await resume.click();
+  await page.reload(); await resumeLocalCampaign(page, "FHH reload order");
   const reloaded = (await getActiveState(page)) as unknown as GameState; const operationReloaded = reloaded.serviceOperations.find((o) => o.actorId === id)!;
   expect(operationReloaded).toMatchObject({ id: operationBefore.id, status: "in_service", quoteFee: operationBefore.quoteFee, phaseStartedAtFacilityTick: operationBefore.phaseStartedAtFacilityTick, phaseEndsAtFacilityTick: operationBefore.phaseEndsAtFacilityTick, testChoiceOrder: operationBefore.testChoiceOrder });
   await run(page); await expect.poll(async () => ((await getActiveState(page)) as unknown as GameState).serviceIncomeReceipts.filter((r) => r.actorId === id).length, { timeout: 60_000 }).toBe(1);
   await pause(page); const after = (await getActiveState(page)) as unknown as GameState; expect(after.serviceOperations.filter((o) => o.actorId === id)).toHaveLength(1); expect(after.serviceIncomeReceipts.filter((r) => r.actorId === id)[0]).toMatchObject({ grossAmount: operationBefore.quoteFee, transactionKey: `income.service-operation.${operationBefore.id}.${operationBefore.incomeLineId}` });
-  await page.reload(); const resumeAgain = page.getByRole("button", { name: "Resume FHH reload order" }); if (await resumeAgain.isVisible()) await resumeAgain.click();
+  await page.reload(); await resumeLocalCampaign(page, "FHH reload order");
   const final = (await getActiveState(page)) as unknown as GameState; expect(final.serviceIncomeReceipts.filter((r) => r.actorId === id)).toHaveLength(1); expect(final.serviceOperations.filter((o) => o.actorId === id)).toHaveLength(1);
 });
 

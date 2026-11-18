@@ -280,6 +280,7 @@ export default function MobileShell(props: PrototypeShellProps) {
   const openPatient = (id: string) => { props.onOpenPatient(id); };
   const openDiscussion = (id: string) => { props.onOpenEmployeeDiscussion?.(id); };
   const openRoom = (id: string) => {
+    if (props.remodelBlueprint?.active) { build.start(); build.exitDoors(); navigator.selectTab("clinic"); props.remodelBlueprint.editRoom(id); return; }
     if (!props.buildMode) { setRoomToOpen(id); requestTab("build"); return; }
     props.onSelectRoom(id); setDoorTool(null); navigator.open("room");
   };
@@ -394,7 +395,7 @@ export default function MobileShell(props: PrototypeShellProps) {
         competitionTutorial={{ campaignId: props.facility.campaignId ?? "", enabled: props.tutorialsEnabled }}
         highlightedRoleId={highlightedRole} requestedTraining={requestedTraining} onDetailBackChange={registerManageBack}
         onSetupAction={(action) => setSetupAction({ ...action, label: action.target === "room" ? "Build" : "Hire" })} /> };
-      case "build": return { title: "Build", kind: "bottom", content: <MobileBuildCatalog props={props}
+      case "build": return { title: "Build", kind: "bottom", content: <MobileBuildCatalog props={props} onBlueprint={() => { build.start(); build.exitDoors(); if (!props.remodelBlueprint?.active) props.remodelBlueprint?.begin(); navigator.selectTab("clinic"); }}
         onPreviewRoom={requestRoomPreview}
         onChoose={(id) => { build.start(); setDoorTool(null); navigator.selectTab("clinic"); props.onBeginPlacement(id); }} onOpenRoom={openRoom}
         onDoors={() => { props.onCancelPlacement(); setDoorTool("place"); navigator.selectTab("clinic"); }} onSetup={setSetupAction} /> };

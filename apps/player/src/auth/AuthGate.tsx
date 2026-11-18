@@ -6,6 +6,7 @@ import {
   type FormEvent,
   type ReactNode,
 } from "react";
+import { LoadingRest, useLoadingFlow } from "../ui/LoadingFlowContext";
 import { LoadingScreen } from "../ui/LoadingScreen";
 import { OpeningBrand } from "../ui/OpeningBrand";
 import { WelcomeArtwork, welcomeSurfaceStyle } from "../ui/WelcomeArtwork";
@@ -63,6 +64,7 @@ export function AuthGate({ children }: AuthGateProps) {
 }
 
 function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps & { setupLink: ReturnType<typeof takeSetupLink>; clearSetupLink: () => void }) {
+  const loadingFlow = useLoadingFlow();
   // Supabase clears the callback fragment during initialization.
   const callback = useMemo(readAuthCallback, []);
   const callbackFlowRef = useRef(callback.hasError ? null : callback.flow);
@@ -246,13 +248,14 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
   // restored session finish server verification before deciding whether to
   // admit it or show the setup form. A different account remains untouched.
   if (setupLink && !checkingSession && !setupLinkMatchesSession) {
-    return <SetupAccountForm link={setupLink} onComplete={clearSetupLink} onReturn={clearSetupLink} />;
+    return <><LoadingRest delayMs={400} /><SetupAccountForm link={setupLink} onComplete={clearSetupLink} onReturn={clearSetupLink} /></>;
   }
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!authClient || pending) return;
     setPending(true);
+    loadingFlow?.begin("auth");
     setMessage(null);
     try {
       if (passwordScreen) {
@@ -285,16 +288,17 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
     } finally { setPending(false); }
   };
 
-  if (checkingSession && !linkErrorBlocking) {
+  if ((checkingSession && !linkErrorBlocking) || pending && loadingFlow) {
     return <AuthAccountContext.Provider value={candidateSession?.user.id ?? null}>
       <LoadingScreen status="Connecting to your account…" stage="connecting"
-        failure={sessionCheckUnavailable ? "Your sign-in could not be verified. Check your connection and try again." : null}
+        failure={sessionCheckUnavailable && !loadingFlow ? "Your sign-in could not be verified. Check your connection and try again." : null}
         onRetry={() => window.location.reload()} />
     </AuthAccountContext.Provider>;
   }
 
   return (
     <main className="opening-screen auth-gate-screen welcome-surface welcome-entrance" style={welcomeSurfaceStyle}>
+      <LoadingRest ready={!pending} delayMs={400} />
       <WelcomeArtwork className="welcome-entrance-art" entrance="wide" />
       <section className="founder-creator auth-gate-card welcome-entrance-panel">
         <OpeningBrand />
@@ -331,6 +335,7 @@ function HostedAuthGate({ children, setupLink, clearSetupLink }: AuthGateProps &
             <p>This build has no hosted account service configured. Continue with the explicit browser-local testing profile.</p>
             {bypassEnabled && !hostedConfiguration ? (
               <button className="opening-choice opening-choice-primary" type="button" onClick={() => {
+                loadingFlow?.begin("selection");
                 const next = createLocalPrototypeSession(); savePrototypeAccessSession(next); setLocalSession(next);
               }}>Enter Local Prototype</button>
             ) : <p role="alert">Local bypass is disabled and Supabase configuration is missing or invalid. Contact the owner.</p>}

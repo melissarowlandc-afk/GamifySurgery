@@ -202,10 +202,15 @@ describe("Garden: real adult use, five-minute rest, frozen once-only visit witne
     expect(state.patientAmenityTrips).toHaveLength(0);
     expect(Object.values(state.encounters).every(encounter => !encounter.gardenVisitBenefit)).toBe(true);
   });
-  it("protects a garden reservation before arrival from room movement and releases it on lost access", () => {
+  it("replans a reserved garden trip after remodeling and releases it on lost access without an award", () => {
     let state = gardenFixture(3);
     const moved = gameReducer(state, { type: "MOVE_ROOM", operationId: "m3.move.garden", roomId: garden(state).id, x: 10, y: 10 }, context);
-    expect(moved.operationReceipts["m3.move.garden"]?.status).toBe("rejected");
+    expect(moved.operationReceipts["m3.move.garden"]?.status).toBe("applied");
+    expect(garden(moved)).toMatchObject({ id: garden(state).id, x: 10, y: 10 });
+    expect(moved.learningHistories).toEqual(state.learningHistories);
+    expect(moved.encounters[patientId]!.answers).toEqual(state.encounters[patientId]!.answers);
+    expect(Object.values(moved.encounters).every(encounter => !encounter.gardenVisitBenefit)).toBe(true);
+    state = reload(moved);
     state.doors = state.doors.filter(door => door.roomId !== garden(state).id);
     state = reload(state); gardenMinutes(state, 40);
     expect(Object.values(state.encounters).every(encounter => !encounter.gardenVisitBenefit)).toBe(true);

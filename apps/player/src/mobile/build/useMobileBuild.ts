@@ -23,6 +23,7 @@ export function useMobileBuild(props: PrototypeShellProps, doorTool: BuildDoorTo
   const placement = props.facility.placement;
   const hallwayActive = placement?.kind === "hallway" || placement?.definitionId === "room.hallway";
   const moving = props.facility.rooms.find(room => room.instanceId === props.movingRoomInstanceId);
+  const stagedMoving = props.remodelBlueprint?.active ? props.remodelBlueprint.steps.find(room => room.roomId === props.movingRoomInstanceId) : undefined;
   const modeKey = `${props.facility.campaignId}:${props.buildMode}:${placement?.definitionId}:${props.movingRoomInstanceId}`;
   // Clear the old mode's preview before Phaser can initialize the new ghost.
   useLayoutEffect(() => {
@@ -74,7 +75,7 @@ export function useMobileBuild(props: PrototypeShellProps, doorTool: BuildDoorTo
   const map: MobileBuildMapState | null = props.buildMode ? {
     placementKey: `${modeKey}:${previewRevision}`,
     ghost: placement && !hallwayActive && ghost ? { ...ghost, ...validation } : null,
-    initialGhost: moving ? { x: moving.tileX, y: moving.tileY } : null,
+    initialGhost: stagedMoving ? { x: stagedMoving.x, y: stagedMoving.y } : moving ? { x: moving.tileX, y: moving.tileY } : null,
     hallway, doors, selectedDoorId, onIntent,
   } : null;
   const start = () => {

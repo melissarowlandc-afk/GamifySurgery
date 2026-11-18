@@ -4,7 +4,7 @@ import { FOUNDER_AVATAR_CHOICES, createFounderAvatarAppearance } from "../../app
 import { SECOND_TUTORIAL_ENCOUNTER_ID } from "@gamify-surgery/game-domain";
 import { chooseTutorialAnswer, enactTutorialPlan, expectNoMandatoryCoachClicks, fileTutorialChart, openReturnedTutorialChart, resumeFacility, tutorialState } from "./tutorial-helpers";
 import {
-  ACCESS_KEY,
+  resumeLocalCampaign, uncoveredUi, ACCESS_KEY,
   PROFILE_KEY,
   completeClinicOpening,
   getActiveState,
@@ -84,9 +84,14 @@ test("campaign screen hides Resume until a named clinic exists", async ({
     "Kent Surgical Clinic",
   );
   await page.reload();
-  await page
-    .getByRole("button", { name: "Resume Kent Surgical Clinic" })
-    .click();
+  await resumeLocalCampaign(page, "Kent Surgical Clinic");
+  // This case checks the chooser itself, so expose it through the real
+  // campaign menu after automatic entry instead of sampling a covered row.
+  await uncoveredUi(page, page.getByRole("button", { name: /Campaigns \(1\)/ })).click();
+  const resume = uncoveredUi(page, page.getByRole("button", { name: "Resume Kent Surgical Clinic", exact: true }));
+  await expect(resume).toBeVisible();
+  await expect(resume).toBeEnabled();
+  await resume.click();
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   const profile = await getProfile(page);
   expect(profile.campaigns).toHaveLength(1);
@@ -165,9 +170,7 @@ test("clinic initialization is one-time, named, and reload safe", async ({
   ).toBe(true);
 
   await page.reload();
-  await page
-    .getByRole("button", { name: "Resume One-Time Surgery" })
-    .click();
+  await resumeLocalCampaign(page, "One-Time Surgery");
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   const restored = await getActiveState(page);
   expect(restored.rooms).toHaveLength(1);
@@ -336,9 +339,7 @@ test("pause freezes the GLP-1 cooldown and facility time advances it", async ({
     .click();
   await expect(consult).toBeEnabled({ timeout: 20_000 });
   await page.reload();
-  await page
-    .getByRole("button", { name: "Resume GLP Surgical Clinic" })
-    .click();
+  await resumeLocalCampaign(page, "GLP Surgical Clinic");
   await expect(
     page
       .locator(".emergency-glp1-panel")

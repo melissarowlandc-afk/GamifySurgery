@@ -1,3 +1,4 @@
+import { ContinuousLoading, LOADING_SURFACE_ID } from "../ui/ContinuousLoading";
 import { act, StrictMode } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -25,7 +26,7 @@ const user = { id: "account-setup", email: "tester@example.org", email_confirmed
   app_metadata: { gamify_setup_admitted: true }, user_metadata: {}, aud: "authenticated", created_at: "2026-10-14T00:00:00Z" } as User;
 const session = { user, access_token: "synthetic-session", refresh_token: "synthetic-refresh", expires_in: 3600, token_type: "bearer" } as Session;
 const code = "c".repeat(43);
-async function setup(layout = "desktop", fragment = `#setup=${code}&email=tester%40example.org`, strict = false, stored = new Map<string, string>()) {
+async function setup(layout = "desktop", fragment = `#setup=${code}&email=tester%40example.org`, strict = false, stored = new Map<string, string>(), continuous = false) {
   const env = phoneTestDom();
   Object.assign(env.browser.location, new URL(`https://melissarowlandc-afk.github.io/GamifySurgery/?layout=${layout}${fragment}`));
   // URL getters are not enumerable; assign the fields used by the auth helpers.
@@ -40,7 +41,8 @@ async function setup(layout = "desktop", fragment = `#setup=${code}&email=tester
     setItem: (key: string, value: string) => stored.set(key, value), removeItem: (key: string) => stored.delete(key) });
   vi.stubGlobal("fetch", mock.network);
   const gate = <AuthGate><p>Clinic</p></AuthGate>;
-  await env.render(strict ? <StrictMode>{gate}</StrictMode> : gate);
+  const child = strict ? <StrictMode>{gate}</StrictMode> : gate;
+  await env.render(continuous ? <ContinuousLoading>{child}</ContinuousLoading> : child);
   return { ...env, replaceState };
 }
 type Harness = Awaited<ReturnType<typeof setup>>;
@@ -147,4 +149,20 @@ describe("scanner-safe personal setup in the shared gate", () => {
     expect(isInvitedVerifiedUser({ ...user, app_metadata: { gamify_setup_pending: true } })).toBe(false);
     expect(isInvitedVerifiedUser({ ...user, email_confirmed_at: undefined })).toBe(false);
   });
+});
+
+it.each(["phone", "desktop"])("covers submitted personal setup immediately with the same %s loading surface", async layout => {
+  vi.useFakeTimers({ toFake: ["setTimeout", "clearTimeout"] });
+  const env = await setup(layout, undefined, false, new Map(), true);
+  await act(async () => { await vi.advanceTimersByTimeAsync(400); });
+  const surface = env.doc.getElementById(LOADING_SURFACE_ID)!; expect(surface.attributes.hidden).toBe("");
+  let release!: (value: string) => void;
+  mock.claim.mockReturnValue(new Promise(resolve => { release = resolve; }));
+  await passwords(env); let submitted!: Promise<void>;
+  await act(async () => { submitted = (testElementProps(env.find(node => node.tagName === "FORM")).onSubmit as (event: unknown) => Promise<void>)({ preventDefault() {} }); });
+  expect(surface.attributes.hidden).toBeUndefined(); expect(surface.textContent).toContain("Setting up your account");
+  expect(allElements(surface, node => node.tagName === "BUTTON")).toHaveLength(0);
+  await act(async () => { release("invalid_link"); await submitted; await vi.advanceTimersByTimeAsync(400); });
+  expect(surface.attributes.hidden).toBe(""); expect(env.doc.getElementById(LOADING_SURFACE_ID)).toBe(surface);
+  expect(env.element.textContent).toContain("invalid or was cancelled"); expect(mock.claim).toHaveBeenCalledOnce();
 });

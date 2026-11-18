@@ -3,7 +3,7 @@ import { expect, test, type Page } from "@playwright/test";
 import { STAFF_CHARACTER_STILLS } from "@gamify-surgery/game-domain";
 
 import {
-  getProfile,
+  leaveLocalFixtureSource, installFreshLocalProfile, resumeLocalCampaign, getProfile,
   installLevelOneVisualState,
   PROFILE_KEY,
   startClinic,
@@ -56,15 +56,13 @@ async function openRosterFixture(page: Page): Promise<Page> {
     lastPraisedAtFacilityTick: null, nextIdleActionAtFacilityTick: 100, facilityTask: null,
   }));
   active.serializedState = JSON.stringify(state);
-  await page.goto("/gamify-surgery-launcher-health.json");
-  await page.evaluate(({ key, value }) => localStorage.setItem(key, value), {
-    key: PROFILE_KEY, value: JSON.stringify(profile),
-  });
+  await leaveLocalFixtureSource(page);
+  
   const capture = await page.context().newPage();
   await capture.setViewportSize({ width: 1440, height: 1000 });
+  await installFreshLocalProfile(capture, profile);
   await capture.goto("/?prototype-tools=0&facility-gait-proof=1");
-  const resume = capture.getByRole("button", { name: /Resume Employee Coverage Clinic/ });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(capture, "Employee Coverage Clinic");
   await expect(capture.getByTestId("facility-canvas")).toBeVisible();
   await capture.waitForFunction(() => typeof (document.querySelector("[data-testid='facility-canvas']") as any)?.__facilityGaitSnapshot === "function");
   return capture;
@@ -105,8 +103,7 @@ test("all staff still registry art is addressable and the GS-026 roster stays un
   expect(ids).toHaveLength(43);
   expect(new Set(ids).size).toBe(43);
   await capture.reload();
-  const resume = capture.getByRole("button", { name: /Resume Employee Coverage Clinic/ });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(capture, "Employee Coverage Clinic");
   const afterReload = await getProfile(capture) as PersistedProfile;
   expect(JSON.parse(afterReload.campaigns.find((campaign) => campaign.campaignId === afterReload.activeCampaignId)!.serializedState).employees.map((employee: any) => employee.appearance.stillId)).toEqual(ids);
   await capture.close();

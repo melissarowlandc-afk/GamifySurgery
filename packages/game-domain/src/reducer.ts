@@ -1,3 +1,5 @@
+import { applyRoomRemodel, remodelFounderReturnPath, ROOM_REMODEL_FOUNDER_RETURN, roomHasActiveRemodelWork, validateRoomRemodelPlan } from "./room-remodel";
+import { cloneCommandState } from "./commandStateClone";
 import { founderConsultClockKey, founderProcedureConsultPath, procedureConsultKind, reconcileFounderConsultSources, selectProcedureConsult, sourceConsultOperation } from "./founder-consults";
 import { procedureCaseRequiresSource } from "./procedure-context";
 import { compactCampaignHistory } from "./history-compaction";
@@ -1588,7 +1590,7 @@ function rejectCommand(
   command: GameCommand,
   message: string,
 ): GameState {
-  return recordReceipt(clonePlain(state), command, "rejected", message);
+  return recordReceipt(cloneCommandState(state), command, "rejected", message);
 }
 
 function appendEvent(state: GameState, event: DomainEvent): void {
@@ -1980,7 +1982,7 @@ function reduceAcknowledgeAlertsTutorial(
       "The Alerts tutorial unlocks after the second tutorial encounter.",
     );
   }
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   if (next.alertHumor.alertsTutorialAcknowledgedAtTick === null) {
     next.alertHumor.alertsTutorialAcknowledgedAtTick =
       next.facilityTick;
@@ -3153,7 +3155,7 @@ function reduceOpenEmployeeDiscussion(
     return rejectCommand(state, command, "Close the current team discussion first.");
   }
   if (discussion.lifecycle !== "waiting_unopened") {
-    const next = clonePlain(state);
+    const next = cloneCommandState(state);
     if (next.employeeDiscussions?.[discussion.id]?.lifecycle === "active_traveling") {
       next.employeeDiscussions[discussion.id]!.lifecycle = "active_action_required";
     }
@@ -3168,7 +3170,7 @@ function reduceOpenEmployeeDiscussion(
     tryStartEmployeeDiscussionAttendance(next, next.employeeDiscussions![discussion.id]!, context);
     return recordReceipt(next, command, "applied", "Team discussion opened.");
   }
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   const nextDiscussion = next.employeeDiscussions![discussion.id]!;
   nextDiscussion.lifecycle = "active_action_required";
   nextDiscussion.firstOpenedAtTick ??= next.facilityTick;
@@ -3196,7 +3198,7 @@ function reduceCloseEmployeeDiscussion(
   if (state.openEmployeeDiscussionId !== command.discussionId) {
     return rejectCommand(state, command, "That team discussion is not open.");
   }
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   const discussion = next.employeeDiscussions?.[command.discussionId];
   if (discussion) releaseEmployeeDiscussionReservation(next, discussion, context);
   if (next.environment.pendingFounderConsult?.kind === "employee_discussion" &&
@@ -3260,7 +3262,7 @@ function reduceSubmitEmployeeDiscussionAnswer(
     reviewedAtMs,
     context.balanceRelease.learning,
   );
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   const nextDiscussion = next.employeeDiscussions![discussion.id]!;
   const nextHistory = clonePlain(currentHistory);
   nextHistory.card = scheduledReview.card;
@@ -3351,7 +3353,7 @@ function reduceAcknowledgeEmployeeDiscussionFeedback(
   ) {
     return rejectCommand(state, command, "No matching discussion feedback is waiting.");
   }
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   const nextDiscussion = next.employeeDiscussions![discussion.id]!;
   const step = nextDiscussion.steps[nextDiscussion.currentNodeIndex]!;
   step.status = "completed";
@@ -3405,7 +3407,7 @@ function reduceFileEmployeeDiscussion(
   if (!discussion || discussion.lifecycle !== "resolved_summary_available") {
     return rejectCommand(state, command, "This team discussion is not ready to file.");
   }
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   const nextDiscussion = next.employeeDiscussions![discussion.id]!;
   nextDiscussion.lifecycle = "resolved";
   nextDiscussion.resolvedAtFacilityTick ??= next.facilityTick;
@@ -3762,7 +3764,7 @@ function reduceCloseChart(
   ) {
     return rejectCommand(state, command, "This chart is not open.");
   }
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   const nextEncounter = next.encounters[command.encounterId]!;
   if (next.environment.pendingFounderConsult?.kind === "encounter" &&
       next.environment.pendingFounderConsult.targetId === command.encounterId) {
@@ -4067,7 +4069,7 @@ function reduceSubmitAnswer(
         ).selection
       : null;
 
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   const nextEncounter = next.encounters[command.encounterId]!;
   clearPatientFeedAttention(nextEncounter);
   const rating = choice.isCorrect ? "Good" : "Again";
@@ -5693,7 +5695,7 @@ function reduceAcknowledgeDecisionFeedback(
     );
   }
 
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   const nextEncounter = next.encounters[command.encounterId]!;
   clearPatientFeedAttention(nextEncounter);
   const nextStep = nextEncounter.steps[nextEncounter.currentNodeIndex]!;
@@ -5970,7 +5972,7 @@ function reduceAcknowledgeFeedback(
   ) {
     return rejectCommand(state, command, "No terminal feedback is ready.");
   }
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   next.encounters[command.encounterId]!.terminalFeedback!.acknowledged = true;
   return recordReceipt(next, command, "applied", "Terminal feedback acknowledged.");
 }
@@ -7144,7 +7146,7 @@ function advanceFounderActivity(
   }
   if (activity.kind === "return_to_front_desk" && activity.path.length <= 1) {
     const frontDesk = state.rooms.find((room) => room.roomDefinitionId === "room.front_desk");
-    const replanned = frontDesk
+    const replanned = activity.targetId === ROOM_REMODEL_FOUNDER_RETURN ? remodelFounderReturnPath(state, context) : frontDesk
       ? findRouteFromDisplacedLocationToRoom(
           state,
           context,
@@ -8094,7 +8096,7 @@ function dispatchQueuedPendingResults(
     )
     .map((encounter) => encounter.id);
   for (const encounterId of queuedIds) {
-    const trial = clonePlain(state);
+    const trial = cloneCommandState(state);
     const encounter = trial.encounters[encounterId];
     if (!encounter?.pendingResult?.resourceQueue) continue;
     const pending = encounter.pendingResult!;
@@ -9162,7 +9164,7 @@ function reducePlaceRoom(
   if (state.cash < definition.constructionCost) {
     return rejectCommand(state, command, "There is not enough cash for this room.");
   }
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   next.rooms.push(placedRoom);
   adjustCash(next, -definition.constructionCost);
   const successDefinitionId =
@@ -9262,7 +9264,7 @@ function reduceSellRoom(
       facility.roomResalePercent) /
       100,
   );
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   const pediatricSalePlans = planPediatricRoomSale(next, context, room.id);
   if (room.roomDefinitionId === "room.gift_shop") cancelRetailOperationsForRoom(next, room.id, "The Gift Shop was sold before the trip finished.", context);
   interruptGardenRestsForRoomSale(next, room.id, context);
@@ -9526,7 +9528,7 @@ function reduceUpgradeRoom(
   if (state.cash < upgradeCost) {
     return rejectCommand(state, command, "There is not enough cash for this upgrade.");
   }
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   const nextRoom = next.rooms.find((candidate) => candidate.id === room.id)!;
   nextRoom.upgradeLevel = (nextRoom.upgradeLevel + 1) as PlacedRoom["upgradeLevel"];
   adjustCash(next, -upgradeCost);
@@ -9588,7 +9590,7 @@ function reduceMoveRoom(
   ) {
     return rejectCommand(state, command, "Choose a valid grid location.");
   }
-  if (roomHasActiveCharacterOrRoute(state, room, context)) {
+  if (roomHasActiveRemodelWork(state, room, context)) {
     return rejectCommand(
       state,
       command,
@@ -9627,10 +9629,8 @@ function reduceMoveRoom(
   if (overlap) {
     return rejectCommand(state, command, "The room overlaps an existing room.");
   }
-  const next = clonePlain(state);
-  const nextRoom = next.rooms.find((candidateRoom) => candidateRoom.id === room.id)!;
-  nextRoom.x = command.x;
-  nextRoom.y = command.y;
+  const next = cloneCommandState(state);
+  reconcileFrozenPatientTravel(applyRoomRemodel(next, [{ roomId: room.id, x: command.x, y: command.y, orientation: room.orientation }], context), next, context);
   appendEvent(next, {
     id: `event.room-moved.${room.id}.${command.operationId}`,
     type: "room_moved",
@@ -9667,7 +9667,7 @@ function reduceRotateRoom(
   if (!definition) {
     return rejectCommand(state, command, "The room definition does not exist.");
   }
-  if (roomHasActiveCharacterOrRoute(state, room, context)) {
+  if (roomHasActiveRemodelWork(state, room, context)) {
     return rejectCommand(
       state,
       command,
@@ -9711,16 +9711,8 @@ function reduceRotateRoom(
       "The rotated room overlaps an existing room.",
     );
   }
-  const next = clonePlain(state);
-  const nextRoom = next.rooms.find((candidateRoom) => candidateRoom.id === room.id)!;
-  nextRoom.orientation = orientation;
-  for (const door of next.doors.filter((candidateDoor) => candidateDoor.roomId === room.id)) {
-    door.side = rotateDirection(door.side, 90);
-  }
-  nextRoom.doorSide =
-    next.doors.find(
-      (door) => door.roomId === room.id && !door.exterior,
-    )?.side ?? null;
+  const next = cloneCommandState(state);
+  reconcileFrozenPatientTravel(applyRoomRemodel(next, [{ roomId: room.id, x: room.x, y: room.y, orientation }], context), next, context);
   appendEvent(next, {
     id: `event.room-rotated.${room.id}.${command.operationId}`,
     type: "room_rotated",
@@ -9731,6 +9723,23 @@ function reduceRotateRoom(
     target: { kind: "room", id: room.id },
   });
   return recordReceipt(next, command, "applied", `${definition.displayName} rotated.`);
+}
+
+function reduceRemodelPlan(
+  state: GameState,
+  command: Extract<GameCommand, { type: "APPLY_REMODEL_PLAN" }>,
+  context: DomainContext,
+): GameState {
+  const validation = validateRoomRemodelPlan(state, command.rooms, context);
+  if (!validation.valid) return rejectCommand(state, command, validation.reason ?? "This remodel plan is unavailable.");
+  const next = cloneCommandState(state);
+  reconcileFrozenPatientTravel(applyRoomRemodel(next, command.rooms, context), next, context);
+  appendEvent(next, {
+    id: `event.room-remodeled.${command.operationId}`, type: "room_moved",
+    facilityTick: next.facilityTick, encounterId: null,
+    message: "Remodel applied. Check its doors before returning to play.", priority: "informational",
+  });
+  return recordReceipt(next, command, "applied", "Remodel applied.");
 }
 
 function reducePlaceDoor(
@@ -9765,7 +9774,7 @@ function reducePlaceDoor(
       validation.reason ?? "That door cannot be placed there.",
     );
   }
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   next.doors.push(door);
   const nextRoom = next.rooms.find((room) => room.id === door.roomId);
   if (nextRoom && !door.exterior && nextRoom.doorSide === null) {
@@ -9809,7 +9818,7 @@ function reduceRemoveDoor(
       "Wait for every character and reserved route to clear this doorway before removing it.",
     );
   }
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   next.doors = next.doors.filter((candidate) => candidate.id !== door.id);
   const nextRoom = next.rooms.find((room) => room.id === door.roomId);
   if (nextRoom) {
@@ -9878,7 +9887,7 @@ function reduceAdmitPatient(
     );
   }
 
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   const guaranteeId = command.protectedGuaranteeId ?? null;
   next.encounters[command.encounterId] = createEncounter(next, context, {
     encounterId: command.encounterId,
@@ -9978,12 +9987,13 @@ function reduceHireStaff(
     return rejectCommand(state, command, `No unused ${definition.displayName} character design is available yet.`);
   }
 
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   reconcileEmployeeRoomSeats(next);
   const usedNames = [
     ...next.employees.map((candidate) => candidate.displayName),
     ...(next.departingEmployees ?? []).map((candidate) => candidate.displayName),
   ];
+  if (command.displayName !== undefined && typeof command.displayName !== "string") return rejectCommand(state, command, "Enter a valid employee name.");
   const requestedName = command.displayName?.trim();
   const displayName = requestedName && !usedNames.includes(requestedName)
     ? requestedName
@@ -10107,7 +10117,7 @@ function reduceSetEmployeeSalary(
       `Salary must be $${role.minimumSalaryPerExpenseInterval}-$${role.maximumSalaryPerExpenseInterval} in $${role.salaryAdjustmentStep} steps.`,
     );
   }
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   const nextEmployee = next.employees.find(
     (candidate) => candidate.id === employee.id,
   )!;
@@ -10139,7 +10149,7 @@ function reduceTrainEmployee(
   command: Extract<GameCommand, { type: "TRAIN_EMPLOYEE" }>,
   context: DomainContext,
 ): GameState {
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   const result = requestEmployeeTraining(next, command.employeeId, context);
   return result.applied ? recordReceipt(next, command, "applied", result.message) : rejectCommand(state, command, result.message);
 }
@@ -10200,7 +10210,7 @@ function reduceFireEmployee(
     );
   }
 
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   cancelEmployeeTrainingForDismissal(next, command.employeeId);
   next.employees = next.employees.filter(
     (candidate) => candidate.id !== command.employeeId,
@@ -10290,7 +10300,7 @@ function reduceLevelUp(
       "The current level requirements are not complete.",
     );
   }
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   next.facilityLevel = progression.nextFacilityLevel;
   next.clinicalXp = 0;
   if (next.facilityLevel === 5) next.levelFive ??= createLevelFiveState();
@@ -10328,7 +10338,7 @@ function reduceEmergencyGlp1Consultation(
   }
 
   const config = context.balanceRelease.emergencyGlp1;
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   if (next.emergencyGlp1.dayNumber !== status.dayNumber) {
     next.emergencyGlp1.dayNumber = status.dayNumber;
     next.emergencyGlp1.usesToday = 0;
@@ -10435,7 +10445,7 @@ function beginFounderActivity(
       "The founder cannot reach that destination through the current doors.",
     );
   }
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   next.environment.suspendedFounderActivity = null;
   next.environment.pendingFounderConsult = null;
   cancelRetailTripsForActor(next, "founder", "founder", "A founder command superseded optional shopping.");
@@ -10580,7 +10590,7 @@ function reduceMoveFounder(
     );
   }
 
-  const next = clonePlain(state);
+  const next = cloneCommandState(state);
   next.environment.suspendedFounderActivity = null;
   next.environment.pendingFounderConsult = null;
   cancelRetailTripsForActor(next, "founder", "founder", "A founder command superseded optional shopping.");
@@ -10675,7 +10685,7 @@ function reduceCollectLitter(
   command: Extract<GameCommand, { type: "COLLECT_LITTER" }>,
   context: DomainContext,
 ): GameState {
-  const reconciled = clonePlain(state);
+  const reconciled = cloneCommandState(state);
   reconcileInaccessibleLitter(reconciled, context);
   const litter = reconciled.environment.litterItems.find(
     (item) => item.id === command.litterId,
@@ -11028,7 +11038,7 @@ function reduceGameCommand(
           "That advertising level does not exist.",
         );
       }
-      const next = clonePlain(state);
+      const next = cloneCommandState(state);
       const previousLevel =
         context.balanceRelease.advertising.levels.find(
           (candidate) => candidate.level === state.advertisingLevel,
@@ -11090,19 +11100,19 @@ function reduceGameCommand(
     case "RECORD_GUIDANCE_TOPIC_EXPOSURE": {
       if (!Array.isArray(command.topicIds) || command.topicIds.some((id) => typeof id !== "string" || !isGuidanceTopicId(id)))
         return rejectCommand(state, command, "Unknown guidance topic.");
-      const next = clonePlain(state);
+      const next = cloneCommandState(state);
       next.alertHumor.guidanceTips ??= createGuidanceTipsState(next.facilityTick);
       recordGuidanceTopicExposure(next, command.topicIds);
       return recordReceipt(next, command, "applied", "Guidance exposure saved.");
     }
     case "BOOK_INSPECTION": {
-      const next = clonePlain(state);
+      const next = cloneCommandState(state);
       const blocked = bookFacilityInspection(next, context);
       return blocked ? rejectCommand(state, command, blocked)
         : recordReceipt(next, command, "applied", "Inspection booked. Preparation continues during ordinary clinic play.");
     }
     case "CANCEL_INSPECTION": {
-      const next = clonePlain(state);
+      const next = cloneCommandState(state);
       const blocked = cancelFacilityInspection(next);
       return blocked ? rejectCommand(state, command, blocked)
         : recordReceipt(next, command, "applied", "Inspection cancelled. No score or game finish was earned.");
@@ -11111,12 +11121,12 @@ function reduceGameCommand(
       if (state.facilityLevel !== 5 || !state.levelFive?.progress.gameFinished) {
         return rejectCommand(state, command, "Complete an inspection before acknowledging the finish report.");
       }
-      const next = clonePlain(state);
+      const next = cloneCommandState(state);
       next.levelFive!.progress.finishPageAcknowledgedAtFacilityTick ??= next.facilityTick;
       return recordReceipt(next, command, "applied", "Finish report acknowledged. The clinic stays open for repeat inspections.");
     }
     case "SET_PAUSED": {
-      const next = clonePlain(state);
+      const next = cloneCommandState(state);
       next.paused = command.paused;
       return recordReceipt(
         next,
@@ -11135,7 +11145,7 @@ function reduceGameCommand(
           "That facility speed is not supported.",
         );
       }
-      const next = clonePlain(state);
+      const next = cloneCommandState(state);
       next.simulationSpeed = command.speed;
       return recordReceipt(
         next,
@@ -11156,6 +11166,8 @@ function reduceGameCommand(
       return reduceMoveRoom(state, command, context);
     case "ROTATE_ROOM":
       return reduceRotateRoom(state, command, context);
+    case "APPLY_REMODEL_PLAN":
+      return withFacilityNavigationScope(() => reduceRemodelPlan(state, command, context));
     case "PLACE_DOOR":
       return reducePlaceDoor(state, command, context);
     case "REMOVE_DOOR":
@@ -11213,7 +11225,7 @@ function reduceGameCommand(
     }
     case "DEV_ADD_MONEY": {
       const amount = context.balanceRelease.development.addMoneyAmount;
-      const next = clonePlain(state);
+      const next = cloneCommandState(state);
       adjustCash(next, amount);
       appendEvent(next, {
         id: `event.development-money-added.${command.operationId}`,
@@ -11232,7 +11244,7 @@ function reduceGameCommand(
     case "RUN_EMERGENCY_GLP1_CONSULTATION":
       return reduceEmergencyGlp1Consultation(state, command, context);
     case "SET_SERVICE_APPOINTMENTS_ENABLED": {
-      const next = clonePlain(state);
+      const next = cloneCommandState(state);
       next.serviceAppointmentsEnabled = command.enabled;
       if (!command.enabled) next.nextServiceAppointmentTicks = {};
       return recordReceipt(
@@ -11245,7 +11257,7 @@ function reduceGameCommand(
       );
     }
     case "START_SERVICE_OPERATION": {
-      const next = clonePlain(state);
+      const next = cloneCommandState(state);
       const operationId = startServiceOperation(
         next,
         command.incomeLineId,
@@ -11257,14 +11269,14 @@ function reduceGameCommand(
         : rejectCommand(state, command, "That service operation is not currently eligible.");
     }
     case "START_RETAIL_PURCHASE": {
-      const next = clonePlain(state);
+      const next = cloneCommandState(state);
       const retailOperationId = startRetailPurchase(next, command.incomeLineId, command.actorKind, command.actorId, context, command.authorizedOrderId);
       return retailOperationId
         ? recordReceipt(next, command, "applied", `Retail trip ${retailOperationId} started.`)
         : rejectCommand(state, command, "That purchase is not currently eligible.");
     }
     case "AUTHORIZE_RETAIL_ORDER": {
-      const next = clonePlain(state);
+      const next = cloneCommandState(state);
       return authorizeRetailOrder(next, command.orderId, command.incomeLineId, command.actorKind, command.actorId, command.allowance, context)
         ? recordReceipt(next, command, "applied", `Retail order ${command.orderId} authorized.`)
         : rejectCommand(state, command, "That retail order is invalid or already exists.");

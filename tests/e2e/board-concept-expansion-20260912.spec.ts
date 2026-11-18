@@ -20,7 +20,7 @@ import {
   type GameState,
 } from "@gamify-surgery/game-domain";
 import {
-  PROFILE_KEY,
+  resumeLocalCampaign, PROFILE_KEY,
   getActiveState,
   installRememberedLocalAccess,
   setFastFacilitySpeed,
@@ -171,10 +171,7 @@ async function launchPreparedCampaign(
   );
   await page.goto("/?prototype-tools=0");
   expect(new URL(page.url()).origin).toBe(ORIGIN);
-  const resume = page.getByRole("button", {
-    name: `Resume ${prepared.campaignName}`,
-  });
-  if (await resume.isVisible()) await resume.click();
+  await resumeLocalCampaign(page, prepared.campaignName);
   await expect(page.getByTestId("facility-canvas")).toBeVisible();
   return { context, page };
 }
@@ -330,10 +327,7 @@ test("postoperative DVT gate preserves its frozen pending encounter through relo
     });
     await page.reload();
     expect(new URL(page.url()).origin).toBe(ORIGIN);
-    const resumeCampaign = page.getByRole("button", {
-      name: `Resume ${prepared.campaignName}`,
-    });
-    if (await resumeCampaign.isVisible()) await resumeCampaign.click();
+    await resumeLocalCampaign(page, prepared.campaignName);
     const restoredState = (await getActiveState(page)) as unknown as GameState;
     const restored = restoredState.encounters[prepared.id]!;
     expect(restored.pendingResult?.dueTick).toBe(pending.dueTick);
