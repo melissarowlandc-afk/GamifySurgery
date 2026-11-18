@@ -1425,6 +1425,68 @@
           }
         }
       ]
+    },
+    {
+      "on": "2026-11-18",
+      "milestone": "B-013 peri-op working space (manager-accepted 2026-11-18)",
+      "priorFixtureSha256": "bf33eb12546cca6120d18c32fa4fe699abf1df4cc19ccfac127928e06006dca7",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-test-support.ts",
+          "mainBeforeSha256": "2cf42b758da44118496e5040df47a6b9c55e5c12ce17ad429da54dabd1818d93",
+          "mainAfterSha256": "59538549c39905e03cab96f9e78701d38c2230361733ce18ce6a30fbe44e88e8",
+          "requiredReleaseSha256": "753260c76f17c6a4a241f3d01d662bcc5d77034c8a89da5e772ec433265ffa5f",
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "956f776eff2111652772200d150bfff89d1fd99bf8f0fe74a77b144d75e1b535",
+          "mainAfterSha256": "61eabde7376a4e7cf6c642c9bf1fce49ad8a7ce273fa0e3a9ef9fdf32855a2f6",
+          "requiredReleaseSha256": "81f7ef5c97eee7a695b165fbaf948b39e27f403e18f6ea159f1081f68c2662f1",
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-pediatric-neck-thoracic-gu-20261111.test.ts",
+          "mainBeforeSha256": "25da8728a513ee4e208393f842207dcb1859ec398b1a47649d14d57a3106061b",
+          "mainAfterSha256": "27b512628162ba999e3e54e0dddff6334966cd32382eeba7d387889a787f7e45",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        },
+        {
+          "path": "packages/clinical-content/src/question-topic-wound-healing-immunology-20261111.test.ts",
+          "mainBeforeSha256": "9bdb26b6888aae0aab6422fa1f0da25b4ecadefd148b2204c44642eea1961366",
+          "mainAfterSha256": "f938877b47ae0ec9387f9790eb333c18dd0bd5cc4c655824bbf4fee3a82b8a40",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
+        }
+      ],
+      "reason": "Exact source-pin bookkeeping for the manager-accepted B-013 peri-op fix; retain all prior captures, histories and assertions, and propagate only derived binding/guard digests.",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
+          "on": "2026-11-18",
+          "releaseBeforeSha256": "81f7ef5c97eee7a695b165fbaf948b39e27f403e18f6ea159f1081f68c2662f1",
+          "previousRequirement": "81f7ef5c97eee7a695b165fbaf948b39e27f403e18f6ea159f1081f68c2662f1",
+          "releaseAfterSha256": "2bcf5e92a77a729baab6215d2e25a509b208522b899f703f4315c397bcca7c7d",
+          "milestone": "B-013 peri-op working space (manager-accepted 2026-11-18)",
+          "reason": "Exact source-pin bookkeeping for the manager-accepted B-013 peri-op fix; retain all prior captures, histories and assertions, and propagate only derived binding/guard digests. All other bytes of this guard test are unchanged.",
+          "evidence": {
+            "kind": "exact-fixture-sha-and-count-literal-replacement",
+            "replacements": [
+              {
+                "kind": "fixture-sha256",
+                "before": "be064e92fd18da97aa143ee2b5c8fb00b7d60f6fdf203702d49cf97d1ee953ff",
+                "after": "ac664ed8c24464742e2d831064b25c4d0bff40c189d40a74ce2f3978f19d55ef",
+                "line": 216
+              }
+            ],
+            "sourceMilestones": [
+              "B-013 peri-op working space (manager-accepted 2026-11-18)"
+            ]
+          }
+        }
+      ]
     }
   ],
   "paths": [
@@ -1439,7 +1501,7 @@
       "path": "packages/clinical-content/src/question-program-batch5-acceptance-20261111.test.ts",
       "mainBeforeSha256": "956f776eff2111652772200d150bfff89d1fd99bf8f0fe74a77b144d75e1b535",
       "mainAfterSha256": "61eabde7376a4e7cf6c642c9bf1fce49ad8a7ce273fa0e3a9ef9fdf32855a2f6",
-      "requiredReleaseSha256": "81f7ef5c97eee7a695b165fbaf948b39e27f403e18f6ea159f1081f68c2662f1",
+      "requiredReleaseSha256": "2bcf5e92a77a729baab6215d2e25a509b208522b899f703f4315c397bcca7c7d",
       "reason": "Preserve the exact release34 guard integration, or require absence and verify the frozen repaired authoring postimage."
     },
     {

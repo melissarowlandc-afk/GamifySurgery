@@ -1,10 +1,9 @@
 import { PERIOP_POST_OP_NURSE_ATTENTION_MINUTES, PERIOP_PRE_OP_NURSE_ATTENTION_MINUTES } from "@gamify-surgery/balance-config";
-import { getDoorCells } from "./doors";
 import { findCareAwareFacilityPath } from "./care-room-access";
 import { getEmployeeRoleTrainingPercent, getEmployeeTrainingWorkMinutes } from "./employee-training-effects";
 import { getEmployeeTrainingAvailability, getQueuedEmployeeTrainingDepartures, isEmployeeAwayForTraining } from "./employee-training";
-import { getRoomDefinition, isEmployeeAssignedToOperationalRoom, isRoomOperationalForFacilityWork } from "./selectors";
-import { getRoomCareStations, getRoomNavigableTiles, rotateRoomLocalPoint } from "./spatial";
+import { isEmployeeAssignedToOperationalRoom, isRoomOperationalForFacilityWork } from "./selectors";
+import { getPeriopBedWorkingPoints, periopPointKey } from "./periop-working-space";
 import type { DomainContext, EmployeeState, GameState, GridPoint, PeriopNurseAttentionState, PeriopNurseAttentionTask, ServiceOperationState } from "./types";
 
 type Phases = NonNullable<ServiceOperationState["frozenOperationPhases"]>;
@@ -68,27 +67,7 @@ export function hasInstalledPeriopNurse(state: GameState, context: DomainContext
  */
 export function getPeriopNurseStandingPoints(state: GameState, operation: ServiceOperationState, context: DomainContext): GridPoint[] {
   const bed = operation.periopBedReservation;
-  const room = bed && state.rooms.find((candidate) => candidate.id === bed.roomInstanceId);
-  const definition = room && getRoomDefinition(room.roomDefinitionId, context);
-  if (!room || !definition || !bed) return [];
-  const contacts = [
-    ...getRoomCareStations(room, definition, state.doors, state.rooms, (id) => getRoomDefinition(id, context)).map((station) => station.patientAnchor),
-    ...(definition.navigation?.endpointOnlyTiles ?? []).map((point) => {
-      const local = rotateRoomLocalPoint(point, definition, room.orientation);
-      return { x: room.x + local.x, y: room.y + local.y };
-    }),
-    ...state.doors.flatMap((door) => {
-      const owner = state.rooms.find((candidate) => candidate.id === door.roomId);
-      const ownerDefinition = owner && getRoomDefinition(owner.roomDefinitionId, context);
-      const cells = owner && ownerDefinition && getDoorCells(door, owner, ownerDefinition);
-      return cells ? [cells.inside, cells.outside] : [];
-    }),
-  ];
-  return getRoomNavigableTiles(room, definition, state.doors, state.rooms, (id) => getRoomDefinition(id, context))
-    .filter((point) => Math.max(Math.abs(point.x - bed.endpoint.x), Math.abs(point.y - bed.endpoint.y)) === 1 &&
-      !contacts.some((contact) => same(contact, point)))
-    .sort((a, b) => (Math.abs(a.x - bed.endpoint.x) + Math.abs(a.y - bed.endpoint.y)) -
-      (Math.abs(b.x - bed.endpoint.x) + Math.abs(b.y - bed.endpoint.y)) || a.y - b.y || a.x - b.x);
+  return bed ? getPeriopBedWorkingPoints(state, bed.roomInstanceId, bed.endpoint, context) : [];
 }
 
 function available(state: GameState, employee: EmployeeState, context: DomainContext): boolean {
@@ -180,7 +159,8 @@ export function advancePeriopNurseAttention(state: GameState, context: DomainCon
     if (task.employeeId) {
       const valid = patientAtBed(state, operation) && employee && !isEmployeeAwayForTraining(employee) && isEmployeeAssignedToOperationalRoom(state, employee.id, context) &&
         employee.facilityTask?.kind === "periop_attention" && employee.facilityTask.targetId === operation.id &&
-        task.standingPoint && getPeriopNurseStandingPoints(state, operation, context).some((point) => same(point, task.standingPoint));
+        task.standingPoint && getPeriopNurseStandingPoints(state, operation, context).some((point) => same(point, task.standingPoint)) &&
+        !state.retailExternalActors.some(actor => actor.lifecycle !== "departed" && (same(actor.location, task.standingPoint) || same(actor.path.at(-1), task.standingPoint)));
       if (!valid) release(employee, task, operation.id);
       else if (employee.pathIndex >= employee.path.length - 1 && same(employee.location, task.standingPoint) &&
         same(operation.actorKind === "encounter" ? state.encounters[operation.actorId]?.patientLocation : operation.location, operation.periopBedReservation?.endpoint)) {
@@ -208,25 +188,40 @@ export function advancePeriopNurseAttention(state: GameState, context: DomainCon
     // FIFO patients, longest-rested eligible nurse. Always picking the first
     // employee ID starves colleagues when procedure returns are staggered.
     .sort((a, b) => (a.lastPeriopAttentionAssignedAtFacilityTick ?? -1) - (b.lastPeriopAttentionAssignedAtFacilityTick ?? -1) || a.id.localeCompare(b.id));
-  for (const { operation, task } of getPeriopNurseAttentionQueue(state)) {
+  const queue = getPeriopNurseAttentionQueue(state);
+  if (!nurses.length || !queue.length) return;
+  const visitorClaims = new Set(state.retailExternalActors.filter(actor => actor.lifecycle !== "departed")
+    .flatMap(actor => [actor.location, actor.path.at(-1)]).filter((point): point is GridPoint => Boolean(point)).map(periopPointKey));
+  const employeeClaims = new Map<string, Set<string>>();
+  const claim = (point: GridPoint | undefined, id: string) => {
+    if (!point) return; const key = periopPointKey(point);
+    const owners = employeeClaims.get(key) ?? new Set<string>(); owners.add(id); employeeClaims.set(key, owners);
+  };
+  for (const employee of state.employees) { claim(employee.location, employee.id); claim(employee.path.at(-1), employee.id); }
+  for (const { operation, task } of queue) {
     const bed = operation.periopBedReservation;
     if (!bed || !isRoomOperationalForFacilityWork(state, bed.roomInstanceId, context)) continue;
     let assigned = false;
+    const points = getPeriopNurseStandingPoints(state, operation, context);
     for (const nurse of nurses) {
       if (nurse.facilityTask) continue;
-      const claimed = [
-        ...state.employees.filter((other) => other.id !== nurse.id).flatMap((other) => [other.location, other.path.at(-1)]),
-        ...state.retailExternalActors.filter((actor) => actor.lifecycle !== "departed").flatMap((actor) => [actor.location, actor.path.at(-1)]),
-      ];
-      for (const standing of getPeriopNurseStandingPoints(state, operation, context).sort((a, b) =>
+      for (const standing of points.slice().sort((a, b) =>
         (Math.abs(a.x - nurse.location.x) + Math.abs(a.y - nurse.location.y)) -
         (Math.abs(b.x - nurse.location.x) + Math.abs(b.y - nurse.location.y)))) {
-        if (claimed.some((point) => same(point, standing))) continue;
+        const key = periopPointKey(standing), owners = employeeClaims.get(key);
+        if (visitorClaims.has(key) || owners && (owners.size > 1 || !owners.has(nurse.id))) continue;
         const path = findCareAwareFacilityPath(state, context, nurse.location, standing, new Set([bed.roomInstanceId]));
         if (!path.length || !same(path.at(-1), standing)) continue;
         task.employeeId = nurse.id;
         task.standingPoint = { ...standing };
         task.lastProgressAtFacilityTick = state.facilityTick;
+        const oldGoal = nurse.path.at(-1);
+        if (oldGoal && !same(oldGoal, nurse.location)) {
+          const oldKey = periopPointKey(oldGoal), oldOwners = employeeClaims.get(oldKey);
+          oldOwners?.delete(nurse.id);
+          if (!oldOwners?.size) employeeClaims.delete(oldKey);
+        }
+        claim(standing, nurse.id);
         nurse.path = path;
         nurse.pathIndex = 0;
         nurse.lastMovedAtFacilityTick = state.facilityTick;
@@ -238,8 +233,9 @@ export function advancePeriopNurseAttention(state: GameState, context: DomainCon
       }
       if (assigned) break;
     }
-    // Do not let a newer task overtake a waiting patient's unavailable bedside.
-    if (!assigned) break;
+    // Keep accepted FIFO order among assignable tasks. A blocked bedside must
+    // not strand every clear bedside elsewhere in the clinic.
+    if (!assigned) continue;
   }
 }
 

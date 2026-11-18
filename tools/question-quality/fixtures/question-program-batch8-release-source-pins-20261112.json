@@ -55,7 +55,7 @@
       "path": "packages/clinical-content/src/question-program-batch7-acceptance-20261112.test.ts",
       "mainBeforeSha256": "58751f8e85442179a1f0ef898ec925fd4ba3068fd8671138d2bbf2098115407d",
       "mainAfterSha256": "a67e4a429bfc944300f7dd23a40429fb2370da5f1cfee5e87eef9dde9f0f1293",
-      "requiredReleaseSha256": "44d6ac87221162f460500afbb0a02eaa970c667c27f95ae8644807a56a11206b"
+      "requiredReleaseSha256": "3549b4129e1096a589bc5feff1ccb4fe9300554163a26431602b1828fe7d28a6"
     },
     {
       "path": "packages/game-domain/src/test-choice-orders.ts",
@@ -79,13 +79,13 @@
       "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
       "mainBeforeSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
       "mainAfterSha256": "87463d6786d16e6b652b2bb44c0eac10605061cd8c038b8732a25b772a3b63ca",
-      "requiredReleaseSha256": "01eba1c1f2cfc32093bbf03eaf265dfb2101ac7a6df3a0c3a9a4632512569af9"
+      "requiredReleaseSha256": "f466ad134a17e6f246799d7935f8e202a53448cc42f60345b90287bae4f061fd"
     },
     {
       "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
       "mainBeforeSha256": "7351387a9b382f661eb443fce76e45b820aaa4f6183b88a470a2cb44ab958742",
       "mainAfterSha256": "bef5a769fc044b501d2640ef3e4001365c4d665e359a73aa356b63f39f1aa3e6",
-      "requiredReleaseSha256": "3317797a58d8572214d3bbe5b1bcf522ac38a05d478f88b82fc5fed3c1786c3a"
+      "requiredReleaseSha256": "d078ae7f15a4b6f8ca227affc5bdfe3248615e752b3eaf570444b9b3d7f185aa"
     },
     {
       "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
@@ -3911,6 +3911,182 @@
               "B-009-C2-round1",
               "B-009-C2-round1+B-009-C2-round2+B-009-C3+B-009-C4",
               "B-009-C3+B-009-C4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "on": "2026-11-18",
+      "milestone": "B-013 peri-op working space (manager-accepted 2026-11-18)",
+      "priorFixtureSha256": "1f28931bba32356551fd194a1ab731229468d9be5d55213ddb717e869af24c2f",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.ts",
+          "mainBeforeSha256": "f1adc5282049d52dd832e6503666805f77a291b7f11c0323c49b37fd35dc6e6b",
+          "mainAfterSha256": "e78592f1001862207e80e06466da137731b74a852147922f9c519bcaad6e6a22",
+          "requiredReleaseSha256": "77c78e9a579e2cf9adda3638280e4dbc3a21c494446cd34e7e1036f38f179f25"
+        },
+        {
+          "path": "packages/clinical-content/src/synthetic-content.ts",
+          "mainBeforeSha256": "1c825724e83c5724b8fd35ee03c14740be3cdb87068bb45e246ef3936513defa",
+          "mainAfterSha256": "1a87490f6ba82ed0bd0a1673e10e0fe5f6be48cfc584f31d3a22551cb14fcc38",
+          "requiredReleaseSha256": "93a5d91cf4bcc4554e208d40511a47c521620064e2a0497c200dbcf72b12fd5c"
+        },
+        {
+          "path": "packages/clinical-content/src/index.ts",
+          "mainBeforeSha256": "65d649bad4aa9fa9940e6510670c1b02a3aaf36a27cc2f22f4f462b2e19ce733",
+          "mainAfterSha256": "a6f8bec343b46ad08b0c810c0b9b6b32f5fcc849adb50debc1deb4d4cb0b0461",
+          "requiredReleaseSha256": "d50862aeeadbe4c69fad52d600aa9adbb97b416f19cdcb7b389782ac1a97692f"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.ts",
+          "mainBeforeSha256": "ba34c6078923b5d7dc34f283fd00775f261c7561dcbf7fe65a0f1e35497e860f",
+          "mainAfterSha256": "721dd09e871137e975c15edb39270e02406a5b058b9aca41b20f637e4c28bac9",
+          "requiredReleaseSha256": "e9628f364ae999aa63f5e7e34f0648a2cf84ed7be36f588255c2fc8cb01c9b8f"
+        },
+        {
+          "path": "packages/clinical-content/src/answer-choice-timing.test.ts",
+          "mainBeforeSha256": "62fdb86a02257daa5121861b6373d74ba91da9b1b3d2586b23e3f5e4bd05d8d7",
+          "mainAfterSha256": "4489a2e74afc90b475b10a3ba2ad9865cfb2a1d1856502d169ec7197fca1ce6c",
+          "requiredReleaseSha256": "9b762c21738f3131c82c18c52fbe06c931b5b5019b9309aeb8a927a73af8f4d7"
+        },
+        {
+          "path": "packages/clinical-content/src/question-ship-manifest.test.ts",
+          "mainBeforeSha256": "6f0ff208d7c38e855878a456b96b4d2c949983908fa05031a79f6ec2e342054c",
+          "mainAfterSha256": "48913062773e3503fde48133cc5adcac23ecc96f9770ce6c468751be11693298",
+          "requiredReleaseSha256": "2eb91fc52c97fa5f627f162d40dede09b83e307a365715577e01d878cfb9d901"
+        },
+        {
+          "path": "packages/clinical-content/src/pilot-content.test.ts",
+          "mainBeforeSha256": "6647ff5437c1d4efbe062cf3e9261f92c42031d1b682e22877102d5c22fb0f9b",
+          "mainAfterSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604",
+          "requiredReleaseSha256": "69e6e3ac97eecd6d0898cbd02544d9216c9e9ded8fd0d26b7d01931ec2b61604"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-test-support.ts",
+          "mainBeforeSha256": "96fad2d37b13187540866cbd77177751b8cd24d1b1a150d28e9628073a18bf1f",
+          "mainAfterSha256": "40a265f0c23e38c224d740b449192604b18659f971be03fae3095fcdebf8ead5",
+          "requiredReleaseSha256": "e0422aa63c812659797e23c79b841dc03630574be9eab419567a442383717d32"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-20261112.test.ts",
+          "mainBeforeSha256": "58751f8e85442179a1f0ef898ec925fd4ba3068fd8671138d2bbf2098115407d",
+          "mainAfterSha256": "a67e4a429bfc944300f7dd23a40429fb2370da5f1cfee5e87eef9dde9f0f1293",
+          "requiredReleaseSha256": "44d6ac87221162f460500afbb0a02eaa970c667c27f95ae8644807a56a11206b"
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "7f06f75a9b26f6d5b196c1f69635458b3cd0467528f6dfa65636fc77922a2d77",
+          "mainAfterSha256": "e08fd207f81a6d07a5ac4e02f3f770653a6c6755d3d92d8756c6f118ee2bde03",
+          "requiredReleaseSha256": "ad2d43ec5f946b6c5b6ffcc58c9fac87d79d12dc1722da9119e5067639c68881"
+        },
+        {
+          "path": "packages/game-domain/tests/question-ship-gate.test.ts",
+          "mainBeforeSha256": "fc8df13b9e46545e32fe43ee1323245d41dbd3cdd49608be20da9b8048e42ec9",
+          "mainAfterSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048",
+          "requiredReleaseSha256": "98aa28e16bb62686bdb0c5d957c5e5b088846bc388d912c254b2e1fc9aa7c048"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch6-acceptance-test-support.ts",
+          "mainBeforeSha256": "0b3397521262c274e12eaf5eeddd4bf43d2e390a0da0787bba2e0daf538a186e",
+          "mainAfterSha256": "c4296d23ff0d65fd980517ee1a5aa7aa048810e714c6e7d3573ad859e96b94b8",
+          "requiredReleaseSha256": "2cf3256740cd9b475b740341c60603f401be9da9bbecb85e688647c8be0e6dc7"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "mainAfterSha256": "87463d6786d16e6b652b2bb44c0eac10605061cd8c038b8732a25b772a3b63ca",
+          "requiredReleaseSha256": "01eba1c1f2cfc32093bbf03eaf265dfb2101ac7a6df3a0c3a9a4632512569af9"
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "7351387a9b382f661eb443fce76e45b820aaa4f6183b88a470a2cb44ab958742",
+          "mainAfterSha256": "bef5a769fc044b501d2640ef3e4001365c4d665e359a73aa356b63f39f1aa3e6",
+          "requiredReleaseSha256": "3317797a58d8572214d3bbe5b1bcf522ac38a05d478f88b82fc5fed3c1786c3a"
+        },
+        {
+          "path": "packages/game-domain/tests/test-choice-order-inventory.test.ts",
+          "mainBeforeSha256": "0ad5916f4a81dc90fcb624c41435ee1634c69a254784cdf43f9bf9fff4297b80",
+          "mainAfterSha256": "0c09dbd10e3acd2475a4901a1b971516ed465ce960cbc61f9f81daf4342a4325",
+          "requiredReleaseSha256": "5d38f76423c43b2b5c64e3672d5d16f2b0330ab9eafa3fd1c388a96fb025f56d"
+        },
+        {
+          "path": "packages/game-domain/tests/topic-runtime-bindings.test.ts",
+          "mainBeforeSha256": "7c014fa2e957165e71791285efdfaa8ac822b610e63a3f27a782c8a11b799f87",
+          "mainAfterSha256": "30de234440db9f71246d79f32609b958b4f33ccbb84dd3708ef743cd7d0c07d8",
+          "requiredReleaseSha256": "448ef8ac62914b5d0abca42377f4bde4ec4c5d7bc3e41e2d37918d8e1fafcc88"
+        }
+      ],
+      "reason": "Exact source-pin bookkeeping for the manager-accepted B-013 peri-op fix; retain all prior captures, histories and assertions, and propagate only derived binding/guard digests.",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch7-acceptance-20261112.test.ts",
+          "on": "2026-11-18",
+          "releaseBeforeSha256": "44d6ac87221162f460500afbb0a02eaa970c667c27f95ae8644807a56a11206b",
+          "previousRequirement": "44d6ac87221162f460500afbb0a02eaa970c667c27f95ae8644807a56a11206b",
+          "releaseAfterSha256": "3549b4129e1096a589bc5feff1ccb4fe9300554163a26431602b1828fe7d28a6",
+          "milestone": "B-013 peri-op working space (manager-accepted 2026-11-18)",
+          "reason": "Exact source-pin bookkeeping for the manager-accepted B-013 peri-op fix; retain all prior captures, histories and assertions, and propagate only derived binding/guard digests. All other bytes of this guard test are unchanged.",
+          "evidence": {
+            "kind": "exact-fixture-sha-and-count-literal-replacement",
+            "replacements": [
+              {
+                "kind": "fixture-sha256",
+                "before": "6b0d8c0dfba506c2eba49d16ab1dcb8171a6db4ec4b3e9746d8db5c7781101f8",
+                "after": "548920131c9c430da06d3305ce05ef09a80a6779e338143fe0dbfb8402543534",
+                "line": 154
+              }
+            ],
+            "sourceMilestones": [
+              "B-013 peri-op working space (manager-accepted 2026-11-18)"
+            ]
+          }
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "on": "2026-11-18",
+          "releaseBeforeSha256": "01eba1c1f2cfc32093bbf03eaf265dfb2101ac7a6df3a0c3a9a4632512569af9",
+          "previousRequirement": "01eba1c1f2cfc32093bbf03eaf265dfb2101ac7a6df3a0c3a9a4632512569af9",
+          "releaseAfterSha256": "f466ad134a17e6f246799d7935f8e202a53448cc42f60345b90287bae4f061fd",
+          "milestone": "B-013 peri-op working space (manager-accepted 2026-11-18)",
+          "reason": "Exact source-pin bookkeeping for the manager-accepted B-013 peri-op fix; retain all prior captures, histories and assertions, and propagate only derived binding/guard digests. All other bytes of this guard test are unchanged.",
+          "evidence": {
+            "kind": "exact-fixture-sha-and-count-literal-replacement",
+            "replacements": [
+              {
+                "kind": "fixture-sha256",
+                "before": "6124f137d647b31f18c5a2cc65d96616ffdac7fb4d098fb2a8f6ec7324fe5877",
+                "after": "d09d6660753612cd04eb3dea87c36dac3f3f1fdda192cf079c0b59857849f995",
+                "line": 180
+              }
+            ],
+            "sourceMilestones": [
+              "B-013 peri-op working space (manager-accepted 2026-11-18)"
+            ]
+          }
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch4-acceptance-20261111.test.ts",
+          "on": "2026-11-18",
+          "releaseBeforeSha256": "3317797a58d8572214d3bbe5b1bcf522ac38a05d478f88b82fc5fed3c1786c3a",
+          "previousRequirement": "3317797a58d8572214d3bbe5b1bcf522ac38a05d478f88b82fc5fed3c1786c3a",
+          "releaseAfterSha256": "d078ae7f15a4b6f8ca227affc5bdfe3248615e752b3eaf570444b9b3d7f185aa",
+          "milestone": "B-013 peri-op working space (manager-accepted 2026-11-18)",
+          "reason": "Exact source-pin bookkeeping for the manager-accepted B-013 peri-op fix; retain all prior captures, histories and assertions, and propagate only derived binding/guard digests. All other bytes of this guard test are unchanged.",
+          "evidence": {
+            "kind": "exact-fixture-sha-and-count-literal-replacement",
+            "replacements": [
+              {
+                "kind": "fixture-sha256",
+                "before": "ee20d4dc4a4c5951148f171df31f0f4c053992e48dc993b258e37ef1d5f55760",
+                "after": "2a0affee29d30ec8eff556e2916d3083155e0098c911e1d164d028b7f76a81d7",
+                "line": 218
+              }
+            ],
+            "sourceMilestones": [
+              "B-013 peri-op working space (manager-accepted 2026-11-18)"
             ]
           }
         }

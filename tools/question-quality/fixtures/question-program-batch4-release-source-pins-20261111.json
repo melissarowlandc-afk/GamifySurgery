@@ -18,7 +18,7 @@
       "mainBeforeSha256": "f9e621ce2b0937ff147dfb072a7f93fe94033c4744c4af534a3409fb9756064e",
       "mainAfterSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
       "releaseBeforeSha256": "15db60305e031085c1718ff46d7da0844d2052fa074d13987bb83073ac206e39",
-      "requiredReleaseSha256": "01eba1c1f2cfc32093bbf03eaf265dfb2101ac7a6df3a0c3a9a4632512569af9",
+      "requiredReleaseSha256": "f466ad134a17e6f246799d7935f8e202a53448cc42f60345b90287bae4f061fd",
       "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
     }
   ],
@@ -1132,6 +1132,56 @@
               "B-009-C2-round1",
               "B-009-C2-round1+B-009-C2-round2+B-009-C3+B-009-C4",
               "B-009-C3+B-009-C4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "on": "2026-11-18",
+      "milestone": "B-013 peri-op working space (manager-accepted 2026-11-18)",
+      "priorFixtureSha256": "ee20d4dc4a4c5951148f171df31f0f4c053992e48dc993b258e37ef1d5f55760",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-test-support.ts",
+          "mainBeforeSha256": "11ef2cfa21b2b386a85cc79093216c762b84e93e7a3478173c2e3c7770115c00",
+          "mainAfterSha256": "3b3bd2c697c495966c8404c83531528b6a3dfc236dfaa08bc72eb78373f8b46e",
+          "releaseBeforeSha256": "0580d2b8a1db317d27fb2f404a45656b29b65b8c94c8f4dcef66bd179ddd431e",
+          "requiredReleaseSha256": "c81cd196af8d4c4dddd28b8bf98dbd8bf659bec839c64feb60b5c9c4bee681fb",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "f9e621ce2b0937ff147dfb072a7f93fe94033c4744c4af534a3409fb9756064e",
+          "mainAfterSha256": "b78297db12ae7053dba296bc3f5519270a5fecea4478ce9f67116913fe0ec28a",
+          "releaseBeforeSha256": "15db60305e031085c1718ff46d7da0844d2052fa074d13987bb83073ac206e39",
+          "requiredReleaseSha256": "01eba1c1f2cfc32093bbf03eaf265dfb2101ac7a6df3a0c3a9a4632512569af9",
+          "reason": "Exact release-specific older guard postimage; preserve all prior authorizations."
+        }
+      ],
+      "reason": "Exact source-pin bookkeeping for the manager-accepted B-013 peri-op fix; retain all prior captures, histories and assertions, and propagate only derived binding/guard digests.",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch3-acceptance-20261111.test.ts",
+          "on": "2026-11-18",
+          "releaseBeforeSha256": "01eba1c1f2cfc32093bbf03eaf265dfb2101ac7a6df3a0c3a9a4632512569af9",
+          "previousRequirement": "01eba1c1f2cfc32093bbf03eaf265dfb2101ac7a6df3a0c3a9a4632512569af9",
+          "releaseAfterSha256": "f466ad134a17e6f246799d7935f8e202a53448cc42f60345b90287bae4f061fd",
+          "milestone": "B-013 peri-op working space (manager-accepted 2026-11-18)",
+          "reason": "Exact source-pin bookkeeping for the manager-accepted B-013 peri-op fix; retain all prior captures, histories and assertions, and propagate only derived binding/guard digests. All other bytes of this guard test are unchanged.",
+          "evidence": {
+            "kind": "exact-fixture-sha-and-count-literal-replacement",
+            "replacements": [
+              {
+                "kind": "fixture-sha256",
+                "before": "6124f137d647b31f18c5a2cc65d96616ffdac7fb4d098fb2a8f6ec7324fe5877",
+                "after": "d09d6660753612cd04eb3dea87c36dac3f3f1fdda192cf079c0b59857849f995",
+                "line": 180
+              }
+            ],
+            "sourceMilestones": [
+              "B-013 peri-op working space (manager-accepted 2026-11-18)"
             ]
           }
         }

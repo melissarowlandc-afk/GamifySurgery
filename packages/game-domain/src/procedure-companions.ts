@@ -4,6 +4,7 @@ import { deterministicInteger, RANDOM_STREAMS } from "./randomness";
 import { getRoomDefinition, isRoomOperationalForFacilityWork } from "./selectors";
 import { getOccupiedTiles, getRoomCareStations, getRoomCompanionSeats, getRoomNavigableTiles, getRoomNavigationAnchor, getRoomSharedStaffAnchor } from "./spatial";
 import { planRestroomRecovery, restroomAtPoint } from "./restroom-recovery";
+import { getPeriopWorkingSpace, periopPointKey, periopSupportPathIndex, periopVisitorClaims, routeFromPeriopSupport, routePeriopSupport } from "./periop-working-space";
 import type { DomainContext, GameState, GridPoint, ProcedureCompanionState, RetailExternalActorState, ServiceOperationState } from "./types";
 
 type CompanionRoute = (start: GridPoint, target: GridPoint, periopRoomId: string | null) => GridPoint[];
@@ -75,15 +76,7 @@ export function reconcileProcedureCompanions(state: GameState): void {
 }
 
 function occupiedPoints(state: GameState, actorId: string): Set<string> {
-  const points: Array<GridPoint | null | undefined> = [state.environment.founderLocation, state.environment.founderActivity?.path.at(-1)];
-  for (const encounter of Object.values(state.encounters)) points.push(encounter.patientLocation, encounter.patientMovement?.path.at(-1), encounter.waitingDestination?.location);
-  for (const employee of state.employees) points.push(employee.location, employee.path.at(-1));
-  for (const operation of state.serviceOperations) if (operation.status !== "completed" && operation.status !== "cancelled") points.push(operation.location, operation.path.at(-1));
-  for (const actor of state.retailExternalActors) if (actor.id !== actorId && actor.lifecycle !== "departed") {
-    points.push(actor.location, actor.path.at(-1), actor.procedureCompanion?.waitingReservation?.location);
-  }
-  for (const trip of state.retailOperations) if (!["completed", "cancelled", "abandoned"].includes(trip.status)) points.push(trip.location, trip.path.at(-1));
-  return new Set(points.filter((point): point is GridPoint => Boolean(point)).map(pointKey));
+  return periopVisitorClaims(state, actorId);
 }
 
 export function planProcedureCompanionWait(
@@ -103,6 +96,7 @@ export function planProcedureCompanionWait(
   if (!room || !definition || !isRoomOperationalForFacilityWork(state, room.id, context)) return null;
   flow.periopRoomInstanceId = room.id;
   const occupied = occupiedPoints(state, actor.id);
+  const working = getPeriopWorkingSpace(state, room.id, context)?.workingKeys;
   const excluded = new Set([
     ...getRoomCareStations(room, definition, state.doors, state.rooms, (id) => getRoomDefinition(id, context)).map((station) => pointKey(station.patientAnchor)),
     pointKey(getRoomNavigationAnchor(room, definition, "staff")),
@@ -115,39 +109,70 @@ export function planProcedureCompanionWait(
   const patient = operation.periopBedReservation?.endpoint ?? operation.location ?? getRoomNavigationAnchor(room, definition);
   const seats = getRoomCompanionSeats(room, definition, state.doors, state.rooms, (id) => getRoomDefinition(id, context));
   const retained = flow.waitingReservation;
-  const availableSeats = seats.filter((seat) => !occupied.has(pointKey(seat.anchor)))
+  const availableSeats = seats.filter((seat) => !occupied.has(pointKey(seat.anchor)) && !working?.has(pointKey(seat.anchor)))
     .sort((left, right) => Number(right.id === retained?.seatId) - Number(left.id === retained?.seatId) ||
       distance(left.anchor, patient) - distance(right.anchor, patient) || left.id.localeCompare(right.id));
   // A seated companion keeps its claim; a standing companion retries every
   // tick and claims the closest reachable free chair as soon as one opens.
   for (const seat of availableSeats) {
-    const path = route(actor.location, seat.anchor, room.id);
+    const path = routePeriopSupport(state, room.id, actor.location, seat.anchor, context, (start, target) => route(start, target, room.id));
     if (path.length) return { reservation: { roomInstanceId: room.id, location: { ...seat.anchor }, kind: "chair", seatId: seat.id }, path };
   }
   const seatKeys = new Set(seats.map((seat) => pointKey(seat.anchor)));
   const candidates = getRoomNavigableTiles(room, definition, state.doors, state.rooms, (id) => getRoomDefinition(id, context))
-    .filter((point) => !occupied.has(pointKey(point)) && !excluded.has(pointKey(point)) && !seatKeys.has(pointKey(point)))
+    .filter((point) => !occupied.has(pointKey(point)) && !excluded.has(pointKey(point)) && !seatKeys.has(pointKey(point)) && !working?.has(pointKey(point)))
     .sort((left, right) => distance(left, patient) - distance(right, patient) || left.y - right.y || left.x - right.x);
   if (retained?.roomInstanceId === room.id && candidates.some((point) => samePoint(point, retained.location))) {
-    const path = route(actor.location, retained.location, room.id);
+    const path = routePeriopSupport(state, room.id, actor.location, retained.location, context, (start, target) => route(start, target, room.id));
     if (path.length) return { reservation: retained, path };
   }
   for (const location of candidates) {
-    const path = route(actor.location, location, room.id);
+    const path = routePeriopSupport(state, room.id, actor.location, location, context, (start, target) => route(start, target, room.id));
     if (path.length) return { reservation: { roomInstanceId: room.id, location: { ...location }, kind: "standing", seatId: null }, path };
   }
   return null;
 }
 
+const repairedAt = new WeakMap<RetailExternalActorState, number>();
 function walk(state: GameState, context: DomainContext, actor: RetailExternalActorState, path: GridPoint[], createdThisTick: boolean): boolean {
   if (!path.length) return false;
-  const elapsed = Math.max(1, state.facilityTick - actor.lastMovedAtFacilityTick);
+  const elapsed = repairedAt.get(actor) === state.facilityTick ? 0 : Math.max(1, state.facilityTick - actor.lastMovedAtFacilityTick);
   actor.path = path.map((point) => ({ ...point }));
-  actor.pathIndex = Math.min(path.length - 1, createdThisTick ? 0 : elapsed * context.balanceRelease.facility.characterTravelTilesPerTick);
+  const steps = createdThisTick ? 0 : elapsed * context.balanceRelease.facility.characterTravelTilesPerTick;
+  actor.pathIndex = actor.procedureCompanion?.periopRoomInstanceId
+    ? periopSupportPathIndex(state, actor.procedureCompanion.periopRoomInstanceId, path, 0, steps, context)
+    : Math.min(path.length - 1, steps);
   actor.location = { ...path[actor.pathIndex]! };
   actor.lastMovedAtFacilityTick = state.facilityTick;
   if (actor.pathIndex === actor.path.length - 1) actor.lifecycle = "onsite";
   return actor.pathIndex === actor.path.length - 1;
+}
+
+/** Repair retained standing claims before dispatch, then let the ordinary
+ * companion reconciler continue its policy without a second travel minute. */
+export function repairCompanionPeriopWorkingSpace(state: GameState, context: DomainContext, route: CompanionRoute): void {
+  for (const actor of state.retailExternalActors) {
+    const flow = actor.procedureCompanion;
+    if (!flow || actor.pediatricFamilyId || actor.lifecycle === "departed" || !actor.location || !flow.periopRoomInstanceId) continue;
+    const space = getPeriopWorkingSpace(state, flow.periopRoomInstanceId, context);
+    if (!space || ![actor.location, actor.path.at(-1), flow.waitingReservation?.location].some(point => point && space.workingKeys.has(periopPointKey(point)))) continue;
+    if (actor.activeRetailOperationId || flow.phase !== "waiting_in_periop" && flow.phase !== "returning_to_periop") {
+      if (flow.waitingReservation && space.workingKeys.has(periopPointKey(flow.waitingReservation.location))) flow.waitingReservation = null;
+      continue;
+    }
+    const operation = state.serviceOperations.find(operation => operation.id === actor.linkedServiceOperationId);
+    if (!operation) continue;
+    const plan = planProcedureCompanionWait(state, context, actor, operation, route);
+    if (!plan) {
+      flow.waitingReservation = null; actor.path = [{ ...actor.location }]; actor.pathIndex = 0;
+      actor.movementWaitReason = "Waiting for a free, reachable companion seat"; continue;
+    }
+    flow.waitingReservation = plan.reservation;
+    actor.lastMovedAtFacilityTick = Math.max(actor.lastMovedAtFacilityTick, state.facilityTick - 1);
+    const noElapsedTick = actor.lastMovedAtFacilityTick >= state.facilityTick;
+    walk(state, context, actor, plan.path, noElapsedTick);
+    repairedAt.set(actor, state.facilityTick); actor.movementWaitReason = null;
+  }
 }
 
 function duringProcedure(operation: ServiceOperationState): boolean {
@@ -185,11 +210,16 @@ export function advanceProcedureCompanion(
   actor: RetailExternalActorState,
   operation: ServiceOperationState,
   createdThisTick: boolean,
-  route: CompanionRoute,
-  exitRoute: (start: GridPoint) => GridPoint[],
+  baseRoute: CompanionRoute,
+  baseExitRoute: (start: GridPoint) => GridPoint[],
 ): boolean {
   const flow = actor.procedureCompanion;
   if (!flow || !actor.location) return false;
+  const route: CompanionRoute = (start, target, roomId) => roomId
+    ? routePeriopSupport(state, roomId, start, target, context, (from, to) => baseRoute(from, to, roomId))
+    : baseRoute(start, target, roomId);
+  const exitRoute = (start: GridPoint) => flow.periopRoomInstanceId
+    ? routeFromPeriopSupport(state, flow.periopRoomInstanceId, start, context, baseExitRoute) : baseExitRoute(start);
   if (flow.phase === "using_amenity" && restroomAtPoint(state, context, actor.location)) {
     flow.amenityDwellEndsAtFacilityTick = Math.min(flow.amenityDwellEndsAtFacilityTick ?? state.facilityTick,
       actor.lastMovedAtFacilityTick + context.balanceRelease.environment.idleActionMaximumMinutes);

@@ -61,7 +61,7 @@ describe("exact harden1 H1-03 and two N3R4 PASS acceptances",()=>{
   const migration=read("tools/question-quality/fixtures/question-harden1-n3r4-acceptance-source-migration-20261110.json");
   expect(migration.files).toHaveLength(18);
   const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json",import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("1f16da7b211d6f58ac189526ddae9aec451cfc1b9372a3076293cf31b88510da");
+  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("d599e7129283140d1eead353a0fbe3905b6eb0d2ea2862fe6edb2c013c433f95");
   const releasePins=JSON.parse(pinBytes.toString("utf8")) as {originalMigrationSha256:string;paths:Array<{path:string;requiredReleaseSha256:string}>};
   expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-harden1-n3r4-acceptance-source-migration-20261110.json",import.meta.url))).digest("hex")).toBe(releasePins.originalMigrationSha256);
   expect(releasePins.paths).toHaveLength(3);

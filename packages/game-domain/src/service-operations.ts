@@ -47,6 +47,8 @@ import { bindReadingUpgradeWork, compareReadingOperations, enableReadingPhase, q
 import { bindServiceOperationTraining, snapshotEmployeeTrainingCategories } from "./employee-training-effects";
 import { advancePeriopNurseAttention, beginPeriopNurseAttention, createPeriopNurseAttention, getCurrentPeriopNurseAttention, hasInstalledPeriopNurse } from "./periop-nurse-attention";
 import { releaseLegacyPeriopCoverage } from "./legacy-periop-coverage";
+import { repairPediatricPeriopWorkingSpace } from "./pediatric-procedure-flow";
+import { repairCompanionPeriopWorkingSpace } from "./procedure-companions";
 import { bindServiceOperationRoomRevenue, cloneRoomUpgradeRevenueQuote, createRoomUpgradeRevenueQuote } from "./room-upgrades";
 import { bindServiceOperationRecoveryExperience, cloneRoomUpgradeRecoveryQuote, completeServiceOperationRecoveryExperience, completeWaitingRoomExperience, createRoomUpgradeRecoveryQuote } from "./room-upgrade-experience";
 import { getProcedureStaffStandingSpots, getProceduralSpecialistReadyAt, isProceduralSpecialistRole, usesApprovedProcedureStaffSpots } from "./procedural-staffing";
@@ -2752,6 +2754,9 @@ export function advanceServiceOperations(
   advanceOutsideRadiologyReads(state, context, false);
   advanceDiagnosticReading(state, context);
   reconcileServiceOperationFlow(state, context, true);
+  repairPediatricPeriopWorkingSpace(state, context);
+  repairCompanionPeriopWorkingSpace(state, context, (start, target, roomId) =>
+    pathServiceVisitorFromCurrentLocation(state, context, start, target, new Set(roomId ? [roomId] : [])));
   advancePeriopNurseAttention(state, context);
   for (const operation of state.serviceOperations) {
     const line = operationIncomeLine(operation);

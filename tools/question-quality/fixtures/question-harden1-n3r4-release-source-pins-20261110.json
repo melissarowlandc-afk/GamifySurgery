@@ -6,7 +6,7 @@
       "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
       "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
       "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
-      "requiredReleaseSha256": "2bc962e737a719d6d4f3d317454a2a67f26514839bcc7d2be53a5e4646f4ded9",
+      "requiredReleaseSha256": "a406c8081a395a28e379b5197df1624a70d5e5d16736fb4a873c3b3cfc3a5d4c",
       "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
     },
     {
@@ -1884,6 +1884,67 @@
               "B-009-C2-round1",
               "B-009-C2-round1+B-009-C2-round2+B-009-C3+B-009-C4",
               "B-009-C3+B-009-C4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "on": "2026-11-18",
+      "milestone": "B-013 peri-op working space (manager-accepted 2026-11-18)",
+      "priorFixtureSha256": "1f16da7b211d6f58ac189526ddae9aec451cfc1b9372a3076293cf31b88510da",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
+          "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
+          "requiredReleaseSha256": "2bc962e737a719d6d4f3d317454a2a67f26514839bcc7d2be53a5e4646f4ded9",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+          "mainBeforeSha256": "c06b05b6fd567362484b6a588be6047d2633684bc0386a9c0a7d2b6760d61863",
+          "mainAfterSha256": "192d7f712c3fd848ab2fdc43a087c522963e1d9ea60ce6f33a34e5523384ce52",
+          "requiredReleaseSha256": "5cf071ff91791ef9d994858bde9167c089c3a715cc24c9a2cbba69eeda9f6500",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6",
+          "mainAfterSha256": "573f4c6156d7c1819db74ad87e9a6413482a8a4e4f64d0563f3510f50e12a983",
+          "requiredReleaseSha256": "ad2d43ec5f946b6c5b6ffcc58c9fac87d79d12dc1722da9119e5067639c68881",
+          "reason": "Manager-accepted exact eight N4 future-planned diagnostic bindings; retain captured main preimage/postimage."
+        }
+      ],
+      "reason": "Exact source-pin bookkeeping for the manager-accepted B-013 peri-op fix; retain all prior captures, histories and assertions, and propagate only derived binding/guard digests.",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "on": "2026-11-18",
+          "releaseBeforeSha256": "2bc962e737a719d6d4f3d317454a2a67f26514839bcc7d2be53a5e4646f4ded9",
+          "previousRequirement": "2bc962e737a719d6d4f3d317454a2a67f26514839bcc7d2be53a5e4646f4ded9",
+          "releaseAfterSha256": "a406c8081a395a28e379b5197df1624a70d5e5d16736fb4a873c3b3cfc3a5d4c",
+          "milestone": "B-013 peri-op working space (manager-accepted 2026-11-18)",
+          "reason": "Exact source-pin bookkeeping for the manager-accepted B-013 peri-op fix; retain all prior captures, histories and assertions, and propagate only derived binding/guard digests. All other bytes of this guard test are unchanged.",
+          "evidence": {
+            "kind": "exact-fixture-sha-and-count-literal-replacement",
+            "replacements": [
+              {
+                "kind": "fixture-sha256",
+                "before": "72ff790013a4b9098f763a2b932e7ab702a631b216b7591516971316cfeec185",
+                "after": "34886799e16cd4349f83934489e5a0905112ccc5c0b940d287c81279f61fe5a4",
+                "line": 80
+              },
+              {
+                "kind": "pins-path-count",
+                "before": 32,
+                "after": 33,
+                "line": 83
+              }
+            ],
+            "sourceMilestones": [
+              "B-013 peri-op working space (manager-accepted 2026-11-18)"
             ]
           }
         }
