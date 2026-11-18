@@ -77,7 +77,7 @@ describe("flags4 exact manager acceptance and preserved legacy identity",()=>{
   const migration=read("tools/question-quality/fixtures/question-flags4-acceptance-source-migration-20261108.json");
   expect(migration.files).toHaveLength(9);
   const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json",import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("34886799e16cd4349f83934489e5a0905112ccc5c0b940d287c81279f61fe5a4");
+  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("c1a8c56a32c334e4d799d0f20ff447bf6f6c0785aa2488f6f6eea40bb19d5236");
   const pins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;paths:Array<{path:string;capturedMainSha256:string;requiredReleaseSha256:string}>};
   expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-flags4-acceptance-before-20261108.json",import.meta.url))).digest("hex")).toBe(pins.capturedFixtureSha256);
   expect(pins.paths).toHaveLength(33);

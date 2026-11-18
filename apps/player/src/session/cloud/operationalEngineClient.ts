@@ -5,6 +5,7 @@ import type { PrototypePlayerView } from "../viewModels";
 import type { OperationalViewArguments } from "./operationalViewProjection";
 import type { JournalRow } from "../localJournal";
 import { rememberEncodedJournalValues } from "../journalEncoding";
+import { clockJournalDeltaParts } from "../clockJournalDelta";
 import { OperationalEvidenceMirror } from "./operationalEvidenceMirror";
 import { freezeOperationalValue as freeze } from "./operationalFreeze";
 import { WorkerDeliveryQueue } from "./workerDelivery";
@@ -119,6 +120,11 @@ export class OperationalEngineClient {
     if (this.closed || this.pending.size >= this.queueLimit) throw new OperationalEngineFailure(this.closed ? this.failure : "engine-backlog");
     // Independent of the stateful queue/version; WebCrypto cannot build a tick backlog.
     const inputs = rows.map(row => {
+      const parts = row.delta ? clockJournalDeltaParts(row.delta) : [];
+      if (!full && parts.length > 1) {
+        const versions = parts.map(delta => this.deltaVersions.get(delta));
+        if (versions.every((version): version is number => version !== undefined)) return { row: { ...row, delta: null }, deltaVersions: versions };
+      }
       const deltaVersion = !full && row.delta ? this.deltaVersions.get(row.delta) : undefined;
       return deltaVersion === undefined ? { row } : { row: { ...row, delta: null }, deltaVersion };
     });
@@ -248,7 +254,7 @@ export class OperationalEngineClient {
     }
     try {
       if (waiting.request.kind === "journalHashes") {
-        if (reply.kind === "journalHashes" && reply.missing === true && reply.hashes === undefined && waiting.request.rows.some(row => row.deltaVersion !== undefined)) {
+        if (reply.kind === "journalHashes" && reply.missing === true && reply.hashes === undefined && waiting.request.rows.some(row => row.deltaVersion !== undefined || row.deltaVersions !== undefined)) {
           waiting.resolve(reply); return;
         }
         if (reply.kind !== "journalHashes" || !Array.isArray(reply.hashes) || reply.hashes.length !== waiting.request.rows.length ||

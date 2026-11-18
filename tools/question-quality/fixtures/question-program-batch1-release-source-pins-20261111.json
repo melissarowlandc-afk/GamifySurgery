@@ -16,7 +16,7 @@
       "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
       "mainBeforeSha256": "9a99b4b85cd738baaa37c1ffdc7a261e6b6dab61db80d965fc647877ba24e735",
       "mainAfterSha256": "b15ca90c435e9b60417b871d335a73bed647fb76eadfa2a566d5190725aaad02",
-      "requiredReleaseSha256": "13b3152dde1cafa7d5458ec4a1cfcbbfa09d478c0674ad7c2786de639bd472cc",
+      "requiredReleaseSha256": "0888c69557685e677e86ca63ed0312d68a2a44754fed31d1cc8d695c8a7efd61",
       "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
     }
   ],
@@ -1360,6 +1360,54 @@
             ],
             "sourceMilestones": [
               "B-013 peri-op working space (manager-accepted 2026-11-18)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "on": "2026-11-18",
+      "milestone": "B-012 tick-admission fix (manager-accepted)",
+      "priorFixtureSha256": "37606a2a9397c52f6bcfd0b11f48373d55fb50ed24d2ddd24d5316a0b19ae84b",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-test-support.ts",
+          "mainBeforeSha256": "8cf0f25391eeda7684c625b9b1d63785ed06880321408940ef33beb8c2fb75db",
+          "mainAfterSha256": "20e940a5fc00771040ba3dbfb228aa0f6d1d2cca0d3da8b5d2c063e753e8c5f2",
+          "requiredReleaseSha256": "4ee3ae3ec72ac2623e54502b35a6dbabb81450cd54ac6ba551219d54ce0d7997",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        },
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+          "mainBeforeSha256": "9a99b4b85cd738baaa37c1ffdc7a261e6b6dab61db80d965fc647877ba24e735",
+          "mainAfterSha256": "b15ca90c435e9b60417b871d335a73bed647fb76eadfa2a566d5190725aaad02",
+          "requiredReleaseSha256": "13b3152dde1cafa7d5458ec4a1cfcbbfa09d478c0674ad7c2786de639bd472cc",
+          "reason": "Preserve exact release guard extensions and all historical source pins; accepted topic epoch hunks only. Original source migration remains byte-exact."
+        }
+      ],
+      "reason": "Exact source-pin bookkeeping for the manager-accepted B-012 tick-admission fix; retain every assertion, historical capture and prior authorization; propagate only derived guard digests.",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-n4-acceptance-20261110.test.ts",
+          "on": "2026-11-18",
+          "releaseBeforeSha256": "13b3152dde1cafa7d5458ec4a1cfcbbfa09d478c0674ad7c2786de639bd472cc",
+          "previousRequirement": "13b3152dde1cafa7d5458ec4a1cfcbbfa09d478c0674ad7c2786de639bd472cc",
+          "releaseAfterSha256": "0888c69557685e677e86ca63ed0312d68a2a44754fed31d1cc8d695c8a7efd61",
+          "milestone": "B-012 tick-admission fix (manager-accepted)",
+          "reason": "Exact source-pin bookkeeping for the manager-accepted B-012 tick-admission fix; retain every assertion, historical capture and prior authorization; propagate only derived guard digests. All other bytes of this guard test are unchanged.",
+          "evidence": {
+            "kind": "exact-fixture-sha-and-count-literal-replacement",
+            "replacements": [
+              {
+                "kind": "fixture-sha256",
+                "before": "33391cba9fd8a83599c0ea4a8e7e8b1799ce5808d15e268cb9f7e82c62f0c23d",
+                "after": "fb3e3747f6340a2ae9c6d38a6f9afd2290b2a2604bf24b357a83d01be1c5b617",
+                "line": 82
+              }
+            ],
+            "sourceMilestones": [
+              "B-012 tick-admission fix (manager-accepted)"
             ]
           }
         }

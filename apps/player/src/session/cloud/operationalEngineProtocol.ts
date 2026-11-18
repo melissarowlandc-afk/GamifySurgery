@@ -6,7 +6,7 @@ import type { JournalRow } from "../localJournal";
 import type { WorkerReceipt } from "./workerDelivery";
 
 export type OperationalContextFlags = Pick<DomainContext, "guidanceTipsDeliveryBlocked" | "guidanceAttentionBlocked" | "guidanceBlockedTopicIds">;
-export interface OperationalJournalHashInput { row: JournalRow; deltaVersion?: number }
+export interface OperationalJournalHashInput { row: JournalRow; deltaVersion?: number; deltaVersions?: readonly number[] }
 export interface OperationalViewRequest { revision: number; args: OperationalViewArguments; asOfRealMs?: number; followOpenChart?: boolean }
 export interface OperationalViewReply { revision: number; asOfRealMs: number; patch?: OperationalStatePatch; computeMs: number; diffMs: number }
 

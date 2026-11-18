@@ -2,6 +2,7 @@ import { runtimeCaseCatalogueEnabled, withRuntimeCaseSlices } from "../../mobile
 import { journalRowText } from "../localJournal";
 import { encodeJournalValue } from "../journalEncoding";
 import { LOCAL_STORAGE_COMPRESSION_WRITES } from "../localStorageBuildPolicy";
+import { joinClockJournalDeltas, MAX_CLOCK_JOURNAL_COMMANDS } from "../clockJournalDelta";
 import { sha256Utf8 } from "./codecJson";
 import type { OperationalEngineProcessor } from "./operationalEngineProcessor";
 import type { OperationalEngineProgress, OperationalEngineReply, OperationalEngineRequest } from "./operationalEngineProtocol";
@@ -19,6 +20,19 @@ export function dispatchOperationalEngineRequest(engine: OperationalEngineProces
   try {
     const versions: number[] = [];
     const rows = request.rows.map(input => {
+      if (input.deltaVersions !== undefined) {
+        if (input.deltaVersions.length < 2 || input.deltaVersions.length > MAX_CLOCK_JOURNAL_COMMANDS ||
+          input.deltaVersions.some(version => !Number.isSafeInteger(version) || version < 1)) throw Error("Invalid clock delta versions");
+        const deltas = input.deltaVersions.map(version => engine.journalDelta(version));
+        if (deltas.some(delta => !delta)) return null;
+        let delta = deltas[0]!;
+        for (const next of deltas.slice(1)) {
+          const joined = joinClockJournalDeltas(delta, next!);
+          if (!joined) throw Error("Invalid clock delta continuity");
+          delta = joined;
+        }
+        versions.push(...input.deltaVersions); return { ...input.row, delta };
+      }
       if (input.deltaVersion === undefined) return input.row;
       const delta = engine.journalDelta(input.deltaVersion);
       if (!delta) return null;

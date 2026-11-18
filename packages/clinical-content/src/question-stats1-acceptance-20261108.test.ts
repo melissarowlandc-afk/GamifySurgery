@@ -97,7 +97,7 @@ describe("stats1 exact manager acceptance and frozen identities",()=>{
  it("pins each authorized existing-source delta before preserving old capture assertions",()=>{
   // Release integration retains every original protected path check.
   const pinsPath="tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json",pinBytes=readFileSync(new URL("../../../"+pinsPath,import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("f752236675e7de3eb36ef11b5442f203758eb03579adc9d1708ccd0eeafe501d");
+  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("4b06d9046ff7572663d90730db8ce72ede6e2d727b095661f135ed90e94f02d9");
   const pins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;paths:Array<{path:string;capturedMainSha256:string;requiredReleaseSha256:string|null}>};
   expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-stats1-acceptance-before-20261108.json",import.meta.url))).digest("hex")).toBe(pins.capturedFixtureSha256);
   expect(pins.paths).toHaveLength(187);

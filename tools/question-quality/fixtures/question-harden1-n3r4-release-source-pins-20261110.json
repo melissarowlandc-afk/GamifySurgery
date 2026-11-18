@@ -6,7 +6,7 @@
       "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
       "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
       "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
-      "requiredReleaseSha256": "a406c8081a395a28e379b5197df1624a70d5e5d16736fb4a873c3b3cfc3a5d4c",
+      "requiredReleaseSha256": "7d064393332d46f810b5ec0539c339e6a267b645e653ff08c50832f81c116ba6",
       "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
     },
     {
@@ -1945,6 +1945,61 @@
             ],
             "sourceMilestones": [
               "B-013 peri-op working space (manager-accepted 2026-11-18)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "on": "2026-11-18",
+      "milestone": "B-012 tick-admission fix (manager-accepted)",
+      "priorFixtureSha256": "d599e7129283140d1eead353a0fbe3905b6eb0d2ea2862fe6edb2c013c433f95",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
+          "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
+          "requiredReleaseSha256": "a406c8081a395a28e379b5197df1624a70d5e5d16736fb4a873c3b3cfc3a5d4c",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+          "mainBeforeSha256": "c06b05b6fd567362484b6a588be6047d2633684bc0386a9c0a7d2b6760d61863",
+          "mainAfterSha256": "192d7f712c3fd848ab2fdc43a087c522963e1d9ea60ce6f33a34e5523384ce52",
+          "requiredReleaseSha256": "5cf071ff91791ef9d994858bde9167c089c3a715cc24c9a2cbba69eeda9f6500",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6",
+          "mainAfterSha256": "573f4c6156d7c1819db74ad87e9a6413482a8a4e4f64d0563f3510f50e12a983",
+          "requiredReleaseSha256": "ad2d43ec5f946b6c5b6ffcc58c9fac87d79d12dc1722da9119e5067639c68881",
+          "reason": "Manager-accepted exact eight N4 future-planned diagnostic bindings; retain captured main preimage/postimage."
+        }
+      ],
+      "reason": "Exact source-pin bookkeeping for the manager-accepted B-012 tick-admission fix; retain every assertion, historical capture and prior authorization; propagate only derived guard digests.",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "on": "2026-11-18",
+          "releaseBeforeSha256": "a406c8081a395a28e379b5197df1624a70d5e5d16736fb4a873c3b3cfc3a5d4c",
+          "previousRequirement": "a406c8081a395a28e379b5197df1624a70d5e5d16736fb4a873c3b3cfc3a5d4c",
+          "releaseAfterSha256": "7d064393332d46f810b5ec0539c339e6a267b645e653ff08c50832f81c116ba6",
+          "milestone": "B-012 tick-admission fix (manager-accepted)",
+          "reason": "Exact source-pin bookkeeping for the manager-accepted B-012 tick-admission fix; retain every assertion, historical capture and prior authorization; propagate only derived guard digests. All other bytes of this guard test are unchanged.",
+          "evidence": {
+            "kind": "exact-fixture-sha-and-count-literal-replacement",
+            "replacements": [
+              {
+                "kind": "fixture-sha256",
+                "before": "34886799e16cd4349f83934489e5a0905112ccc5c0b940d287c81279f61fe5a4",
+                "after": "c1a8c56a32c334e4d799d0f20ff447bf6f6c0785aa2488f6f6eea40bb19d5236",
+                "line": 80
+              }
+            ],
+            "sourceMilestones": [
+              "B-012 tick-admission fix (manager-accepted)"
             ]
           }
         }

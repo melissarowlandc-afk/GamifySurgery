@@ -9,7 +9,7 @@
       "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
       "mainBeforeSha256": "8c488117164c0ec32709c19b093c42d2e5de7ff5a93d2e27eb05068f4ed15b30",
       "mainAfterSha256": "59413788d5d5421d12b79a44107bd56d60a86638aecc5d9183452cf8e52cc2a0",
-      "requiredReleaseSha256": "f08b57ed53a53a155e7a758e0ea132a25d818c5043e2f129b6e7c4c481e2403b",
+      "requiredReleaseSha256": "432d36192945e3906f3e33a11c6bf522d85cad047bc738b9f3afa24696771879",
       "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
     },
     {
@@ -1813,6 +1813,61 @@
             ],
             "sourceMilestones": [
               "B-013 peri-op working space (manager-accepted 2026-11-18)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "on": "2026-11-18",
+      "milestone": "B-012 tick-admission fix (manager-accepted)",
+      "priorFixtureSha256": "33391cba9fd8a83599c0ea4a8e7e8b1799ce5808d15e268cb9f7e82c62f0c23d",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+          "mainBeforeSha256": "8c488117164c0ec32709c19b093c42d2e5de7ff5a93d2e27eb05068f4ed15b30",
+          "mainAfterSha256": "59413788d5d5421d12b79a44107bd56d60a86638aecc5d9183452cf8e52cc2a0",
+          "requiredReleaseSha256": "f08b57ed53a53a155e7a758e0ea132a25d818c5043e2f129b6e7c4c481e2403b",
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        },
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-test-support.ts",
+          "mainBeforeSha256": "673eb53ba621031555ccbc55e9e930764e43db51482d633ddcd4954c9aceafdd",
+          "mainAfterSha256": "0a2b2370e96d2ac3c28941499fc6188ad1a4cefb73c81d7a229906e70cb7596a",
+          "requiredReleaseSha256": "da14487e87d8559f7ba44cdbc768c5679512d0be915e3b6c8f3312d0c5e43837",
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        },
+        {
+          "path": "packages/clinical-content/src/question-harden1-round2-20261110.test.ts",
+          "mainBeforeSha256": "c1be8bbc9bdea0032493d9df3a0c830cc5dec1f3f63929e72dd1f67abad46e9e",
+          "mainAfterSha256": "b4ba37830da65ffc95c9e24b5104ef2e55af1ddb2ab1c9eb7a3d958e3d1bcec7",
+          "requiredReleaseSha256": null,
+          "reason": "Preserve release-specific strict source guards and authorized history; the unaccepted hardened hernia test must remain absent."
+        }
+      ],
+      "reason": "Exact source-pin bookkeeping for the manager-accepted B-012 tick-admission fix; retain every assertion, historical capture and prior authorization; propagate only derived guard digests.",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-harden1-n3r4-acceptance-20261110.test.ts",
+          "on": "2026-11-18",
+          "releaseBeforeSha256": "f08b57ed53a53a155e7a758e0ea132a25d818c5043e2f129b6e7c4c481e2403b",
+          "previousRequirement": "f08b57ed53a53a155e7a758e0ea132a25d818c5043e2f129b6e7c4c481e2403b",
+          "releaseAfterSha256": "432d36192945e3906f3e33a11c6bf522d85cad047bc738b9f3afa24696771879",
+          "milestone": "B-012 tick-admission fix (manager-accepted)",
+          "reason": "Exact source-pin bookkeeping for the manager-accepted B-012 tick-admission fix; retain every assertion, historical capture and prior authorization; propagate only derived guard digests. All other bytes of this guard test are unchanged.",
+          "evidence": {
+            "kind": "exact-fixture-sha-and-count-literal-replacement",
+            "replacements": [
+              {
+                "kind": "fixture-sha256",
+                "before": "d599e7129283140d1eead353a0fbe3905b6eb0d2ea2862fe6edb2c013c433f95",
+                "after": "06eff36f8509338f598ed9574d39b000ee11bef0ea73f5899947ad3ad5d288b9",
+                "line": 64
+              }
+            ],
+            "sourceMilestones": [
+              "B-012 tick-admission fix (manager-accepted)"
             ]
           }
         }

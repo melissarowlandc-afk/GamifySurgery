@@ -278,8 +278,8 @@ export class CloudGameSession {
   }
   /** Real clock pulses only. Explicit ADVANCE_TICK commands keep normal order. */
   advanceClock(command: Extract<GameCommand, { type: "ADVANCE_TICK" }>, context: DomainContext): Promise<GameState | null> {
-    if (this.ordered.pending || this.journalDrain?.queued) { this.skippedClockPulses++; return Promise.resolve(null); }
-    return this.executeAsync(command, context);
+    if (this.ordered.pending || this.journalDrain?.committing) { this.skippedClockPulses++; return Promise.resolve(null); }
+    return this.executeAsync(command, context, undefined, false, true);
   }
   get commandPending(): boolean { return this.ordered.pending > 0; }
   get usesOperationalEngine(): boolean { return this.engine !== null; }
@@ -287,7 +287,7 @@ export class CloudGameSession {
   get metadata(): CloudCampaignMetadata { return structuredClone(this.campaign); }
   playerView(state: GameState, ...args: OperationalViewArguments) { return this.projectedView.read(state, args); }
 
-  execute(command: GameCommand, context: DomainContext, createQuestionReceipt?: () => QuestionUsageReceipt | null): GameState | null {
+  execute(command: GameCommand, context: DomainContext, createQuestionReceipt?: () => QuestionUsageReceipt | null, clock = false): GameState | null {
     if (this.engine) { problemDiagnostics.event("command", "async-boundary-required"); return null; }
     if (!this.canExecute) { problemDiagnostics.event("command", "refused"); this.emit(); return null; }
     if (this.commandBackoff.blocked(command, this.changeVersion)) return null;
@@ -295,7 +295,7 @@ export class CloudGameSession {
     const before = this.current;
     const priorCheckpoint = this.checkpoint;
     let stage: CommandStage = "execute", publication: CommandPublication | null = null;
-    const highWater = this.journalDrain?.highWater;
+    const highWater = this.journalDrain?.admissionSerial;
     const started = performance.now();
     try {
       const result = applyGameEvidenceCommand(priorCheckpoint, command, context);
@@ -303,14 +303,14 @@ export class CloudGameSession {
       stage = "diff";
       publication = this.prepareCommandPublication({ ...result, delta: gameEvidenceDelta(priorCheckpoint, result.checkpoint) }, before, command, context, createQuestionReceipt);
       stage = "journal";
-      this.admitCommandPublication(publication, command.type === "ADVANCE_TICK", this.coordinator.journalWriterGeneration);
+      this.admitCommandPublication(publication, command.type === "ADVANCE_TICK", this.coordinator.journalWriterGeneration, clock);
       stage = "publication";
       this.publishCommand(publication);
       stage = "followup";
       this.finishCommand(publication);
       this.commandBackoff.success(); return this.current;
     } catch (error) {
-      const admitted = publication !== null && (this.current !== before || Boolean(this.journalDrain && this.journalDrain.highWater !== highWater));
+      const admitted = publication !== null && (this.current !== before || Boolean(this.journalDrain && this.journalDrain.admissionSerial !== highWater));
       if (!this.recordCommandFailure(error, command, stage, !admitted)) return null;
       if (admitted && publication) { void this.repairCommand(publication); return null; }
       this.checkpoint = priorCheckpoint; this.current = before; return null;
@@ -320,8 +320,12 @@ export class CloudGameSession {
   /** Clock pulses are intents until admitted: busy pulses never become commands.
    * Player commands reserve journal capacity and retain their admission order.
    */
-  executeAsync(command: GameCommand, context: DomainContext, createQuestionReceipt?: () => QuestionUsageReceipt | null, admittedBeforeClose = false): Promise<GameState | null> {
-    if (!this.engine) return Promise.resolve(this.executeControllerCommand(command, context, createQuestionReceipt));
+  executeAsync(command: GameCommand, context: DomainContext, createQuestionReceipt?: () => QuestionUsageReceipt | null, admittedBeforeClose = false, clock = false): Promise<GameState | null> {
+    if (!this.engine) {
+      if (!clock) return Promise.resolve(this.executeControllerCommand(command, context, createQuestionReceipt));
+      const priorRepair = this.repairingCommand, result = this.execute(command, context, createQuestionReceipt, true);
+      return !priorRepair && this.repairingCommand ? this.repairingCommand.then(ok => ok ? this.state : null) : Promise.resolve(result);
+    }
     if (!this.canAdmit(admittedBeforeClose)) { problemDiagnostics.event("command", "refused"); this.emit(); return Promise.resolve(null); }
     if (this.commandBackoff.blocked(command, this.changeVersion)) return Promise.resolve(null);
     const engine = this.engine, writerGeneration = this.coordinator.journalWriterGeneration;
@@ -332,7 +336,7 @@ export class CloudGameSession {
       if (this.commandRepair && !await this.repairCommand()) return null;
       if (this.commandBackoff.blocked(entry.command, this.changeVersion)) return null;
       const before = this.current;
-      const prior = engine.recoveryPoint(), highWater = this.journalDrain?.highWater;
+      const prior = engine.recoveryPoint(), highWater = this.journalDrain?.admissionSerial;
       let stage: CommandStage = "execute", publication: CommandPublication | null = null;
       try {
         const result = await engine.execute(entry), at = performance.now();
@@ -341,7 +345,7 @@ export class CloudGameSession {
         this.projectedView.publish(result.state, result.viewArguments, result.view);
         publication = this.prepareCommandPublication(result, before, entry.command, entry.context, createQuestionReceipt);
         stage = "journal";
-        this.admitCommandPublication(publication, entry.command.type === "ADVANCE_TICK", writerGeneration);
+        this.admitCommandPublication(publication, entry.command.type === "ADVANCE_TICK", writerGeneration, clock);
         stage = "publication";
         this.publishCommand(publication);
         this.lastCommandMs = result.timing.captureMs + result.timing.postMs + result.timing.publishMs + performance.now() - at;
@@ -352,7 +356,7 @@ export class CloudGameSession {
         this.commandBackoff.success();
         return this.state;
       } catch (error) {
-        const admitted = publication !== null && (this.current !== before || Boolean(this.journalDrain && this.journalDrain.highWater !== highWater));
+        const admitted = publication !== null && (this.current !== before || Boolean(this.journalDrain && this.journalDrain.admissionSerial !== highWater));
         if (!this.recordCommandFailure(error, entry.command, stage, !admitted)) return null;
         if (admitted && publication) return await this.repairCommand(publication) ? this.state : null;
         engine.restore(prior); return null;
@@ -386,17 +390,17 @@ export class CloudGameSession {
     }
     return { result, campaign: { ...this.campaign, updatedAtRealMs: Math.max(this.campaign.updatedAtRealMs, Date.now()) }, questions, followup };
   }
-  private admitCommandPublication(publication: CommandPublication, tick: boolean, writerGeneration: string): void {
+  private admitCommandPublication(publication: CommandPublication, tick: boolean, writerGeneration: string, clock = false): void {
     if (!this.journalDrain) return; // Full-snapshot fallback stages after publication.
     this.journalDrain.acceptAdmitted({ delta: publication.result.delta ?? null, campaign: publication.campaign,
-      usageQuestions: [...publication.questions], writerGeneration }, tick);
+      usageQuestions: [...publication.questions], writerGeneration }, tick, clock);
   }
   private publishCommand(publication: CommandPublication): void {
     const { result, campaign, questions } = publication;
     if (result.checkpoint) this.checkpoint = result.checkpoint;
     this.current = result.state; this.campaign = campaign;
     for (const receipt of questions) this.questions.set(receipt.receipt_id, receipt);
-    this.changeVersion++; this.dirty = true;
+    this.changeVersion = this.journalDrain ? this.journalDrain.highWater - this.journalStart : this.changeVersion + 1; this.dirty = true;
     if (!this.journalDrain) this.scheduleFlush();
     this.coordinator.noteLocalChange(); this.emit();
   }
