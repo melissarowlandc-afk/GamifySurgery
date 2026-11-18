@@ -26,6 +26,13 @@ vi.mock("../mobile/map/MobileFacilityMap", () => ({ MobileFacilityMap: ReadyMap 
 const codecs: CloudCodecWorker[] = [];
 afterEach(async () => { await cleanupPhoneTests(); for (const codec of codecs.splice(0)) codec.dispose(); vi.restoreAllMocks(); });
 
+// M-2026-11-17-03: queued codec/IDB admission scales with runner CPU, not a
+// one-second product deadline. Preserve waitFor's default polling interval.
+const APP_OPEN_WAIT_MS = 20_000;
+// The longest case has four opening waits plus one unchanged 1s observation;
+// leave headroom beyond their 81s sum for the real commands and codec work.
+const APP_OPEN_TEST_MS = 120_000;
+
 async function fixture(layout: "phone" | "desktop", needsNotice = false) {
   const env = phoneTestDom(), values = new Map<string, string>(), server = new FakeCloudServer(), transport = server.transport("qa-account-a");
   const intervals = new Map<number, { callback(): void; ms: number }>(), commits: CloudFrozenOperation[] = [];
@@ -69,7 +76,7 @@ async function fixture(layout: "phone" | "desktop", needsNotice = false) {
   };
   await env.render(<QaApp />);
   if (needsNotice) {
-    await vi.waitFor(async () => { await act(async () => {}); expect(env.button("Accept and continue").attributes.disabled).toBeUndefined(); }, { timeout: 5_000 });
+    await vi.waitFor(async () => { await act(async () => {}); expect(env.button("Accept and continue").attributes.disabled).toBeUndefined(); }, { timeout: APP_OPEN_WAIT_MS });
     await env.click("Accept and continue");
   }
   // Routine first enrollment now opens the clear campaign automatically. Never
@@ -77,12 +84,12 @@ async function fixture(layout: "phone" | "desktop", needsNotice = false) {
   const playing = () => vi.waitFor(async () => { await act(async () => {});
     expect(browser.__cloudQa?.status()).toMatchObject({ hasState: true, canExecute: true, failure: null, needsReload: false });
     expect(allElements(env.doc.body, node => node.attributes["aria-label"] === "Loading clinic" && node.attributes.hidden === undefined)).toHaveLength(0);
-  }, { timeout: 5_000 });
+  }, { timeout: APP_OPEN_WAIT_MS });
   await playing();
   // The chooser has correctly unmounted, so retain its real stage reader rather
   // than depending on a diagnostic source that only exists while it is visible.
   const entryStatus = { ...browser.__cloudQa!.status(), entryPreparation: entryProbe.read?.() };
-  await vi.waitFor(async () => { await act(async () => {}); expect(browser.__cloudQa?.status().pending).toBe(false); });
+  await vi.waitFor(async () => { await act(async () => {}); expect(browser.__cloudQa?.status().pending).toBe(false); }, { timeout: APP_OPEN_WAIT_MS });
   return { env, server, browser, playing, intervals, commits, codec, entryStatus, hold: (method: string, wait: Promise<void>) => { holds.set(method, wait); }, unavailable: (value: boolean) => { unavailable = value; } };
 }
 
@@ -93,7 +100,7 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     expect(f.browser.__cloudQa!.status()).toMatchObject({ hasState: true, canExecute: true, failure: null });
     expect(f.server.operationCount("qa-account-a")).toBe(1);
     expect(f.server.calls.filter(call => call.method === "importCampaign")).toHaveLength(1);
-  });
+  }, APP_OPEN_TEST_MS);
   it("keeps standalone focus bursts cheap and checkpoints a hidden/pagehide/freeze boundary only once", async () => {
     const clock = new TestCloudClock(); vi.spyOn(Date, "now").mockImplementation(clock.wallNow); vi.spyOn(performance, "now").mockImplementation(clock.monotonicNow);
     const f = await fixture(layout), qa = () => f.browser.__cloudQa!;
@@ -127,7 +134,7 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     await vi.waitFor(() => expect(f.server.calls.at(-1)?.method).toBe("renew"));
     expect(codec).not.toHaveBeenCalled(); expect(scans).not.toHaveBeenCalled(); expect(writes).not.toHaveBeenCalled(); expect(reconnect).not.toHaveBeenCalled();
     expect(f.server.operationCount("qa-account-a")).toBe(count + 1);
-  });
+  }, APP_OPEN_TEST_MS);
 
   it.each([false, true])("shows an immediate fence only for an expired lease=%s while foreground transport takes 20 seconds", async expired => {
     const clock = new TestCloudClock(); vi.spyOn(Date, "now").mockImplementation(clock.wallNow); vi.spyOn(performance, "now").mockImplementation(clock.monotonicNow);
@@ -173,7 +180,7 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     await f.playing(); expect(notices()).toHaveLength(0);
     expect(allElements(f.env.doc.body, node => node.attributes["aria-label"] === "Loading clinic" && node.attributes.hidden === undefined)).toHaveLength(0);
     vi.useRealTimers();
-  });
+  }, APP_OPEN_TEST_MS);
 
   it("uploads offline progress once and keeps its unsubmitted frozen ancestor locally without an account archive", async () => {
     const clock = new TestCloudClock(); vi.spyOn(Date, "now").mockImplementation(clock.wallNow); vi.spyOn(performance, "now").mockImplementation(clock.monotonicNow);
@@ -231,7 +238,7 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     clock.advance(CLOUD_RENEW_MS); pulse.mockClear();
     await act(async () => { for (const timer of [...f.intervals.values()]) timer.callback(); await Promise.all(pulse.mock.results.map(result => result.value)); });
     expect(f.server.operationCount("qa-account-a")).toBe(2); expect(qa().snapshot().state).toEqual(newest);
-  });
+  }, APP_OPEN_TEST_MS);
   it("rejects a QA handle replaced during reconnect, and atomically prepares a durably paused copy that stays paused on reopen", async () => {
     const f = await fixture(layout), stale = f.browser.__cloudQa!;
     const clinicFrame = allElements(f.env.doc.body, node => node.attributes["data-testid"] === "facility-canvas")[0];
@@ -255,7 +262,7 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     // A real app teardown/reopen replaces the owner; the network check above
     // does not. Keep the outage and the original running-state assertions.
     await f.env.render(null); await f.env.render(<QaApp />);
-    await vi.waitFor(async () => { await act(async () => {}); expect(f.browser.__cloudQa!.status()).toMatchObject({ canExecute: true, failure: "network" }); });
+    await vi.waitFor(async () => { await act(async () => {}); expect(f.browser.__cloudQa!.status()).toMatchObject({ canExecute: true, failure: "network" }); }, { timeout: APP_OPEN_WAIT_MS });
     expect(f.browser.__cloudQa).toBeDefined();
     expect(f.browser.__cloudQa).not.toBe(stale);
     // The former e2e helper captured this handle, ignored a refused final
@@ -280,7 +287,7 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     const pulse = vi.spyOn(CloudSyncCoordinator.prototype, "pulse");
     await act(async () => { for (const timer of [...f.intervals.values()]) timer.callback(); await Promise.all(pulse.mock.results.map(result => result.value)); });
     expect(f.browser.__cloudQa!.snapshot().state).toEqual(saved);
-  });
+  }, APP_OPEN_TEST_MS);
   it.each([
     [() => new DOMException("private checkpoint bytes", "DataCloneError"), "codec", "worker_data_clone"],
     [() => new TypeError("private checkpoint bytes"), "unexpected", "type_error"],
@@ -289,7 +296,7 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     await f.env.render(null); await f.env.render(<QaApp />);
     await vi.waitFor(async () => { await act(async () => {});
       expect(f.browser.__cloudQa?.status().openingFailure).toEqual({ stage: "copies", kind, code });
-    });
+    }, { timeout: APP_OPEN_WAIT_MS });
     expect(f.browser.__cloudQa!.status().hasState).toBe(false);
     expect(f.env.doc.body.textContent).toContain("Your saved copies are safe");
     await f.env.clickElement(allElements(f.env.doc.body, node => node.tagName === "BUTTON" && node.textContent === "Back to your clinics")[0]!);
@@ -297,19 +304,19 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     await vi.waitFor(async () => { await act(async () => {}); expect(f.env.button("Resume Synthetic clinic 1").attributes.disabled).toBeUndefined(); });
     await f.env.click("Resume Synthetic clinic 1"); await f.playing();
     expect(f.browser.__cloudQa!.status().openingFailure).toBeNull();
-  });
+  }, APP_OPEN_TEST_MS);
   it("classifies a failed automatic open without exposing saved bytes and retries automatically when connectivity returns", async () => {
     const f = await fixture(layout);
     f.server.faults.push({ method: "load", at: "before", error: new CloudSyncError("protocol") });
     await f.env.render(null); await f.env.render(<QaApp />);
     await vi.waitFor(async () => { await act(async () => {});
       expect(f.browser.__cloudQa?.status().openingFailure).toEqual({ stage: "copies", kind: "sync", code: "protocol" });
-    });
+    }, { timeout: APP_OPEN_WAIT_MS });
     expect(f.browser.__cloudQa!.status().hasState).toBe(false);
     await act(async () => { f.env.browser.dispatchEvent(new Event("online")); });
     await f.playing();
     expect(f.browser.__cloudQa!.status().openingFailure).toBeNull();
-  });
+  }, APP_OPEN_TEST_MS);
 
   it.each([false, true])("a fresh app instance reopens its last clinic and uploads (Save & Close=%s)", async closeFirst => {
     const f = await fixture(layout);
@@ -323,10 +330,10 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     // No Resume, Retry, Open here, or campaign-list interaction on relaunch.
     await f.playing();
     expect(f.browser.__cloudQa!.snapshot().state).toEqual(expected);
-    await vi.waitFor(async () => { await act(async () => {}); expect(f.browser.__cloudQa!.status().pending).toBe(false); });
+    await vi.waitFor(async () => { await act(async () => {}); expect(f.browser.__cloudQa!.status().pending).toBe(false); }, { timeout: APP_OPEN_WAIT_MS });
     expect(allElements(f.env.doc.body, node => node.attributes.class?.includes("cloud-dialog") === true)).toHaveLength(0);
     expect(f.server.usageCount("qa-account-a")).toBe(0);
-  });
+  }, APP_OPEN_TEST_MS);
 
   it("keeps an explicit campaign-screen choice across a fresh app instance, until manual Resume", async () => {
     const f = await fixture(layout);
@@ -334,10 +341,10 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     await f.env.click("Account campaign screen");
     await vi.waitFor(async () => { await act(async () => {}); expect(f.env.button("Resume Synthetic clinic 1").attributes.disabled).toBeUndefined(); });
     await f.env.render(null); await f.env.render(<QaApp />);
-    await vi.waitFor(async () => { await act(async () => {}); expect(f.env.button("Resume Synthetic clinic 1").attributes.disabled).toBeUndefined(); });
+    await vi.waitFor(async () => { await act(async () => {}); expect(f.env.button("Resume Synthetic clinic 1").attributes.disabled).toBeUndefined(); }, { timeout: APP_OPEN_WAIT_MS });
     expect(f.browser.__cloudQa!.status().hasState).toBe(false);
     await f.env.click("Resume Synthetic clinic 1"); await f.playing();
-  });
+  }, APP_OPEN_TEST_MS);
 
   it("automatically resumes its newer retained projection and confirms it without closing", async () => {
     const f = await fixture(layout), close = vi.spyOn(CloudGameSession.prototype, "saveAndClose");
@@ -346,10 +353,10 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     await act(async () => { await f.browser.__cloudQa!.retainAndReopenOlderCache(); });
     await f.playing();
     expect(f.browser.__cloudQa!.snapshot().state).toEqual(expected);
-    await vi.waitFor(async () => { await act(async () => {}); expect(f.browser.__cloudQa!.status().pending).toBe(false); });
+    await vi.waitFor(async () => { await act(async () => {}); expect(f.browser.__cloudQa!.status().pending).toBe(false); }, { timeout: APP_OPEN_WAIT_MS });
     expect(close).not.toHaveBeenCalled();
     expect(allElements(f.env.doc.body, node => node.attributes.class?.includes("cloud-dialog") === true)).toHaveLength(0);
-  });
+  }, APP_OPEN_TEST_MS);
 
   it("offers one Open here action after dismissing Save & Close in the current document", async () => {
     const f = await fixture(layout);
@@ -364,7 +371,7 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     const buttons = allElements(notices[0]!, node => node.tagName === "BUTTON");
     expect(buttons.map(button => button.textContent)).toEqual(["Open here"]);
     await f.env.clickElement(buttons[0]!); await f.playing();
-  });
+  }, APP_OPEN_TEST_MS);
 
   it("keeps Save & Close polling quiet, and automatically reopens when the backgrounded app actually returns", async () => {
     const f = await fixture(layout);
@@ -391,7 +398,7 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     expect(f.browser.__cloudQa!.snapshot().state).toEqual(expected);
     expect(await oldCloseLease()).toBe(false); // Old document owner cannot release the new lease.
     expect(allElements(f.env.doc.body, node => node.attributes.class?.includes("cloud-dialog") === true)).toHaveLength(0);
-  });
+  }, APP_OPEN_TEST_MS);
 
   it("exports a verified prior revision through the rendered account menu after a focus event", async () => {
     const f = await fixture(layout);
@@ -408,7 +415,7 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     // Retain this context's valid same-revision cache as well. It must remain
     // protected, but cannot mask the corrupt account head or prevent recovery.
     await f.env.render(null); await f.env.render(<QaApp />);
-    await vi.waitFor(async () => { await act(async () => {}); expect(f.browser.__cloudQa?.status()).toMatchObject({ phase: "readonly", failure: "prior-recovery", canExecute: false }); }, { timeout: 2_000 });
+    await vi.waitFor(async () => { await act(async () => {}); expect(f.browser.__cloudQa?.status()).toMatchObject({ phase: "readonly", failure: "prior-recovery", canExecute: false }); }, { timeout: APP_OPEN_WAIT_MS });
     const reads = f.server.calls.length;
     await act(async () => { f.env.browser.dispatchEvent(new Event("focus")); });
     expect(f.server.calls).toHaveLength(reads);
@@ -430,5 +437,5 @@ describe.each(["phone", "desktop"] as const)("%s actual disposable QA entry", la
     expect(await (exported as Blob | null)?.text()).toContain(prior.snapshot.uncompressedSha256);
     expect(f.browser.__cloudQa!.status()).toMatchObject({ phase: "readonly", failure: "prior-recovery", canExecute: false });
     expect(row.confirmed).toEqual(corrupt); expect(row.prior).toEqual(prior); expect(f.server.operationCount("qa-account-a")).toBe(operationCount);
-  });
+  }, APP_OPEN_TEST_MS);
 });
