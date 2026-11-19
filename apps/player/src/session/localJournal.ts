@@ -12,7 +12,7 @@ import { LOCAL_STORAGE_COMPRESSION_WRITES } from "./localStorageBuildPolicy";
 import { isStorageQuotaError, reclaimAuxiliaryStorage } from "./storagePressure";
 import { sha256Utf8 } from "./cloud/codecJson";
 import { isTransientStorageError, retrySlowStorage } from "./cloud/storageRetry";
-import { joinClockJournalDeltas, MAX_CLOCK_JOURNAL_COMMANDS } from "./clockJournalDelta";
+import { clockJournalDeltasContinue, materializeClockJournalDeltas, MAX_CLOCK_JOURNAL_COMMANDS } from "./clockJournalDelta";
 
 export const LOCAL_JOURNAL_DATABASE = "gamify-surgery.local-journal.v1";
 export const LOCAL_COMMIT_MS = 250;
@@ -24,7 +24,7 @@ export const LOCAL_NATIVE_PREPARE_MS = 60_000;
 /** Native account move tails are recovery data, not campaign history. Pulse
  * compacts an unusually busy/offline tail before the ordinary time boundary. */
 export const LOCAL_SNAPSHOT_TAIL_LIMIT = 512;
-export const LOCAL_JOURNAL_QUEUE_LIMIT = 128;
+export const LOCAL_JOURNAL_QUEUE_LIMIT = MAX_CLOCK_JOURNAL_COMMANDS;
 /** Adopt an already verified, privately owned import once. Stable frozen
  * checkpoints let the incremental evidence index retain its exact parent. */
 export function freezeJournalCheckpoint<T>(value: T): T {
@@ -494,15 +494,18 @@ export function journalWorkerStore(address: JournalWorkerAddress): JournalStorag
   const store = memoryStores.get(address.memory)?.deref(); if (!store) throw new CloudCacheError("unavailable"); return store;
 }
 
-/** One active transaction, bounded accepted rows, fixed first-dirty deadline.
+/** One active transaction, bounded accepted commands, completion-spaced clocks.
  * Captured barriers do not wait for future ticks. Failure retains every row. */
 export class LocalJournalDrain {
   private pending: JournalRow[] = [];
-  private clockRow: JournalRow | null = null;
+  private clockRow: { row: JournalRow; deltas: GameEvidenceDelta[] } | null = null;
   private readonly commandsPerRow = new WeakMap<JournalRow, number>();
   private pendingCommands = 0;
   private admissions = 0;
   private writing = false;
+  private urgentThrough: number;
+  private nextClockCommitAt = -Infinity;
+  private retryThrough: number | null = null;
   private rebasing: { through: number; work(through: number): Promise<void> } | null = null;
   private rebaseActive: Promise<boolean> | null = null;
   private active: Promise<boolean> | null = null;
@@ -517,14 +520,13 @@ export class LocalJournalDrain {
   onRecovered?: () => void;
   constructor(readonly store: JournalStorage, readonly key: string, readonly owner: string, highWater: number,
     private readonly onFailure: (error: unknown) => void,
-    private readonly prepareHashes?: (rows: readonly JournalRow[]) => Promise<readonly string[] | null>) { this.version = this.committed = highWater; }
+    private readonly prepareHashes?: (rows: readonly JournalRow[]) => Promise<readonly string[] | null>) { this.version = this.committed = this.urgentThrough = highWater; }
   get canAccept() { return !this.stopped && (!this.error || isTransientStorageError(this.error)) && this.pendingCommands < LOCAL_JOURNAL_QUEUE_LIMIT; }
   get dirty() { return this.version > this.committed; }
   get highWater() { return this.version; }
   get queued() { return this.pendingCommands; }
   get admissionSerial() { return this.admissions; }
-  /** An actually held storage transaction remains clock backpressure. A row
-   * merely awaiting its deadline/hash is not a reason to halve healthy play. */
+  /** Storage liveness only. Healthy in-flight I/O is not an admission fence. */
   get committing() { return this.writing; }
   get rebasePending() { return this.rebasing !== null; }
   accept(row: Omit<JournalRow, "version">, tick = false): void {
@@ -536,29 +538,52 @@ export class LocalJournalDrain {
   acceptAdmitted(row: Omit<JournalRow, "version">, tick = false, clock = false): void {
     if (this.stopped || this.pendingCommands >= LOCAL_JOURNAL_QUEUE_LIMIT) throw new CloudCacheError("transaction");
     const prior = this.clockRow;
-    this.clockRow = null;
-    const delta = clock && tick && prior?.delta && row.delta && prior.writerGeneration === row.writerGeneration &&
-      prior.campaign.campaignId === row.campaign.campaignId ? joinClockJournalDeltas(prior.delta, row.delta) : null;
-    if (delta && prior) {
-      const joined = { ...row, delta, version: prior.version };
+    const ordinary = clock && tick;
+    if (ordinary && prior && row.delta && prior.row.delta && prior.deltas.length < MAX_CLOCK_JOURNAL_COMMANDS &&
+      prior.row.writerGeneration === row.writerGeneration && prior.row.campaign.campaignId === row.campaign.campaignId &&
+      clockJournalDeltasContinue(prior.row.delta, row.delta)) {
+      // A private draft retains delta references only. Do not concatenate or
+      // serialize its accumulated patches on each new clock command.
+      const joined = { ...row, version: prior.row.version };
       this.pending[this.pending.length - 1] = joined;
-      const commands = (this.commandsPerRow.get(prior) ?? 1) + 1;
-      this.commandsPerRow.set(joined, commands);
-      if (commands < MAX_CLOCK_JOURNAL_COMMANDS) this.clockRow = joined;
+      prior.row = joined; prior.deltas.push(row.delta);
+      this.commandsPerRow.set(joined, prior.deltas.length);
     } else {
+      this.sealClockRow();
       const next = { ...row, version: ++this.version };
       this.pending.push(next); this.commandsPerRow.set(next, 1);
-      if (clock && tick && row.delta) this.clockRow = next;
+      if (ordinary && row.delta) this.clockRow = { row: next, deltas: [row.delta] };
+      if (!ordinary) this.urgentThrough = next.version;
     }
     this.pendingCommands++; this.admissions++;
     if (isTransientStorageError(this.error)) { this.scheduleRetry(); return; }
-    // Only real clock intents use this two-pulse window. Player commands,
-    // explicit ticks and every requested durability barrier keep their policy.
-    const due = Date.now() + (clock && tick ? 2 * LOCAL_TICK_COMMIT_MS : tick ? LOCAL_TICK_COMMIT_MS : LOCAL_COMMIT_MS);
+    // The next ordinary batch waits behind active I/O without scheduling a
+    // second drain. Completion installs its deadline. Urgent work keeps its
+    // original deadline, and explicit durability still bypasses spacing.
+    if (ordinary && (this.active || this.rebasing)) return;
+    const due = ordinary ? Math.max(Date.now() + 2 * LOCAL_TICK_COMMIT_MS, this.nextClockCommitAt)
+      : Date.now() + (tick ? LOCAL_TICK_COMMIT_MS : LOCAL_COMMIT_MS);
+    this.scheduleAt(due);
+  }
+  private sealClockRow(): void {
+    const draft = this.clockRow; if (!draft) return;
+    const delta = materializeClockJournalDeltas(draft.deltas);
+    if (!delta) throw new CloudCacheError("checksum");
+    const row = { ...draft.row, delta };
+    this.pending[this.pending.length - 1] = row;
+    this.commandsPerRow.set(row, draft.deltas.length); this.clockRow = null;
+  }
+  private scheduleAt(due: number): void {
+    if (this.stopped) return;
     if (due < this.dueAt) {
       if (this.timer !== null) clearTimeout(this.timer);
       this.dueAt = due; this.timer = setTimeout(() => { this.timer = null; this.dueAt = Infinity; void this.drain(); }, Math.max(0, due - Date.now()));
     }
+  }
+  private schedulePending(): void {
+    if (this.stopped || this.timer !== null || this.active || this.rebasing || this.error || !this.pending.length) return;
+    this.scheduleAt(this.urgentThrough > this.committed ? Date.now() + LOCAL_COMMIT_MS
+      : Math.max(Date.now() + 2 * LOCAL_TICK_COMMIT_MS, this.nextClockCommitAt));
   }
   private scheduleRetry(): void {
     if (this.stopped || this.timer !== null) return;
@@ -574,7 +599,7 @@ export class LocalJournalDrain {
   /** Install the new baseline before any deltas that refer to it can commit.
    * Accepted commands continue synchronously in the bounded pending queue. */
   rebase(work: (through: number) => Promise<void>): Promise<boolean> {
-    this.clockRow = null;
+    this.sealClockRow();
     if (!this.rebasing) this.rebasing = { through: this.version, work };
     return this.finishRebase();
   }
@@ -587,11 +612,11 @@ export class LocalJournalDrain {
       this.rebasing = null; this.error = null; this.retries = 0;
       try { this.onRecovered?.(); } catch (error) { problemDiagnostics.error("journal-observer", error); }
       return true;
-    })().catch(error => this.failed(error)).finally(() => { this.rebaseActive = null; });
+    })().catch(error => this.failed(error)).finally(() => { this.rebaseActive = null; this.schedulePending(); });
     return this.rebaseActive;
   }
   async drain(): Promise<boolean> {
-    this.clockRow = null; // Seal this exact prefix before any asynchronous work.
+    this.sealClockRow(); // Seal this exact prefix before any asynchronous work.
     const target = this.version;
     if (this.rebasing && !await this.finishRebase()) return false;
     return this.drainThrough(target);
@@ -600,8 +625,13 @@ export class LocalJournalDrain {
     if (this.timer !== null) { clearTimeout(this.timer); this.timer = null; this.dueAt = Infinity; }
     while (this.committed < target && !this.stopped) {
       if (this.active) { if (!await this.active) return false; continue; }
-      const rows = this.pending.filter(row => row.version <= target), from = this.committed;
-      if (this.clockRow && this.clockRow.version <= target) this.clockRow = null;
+      if (this.timer !== null) { clearTimeout(this.timer); this.timer = null; this.dueAt = Infinity; }
+      // A timeout can follow a committed transaction. Retry that identical
+      // immutable prefix before including any work admitted during its I/O;
+      // otherwise the existing head check correctly rejects the larger batch.
+      const batchThrough = this.retryThrough ?? target;
+      if (this.clockRow && this.clockRow.row.version <= batchThrough) this.sealClockRow();
+      const rows = this.pending.filter(row => row.version <= batchThrough), from = this.committed;
       this.active = journalQuotaRetry(async () => {
         if (this.prepareHashes && rows.some(row => !preparedHashes.has(row))) {
           const hashes = await this.prepareHashes(rows);
@@ -615,11 +645,21 @@ export class LocalJournalDrain {
         try { return await this.store.append(this.key, this.owner, from, rows, encoded.every((value): value is StoredRow => value !== undefined) ? encoded : undefined); }
         finally { this.writing = false; }
       }).then(through => {
+        this.retryThrough = null;
         this.pendingCommands -= this.pending.filter(row => row.version <= through).reduce((count, row) => count + (this.commandsPerRow.get(row) ?? 1), 0);
         this.committed = through; this.pending = this.pending.filter(r => r.version > through); this.error = null; this.retries = 0;
+        // The first ordinary deadline is two seconds. Later ordinary batches
+        // leave a player-commit-sized margin after three seconds: a clock reply
+        // crossing the last ordinary deadline must not force a 21st row in the
+        // final captured-prefix drain. Player/explicit barriers bypass spacing.
+        this.nextClockCommitAt = Date.now() + 3 * LOCAL_TICK_COMMIT_MS + LOCAL_COMMIT_MS;
         try { this.onCommit?.(rows.at(-1)!); } catch (error) { problemDiagnostics.error("journal-observer", error); }
         return true;
-      }).catch(error => this.failed(error)).finally(() => { this.active = null; });
+      }).catch(error => {
+        const through = rows.at(-1)?.version;
+        if (through !== undefined && through > this.committed) this.retryThrough = through;
+        return this.failed(error);
+      }).finally(() => { this.active = null; this.schedulePending(); });
       if (!await this.active) return false;
     }
     return !this.stopped && this.committed >= target;

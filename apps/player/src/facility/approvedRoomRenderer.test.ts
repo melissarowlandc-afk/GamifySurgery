@@ -155,7 +155,7 @@ describe("approved room renderer helpers", () => {
       expect(getApprovedDrawPainterGround(records.find((draw) => draw.id === "lights")!)).toBe(2.59);
       expect(resolveApprovedRoomActorSupports("room.ambulatory_or", 0).map((support) =>
         getApprovedSupportPainterGround(support).y
-      )).toEqual([2.6, 3.05, 2.6, 3.05]);
+      )).toEqual([2.6, 3.05, 2.6, 3.05, 2.58]);
     }
   });
 

@@ -534,6 +534,7 @@ describe("approved GS-015 room presentation contract", () => {
     }
     expect(resolveApprovedRoomActorSupports("room.ambulatory_or", 0).map((support) => support.role)).toEqual([
       "ambulatory-or-surgeon", "ambulatory-or-surgeon", "ambulatory-or-nurse", "ambulatory-or-nurse",
+      "procedure-table-patient",
     ]);
     expect(resolveApprovedRoomActorSupports("room.laboratory", 0)[0]?.role).toBe("laboratory-technician");
     expect(resolveApprovedRoomActorSupports("room.pharmacy", 0)[0]?.role).toBe("pharmacist");

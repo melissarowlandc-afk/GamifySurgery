@@ -6,7 +6,7 @@
       "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
       "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
       "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
-      "requiredReleaseSha256": "7d064393332d46f810b5ec0539c339e6a267b645e653ff08c50832f81c116ba6",
+      "requiredReleaseSha256": "f4bf9554e203fddf1dff31914424dc4079acc66a7000af372b44bfb98b4fb72c",
       "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
     },
     {
@@ -2000,6 +2000,62 @@
             ],
             "sourceMilestones": [
               "B-012 tick-admission fix (manager-accepted)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "on": "2026-11-19",
+      "milestone": "release-43 retry: B-014/B-012 authorized source-pin bookkeeping",
+      "priorFixtureSha256": "06eff36f8509338f598ed9574d39b000ee11bef0ea73f5899947ad3ad5d288b9",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "mainBeforeSha256": "b0db2a2b63bdc09836810899f993227c3149f2465478f6a68ae2cc51d232e4ab",
+          "mainAfterSha256": "93501006d93385d1bfc78ed8be0dd56ca28ab8aec07c38d204902ef0e510de9f",
+          "requiredReleaseSha256": "7d064393332d46f810b5ec0539c339e6a267b645e653ff08c50832f81c116ba6",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/tests/approved-clinical-admission.test.ts",
+          "mainBeforeSha256": "c06b05b6fd567362484b6a588be6047d2633684bc0386a9c0a7d2b6760d61863",
+          "mainAfterSha256": "192d7f712c3fd848ab2fdc43a087c522963e1d9ea60ce6f33a34e5523384ce52",
+          "requiredReleaseSha256": "5cf071ff91791ef9d994858bde9167c089c3a715cc24c9a2cbba69eeda9f6500",
+          "reason": "Exact authorized release hunk port preserves pre-existing strict guard/registry fixes; original migration unchanged."
+        },
+        {
+          "path": "packages/game-domain/src/test-choice-orders.ts",
+          "mainBeforeSha256": "cfb0739a97e9eeaa9c671fd4e1da458ec45b0aa2b731863534b42551d80f79e6",
+          "mainAfterSha256": "573f4c6156d7c1819db74ad87e9a6413482a8a4e4f64d0563f3510f50e12a983",
+          "requiredReleaseSha256": "ad2d43ec5f946b6c5b6ffcc58c9fac87d79d12dc1722da9119e5067639c68881",
+          "reason": "Manager-accepted exact eight N4 future-planned diagnostic bindings; retain captured main preimage/postimage."
+        }
+      ],
+      "reason": "Propagate exact accepted B-012 slow-storage source pins for the release-43 retry; B-014 final hashes also verified. Preserve all captures, histories, path counts and non-SHA guard bytes.",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-flags4-acceptance-20261108.test.ts",
+          "on": "2026-11-19",
+          "releaseBeforeSha256": "7d064393332d46f810b5ec0539c339e6a267b645e653ff08c50832f81c116ba6",
+          "previousRequirement": "7d064393332d46f810b5ec0539c339e6a267b645e653ff08c50832f81c116ba6",
+          "releaseAfterSha256": "f4bf9554e203fddf1dff31914424dc4079acc66a7000af372b44bfb98b4fb72c",
+          "milestone": "release-43 retry: B-014/B-012 authorized source-pin bookkeeping",
+          "reason": "Propagate exact accepted B-012 slow-storage source pins for the release-43 retry; B-014 final hashes also verified. Preserve all captures, histories, path counts and non-SHA guard bytes. All other bytes of this guard test are unchanged.",
+          "evidence": {
+            "kind": "exact-fixture-sha-and-count-literal-replacement",
+            "replacements": [
+              {
+                "kind": "fixture-sha256",
+                "before": "c1a8c56a32c334e4d799d0f20ff447bf6f6c0785aa2488f6f6eea40bb19d5236",
+                "after": "c81a356f002016abe6fa99c623fd6b5648019e15fe347242a5bf98c4ab6770ea",
+                "line": 80
+              }
+            ],
+            "sourceMilestones": [
+              "B-012 slow-storage fix (manager-accepted)",
+              "B-014 presentation fix (manager-accepted)"
             ]
           }
         }

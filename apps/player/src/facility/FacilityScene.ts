@@ -3693,8 +3693,26 @@ export class FacilityScene extends Phaser.Scene {
     );
   }
 
+  private periopChairRooms?: FacilityViewModel["rooms"];
+  private periopChairDoors?: FacilityViewModel["doors"];
+  private readonly periopChairLayouts = new Map<string, Readonly<{
+    room: FacilityRoomView; chairs: ReturnType<typeof resolvePeriopCompanionChairs>;
+  }>>();
+
   private getPeriopCompanionChairs(room: FacilityRoomView) {
-    return resolvePeriopCompanionChairs(room, this.bridge.viewModel.doors ?? [], this.bridge.viewModel.rooms);
+    if (room.definitionId !== "room.periop_recovery") return [];
+    const {rooms, doors} = this.bridge.viewModel;
+    // View projections replace these arrays on geometry changes. Retain only
+    // the current layout; never rescan/convert the whole clinic for each sitter.
+    if (this.periopChairRooms !== rooms || this.periopChairDoors !== doors) {
+      this.periopChairRooms = rooms; this.periopChairDoors = doors;
+      this.periopChairLayouts.clear();
+    }
+    const cached = this.periopChairLayouts.get(room.instanceId);
+    if (cached?.room === room) return cached.chairs;
+    const chairs = resolvePeriopCompanionChairs(room, doors ?? [], rooms);
+    this.periopChairLayouts.set(room.instanceId, {room, chairs});
+    return chairs;
   }
 
   /** Paints touch-up primitives authored at 120 px per tile. */
@@ -7632,7 +7650,7 @@ export class FacilityScene extends Phaser.Scene {
       ? this.getFrontDeskV5ActorDisplayPosition(location, Boolean(patient.moving), "public")
       : undefined;
     const approvedSupportDisplay = frontDeskDisplay ??
-      this.getApprovedActorSupportDisplayPosition(location, moving, patient.supportRole, patient.supportId);
+      this.getApprovedActorSupportDisplayPosition(location, moving, patient.supportRole, patient.supportId, patient.supportRoomInstanceId);
     pose = approvedSupportDisplay?.pose ?? pose;
     const renderedDirection = approvedSupportDisplay?.direction ??
       stationaryFloorDirection(moving, direction, destinationPose !== undefined);
@@ -7720,7 +7738,8 @@ export class FacilityScene extends Phaser.Scene {
     const direction = actor.direction ?? "front";
     const graphics = this.getCharacterGraphics(key);
     const room = this.bridge.viewModel.rooms.find((candidate) =>
-      candidate.instanceId === actor.procedureCompanion?.waitingReservation?.roomInstanceId);
+      candidate.instanceId === (actor.procedureCompanion?.waitingReservation?.roomInstanceId ??
+        (actor.pediatricFamilyId ? actor.supportRoomInstanceId : undefined)));
     const chair = room ? getPeriopCompanionChairForActor(actor, this.getPeriopCompanionChairs(room)) : undefined;
     const supportDisplay = actor.supportRole ? this.getApprovedActorSupportDisplayPosition(
       location, moving, actor.supportRole, actor.supportId, actor.supportRoomInstanceId,

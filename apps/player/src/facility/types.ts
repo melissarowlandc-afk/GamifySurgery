@@ -46,6 +46,7 @@ export type FacilityActorSupportRole =
   | "phlebotomy-clinician"
   | "endoscopy-provider"
   | "endoscopy-nurse"
+  | "procedure-table-patient"
   | "periop-bed-patient"
   | "periop-companion-seat"
   | "glp1-np-station-1"
@@ -79,6 +80,8 @@ export interface FacilityPatientView {
   supportRole?: FacilityActorSupportRole;
   /** Exact presentation support when one semantic role has several furniture surfaces. */
   supportId?: string;
+  /** Exact room owning a presentation-only patient furniture contact. */
+  supportRoomInstanceId?: string;
 }
 
 /** Noninteractive exterior pedestrian; never appears in patient UI. */

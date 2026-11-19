@@ -179,7 +179,7 @@ describe("stats1 short single-skill candidates without live acceptance",()=>{
  it("preserves every protected source/capture through the exact authorized standard/test-hook migration",()=>{
   // Release integration retains every original protected path check.
   const pinsPath="tools/question-quality/fixtures/question-stats1-release-source-pins-20261108.json",pinBytes=readFileSync(new URL("../../../"+pinsPath,import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("c85639237b96d5887ab26ac2f6ba75bd04e12c978e6960b05767f837acc28982");
+  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("49f1b72f939beb3e05bf526f4387e323137a9b31d04d14d0b23cdd19e9a020df");
   const pins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;paths:Array<{path:string;capturedMainSha256:string;requiredReleaseSha256:string|null}>};
   expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-stats1-before-20261108.json",import.meta.url))).digest("hex")).toBe(pins.capturedFixtureSha256);
   expect(pins.paths).toHaveLength(148);

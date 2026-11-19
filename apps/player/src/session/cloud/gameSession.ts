@@ -88,6 +88,7 @@ export class CloudGameSession {
   private requestedReplacement: string | null = null;
   private foregrounding: Promise<boolean> | null = null;
   private journalDrain: LocalJournalDrain | null = null;
+  private journalFailure = false;
   private journalStart = 0;
   private preparedVersion = 0;
   private lastCompaction = performance.now();
@@ -208,11 +209,11 @@ export class CloudGameSession {
           source: loaded.source, confirmed, usageQuestions: [...session.questions.values()], writerGeneration: coordinator.journalWriterGeneration }, coordinator.codec);
         session.journalStart = head.highWater;
         session.compactedThrough = head.highWater;
-        session.journalDrain = new LocalJournalDrain(journal, key, owner, head.highWater, error => coordinator.reportStorageRetry(error),
+        session.journalDrain = new LocalJournalDrain(journal, key, owner, head.highWater, error => { session.journalFailure = true; coordinator.reportStorageRetry(error); },
           rows => session.engine?.hashJournalRows(rows) ?? Promise.resolve(null));
         coordinator.bindJournalOwner(owner);
-        session.journalDrain.onRecovered = () => { coordinator.confirmJournalDurability(); session.emit(); };
-        session.journalDrain.onCommit = () => { coordinator.confirmJournalDurability(); session.emit();
+        session.journalDrain.onRecovered = () => { session.journalFailure = false; coordinator.confirmJournalDurability(); session.emit(); };
+        session.journalDrain.onCommit = () => { session.journalFailure = false; coordinator.confirmJournalDurability(); session.emit();
           if (!session.commandRepair && !session.opening && !session.backgrounded && (typeof document === "undefined" || document.visibilityState !== "hidden")) void session.warmPrepared();
         };
       } catch (error) { session.detach(); coordinator.reportLocalFailure(error); throw error; }
@@ -278,7 +279,7 @@ export class CloudGameSession {
   }
   /** Real clock pulses only. Explicit ADVANCE_TICK commands keep normal order. */
   advanceClock(command: Extract<GameCommand, { type: "ADVANCE_TICK" }>, context: DomainContext): Promise<GameState | null> {
-    if (this.ordered.pending || this.journalDrain?.committing) { this.skippedClockPulses++; return Promise.resolve(null); }
+    if (this.ordered.pending || this.journalFailure) { this.skippedClockPulses++; return Promise.resolve(null); }
     return this.executeAsync(command, context, undefined, false, true);
   }
   get commandPending(): boolean { return this.ordered.pending > 0; }
@@ -656,7 +657,7 @@ export class CloudGameSession {
     }
     if (this.journalDrain) {
       try { const ok = await cloudCheckDeadline(this.journalDrain.drain()); if (ok) this.coordinator.confirmJournalDurability(); return ok; }
-      catch (error) { this.coordinator.reportStorageRetry(error instanceof CloudCacheError ? error : new CloudCacheError("timeout")); return false; }
+      catch (error) { this.journalFailure = true; this.coordinator.reportStorageRetry(error instanceof CloudCacheError ? error : new CloudCacheError("timeout")); return false; }
     }
     if (!this.dirty && !this.flushing || this.durableVersion >= this.changeVersion) return this.coordinator.view.localDurable;
     const version = this.changeVersion;

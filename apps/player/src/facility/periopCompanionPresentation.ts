@@ -105,10 +105,14 @@ export function getPeriopCompanionChairForActor(
   actor: FacilityRetailExternalActorView,
   chairs: readonly PeriopCompanionChairPresentation[],
 ): PeriopCompanionChairPresentation | undefined {
+  if (actor.actorKind !== "companion" || actor.moving || !actor.location) return undefined;
+  if (actor.pediatricFamilyId && actor.supportRoomInstanceId) {
+    return chairs.find(chair => chair.roomInstanceId === actor.supportRoomInstanceId &&
+      chair.anchor.x === actor.location!.x && chair.anchor.y === actor.location!.y);
+  }
   const flow = actor.procedureCompanion;
   const reservation = flow?.waitingReservation;
-  if (actor.actorKind !== "companion" || actor.moving || !actor.location ||
-    flow?.phase !== "waiting_in_periop" || reservation?.kind !== "chair" ||
+  if (flow?.phase !== "waiting_in_periop" || reservation?.kind !== "chair" ||
     flow.periopRoomInstanceId !== reservation.roomInstanceId) return undefined;
   return chairs.find((chair) => chair.roomInstanceId === reservation.roomInstanceId &&
     chair.support.id === reservation.seatId &&

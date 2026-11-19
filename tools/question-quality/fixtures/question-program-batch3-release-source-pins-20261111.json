@@ -18,7 +18,7 @@
       "mainBeforeSha256": "6b6bda28d43a87d16365778aed15e937314d43774c22398cd282ddea47323d95",
       "mainAfterSha256": "da794d14e7e4acf85cc487bfce7a07310d04461779e2dc2f985c89afdf44ba52",
       "releaseBeforeSha256": "520fe53ecd0e037be70f04c7500a0b5c47f2e11e546893c63754d27ab409ad90",
-      "requiredReleaseSha256": "7bdd68b6e37b258d401b417910b9afc8411bbbbc9ac17db572159ea148347f56",
+      "requiredReleaseSha256": "18363607b24cc9f52d730adc5a89c1dcb1c98961ee9de0cbe6f665cf8fdc5ae3",
       "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
     },
     {
@@ -1624,6 +1624,65 @@
             ],
             "sourceMilestones": [
               "B-012 tick-admission fix (manager-accepted)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "on": "2026-11-19",
+      "milestone": "release-43 retry: B-014/B-012 authorized source-pin bookkeeping",
+      "priorFixtureSha256": "631de911caa86c78256bcb110952ec4f32ed33e482538c755cfa3619753ffeda",
+      "priorPaths": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-test-support.ts",
+          "mainBeforeSha256": "42e459846ffd5cc9e1022dc1d5601e88948f6764c49e0b781ea75ab981d01f7e",
+          "mainAfterSha256": "5459f2c4d6c9ad166fa1cb6ad6677dbffbda08197bf096dde89e016ea11f3aa9",
+          "releaseBeforeSha256": "dbd27f1580405ee5bee9308561674ac26e5f5446d014534fe2f32bf501c5b2db",
+          "requiredReleaseSha256": "3d02f6fbeb9fa81caf1948a03f34d26232606e8d3b15afd68658e9f53af9661c",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        },
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+          "mainBeforeSha256": "6b6bda28d43a87d16365778aed15e937314d43774c22398cd282ddea47323d95",
+          "mainAfterSha256": "da794d14e7e4acf85cc487bfce7a07310d04461779e2dc2f985c89afdf44ba52",
+          "releaseBeforeSha256": "520fe53ecd0e037be70f04c7500a0b5c47f2e11e546893c63754d27ab409ad90",
+          "requiredReleaseSha256": "7bdd68b6e37b258d401b417910b9afc8411bbbbc9ac17db572159ea148347f56",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        },
+        {
+          "path": "tests/fixtures/diagnostic-workload.ts",
+          "mainBeforeSha256": "12c41f69689e0888d9510f01fea90e69c2c00a3af712d5eec83e1b90185d8559",
+          "mainAfterSha256": "3862651c9034c43ed2260de97cd1a990423b391da1dcca621a6a9bdc7195399d",
+          "releaseBeforeSha256": "a21f273bc9770967388e9d6d718adece4581765f40c36dbbc7d11650245a6318",
+          "requiredReleaseSha256": "ce5b315de2bd9440072ed206b0d154f41dd98ca1906c891261dc137e5505fa90",
+          "reason": "Manager-authorized release-specific guard history or authentic historical fixture safeguards retained while adding the exact batch3 epoch."
+        }
+      ],
+      "reason": "Propagate exact accepted B-012 slow-storage source pins for the release-43 retry; B-014 final hashes also verified. Preserve all captures, histories, path counts and non-SHA guard bytes.",
+      "testSupportDelta": null,
+      "deltas": [
+        {
+          "path": "packages/clinical-content/src/question-program-batch2-acceptance-20261111.test.ts",
+          "on": "2026-11-19",
+          "releaseBeforeSha256": "7bdd68b6e37b258d401b417910b9afc8411bbbbc9ac17db572159ea148347f56",
+          "previousRequirement": "7bdd68b6e37b258d401b417910b9afc8411bbbbc9ac17db572159ea148347f56",
+          "releaseAfterSha256": "18363607b24cc9f52d730adc5a89c1dcb1c98961ee9de0cbe6f665cf8fdc5ae3",
+          "milestone": "release-43 retry: B-014/B-012 authorized source-pin bookkeeping",
+          "reason": "Propagate exact accepted B-012 slow-storage source pins for the release-43 retry; B-014 final hashes also verified. Preserve all captures, histories, path counts and non-SHA guard bytes. All other bytes of this guard test are unchanged.",
+          "evidence": {
+            "kind": "exact-fixture-sha-and-count-literal-replacement",
+            "replacements": [
+              {
+                "kind": "fixture-sha256",
+                "before": "5979b15fc76baa16a1b3444c4bec535246815391503df59170788d6d32f09a95",
+                "after": "799a710a618bd3dedd681d39e4d38fa6ac13a616c6e9c223660dc1fe0e6d2863",
+                "line": 133
+              }
+            ],
+            "sourceMilestones": [
+              "B-012 slow-storage fix (manager-accepted)",
+              "B-014 presentation fix (manager-accepted)"
             ]
           }
         }

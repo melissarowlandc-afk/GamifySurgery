@@ -844,6 +844,10 @@ const bindSideChairSupport = (
   };
 };
 
+// Only three immutable approved procedure layouts exist. Never rebuild their
+// proof contacts or inspect room/actor occupancy during a frame.
+const procedureSupportLayouts = new Map<string, readonly ApprovedActorSupport[]>();
+
 /** Furniture support contacts for presentation-only actor attachment. */
 export function resolveApprovedRoomActorSupports(
   definitionId: string,
@@ -857,7 +861,10 @@ export function resolveApprovedRoomActorSupports(
   const procedureSpots = APPROVED_PROCEDURE_STAFF_SPOTS[definitionId];
   const procedureLayout = APPROVED_ROOM_NAVIGATION_CONTRACTS[definitionId];
   if (procedureSpots && procedureLayout?.allowedOrientations.includes(orientation as 0 | 270)) {
-    return procedureSpots.map((spot) => {
+    const key = `${definitionId}:${orientation}`;
+    const cached = procedureSupportLayouts.get(key);
+    if (cached) return cached;
+    const staff = procedureSpots.map((spot) => {
       const ground = orientation === 270
         ? { x: spot.ground.y, y: procedureLayout.width - spot.ground.x }
         : spot.ground;
@@ -866,6 +873,30 @@ export function resolveApprovedRoomActorSupports(
         : spot.actor === "provider" ? "ambulatory-or-surgeon" : "ambulatory-or-nurse";
       return support(spot.id, role, "standing", rotateDirection(spot.facing, orientation), ground, ground);
     });
+    const table = resolveApprovedRoomDrawRecords(definitionId, orientation).find(draw => draw.id === "table" || draw.id === "tableEmpty");
+    const capture = getApprovedRoomProofCapture(definitionId, orientation);
+    const footprint = table?.footprint;
+    const seat = definitionId === "room.endoscopy"
+      ? capture && screenPointToLocal(table?.attachments.procedureAttach, capture)
+      : footprint && {x: footprint.left + footprint.width / 2, y: footprint.top + footprint.height / 2};
+    const approach = table?.approach;
+    const model = capture && isObject(capture.dataset.model) ? capture.dataset.model : undefined;
+    const fixtures = isObject(model?.fixtures) ? model.fixtures : undefined;
+    const procedureTable = isObject(fixtures?.procedureTable) ? fixtures.procedureTable : undefined;
+    const footFacing = ({N: "north", S: "south", E: "east", W: "west"} as const)[procedureTable?.footFacing as "N" | "S" | "E" | "W"];
+    const dx = approach && footprint ? approach.x - (footprint.left + footprint.width / 2) : 0;
+    const dy = approach && footprint ? approach.y - (footprint.top + footprint.height / 2) : 0;
+    const facing = footFacing ?? (Math.abs(dx) > Math.abs(dy) ? dx > 0 ? "east" : "west" : dy > 0 ? "south" : "north");
+    const ground = table && seat ? {x: table.worldLocalGround?.[0] ?? seat.x,
+      y: table.worldLocalGround?.[1] ?? (table.depthPolicy === "authored-layer" ? table.depthKey : table.destinationTopLeftTiles[1] + table.renderSizeTiles[1])} : undefined;
+    const patient: ApprovedActorSupport[] = table && seat && ground ? [{
+      ...support("procedure-table:patient", "procedure-table-patient", "exam-table", facing, seat, ground),
+      painterDepth: table.depthPolicy === "authored-layer" ? table.depthKey : ground.y,
+      allowedActors: ["child"],
+    }] : [];
+    const result = [...staff, ...patient];
+    procedureSupportLayouts.set(key, result);
+    return result;
   }
   const level3Supports = orientation === 0 ? APPROVED_LEVEL3_ACTOR_SUPPORTS[definitionId] : undefined;
   if (level3Supports) return level3Supports.map((value) => bindSideChairSupport(

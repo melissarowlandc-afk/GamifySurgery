@@ -163,11 +163,15 @@ describe("furniture seating layer audit", () => {
     }
   });
 
-  it("retains covered Endoscopy/OR patients as the approved table variant rather than a second sitter", () => {
+  it("retains covered adult Endoscopy/OR artwork and reserves the empty-table contact for children", () => {
     for (const room of ["room.endoscopy", "room.ambulatory_or"]) {
       expect(getApprovedRoomPresentation(room)?.variantPolicy?.hideIndividualPatient).toBe(true);
       for (const view of getApprovedRoomPresentation(room)!.orientations) {
-        expect(resolveApprovedRoomActorSupports(room, view.runtimeOrientation).every((support) => support.pose === "standing")).toBe(true);
+        expect(resolveApprovedRoomActorSupports(room, view.runtimeOrientation)
+          .filter(support => support.pose !== "standing")
+          .map(({role, pose, allowedActors}) => ({role, pose, allowedActors}))).toEqual([
+          {role: "procedure-table-patient", pose: "exam-table", allowedActors: ["child"]},
+        ]);
       }
     }
   });
