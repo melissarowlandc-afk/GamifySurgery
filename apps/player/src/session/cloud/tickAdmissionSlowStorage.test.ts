@@ -12,6 +12,7 @@ import { cloudCampaignStorageKey } from "../accountStorageKey";
 import { operationalSessionFixture } from "./operationalSessionTestSupport";
 import { CloudCacheError } from "./codecCache";
 import { CLOUD_WORKER_TASK_TIMEOUT_MS } from "./codecWorker";
+import { FakeCloudServer } from "./fakeTransport";
 import { prepareJournal } from "./journalCodec";
 import { deferred } from "./syncTestSupport";
 import { CadencePort, cadenceState, FRAME_MS, LONG_ROUTE, nativeWorkIdle, NUMERIC_EPSILON,
@@ -66,11 +67,39 @@ function appendObserver(store: JournalStorage, latency: number, held?: Promise<v
 
 async function fixture(operational: boolean, latency = 0, held?: Promise<void>, large = false) {
   const codecBusy = observeCodecWork(), ports: CadencePort[] = [];
-  const f = await operationalSessionFixture({ createPort: () => { const port = new CadencePort(); ports.push(port); return port; } },
-    large ? reviewedClinic() : cadenceState(), operational);
+  let nativeIo = 0;
+  function trackNativeIo<T>(work: Promise<T>): Promise<T> {
+    nativeIo++;
+    const settled = () => { nativeIo--; };
+    void work.then(settled, settled);
+    return work;
+  }
+
+  // Observe the promises on the transport created by the fixture. Restore the
+  // factory after setup, including any slowdown wrapper that was already there.
+  const createTransport = FakeCloudServer.prototype.transport;
+  FakeCloudServer.prototype.transport = function (accountId) {
+    const transport = createTransport.call(this, accountId);
+    const { commit, release } = transport;
+    transport.commit = request => trackNativeIo(commit.call(transport, request));
+    transport.release = lease => trackNativeIo(release.call(transport, lease));
+    return transport;
+  };
+  let f: Awaited<ReturnType<typeof operationalSessionFixture>>;
+  try {
+    f = await operationalSessionFixture({ createPort: () => { const port = new CadencePort(); ports.push(port); return port; } },
+      large ? reviewedClinic() : cadenceState(), operational);
+  } finally {
+    FakeCloudServer.prototype.transport = createTransport;
+  }
+
+  // Include cache pack/unpack and readback through their completion.
+  const read = f.cache.read.bind(f.cache), write = f.cache.write.bind(f.cache);
+  vi.spyOn(f.cache, "read").mockImplementation((...args) => trackNativeIo(read(...args)));
+  vi.spyOn(f.cache, "write").mockImplementation((...args) => trackNativeIo(write(...args)));
   expect(await f.session.durable()).toBe(true); // Setup only; never inside the pulse window.
   const io = appendObserver(f.coordinator.journal!, latency, held);
-  const busy = () => codecBusy() || io.native > 0 || ports.some(port => port.outstanding.size > 0);
+  const busy = () => nativeIo > 0 || codecBusy() || io.native > 0 || ports.some(port => port.outstanding.size > 0);
   await nativeWorkIdle(busy);
   vi.useFakeTimers({ toFake: ["Date", "setTimeout", "clearTimeout", "setInterval", "clearInterval"] });
   vi.setSystemTime(f.clock.wall);
