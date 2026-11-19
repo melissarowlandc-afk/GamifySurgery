@@ -36,9 +36,16 @@ describe("M2 shared catalog, desktop and phone parity", () => {
     PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = createLevelFiveStateQaContext().balanceRelease;
     const state = createLevelFiveStateQaState("pre-goal"), view = createPrototypePlayerView(state, null, false, null, true);
     const phone = catalog(view), desk = desktop(view);
+    const caps = {
+      "room.founder_office": 1,
+      "room.executive_office": 1,
+      "room.gift_shop": 2,
+      "room.indoor_garden": 4,
+      "room.staff_gym": 1,
+    };
     for (const site of LEVEL_FIVE_ROOMS_QA_PLACEMENTS) {
       const definition = getRoomDefinition(site.roomDefinitionId)!;
-      expect(view.roomOptions.find(r => r.id === definition.id)).toMatchObject({ enabled: true, builtCountLabel: "0 / 1 built",
+      expect(view.roomOptions.find(r => r.id === definition.id)).toMatchObject({ enabled: true, builtCountLabel: `0 / ${caps[site.roomDefinitionId]} built`,
         costLabel: `$${definition.constructionCost.toLocaleString()}`, upkeepLabel: "$1 upkeep / hr", footprintLabel: `${definition.width} × ${definition.height} tiles` });
       expect(phone).toContain(`data-build-room-option="${definition.id}"`);
       expect(desk).toContain(definition.displayName.replaceAll("'", "&#x27;"));

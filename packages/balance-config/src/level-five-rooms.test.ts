@@ -4,18 +4,18 @@ import { APPROVED_LEVEL5_ROOM_NAVIGATION_CONTRACTS, APPROVED_LEVEL5_SUPPORT_NAVI
 import { getRoomUpgradeAmount, getRoomUpgradeCost, getRoomUpgradeDefinition, getRoomUpgradeRevenueMultiplier } from "./room-upgrades";
 
 const expected = [
-  ["room.founder_office", 3, 3, 1580, [300, 500, 900, 1400]],
-  ["room.executive_office", 3, 2, 2640, [500, 750, 1320, 2100]],
-  ["room.gift_shop", 3, 3, 1060, [200, 300, 540, 840]],
-  ["room.indoor_garden", 4, 4, 1060, [200, 300, 540, 840]],
-  ["room.staff_gym", 4, 4, 1320, [250, 375, 660, 1050]],
+  ["room.founder_office", 3, 3, 1580, 1, [300, 500, 900, 1400]],
+  ["room.executive_office", 3, 2, 2640, 1, [500, 750, 1320, 2100]],
+  ["room.gift_shop", 3, 3, 1060, 2, [200, 300, 540, 840]],
+  ["room.indoor_garden", 4, 4, 1060, 4, [200, 300, 540, 840]],
+  ["room.staff_gym", 4, 4, 1320, 1, [250, 375, 660, 1050]],
 ] as const;
 
 describe("M2 Level 5 base catalog", () => {
-  it.each(expected)("registers %s's approved size, price, cap and implemented support ladder", (id, width, height, cost, prices) => {
+  it.each(expected)("registers %s's approved size, price, cap and implemented support ladder", (id, width, height, cost, cap, prices) => {
     const room = PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(room => room.id === id)!;
     expect(room).toMatchObject({ width, height, constructionCost: cost, unlockFacilityLevel: 5, buildable: true,
-      maximumInstances: 1, upkeepPerExpenseInterval: 1, upkeepPerUpgradeLevel: 0, maximumUpgradeLevel: 5,
+      maximumInstances: cap, upkeepPerExpenseInterval: 1, upkeepPerUpgradeLevel: 0, maximumUpgradeLevel: 5,
       satisfactionOnBuild: 0, workloadLimitContribution: 0, workloadLimitContributionPerUpgradeLevel: 0,
       serviceDurationReductionPercentPerUpgradeLevel: 0, requiredRoomDefinitionIds: ["room.front_desk"],
       capabilityIds: id === "room.gift_shop" ? ["capability.gift_shop"] : [], upgradeCosts: [...prices] });

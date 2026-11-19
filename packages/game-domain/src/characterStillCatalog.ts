@@ -41,7 +41,7 @@ export type CharacterStillCatalogEntry =
   | {
       readonly stillId: CharacterStillId;
       readonly category: "staff";
-      readonly sourceCohort: "gs022-employee20" | "gs018-foundation-employee" | "gs026-employee-coverage" | "level3-roster-v2" | "future-roster20-v5" | "staff-gapfill-v6d" | "app-gapfill-v6e";
+      readonly sourceCohort: "gs022-employee20" | "gs018-foundation-employee" | "gs026-employee-coverage" | "level3-roster-v2" | "future-roster20-v5" | "staff-gapfill-v6d" | "app-gapfill-v6e" | "app-variety-v1" | "staff-variety-v1";
       readonly eligibleStaffRoleDefinitionIds: readonly string[];
     }
   | {
@@ -381,6 +381,33 @@ const APP_GAPFILL_V6E_STILLS = APP_GAPFILL_V6E_ROWS.map(([number, role]) => ({
   sourceCohort: "app-gapfill-v6e" as const, eligibleStaffRoleDefinitionIds: [role],
 }));
 
+// Owner approved D-2026-11-19-05 and D-2026-11-19-07. The first four APP IDs
+// are the pilot, including the revised .001. Each staff look has one role.
+const APP_VARIETY_V1_STILLS = Array.from({ length: 22 }, (_, index) => ({
+  stillId: id(`app-variety-v1.${String(index + 1).padStart(3, "0")}`),
+  category: "staff" as const, sourceCohort: "app-variety-v1" as const,
+  eligibleStaffRoleDefinitionIds: ["staff.app"],
+}));
+
+const STAFF_VARIETY_V1_ROLES = [
+  ["staff.surgeon", 1, 8],
+  ["staff.radiologist", 9, 16],
+  ["staff.imaging_technician", 17, 22],
+  ["staff.periop_nurse", 23, 28],
+  ["staff.glp1_np", 29, 33],
+  ["staff.endoscopist", 34, 37],
+  ["staff.endoscopy_nurse", 38, 41],
+  ["staff.or_nurse", 42, 43],
+] as const;
+
+const STAFF_VARIETY_V1_STILLS = STAFF_VARIETY_V1_ROLES.flatMap(([role, first, last]) =>
+  Array.from({ length: last - first + 1 }, (_, index) => ({
+    stillId: id(`staff-variety-v1.${String(first + index).padStart(3, "0")}`),
+    category: "staff" as const, sourceCohort: "staff-variety-v1" as const,
+    eligibleStaffRoleDefinitionIds: [role],
+  })),
+);
+
 /** Manager-accepted v6f cast; only the dedicated inspection presentation uses it. */
 export const INSPECTOR_CHARACTER_STILLS = Array.from({ length: 10 }, (_, index) => ({
   stillId: id(`inspector-v6f.${String(index + 1).padStart(3, "0")}`),
@@ -415,19 +442,32 @@ export const CHARACTER_STILL_CATALOG = [
   ...STAFF_GAPFILL_V6D_STILLS,
   ...APP_GAPFILL_V6E_STILLS,
   ...INSPECTOR_CHARACTER_STILLS,
+  ...APP_VARIETY_V1_STILLS, ...STAFF_VARIETY_V1_STILLS,
 ] as readonly CharacterStillCatalogEntry[];
+
+const stillsById = new Map(CHARACTER_STILL_CATALOG.map((entry) => [entry.stillId, entry] as const));
 
 export const PATIENT_CHARACTER_STILLS = CHARACTER_STILL_CATALOG.filter((entry): entry is Extract<CharacterStillCatalogEntry, { category: "patient" }> => entry.category === "patient");
 export const STAFF_CHARACTER_STILLS = CHARACTER_STILL_CATALOG.filter((entry): entry is Extract<CharacterStillCatalogEntry, { category: "staff" }> => entry.category === "staff");
 export const EXPLICIT_ADDITIONAL_AVATAR_STILLS = CHARACTER_STILL_CATALOG.filter((entry): entry is Extract<CharacterStillCatalogEntry, { category: "explicit-avatar-extra" }> => entry.category === "explicit-avatar-extra");
 export const FUTURE_PRESENTATION_CHARACTER_STILLS = CHARACTER_STILL_CATALOG.filter((entry): entry is Extract<CharacterStillCatalogEntry, { category: "future-presentation" }> => entry.category === "future-presentation");
 
+// Guidance and view models query these pools during play.
+const staffStillsByRole = new Map<string, Array<(typeof STAFF_CHARACTER_STILLS)[number]>>();
+for (const entry of STAFF_CHARACTER_STILLS) {
+  for (const role of entry.eligibleStaffRoleDefinitionIds) {
+    const pool = staffStillsByRole.get(role);
+    if (pool) pool.push(entry);
+    else staffStillsByRole.set(role, [entry]);
+  }
+}
+
 export function isCharacterStillId(value: unknown): value is CharacterStillId {
   return typeof value === "string" && value.length > 0 && value.length <= MAX_CHARACTER_STILL_ID_LENGTH && value.trim() === value;
 }
 
 export function characterStillCatalogEntryById(stillId: string | undefined): CharacterStillCatalogEntry | undefined {
-  return CHARACTER_STILL_CATALOG.find((entry) => entry.stillId === stillId);
+  return stillId === undefined ? undefined : stillsById.get(stillId);
 }
 
 export function patientStillEligibleEntries(sexLabel?: PatientSexLabel, ageYears?: number) {
@@ -442,7 +482,7 @@ export function patientStillEligibleEntries(sexLabel?: PatientSexLabel, ageYears
 }
 
 export function staffStillEligibleEntries(staffRoleDefinitionId: string) {
-  return STAFF_CHARACTER_STILLS.filter((entry) => entry.eligibleStaffRoleDefinitionIds.includes(staffRoleDefinitionId));
+  return staffStillsByRole.get(staffRoleDefinitionId)?.slice() ?? [];
 }
 
 export function founderStillIdForPresetIds(headId: string, bodyId: string): CharacterStillId | undefined {

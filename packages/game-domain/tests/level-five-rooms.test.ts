@@ -29,8 +29,21 @@ describe("Level 5 M2 real construction and compatibility", () => {
   });
   it.each(LEVEL_FIVE_ROOMS_QA_PLACEMENTS)("guards $roomDefinitionId's unlock/cap/upgrade and sale without duplicated finance", site => {
     const state = createLevelFiveStateQaState("rooms", context);
-    const over = gameReducer(state, { type: "PLACE_ROOM", operationId: "over-cap", roomId: "second", roomDefinitionId: site.roomDefinitionId, x: 5, y: 5 }, context);
-    expect(over.operationReceipts["over-cap"]?.status).toBe("rejected"); expect(over.cashCents).toBe(state.cashCents);
+    const definition = context.balanceRelease.facility.roomDefinitions.find(room => room.id === site.roomDefinitionId)!;
+    const cap = definition.maximumInstances!;
+    let atCap = state;
+    for (let index = 1; index < cap; index++) {
+      const operationId = `cap-fill-${index}`;
+      atCap = gameReducer(atCap, { type: "PLACE_ROOM", operationId, roomId: operationId, roomDefinitionId: site.roomDefinitionId,
+        x: 5 + (index - 1) * definition.width, y: 5 }, context);
+      expect(atCap.operationReceipts[operationId]?.status).toBe("applied");
+    }
+    const over = gameReducer(atCap, { type: "PLACE_ROOM", operationId: "over-cap", roomId: "over-cap", roomDefinitionId: site.roomDefinitionId,
+      x: 5 + (cap - 1) * definition.width, y: 5 }, context);
+    expect(over.operationReceipts["over-cap"]).toMatchObject({
+      status: "rejected", message: `${definition.displayName} has reached its maximum of ${cap}.`,
+    });
+    expect(over.cashCents).toBe(atCap.cashCents);
     const locked = structuredClone(state); locked.facilityLevel = 4;
     locked.rooms = locked.rooms.filter(r => r.roomDefinitionId !== site.roomDefinitionId);
     const denied = gameReducer(locked, { type: "PLACE_ROOM", operationId: "locked", roomId: "locked-room", roomDefinitionId: site.roomDefinitionId, x: 5, y: 5 }, context);
@@ -38,7 +51,7 @@ describe("Level 5 M2 real construction and compatibility", () => {
     const upgrade = gameReducer(state, { type: "UPGRADE_ROOM", operationId: "future-effect", roomId: site.roomId }, context);
     const active = true;
     expect(upgrade.operationReceipts["future-effect"]?.status).toBe(active ? "applied" : "rejected");
-    const cost = context.balanceRelease.facility.roomDefinitions.find(room => room.id === site.roomDefinitionId)!.upgradeCosts[0]!;
+    const cost = definition.upgradeCosts[0]!;
     expect(upgrade.cashCents).toBe(state.cashCents - (active ? cost * 100 : 0));
     const refund = getRoomResaleValue(state, site.roomId, context)!;
     const command = { type: "SELL_ROOM" as const, operationId: "sale", roomId: site.roomId };

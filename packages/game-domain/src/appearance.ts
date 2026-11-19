@@ -666,24 +666,19 @@ export function selectStaffStillId(
     (stillId) => !occupiedStillIds.has(stillId) && eligible.some((entry) => entry.stillId === stillId),
   );
   if (orderedStillId) return orderedStillId;
-  // Seeded selection starts from the complete eligible pool. Filtering before the hash
-  // changes an otherwise free employee's identity whenever somebody else
-  // occupies an unrelated option in that role's pool.
-  const preferred = eligible[
-    deterministicInteger(
-      campaignSeed,
-      RANDOM_STREAMS.staffAppearance,
-      `${employeeId}:${staffRoleDefinitionId}:staff-still.v1`,
-      eligible.length,
-    )
-  ];
-  if (preferred && !occupiedStillIds.has(preferred.stillId)) {
-    return preferred.stillId;
-  }
-  const available = eligible.filter((entry) => !occupiedStillIds.has(entry.stillId));
-  return available.length > 0
-    ? available[deterministicInteger(campaignSeed, RANDOM_STREAMS.staffAppearance, `${employeeId}:${staffRoleDefinitionId}:staff-still.v1`, available.length)]?.stillId
-    : undefined;
+  // Keep the complete original pool for the seeded pick. The new looks extend
+  // capacity once the role's original looks are occupied.
+  const original = eligible.filter((entry) =>
+    entry.sourceCohort !== "app-variety-v1" && entry.sourceCohort !== "staff-variety-v1",
+  );
+  const pick = (pool: typeof eligible) => pool.length === 0 ? undefined : pool[
+    deterministicInteger(campaignSeed, RANDOM_STREAMS.staffAppearance, `${employeeId}:${staffRoleDefinitionId}:staff-still.v1`, pool.length)
+  ]?.stillId;
+  const preferred = pick(original);
+  if (preferred && !occupiedStillIds.has(preferred)) return preferred;
+  const isFree = (entry: (typeof eligible)[number]) => !occupiedStillIds.has(entry.stillId);
+  const freeOriginal = original.filter(isFree);
+  return pick(freeOriginal.length > 0 ? freeOriginal : eligible.filter(isFree));
 }
 
 function staffRoleDefinitionForRoleStyle(roleStyle: PixelRoleStyle): string | undefined {

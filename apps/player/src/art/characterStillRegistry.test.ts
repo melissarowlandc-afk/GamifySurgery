@@ -7,6 +7,7 @@ import {
   getCharacterStillEntry,
   getClipboardStill,
   resolveCharacterStillAssetUrl,
+  type CharacterStillCohort,
 } from "./characterStillRegistry";
 import { PATIENT_CHARACTER_STILLS, STAFF_CHARACTER_STILLS } from "@gamify-surgery/game-domain";
 import ownerApproval from "../../../../tools/character-mapping/future-roster20-v5/owner-approval.json";
@@ -16,45 +17,41 @@ import v6dApproval from "../../../../tools/character-mapping/staff-gapfill-v6d/o
 import v6cApproval from "../../../../tools/character-mapping/patient-gapfill-v6c/owner-approval.json";
 import v6eApproval from "../../../../tools/character-mapping/app-gapfill-v6e/owner-approval.json";
 
+const ASSET_ROOTS: Partial<Record<CharacterStillCohort, string>> = {
+  employeeCoverage: "gs026-employee-expansion-v1",
+  level3RosterV2: "level3-roster-v2",
+  patientWomen20V3: "patient-women20-v3",
+  patientDemographics20V4: "patient-demographics20-v4",
+  futureRoster20V5: "future-roster20-v5",
+  patientGapfillV6a: "patient-gapfill-v6a",
+  patientGapfillV6b: "patient-gapfill-v6b",
+  patientGapfillV6c: "patient-gapfill-v6c",
+  staffGapfillV6d: "staff-gapfill-v6d",
+  appGapfillV6e: "app-gapfill-v6e",
+  inspectorV6f: "inspector-v6f",
+  appVarietyV1: "app-variety-v1",
+  staffVarietyV1: "staff-variety-v1",
+};
+
 describe("characterStillRegistry", () => {
   it("exposes every packaged identity and cardinal still without fallback", () => {
-    expect(characterStillRegistry.counts).toEqual({ identities: 336, cardinalPoses: 2688, clipboardPoses: 30, assets: 2718 });
+    expect(characterStillRegistry.counts).toEqual({ identities: 401, cardinalPoses: 3208, clipboardPoses: 30, assets: 3238 });
     const entries = getAllCharacterStillEntries();
-    expect(entries).toHaveLength(336);
-    expect(new Set(entries.map((entry) => entry.id)).size).toBe(336);
+    expect(entries).toHaveLength(401);
+    expect(new Set(entries.map((entry) => entry.id)).size).toBe(401);
     for (const entry of entries) {
       for (const posture of ["stand", "sit"] as const) {
         for (const direction of CHARACTER_STILL_DIRECTIONS) {
           const asset = getCharacterStill(entry.id, posture, direction);
           expect(asset?.width).toBe(160);
           expect(asset?.height).toBe(320);
-          const assetRoot = entry.cohort === "employeeCoverage"
-            ? "gs026-employee-expansion-v1"
-            : entry.cohort === "level3RosterV2"
-              ? "level3-roster-v2"
-              : entry.cohort === "patientWomen20V3"
-                ? "patient-women20-v3"
-                : entry.cohort === "patientDemographics20V4"
-                  ? "patient-demographics20-v4"
-                  : entry.cohort === "futureRoster20V5"
-                    ? "future-roster20-v5"
-                    : entry.cohort === "patientGapfillV6a"
-                      ? "patient-gapfill-v6a"
-                      : entry.cohort === "patientGapfillV6b"
-                        ? "patient-gapfill-v6b"
-                        : entry.cohort === "patientGapfillV6c"
-                          ? "patient-gapfill-v6c"
-                          : entry.cohort === "staffGapfillV6d"
-                            ? "staff-gapfill-v6d"
-                            : entry.cohort === "appGapfillV6e"
-                              ? "app-gapfill-v6e"
-                              : entry.cohort === "inspectorV6f" ? "inspector-v6f" : "gs026-stills-v1";
+          const assetRoot = ASSET_ROOTS[entry.cohort] ?? "gs026-stills-v1";
           expect(asset?.url).toBe(`art/characters/${assetRoot}/${entry.id}/${posture}-${direction}.png`);
         }
       }
     }
     const seatedAssets = entries.flatMap((entry) => CHARACTER_STILL_DIRECTIONS.map((direction) => entry.poses.sit[direction]));
-    expect(seatedAssets).toHaveLength(1344);
+    expect(seatedAssets).toHaveLength(1604);
     for (const asset of seatedAssets) {
       expect(Number.isFinite(asset.anchors.seatContactY)).toBe(true);
       expect(asset.anchors.seatContactY).toBeGreaterThan(0);

@@ -167,7 +167,7 @@ describe("owner-requested colleague Easter-egg names", () => {
       if (row?.intendedAge === undefined || row?.intendedSex === undefined) continue;
       expect(getNamePresentationProfile(staff)).toEqual({ ageYears: row.intendedAge, sexLabel: row.intendedSex }); checked++;
     }
-    expect(checked).toBe(38);
+    expect(checked).toBe(103);
     for (const stillId of ["level3-roster-v2.001", "level3-roster-v2.002", "level3-roster-v2.003", "level3-roster-v2.004", "gs022-new-employee-001", "unknown"]) expect(getNamePresentationProfile({ stillId })).toEqual({});
   });
 

@@ -24,11 +24,11 @@ import {
 } from "./characterStillCatalog";
 
 describe("character still selection catalog", () => {
-  it("covers all 336 packaged identities through explicit selection categories", () => {
-    expect(CHARACTER_STILL_CATALOG).toHaveLength(336);
-    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(336);
+  it("covers all 401 packaged identities through explicit selection categories", () => {
+    expect(CHARACTER_STILL_CATALOG).toHaveLength(401);
+    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(401);
     expect(PATIENT_CHARACTER_STILLS).toHaveLength(179);
-    expect(STAFF_CHARACTER_STILLS).toHaveLength(99);
+    expect(STAFF_CHARACTER_STILLS).toHaveLength(164);
     expect(FOUNDER_STILL_IDS).toHaveLength(30);
     expect(EXPLICIT_ADDITIONAL_AVATAR_STILLS).toHaveLength(6);
     expect(FUTURE_PRESENTATION_CHARACTER_STILLS).toHaveLength(0);
@@ -214,8 +214,8 @@ describe("character still selection catalog", () => {
 
   it("admits all fourteen manager-approved v6d staff only to their single assigned role", () => {
     const rolePools = [
-      ["staff.imaging_technician", 5], ["staff.phlebotomist", 5],
-      ["staff.laboratory_technician", 4], ["staff.surgeon", 4], ["staff.or_nurse", 4],
+      ["staff.imaging_technician", 11], ["staff.phlebotomist", 5],
+      ["staff.laboratory_technician", 4], ["staff.surgeon", 12], ["staff.or_nurse", 6],
       ["staff.pharmacist", 4], ["staff.repair_person", 4],
     ] as const;
     const additions = STAFF_CHARACTER_STILLS.filter(entry => entry.sourceCohort === "staff-gapfill-v6d");
@@ -263,7 +263,7 @@ describe("character still selection catalog", () => {
     const pool = staffStillEligibleEntries("staff.radiologist");
     const additions = pool.filter(entry => entry.sourceCohort === "future-roster20-v5");
     expect(additions).toHaveLength(12);
-    expect(pool).toHaveLength(16);
+    expect(pool).toHaveLength(24);
     const occupied = new Set<string>();
     for (let index = 0; index < pool.length; index += 1) {
       const selected = selectStaffStillId("GS-033-radiologists", `employee.${index}`, "staff.radiologist", undefined, occupied);
@@ -294,7 +294,7 @@ describe("character still selection catalog", () => {
     const additions = STAFF_CHARACTER_STILLS.filter(entry => entry.sourceCohort === "app-gapfill-v6e");
     expect(additions.map(entry => entry.stillId)).toEqual(Array.from({ length: 8 }, (_, i) => `app-gapfill-v6e.${String(i + 1).padStart(3, "0")}`));
     const pool = staffStillEligibleEntries("staff.app");
-    expect(pool.map(entry => entry.stillId)).toEqual(["future-roster20-v5.001", "future-roster20-v5.002", ...additions.map(entry => entry.stillId)]);
+    expect(pool.slice(0, 10).map(entry => entry.stillId)).toEqual(["future-roster20-v5.001", "future-roster20-v5.002", ...additions.map(entry => entry.stillId)]);
     const allRoles = [...PROTOTYPE_BALANCE_RELEASE.facility.staffRoleDefinitions.map(role => role.id), "staff.executive"];
     for (const entry of additions) {
       expect(entry.eligibleStaffRoleDefinitionIds).toEqual(["staff.app"]);
@@ -308,7 +308,7 @@ describe("character still selection catalog", () => {
       expect(selected).toBeDefined(); expect(occupied.has(selected!)).toBe(false); occupied.add(selected!);
     }
     expect([...occupied].sort()).toEqual(pool.map(entry => entry.stillId).sort());
-    expect(selectStaffStillId("v6e-hires", "eleventh", "staff.app", undefined, occupied)).toBeUndefined();
+    expect(selectStaffStillId("v6e-hires", "exhausted", "staff.app", undefined, occupied)).toBeUndefined();
     for (const entry of pool) {
       const otherCurrentOrDepartingIds = new Set(pool.filter(other => other.stillId !== entry.stillId).map(other => other.stillId));
       expect(selectStaffStillId("saved-campaign", "current-app", "staff.app", entry.stillId, otherCurrentOrDepartingIds)).toBe(entry.stillId);

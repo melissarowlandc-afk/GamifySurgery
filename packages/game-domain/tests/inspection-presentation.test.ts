@@ -25,7 +25,7 @@ describe("Level 5 M7b inspection actors", () => {
   it("keeps all ten inspector looks out of every employee and patient pool", () => {
     expect(INSPECTOR_CHARACTER_STILLS).toHaveLength(10);
     expect(new Set(INSPECTOR_CHARACTER_STILLS.map(row => row.stillId)).size).toBe(10);
-    expect(PATIENT_CHARACTER_STILLS).toHaveLength(179); expect(STAFF_CHARACTER_STILLS).toHaveLength(99);
+    expect(PATIENT_CHARACTER_STILLS).toHaveLength(179); expect(STAFF_CHARACTER_STILLS).toHaveLength(164);
     for (const role of [...context.balanceRelease.facility.staffRoleDefinitions.map(role => role.id), "staff.inspector", "inspection-agent"])
       expect(staffStillEligibleEntries(role).some(row => row.stillId.startsWith("inspector-v6f"))).toBe(false);
   });

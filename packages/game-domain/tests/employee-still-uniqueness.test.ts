@@ -45,7 +45,7 @@ function stateWithStaff(seed = "employee-still-uniqueness"): GameState {
 }
 
 describe("employee still uniqueness", () => {
-  it("allocates 43 distinct eligible employee designs across both role orders", () => {
+  it("allocates 46 distinct eligible employee designs across both role orders", () => {
     const state = stateWithStaff("all-openings");
     const addRooms = (prefix: string, roomDefinitionId: string, count: number) => {
       expect(PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.roomDefinitions
@@ -62,13 +62,13 @@ describe("employee still uniqueness", () => {
         });
       }
     };
-    addRooms("room.ultrasound", "room.ultrasound", 1);
-    addRooms("room.xray", "room.xray", 1);
-    addRooms("room.ct", "room.ct", 1);
-    addRooms("room.periop", "room.periop_recovery", 3);
-    addRooms("room.endoscopy", "room.endoscopy", 5);
+    addRooms("room.ultrasound", "room.ultrasound", 2);
+    addRooms("room.xray", "room.xray", 2);
+    addRooms("room.ct", "room.ct", 2);
+    addRooms("room.periop", "room.periop_recovery", 4);
+    addRooms("room.endoscopy", "room.endoscopy", 6);
     addRooms("room.phlebotomy", "room.phlebotomy", 3);
-    addRooms("room.evs", "room.evs_closet", 10);
+    addRooms("room.evs", "room.evs_closet", 6);
     addRooms("room.glp", "room.glp1_telehealth_suite", 5);
     const roles = [
       "staff.receptionist",
@@ -82,9 +82,9 @@ describe("employee still uniqueness", () => {
     ] as const;
     const openings = roles.map((role) => [role, getRoomStaffCapacity(state, role).capacity] as const);
     expect(openings).toEqual([
-      ["staff.receptionist", 1], ["staff.imaging_technician", 3], ["staff.periop_nurse", 6],
-      ["staff.endoscopy_nurse", 5], ["staff.endoscopist", 5], ["staff.phlebotomist", 3],
-      ["staff.evs_worker", 10], ["staff.glp1_np", 10],
+      ["staff.receptionist", 1], ["staff.imaging_technician", 6], ["staff.periop_nurse", 8],
+      ["staff.endoscopy_nurse", 6], ["staff.endoscopist", 6], ["staff.phlebotomist", 3],
+      ["staff.evs_worker", 6], ["staff.glp1_np", 10],
     ]);
     for (const roles of [openings, [...openings].reverse()] as const) {
       const occupied = new Set<string>();
@@ -103,7 +103,7 @@ describe("employee still uniqueness", () => {
           roster.employees.push(staff(roster, `employee.${role}.${index}`, role, stillId!, roster.employees.length));
         }
       }
-      expect(occupied).toHaveLength(43);
+      expect(occupied).toHaveLength(46);
       expect(deserializeGameState(serializeGameState(roster)).employees.map((employee) => employee.appearance.stillId)).toEqual(
         roster.employees.map((employee) => employee.appearance.stillId),
       );

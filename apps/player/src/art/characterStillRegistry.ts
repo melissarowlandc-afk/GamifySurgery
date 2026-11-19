@@ -7,7 +7,7 @@ export const CHARACTER_STILL_POSTURES = ["stand", "sit"] as const;
 
 export type CharacterStillDirection = (typeof CHARACTER_STILL_DIRECTIONS)[number];
 export type CharacterStillPosture = (typeof CHARACTER_STILL_POSTURES)[number];
-export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage" | "level3RosterV2" | "patientWomen20V3" | "patientDemographics20V4" | "futureRoster20V5" | "patientGapfillV6a" | "patientGapfillV6b" | "patientGapfillV6c" | "staffGapfillV6d" | "appGapfillV6e" | "inspectorV6f";
+export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage" | "level3RosterV2" | "patientWomen20V3" | "patientDemographics20V4" | "futureRoster20V5" | "patientGapfillV6a" | "patientGapfillV6b" | "patientGapfillV6c" | "staffGapfillV6d" | "appGapfillV6e" | "inspectorV6f" | "appVarietyV1" | "staffVarietyV1";
 
 export interface CharacterStillAsset {
   readonly url: string;

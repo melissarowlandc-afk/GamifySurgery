@@ -24,12 +24,13 @@ describe("M3 room definitions and option B upkeep", () => {
     expect(getCurrentRoomUpgradeDefinition(id)?.upgradeCosts).toEqual([...prices]);
   });
 
-  it("makes ordinary Level 4 reachable with APP unlocked at 4, and MRI's cap equal to every other imaging type", () => {
+  it("makes ordinary Level 4 reachable with APP unlocked at 4 and MRI capped at one", () => {
     expect(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel).toBe(5);
     expect(PROTOTYPE_BALANCE_RELEASE.facility.stageDefinitions.map((stage) => stage.level)).toEqual([0, 1, 2, 3, 4, 5]);
     expect(PROTOTYPE_BALANCE_RELEASE.facility.stageDefinitions.at(-1)?.nextFacilityLevel).toBeNull();
     expect(PROTOTYPE_BALANCE_RELEASE.facility.staffRoleDefinitions.find((role) => role.id === "staff.app")?.unlockFacilityLevel).toBe(4);
-    for (const id of ["room.ultrasound", "room.xray", "room.ct"]) expect(room("room.mri").maximumInstances).toBe(room(id).maximumInstances);
+    expect(room("room.mri").maximumInstances).toBe(1);
+    for (const id of ["room.ultrasound", "room.xray", "room.ct"]) expect(room(id).maximumInstances).toBe(2);
     expect(APPROVED_LEVEL4_SUPPORT_NAVIGATION["room.pediatric_waiting"]).toHaveLength(9);
     expect(room("room.pediatric_waiting").navigation?.waitingAnchors).toEqual([]);
   });

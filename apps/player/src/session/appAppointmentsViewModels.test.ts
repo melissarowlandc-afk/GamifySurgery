@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createAppAppointmentsQaState } from "../../../../tests/fixtures/app-appointments";
 import { createLevelFourRoomsQaContext, createLevelFourRoomsQaState } from "../../../../tests/fixtures/level-four-rooms";
-import { advanceEmployeeMovement, advanceServiceOperations, gameReducer, getRoomStaffCapacity, isAppAppointment, PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
+import { advanceEmployeeMovement, advanceServiceOperations, gameReducer, getRoomStaffCapacity, isAppAppointment, PROTOTYPE_DOMAIN_CONTEXT, staffStillEligibleEntries } from "@gamify-surgery/game-domain";
 import { createPrototypePlayerView } from "./viewModels";
 import { describeFacilityCharacter } from "./characterActivityPresentation";
 
@@ -39,7 +39,7 @@ describe("APP staff, service and named activity presentation", () => {
     expect(view.staffRoles.find(row => row.id === "staff.app")?.blockedReason).toContain("Maximum 2 hired");
   });
 
-  it("shows art exhaustion for an eleventh APP while one reachable physical post remains free", () => {
+  it("enables an eleventh APP while a look is free and blocks hiring when departures reserve the rest", () => {
     let state = createLevelFourRoomsQaState(context);
     for (let x = 9; x < 25; x++) {
       state = gameReducer(state, { type: "PLACE_ROOM", operationId: `art.hall.${x}`, roomId: `room.art.hall.${x}`,
@@ -47,8 +47,10 @@ describe("APP staff, service and named activity presentation", () => {
       expect(state.operationReceipts[`art.hall.${x}`]?.status).toBe("applied");
     }
     for (let i = 0; i < 11; i++) {
+      const pediatric = i === 10;
       state = gameReducer(state, { type: "PLACE_ROOM", operationId: `art.exam.${i}`, roomId: `room.art.${i}`,
-        roomDefinitionId: "room.examination", x: 9 + 3 * i, y: 24, orientation: 0 }, context);
+        roomDefinitionId: pediatric ? "room.pediatric_examination" : "room.examination", x: 9 + 3 * i, y: pediatric ? 23 : 24, orientation: 0 }, context);
+      expect(state.operationReceipts[`art.exam.${i}`]?.status).toBe("applied");
       state = gameReducer(state, { type: "PLACE_DOOR", operationId: `art.door.${i}`, doorId: `door.art.${i}`,
         roomId: `room.art.${i}`, side: "south", offset: 1 }, context);
       expect(state.operationReceipts[`art.door.${i}`]?.status).toBe("applied");
@@ -59,6 +61,23 @@ describe("APP staff, service and named activity presentation", () => {
       expect(state.operationReceipts[`art.hire.${i}`]?.status).toBe("applied");
     }
     expect(getRoomStaffCapacity(state, "staff.app").capacity).toBe(11);
+    const available = createPrototypePlayerView(state, null, false, null);
+    expect(available.staffRoles.find(row => row.id === "staff.app")?.canHire).toBe(true);
+    expect(available.staffOptions.find(row => row.id === "staff.app")?.enabled).toBe(true);
+
+    const occupied = new Set(state.employees.map(row => row.appearance.stillId));
+    const free = staffStillEligibleEntries("staff.app").filter(row => !occupied.has(row.stillId));
+    expect(free).toHaveLength(22);
+    const template = state.employees[0]!;
+    state.departingEmployees = free.map(row => ({
+      ...template,
+      id: `departing.${row.stillId}`,
+      displayName: row.stillId,
+      appearance: { ...template.appearance, stillId: row.stillId },
+      salaryPerExpenseInterval: 0,
+      homeRoomInstanceId: null,
+      dismissedAtFacilityTick: state.facilityTick,
+    }));
     const view = createPrototypePlayerView(state, null, false, null);
     expect(view.staffRoles.find(row => row.id === "staff.app")).toMatchObject({ canHire: false,
       blockedReason: "All approved APP looks are in use; additional APP art is needed." });

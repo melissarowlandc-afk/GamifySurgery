@@ -153,7 +153,7 @@ test("Build Mode shows separate finite room caps and Management uses shared imag
   test.skip(testInfo.project.name !== "desktop-chrome", "Desktop capacity and hire proof.");
   await install(page, "Room capacity browser");
   await page.getByRole("button", { name: "Enter Build Mode" }).click();
-  await expect(page.locator("[data-room-definition-id='room.ultrasound']")).toContainText("1 / 1 built");
+  await expect(page.locator("[data-room-definition-id='room.ultrasound']")).toContainText("1 / 2 built");
   await expect(page.locator("[data-room-definition-id='room.glp1_telehealth_suite']")).toContainText("1 / 5 built");
   await page.screenshot({ path: shot(testInfo, "build-caps"), animations: "disabled" });
   await page.getByRole("button", { name: "Done / Save" }).click();

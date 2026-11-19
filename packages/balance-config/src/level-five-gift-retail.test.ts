@@ -4,7 +4,7 @@ import { APPROVED_LEVEL5_SUPPORT_ROUTES, LEVEL_FIVE_GIFT_RETAIL, PROTOTYPE_BALAN
   getRoomUpgradeRevenueMultiplier } from "./index";
 
 describe("M5 editorial gift retail contract", () => {
-  it("keeps the catalog's normal/premium stock and duration, one shop and ordinary cap 5", () => {
+  it("keeps the catalog's normal/premium stock and duration, two shops and ordinary cap 5", () => {
     expect(LEVEL_FIVE_GIFT_RETAIL).toMatchObject({ arrivalCadenceMinutes: 120, checkoutMinutes: 2, queueCapacity: 2,
       recurringBudget: 20, ordinaryVisitorBudget: 30, visitorBudget: 40 });
     expect(SERVICE_INCOME_CATALOG.filter(line => line.id.startsWith("income.gift_shop"))).toEqual([
@@ -14,7 +14,7 @@ describe("M5 editorial gift retail contract", () => {
         outlets: [{ roomDefinitionId: "room.gift_shop", requiredCapabilityIds: ["capability.gift_shop"], durationMinutes: 2 }] }) }),
     ]);
     expect(PROTOTYPE_BALANCE_RELEASE.facility.maximumPlayableLevel).toBe(5);
-    expect(PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(r => r.id === "room.gift_shop")).toMatchObject({ width:3, height:3, maximumInstances:1,
+    expect(PROTOTYPE_BALANCE_RELEASE.facility.roomDefinitions.find(r => r.id === "room.gift_shop")).toMatchObject({ width:3, height:3, maximumInstances:2,
       constructionCost:1060, upkeepPerExpenseInterval:1, upkeepPerUpgradeLevel:0, capabilityIds:["capability.gift_shop"] });
   });
   it("adds percentages of base gross, without compound profit or stock arithmetic", () => {

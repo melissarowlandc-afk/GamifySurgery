@@ -61,10 +61,15 @@ function hireFour(state: GameState): GameState {
   return state;
 }
 
-// The pre-change seeded rule is the compatibility contract for all other roles
-// and for radiologists once every ordered look is reserved.
+function originalPool(role: string) {
+  return staffStillEligibleEntries(role).filter(entry =>
+    entry.sourceCohort !== "app-variety-v1" && entry.sourceCohort !== "staff-variety-v1",
+  );
+}
+
+// The seeded rule stays bound to the same pool while an original look is free.
 function seededChoice(seed: string, employeeId: string, role: string, used: ReadonlySet<string | undefined>) {
-  const pool = staffStillEligibleEntries(role);
+  const pool = originalPool(role);
   const key = `${employeeId}:${role}:staff-still.v1`;
   const preferred = pool[deterministicInteger(seed, RANDOM_STREAMS.staffAppearance, key, pool.length)];
   if (preferred && !used.has(preferred.stillId)) return preferred.stillId;
@@ -155,15 +160,19 @@ describe("Severance radiologists first", () => {
     }
   });
 
-  it("leaves seeded selection and occupied-look fallback unchanged for every other role", () => {
+  it("keeps seeded picks for every other role and uses the new looks after filling the original pool", () => {
     for (const role of PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility.staffRoleDefinitions) {
       if (role.id === ROLE) continue;
       const pool = staffStillEligibleEntries(role.id);
       for (let index = 0; index < 12; index += 1) {
         const seed = `other-roles.${index}`, employeeId = `employee.${index}`;
         for (const used of [new Set<string>(), new Set(pool.slice(0, index).map((entry) => entry.stillId))]) {
-          expect(selectStaffStillId(seed, employeeId, role.id, undefined, used))
-            .toBe(seededChoice(seed, employeeId, role.id, used));
+          const original = seededChoice(seed, employeeId, role.id, used);
+          const free = pool.filter((entry) => !used.has(entry.stillId));
+          const fallback = free.length > 0 ? free[
+            deterministicInteger(seed, RANDOM_STREAMS.staffAppearance, `${employeeId}:${role.id}:staff-still.v1`, free.length)
+          ]?.stillId : undefined;
+          expect(selectStaffStillId(seed, employeeId, role.id, undefined, used)).toBe(original ?? fallback);
         }
       }
     }

@@ -9291,15 +9291,24 @@ function reduceSellRoom(
     cancelRetailTripsForActor(next, "employee", employee.id, "Employment ended when the room was sold.");
     const location = retailLocation ?? employee.path[employee.pathIndex] ?? employee.location;
     const path = [{ ...location }];
+    // Match the hydrated departure record so employment-only state ends at dismissal.
     next.departingEmployees.push({
-      ...employee,
+      id: employee.id,
+      staffRoleDefinitionId: employee.staffRoleDefinitionId,
+      displayName: employee.displayName,
+      appearance: employee.appearance,
+      hiredAtFacilityTick: employee.hiredAtFacilityTick,
       salaryPerExpenseInterval: 0,
+      morale: employee.morale,
+      trainingLevel: employee.trainingLevel,
       homeRoomInstanceId: null,
-      facilityTask: null,
-      location: { ...path[0]! },
+      location: { ...location },
       path,
       pathIndex: 0,
       lastMovedAtFacilityTick: next.facilityTick,
+      lastPraisedAtFacilityTick: null,
+      nextIdleActionAtFacilityTick: Number.MAX_SAFE_INTEGER,
+      facilityTask: null,
       dismissedAtFacilityTick: next.facilityTick,
     });
   }

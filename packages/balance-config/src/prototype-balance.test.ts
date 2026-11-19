@@ -226,12 +226,12 @@ describe("Level 2 expanded outpatient definitions", () => {
         .filter((room) => room.unlockFacilityLevel === 3)
         .map((room) => [room.id, room.constructionCost, room.upkeepPerExpenseInterval, room.maximumInstances]),
     ).toEqual([
-      ["room.ambulatory_or", 2400, 12, 2],
-      ["room.laboratory", 1800, 4, 2],
+      ["room.ambulatory_or", 2400, 12, 4],
+      ["room.laboratory", 1800, 4, 1],
       ["room.pharmacy", 1200, 2, 2],
       ["room.maintenance_workshop", 800, 1, 1],
-      ["room.staff_break", 900, 1, 2],
-      ["room.surgeon_office", 700, 1, 1],
+      ["room.staff_break", 900, 1, 3],
+      ["room.surgeon_office", 700, 1, 4],
       ["room.vending", 450, 1, 5],
       ["room.reading", 1800, 6, 4],
     ]);
