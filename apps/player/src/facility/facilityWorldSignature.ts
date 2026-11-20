@@ -15,19 +15,40 @@ export function getFacilityWorldSignature(
   model: FacilityViewModel,
   includeCamera = true,
 ): string {
+  return getFacilityWorldSignatures(model, includeCamera).world;
+}
+
+function getRoomSignatures(rows: FacilityViewModel["rooms"]) {
+  const footprints: string[] = [];
+  const appearance = rows.map(room => {
+    footprints.push(`${JSON.stringify(room.instanceId)}:${room.tileX},${room.tileY},${room.width},${room.height},${room.orientation ?? 0}`);
+    return `${room.definitionId}:${room.displayName}:${room.kind ?? "room"}:${room.isFounderRoom ? 1 : 0}:${room.doorSide ?? "-"},${room.upgradeLevel ?? 1},${room.upgradeAvailable ? 1 : 0},${room.cleanliness ?? 100}:${room.buildLabel ?? "-"}:${room.upgradeMaxLevel ?? 1}:${room.upgradeAffordable ? 1 : 0}:${room.accessProblem ? 1 : 0}`;
+  }).join("|");
+  return { rows, appearance, geometry: footprints.join("|") };
+}
+
+function getDoorSignature(rows: FacilityViewModel["doors"]) {
+  const geometry = (rows ?? []).map(door =>
+    `${JSON.stringify(door.instanceId)}:${JSON.stringify(door.roomInstanceId)}:${door.side}:${door.offset}:${door.exterior ? 1 : 0}:${door.connectionValid ?? "legacy"}:${JSON.stringify(door.adjacentRoomInstanceId) ?? "missing"}:${JSON.stringify(door.blockedReason) ?? "-"}`,
+  ).join("|");
+  return { rows, geometry };
+}
+
+export interface FacilityWorldSignatures {
+  world: string;
+  rooms: ReturnType<typeof getRoomSignatures>;
+  doors: ReturnType<typeof getDoorSignature>;
+}
+
+/** Share the signature pass with the door index. Published rows are immutable. */
+export function getFacilityWorldSignatures(
+  model: FacilityViewModel,
+  includeCamera: boolean,
+  previous?: FacilityWorldSignatures,
+): FacilityWorldSignatures {
   const placement = model.placement;
-  const rooms = model.rooms
-    .map(
-      (room) =>
-        `${room.instanceId}:${room.definitionId}:${room.displayName}:${room.kind ?? "room"}:${room.isFounderRoom ? 1 : 0}:${room.tileX},${room.tileY},${room.width},${room.height},${room.orientation ?? 0},${room.doorSide ?? "-"},${room.upgradeLevel ?? 1},${room.upgradeAvailable ? 1 : 0},${room.cleanliness ?? 100}:${room.buildLabel ?? "-"}:${room.upgradeMaxLevel ?? 1}:${room.upgradeAffordable ? 1 : 0}:${room.accessProblem ? 1 : 0}`,
-    )
-    .join("|");
-  const doors = (model.doors ?? [])
-    .map(
-      (door) =>
-        `${door.instanceId}:${door.roomInstanceId}:${door.side}:${door.offset}:${door.exterior ? 1 : 0}:${door.connectionValid ?? "legacy"}:${door.adjacentRoomInstanceId ?? "-"}:${door.blockedReason ?? "-"}`,
-    )
-    .join("|");
+  const rooms = previous?.rooms.rows === model.rooms ? previous.rooms : getRoomSignatures(model.rooms);
+  const doors = previous && previous.doors.rows === model.doors ? previous.doors : getDoorSignature(model.doors);
   const doorSlots = (
     model.buildDoorSlots ??
     model.eligibleDoorSlots ??
@@ -58,7 +79,7 @@ export function getFacilityWorldSignature(
     .join(",");
   const activeImagingRooms = [...(model.imagingActiveRoomInstanceIds ?? [])].sort().join(",");
 
-  return [
+  const world = [
     model.buildMode ? 1 : 0,
     model.buildDoorTool ?? "-",
     doorSlots,
@@ -67,8 +88,9 @@ export function getFacilityWorldSignature(
     placement
       ? `${placement.definitionId}:${placement.width}x${placement.height}:${placement.orientation ?? 0}:${placement.doorSide ?? "inferred"}`
       : "-",
-    rooms,
-    doors,
+    rooms.geometry,
+    rooms.appearance,
+    doors.geometry,
     environment,
     `endoscopy:${occupiedEndoscopyRooms}`,
     `imaging:${activeImagingRooms}`,
@@ -77,4 +99,5 @@ export function getFacilityWorldSignature(
       ? `${model.camera.zoom},${model.camera.panX},${model.camera.panY}`
       : "camera.default",
   ].join(":");
+  return { world, rooms, doors };
 }

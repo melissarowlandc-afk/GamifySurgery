@@ -8,7 +8,7 @@ import {
 
 const repositoryRoot = fileURLToPath(new URL("../../../", import.meta.url));
 // Seal the reviewed path set separately so a missing or substituted row fails.
-const protectedPathSetSha256 = "55c04225992050ad96c9446a9db5643c83d7396181aed46836374c63e3b5a534";
+const protectedPathSetSha256 = "8453c6de7ee3c1a6092ed69a567ef2d48012a956fa63800f5a4cf51f80a0b5fc";
 
 test("preserves the exact current bytes and required absences of protected sources", () => {
   const entries = readProtectedSources();

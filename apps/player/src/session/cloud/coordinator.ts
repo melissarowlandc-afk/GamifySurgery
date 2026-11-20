@@ -613,6 +613,41 @@ export class CloudSyncCoordinator {
   private renewalCadence(): number {
     return healthyLeaseRenewMs(this.window ? this.window.until.mono - this.lastRenew.mono : CLOUD_LEASE_MS);
   }
+  private isOwnRenewalRevision(revision: string, writerGeneration: string): boolean {
+    if (revision === this.confirmedRevision) return true;
+    const recovery = this.uploading ? this.recovery() : null;
+    return Boolean(recovery?.inFlight && recovery.writerGeneration === writerGeneration &&
+      BigInt(revision) === BigInt(recovery.baseRevision) + 1n);
+  }
+  /** Refresh the CAS base and prove the same token after an overlapping save. */
+  private async renewAfterOwnSave(previous: CloudLease, current: () => boolean): Promise<{ lease: CloudLease; sent: TimePair } | null> {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const beforeRead = this.confirmedRevision;
+      const head = await cloudCheckDeadline(this.options.transport.head(this.scope.campaignId));
+      if (!current()) return null;
+      if (head.writerGeneration !== previous.writerGeneration) throw new CloudSyncError("writer");
+      const confirmed = this.confirmedRevision;
+      // A verified receipt can overtake the metadata read while it is in flight.
+      if (confirmed !== beforeRead && confirmed && BigInt(head.revision) < BigInt(confirmed)) continue;
+      if (!this.isOwnRenewalRevision(head.revision, previous.writerGeneration)) throw new CloudSyncError("revision");
+      const sent = this.now();
+      let lease: CloudLease;
+      try {
+        lease = await cloudCheckDeadline(this.options.transport.renew(previous));
+      } catch (error) {
+        if (!current()) return null;
+        if (!(error instanceof CloudSyncError && error.code === "revision" &&
+            (this.uploading || confirmed !== this.confirmedRevision))) throw error;
+        continue;
+      }
+      if (!current()) return null;
+      if (lease.writerGeneration !== previous.writerGeneration) throw new CloudSyncError("writer");
+      if (lease.revision !== head.revision && !this.isOwnRenewalRevision(lease.revision, lease.writerGeneration))
+        throw new CloudSyncError("revision");
+      return { lease, sent };
+    }
+    return null;
+  }
   private async acquire(head: { revision: string; writerGeneration: string }, takeover: boolean, epoch: number,
     current: () => boolean = () => this.live(epoch)): Promise<CloudLease> {
     const acquisition: WriterAcquisition = { campaignId: this.scope.campaignId, expectedRevision: head.revision,
@@ -1342,10 +1377,23 @@ export class CloudSyncCoordinator {
         this.fail(new CloudSyncError(head.revision !== revision ? "revision" : "writer")); return false;
       }
       if (!head.writerActive) { this.resumeAuthorized = false; this.phase = "paused"; this.failure = "lease-expired"; this.emit(); return false; }
-      const sent = this.now(), renewed = await this.options.transport.renew(lease);
+      const sent = this.now();
+      const refreshed = await this.options.transport.renew(lease).then(renewed => {
+        if (!current()) return null;
+        if (renewed.writerGeneration !== lease.writerGeneration) throw new CloudSyncError("writer");
+        // A verified own save can overtake the reply to this successful renewal.
+        if (renewed.revision !== head.revision && !this.isOwnRenewalRevision(renewed.revision, lease.writerGeneration))
+          throw new CloudSyncError("revision");
+        return { lease: renewed, sent };
+      }, error => {
+        if (!current()) return null;
+        if (!(error instanceof CloudSyncError && error.code === "revision" &&
+            (this.uploading || revision !== this.confirmedRevision))) throw error;
+        return this.renewAfterOwnSave(lease, current);
+      });
       if (!current() || this.closingRequested || !this.localDurable) return false;
-      if (renewed.revision !== this.confirmedRevision || renewed.writerGeneration !== lease.writerGeneration) throw new CloudSyncError("writer");
-      this.installLease(renewed, sent);
+      if (!refreshed) return this.allowed();
+      this.installLease(refreshed.lease, refreshed.sent);
       const changed = !this.allowed() || this.phase !== "ready" || this.failure !== null;
       this.resumeAuthorized = true; this.grace = null; this.phase = "ready"; this.failure = null;
       if (changed) this.emit();
@@ -1475,6 +1523,7 @@ export class CloudSyncCoordinator {
     if (this.window && ["ready", "saving"].includes(this.phase) && this.elapsed(this.lastRenew) >= this.renewalCadence()) {
       this.renewing = true;
       const previous = this.window, sent = this.now(), previouslyPlayable = this.allowed();
+      const revision = this.confirmedRevision;
       this.lastRenew = sent; // A refused/short-circuited check is still an attempt, never a 1 Hz renewal schedule.
       try {
         const lease = await cloudCheckDeadline(this.options.transport.renew(previous.lease));
@@ -1492,24 +1541,18 @@ export class CloudSyncCoordinator {
           // the head and prove the SAME writer token, without waiting for bulk
           // acknowledgement work or temporarily fencing a valid lease.
           try {
-            if (!this.uploading) {
+            if (!this.uploading && revision === this.confirmedRevision) {
               // focus owns its gate. Do not set a new checking phase before
               // joining a check that may already have successfully resumed.
               if (this.live(epoch) && !await (this.automaticSelection && this.mountedDurable ? this.automaticSelection() : this.focus()) && this.phase === "ready") await this.failChecked(error, epoch, previouslyPlayable);
             } else {
-              const head = await cloudCheckDeadline(this.options.transport.head(this.scope.campaignId));
-              if (!current()) return;
-              const flight = this.recovery()?.inFlight, request = flight ? this.request(flight) : null;
-              if (head.writerGeneration !== previous.lease.writerGeneration) throw new CloudSyncError("writer");
-              if (head.revision !== this.confirmedRevision && (!request || BigInt(head.revision) !== BigInt(request.expectedRevision) + 1n))
-                throw new CloudSyncError("revision");
-              const sent = this.now(), lease = await cloudCheckDeadline(this.options.transport.renew(previous.lease));
-              if (!current()) return;
-              if (lease.writerGeneration !== previous.lease.writerGeneration || lease.revision !== head.revision) throw new CloudSyncError("writer");
-              this.checkTime();
-              if (this.phase === "paused" || this.phase === "conflict") return;
-              this.installLease(lease, sent);
-              this.emitConnection();
+              const refreshed = await this.renewAfterOwnSave(previous.lease, current);
+              if (refreshed && current()) {
+                this.checkTime();
+                if (this.phase === "paused" || this.phase === "conflict") return;
+                this.installLease(refreshed.lease, refreshed.sent);
+                this.emitConnection();
+              }
             }
           } catch (failure) { if (current()) await this.failChecked(failure, epoch); }
         } else await this.failChecked(error, epoch);

@@ -129,9 +129,11 @@ describe("flags3 exact owner-flag candidates and retained live source",()=>{
   for (const [path, sha] of Object.entries(capture.files)) {
    if (pins.has(path)) continue;
    const url = new URL("../../../" + path, import.meta.url);
-   if (path === "packages/game-domain/src/colleagueNames.ts" ||
+   if (path === "apps/player/src/session/cloud/uploadRaces.test.ts" ||
+       path === "packages/game-domain/src/colleagueNames.ts" ||
        path === "packages/game-domain/src/executive-management.ts" ||
-       path === "packages/game-domain/src/inspection-presentation.ts") {
+       path === "packages/game-domain/src/inspection-presentation.ts" ||
+       path === "packages/game-domain/src/room-upkeep-outages.ts") {
     expect(sourceSha256(readFileSync(url)), path).toBe(releasePins.get(path)?.sha256);
    } else {
     expect(createHash("sha256").update(beforeFlags3AcceptanceSource(path, readFileSync(url, "utf8"))).digest("hex"), path).toBe(sha);

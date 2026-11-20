@@ -46,7 +46,11 @@ export function normalizeRoomUpkeepOutage(
  * availability. Queues, recovery beds, walking, training, breaks, discussions,
  * the appointment switch and lack of patients do not start an outage clock.
  */
-export function synchronizeRoomUpkeepOutages(state: GameState, context: DomainContext): void {
+export function synchronizeRoomUpkeepOutages(
+  state: GameState,
+  context: DomainContext,
+  roomOwnership: "owned" | "shared" = "owned",
+): void {
   const operational = new Map<string, boolean>();
   const isOperational = (room: PlacedRoom): boolean => {
     let result = operational.get(room.id);
@@ -66,32 +70,44 @@ export function synchronizeRoomUpkeepOutages(state: GameState, context: DomainCo
     const allowedHomes = [...role.requiredRoomDefinitionIds, ...role.requiredAnyRoomDefinitionIds];
     return allowedHomes.includes(home.roomDefinitionId);
   });
-  for (const room of state.rooms) {
+  const rooms = state.rooms;
+  let updatedRooms: PlacedRoom[] | undefined;
+  for (let index = 0; index < rooms.length; index++) {
+    const room = rooms[index]!;
     const requiredRoles = room.roomDefinitionId === "room.gift_shop" && state.facilityLevel < 5 ? undefined : REVENUE_ROOM_STAFF[room.roomDefinitionId];
-    if (!requiredRoles || !getRoomDefinition(room.roomDefinitionId, context)) {
-      delete room.upkeepOutage;
-      continue;
-    }
-    const recoveryRequired = room.roomDefinitionId === "room.endoscopy" || room.roomDefinitionId === "room.ambulatory_or";
-    const unavailable = !isOperational(room) ||
-      !requiredRoles.every((roleId) => hasAssignedRole(roleId, room)) ||
-      (recoveryRequired && !state.rooms.some((candidate) => candidate.roomDefinitionId === "room.periop_recovery" && isOperational(candidate)));
     // The founder is an installed provider fallback for minor/endoscopy/OR;
     // ordinary provider busyness is a queue, not a technical outage.
-    if (!unavailable) {
-      delete room.upkeepOutage;
+    const unavailable = requiredRoles && getRoomDefinition(room.roomDefinitionId, context) && (
+      !isOperational(room) || !requiredRoles.every((roleId) => hasAssignedRole(roleId, room)) ||
+      ((room.roomDefinitionId === "room.endoscopy" || room.roomDefinitionId === "room.ambulatory_or") &&
+        !rooms.some((candidate) => candidate.roomDefinitionId === "room.periop_recovery" && isOperational(candidate)))
+    );
+    let outage: PlacedRoom["upkeepOutage"];
+    if (unavailable) {
+      const previous = room.upkeepOutage;
+      const continuous = previous?.version === ROOM_UPKEEP_OUTAGE_VERSION &&
+        Number.isSafeInteger(previous.sinceFacilityTick) && previous.sinceFacilityTick >= 0 &&
+        previous.sinceFacilityTick <= previous.lastObservedFacilityTick &&
+        (previous.lastObservedFacilityTick === state.facilityTick ||
+          previous.lastObservedFacilityTick === state.facilityTick - 1);
+      if (roomOwnership === "shared" && continuous && previous.lastObservedFacilityTick === state.facilityTick) {
+        // Reuse clocks that already have the canonical saved shape.
+        const keys = Object.keys(previous);
+        if (keys.length === 3 && keys[0] === "version" && keys[1] === "sinceFacilityTick" &&
+            keys[2] === "lastObservedFacilityTick") continue;
+      }
+      outage = {
+        version: ROOM_UPKEEP_OUTAGE_VERSION,
+        sinceFacilityTick: continuous ? previous.sinceFacilityTick : state.facilityTick,
+        lastObservedFacilityTick: state.facilityTick,
+      };
+    } else if (!Object.hasOwn(room, "upkeepOutage")) {
       continue;
     }
-    const previous = room.upkeepOutage;
-    const continuous = previous?.version === ROOM_UPKEEP_OUTAGE_VERSION &&
-      Number.isSafeInteger(previous.sinceFacilityTick) && previous.sinceFacilityTick >= 0 &&
-      previous.sinceFacilityTick <= previous.lastObservedFacilityTick &&
-      (previous.lastObservedFacilityTick === state.facilityTick ||
-        previous.lastObservedFacilityTick === state.facilityTick - 1);
-    room.upkeepOutage = {
-      version: ROOM_UPKEEP_OUTAGE_VERSION,
-      sinceFacilityTick: continuous ? previous.sinceFacilityTick : state.facilityTick,
-      lastObservedFacilityTick: state.facilityTick,
-    };
+
+    const writable = roomOwnership === "owned" ? room : ((updatedRooms ??= rooms.slice())[index] = { ...room });
+    if (outage) writable.upkeepOutage = outage;
+    else delete writable.upkeepOutage;
   }
+  if (updatedRooms) state.rooms = updatedRooms;
 }

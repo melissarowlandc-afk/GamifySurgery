@@ -310,9 +310,9 @@ import {
   getDoorInteractionGeometry,
   type DoorInteractionGeometry,
 } from "./doorInteractionGeometry";
-import { getDoorPresentationOpenings, isDoorPresentationConnected } from "./doorPresentation";
+import { buildDoorPresentationIndex, type DoorPresentationIndex } from "./doorPresentation";
 import { rasterizeGridLine } from "./hallwayPainting";
-import { getFacilityWorldSignature } from "./facilityWorldSignature";
+import { getFacilityWorldSignatures, type FacilityWorldSignatures } from "./facilityWorldSignature";
 import { characterRefFromKey, patientChartIdForCharacter, INSPECT_BOX_FADE_MS, INSPECT_BOX_VISIBLE_MS } from "./characterInspect";
 import { MapTouchGestures, type MapGesture, type TouchPoint } from "../mobile/map/gestures";
 import { transformPhoneCamera } from "../mobile/map/camera";
@@ -415,6 +415,7 @@ type FacilityDoorInteractionTarget =
   | {
       kind: "remove";
       door: FacilityDoorView;
+      invalid: boolean;
       geometry: DoorInteractionGeometry;
     };
 
@@ -636,7 +637,8 @@ export class FacilityScene extends Phaser.Scene {
   private cameraPreferencePending = false;
   private lastPublishedCameraRequest = "";
   private signatureModel?: FacilityViewModel;
-  private staticSignature = "";
+  private worldSignatures?: FacilityWorldSignatures;
+  private doorPresentation?: DoorPresentationIndex;
   private frozenCharacterModel?: FacilityViewModel;
   private frozenCharacterLayout?: GridLayout;
   private founderActivityAnchor?: [string, string | undefined, number, number];
@@ -1712,10 +1714,9 @@ export class FacilityScene extends Phaser.Scene {
     // Projections are immutable between state changes; gestures need no repeat
     // room/door scan. Forced asset/edit redraws still refresh the signature.
     if (force || this.signatureModel !== this.bridge.viewModel) {
-      this.signatureModel = this.bridge.viewModel;
-      this.staticSignature = getFacilityWorldSignature(this.bridge.viewModel, false);
+      this.refreshWorldSignatures(force);
     }
-    const signature = `${this.bridge.viewModel.campaignId ?? ""}:${this.staticSignature}`;
+    const signature = `${this.bridge.viewModel.campaignId ?? ""}:${this.worldSignatures!.world}`;
     const request = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(this.bridge.viewModel.camera)}`;
     const changed = force || width !== this.lastWidth || height !== this.lastHeight || signature !== this.lastModelSignature;
     const projected = request !== this.lastProjectionRequest;
@@ -4189,11 +4190,25 @@ export class FacilityScene extends Phaser.Scene {
 
   /** Presentation-only direct plus reciprocal wall apertures for this room. */
   private getRoomDoorOpenings(room: FacilityRoomView): readonly CanonicalRoomWallOpening[] {
-    return getDoorPresentationOpenings(
-      room,
-      this.bridge.viewModel.doors ?? [],
-      this.bridge.viewModel.rooms,
-    );
+    return this.getDoorPresentationIndex().openingsFor(room.instanceId);
+  }
+
+  private refreshWorldSignatures(force = false): void {
+    const model = this.bridge.viewModel;
+    const before = this.worldSignatures;
+    const next = getFacilityWorldSignatures(model, false, force ? undefined : before);
+    if (!this.doorPresentation || !before || this.signatureModel?.campaignId !== model.campaignId ||
+        next.rooms.geometry !== before.rooms.geometry || next.doors.geometry !== before.doors.geometry) {
+      this.doorPresentation = buildDoorPresentationIndex(model.rooms, model.doors ?? []);
+    }
+    this.signatureModel = model;
+    this.worldSignatures = next;
+  }
+
+  private getDoorPresentationIndex(): DoorPresentationIndex {
+    // A pointer event can read a new publication before the next animation frame.
+    if (!this.doorPresentation || this.signatureModel !== this.bridge.viewModel) this.refreshWorldSignatures();
+    return this.doorPresentation!;
   }
 
   private hasExposedNorthWallAt(
@@ -4252,6 +4267,7 @@ export class FacilityScene extends Phaser.Scene {
 
   private getBuildDoorPlaceTargets(): FacilityDoorInteractionTarget[] {
     const model = this.bridge.viewModel;
+    const { roomIndices } = this.getDoorPresentationIndex();
     return (
       model.buildDoorSlots ??
       model.eligibleDoorSlots ??
@@ -4260,9 +4276,7 @@ export class FacilityScene extends Phaser.Scene {
       if (slot.enabled === false) {
         return [];
       }
-      const room = model.rooms.find(
-        (candidate) => candidate.instanceId === slot.roomInstanceId,
-      );
+      const room = model.rooms[roomIndices.get(slot.roomInstanceId) ?? -1];
       return room && isRoomVisualDoorSlotClear({
         definitionId: room.definitionId,
         orientation: room.orientation,
@@ -4288,20 +4302,20 @@ export class FacilityScene extends Phaser.Scene {
 
   private getBuildDoorRemoveTargets(): FacilityDoorInteractionTarget[] {
     const model = this.bridge.viewModel;
-    return (model.doors ?? []).flatMap((door) => {
+    const { roomIndices, connected } = this.getDoorPresentationIndex();
+    return (model.doors ?? []).flatMap((door, index) => {
       // The public entrance is immutable in the domain and never becomes a
       // pointer target, even while the remove tool is active.
       if (door.exterior) {
         return [];
       }
-      const room = model.rooms.find(
-        (candidate) => candidate.instanceId === door.roomInstanceId,
-      );
+      const room = model.rooms[roomIndices.get(door.roomInstanceId) ?? -1];
       return room
         ? [
             {
               kind: "remove" as const,
               door,
+              invalid: !connected[index],
               geometry: this.getDoorGeometry(
                 room,
                 door.side,
@@ -4316,9 +4330,10 @@ export class FacilityScene extends Phaser.Scene {
   /** A saved invalid door is a closed wall with a red X, in both play and Build. */
   private drawInvalidDoorMarkers(): void {
     const model = this.bridge.viewModel;
-    for (const door of model.doors ?? []) {
-      if (isDoorPresentationConnected(door, model.rooms)) continue;
-      const room = model.rooms.find(candidate => candidate.instanceId === door.roomInstanceId);
+    const { roomIndices, connected } = this.getDoorPresentationIndex();
+    for (const [index, door] of (model.doors ?? []).entries()) {
+      if (connected[index]) continue;
+      const room = model.rooms[roomIndices.get(door.roomInstanceId) ?? -1];
       if (!room) continue;
       const length = door.side === "north" || door.side === "south" ? room.width : room.height;
       const offset = Math.max(0, Math.min(length - 1, Number.isFinite(door.offset) ? Math.floor(door.offset) : 0));
@@ -4342,7 +4357,7 @@ export class FacilityScene extends Phaser.Scene {
     targets.forEach((target) => {
       const { hitRegion, center, horizontal } = target.geometry;
       const place = target.kind === "place";
-      const invalid = !place && !isDoorPresentationConnected(target.door, this.bridge.viewModel.rooms);
+      const invalid = !place && target.invalid;
       const outerColor = invalid ? 0xb3382c : place
         ? PIXEL_PALETTE_NUMBER.highlight
         : PIXEL_PALETTE_NUMBER.ink;
@@ -8583,8 +8598,9 @@ export class FacilityScene extends Phaser.Scene {
     const model = this.bridge.viewModel;
     if (model.placement) return;
     if (model.buildDoorTool && state) {
+      const { roomIndices } = this.getDoorPresentationIndex();
       const targets = state.doors.flatMap(section => {
-        const room = model.rooms.find(candidate => candidate.instanceId === section.roomId);
+        const room = model.rooms[roomIndices.get(section.roomId) ?? -1];
         return room ? [{ value: section.id, bounds: this.getDoorGeometry(room, section.side, section.offset).hitRegion }] : [];
       });
       state.onIntent({ kind: "door", id: nearestTouchTarget(point, targets.map(target => ({ ...target, bounds: this.toScreenRect(target.bounds) }))) });
@@ -8637,12 +8653,15 @@ export class FacilityScene extends Phaser.Scene {
     };
     if (state.ghost && placement) footprint(state.ghost, placement.width, placement.height, state.ghost.valid);
     for (const cell of state.hallway?.cells ?? []) if (cell.status !== "existing") footprint(cell, 1, 1, cell.status === "build");
-    for (const section of state.doors) {
-      const room = model.rooms.find(candidate => candidate.instanceId === section.roomId); if (!room) continue;
-      const rect = this.getDoorGeometry(room, section.side, section.offset).hitRegion;
-      const selected = section.id === state.selectedDoorId;
-      graphics.lineStyle(selected ? 4 : 2, section.connectionInvalid ? 0xc94b43 : selected ? 0xf7c960 : section.validation.valid ? 0x3d8650 : 0xc94b43, selected ? 1 : 0.6);
-      graphics.strokeRect(rect.x, rect.y, rect.width, rect.height);
+    if (state.doors.length) {
+      const { roomIndices } = this.getDoorPresentationIndex();
+      for (const section of state.doors) {
+        const room = model.rooms[roomIndices.get(section.roomId) ?? -1]; if (!room) continue;
+        const rect = this.getDoorGeometry(room, section.side, section.offset).hitRegion;
+        const selected = section.id === state.selectedDoorId;
+        graphics.lineStyle(selected ? 4 : 2, section.connectionInvalid ? 0xc94b43 : selected ? 0xf7c960 : section.validation.valid ? 0x3d8650 : 0xc94b43, selected ? 1 : 0.6);
+        graphics.strokeRect(rect.x, rect.y, rect.width, rect.height);
+      }
     }
   }
 
@@ -8698,9 +8717,12 @@ export class FacilityScene extends Phaser.Scene {
       const seat = this.founderSeatScreenPoint(chair);
       if (seat) details.push({ value: { kind: "chair", chair }, bounds: { ...seat, width: 0, height: 0 } });
     }
-    for (const door of model.doors ?? []) {
-      const room = model.rooms.find((candidate) => candidate.instanceId === door.roomInstanceId);
-      if (room) details.push({ value: { kind: "door", door, room }, bounds: this.getDoorGeometry(room, door.side, door.offset).hitRegion });
+    if (model.doors?.length) {
+      const { roomIndices } = this.getDoorPresentationIndex();
+      for (const door of model.doors) {
+        const room = model.rooms[roomIndices.get(door.roomInstanceId) ?? -1];
+        if (room) details.push({ value: { kind: "door", door, room }, bounds: this.getDoorGeometry(room, door.side, door.offset).hitRegion });
+      }
     }
     for (const litter of model.litterItems ?? []) details.push({ value: { kind: "environment", selection: {
       kind: "environment", action: "collect-litter", id: litter.instanceId, name: "Litter", status: "Collect this litter" } },

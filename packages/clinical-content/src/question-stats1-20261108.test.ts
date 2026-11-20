@@ -185,9 +185,11 @@ describe("stats1 short single-skill candidates without live acceptance",()=>{
   for (const [p, h] of Object.entries(capture.files)) {
    if (pins.has(p)) continue;
    const url = new URL("../../../" + p, import.meta.url);
-   if (p === "packages/game-domain/src/colleagueNames.ts" ||
+   if (p === "apps/player/src/session/cloud/uploadRaces.test.ts" ||
+       p === "packages/game-domain/src/colleagueNames.ts" ||
        p === "packages/game-domain/src/executive-management.ts" ||
-       p === "packages/game-domain/src/inspection-presentation.ts") {
+       p === "packages/game-domain/src/inspection-presentation.ts" ||
+       p === "packages/game-domain/src/room-upkeep-outages.ts") {
     expect(sourceSha256(readFileSync(url)), p).toBe(releasePins.get(p)?.sha256);
    } else {
     expect(createHash("sha256").update(beforeStats1Source(p, readFileSync(url, "utf8"))).digest("hex"), p).toBe(h);

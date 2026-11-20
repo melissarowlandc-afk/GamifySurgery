@@ -11324,7 +11324,8 @@ export function gameReducer(
   // Facility conditions can change through paused build/staff commands as
   // well as through simulation time. Reconcile every applied/rejected clone so
   // history and attention clear at the exact persisted facility tick.
-  synchronizeRoomUpkeepOutages(next, context);
+  // Room sales reuse surviving rows from the input, including frozen evidence.
+  synchronizeRoomUpkeepOutages(next, context, "shared");
   synchronizeFacilityConditionOccurrences(next, context);
   synchronizeFacilityOperationalAlertOccurrences(next, context);
   reconcileExecutiveManagement(next, context, command.type !== "ADVANCE_TICK" && doorEditedWhilePaused(next));

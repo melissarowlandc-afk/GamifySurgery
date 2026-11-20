@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
 import { CloudGameSession } from "./gameSession";
-import { CloudSyncError, CLOUD_RENEW_MS } from "./transport";
+import { CloudSyncError, CLOUD_LEASE_MS, CLOUD_RENEW_MS } from "./transport";
 import { deferred, syncHarness } from "./syncTestSupport";
 import { CLOUD_CHECK_TIMEOUT_MS } from "./checkDeadline";
 
@@ -15,6 +15,63 @@ async function playing() {
 }
 
 describe("upload, authority check and close ordering", () => {
+  it.each(["foreground-rejection", "foreground-receipt", "heartbeat-head"] as const)(
+    "stays playable when an own save overtakes a %s response", async timing => {
+      const h = await playing(), held = deferred(), receipt = deferred();
+      const initialExpiry = h.clock.wall + CLOUD_LEASE_MS;
+      const first = { type: "SET_SIMULATION_SPEED", speed: 2, operationId: "during.check.first" } as const;
+      const second = { type: "SET_SIMULATION_SPEED", speed: 4, operationId: "during.check.second" } as const;
+      const heartbeat = timing === "heartbeat-head";
+      const failed: string[] = [];
+      const unsubscribe = h.coordinator.subscribe(() => {
+        const { failure } = h.coordinator.view;
+        if (failure) failed.push(failure);
+      });
+      let saving: Promise<boolean> | undefined;
+      let checking: Promise<unknown> | undefined;
+      try {
+        if (heartbeat) {
+          h.session.execute(first, PROTOTYPE_DOMAIN_CONTEXT);
+          h.server.faults.push({ method: "commit", at: "after", wait: receipt.promise });
+          saving = h.session.checkpointNow("purchase");
+          await vi.waitFor(() => expect(h.server.operationCount(h.scope.accountId)).toBe(1));
+          h.server.faults.push({ method: "renew", at: "before", error: new CloudSyncError("revision") });
+          h.server.faults.push({ method: "head", at: "after", wait: held.promise });
+          h.clock.advance(CLOUD_RENEW_MS);
+          checking = h.session.pulse();
+          await vi.waitFor(() => expect(h.server.faults).toHaveLength(0));
+          receipt.resolve();
+          expect(await saving).toBe(true);
+        } else {
+          h.coordinator.markBackground();
+          h.clock.advance(10_000);
+          h.server.faults.push(timing === "foreground-rejection"
+            ? { method: "renew", at: "before", wait: held.promise, error: new CloudSyncError("revision") }
+            : { method: "renew", at: "after", wait: held.promise });
+          checking = h.session.foreground();
+          await vi.waitFor(() => expect(h.server.faults).toHaveLength(0));
+        }
+        expect(h.session.execute(second, PROTOTYPE_DOMAIN_CONTEXT)?.operationReceipts[second.operationId]?.status).toBe("applied");
+        expect(await h.session.checkpointNow("purchase")).toBe(true);
+        const revision = heartbeat ? "3" : "2";
+        expect(h.coordinator.confirmedRevision).toBe(revision);
+        held.resolve();
+        await checking;
+        while (h.clock.wall <= initialExpiry) {
+          h.clock.advance(CLOUD_RENEW_MS);
+          await h.session.pulse();
+        }
+        expect(h.session.syncView).toMatchObject({ revision, failure: null, pending: false, canExecute: true });
+        expect(failed).toEqual([]);
+        expect(h.server.calls.filter(call => call.method === "acquire")).toHaveLength(1);
+        expect(h.server.operationCount(h.scope.accountId)).toBe(heartbeat ? 2 : 1);
+      } finally {
+        held.resolve(); receipt.resolve(); await Promise.allSettled([saving, checking]);
+        unsubscribe(); h.session.dispose();
+      }
+    },
+  );
+
   it.each([false, true])("does not let an older renewal fence a recovery that has just finished checking (pending upload=%s)", async pending => {
     const h = await playing(), renewal = deferred(), started = deferred();
     const receipt = deferred();

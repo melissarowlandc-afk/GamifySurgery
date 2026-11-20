@@ -1,6 +1,6 @@
 import type { CardinalDirection } from "@gamify-surgery/game-domain";
 import type { FacilityRoomView, FacilityViewModel } from "../../facility/types";
-import { isDoorPresentationConnected } from "../../facility/doorPresentation";
+import { buildDoorPresentationIndex } from "../../facility/doorPresentation";
 import type { DoorSection, MobileBuildActions } from "./types";
 
 /** One key per physical one-tile wall section, including reciprocal room walls. */
@@ -12,14 +12,16 @@ export function wallSectionKey(room: FacilityRoomView, side: CardinalDirection, 
 
 export function phoneDoorSections(model: FacilityViewModel, actions: Pick<MobileBuildActions, "previewDoor">): DoorSection[] {
   const sections = new Map<string, DoorSection>();
+  const doors = model.doors ?? [];
+  const { roomIndices, connected } = buildDoorPresentationIndex(model.rooms, doors);
   // Prefer the actual owner of an opening, even on its reciprocal room wall.
-  for (const door of model.doors ?? []) {
-    const room = model.rooms.find(candidate => candidate.instanceId === door.roomInstanceId);
+  for (const [index, door] of doors.entries()) {
+    const room = model.rooms[roomIndices.get(door.roomInstanceId) ?? -1];
     if (!room) continue;
     const request = { kind: "remove" as const, doorId: door.instanceId };
     const id = wallSectionKey(room, door.side, door.offset);
     sections.set(id, { id, roomId: room.instanceId, side: door.side, offset: door.offset, request,
-      connectionInvalid: !isDoorPresentationConnected(door, model.rooms),
+      connectionInvalid: !connected[index],
       validation: actions.previewDoor(request) });
   }
   const rooms = [...model.rooms].sort((a, b) => Number(b.instanceId === model.selectedRoomInstanceId) - Number(a.instanceId === model.selectedRoomInstanceId));

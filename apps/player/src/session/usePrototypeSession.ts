@@ -8,7 +8,7 @@ import { learningReviewCount } from "./learningReviewCount";
 import { startFacilityClock } from "./facilityClock";
 import { LocalProfileJournal } from "./localProfileJournal";
 import { cloudCheckDeadline } from "./cloud/checkDeadline";
-import { getCommandFeedback, problemDiagnostics, showCommandProblem } from "../diagnostics/problemDiagnostics";
+import { problemDiagnostics, showCommandProblem } from "../diagnostics/problemDiagnostics";
 import { getBuildAccessWarning, getRoomAccessWarning, presentActionRejection } from "../ui/roomAccessFeedback";
 import { questionReviewContext } from "./questionReviewContext";
 import type { SubmitQuestionReviewFlag } from "./questionReviewFlags";
@@ -115,6 +115,13 @@ type GameCommandInput = {
     "operationId"
   >;
 }[GameCommand["type"]];
+
+function showCloudActionRefusal(cloud: CloudGameSession, savingMessage: string): string {
+  const canExecute = cloud.canExecuteAction;
+  const message = canExecute ? "That action could not be completed. Try again." : savingMessage;
+  showCommandProblem(message, canExecute ? "error" : "rejection");
+  return message;
+}
 
 interface ExecuteOptions {
   clockPulse?: boolean;
@@ -802,10 +809,9 @@ export function usePrototypeSession(
         if (!next) {
           problemDiagnostics.event("command", "hosted-refused");
           if (command.type !== "ADVANCE_TICK") {
-            const problem = getCommandFeedback();
-            showCommandProblem(problem?.kind === "error" ? problem.message : "Account saving must be checked before continuing.", problem?.kind === "error" ? "error" : "rejection");
+            setAnnouncement(showCloudActionRefusal(cloud, "Account saving must be checked before continuing."));
           }
-          setAnnouncement("Account saving must be checked before continuing."); return "rejected";
+          return "rejected";
         }
         if (stateRef.current !== next) { stateRef.current = next; setState(next); setProfile(stageActiveState(next)); }
         const receipt = next.operationReceipts[operationId];
@@ -1002,7 +1008,10 @@ export function usePrototypeSession(
       return;
     }
     const previous = buildHistoryRef.current.at(-1)!;
-    if (cloud && !(yield cloud.undoBuildAsync(previous))) { showCommandProblem("Check the account save before undoing this build action.", "rejection"); setAnnouncement("Check the account save before undoing this build action."); return; }
+    if (cloud && !(yield cloud.undoBuildAsync(previous))) {
+      setAnnouncement(showCloudActionRefusal(cloud, "Check the account save before undoing this build action."));
+      return;
+    }
     if (localJournalRef.current) {
       if (!localJournalRef.current.canAccept) { showCommandProblem("Device saving needs attention before undoing."); return; }
       localJournalRef.current.undo(previous);
