@@ -81,6 +81,8 @@ import { replaceDiagnosticOrderPlan } from "./diagnostic-orders";
 import { isReadingWorkMinute, readingMinutesEqual } from "./room-upgrade-reading";
 import { normalizeOutsideRadiologyReads, normalizeRadiologistReadIncome } from "./radiologist-read-income";
 import { getDefaultDoorOffset } from "./doors";
+import { doorEditedWhilePaused } from "./door-route-repair";
+import { jsonObject } from "./game-evidence-json";
 import { findDeterministicFacilityPath, getRoomCareStations, getRoomNavigationAnchor } from "./spatial";
 import type {
   AnswerRecord,
@@ -4834,6 +4836,18 @@ export function deserializeGameState(
   return options.compactHistory === false ? state : compactGameState(remapLegacyInspectionReviewers(state), context);
 }
 
+// Journal recovery preserves the saved order of accepted facts during a
+// paused remodel. Keep the validator's values and any migrations it supplied.
+function preserveValidatedFieldOrder(value: unknown, source: unknown): unknown {
+  if (Array.isArray(value) && Array.isArray(source)) {
+    return value.map((entry, index) => preserveValidatedFieldOrder(entry, source[index]));
+  }
+  if (!jsonObject(value) || !jsonObject(source)) return value;
+  const keys = new Set([...Object.keys(source), ...Object.keys(value)]);
+  return Object.fromEntries([...keys].filter(key => Object.hasOwn(value, key))
+    .map(key => [key, preserveValidatedFieldOrder(value[key], source[key])]));
+}
+
 function deserializeValidatedGameState(
   serialized: string,
   context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
@@ -4877,7 +4891,10 @@ function deserializeValidatedGameState(
     return finishApprovedRoomMigration(parsed, validateVersionEight(parsed, context), context);
   }
   if (parsed.schemaVersion === 9) {
-    return finishApprovedRoomMigration(parsed, validateVersionNine(parsed, context), context);
+    const state = finishApprovedRoomMigration(parsed, validateVersionNine(parsed, context), context);
+    if (!doorEditedWhilePaused(state)) return state;
+    return Object.fromEntries(Object.entries(state)
+      .map(([key, value]) => [key, preserveValidatedFieldOrder(value, parsed[key])])) as unknown as GameState;
   }
   throw new Error("The saved game uses an unsupported schema version.");
 }

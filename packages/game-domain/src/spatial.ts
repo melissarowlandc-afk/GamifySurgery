@@ -1219,6 +1219,26 @@ export function prepareFacilityPathfinding(rooms: readonly PlacedRoom[], doors: 
   navigationGraph(getNavigationLayout(rooms, doors, getDefinition), rooms, doors, getDefinition, new Set());
 }
 
+/** Connected floor, including occupied thresholds, for the Build exit check. */
+export function reachableFacilityRooms(start: GridPoint, rooms: readonly PlacedRoom[], doors: readonly DoorState[],
+  getDefinition: (id: string) => RoomDefinition | null): Set<string> {
+  const layout = getNavigationLayout(rooms, doors, getDefinition);
+  const graph = navigationGraph(layout, rooms, doors, getDefinition, new Set());
+  const origin = pointKey(start);
+  const visited = new Set([origin]), queue = [origin], reached = new Set<string>();
+  for (let index = 0; index < queue.length; index++) {
+    const key = queue[index]!;
+    const roomId = layout.roomAt.get(key);
+    if (roomId) reached.add(roomId);
+    for (const neighbor of graph.get(key) ?? []) {
+      if (visited.has(neighbor)) continue;
+      visited.add(neighbor);
+      queue.push(neighbor);
+    }
+  }
+  return reached;
+}
+
 export function findDeterministicFacilityPath(
   start: GridPoint,
   goal: GridPoint,

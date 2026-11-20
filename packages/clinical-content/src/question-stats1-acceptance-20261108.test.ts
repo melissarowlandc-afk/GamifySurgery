@@ -103,7 +103,9 @@ describe("stats1 exact manager acceptance and frozen identities",()=>{
   for (const [p, h] of Object.entries(before.files)) {
    if (pins.has(p)) continue;
    const url = new URL("../../../" + p, import.meta.url);
-   if (p === "packages/game-domain/src/colleagueNames.ts" || p === "packages/game-domain/src/inspection-presentation.ts") {
+   if (p === "packages/game-domain/src/colleagueNames.ts" ||
+       p === "packages/game-domain/src/executive-management.ts" ||
+       p === "packages/game-domain/src/inspection-presentation.ts") {
     expect(sourceSha256(readFileSync(url)), p).toBe(releasePins.get(p)?.sha256);
    } else {
     expect(createHash("sha256").update(beforeStats1AcceptanceSource(p, readFileSync(url, "utf8"))).digest("hex"), p).toBe(h);

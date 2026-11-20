@@ -1,5 +1,7 @@
 import { applyRoomRemodel, remodelFounderReturnPath, ROOM_REMODEL_FOUNDER_RETURN, roomHasActiveRemodelWork, validateRoomRemodelPlan } from "./room-remodel";
 import { cloneCommandState } from "./commandStateClone";
+import { deferPendingForTravelDelay, doorEditedWhilePaused, getBuildExitAccessValidation, reconcileDoorRoutes } from "./door-route-repair";
+export { getBuildExitAccessValidation } from "./door-route-repair";
 import { founderConsultClockKey, founderProcedureConsultPath, procedureConsultKind, reconcileFounderConsultSources, selectProcedureConsult, sourceConsultOperation } from "./founder-consults";
 import { procedureCaseRequiresSource } from "./procedure-context";
 import { compactCampaignHistory } from "./history-compaction";
@@ -5006,32 +5008,6 @@ function alignedFrozenPath(
   return path;
 }
 
-function deferPendingForTravelDelay(
-  pending: PendingResult,
-  delay: number,
-  thresholdTick: number,
-): void {
-  if (delay <= 0) return;
-  pending.dueTick += delay;
-  pending.durationTicks += delay;
-  pending.timingPhases = pending.timingPhases?.map((phase) =>
-    phase.startsAtTick >= thresholdTick
-      ? {
-          ...phase,
-          startsAtTick: phase.startsAtTick + delay,
-          endsAtTick: phase.endsAtTick + delay,
-        }
-      : phase,
-  );
-  if (
-    pending.onsiteReturn?.serviceCompletedAtTick !== null &&
-    pending.onsiteReturn?.serviceCompletedAtTick !== undefined &&
-    pending.onsiteReturn.serviceCompletedAtTick >= thresholdTick
-  ) {
-    pending.onsiteReturn.serviceCompletedAtTick += delay;
-  }
-}
-
 /**
  * Repairs only the active leg of an undelivered frozen itinerary. The frozen
  * clock is presentation state as well as scheduling state, so a repaired path
@@ -9783,11 +9759,12 @@ function reducePlaceDoor(
     );
   }
   const next = cloneCommandState(state);
-  next.doors.push(door);
+  next.doors = [...next.doors, door];
   const nextRoom = next.rooms.find((room) => room.id === door.roomId);
   if (nextRoom && !door.exterior && nextRoom.doorSide === null) {
     nextRoom.doorSide = door.side;
   }
+  if (next.paused && !door.exterior) withFacilityNavigationScope(() => reconcileDoorRoutes(next, context, true));
   appendEvent(next, {
     id: `event.door-placed.${door.id}`,
     type: "door_placed",
@@ -9800,32 +9777,31 @@ function reducePlaceDoor(
   return recordReceipt(next, command, "applied", "Door placed for $0.");
 }
 
+export function getDoorRemovalIssue(
+  state: GameState,
+  doorId: string,
+  context: DomainContext = PROTOTYPE_DOMAIN_CONTEXT,
+): string | null {
+  const door = state.doors.find(candidate => candidate.id === doorId);
+  if (!door) return "That door does not exist.";
+  if (door.exterior) return "The public Front Desk entrance cannot be removed.";
+  if (!state.paused) {
+    const room = state.rooms.find(candidate => candidate.id === door.roomId);
+    if (room && roomHasActiveCharacterOrRoute(state, room, context)) {
+      return "Wait for every character and reserved route to clear this doorway before removing it.";
+    }
+  }
+  return null;
+}
+
 function reduceRemoveDoor(
   state: GameState,
   command: Extract<GameCommand, { type: "REMOVE_DOOR" }>,
   context: DomainContext,
 ): GameState {
-  const door = state.doors.find((candidate) => candidate.id === command.doorId);
-  if (!door) {
-    return rejectCommand(state, command, "That door does not exist.");
-  }
-  if (door.exterior) {
-    return rejectCommand(
-      state,
-      command,
-      "The public Front Desk entrance cannot be removed.",
-    );
-  }
-  const room = state.rooms.find(
-    (candidate) => candidate.id === door.roomId,
-  );
-  if (room && roomHasActiveCharacterOrRoute(state, room, context)) {
-    return rejectCommand(
-      state,
-      command,
-      "Wait for every character and reserved route to clear this doorway before removing it.",
-    );
-  }
+  const issue = getDoorRemovalIssue(state, command.doorId, context);
+  if (issue) return rejectCommand(state, command, issue);
+  const door = state.doors.find(candidate => candidate.id === command.doorId)!;
   const next = cloneCommandState(state);
   next.doors = next.doors.filter((candidate) => candidate.id !== door.id);
   const nextRoom = next.rooms.find((room) => room.id === door.roomId);
@@ -9836,6 +9812,7 @@ function reduceRemoveDoor(
           candidate.roomId === door.roomId && !candidate.exterior,
       )?.side ?? null;
   }
+  if (next.paused) withFacilityNavigationScope(() => reconcileDoorRoutes(next, context, true, door));
   appendEvent(next, {
     id: `event.door-removed.${door.id}.${command.operationId}`,
     type: "door_removed",
@@ -11134,6 +11111,10 @@ function reduceGameCommand(
       return recordReceipt(next, command, "applied", "Finish report acknowledged. The clinic stays open for repeat inspections.");
     }
     case "SET_PAUSED": {
+      if (!command.paused && doorEditedWhilePaused(state)) {
+        const access = getBuildExitAccessValidation(state, context);
+        if (!access.valid) return rejectCommand(state, command, access.reason!);
+      }
       const next = cloneCommandState(state);
       next.paused = command.paused;
       return recordReceipt(
@@ -11346,6 +11327,6 @@ export function gameReducer(
   synchronizeRoomUpkeepOutages(next, context);
   synchronizeFacilityConditionOccurrences(next, context);
   synchronizeFacilityOperationalAlertOccurrences(next, context);
-  reconcileExecutiveManagement(next, context);
+  reconcileExecutiveManagement(next, context, command.type !== "ADVANCE_TICK" && doorEditedWhilePaused(next));
   return next;
 }

@@ -1,5 +1,5 @@
 import {
-  gameReducer, getRoomDefinition, getRoomInstanceFootprint, PROTOTYPE_DOMAIN_CONTEXT,
+  gameReducer, getDoorRemovalIssue, getRoomDefinition, getRoomInstanceFootprint, PROTOTYPE_DOMAIN_CONTEXT,
   validateDoorPlacement, validateRoomRemodelPlan, rotateDirection,
   type GameCommand, type GameState, type GridPoint, type RoomOrientation,
 } from "@gamify-surgery/game-domain";
@@ -92,8 +92,10 @@ export function previewMobileHallway(state: GameState, points: readonly GridPoin
 }
 
 export function previewMobileDoor(state: GameState, request: DoorRequest): BuildValidation {
-  if (request.kind === "remove") return previewCommand(state, { type: "REMOVE_DOOR",
-    operationId: previewId(state, "mobile.preview.door.remove"), doorId: request.doorId }).validation;
+  if (request.kind === "remove") {
+    const reason = getDoorRemovalIssue(state, request.doorId);
+    return { valid: reason === null, reason, cost: 0 };
+  }
   // PLACE_DOOR delegates all wall-section rules to this same pure validator.
   const facility = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility;
   const validation = validateDoorPlacement({ id: "door.mobile.preview", roomId: request.roomId,

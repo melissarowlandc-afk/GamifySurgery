@@ -122,8 +122,24 @@ function ordinaryRoute(state: GameState, context: DomainContext, start: GridPoin
   return findRouteFromDisplacedLocationToPoint(state, context, start, goal, allowed);
 }
 
-/** Exit only along an approved native segment containing the current point. */
-function exitVariants(state: GameState, context: DomainContext, start: GridPoint) {
+/** The wall can be opened by a door owned by either of its neighboring rooms. */
+function pediatricOpenings(state: GameState, context: DomainContext, room: PlacedRoom, shared: boolean) {
+  if (!shared) return state.doors.filter(door => door.roomId === room.id && !door.exterior);
+  return state.doors.flatMap(door => {
+    if (door.exterior) return [];
+    if (door.roomId === room.id) return [door];
+    const owner = state.rooms.find(row => row.id === door.roomId);
+    const definition = owner && getRoomDefinition(owner.roomDefinitionId, context);
+    const cells = owner && definition && getDoorCells(door, owner, definition);
+    if (!cells || pediatricRoomAtPoint(state, context, cells.outside)?.id !== room.id) return [];
+    const side = ({ north: "south", south: "north", east: "west", west: "east" } as const)[door.side];
+    const offset = side === "north" || side === "south" ? cells.outside.x - room.x : cells.outside.y - room.y;
+    return [{ ...door, roomId: room.id, side, offset }];
+  });
+}
+
+/** Exit via the current contact and an approved native approach. */
+function exitVariants(state: GameState, context: DomainContext, start: GridPoint, remodel = false) {
   const room = pediatricRoomAtPoint(state, context, start);
   // Ordinary floor/hallway tiles use the facility graph. Hallway rooms have no
   // authored doors; requiring a native exit there stranded the approaching
@@ -131,14 +147,23 @@ function exitVariants(state: GameState, context: DomainContext, start: GridPoint
   if (!room || !routes[room.roomDefinitionId]) return [{ path: [clone(start)], doorId: null as string | null }];
   const definition = getRoomDefinition(room.roomDefinitionId, context)!;
   const variants: Array<{ path: GridPoint[]; doorId: string | null }> = [];
-  for (const door of state.doors.filter(row => row.roomId === room.id && !row.exterior)) {
+  const nativeRoutes = routes[room.roomDefinitionId]!;
+  for (const door of pediatricOpenings(state, context, room, remodel)) {
     const cells = getDoorCells(door, room, definition);
     if (!cells) continue;
-    if (routes[room.roomDefinitionId]) {
-      for (const route of routes[room.roomDefinitionId]!.filter(row => row.doorSegment === segment(door))) {
-        const native = route.walkingPath.map(point => world(room, point));
-        const index = native.findIndex(point => same(point, start));
-        if (index >= 0) variants.push({ path: join(native.slice(0, index + 1).reverse(), [cells.outside]), doorId: door.id });
+    for (const route of nativeRoutes.filter(row => row.doorSegment === segment(door))) {
+      const native = route.walkingPath.map(point => world(room, point));
+      const index = native.findIndex(point => same(point, start));
+      if (index >= 0) variants.push({ path: join(native.slice(0, index + 1).reverse(), [cells.outside]), doorId: door.id });
+      else if (remodel) {
+        // A family can be partway down the old approach. Join the open lane
+        // at the same interior contact without crossing the closed wall.
+        for (const original of nativeRoutes.filter(row => row.supportId === route.supportId)) {
+          const before = original.walkingPath.map(point => world(room, point));
+          const cursor = before.findIndex(point => same(point, start));
+          if (cursor < 0 || !same(before.at(-1), native.at(-1))) continue;
+          variants.push({ path: join(before.slice(cursor), native.slice().reverse(), [cells.outside]), doorId: door.id });
+        }
       }
     }
     // Coarse points are used only before entering the native seating route.
@@ -150,9 +175,9 @@ function exitVariants(state: GameState, context: DomainContext, start: GridPoint
   return variants;
 }
 
-function destinationVariants(state: GameState, context: DomainContext, room: PlacedRoom, location: GridPoint, seatId: string | null) {
+function destinationVariants(state: GameState, context: DomainContext, room: PlacedRoom, location: GridPoint, seatId: string | null, remodel = false) {
   const definition = getRoomDefinition(room.roomDefinitionId, context)!;
-  return state.doors.filter(door => door.roomId === room.id && !door.exterior).flatMap(door => {
+  return pediatricOpenings(state, context, room, remodel).flatMap(door => {
     const cells = getDoorCells(door, room, definition);
     if (!cells) return [];
     const native = seatId ? routes[room.roomDefinitionId]?.find(route => route.doorSegment === segment(door) && route.supportId === seatId)
@@ -174,7 +199,7 @@ function align(a: GridPoint[], b: GridPoint[], padStart: boolean): [GridPoint[],
 
 /** Pure plan first; the caller commits both physical places in one mutation. */
 export function planPediatricPair(state: GameState, context: DomainContext, family: PediatricFamilyState, reservation: Reservation | null,
-  point?: GridPoint): PediatricPairPlan | null {
+  point?: GridPoint, remodel = false): PediatricPairPlan | null {
   const child = childRecord(state, family);
   const parent = state.retailExternalActors.find(actor => actor.id === family.parentActorId);
   if (!child.location || !parent?.location) return null;
@@ -186,10 +211,10 @@ export function planPediatricPair(state: GameState, context: DomainContext, fami
   if (same(child.location, targetChild) && same(parent.location, targetParent)) return { reservation,
     movement: { version: "pediatric-pair-travel.v1", childPath: [clone(targetChild)], parentPath: [clone(targetParent)],
       pathIndex: 0, lastMovedAtFacilityTick: state.facilityTick, doorIds: [] } };
-  const destinationsChild = room ? destinationVariants(state, context, room, targetChild, reservation!.childSeatId) : [{ path: [targetChild], doorId: null }];
-  const destinationsParent = room ? destinationVariants(state, context, room, targetParent, reservation!.parentSeatId) : [{ path: [targetParent], doorId: null }];
+  const destinationsChild = room ? destinationVariants(state, context, room, targetChild, reservation!.childSeatId, remodel) : [{ path: [targetChild], doorId: null }];
+  const destinationsParent = room ? destinationVariants(state, context, room, targetParent, reservation!.parentSeatId, remodel) : [{ path: [targetParent], doorId: null }];
   const allowed = new Set([room?.id, pediatricRoomAtPoint(state, context, child.location)?.id].filter((id): id is string => Boolean(id)));
-  for (const fromChild of exitVariants(state, context, child.location)) for (const fromParent of exitVariants(state, context, parent.location)) {
+  for (const fromChild of exitVariants(state, context, child.location, remodel)) for (const fromParent of exitVariants(state, context, parent.location, remodel)) {
     if (fromChild.doorId !== fromParent.doorId) continue;
     for (const toChild of destinationsChild) for (const toParent of destinationsParent) {
       if (toChild.doorId !== toParent.doorId) continue;

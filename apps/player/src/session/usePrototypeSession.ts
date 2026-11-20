@@ -24,6 +24,7 @@ import {
   TUTORIAL_ENCOUNTER_ID,
   gameReducer,
   getCurrentQuestion,
+  getBuildExitAccessValidation,
   getFacilityAccessValidation,
   getRoomDefinition,
   getStaffRoleDefinition,
@@ -1608,7 +1609,7 @@ export function usePrototypeSession(
       setAnnouncement("Apply or cancel the blueprint before returning to play.");
       showCommandProblem("Apply or cancel the blueprint before returning to play.", "rejection"); return;
     }
-    const validation = getFacilityAccessValidation(stateRef.current);
+    const validation = getBuildExitAccessValidation(stateRef.current);
     if (!validation.valid) {
       const reason =
         validation.reason ??

@@ -50,7 +50,7 @@ function releaseRound(state: GameState, round: DailyManagementRoundState): void 
 }
 
 /** Command reconciliation never works, awards, renews or invents a daily round. */
-export function reconcileExecutiveManagement(state: GameState, context: DomainContext): void {
+export function reconcileExecutiveManagement(state: GameState, context: DomainContext, editingDoors = false): void {
   if (state.facilityLevel < 5) return;
   const terms = state.levelFive?.management.activeTerms;
   if (terms && (!state.employees.some(employee => employee.id === terms.employeeId && employee.staffRoleDefinitionId === "staff.executive" && employee.homeRoomInstanceId === terms.officeRoomInstanceId) ||
@@ -62,9 +62,9 @@ export function reconcileExecutiveManagement(state: GameState, context: DomainCo
   if (round.dayNumber !== getFacilityClock(state, context).dayNumber || !employee || !office) {
     releaseRound(state, round);
     round.status = employee && office ? "expired" : "cancelled";
-  } else if (!installed(state, employee.id, office.id, context) || isEmployeeAwayForTraining(employee) ||
+  } else if ((!editingDoors && !installed(state, employee.id, office.id, context)) || isEmployeeAwayForTraining(employee) ||
     employee.facilityTask?.kind !== "daily_management_round" || employee.facilityTask.targetId !== round.id ||
-    !state.doors.some(door => door.id === employee.facilityTask?.supportDoorId && door.roomId === office.id)) {
+    (!editingDoors && !state.doors.some(door => door.id === employee.facilityTask?.supportDoorId && door.roomId === office.id))) {
     releaseRound(state, round); round.status = "paused";
     round.lastProgressAtFacilityTick = state.facilityTick;
   }
