@@ -3,7 +3,7 @@ import { createHash } from "node:crypto";
 import { describe, expect, it } from "vitest";
 import {
   PROTOTYPE_DOMAIN_CONTEXT, deserializeGameState, gameReducer, getFacilityProgressionStatus,
-  getInspectionBookingBlockedReason, serializeGameState, type GameState, type InspectionReportState,
+  getInspectionBookingBlockedReason, inspectionReviewersForSeed, serializeGameState, type GameState, type InspectionReportState,
 } from "../src";
 import { createPreLevelFiveLaunchContext } from "../../../tests/fixtures/level-five-launch";
 import { createLevelFiveIntegrationQaState, LEVEL_FIVE_INTEGRATION_QA_SCENARIOS } from "../../../tests/fixtures/level-five-integration-qa";
@@ -121,7 +121,13 @@ describe("M9 connected Level 5 reducer journey", () => {
     // has already passed through the reader and could conceal a clock reset.
     const before = structuredClone(checkpoints[scenario]) as unknown as GameState;
     const loaded = deserializeGameState(serializeGameState(before), context);
-    expect(loaded.levelFive).toEqual(before.levelFive);
+    const expectedLevelFive = structuredClone(before.levelFive);
+    const presentation = expectedLevelFive?.inspectionPresentation;
+    if (presentation?.seed && presentation.actors.some(actor => actor.stillId.startsWith("inspector-v6f."))) {
+      const reviewers = inspectionReviewersForSeed(presentation.seed);
+      presentation.actors.forEach((actor, index) => { actor.stillId = reviewers[index]!.stillId; });
+    }
+    expect(loaded.levelFive).toEqual(expectedLevelFive);
     for (const employee of before.employees)
       expect(loaded.employees.find(e => e.id === employee.id)!.nextIdleActionAtFacilityTick).toBe(employee.nextIdleActionAtFacilityTick);
     for (const encounter of Object.values(before.encounters))

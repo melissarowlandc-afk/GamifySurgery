@@ -1532,7 +1532,6 @@ function createEncounter(
     terminalFeedback: null,
     settlementId: null,
   };
-  if (pediatricIdentity) encounter.patientAppearance.stillId = pediatricIdentity.childStillId;
   if (variety3Identity) encounter.patientAppearance.stillId = variety3Identity.patientStillId;
   if (input.patientAppearance) encounter.patientAppearance = clonePlain(input.patientAppearance);
   if (frozenCase.pediatricProfile) createPediatricFamily(state, encounter, "encounter", pediatricIdentity ? {

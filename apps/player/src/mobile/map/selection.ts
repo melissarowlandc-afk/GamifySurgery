@@ -31,7 +31,7 @@ export function describeMobileCharacter(character: FacilityCharacterRef, model: 
     "retail-visitor": "Shopper", companion: "Companion", ambient: "Passerby", staff: "Employee", inspector: "Inspector" }[character.kind]);
   return {
     kind: "character", character, role,
-    name: inspector ? "Inspector" : description?.name ?? employee?.displayName ?? patient?.displayName ?? model.founder.displayName,
+    name: inspector?.displayName ?? description?.name ?? employee?.displayName ?? patient?.displayName ?? model.founder.displayName,
     activity: inspector?.activity ?? description?.activity ?? (character.kind === "founder" ? model.founder.activityLabel ?? "Standing by" : patient?.status ?? ""),
     patient: patient ? { id: patient.instanceId, name: patient.displayName, status: patient.status } : null,
     // Matches the desktop action's availability; the session still guards execution.

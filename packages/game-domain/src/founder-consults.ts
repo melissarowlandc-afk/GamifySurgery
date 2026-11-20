@@ -1,6 +1,7 @@
 import { FOUNDER_CONSULT_POLICY } from "@gamify-surgery/balance-config";
 import { VARIETY3_ADULT_CONTEXTS, type SyntheticClinicalCase } from "@gamify-surgery/clinical-content";
 import { normalizePatientAppearanceForSex } from "./appearance";
+import { isCompatiblePediatricStill } from "./characterStillCatalog";
 import { getClinicalCaseEligibilityIssue, getPediatricClinicFamilyContext } from "./clinical-case-eligibility";
 import { selectRoutineClinicalCase } from "./clinical-selection";
 import { findRouteFromDisplacedLocationToPoint } from "./displaced-routing";
@@ -80,7 +81,8 @@ function declaredSourceMatches(state: GameState, context: DomainContext, operati
     const family = state.pediatricFamilies?.[operation.clinicVisit?.pediatricFamilyId ?? ""];
     const authored = declared.pediatricFamilyContext, saved = frozen.pediatricFamilyContext;
     if (!family?.procedureFlow || family.procedureFlow.serviceOperationId !== operation.id || !pediatricProcedureParentReady(state, family) ||
-        !authored || !saved || (["profileId", "childName", "childStillId", "parentName", "parentRelationship"] as const).some(key => authored[key] !== saved[key])) return false;
+        !authored || !saved || saved.childStillId !== operation.appearance?.stillId ||
+        (["profileId", "childName", "parentName", "parentRelationship"] as const).some(key => authored[key] !== saved[key])) return false;
   }
   const nurseRole = declared.kind === "operation" ? "staff.or_nurse" : "staff.endoscopy_nurse";
   if (!operation.reservedEmployeeIds.some(id => state.employees.some(e => e.id === id && e.staffRoleDefinitionId === nurseRole)) ||
@@ -96,7 +98,8 @@ export function compatibleConsultProfile(clinicalCase: SyntheticClinicalCase, op
   if (!operation.appearance) return undefined;
   if (clinicalCase.pediatricProfile) {
     const family = getPediatricClinicFamilyContext(clinicalCase);
-    if (!family || family.childName !== operation.displayName || family.childStillId !== operation.appearance.stillId) return undefined;
+    if (!family || family.childName !== operation.displayName ||
+        !isCompatiblePediatricStill(operation.appearance.stillId, family.prototypeDemographics.sexLabel, family.prototypeDemographics.ageYears)) return undefined;
   }
   const profiles = clinicalCase.approvedInstantiationProfiles?.length
     ? [...clinicalCase.approvedInstantiationProfiles].sort((a, b) => a.id.localeCompare(b.id))

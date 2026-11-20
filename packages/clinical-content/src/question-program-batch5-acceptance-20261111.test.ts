@@ -1,4 +1,5 @@
 import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
+import { readProtectedSources, sourceSha256 } from "../../../tests/fixtures/protected-source-manifest";
 import {createHash} from "node:crypto";
 import {readFileSync,existsSync} from "node:fs";
 import {describe, expect, it} from "vitest";
@@ -214,12 +215,24 @@ describe("topic batch5 final exact manager acceptance", () => {
   it("binds every scoped existing-source correction to its captured preimage", () => {
     const migration = read("tools/question-quality/fixtures/question-topic-acceptance-batch5-source-migration-20261111.json");
     const { pins } = historicalSourceScope("batch5");
+    const releasePins = readProtectedSources();
     expect(pins.size).toBe(27);
     expect([...pins.values()].filter(pin => pin.requiredAbsent)).toHaveLength(25);
     for (const row of migration.files) {
       if (row.path.includes("/question-topic-")) expect(row.path).toMatch(/\.test\.ts$/);
       const sourceUrl=new URL("../../../"+row.path,import.meta.url);
-      const current=existsSync(sourceUrl)?readFileSync(sourceUrl,"utf8"):undefined;
+      const currentBytes = existsSync(sourceUrl) ? readFileSync(sourceUrl) : undefined;
+      let current = currentBytes?.toString("utf8");
+      if (row.path === "packages/game-domain/tests/pediatric-clinic-admission.test.ts") {
+        expect(currentBytes, row.path + " required live source").toBeDefined();
+        expect(sourceSha256(currentBytes!), row.path + " exact live source").toBe(releasePins.get(row.path)?.sha256);
+        // Restore the reviewed test before applying the historical Batch 5 inverse.
+        current = current!
+          .replace("constrained child, compatible still", "constrained child, exact still")
+          .replace("      expect(encounter.patientAppearance.patientIdentityId)",
+            "      expect(encounter.patientAppearance.stillId).toBe(familyContext.childStillId);\n"
+              + "      expect(encounter.patientAppearance.patientIdentityId)");
+      }
       expect(createHash("sha256").update(previousSource(row.path, current)).digest("hex"), row.path).toBe(row.beforeSha256);
     }
   });

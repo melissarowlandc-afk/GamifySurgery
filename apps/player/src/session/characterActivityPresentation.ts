@@ -319,7 +319,7 @@ export function describeFacilityCharacter(
   switch (character.kind) {
     case "inspector": {
       const actor = createInspectionActorViews(state).find(actor => actor.instanceId === character.id);
-      return actor ? { name: "Inspection agent", activity: actor.activity } : null;
+      return actor ? { name: actor.displayName, activity: actor.activity } : null;
     }
     case "founder":
       return { name: withRole(state.founder.displayName, "Founder"), activity: describeFounder(state) };

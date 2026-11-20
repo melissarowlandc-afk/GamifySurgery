@@ -3,6 +3,7 @@ import {
   patientVisualAgeBand,
   type PatientVisualAgeBand,
 } from "./patientAppearanceCatalog";
+import { ATTENDING_REVIEWERS } from "./inspection-reviewers";
 import type {
   CharacterStillId,
   PatientIdentityId,
@@ -17,13 +18,13 @@ export type CharacterStillCatalogEntry =
       /** Inspection art is never eligible for patient, employee or founder selection. */
       readonly stillId: CharacterStillId;
       readonly category: "inspector";
-      readonly sourceCohort: "inspector-v6f";
+      readonly sourceCohort: "inspector-v6f" | "inspector-v7a";
       readonly presentationRole: "inspection-agent";
     }
   | {
       readonly stillId: CharacterStillId;
       readonly category: "pediatric";
-      readonly sourceCohort: "level3-roster-v2";
+      readonly sourceCohort: "level3-roster-v2" | "pediatric-variety-pilot-v1" | "pediatric-variety-production-v1";
       readonly compatibleSexLabel: "Female" | "Male";
       readonly intendedVisualAge: number;
       /** Editorial art bounds from the authored child/older-child/teen groups. */
@@ -161,26 +162,87 @@ export const PREFERRED_STAFF_STILL_IDS_BY_ROLE: Readonly<Partial<Record<string, 
   ],
 };
 
-// Sex and visual age are explicit in level3-roster-complete-v2/roster.json,
-// identities 021-032. Bounds describe its authored art groups, not clinical risk.
-export const PEDIATRIC_CHARACTER_STILLS = [
+type PediatricStill = Extract<CharacterStillCatalogEntry, { category: "pediatric" }>;
+type PediatricStillRow = readonly [string, number, "Female" | "Male", number, number];
+
+function pediatricStills(sourceCohort: PediatricStill["sourceCohort"], rows: readonly PediatricStillRow[]): readonly PediatricStill[] {
+  return rows.map(([number, intendedVisualAge, compatibleSexLabel, minimumAge, maximumAge]) => ({
+    stillId: id(`${sourceCohort}.${number}`), category: "pediatric",
+    sourceCohort, intendedVisualAge, compatibleSexLabel, minimumAge, maximumAge,
+  }));
+}
+
+// Keep the released fallback visit demographics in their original seed order.
+export const LEVEL3_PEDIATRIC_CHARACTER_STILLS = pediatricStills("level3-roster-v2", [
   ["021", 6, "Female", 5, 8], ["022", 5, "Male", 5, 8],
   ["023", 7, "Female", 5, 8], ["024", 6, "Male", 5, 8],
   ["025", 9, "Female", 9, 12], ["026", 10, "Male", 9, 12],
   ["027", 11, "Female", 9, 12], ["028", 12, "Male", 9, 12],
   ["029", 14, "Female", 13, 17], ["030", 14, "Male", 13, 17],
   ["031", 16, "Female", 13, 17], ["032", 17, "Male", 13, 17],
-].map(([number, intendedVisualAge, compatibleSexLabel, minimumAge, maximumAge]) => ({
-  stillId: id(`level3-roster-v2.${number}`), category: "pediatric" as const,
-  sourceCohort: "level3-roster-v2" as const, intendedVisualAge, compatibleSexLabel,
-  minimumAge, maximumAge,
-})) as readonly Extract<CharacterStillCatalogEntry, { category: "pediatric" }>[];
+]);
 
-export function pediatricStillEligibleEntries(sexLabel?: PatientSexLabel, ageYears?: number) {
+const pediatricPilot = pediatricStills("pediatric-variety-pilot-v1", [
+  ["001", 6, "Female", 5, 8],
+  ["002", 7, "Male", 5, 8],
+  ["003", 11, "Female", 9, 12],
+  ["004", 15, "Male", 13, 17],
+]);
+const pediatricProduction = pediatricStills("pediatric-variety-production-v1", [
+  ["001", 5, "Female", 5, 8],
+  ["003", 5, "Male", 5, 8],
+  ["005", 6, "Female", 5, 8],
+  ["009", 7, "Female", 5, 8],
+  ["011", 6, "Male", 5, 8],
+  ["013", 8, "Female", 5, 8],
+  ["017", 5, "Female", 5, 8],
+  ["019", 8, "Male", 5, 8],
+  ["021", 6, "Female", 5, 8],
+  ["025", 7, "Female", 5, 8],
+  ["027", 7, "Male", 5, 8],
+  ["029", 8, "Female", 5, 8],
+  ["033", 5, "Female", 5, 8],
+  ["035", 5, "Male", 5, 8],
+  ["037", 6, "Female", 5, 8],
+  ["041", 8, "Female", 5, 8],
+  ["043", 5, "Female", 5, 8],
+  ["002", 9, "Female", 9, 12],
+  ["004", 9, "Male", 9, 12],
+  ["006", 10, "Female", 9, 12],
+  ["007", 13, "Female", 13, 17],
+  ["008", 13, "Male", 13, 17],
+  ["010", 11, "Female", 9, 12],
+  ["012", 10, "Male", 9, 12],
+  ["014", 12, "Female", 9, 12],
+  ["015", 15, "Female", 13, 17],
+  ["016", 11, "Male", 9, 12],
+  ["018", 9, "Female", 9, 12],
+  ["020", 16, "Male", 13, 17],
+  ["022", 10, "Female", 9, 12],
+  ["023", 16, "Female", 13, 17],
+  ["024", 12, "Male", 9, 12],
+  ["026", 11, "Female", 9, 12],
+  ["028", 9, "Male", 9, 12],
+  ["030", 12, "Female", 9, 12],
+  ["031", 17, "Female", 13, 17],
+  ["032", 17, "Male", 13, 17],
+  ["034", 9, "Female", 9, 12],
+  ["036", 10, "Male", 9, 12],
+  ["038", 10, "Female", 9, 12],
+  ["040", 11, "Female", 9, 12],
+  ["042", 12, "Female", 9, 12],
+  ["044", 9, "Female", 9, 12],
+]);
+
+export const PEDIATRIC_CHARACTER_STILLS = [...LEVEL3_PEDIATRIC_CHARACTER_STILLS, ...pediatricPilot, ...pediatricProduction] as const;
+const pediatricPools = (sex: PediatricStill["compatibleSexLabel"]) =>
+  [5, 9, 13].map(minimumAge => PEDIATRIC_CHARACTER_STILLS.filter(entry => entry.compatibleSexLabel === sex && entry.minimumAge === minimumAge));
+const pediatricPoolsBySex = { Female: pediatricPools("Female"), Male: pediatricPools("Male") };
+
+export function pediatricStillEligibleEntries(sexLabel?: PatientSexLabel, ageYears?: number): readonly PediatricStill[] {
   if (!Number.isInteger(ageYears) || ageYears === undefined || ageYears < 5 || ageYears > 17 ||
     (sexLabel !== "Female" && sexLabel !== "Male")) return [];
-  return PEDIATRIC_CHARACTER_STILLS.filter(entry => entry.compatibleSexLabel === sexLabel &&
-    ageYears >= entry.minimumAge && ageYears <= entry.maximumAge);
+  return pediatricPoolsBySex[sexLabel][ageYears <= 8 ? 0 : ageYears <= 12 ? 1 : 2]!;
 }
 
 const PATIENT_WOMEN20_V3_ROWS = [
@@ -408,10 +470,15 @@ const STAFF_VARIETY_V1_STILLS = STAFF_VARIETY_V1_ROLES.flatMap(([role, first, la
   })),
 );
 
-/** Manager-accepted v6f cast; only the dedicated inspection presentation uses it. */
-export const INSPECTOR_CHARACTER_STILLS = Array.from({ length: 10 }, (_, index) => ({
+/** Retained registry identities from the retired inspection cast. */
+export const LEGACY_INSPECTOR_CHARACTER_STILLS = Array.from({ length: 10 }, (_, index) => ({
   stillId: id(`inspector-v6f.${String(index + 1).padStart(3, "0")}`),
   category: "inspector" as const, sourceCohort: "inspector-v6f" as const,
+  presentationRole: "inspection-agent" as const,
+}));
+
+const ATTENDING_REVIEWER_STILLS = ATTENDING_REVIEWERS.map(({ stillId }) => ({
+  stillId, category: "inspector" as const, sourceCohort: "inspector-v7a" as const,
   presentationRole: "inspection-agent" as const,
 }));
 
@@ -441,7 +508,7 @@ export const CHARACTER_STILL_CATALOG = [
   ...PATIENT_GAPFILL_V6C_STILLS,
   ...STAFF_GAPFILL_V6D_STILLS,
   ...APP_GAPFILL_V6E_STILLS,
-  ...INSPECTOR_CHARACTER_STILLS,
+  ...LEGACY_INSPECTOR_CHARACTER_STILLS, ...ATTENDING_REVIEWER_STILLS,
   ...APP_VARIETY_V1_STILLS, ...STAFF_VARIETY_V1_STILLS,
 ] as readonly CharacterStillCatalogEntry[];
 
@@ -468,6 +535,12 @@ export function isCharacterStillId(value: unknown): value is CharacterStillId {
 
 export function characterStillCatalogEntryById(stillId: string | undefined): CharacterStillCatalogEntry | undefined {
   return stillId === undefined ? undefined : stillsById.get(stillId);
+}
+
+export function isCompatiblePediatricStill(stillId: string | undefined, sexLabel?: PatientSexLabel, ageYears?: number): boolean {
+  const still = characterStillCatalogEntryById(stillId);
+  return still?.category === "pediatric" && still.compatibleSexLabel === sexLabel &&
+    ageYears !== undefined && Number.isInteger(ageYears) && ageYears >= still.minimumAge && ageYears <= still.maximumAge;
 }
 
 export function patientStillEligibleEntries(sexLabel?: PatientSexLabel, ageYears?: number) {

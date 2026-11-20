@@ -1,10 +1,10 @@
 import { APPROVED_LEVEL5_SUPPORT_NAVIGATION, APPROVED_ROOM_NAVIGATION_CONTRACTS, type ApprovedFloorFootprint, type RoomDefinition } from "@gamify-surgery/balance-config";
-import { INSPECTOR_CHARACTER_STILLS } from "./characterStillCatalog";
+import { inspectionReviewersForSeed } from "./inspection-reviewers";
 import { getDoorCells } from "./doors";
 import { findRouteFromDisplacedLocationToPublicEntrance } from "./displaced-routing";
 import { deterministicInteger, deterministicShuffle } from "./randomness";
 import { getRotatedFootprint } from "./spatial";
-import type { DomainContext, GameState, GridPoint, InspectionPresentationActor, InspectorStillId, PlacedRoom } from "./types";
+import type { DomainContext, GameState, GridPoint, InspectionPresentationActor, PlacedRoom } from "./types";
 
 /** Editorial cosmetic cadence and geometry, independent of the inspection rules. */
 export const INSPECTOR_OBSERVATION_MINUTES = 5;
@@ -253,12 +253,12 @@ export function advanceInspectionPresentation(state: GameState, context: DomainC
     lane.runId = run.id; lane.seed = `inspection-visual.v1.${deterministicInteger(state.campaignSeed, INSPECTOR_PRESENTATION_STREAM, run.id, 0x100000000)}`;
     const exterior = state.doors.find(door => door.exterior), room = exterior && state.rooms.find(row => row.id === exterior.roomId);
     const def = room && definition(context, room.roomDefinitionId), cells = exterior && room && def ? getDoorCells(exterior, room, def) : null;
-    lane.actors = INSPECTOR_CHARACTER_STILLS.map((entry, index) => {
+    lane.actors = inspectionReviewersForSeed(lane.seed).map(({ stillId }, index) => {
       const columns = context.balanceRelease.facility.gridWidth;
       const location = { x: ((cells?.outside.x ?? 5) - 5 + index + columns) % columns,
         y: context.balanceRelease.facility.gridHeight };
       return { id: `inspector.${run.startedAtFacilityTick}.${deterministicInteger(lane.seed!, INSPECTOR_PRESENTATION_STREAM, run.id, 0x1000000)}.${index + 1}`,
-        stillId: entry.stillId as InspectorStillId, phase: "stationary", location, path: [location], pathIndex: 0,
+        stillId, phase: "stationary", location, path: [location], pathIndex: 0,
         lastMovedAtFacilityTick: state.facilityTick, targetRoomInstanceId: null, observingUntilFacilityTick: state.facilityTick + index };
     });
   }

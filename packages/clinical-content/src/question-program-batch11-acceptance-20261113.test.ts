@@ -1,4 +1,5 @@
 import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
+import { readProtectedSources } from "../../../tests/fixtures/protected-source-manifest";
 import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
 import {describe, expect, it} from "vitest";
@@ -147,10 +148,25 @@ describe("batch11 exact whole-case procedure and salvage acceptance", () => {
     expect(() => beforeProgramBatch11AcceptanceSource(path, raw(path).toString("utf8") + "\n// unauthorized\n")).toThrow();
     expect(sha(beforeProgramBatch11AcceptanceSource(path, raw(path).toString("utf8")))).toBe(before.observed[path]);
     const pins=read("tools/question-quality/fixtures/question-intraop-acceptance-batch11-eng-i01c-pins-20261113.json");
+    const releasePins = readProtectedSources();
     for(const pin of pins.records){
-      expect(sha(raw(pin.path))).toBe(pin.afterSha256);
-      expect(sha(beforeProgramBatch11AcceptanceSourceBytes(raw(pin.path)))).toBe(pin.beforeSha256);
-      const mutation=Buffer.concat([raw(pin.path),Buffer.from("\n// unauthorized\n")]);
+      let current: Buffer;
+      if (pin.path === "packages/game-domain/src/procedure-context.ts") {
+        const liveBytes = readFileSync(new URL("../../../" + pin.path, import.meta.url));
+        expect(sha(liveBytes), pin.path + " exact live source").toBe(releasePins.get(pin.path)?.sha256);
+        // Recover the exact ENG-I01c source for the existing preimage and mutation assertions.
+        current = Buffer.from(liveBytes.toString("utf8")
+          .replace("import { isCompatiblePediatricStill }", "import { pediatricStillEligibleEntries }")
+          .replace("isCompatiblePediatricStill(family.childStillId, demographics.sexLabel, demographics.ageYears)",
+            "pediatricStillEligibleEntries(demographics.sexLabel, demographics.ageYears).some(row => row.stillId === family.childStillId)")
+          .replace("isCompatiblePediatricStill(family.childStillId, raw.demographics.sexLabel, raw.demographics.ageYears)",
+            "pediatricStillEligibleEntries(raw.demographics.sexLabel, raw.demographics.ageYears).some(row => row.stillId === family.childStillId)"));
+      } else {
+        current = raw(pin.path);
+      }
+      expect(sha(current)).toBe(pin.afterSha256);
+      expect(sha(beforeProgramBatch11AcceptanceSourceBytes(current))).toBe(pin.beforeSha256);
+      const mutation=Buffer.concat([current,Buffer.from("\n// unauthorized\n")]);
       expect(sha(beforeProgramBatch11AcceptanceSourceBytes(mutation))).not.toBe(pin.beforeSha256);
     }
   });

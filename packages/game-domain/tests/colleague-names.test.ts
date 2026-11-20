@@ -14,7 +14,7 @@ import {
 } from "../src";
 
 const names = new Set(COLLEAGUE_NAMES.map(name => `${name.given} ${name.family}`));
-const profile = { ageYears: 50, sexLabel: "Female" as const };
+const profile = { ageYears: 30, sexLabel: "Female" as const };
 const encounterId = "encounter.colleague";
 function selectedSeed(key: string, selectionProfile = profile): string {
   for (let index = 0; index < 1_000; index++) {
@@ -41,18 +41,16 @@ function admit(seed: string, overrides: Partial<SyntheticClinicalCase> = {}, dis
 }
 
 describe("owner-requested colleague Easter-egg names", () => {
-  it("contains 82 unique names, with the exact unusual spellings and no contact data", () => {
-    expect(COLLEAGUE_NAMES).toHaveLength(82);
-    expect(names.size).toBe(82);
-    expect(COLLEAGUE_NAMES.filter(n => n.group === "attending")).toHaveLength(46);
-    expect(COLLEAGUE_NAMES.filter(n => n.group === "resident")).toHaveLength(36);
-    expect(COLLEAGUE_NAMES).toContainEqual({ given: "O. William", family: "Brown", sex: "male", group: "attending" });
+  it("contains the 36 unique resident names, with the exact spellings and no contact data", () => {
+    expect(COLLEAGUE_NAMES).toHaveLength(36);
+    expect(names.size).toBe(36);
+    expect(COLLEAGUE_NAMES.every(n => n.group === "resident")).toBe(true);
     expect(COLLEAGUE_NAMES).toContainEqual({ given: "Pragathi", family: "Pathanjeli", sex: "female", group: "resident" });
     for (const name of COLLEAGUE_NAMES) expect(Object.keys(name).sort()).toEqual(["family", "given", "group", "sex"]);
     expect(readFileSync(new URL("../src/colleagueNames.ts", import.meta.url), "utf8")).not.toMatch(/[\w.+-]+@[\w.-]+\.[a-z]{2,}/i);
   });
 
-  it.each([[30, "Female", "resident"], [30, "Male", "resident"], [50, "Female", "attending"], [50, "Male", "attending"]] as const)
+  it.each([[30, "Female", "resident"], [30, "Male", "resident"]] as const)
   ("uses the configured rate for age %i, %s (%s)", (ageYears, sexLabel, group) => {
     let selected = 0;
     const seen = new Set<string>();
@@ -70,15 +68,15 @@ describe("owner-requested colleague Easter-egg names", () => {
   });
 
   it("checks age boundaries and refuses children, unknown sex and unsupported ages", () => {
-    for (const ageYears of [25, 35, 40, 65]) {
+    for (const ageYears of [25, 35]) {
       const eligible = { ageYears, sexLabel: "Female" as const };
       expect(names.has(selectColleagueDisplayName(selectedSeed("bounds", eligible), "bounds", eligible)!)).toBe(true);
     }
     const seed = selectedSeed("bounds");
-    for (const ageYears of [0, 5, 17, 18, 24, 36, 39, 66, 90, NaN, Infinity, undefined]) {
+    for (const ageYears of [0, 5, 17, 18, 24, 36, 39, 40, 50, 65, 66, 90, NaN, Infinity, undefined]) {
       expect(selectColleagueDisplayName(seed, "bounds", { ageYears, sexLabel: "Female" })).toBeUndefined();
     }
-    for (const sexLabel of [undefined, "Not specified"] as const) expect(selectColleagueDisplayName(seed, "bounds", { ageYears: 50, sexLabel })).toBeUndefined();
+    for (const sexLabel of [undefined, "Not specified"] as const) expect(selectColleagueDisplayName(seed, "bounds", { ageYears: 30, sexLabel })).toBeUndefined();
     expect(selectColleagueDisplayName(seed, "bounds", { ...profile, constrained: true })).toBeUndefined();
   });
 
@@ -90,7 +88,8 @@ describe("owner-requested colleague Easter-egg names", () => {
       expect(presentation).toEqual({ sexLabel, ageBand });
       const seed = selectedSeed("staff.band");
       const name = selectColleagueDisplayName(seed, "staff.band", presentation);
-      expect(COLLEAGUE_NAMES.find(n => `${n.given} ${n.family}` === name)?.group).toBe(ageBand === "middle_aged" ? "attending" : "resident");
+      if (ageBand === "young_adult") expect(COLLEAGUE_NAMES.find(n => `${n.given} ${n.family}` === name)?.group).toBe("resident");
+      else expect(name).toBeUndefined();
       expect(selectColleagueDisplayName(seed, "staff.band", { ...presentation, ageYears: 80 })).toBeUndefined();
     }
     expect(getNamePresentationProfile({ stillId: "gs022-new-employee-001" })).toEqual({});
@@ -98,7 +97,7 @@ describe("owner-requested colleague Easter-egg names", () => {
 
   it("uses each compatible colleague once and falls back when all are present", () => {
     const seed = selectedSeed("patient:occupied"), occupied: string[] = [];
-    for (let i = 0; i < COLLEAGUE_NAMES.filter(n => n.group === "attending" && n.sex === "female").length; i++) {
+    for (let i = 0; i < COLLEAGUE_NAMES.filter(n => n.sex === "female").length; i++) {
       const name = createPatientDisplayName(seed, "occupied", "Female", [], { ...profile, occupiedDisplayNames: occupied });
       expect(names.has(name)).toBe(true); expect(occupied).not.toContain(name); occupied.push(name);
     }
@@ -125,7 +124,7 @@ describe("owner-requested colleague Easter-egg names", () => {
   });
 
   it("uses the chart sex even when an optional profile disagrees", () => {
-    const name = createPatientDisplayName(selectedSeed("patient:sex"), "sex", "Female", [], { ageYears: 50, sexLabel: "Male" });
+    const name = createPatientDisplayName(selectedSeed("patient:sex"), "sex", "Female", [], { ageYears: 30, sexLabel: "Male" });
     expect(COLLEAGUE_NAMES.find(n => `${n.given} ${n.family}` === name)?.sex).toBe("female");
   });
 
@@ -196,7 +195,9 @@ describe("owner-requested colleague Easter-egg names", () => {
 
   it("covers shoppers and companions without changing their seeded appearance or fallback names", () => {
     const state = newState(); let selected = 0;
-    for (let i = 0; i < 500; i++) {
+    // The previous seeds exercised older-adult cameos. Include the first
+    // seeded resident draws in the same retail path.
+    for (let i = 0; i < 2_000; i++) {
       const id = `retail.name.${i}`, actor = createGeneratedPatientActorIdentity(state, id);
       expect(actor.appearance).toEqual(createPatientPixelAppearance(state.campaignSeed, id, {}, "patient", getPatientAppearanceSelectionContext(state)));
       const expected = selectColleagueDisplayName(state.campaignSeed, `patient:${id}`, getNamePresentationProfile(actor.appearance));
@@ -238,7 +239,7 @@ describe("owner-requested colleague Easter-egg names", () => {
     const state = createLevelFiveStateQaState("gift");
     const id = "gift-visitor.0";
     let expected: string | undefined;
-    for (let i = 0; i < 1_000; i++) {
+    for (let i = 0; i < 2_000; i++) {
       state.campaignSeed = `gift.colleague.${i}`;
       const seed = `${state.campaignSeed}|gift-retail.v1`;
       const appearance = createPatientPixelAppearance(seed, id, {}, "patient");

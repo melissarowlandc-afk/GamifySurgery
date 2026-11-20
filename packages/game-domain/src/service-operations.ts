@@ -60,7 +60,7 @@ import { APP_APPOINTMENT_INCOME_LINE_ID, APP_APPOINTMENT_INCOME_LINE_IDS, PEDIAT
 import { advancePediatricPair, commitPediatricPairPlan, createPediatricFamily, pathToPediatricSupport, pediatricFamilyForActor,
   pediatricPairAtReservation, planPediatricExam, planPediatricPair, planPediatricWaiting, recordPediatricVisitCompletion,
   reconcilePediatricFamilies } from "./pediatric-family";
-import { characterStillCatalogEntryById, PEDIATRIC_CHARACTER_STILLS } from "./characterStillCatalog";
+import { characterStillCatalogEntryById, LEVEL3_PEDIATRIC_CHARACTER_STILLS } from "./characterStillCatalog";
 import { pediatricServiceIsUnsupported } from "./pediatric-eligibility";
 import { pediatricProcedureParentReady } from "./pediatric-procedure-flow";
 import { planDiagnosticOrder } from "./diagnostic-timing";
@@ -2342,15 +2342,16 @@ function createOperation(state: GameState, line: ServiceIncomeLine, actorKind: "
     ? pediatricConsultPresentations(state, context).filter(profile => !excludedDisplayNames.includes(profile.childName)) : [];
   const pediatricPresentation = pediatricProfiles.length
     ? pediatricProfiles[deterministicInteger(state.campaignSeed, RANDOM_STREAMS.patientIdentity, `${id}:family-presentation.v1`, pediatricProfiles.length)] : undefined;
-  const childStill = appointment && line.id === PEDIATRIC_APPOINTMENT_INCOME_LINE_ID
-    ? PEDIATRIC_CHARACTER_STILLS[deterministicInteger(state.campaignSeed, RANDOM_STREAMS.patientIdentity, `${id}:child-presentation.v1`, PEDIATRIC_CHARACTER_STILLS.length)] : undefined;
-  const childDemographics = pediatricPresentation?.prototypeDemographics ?? (childStill ? { sexLabel: childStill.compatibleSexLabel, ageYears: childStill.intendedVisualAge } : undefined);
+  const fallbackChild = appointment && line.id === PEDIATRIC_APPOINTMENT_INCOME_LINE_ID && !pediatricPresentation
+    ? LEVEL3_PEDIATRIC_CHARACTER_STILLS[deterministicInteger(state.campaignSeed, RANDOM_STREAMS.patientIdentity,
+        `${id}:child-presentation.v1`, LEVEL3_PEDIATRIC_CHARACTER_STILLS.length)]
+    : undefined;
+  const childDemographics = pediatricPresentation?.prototypeDemographics ??
+    (fallbackChild ? { sexLabel: fallbackChild.compatibleSexLabel, ageYears: fallbackChild.intendedVisualAge } : undefined);
   const declaredProcedure = actorKind === "visitor" && context ? declaredProcedurePresentation(state, context, line.id, id) : undefined;
   const procedureProfiles = actorKind === "visitor" && context ? [...procedureConsultPresentations(state, context, line.id), ...clinicConsultPresentations(state, context, line.id)] : [];
   const procedureDemographics = procedureProfiles.length ? procedureProfiles[deterministicInteger(state.campaignSeed, RANDOM_STREAMS.patientIdentity, `${id}:procedure-presentation.v1`, procedureProfiles.length)] : undefined;
   const appearance = encounter?.patientAppearance ?? (actorKind === "visitor" ? createPatientPixelAppearance(state.campaignSeed, actualActorId, declaredProcedure?.demographics ?? childDemographics ?? procedureDemographics ?? {}, "patient", getPatientAppearanceSelectionContext(state)) : null);
-  if (appearance && declaredProcedure?.pediatricFamilyContext) appearance.stillId = declaredProcedure.pediatricFamilyContext.childStillId;
-  if (appearance && pediatricPresentation) appearance.stillId = pediatricPresentation.childStillId;
   const still = characterStillCatalogEntryById(appearance?.stillId);
   const demographics = declaredProcedure?.demographics ?? childDemographics ?? (appointment ? procedureDemographics : undefined) ?? ((appointment || mri) && still?.category === "patient" ? { sexLabel: still.compatibleSexLabel,
     ageYears: still.intendedAge ?? (still.ageBand === "young_adult" ? 24 : still.ageBand === "adult" ? 38 : still.ageBand === "middle_aged" ? 54 : 70) } : undefined);
@@ -2369,6 +2370,8 @@ function createOperation(state: GameState, line: ServiceIncomeLine, actorKind: "
     operation.procedureContext = {version: "procedure-visit.v1", ...declaredProcedure};
     const parentContext = declaredProcedure.pediatricFamilyContext;
     if (parentContext) {
+      if (!appearance?.stillId) return null;
+      operation.procedureContext.pediatricFamilyContext = { ...parentContext, childStillId: appearance.stillId };
       operation.clinicVisit = {version: "clinic-visit.v1", kind: "pediatric_procedure", demographics: declaredProcedure.demographics};
       operation.displayName = parentContext.childName;
       const family = createPediatricFamily(state, operation, "service_visitor", {displayName: parentContext.parentName,

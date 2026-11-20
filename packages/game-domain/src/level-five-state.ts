@@ -1,3 +1,4 @@
+import { attendingReviewerByStillId, INSPECTION_PARTY_SIZE, isLegacyInspectorStillId } from "./inspection-reviewers";
 import type {
   DailyManagementRoundState, ExecutiveEffectQuote, InspectionAccumulatorState,
   InspectionCategoryId, InspectionReportState, InspectionRunState, LevelFiveState,
@@ -351,7 +352,7 @@ export function readLevelFiveState(value: unknown, facilityTick: number, facilit
   }
   const presentation = record(raw.inspectionPresentation, ["version", "runId", "seed", "actors"]);
   const actors = list(presentation.actors), actorIds: string[] = [], stillIds: string[] = [];
-  requireState(presentation.version === "inspection-presentation.v1" && nullableId(presentation.runId) && nullableId(presentation.seed) && actors.length <= 10 &&
+  requireState(presentation.version === "inspection-presentation.v1" && nullableId(presentation.runId) && nullableId(presentation.seed) && actors.length <= INSPECTION_PARTY_SIZE &&
     (presentation.runId === null ? presentation.seed === null && actors.length === 0 : activeRun?.id === presentation.runId && presentation.seed !== null), "presentation must belong to the active run");
   const point = (v: unknown) => {
     const p = record(v, ["x", "y"]); requireState(number(p.x) && number(p.y), "invalid presentation route point");
@@ -359,7 +360,8 @@ export function readLevelFiveState(value: unknown, facilityTick: number, facilit
   for (const value of actors) {
     const actor = record(value, ["id", "stillId", "phase", "location", "path", "pathIndex", "lastMovedAtFacilityTick", "targetRoomInstanceId", "observingUntilFacilityTick"]);
     const path = list(actor.path);
-    requireState(id(actor.id) && typeof actor.stillId === "string" && /^inspector-v6f\.(00[1-9]|010)$/.test(actor.stillId) &&
+    requireState(id(actor.id) && typeof actor.stillId === "string" &&
+      (attendingReviewerByStillId(actor.stillId) || isLegacyInspectorStillId(actor.stillId)) &&
       ["walking", "observing", "stationary"].includes(String(actor.phase)) && integer(actor.pathIndex, 0, Math.max(0, path.length - 1)) &&
       tick(actor.lastMovedAtFacilityTick, facilityTick) && nullableId(actor.targetRoomInstanceId) && (actor.observingUntilFacilityTick === null || integer(actor.observingUntilFacilityTick)), "invalid inspector identity/route clock");
     point(actor.location); path.forEach(point); actorIds.push(actor.id); stillIds.push(actor.stillId);

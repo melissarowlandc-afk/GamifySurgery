@@ -1,7 +1,7 @@
 import { beforeProgramBatch4AcceptanceRelease } from "../../../../packages/clinical-content/src/question-program-batch4-acceptance-test-support";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { PEDIATRIC_CLINIC_CASES, PEDIATRIC_CLINIC_FAMILY_CONTEXTS } from "@gamify-surgery/clinical-content";
-import { gameReducer, getAnswerChoiceServicePreview, pediatricFamilyForActor, pediatricPairAtReservation,
+import { gameReducer, getAnswerChoiceServicePreview, isCompatiblePediatricStill, pediatricFamilyForActor, pediatricPairAtReservation,
   PROTOTYPE_DOMAIN_CONTEXT } from "@gamify-surgery/game-domain";
 import { createLevelFourRoomsQaContext } from "../../../../tests/fixtures/level-four-rooms";
 import { createPediatricChartsQaState, PEDIATRIC_CHARTS_QA_ENCOUNTER_ID as encounterId } from "../../../../tests/fixtures/pediatric-charts";
@@ -39,6 +39,8 @@ describe("M7 scored pediatric chart presentation", () => {
 
   it("renders the real scored child and parent at M5's exam supports with their frozen identities", () => {
     let state = createPediatricChartsQaState(context);
+    const stillId = state.encounters[encounterId]!.patientAppearance.stillId;
+    expect(isCompatiblePediatricStill(stillId, "Male", 5)).toBe(true);
     let opened = false;
     for (let i = 0; i < 180; i++) {
       state = gameReducer({ ...state, paused: false }, { type: "ADVANCE_TICK", operationId: `m7.view.tick.${i}` }, context);
@@ -51,7 +53,7 @@ describe("M7 scored pediatric chart presentation", () => {
       const view = createPrototypePlayerView(state, encounterId, false, null);
       expect(view.facility.patients?.find(child => child.instanceId === encounterId)).toMatchObject({
         supportRole: "pediatric-examination-patient", supportId: "table:patient", supportRoomInstanceId: "room.peds.exam",
-        appearance: { stillId: "level3-roster-v2.022" } });
+        appearance: { stillId } });
       expect(view.facility.retailExternalActors?.find(parent => parent.instanceId === family.parentActorId)).toMatchObject({
         supportRole: "pediatric-parent-seat", supportId: "parentChair", supportRoomInstanceId: "room.peds.exam" });
       expect(view.chart).toMatchObject({ patientName: "Noah Bennett", ageLabel: "5 years", sexLabel: "Male" });

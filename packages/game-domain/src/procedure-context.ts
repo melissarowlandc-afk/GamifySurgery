@@ -1,5 +1,5 @@
 import type { SyntheticClinicalCase } from "@gamify-surgery/clinical-content";
-import { pediatricStillEligibleEntries } from "./characterStillCatalog";
+import { isCompatiblePediatricStill } from "./characterStillCatalog";
 import { legacyProcedureContext } from "./legacy-procedure-contexts";
 import type { ProcedureVisitContext } from "./types";
 
@@ -49,7 +49,7 @@ export function pediatricProcedureFamilyContext(clinicalCase: SyntheticClinicalC
       (demographics.sexLabel !== "Female" && demographics.sexLabel !== "Male") ||
       (profiles[0].prototypeDemographics?.ageYears ?? demographics.ageYears) !== demographics.ageYears ||
       (profiles[0].prototypeDemographics?.sexLabel ?? demographics.sexLabel) !== demographics.sexLabel ||
-      !pediatricStillEligibleEntries(demographics.sexLabel, demographics.ageYears).some(row => row.stillId === family.childStillId)) return undefined;
+      !isCompatiblePediatricStill(family.childStillId, demographics.sexLabel, demographics.ageYears)) return undefined;
   return {...family, caseId: clinicalCase.id, prototypeDemographics: {ageYears: demographics.ageYears, sexLabel: demographics.sexLabel}};
 }
 
@@ -75,7 +75,7 @@ export function normalizeProcedureVisit(value: unknown, lineId: string): Procedu
     if (raw.demographics.ageYears > 17 || Object.keys(family).length !== 5 ||
         ["profileId", "childName", "childStillId", "parentName"].some(key => typeof family[key as keyof typeof family] !== "string" || !family[key as keyof typeof family]) ||
         !["mother", "father"].includes(family.parentRelationship) ||
-        !pediatricStillEligibleEntries(raw.demographics.sexLabel, raw.demographics.ageYears).some(row => row.stillId === family.childStillId)) return invalid();
+        !isCompatiblePediatricStill(family.childStillId, raw.demographics.sexLabel, raw.demographics.ageYears)) return invalid();
   } else if (raw.demographics.ageYears < 18) return invalid();
   return {...raw, demographics: {...raw.demographics}, ...(family ? {pediatricFamilyContext: {...family}} : {})};
 }

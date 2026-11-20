@@ -31,14 +31,17 @@ const ASSET_ROOTS: Partial<Record<CharacterStillCohort, string>> = {
   inspectorV6f: "inspector-v6f",
   appVarietyV1: "app-variety-v1",
   staffVarietyV1: "staff-variety-v1",
+  pediatricVarietyPilotV1: "pediatric-variety-pilot-v1",
+  pediatricVarietyProductionV1: "pediatric-variety-production-v1",
+  attendingReviewersV1: "inspector-v7a",
 };
 
 describe("characterStillRegistry", () => {
   it("exposes every packaged identity and cardinal still without fallback", () => {
-    expect(characterStillRegistry.counts).toEqual({ identities: 401, cardinalPoses: 3208, clipboardPoses: 30, assets: 3238 });
+    expect(characterStillRegistry.counts).toEqual({ identities: 494, cardinalPoses: 3952, clipboardPoses: 30, assets: 3982 });
     const entries = getAllCharacterStillEntries();
-    expect(entries).toHaveLength(401);
-    expect(new Set(entries.map((entry) => entry.id)).size).toBe(401);
+    expect(entries).toHaveLength(494);
+    expect(new Set(entries.map((entry) => entry.id)).size).toBe(494);
     for (const entry of entries) {
       for (const posture of ["stand", "sit"] as const) {
         for (const direction of CHARACTER_STILL_DIRECTIONS) {
@@ -51,7 +54,7 @@ describe("characterStillRegistry", () => {
       }
     }
     const seatedAssets = entries.flatMap((entry) => CHARACTER_STILL_DIRECTIONS.map((direction) => entry.poses.sit[direction]));
-    expect(seatedAssets).toHaveLength(1604);
+    expect(seatedAssets).toHaveLength(1976);
     for (const asset of seatedAssets) {
       expect(Number.isFinite(asset.anchors.seatContactY)).toBe(true);
       expect(asset.anchors.seatContactY).toBeGreaterThan(0);

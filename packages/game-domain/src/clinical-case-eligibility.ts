@@ -4,7 +4,7 @@ import {
   type SyntheticClinicalCase,
 } from "@gamify-surgery/clinical-content";
 import { pediatricCaseHasCompatibleIdentity } from "./pediatric-eligibility";
-import { pediatricStillEligibleEntries } from "./characterStillCatalog";
+import { isCompatiblePediatricStill } from "./characterStillCatalog";
 import { getCurrentCapabilities, isRoomOperationalForFacilityWork } from "./selectors";
 import { getExactTestChoiceOrderRecordForCase } from "./test-choice-orders";
 import { pediatricProcedureFamilyContext, supportedProcedureContext } from "./procedure-context";
@@ -24,7 +24,7 @@ export function getPediatricClinicFamilyContext(clinicalCase: SyntheticClinicalC
     profiles[0]!.prototypeDemographics?.sexLabel === family.prototypeDemographics.sexLabel &&
     demographics?.ageYears === family.prototypeDemographics.ageYears &&
     demographics.sexLabel === family.prototypeDemographics.sexLabel &&
-    pediatricStillEligibleEntries(demographics.sexLabel, demographics.ageYears).some(row => row.stillId === family.childStillId)
+    isCompatiblePediatricStill(family.childStillId, demographics.sexLabel, demographics.ageYears)
     ? family : undefined;
 }
 

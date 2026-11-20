@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { PROTOTYPE_DOMAIN_CONTEXT, gameReducer } from "@gamify-surgery/game-domain";
+import { PROTOTYPE_DOMAIN_CONTEXT, deserializeGameState, gameReducer, serializeGameState, type InspectorStillId } from "@gamify-surgery/game-domain";
 import { createLevelFiveStateQaContext, createLevelFiveStateQaState } from "../../../../../tests/fixtures/level-five-state";
 import { createPrototypePlayerView } from "../../session/viewModels";
 import { describeFacilityCharacter } from "../../session/characterActivityPresentation";
@@ -10,6 +10,8 @@ import { cleanupPhoneTests, phoneTestDom } from "../screenTestUtils";
 import { describeMobileCharacter, refreshMobileSelection } from "./selection";
 import { characterStandingBitmapDescriptors } from "../../art/characterBitmapArt";
 import { loadMobileInspectorBitmap } from "../performance/inspectorAssets";
+import { codecTestCampaign } from "../../session/cloud/codecTestSupport";
+import { encodeCloudSnapshot, loadCloudSnapshot } from "../../session/cloud/snapshotCodec";
 
 const context = createLevelFiveStateQaContext(), balance = PROTOTYPE_DOMAIN_CONTEXT.balanceRelease;
 afterEach(async () => { PROTOTYPE_DOMAIN_CONTEXT.balanceRelease = balance; await cleanupPhoneTests(); });
@@ -26,13 +28,13 @@ describe("phone inspection actors", () => {
       expect(ref.kind).toBe("inspector"); expect(patientChartIdForCharacter(ref, model)).toBeNull();
       const describe = () => describeFacilityCharacter(state, ref);
       const selection = describeMobileCharacter(ref, model, describe, true)!;
-      expect(selection).toMatchObject({ role: "Inspector", patient: null, praise: null });
+      expect(selection).toMatchObject({ name: actor.displayName, role: "Inspector", patient: null, praise: null });
       const props = { selection, facility: model, onDescribeCharacter: describe, onClose: close, onOpenRoom: vi.fn(), onOpenPatient: chart, onPraiseEmployee: praise };
       const markup = renderToStaticMarkup(<MobileInspectorSheet {...props} />);
       expect(markup).toContain('class="mobile-sheet is-bottom"');
       for (const action of ["Open patient chart", "Praise Employee", "Room actions", "Hire", "Train", "Salary"]) expect(markup).not.toContain(action);
       await harness.render(<MobileInspectorSheet {...props} />); expect(harness.element.textContent).toContain(actor.activity);
-      await harness.click("Close Inspector");
+      await harness.click(`Close ${actor.displayName}`);
     }
     expect(close).toHaveBeenCalledTimes(10); expect(chart).not.toHaveBeenCalled(); expect(praise).not.toHaveBeenCalled();
     expect(JSON.stringify(state)).toBe(before);
@@ -59,7 +61,29 @@ describe("phone inspection actors", () => {
     expect(loadMobileInspectorBitmap(descriptors[0]!)).toBe(first);
     for (const descriptor of descriptors.slice(1)) loadMobileInspectorBitmap(descriptor);
     expect(images).toHaveLength(4);
-    expect(images.every(image => image.src?.includes("/inspector-v6f/") && image.src.includes("/stand-"))).toBe(true);
+    expect(images.every(image => image.src?.includes("/inspector-v7a/") && image.src.includes("/stand-"))).toBe(true);
     images[0]!.onload!(); expect(await first).toBe(images[0]);
+  });
+
+  it("keeps a legacy native snapshot verifiable and shows the same remapped party as local loading", async () => {
+    const state = createLevelFiveStateQaState("inspectors", context);
+    const lane = state.levelFive!.inspectionPresentation;
+    lane.actors.forEach((actor, index) => {
+      actor.stillId = `inspector-v6f.${String(index + 1).padStart(3, "0")}` as InspectorStillId;
+    });
+    const before = serializeGameState(state);
+    const { snapshot, lineage } = await encodeCloudSnapshot({
+      state, campaign: codecTestCampaign(before), lineage: { branchId: "legacy-reviewer-fixture", sequence: 0, parents: [] },
+    });
+    const loaded = await loadCloudSnapshot({ snapshot, revision: "1", expectedRevision: "1", expectedCampaignId: state.campaignId, lineage });
+    expect(loaded.state.levelFive).toEqual(state.levelFive);
+    expect(serializeGameState(state)).toBe(before);
+    const nativeParty = createPrototypePlayerView(loaded.state, null, false, null).facility.inspectors!;
+    const localParty = createPrototypePlayerView(deserializeGameState(before, context), null, false, null).facility.inspectors!;
+    expect(nativeParty).toEqual(localParty);
+    expect(nativeParty).toHaveLength(10);
+    expect(nativeParty[0]!.displayName).toBe("Dr. Ivascu");
+    expect(new Set(nativeParty.map(actor => actor.appearance.stillId)).size).toBe(10);
+    expect(nativeParty.every(actor => actor.appearance.stillId?.startsWith("inspector-v7a."))).toBe(true);
   });
 });

@@ -1,5 +1,5 @@
 import registryData from "./characterStillRegistry.generated.json";
-import { PEDIATRIC_CHARACTER_STILLS } from "@gamify-surgery/game-domain";
+import { characterStillCatalogEntryById } from "@gamify-surgery/game-domain";
 import { resolvePublicArtAssetUrl } from "./bitmapAssetManifest";
 
 export const CHARACTER_STILL_DIRECTIONS = ["south", "east", "west", "north"] as const;
@@ -7,7 +7,7 @@ export const CHARACTER_STILL_POSTURES = ["stand", "sit"] as const;
 
 export type CharacterStillDirection = (typeof CHARACTER_STILL_DIRECTIONS)[number];
 export type CharacterStillPosture = (typeof CHARACTER_STILL_POSTURES)[number];
-export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage" | "level3RosterV2" | "patientWomen20V3" | "patientDemographics20V4" | "futureRoster20V5" | "patientGapfillV6a" | "patientGapfillV6b" | "patientGapfillV6c" | "staffGapfillV6d" | "appGapfillV6e" | "inspectorV6f" | "appVarietyV1" | "staffVarietyV1";
+export type CharacterStillCohort = "gs018" | "employee20" | "patientPublic20" | "employeeCoverage" | "level3RosterV2" | "patientWomen20V3" | "patientDemographics20V4" | "futureRoster20V5" | "patientGapfillV6a" | "patientGapfillV6b" | "patientGapfillV6c" | "staffGapfillV6d" | "appGapfillV6e" | "inspectorV6f" | "appVarietyV1" | "staffVarietyV1" | "pediatricVarietyPilotV1" | "pediatricVarietyProductionV1" | "attendingReviewersV1";
 
 export interface CharacterStillAsset {
   readonly url: string;
@@ -74,8 +74,8 @@ const approvedRegistry = registryData as unknown as CharacterStillRegistry;
 export const characterStillRegistry: CharacterStillRegistry = {
   ...approvedRegistry,
   characters: approvedRegistry.characters.map((entry) => {
-    const child = PEDIATRIC_CHARACTER_STILLS.find(row => row.stillId === entry.id);
-    if (child) {
+    const child = characterStillCatalogEntryById(entry.id);
+    if (child?.category === "pediatric") {
       const { currentClinicalEligibility: _futureGate, ...current } = entry;
       return { ...current, category: "pediatric-presentation", intendedSex: child.compatibleSexLabel,
         minimumAge: child.minimumAge, maximumAge: child.maximumAge };

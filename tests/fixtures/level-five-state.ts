@@ -1,9 +1,9 @@
 import { PROTOTYPE_BALANCE_RELEASE, prototypeBalanceReleaseSchema } from "@gamify-surgery/balance-config";
 import {
   PROTOTYPE_DOMAIN_CONTEXT, createInspectionAccumulators, createLevelFiveState, gameReducer,
-  getClinicSatisfaction, getDisplayedClinicSatisfaction, getRoomStaffCapacity, INSPECTION_CATEGORY_WEIGHTS,
+  getClinicSatisfaction, getDisplayedClinicSatisfaction, getRoomStaffCapacity, INSPECTION_CATEGORY_WEIGHTS, inspectionReviewersForSeed,
   validateDomainContext, type DomainContext, type ExecutiveEffectQuote, type GameCommand,
-  type GameState, type InspectionReportState, type InspectionRunState, type InspectorStillId,
+  type GameState, type InspectionReportState, type InspectionRunState,
 } from "@gamify-surgery/game-domain";
 import { createLevelFourRoomsQaState } from "./level-four-rooms";
 import { placeLevelFiveRoomsQaRooms } from "./level-five-rooms";
@@ -190,9 +190,10 @@ export function createLevelFiveStateQaState(scenario: LevelFiveQaScenario = "pre
     foundation.inspection.status = "running";
     foundation.inspection.run = inspectionRun(state, context);
     if (scenario === "actors") {
+      const seed = "inspection.qa.level5.presentation";
       foundation.inspectionPresentation = { version: "inspection-presentation.v1", runId: foundation.inspection.run.id,
-        seed: "inspection.qa.level5.presentation", actors: Array.from({ length: 10 }, (_, index) => ({
-          id: `inspector.qa.level5.${index + 1}`, stillId: `inspector-v6f.${String(index + 1).padStart(3, "0")}` as InspectorStillId,
+        seed, actors: inspectionReviewersForSeed(seed).map(({ stillId }, index) => ({
+          id: `inspector.qa.level5.${index + 1}`, stillId,
           phase: "stationary", location: { x: 25 + index, y: 26 }, path: [], pathIndex: 0,
           lastMovedAtFacilityTick: 170, targetRoomInstanceId: null, observingUntilFacilityTick: 175 + index,
         })) };

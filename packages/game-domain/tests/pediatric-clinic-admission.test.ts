@@ -47,7 +47,7 @@ function until(state: GameState, predicate: (state: GameState) => boolean): Game
 
 describe("M7 scored pediatric prototype admission", () => {
   it.each(PEDIATRIC_CLINIC_CASES.map(clinicalCase => [clinicalCase.id, clinicalCase] as const))
-    ("freezes the constrained child, exact still and named parent for %s", (_id, clinicalCase) => {
+    ("freezes the constrained child, compatible still and named parent for %s", (_id, clinicalCase) => {
       const familyContext = PEDIATRIC_CLINIC_FAMILY_CONTEXTS.find(family => family.caseId === clinicalCase.id)!;
       const state = createPediatricChartsQaState(context, clinicalCase.id);
       const encounter = state.encounters[encounterId]!;
@@ -59,7 +59,6 @@ describe("M7 scored pediatric prototype admission", () => {
       expect(encounter.frozenCase.selectedInstantiationProfileId).toBe(familyContext.profileId);
       expect(encounter.frozenCase.presentation).toBe(clinicalCase.presentation);
       expect(encounter.frozenCase.decisionNodes[0]!.stem).toBe(clinicalCase.decisionNodes[0]!.stem);
-      expect(encounter.patientAppearance.stillId).toBe(familyContext.childStillId);
       expect(encounter.patientAppearance.patientIdentityId).toBeUndefined();
       expect(pediatricStillEligibleEntries(familyContext.prototypeDemographics.sexLabel, familyContext.prototypeDemographics.ageYears)
         .some(entry => entry.stillId === encounter.patientAppearance.stillId)).toBe(true);

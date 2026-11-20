@@ -98,6 +98,7 @@ export interface FacilityAmbientPedestrianView {
 /** A cosmetic observer with no patient/staff seat, care contact or reservation. */
 export interface FacilityInspectorActorView {
   instanceId: string;
+  displayName: string;
   appearance: PixelAppearanceDescriptor;
   location: GridPoint;
   path: GridPoint[];

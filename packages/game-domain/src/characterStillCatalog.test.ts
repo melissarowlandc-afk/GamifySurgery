@@ -19,20 +19,21 @@ import {
   STAFF_CHARACTER_STILLS,
   founderStillIdForPresetIds,
   patientStillEligibleEntries,
+  pediatricStillEligibleEntries,
   staffStillEligibleEntries,
   withExplicitAdditionalAvatarStill,
 } from "./characterStillCatalog";
 
 describe("character still selection catalog", () => {
-  it("covers all 401 packaged identities through explicit selection categories", () => {
-    expect(CHARACTER_STILL_CATALOG).toHaveLength(401);
-    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(401);
+  it("covers all 494 packaged identities through explicit selection categories", () => {
+    expect(CHARACTER_STILL_CATALOG).toHaveLength(494);
+    expect(new Set(CHARACTER_STILL_CATALOG.map((entry) => entry.stillId)).size).toBe(494);
     expect(PATIENT_CHARACTER_STILLS).toHaveLength(179);
     expect(STAFF_CHARACTER_STILLS).toHaveLength(164);
     expect(FOUNDER_STILL_IDS).toHaveLength(30);
     expect(EXPLICIT_ADDITIONAL_AVATAR_STILLS).toHaveLength(6);
     expect(FUTURE_PRESENTATION_CHARACTER_STILLS).toHaveLength(0);
-    expect(PEDIATRIC_CHARACTER_STILLS).toHaveLength(12);
+    expect(PEDIATRIC_CHARACTER_STILLS).toHaveLength(59);
   });
 
   it("admits the twenty manager-approved v6a patients only to their exact sex and age-band pools", () => {
@@ -434,7 +435,8 @@ describe("character still selection catalog", () => {
       expect(reached).toBe(true);
     }
     expect(patientStillEligibleEntries("Female", 12)).toEqual([]);
-    expect(createPatientPixelAppearance("child-seed", "child", { sexLabel: "Female", ageYears: 12 }).stillId).toMatch(/^level3-roster-v2\./);
+    expect(pediatricStillEligibleEntries("Female", 12).map(entry => entry.stillId))
+      .toContain(createPatientPixelAppearance("child-seed", "child", { sexLabel: "Female", ageYears: 12 }).stillId);
   });
 
   it("adds six authorized adult Level 3 designs to the existing adult-only pool", () => {
@@ -483,7 +485,7 @@ describe("character still selection catalog", () => {
   it("keeps pediatric art separate from adult selection and retains the radiologist staff pool", () => {
     const pediatric = PEDIATRIC_CHARACTER_STILLS;
     const radiologists = FUTURE_PRESENTATION_CHARACTER_STILLS.filter((entry) => entry.futurePresentationKind === "radiologist");
-    expect(pediatric).toHaveLength(12);
+    expect(pediatric).toHaveLength(59);
     expect(pediatric.every((entry) => entry.minimumAge >= 5 && entry.maximumAge <= 17)).toBe(true);
     expect(radiologists).toHaveLength(0);
     expect(patientStillEligibleEntries(undefined, undefined).map((entry) => entry.stillId)).not.toContain("level3-roster-v2.021");

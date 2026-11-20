@@ -1,4 +1,5 @@
 import type { GridPoint, RoomUpgradeLevel } from "./types";
+import type { AttendingReviewerStillId } from "./inspection-reviewers";
 
 /** Optional, versioned Level 5 saved contracts. */
 export interface ExecutiveEffectQuote {
@@ -225,7 +226,8 @@ export interface FacilityInspectionState {
   bestCompletedReport: InspectionReportState | null;
 }
 
-export type InspectorStillId = `inspector-v6f.${"001" | "002" | "003" | "004" | "005" | "006" | "007" | "008" | "009" | "010"}`;
+export type InspectorStillId = AttendingReviewerStillId |
+  `inspector-v6f.${"001" | "002" | "003" | "004" | "005" | "006" | "007" | "008" | "009" | "010"}`;
 
 /** Dedicated presentation lane. These actors are never employees, patients or customers. */
 export interface InspectionPresentationActor {

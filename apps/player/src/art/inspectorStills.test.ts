@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { INSPECTOR_CHARACTER_STILLS } from "@gamify-surgery/game-domain";
+import { ATTENDING_REVIEWERS, LEGACY_INSPECTOR_CHARACTER_STILLS } from "@gamify-surgery/game-domain";
 import approval from "../../../../artifacts/character-statics/inspector-v6f/runtime-approval.json";
 import { CHARACTER_STILL_DIRECTIONS, getCharacterStillEntry, getCharacterStill, resolveCharacterStillAssetUrl } from "./characterStillRegistry";
 import { characterBitmapLayers, characterStandingBitmapDescriptors } from "./characterBitmapArt";
 import { isInspectorBitmapAsset } from "../mobile/performance/inspectorAssets";
 
-describe("manager-accepted inspector v6f stills", () => {
+describe("inspection stills", () => {
   it("binds all eighty exact poses and forty contacts to the inspector-only registry role", () => {
     const hashes = new Set<string>();
-    for (const row of INSPECTOR_CHARACTER_STILLS) {
+    for (const row of LEGACY_INSPECTOR_CHARACTER_STILLS) {
       const entry = getCharacterStillEntry(row.stillId)!;
       expect(entry).toMatchObject({ cohort: "inspectorV6f", category: "inspection-presentation", role: "inspection-agent", eligibleStaffRoleDefinitionIds: [] });
       const number = row.stillId.split(".")[1]! as keyof typeof approval.approvedPoses;
@@ -22,8 +22,8 @@ describe("manager-accepted inspector v6f stills", () => {
     }
     expect(hashes.size).toBe(80);
   });
-  it("uses clipboard-bearing standing cardinals for the existing hop motion in both asset paths", () => {
-    for (const row of INSPECTOR_CHARACTER_STILLS) {
+  it("uses attending standing cardinals for the existing hop motion in both asset paths", () => {
+    for (const row of ATTENDING_REVIEWERS) {
       const appearance = { version: "pixel-avatar.v1" as const, stillId: row.stillId, bodyShape: "average" as const,
         hairStyle: "short" as const, hairShade: 3 as const, faceStyle: "round" as const, skinTone: 1 as const,
         outfitStyle: "plain" as const, outfitShade: 1 as const, accessory: "none" as const };

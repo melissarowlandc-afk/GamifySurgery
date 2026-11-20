@@ -1,6 +1,6 @@
 import {describe,it,expect} from "vitest";
 import {QUESTION_PROGRAM_BATCH9_ACCEPTED_CASES} from "@gamify-surgery/clinical-content";
-import {deserializeGameState,serializeGameState,startServiceOperation,getClinicalCaseEligibilityIssue} from "../src";
+import {deserializeGameState,serializeGameState,startServiceOperation,getClinicalCaseEligibilityIssue,isCompatiblePediatricStill} from "../src";
 import {answerConsult} from "./founder-consults.fixture";
 import {engProcedureClinic,buyPediatricRoom,lineFor,advanceEngProcedure,openEngConsult,engCommand,engTick} from "./eng-i01-live-procedure.fixture";
 
@@ -25,13 +25,18 @@ describe("release37 pediatric saves before and after the real examination-room p
     expect(state.serviceIncomeReceipts.some(receipt=>receipt.transactionKey.includes(oldSource))).toBe(true);
     const id=startServiceOperation(state,lineFor(kind),"visitor",context);
     expect(id).toBeTruthy();
-    expect(state.serviceOperations.find(op=>op.id===id)!.procedureContext?.pediatricFamilyContext).toEqual(c.procedureContext.pediatricFamilyContext);
+    const source=state.serviceOperations.find(op=>op.id===id)!;
+    const look=source.appearance?.stillId, demographics=source.procedureContext!.demographics;
+    expect(demographics).toEqual(c.prototypeDemographics);
+    expect(isCompatiblePediatricStill(look,demographics.sexLabel,demographics.ageYears)).toBe(true);
+    expect(source.procedureContext?.pediatricFamilyContext).toEqual({...c.procedureContext.pediatricFamilyContext,childStillId:look});
     state=advanceEngProcedure(state,context,id!);
     const opened=openEngConsult(state,context,id!);state=opened.state;
     const frozen=structuredClone(state.encounters[opened.encounterId]!.frozenCase);
     const family=state.encounters[opened.encounterId]!.pediatricFamilyId!;
     state=deserializeGameState(serializeGameState(state),context);
     expect(state.encounters[opened.encounterId]!.frozenCase).toEqual(frozen);
+    expect(state.encounters[opened.encounterId]!.patientAppearance.stillId).toBe(look);
     expect(state.pediatricFamilies![family]!.procedureFlow).toBeDefined();
     expect(state.learningHistories).toEqual(histories);
     state=answerConsult(state,opened.encounterId,context);

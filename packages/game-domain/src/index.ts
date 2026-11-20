@@ -33,6 +33,7 @@ export * from "./level-five-state";
 export * from "./level-five-progression";
 export * from "./facility-inspection";
 export * from "./inspection-presentation";
+export { ATTENDING_REVIEWERS, attendingReviewerByStillId, inspectionReviewersForSeed, remapLegacyInspectionReviewers } from "./inspection-reviewers";
 export * from "./executive-management";
 export * from "./gift-retail";
 export * from "./persistence";

@@ -20,6 +20,7 @@ import {
   legacyPatientStillId,
   patientStillEligibleEntries,
   pediatricStillEligibleEntries,
+  isCompatiblePediatricStill,
   staffStillEligibleEntries,
 } from "./characterStillCatalog";
 import {
@@ -558,10 +559,9 @@ export function selectPatientStillId(
   const child = profile.ageYears !== undefined && profile.ageYears < 18;
   const eligible = child ? pediatricStillEligibleEntries(profile.sexLabel, profile.ageYears)
     : patientStillEligibleEntries(profile.sexLabel, profile.ageYears);
-  if (isCharacterStillId(currentStillId)) {
-    const catalogEntry = characterStillCatalogEntryById(currentStillId);
-    if ((!child && !catalogEntry) || eligible.some((entry) => entry.stillId === currentStillId)) return currentStillId;
-  }
+  if (isCharacterStillId(currentStillId) && (child
+    ? isCompatiblePediatricStill(currentStillId, profile.sexLabel, profile.ageYears)
+    : !characterStillCatalogEntryById(currentStillId) || eligible.some((entry) => entry.stillId === currentStillId))) return currentStillId;
   const legacyStill = legacyPatientStillId(legacyIdentityId);
   if (legacyStill && eligible.some((entry) => entry.stillId === legacyStill)) return legacyStill;
   return eligible.length > 0

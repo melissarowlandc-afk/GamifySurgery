@@ -13,7 +13,7 @@ import {
   applyFsrsReview, createNewFsrsCard, applyGameEvidenceCommand, gameEvidenceDelta,
   type DomainContext, type GameState, type GameCommand,
   createInitialGameState,
-  getCurrentCapabilities,
+  getCurrentCapabilities, isCompatiblePediatricStill,
 } from "@gamify-surgery/game-domain";
 import {endoscopyReadyClinic} from "../../../packages/game-domain/tests/routine-endoscopy-ready.fixture";
 import {beforeProgramBatch6AcceptanceRelease} from "../../../packages/clinical-content/src/question-program-batch6-acceptance-test-support";
@@ -201,7 +201,8 @@ describe("topic batch6 default admission and all retired frozen identities", () 
     const family = families.find(row => row.caseId === clinicalCase.id);
     if (family) {
       expect(frozen.prototypeDemographics).toEqual(family.prototypeDemographics);
-      expect(state.encounters[encounterId]!.patientAppearance.stillId).toBe(family.childStillId);
+      expect(isCompatiblePediatricStill(state.encounters[encounterId]!.patientAppearance.stillId,
+        family.prototypeDemographics.sexLabel, family.prototypeDemographics.ageYears)).toBe(true);
       expect(state.encounters[encounterId]!.patientDisplayName).toBe(family.childName);
       const parents = state.retailExternalActors.filter(actor => actor.kind === "companion" && actor.linkedEncounterId === encounterId);
       expect(parents).toHaveLength(1);

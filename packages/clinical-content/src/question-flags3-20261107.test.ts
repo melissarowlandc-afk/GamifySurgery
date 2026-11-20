@@ -1,4 +1,5 @@
 import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
+import { readProtectedSources, sourceSha256 } from "../../../tests/fixtures/protected-source-manifest";
 import {beforeFlags3AcceptanceRelease,beforeFlags3AcceptanceManifest,beforeFlags3AcceptanceTimings,beforeFlags3AcceptanceSource} from "./question-flags3-acceptance-test-support";
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
@@ -123,11 +124,16 @@ describe("flags3 exact owner-flag candidates and retained live source",()=>{
  });
  it("leaves every existing protected source and decision file byte-exact",()=>{
   const { pins } = historicalSourceScope("flags3");
+  const releasePins = readProtectedSources();
   expect(pins.size).toBe(151);
   for (const [path, sha] of Object.entries(capture.files)) {
    if (pins.has(path)) continue;
    const url = new URL("../../../" + path, import.meta.url);
-   expect(createHash("sha256").update(beforeFlags3AcceptanceSource(path, readFileSync(url, "utf8"))).digest("hex"), path).toBe(sha);
+   if (path === "packages/game-domain/src/colleagueNames.ts" || path === "packages/game-domain/src/inspection-presentation.ts") {
+    expect(sourceSha256(readFileSync(url)), path).toBe(releasePins.get(path)?.sha256);
+   } else {
+    expect(createHash("sha256").update(beforeFlags3AcceptanceSource(path, readFileSync(url, "utf8"))).digest("hex"), path).toBe(sha);
+   }
   }
  });
 });

@@ -6,8 +6,8 @@ vi.mock("../src/inspection-presentation", async importOriginal => {
     if (visual.enabled) original.advanceInspectionPresentation(...args);
   } };
 });
-import { advanceInspectionPresentation, createInitialGameState, createFacilityInspectionRun, deserializeGameState,
-  gameReducer, INSPECTOR_CHARACTER_STILLS, isSafeInspectionObservationPoint, PATIENT_CHARACTER_STILLS,
+import { advanceInspectionPresentation, ATTENDING_REVIEWERS, createInitialGameState, createFacilityInspectionRun, deserializeGameState,
+  gameReducer, inspectionReviewersForSeed, isSafeInspectionObservationPoint, PATIENT_CHARACTER_STILLS,
   STAFF_CHARACTER_STILLS, serializeGameState, staffStillEligibleEntries, inspectionPresentationNavigationSummary, type GameState } from "../src";
 import { createLevelFiveStateQaContext, createLevelFiveStateQaState } from "../../../tests/fixtures/level-five-state";
 import { APPROVED_LEVEL5_SUPPORT_NAVIGATION, APPROVED_ROOM_NAVIGATION_CONTRACTS } from "@gamify-surgery/balance-config";
@@ -22,12 +22,14 @@ const withoutPresentation = (state: GameState) => { const copy = structuredClone
 afterEach(() => { visual.enabled = true; });
 
 describe("Level 5 M7b inspection actors", () => {
-  it("keeps all ten inspector looks out of every employee and patient pool", () => {
-    expect(INSPECTOR_CHARACTER_STILLS).toHaveLength(10);
-    expect(new Set(INSPECTOR_CHARACTER_STILLS.map(row => row.stillId)).size).toBe(10);
+  it("keeps all attending reviewers out of every employee and patient pool", () => {
+    expect(ATTENDING_REVIEWERS).toHaveLength(46);
+    const reviewers = new Set<string>(ATTENDING_REVIEWERS.map(row => row.stillId));
+    expect(reviewers.size).toBe(46);
     expect(PATIENT_CHARACTER_STILLS).toHaveLength(179); expect(STAFF_CHARACTER_STILLS).toHaveLength(164);
+    expect(PATIENT_CHARACTER_STILLS.some(row => reviewers.has(row.stillId))).toBe(false);
     for (const role of [...context.balanceRelease.facility.staffRoleDefinitions.map(role => role.id), "staff.inspector", "inspection-agent"])
-      expect(staffStillEligibleEntries(role).some(row => row.stillId.startsWith("inspector-v6f"))).toBe(false);
+      expect(staffStillEligibleEntries(role).some(row => reviewers.has(row.stillId))).toBe(false);
   });
 
   it("is a no-op outside Level 5 and while locked, ready or preparing", () => {
@@ -43,7 +45,9 @@ describe("Level 5 M7b inspection actors", () => {
   it("arrives, spreads through actual doors, observes for five minutes and visits new rooms", () => {
     let state = createLevelFiveStateQaState("inspectors-arriving", context);
     const actors = state.levelFive!.inspectionPresentation.actors;
-    expect(actors.map(actor => actor.stillId)).toEqual(INSPECTOR_CHARACTER_STILLS.map(row => row.stillId));
+    expect(actors.map(actor => actor.stillId)).toEqual(
+      inspectionReviewersForSeed(state.levelFive!.inspectionPresentation.seed!).map(row => row.stillId),
+    );
     expect(new Set(actors.map(actor => `${actor.location.x},${actor.location.y}`)).size).toBe(10);
     const runId = state.levelFive!.inspection.run!.id;
     const targets = new Map<string, Set<string>>(), observed = new Set<string>();
@@ -79,6 +83,35 @@ describe("Level 5 M7b inspection actors", () => {
     loaded.paused = false;
     const next = tick(loaded, "m7b.resume");
     expect(next.levelFive!.inspectionPresentation.actors.map(actor => actor.id)).toEqual(state.levelFive!.inspectionPresentation.actors.map(actor => actor.id));
+  });
+
+  it("remaps an active legacy party on reload while preserving the inspection and all actor routes", () => {
+    const source = JSON.stringify(captured);
+    const original = deserializeGameState(source, context, { compactHistory: false });
+    const legacy = original.levelFive!.inspectionPresentation;
+    expect(legacy.actors).toHaveLength(10);
+    expect(legacy.actors.every(actor => actor.stillId.startsWith("inspector-v6f."))).toBe(true);
+    expect(legacy.actors.some(actor => actor.phase === "walking" && actor.pathIndex > 0)).toBe(true);
+
+    const restored = deserializeGameState(source, context);
+    const party = restored.levelFive!.inspectionPresentation;
+    const looks = party.actors.map(actor => actor.stillId);
+    expect(looks).toHaveLength(legacy.actors.length);
+    expect(new Set(looks).size).toBe(looks.length);
+    expect(looks.every(id => !id.startsWith("inspector-v6f."))).toBe(true);
+    expect(looks).toEqual(inspectionReviewersForSeed(legacy.seed!).map(row => row.stillId));
+    expect(ATTENDING_REVIEWERS.find(row => row.stillId === looks[0])?.displayName).toBe("Dr. Ivascu");
+    expect(party).toEqual({ ...legacy, actors: legacy.actors.map((actor, index) => ({ ...actor, stillId: looks[index] })) });
+    expect(restored.levelFive!.inspection).toEqual(original.levelFive!.inspection);
+    expect(deserializeGameState(source, context).levelFive!.inspectionPresentation).toEqual(party);
+    expect(deserializeGameState(serializeGameState(restored), context).levelFive).toEqual(restored.levelFive);
+
+    restored.paused = false;
+    const next = tick(restored, "m7b.legacy-resume");
+    expect(next.levelFive!.inspection.run?.id).toBe(original.levelFive!.inspection.run?.id);
+    expect(next.levelFive!.inspection.run?.accumulators.observedActiveMinutes)
+      .toBe(original.levelFive!.inspection.run!.accumulators.observedActiveMinutes + 1);
+    expect(next.levelFive!.inspectionPresentation.actors.map(actor => actor.stillId)).toEqual(looks);
   });
 
   it.each([false, true])("advances cloned routes identically with a shared context, reverse order=%s", reverse => {

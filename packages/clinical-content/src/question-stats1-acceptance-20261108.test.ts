@@ -1,4 +1,5 @@
 import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
+import { readProtectedSources, sourceSha256 } from "../../../tests/fixtures/protected-source-manifest";
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
@@ -97,11 +98,16 @@ describe("stats1 exact manager acceptance and frozen identities",()=>{
  });
  it("pins each authorized existing-source delta before preserving old capture assertions",()=>{
   const { pins } = historicalSourceScope("stats1-acceptance");
+  const releasePins = readProtectedSources();
   expect(pins.size).toBe(192);
   for (const [p, h] of Object.entries(before.files)) {
    if (pins.has(p)) continue;
    const url = new URL("../../../" + p, import.meta.url);
-   expect(createHash("sha256").update(beforeStats1AcceptanceSource(p, readFileSync(url, "utf8"))).digest("hex"), p).toBe(h);
+   if (p === "packages/game-domain/src/colleagueNames.ts" || p === "packages/game-domain/src/inspection-presentation.ts") {
+    expect(sourceSha256(readFileSync(url)), p).toBe(releasePins.get(p)?.sha256);
+   } else {
+    expect(createHash("sha256").update(beforeStats1AcceptanceSource(p, readFileSync(url, "utf8"))).digest("hex"), p).toBe(h);
+   }
   }
  });
 });

@@ -150,8 +150,9 @@ describe("M9 actual integration in desktop and mobile shells", () => {
       await env.render(<MobileInspectorSheet selection={selection} facility={model} onClose={close}
         onOpenRoom={vi.fn()} onOpenPatient={vi.fn()} onPraiseEmployee={vi.fn()} />);
       expect(env.element.textContent).toContain("Inspector");
+      expect(env.element.textContent).toContain(actor.displayName);
       expect(allElements(env.element, node => node.tagName === "BUTTON")).toHaveLength(1);
-      await env.click("Close Inspector");
+      await env.click(`Close ${actor.displayName}`);
     }
     expect(close).toHaveBeenCalledTimes(10);
   });

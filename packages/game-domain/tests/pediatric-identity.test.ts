@@ -1,15 +1,15 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { SYNTHETIC_CLINICAL_RELEASE } from "@gamify-surgery/clinical-content";
-import { PEDIATRIC_CHARACTER_STILLS, pediatricStillEligibleEntries, patientStillEligibleEntries,
+import { LEVEL3_PEDIATRIC_CHARACTER_STILLS, pediatricStillEligibleEntries, patientStillEligibleEntries,
   createPatientPixelAppearance, createPatientDisplayName, completePatientDemographics,
   selectPatientStillId, pediatricCaseHasCompatibleIdentity } from "../src";
 
 describe("M5a pediatric identity", () => {
   it("reviews all twelve source briefs without inferring sex from their pixels", () => {
     const source = JSON.parse(readFileSync(new URL("../../../tools/character-mapping/level3-roster-complete-v2/roster.json", import.meta.url), "utf8"));
-    expect(PEDIATRIC_CHARACTER_STILLS).toHaveLength(12);
-    for (const entry of PEDIATRIC_CHARACTER_STILLS) {
+    expect(LEVEL3_PEDIATRIC_CHARACTER_STILLS).toHaveLength(12);
+    for (const entry of LEVEL3_PEDIATRIC_CHARACTER_STILLS) {
       const row = source.identities.find((identity: { stableId: string }) => identity.stableId === entry.stillId);
       expect(row.visualAge).toBe(entry.intendedVisualAge);
       expect(row.brief.startsWith(entry.compatibleSexLabel === "Female" ? "girl" : "boy")).toBe(true);
@@ -36,7 +36,8 @@ describe("M5a pediatric identity", () => {
   it("rejects missing/out-of-range pediatric demographics and arbitrary/adult saved stills", () => {
     for (const ageYears of [0, 4, 18, 30]) expect(pediatricStillEligibleEntries("Male", ageYears)).toEqual([]);
     expect(pediatricStillEligibleEntries("Not specified", 8)).toEqual([]);
-    expect(selectPatientStillId("seed", "child", { ageYears: 8, sexLabel: "Male" }, "patient.adult.001")).toMatch(/^level3-roster-v2\./);
+    const compatible = pediatricStillEligibleEntries("Male", 8).map(entry => entry.stillId);
+    expect(compatible).toContain(selectPatientStillId("seed", "child", { ageYears: 8, sexLabel: "Male" }, "patient.adult.001"));
     expect(selectPatientStillId("seed", "child", { ageYears: 4, sexLabel: "Male" }, "future.unknown")).toBeUndefined();
     expect(() => completePatientDemographics({ caseId: "fixture", campaignSeed: "s", encounterId: "c", pediatric: true })).toThrow("explicit age");
     const demographics = { ageYears: 9, sexLabel: "Female" as const };

@@ -40,7 +40,8 @@ import {
   roleStyleForStaffDefinition,
   selectStaffStillId,
 } from "./appearance";
-import { founderStillIdForPresetIds, pediatricStillEligibleEntries } from "./characterStillCatalog";
+import { founderStillIdForPresetIds, isCompatiblePediatricStill } from "./characterStillCatalog";
+import { remapLegacyInspectionReviewers } from "./inspection-reviewers";
 import {
   RANDOMNESS_CONTRACT_VERSION,
   RANDOM_STREAMS,
@@ -163,7 +164,7 @@ function readClinicVisit(value: unknown, operation: Record<string, unknown>): Cl
   if (age < (pediatric ? 5 : 18) || age > (pediatric ? 17 : 120) || pediatric !== Boolean(familyId)) {
     throw new Error("The saved clinic visit has invalid patient eligibility or family linkage.");
   }
-  if (pediatric && !pediatricStillEligibleEntries(value.demographics.sexLabel, age).some(still => still.stillId === (operation.appearance as { stillId?: string }).stillId)) {
+  if (pediatric && !isCompatiblePediatricStill((operation.appearance as { stillId?: string }).stillId, value.demographics.sexLabel, age)) {
     throw new Error("The saved pediatric appearance must match the frozen age and sex.");
   }
   if (value.requestedRoomInstanceId !== undefined &&
@@ -4828,9 +4829,9 @@ export function deserializeGameState(
   options: { compactHistory?: boolean } = {},
 ): GameState {
   const state = deserializeValidatedGameState(serialized, context);
-  // Historical cloud proof comparison must retain its pre-compaction logical
-  // projection. Playable local loads use the ordinary compacting default.
-  return options.compactHistory === false ? state : compactGameState(state, context);
+  // Preserve the original logical projection for historical cloud proofs.
+  // Playable local loads also adapt the retired inspector IDs.
+  return options.compactHistory === false ? state : compactGameState(remapLegacyInspectionReviewers(state), context);
 }
 
 function deserializeValidatedGameState(

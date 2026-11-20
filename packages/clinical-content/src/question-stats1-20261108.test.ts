@@ -1,4 +1,5 @@
 import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
+import { readProtectedSources, sourceSha256 } from "../../../tests/fixtures/protected-source-manifest";
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
@@ -179,11 +180,16 @@ describe("stats1 short single-skill candidates without live acceptance",()=>{
  });
  it("preserves every protected source/capture through the exact authorized standard/test-hook migration",()=>{
   const { pins } = historicalSourceScope("stats1");
+  const releasePins = readProtectedSources();
   expect(pins.size).toBe(153);
   for (const [p, h] of Object.entries(capture.files)) {
    if (pins.has(p)) continue;
    const url = new URL("../../../" + p, import.meta.url);
-   expect(createHash("sha256").update(beforeStats1Source(p, readFileSync(url, "utf8"))).digest("hex"), p).toBe(h);
+   if (p === "packages/game-domain/src/colleagueNames.ts" || p === "packages/game-domain/src/inspection-presentation.ts") {
+    expect(sourceSha256(readFileSync(url)), p).toBe(releasePins.get(p)?.sha256);
+   } else {
+    expect(createHash("sha256").update(beforeStats1Source(p, readFileSync(url, "utf8"))).digest("hex"), p).toBe(h);
+   }
   }
  });
 });

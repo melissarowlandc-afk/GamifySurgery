@@ -1,4 +1,5 @@
 import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
+import { readProtectedSources } from "../../../tests/fixtures/protected-source-manifest";
 import {beforeProgramBatch11AcceptanceRelease,beforeProgramBatch11AcceptanceManifest,beforeProgramBatch11AcceptanceTimings,beforeProgramBatch11AcceptanceSourceBytes} from "./question-program-batch11-acceptance-test-support";
 import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
@@ -156,11 +157,39 @@ describe("batch10 exact whole-case procedure and salvage acceptance", () => {
     expect(sha(archiveBytes)).toBe("612551dd56fa127ba511d482b04c4933a47e15c48c954849986506f8f5de8019");
     const archive=JSON.parse(archiveBytes.toString("utf8"));
     expect(archive.records.map((r:{path:string})=>r.path)).toEqual(["packages/clinical-content/src/question-intraop-anesthetic-intraoperative-crises-20261112.ts", "packages/clinical-content/src/question-intraop-anorectal-eua-and-fistula-20261112.ts", "packages/clinical-content/src/question-intraop-endoscopic-upper-gi-hemostasis-20261112.ts", "packages/clinical-content/src/question-intraop-parathyroid-localization-and-preservation-20261112.ts", "packages/clinical-content/src/question-intraop-pediatric-anesthesia-events-20261112.ts", "packages/clinical-content/src/question-intraop-pediatric-orchiopexy-findings-20261112.ts", "packages/clinical-content/src/question-intraop-polypectomy-technique-and-bleeding-20261112.ts", "docs/research/question-intraop-anesthetic-intraoperative-crises-20261112.json", "docs/research/question-intraop-anesthetic-intraoperative-crises-20261112.md"]);
+    const releasePins = readProtectedSources();
+    const founderPath = "packages/game-domain/src/founder-consults.ts";
+    const procedurePath = "packages/game-domain/src/procedure-context.ts";
     for (const record of reconciliation.records) {
       const archived=archive.records.find((r:{path:string})=>r.path===record.path);
-      if(archived)expect(existsSync(new URL("../../../"+record.path,import.meta.url)),record.path+" excluded working source").toBe(false);
-      const current = archived?Buffer.from(archived.sourceText):raw(record.path);
-      if(archived)expect(sha(current)).toBe(archived.sha256);
+      const sourceUrl = new URL("../../../" + record.path, import.meta.url);
+      let current: Buffer;
+      if (archived) {
+        expect(existsSync(sourceUrl),record.path+" excluded working source").toBe(false);
+        current = Buffer.from(archived.sourceText);
+        expect(sha(current)).toBe(archived.sha256);
+      } else if (record.path === founderPath || record.path === procedurePath) {
+        const liveBytes = readFileSync(sourceUrl);
+        expect(sha(liveBytes), record.path + " exact live source").toBe(releasePins.get(record.path)?.sha256);
+        if (record.path === founderPath) {
+          // Reverse the accepted pediatric still changes to recover the Batch 10 postimage.
+          current = Buffer.from(liveBytes.toString("utf8")
+            .replace('import { isCompatiblePediatricStill } from "./characterStillCatalog";\n', "")
+            .replace('saved.childStillId !== operation.appearance?.stillId ||\n        (["profileId", "childName", "parentName"',
+              '(["profileId", "childName", "childStillId", "parentName"')
+            .replace("||\n        !isCompatiblePediatricStill(operation.appearance.stillId, family.prototypeDemographics.sexLabel, family.prototypeDemographics.ageYears)",
+              "|| family.childStillId !== operation.appearance.stillId"));
+        } else {
+          // Batch 11 verifies this captured preimage by reversing its exact postimage.
+          const eng = read("tools/question-quality/fixtures/question-intraop-acceptance-batch11-eng-i01c-pins-20261113.json");
+          const prior = eng.records.find((pin: { path: string }) => pin.path === procedurePath);
+          expect(prior, record.path + " captured Batch 11 preimage").toBeDefined();
+          current = Buffer.from(prior.beforeText);
+          expect(sha(current), record.path + " exact prior source bytes").toBe(prior.beforeSha256);
+        }
+      } else {
+        current = raw(record.path);
+      }
       expect(sha(current), record.path + " complete authorized postimage").toBe(record.afterSha256);
       expect(sha(beforeAuthorizedBatch10IntegrationPins(current)), record.path + " original pinned bytes").toBe(record.beforeSha256);
       const mutation = Buffer.concat([current, Buffer.from("\n// unauthorized\n")]);
