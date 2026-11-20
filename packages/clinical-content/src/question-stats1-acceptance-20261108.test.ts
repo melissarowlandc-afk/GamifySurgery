@@ -1,5 +1,6 @@
+import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
 import {createHash} from "node:crypto";
-import {readFileSync,existsSync} from "node:fs";
+import {readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
 import {SYNTHETIC_CLINICAL_RELEASE as actualLive,QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
 import {QUESTION_SHIP_MANIFEST as actualManifest} from "./question-ship-manifest";
@@ -95,20 +96,12 @@ describe("stats1 exact manager acceptance and frozen identities",()=>{
   for(const r of revisions)for(const id of r.question.supportingEvidenceClaimIds)expect(all.some(c=>c.id===id),id).toBe(true);
  });
  it("pins each authorized existing-source delta before preserving old capture assertions",()=>{
-  // Release integration retains every original protected path check.
-  const pinsPath="tools/question-quality/fixtures/question-stats1-acceptance-release-source-pins-20261108.json",pinBytes=readFileSync(new URL("../../../"+pinsPath,import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("d2d480d0ec6e8d1f43d7e972e0e0bc3bb444edaa482bd1549223e9429926d64d");
-  const pins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;paths:Array<{path:string;capturedMainSha256:string;requiredReleaseSha256:string|null}>};
-  expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-stats1-acceptance-before-20261108.json",import.meta.url))).digest("hex")).toBe(pins.capturedFixtureSha256);
-  expect(pins.paths).toHaveLength(192);
-  const releasePins=new Map(pins.paths.map(row=>[row.path,row]));
-  for(const row of pins.paths)expect(before.files[row.path],row.path+" immutable main capture").toBe(row.capturedMainSha256);
-  for(const[p,h]of Object.entries(before.files)){
-   const row=releasePins.get(p),url=new URL("../../../"+p,import.meta.url);
-   if(row){
-    if(row.requiredReleaseSha256===null)expect(existsSync(url),p+" excluded source remains absent").toBe(false);
-    else expect(createHash("sha256").update(readFileSync(url)).digest("hex"),p+" exact release source").toBe(row.requiredReleaseSha256);
-   }else expect(createHash("sha256").update(beforeStats1AcceptanceSource(p,readFileSync(url,"utf8"))).digest("hex"),p).toBe(h);
+  const { pins } = historicalSourceScope("stats1-acceptance");
+  expect(pins.size).toBe(192);
+  for (const [p, h] of Object.entries(before.files)) {
+   if (pins.has(p)) continue;
+   const url = new URL("../../../" + p, import.meta.url);
+   expect(createHash("sha256").update(beforeStats1AcceptanceSource(p, readFileSync(url, "utf8"))).digest("hex"), p).toBe(h);
   }
  });
 });

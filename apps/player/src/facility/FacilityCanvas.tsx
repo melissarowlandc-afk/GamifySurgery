@@ -177,6 +177,13 @@ export function FacilityCanvas({
   bridgeRef.current.onSelectedRoomRectChange = onSelectedRoomRectChange;
   bridgeRef.current.onAlertPinPositionsChange = pinPositions.current.publish;
 
+  const motionFrozen = viewModel.paused || Boolean(viewModel.buildMode);
+  useLayoutEffect(() => {
+    // A pause or cover can begin and end between two delivered frames.
+    const scene = gameRef.current?.scene?.getScene?.("facility-scene") as FacilityScene | undefined;
+    scene?.resetMotionClock();
+  }, [motionFrozen, mobileMapCovered, viewModel.campaignId]);
+
   useEffect(() => { phoneFrames.current?.update(); });
   useEffect(() => {
     if (mobileInput !== true) return;
@@ -275,7 +282,7 @@ export function FacilityCanvas({
       frameBudget.update();
     }
     const contextRecovery = bindCanvasContextRecovery(game.canvas, {
-      lost: () => { mainCanvasLost = true; game.loop.sleep(); },
+      lost: () => { mainCanvasLost = true; scene.resetMotionClock(); game.loop.sleep(); },
       restored: () => {
         mainCanvasLost = false;
         try { scene.restoreCanvasPresentation(); }
@@ -410,7 +417,11 @@ export function FacilityCanvas({
       reconcileCamera();
     };
     const flushCamera = () => { scene.cancelCameraGesture(); flushResizeCamera(); };
-    const flushHiddenCamera = () => { if (document.visibilityState === "hidden") flushCamera(); };
+    const onPageHide = () => { scene.resetMotionClock(); flushCamera(); };
+    const onPageVisibility = () => {
+      scene.resetMotionClock();
+      if (document.visibilityState === "hidden") flushCamera();
+    };
     const flushBeforeAction = (event: Event) => {
       // A Save & Close/zoom/menu action must see the latest wheel preference,
       // even when clicked before the quiet-wheel timeout. Runs before React.
@@ -426,9 +437,13 @@ export function FacilityCanvas({
     };
     const desktopLifecycle = bridgeRef.current.mobileInput !== true;
     // Publish before the session's bubble-phase storage flush on both layouts.
-    window.addEventListener("pagehide", flushCamera, true);
+    window.addEventListener("pagehide", onPageHide, true);
     window.addEventListener("beforeunload", flushCamera, true);
-    document.addEventListener("visibilitychange", flushHiddenCamera, true);
+    document.addEventListener("visibilitychange", onPageVisibility, true);
+    window.addEventListener("pageshow", scene.resetMotionClock);
+    document.addEventListener("freeze", scene.resetMotionClock);
+    document.addEventListener("resume", scene.resetMotionClock);
+    game.events.on(Phaser.Core.Events.RESUME, scene.resetMotionClock);
     window.addEventListener("pointerdown", flushBeforeAction, true);
     window.addEventListener("keydown", flushBeforeAction, true);
     window.addEventListener("pointercancel", flushCamera, true);
@@ -467,9 +482,13 @@ export function FacilityCanvas({
       game.events.off(Phaser.Core.Events.POST_STEP, reconcileCamera);
       resizeObserver.disconnect();
       if (cameraSettleTimer !== null) window.clearTimeout(cameraSettleTimer);
-      window.removeEventListener("pagehide", flushCamera, true);
+      window.removeEventListener("pagehide", onPageHide, true);
       window.removeEventListener("beforeunload", flushCamera, true);
-      document.removeEventListener("visibilitychange", flushHiddenCamera, true);
+      document.removeEventListener("visibilitychange", onPageVisibility, true);
+      window.removeEventListener("pageshow", scene.resetMotionClock);
+      document.removeEventListener("freeze", scene.resetMotionClock);
+      document.removeEventListener("resume", scene.resetMotionClock);
+      game.events.off(Phaser.Core.Events.RESUME, scene.resetMotionClock);
       window.removeEventListener("pointerdown", flushBeforeAction, true);
       window.removeEventListener("keydown", flushBeforeAction, true);
       window.removeEventListener("pointercancel", flushCamera, true);

@@ -1,3 +1,4 @@
+import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
 import {beforeProgramBatch4AcceptanceRelease,beforeProgramBatch4AcceptanceManifest,beforeProgramBatch4AcceptanceTimings,beforeProgramBatch4AcceptanceSource} from "./question-program-batch4-acceptance-test-support";
 import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
@@ -87,10 +88,8 @@ export function beforeProgramBatch3AcceptanceSource(path: string, current: strin
   const row = migration.files.find(file => file.path === path);
   if (!row) return current;
   const hash = (text: string) => createHash("sha256").update(text).digest("hex");
-  const releasePins=read("tools/question-quality/fixtures/question-program-batch3-release-source-pins-20261111.json") as {paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string}>};
-  const release=releasePins.paths.find(pin=>pin.path===path);
-  if(release){expect(release.mainBeforeSha256).toBe(row.beforeSha256);expect(release.mainAfterSha256).toBe(row.afterSha256);}
-  expect(hash(current),path+" exact authorized release postimage").toBe(release?.requiredReleaseSha256??row.afterSha256);
+  const release = historicalSourceScope("batch3").pins.get(path);
+  expect(hash(current),path+" exact authorized release postimage").toBe(release?.sha256??row.afterSha256);
   expect(hash(row.beforeText)).toBe(row.beforeSha256);
   expect(row.beforeSha256).toBe([...before.sourcePreimages,...additional.files,...supplemental].find((file: {path: string}) => file.path === path).beforeSha256);
   return row.beforeText;

@@ -1,3 +1,4 @@
+import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
 import {beforeProgramBatch2AcceptanceRelease,beforeProgramBatch2AcceptanceManifest,beforeProgramBatch2AcceptanceTimings,beforeProgramBatch2AcceptanceSource} from "./question-program-batch2-acceptance-test-support";
 import {readFileSync} from "node:fs";
 import {createHash} from "node:crypto";
@@ -43,10 +44,8 @@ export function beforeProgramBatch1AcceptanceSource(path:string,current:string):
  current=beforeProgramBatch2AcceptanceSource(path,current);
  const row=migration.files.find(r=>r.path===path);if(!row)return current;
  const hash=(v:string)=>createHash("sha256").update(v).digest("hex");
- const releasePins=read("tools/question-quality/fixtures/question-program-batch1-release-source-pins-20261111.json") as {paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string}>};
- const release=releasePins.paths.find(pin=>pin.path===path);
- if(release){expect(release.mainBeforeSha256).toBe(row.beforeSha256);expect(release.mainAfterSha256).toBe(row.afterSha256);}
- expect(hash(current),path+" exact authorized release postimage").toBe(release?.requiredReleaseSha256??row.afterSha256);
+ const release = historicalSourceScope("batch1").pins.get(path);
+ expect(hash(current),path+" exact authorized release postimage").toBe(release?.sha256??row.afterSha256);
  expect(hash(row.beforeText)).toBe(row.beforeSha256);
  expect(row.beforeSha256).toBe(before.sourcePreimages.find((f:{path:string})=>f.path===path).beforeSha256);return row.beforeText;
 }

@@ -1,3 +1,4 @@
+import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
 import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
 import {describe, expect, it} from "vitest";
@@ -155,24 +156,16 @@ describe("batch11 exact whole-case procedure and salvage acceptance", () => {
   });
 
   it("pins exact release source deltas, presence and every immutable epoch preimage",()=>{
-    const bytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch11-release-source-pins-20261113.json",import.meta.url));
-    expect(createHash("sha256").update(bytes).digest("hex")).toBe("4b2ed45e9a674fc17254a5c01483206c22b0620d469b84e606d580be8f7a027b");
-    const pins=JSON.parse(bytes.toString("utf8"));
-    const hash=(path:string)=>createHash("sha256").update(readFileSync(new URL("../../../"+path,import.meta.url))).digest("hex");
-    expect(hash(pins.capturePath)).toBe(pins.capturedFixtureSha256);
-    expect(hash("packages/clinical-content/src/question-program-batch11-acceptance-test-support.ts")).toBe(pins.testSupportSha256);
-    expect(hash(pins.repairedTopicTestArchivePath)).toBe(pins.repairedTopicTestArchiveSha256);
-    const migration=read(pins.capturePath);expect(pins.paths).toHaveLength(13);
-    expect(pins.paths.map((p:{path:string})=>p.path)).toEqual(migration.files.map((r:{path:string})=>r.path));
-    for(const pin of pins.paths){
-      const row=migration.files.find((r:{path:string})=>r.path===pin.path)!;
-      expect(pin.mainBeforeSha256).toBe(row.beforeSha256);expect(pin.mainAfterSha256).toBe(row.afterSha256);
+    const { pins, capture } = historicalSourceScope("batch11");
+    const migration = read(capture.path);
+    expect(pins.size).toBe(13);
+    expect([...pins.keys()]).toEqual(migration.files.map((row: { path: string }) => row.path));
+    for (const row of migration.files) {
       expect(createHash("sha256").update(row.beforeText).digest("hex")).toBe(row.beforeSha256);
-      const url=new URL("../../../"+pin.path,import.meta.url);expect(existsSync(url)).toBe(pin.requiredReleaseSha256!==null);
-      const current=existsSync(url)?readFileSync(url,"utf8"):undefined;
-      if(current!==undefined)expect(hash(pin.path)).toBe(pin.requiredReleaseSha256);
-      expect(createHash("sha256").update(beforeProgramBatch11AcceptanceSource(pin.path,current)!).digest("hex")).toBe(row.beforeSha256);
-      if(current!==undefined)expect(()=>beforeProgramBatch11AcceptanceSource(pin.path,current+"\n// unauthorized\n")).toThrow();
+      const url = new URL("../../../" + row.path, import.meta.url);
+      const current = existsSync(url) ? readFileSync(url, "utf8") : undefined;
+      expect(createHash("sha256").update(beforeProgramBatch11AcceptanceSource(row.path,current)!).digest("hex")).toBe(row.beforeSha256);
+      if(current!==undefined)expect(()=>beforeProgramBatch11AcceptanceSource(row.path,current+"\n// unauthorized\n")).toThrow();
     }
   });
 });

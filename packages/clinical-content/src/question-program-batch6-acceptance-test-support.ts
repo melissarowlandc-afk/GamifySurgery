@@ -1,3 +1,4 @@
+import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
 import {programBatch8HistoricalMembership} from "./question-program-batch8-acceptance-test-support";
 import {beforeProgramBatch7AcceptanceRelease,beforeProgramBatch7AcceptanceManifest,beforeProgramBatch7AcceptanceTimings,beforeProgramBatch7AcceptanceSource,topicQuestionAcceptance as batch7QuestionAcceptance,topicCaseIsExplicitlyLive as batch7CaseLive} from "./question-program-batch7-acceptance-test-support";
 import {PROGRAM_BATCH7_RETIRED_CASES as retired7} from "./question-program-batch7-accepted-data-20261112";
@@ -152,15 +153,8 @@ export function beforeProgramBatch6AcceptanceSource(path: string, current: strin
     return current!;
   }
   const hash = (text: string) => createHash("sha256").update(text).digest("hex");
-  const pins = read("tools/question-quality/fixtures/question-program-batch6-release-source-pins-20261112.json") as {
-    paths: Array<{path: string; mainBeforeSha256: string; mainAfterSha256: string; requiredReleaseSha256: string | null}>;
-  };
-  const pin = pins.paths.find(pin => pin.path === path);
-  if (pin) {
-    expect(pin.mainBeforeSha256).toBe(row.beforeSha256);
-    expect(pin.mainAfterSha256).toBe(row.afterSha256);
-  }
-  if (pin?.requiredReleaseSha256 === null) {
+  const pin = historicalSourceScope("batch6").pins.get(path);
+  if (pin?.requiredAbsent) {
     expect(current, path + " excluded authoring module").toBeUndefined();
     expect(existsSync(new URL("../../../" + path, import.meta.url))).toBe(false);
     const archive = read("tools/question-quality/fixtures/question-topic-batch6-repaired-tests-20261112.json") as {
@@ -173,7 +167,7 @@ export function beforeProgramBatch6AcceptanceSource(path: string, current: strin
     expect(hash(record!.afterText)).toBe(row.afterSha256);
   } else {
     expect(current, path + " required source").toBeDefined();
-    expect(hash(current!), path + " exact authorized release postimage").toBe(pin?.requiredReleaseSha256 ?? row.afterSha256);
+    expect(hash(current!), path + " exact authorized release postimage").toBe(pin?.sha256 ?? row.afterSha256);
   }
   expect(hash(row.beforeText)).toBe(row.beforeSha256);
   expect(row.beforeSha256).toBe([...before.sourcePreimages, ...additional.files, ...supplemental]

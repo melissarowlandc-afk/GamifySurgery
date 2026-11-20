@@ -1,3 +1,4 @@
+import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
@@ -76,16 +77,12 @@ describe("flags4 exact manager acceptance and preserved legacy identity",()=>{
  it("pins each authorized source preimage without refreshing any immutable capture",()=>{
   const migration=read("tools/question-quality/fixtures/question-flags4-acceptance-source-migration-20261108.json");
   expect(migration.files).toHaveLength(9);
-  const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-flags4-acceptance-release-source-pins-20261108.json",import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("4580379acfae1181cfc3e31ea97ee32eec16ffba3b6e39f3e70836adbc101b9d");
-  const pins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;paths:Array<{path:string;capturedMainSha256:string;requiredReleaseSha256:string}>};
-  expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-flags4-acceptance-before-20261108.json",import.meta.url))).digest("hex")).toBe(pins.capturedFixtureSha256);
-  expect(pins.paths).toHaveLength(33);
-  for(const row of pins.paths)expect(before.files[row.path]).toBe(row.capturedMainSha256);
-  for(const file of migration.files){
-   const current=readFileSync(new URL("../../../"+file.path,import.meta.url),"utf8"),row=pins.paths.find(r=>r.path===file.path);
-   if(row)expect(createHash("sha256").update(current).digest("hex"),file.path+" exact release source").toBe(row.requiredReleaseSha256);
-   else expect(createHash("sha256").update(beforeFlags4AcceptanceSource(file.path,current)).digest("hex")).toBe(before.files[file.path]);
+  const { pins } = historicalSourceScope("flags4");
+  expect(pins.size).toBe(33);
+  for (const file of migration.files) {
+   if (pins.has(file.path)) continue;
+   const current = readFileSync(new URL("../../../" + file.path, import.meta.url), "utf8");
+   expect(createHash("sha256").update(beforeFlags4AcceptanceSource(file.path, current)).digest("hex")).toBe(before.files[file.path]);
   }
  });
 });

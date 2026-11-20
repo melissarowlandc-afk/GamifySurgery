@@ -1,3 +1,4 @@
+import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
 import {beforeProgramBatch6AcceptanceRelease,beforeProgramBatch6AcceptanceManifest,beforeProgramBatch6AcceptanceTimings,beforeProgramBatch6AcceptanceSource} from "./question-program-batch6-acceptance-test-support";
 import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
@@ -85,18 +86,12 @@ export function beforeProgramBatch5AcceptanceTimings(actual: readonly AnswerChoi
 }
 
 export function beforeProgramBatch5AcceptanceSource(path: string, current: string | undefined): string {
-  const releaseSourcePins = read("tools/question-quality/fixtures/question-program-batch5-release-source-pins-20261111.json") as {
-    paths: Array<{path: string; requiredReleaseSha256: string | null}>;
-  };
-  const excludedSource = releaseSourcePins.paths.find(pin => pin.path === path)?.requiredReleaseSha256 === null;
-  if (!excludedSource) current = beforeProgramBatch6AcceptanceSource(path, current);
+  const release = historicalSourceScope("batch5").pins.get(path);
+  if (!release?.requiredAbsent) current = beforeProgramBatch6AcceptanceSource(path, current);
   const row = migration.files.find(file => file.path === path);
   if (!row) { expect(current).toBeDefined(); return current!; }
   const hash = (text: string) => createHash("sha256").update(text).digest("hex");
-  const releasePins=read("tools/question-quality/fixtures/question-program-batch5-release-source-pins-20261111.json") as {paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string|null}>};
-  const release=releasePins.paths.find(pin=>pin.path===path);
-  if(release){expect(release.mainBeforeSha256).toBe(row.beforeSha256);expect(release.mainAfterSha256).toBe(row.afterSha256);}
-  if(release?.requiredReleaseSha256===null){
+  if(release?.requiredAbsent){
     expect(current,path+" excluded authoring source").toBeUndefined();
     expect(existsSync(new URL("../../../"+path,import.meta.url)),path+" required absence").toBe(false);
     const frozen=read("tools/question-quality/fixtures/question-topic-batches45-repaired-tests-20261112.json") as {records:Array<{path:string;afterText:string;afterSha256:string}>};
@@ -106,7 +101,7 @@ export function beforeProgramBatch5AcceptanceSource(path: string, current: strin
     expect(current,path+" required source").toBeDefined();
     // Later exact source inverses return this immutable authoring epoch.
     // The direct pin test independently requires the current release bytes.
-    expect(hash(current!),path+" exact authorized release/epoch postimage").toBe(hash(current!)===row.afterSha256?row.afterSha256:release?.requiredReleaseSha256??row.afterSha256);
+    expect(hash(current!),path+" exact authorized release/epoch postimage").toBe(hash(current!)===row.afterSha256?row.afterSha256:release?.sha256??row.afterSha256);
   }
   expect(hash(row.beforeText)).toBe(row.beforeSha256);
   expect(row.beforeSha256).toBe([...before.sourcePreimages,...additional.files,...supplemental].find((file: {path: string}) => file.path === path).beforeSha256);

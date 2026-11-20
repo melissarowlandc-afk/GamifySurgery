@@ -1,3 +1,4 @@
+import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
 import {beforeProgramBatch11AcceptanceRelease,beforeProgramBatch11AcceptanceManifest,beforeProgramBatch11AcceptanceTimings,beforeProgramBatch11AcceptanceSource,beforeProgramBatch11AcceptanceSourceBytes,beforeProgramBatch11AcceptanceCases,beforeProgramBatch11AcceptanceConcepts} from "./question-program-batch11-acceptance-test-support";
 import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
@@ -49,16 +50,15 @@ export function beforeProgramBatch10AcceptanceSource(path:string,current:string|
 export function beforeProgramBatch10AcceptanceSource(path:string,current:string|undefined):string|undefined {
   current=current===undefined?beforeProgramBatch11AcceptanceSource(path,current):beforeProgramBatch11AcceptanceSourceBytes(current);
   const row=migration.files.find(r=>r.path===path);if(!row)return current;
-  const pins=read("tools/question-quality/fixtures/question-program-batch10-release-source-pins-20261113.json");
-  const pin=pins.paths.find((p:{path:string})=>p.path===path);
+  const scope = historicalSourceScope("batch10");
+  const pin = scope.pins.get(path);
   expect(pin,path+" exact release delta").toBeDefined();
-  expect(pin.mainBeforeSha256).toBe(row.beforeSha256);expect(pin.mainAfterSha256).toBe(row.afterSha256);
   if(current===undefined){
-    expect(pin.requiredReleaseSha256).toBeNull();expect(existsSync(new URL("../../../"+path,import.meta.url))).toBe(false);
-    const repaired=read(pins.repairedTopicTestArchivePath).records.find((r:{path:string})=>r.path===path);
+    expect(pin!.sha256).toBeNull();expect(existsSync(new URL("../../../"+path,import.meta.url))).toBe(false);
+    const repaired=read(scope.repairedArchive!.path).records.find((r:{path:string})=>r.path===path);
     expect(repaired.sha256).toBe(row.afterSha256);expect(sha(repaired.sourceText)).toBe(row.afterSha256);
   }else if(sha(current)===row.beforeSha256)return current;
-  else expect([row.afterSha256,pin.requiredReleaseSha256],path+" exact authoring/release postimage").toContain(sha(current));
+  else expect([row.afterSha256,pin!.sha256],path+" exact authoring/release postimage").toContain(sha(current));
   expect(sha(row.beforeText),path+" immutable captured preimage").toBe(row.beforeSha256);
   return row.beforeText;
 }
@@ -67,8 +67,9 @@ export function beforeProgramBatch10AcceptanceSourceBytes(value:string):string;
 export function beforeProgramBatch10AcceptanceSourceBytes(value:Buffer):Buffer;
 export function beforeProgramBatch10AcceptanceSourceBytes(value:string|Buffer):string|Buffer {
   value=Buffer.isBuffer(value)?beforeProgramBatch11AcceptanceSourceBytes(value):beforeProgramBatch11AcceptanceSourceBytes(value);
-  const pins=read("tools/question-quality/fixtures/question-program-batch10-release-source-pins-20261113.json");
-  const row=migration.files.find(file=>file.afterSha256===sha(value)||pins.paths.some((p:{path:string;requiredReleaseSha256:string|null})=>p.path===file.path&&p.requiredReleaseSha256===sha(value)));
+  const { pins } = historicalSourceScope("batch10");
+  const hash = sha(value);
+  const row=migration.files.find(file=>file.afterSha256===hash||pins.get(file.path)?.sha256===hash);
   if (!row) return value;
   expect(sha(row.beforeText), row.path + " exact prior source bytes").toBe(row.beforeSha256);
   return Buffer.isBuffer(value) ? Buffer.from(row.beforeText) : row.beforeText;

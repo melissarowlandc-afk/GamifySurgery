@@ -1,6 +1,7 @@
+import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
 import {beforeFlags3AcceptanceRelease,beforeFlags3AcceptanceManifest,beforeFlags3AcceptanceTimings,beforeFlags3AcceptanceSource} from "./question-flags3-acceptance-test-support";
 import {createHash} from "node:crypto";
-import {readFileSync,existsSync} from "node:fs";
+import {readFileSync} from "node:fs";
 import {describe,expect,it} from "vitest";
 import {PROTOTYPE_BALANCE_RELEASE} from "@gamify-surgery/balance-config";
 import {SYNTHETIC_CLINICAL_RELEASE as actualLive,QUESTION_CATALOG_RELEASE as catalog} from "./synthetic-content";
@@ -121,22 +122,12 @@ describe("flags3 exact owner-flag candidates and retained live source",()=>{
   expect(()=>applyQuestionFlags3Revisions(changed)).toThrow(/retained input changed/);
  });
  it("leaves every existing protected source and decision file byte-exact",()=>{
-  // Release integration pins excluded lanes to this release's exact entry,
-  // preserving the immutable main-tree capture and every protected path check.
-  const pinsPath="tools/question-quality/fixtures/question-flags3-release-source-pins-20261107.json";
-  const pinBytes=readFileSync(new URL("../../../"+pinsPath,import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("909d099f0526a2bc08062af2c807c29cde863c9c1a8ed241b8a31a572e2b470b");
-  const pins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;paths:Array<{path:string;capturedMainSha256:string;releaseEntrySha256:string|null}>};
-  expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-flags3-before-20261107.json",import.meta.url))).digest("hex")).toBe(pins.capturedFixtureSha256);
-  expect(pins.paths).toHaveLength(151);
-  const excluded=new Map(pins.paths.map(row=>[row.path,row]));
-  for(const row of pins.paths)expect(capture.files[row.path],row.path+" historical main pin").toBe(row.capturedMainSha256);
-  for(const [path,sha]of Object.entries(capture.files)){
-   const row=excluded.get(path),url=new URL("../../../"+path,import.meta.url);
-   if(row){
-    if(row.releaseEntrySha256===null)expect(existsSync(url),path+" unshipped source stays absent").toBe(false);
-    else expect(createHash("sha256").update(readFileSync(url)).digest("hex"),path+" exact pre-port release bytes").toBe(row.releaseEntrySha256);
-   }else expect(createHash("sha256").update(beforeFlags3AcceptanceSource(path,readFileSync(url,"utf8"))).digest("hex"),path).toBe(sha);
+  const { pins } = historicalSourceScope("flags3");
+  expect(pins.size).toBe(151);
+  for (const [path, sha] of Object.entries(capture.files)) {
+   if (pins.has(path)) continue;
+   const url = new URL("../../../" + path, import.meta.url);
+   expect(createHash("sha256").update(beforeFlags3AcceptanceSource(path, readFileSync(url, "utf8"))).digest("hex"), path).toBe(sha);
   }
  });
 });

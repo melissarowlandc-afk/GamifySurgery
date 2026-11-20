@@ -1,3 +1,4 @@
+import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
 import {beforeProgramBatch5AcceptanceRelease, beforeProgramBatch5AcceptanceManifest, beforeProgramBatch5AcceptanceTimings, beforeProgramBatch5AcceptanceSource} from "./question-program-batch5-acceptance-test-support";
 import {readFileSync,existsSync} from "node:fs";
 import {createHash} from "node:crypto";
@@ -87,12 +88,10 @@ export function beforeProgramBatch4AcceptanceSource(path: string, current: strin
   const row = migration.files.find(file => file.path === path);
   if (!row) return current;
   const hash = (text: string) => createHash("sha256").update(text).digest("hex");
-  const releasePins=read("tools/question-quality/fixtures/question-program-batch4-release-source-pins-20261111.json") as {paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string|null}>};
-  const release=releasePins.paths.find(pin=>pin.path===path);
-  if(release){expect(release.mainBeforeSha256).toBe(row.beforeSha256);expect(release.mainAfterSha256).toBe(row.afterSha256);}
+  const release = historicalSourceScope("batch4").pins.get(path);
   // Later inverses may return this exact immutable authoring epoch. Direct
   // release-pin tests independently bind every current public-file digest.
-  expect(hash(current),path+" exact authorized release/epoch postimage").toBe(hash(current)===row.afterSha256?row.afterSha256:release?.requiredReleaseSha256??row.afterSha256);
+  expect(hash(current),path+" exact authorized release/epoch postimage").toBe(hash(current)===row.afterSha256?row.afterSha256:release?.sha256??row.afterSha256);
   expect(hash(row.beforeText)).toBe(row.beforeSha256);
   expect(row.beforeSha256).toBe([...before.sourcePreimages,...additional.files,...supplemental].find((file: {path: string}) => file.path === path).beforeSha256);
   return row.beforeText;

@@ -1,3 +1,4 @@
+import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
 // Exact historical scope for owner-directed flag fixes batch 5.
 import {beforeFlags5AcceptanceRelease,beforeFlags5AcceptanceManifest} from './question-flags5-acceptance-test-support';
 import {beforeProgramBatch9AcceptanceRelease,beforeProgramBatch9AcceptanceManifest,beforeProgramBatch9AcceptanceTimings,beforeProgramBatch9AcceptanceSource} from "./question-program-batch9-acceptance-test-support";
@@ -51,17 +52,16 @@ export function beforeProgramBatch8AcceptanceSource(path:string,current:string|u
   current=beforeProgramBatch9AcceptanceSource(path,current);
   const row=migration.files.find(r=>r.path===path);if(!row)return current;
   const hash=(value:string)=>createHash("sha256").update(value).digest("hex");
-  const pins=read("tools/question-quality/fixtures/question-program-batch8-release-source-pins-20261112.json");
-  const pin=pins.paths.find((p:{path:string})=>p.path===path);
+  const scope = historicalSourceScope("batch8");
+  const pin = scope.pins.get(path);
   expect(pin,path+" exact authorized release presence").toBeDefined();
-  expect(pin.mainBeforeSha256).toBe(row.beforeSha256);expect(pin.mainAfterSha256).toBe(row.afterSha256);
   if(current===undefined){
-    expect(pin.requiredReleaseSha256).toBeNull();expect(existsSync(new URL("../../../"+path,import.meta.url))).toBe(false);
-    const archive=read(pins.repairedTopicTestArchivePath);
+    expect(pin!.sha256).toBeNull();expect(existsSync(new URL("../../../"+path,import.meta.url))).toBe(false);
+    const archive=read(scope.repairedArchive!.path);
     const repaired=archive.records.find((r:{path:string})=>r.path===path);
     expect(repaired.sha256).toBe(row.afterSha256);expect(hash(repaired.sourceText)).toBe(row.afterSha256);
   }else if(hash(current)===row.beforeSha256)return current;
-  else expect([row.afterSha256,pin.requiredReleaseSha256],path+" exact authoring/release postimage").toContain(hash(current));
+  else expect([row.afterSha256,pin!.sha256],path+" exact authoring/release postimage").toContain(hash(current));
   expect(hash(row.beforeText),path+" immutable captured preimage").toBe(row.beforeSha256);
   return row.beforeText;
 }

@@ -429,6 +429,7 @@ const DEFAULT_VISIBLE_GRID_COLUMNS = 14;
 const DEFAULT_VISIBLE_GRID_ROWS = 6;
 const MINIMUM_CAMERA_ZOOM = 0.1;
 const MAXIMUM_CAMERA_ZOOM = 2.5;
+const NANOSECOND_IN_MILLISECONDS = 0.000_001;
 const FALLBACK_APPEARANCE: PixelAppearanceDescriptor = {
   version: "pixel-avatar.v1",
   bodyShape: "average",
@@ -676,7 +677,8 @@ export class FacilityScene extends Phaser.Scene {
   /** Real milliseconds of unpaused play; drives breathing, not game speed. */
   private characterRestClockMilliseconds = 0;
   private frameDeltaMilliseconds = 0;
-  private characterPresentationWasFrozen = false;
+  private lastMotionFrameTime?: number;
+  private nominalMotionFrameMilliseconds = 0;
   private readonly routeMotionTracks = new Map<string, RouteMotionTrack>();
   private readonly failedInspectorLocations = new Map<string, GridPoint>();
   /** Last horizontal render orientation survives a stationary frame without
@@ -871,6 +873,14 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   public create(): void {
+    this.resetMotionClock();
+    this.nominalMotionFrameMilliseconds = 1_000 / this.game.loop.targetFps;
+    this.events.on(Phaser.Scenes.Events.RESUME, this.resetMotionClock);
+    this.events.on(Phaser.Scenes.Events.WAKE, this.resetMotionClock);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.events.off(Phaser.Scenes.Events.RESUME, this.resetMotionClock);
+      this.events.off(Phaser.Scenes.Events.WAKE, this.resetMotionClock);
+    });
     initializeCanvasRoomLighting(this.game.renderer);
     this.cameras.main.setBackgroundColor("#7e8476");
     this.cameras.main.setRoundPixels(true);
@@ -1165,7 +1175,7 @@ export class FacilityScene extends Phaser.Scene {
       this.trimMobileAtlases();
     }
     this.mobileArtWorldPending = false;
-    if (this.mobileArtCharactersPending) { this.mobileArtCharactersPending = false; this.drawCharacters(); }
+    if (this.mobileArtCharactersPending) { this.mobileArtCharactersPending = false; this.redrawCharactersAfterArtLoad(); }
     this.recordMobileArtSettled();
   }
 
@@ -1315,7 +1325,7 @@ export class FacilityScene extends Phaser.Scene {
         else this.failedCharacterStills.add(pending.id);
         this.pendingCharacterStills.delete(pending.id);
       }
-      this.drawCharacters();
+      this.redrawCharactersAfterArtLoad();
       const next = this.pendingCharacterStills.values().next().value;
       if (next) this.ensureCharacterStill(next);
     });
@@ -1574,8 +1584,15 @@ export class FacilityScene extends Phaser.Scene {
     }));
   }
 
-  /** Same authoritative starting sample as a reload; never replay a covered route tail or old credits. */
-  private resyncMobilePresentation(): void {
+  /** The first eligible frame after a lifecycle boundary establishes a new time anchor. */
+  public resetMotionClock = (): void => {
+    this.lastMotionFrameTime = undefined;
+    this.frameDeltaMilliseconds = 0;
+  };
+
+  /** Restart from the current projection after phone resync or campaign replacement. */
+  private resyncPresentation(): void {
+    this.resetMotionClock();
     this.routeMotionTracks.clear();
     this.characterFacingRight.clear();
     this.characterMotionSnapshots.clear();
@@ -1583,6 +1600,8 @@ export class FacilityScene extends Phaser.Scene {
     this.characterHopStates.clear();
     this.characterStepBounceStates.clear();
     this.characterSeatSettles.clear();
+    this.frozenCharacterModel = undefined;
+    this.frozenCharacterLayout = undefined;
     this.earningsPopupState = undefined;
     for (const text of this.earningsPopupTexts.values()) text.destroy();
     this.earningsPopupTexts.clear();
@@ -1596,18 +1615,23 @@ export class FacilityScene extends Phaser.Scene {
   }
 
   public restoreCanvasPresentation(): void {
-    if (this.bridge.mobileInput === true) this.resyncMobilePresentation();
+    if (this.bridge.mobileInput === true) this.resyncPresentation();
+    else this.resetMotionClock();
     this.refreshLayout(true);
   }
 
   public update(time: number, delta: number): void {
+    if (typeof document !== "undefined" && document.visibilityState === "hidden") {
+      this.resetMotionClock();
+      return;
+    }
     if (this.bridge.mobileInput !== true && this.bridge.viewModel.levelFiveRoomArt) this.ensureLevelFiveAtlases();
     let mobileResynced = false;
     if (this.bridge.mobileInput === true) {
       this.ensureMobileAtlases();
       const frame = this.bridge.mobilePresentation?.beginFrame();
       if (frame && !frame.draw) {
-        this.frameDeltaMilliseconds = 0;
+        this.resetMotionClock();
         this.mobileGestures?.cancel();
         this.cameras.main.setVisible(false);
         return;
@@ -1616,7 +1640,7 @@ export class FacilityScene extends Phaser.Scene {
         // A sleeping loop had no hidden frame in which to cancel old contacts.
         this.mobileGestures?.cancel();
         this.cameras.main.setVisible(true);
-        this.resyncMobilePresentation();
+        this.resyncPresentation();
         mobileResynced = true;
       }
       if (this.mobileArtRefreshTimer === undefined && (this.mobileArtWorldPending || this.mobileArtCharactersPending)) this.flushMobileArtRefresh();
@@ -1625,23 +1649,6 @@ export class FacilityScene extends Phaser.Scene {
       this.syncMobileInputMode();
       this.panMobileGhostAtEdge(delta);
     }
-    const motionFrozen =
-      this.bridge.viewModel.paused ||
-      Boolean(this.bridge.viewModel.buildMode);
-    // A browser/tab pause can leave the first resumed Phaser delta covering
-    // the entire pause interval. Drop that one delta so presentation resumes
-    // from the exact frozen phase and route sample.
-    const resumedFromFrozen = !motionFrozen && this.characterPresentationWasFrozen;
-    this.frameDeltaMilliseconds = motionFrozen || resumedFromFrozen ? 0 : delta;
-    if (mobileResynced) this.frameDeltaMilliseconds = 0;
-    if (!motionFrozen) {
-      // Keep the older phase for unrelated UI pulses. Hops follow each
-      // character's route distance; breathing follows this real-time clock.
-      this.characterPhase += this.frameDeltaMilliseconds * 0.0025;
-      this.characterRestClockMilliseconds += this.frameDeltaMilliseconds;
-    }
-    this.characterPresentationWasFrozen = motionFrozen;
-
     if (mobileResynced) this.refreshLayout(true);
     this.refreshLayout();
     if (this.cameraPreferencePending && !this.isCameraGestureActive()) this.flushCameraChange();
@@ -1654,8 +1661,29 @@ export class FacilityScene extends Phaser.Scene {
       const window = phoneActorWindowKey(this.layout, this.scale);
       if (window !== this.phoneActorWindow) { this.phoneActorWindow = window; this.frozenCharacterLayout = undefined; }
     }
+    const motionFrozen = this.characterPresentationFrozen();
+    if (motionFrozen) this.resetMotionClock();
     if (!motionFrozen || this.frozenCharacterModel !== this.bridge.viewModel || this.frozenCharacterLayout !== this.worldLayout) {
-      this.drawCharacters();
+      if (!motionFrozen) {
+        // Phaser smooths and clamps delta on blur. The frame timestamp still
+        // includes all visible elapsed time, including frames skipped on phones.
+        const previous = this.lastMotionFrameTime ?? time;
+        this.lastMotionFrameTime = Math.max(previous, time);
+        const elapsed = this.lastMotionFrameTime - previous;
+        const nominal = this.nominalMotionFrameMilliseconds;
+        // Keep the configured cadence exact within one nanosecond of timestamp precision.
+        this.frameDeltaMilliseconds = Math.abs(elapsed - nominal) <= NANOSECOND_IN_MILLISECONDS
+          ? nominal
+          : elapsed;
+        this.characterPhase += this.frameDeltaMilliseconds * 0.0025;
+        this.characterRestClockMilliseconds += this.frameDeltaMilliseconds;
+      }
+      try {
+        this.drawCharacters();
+      } finally {
+        // Clear elapsed time before any later atlas redraw.
+        this.frameDeltaMilliseconds = 0;
+      }
       this.frozenCharacterModel = motionFrozen ? this.bridge.viewModel : undefined;
       this.frozenCharacterLayout = motionFrozen ? this.worldLayout : undefined;
     } else {
@@ -1667,15 +1695,13 @@ export class FacilityScene extends Phaser.Scene {
     this.reportAlertPinPositions();
     this.drawEarningsPopups(time);
     if (this.bridge.mobileInput === true) this.recordMobileArtSettled();
-    // Atlas completion callbacks can redraw outside update(). Delta belongs to
-    // this update only, never to a later event-driven redraw.
-    this.frameDeltaMilliseconds = 0;
   }
 
   private refreshLayout(force = false): void {
     if (this.bridge.mobileInput === true && this.bridge.mobilePresentation?.hidden) return;
     const campaignChanged = this.renderedLayout && this.renderedCampaignId !== this.bridge.viewModel.campaignId;
     if (campaignChanged) {
+      this.resyncPresentation();
       this.dragStart = null;
       this.mobileGestures?.cancel();
       this.cameraGestureUntil = 0;
@@ -6828,14 +6854,20 @@ export class FacilityScene extends Phaser.Scene {
     return graphics;
   }
 
+  private redrawCharactersAfterArtLoad(): void {
+    if (typeof document !== "undefined" && document.visibilityState === "hidden") return;
+    if (this.renderedLayout && this.renderedCampaignId !== this.bridge.viewModel.campaignId) return;
+    this.drawCharacters();
+  }
+
   private drawCharacters(): void {
     if (this.bridge.mobileInput === true && this.bridge.mobilePresentation?.hidden) return;
     this.mobileCharacterUsedTextures.clear();
     this.mobileCharacterFamilies.clear();
     if (this.characterPresentationFrozen()) {
       // Atlas callbacks may redraw while paused without update() observing the
-      // pause. Mark it so the next update also discards a stale resume delta.
-      this.characterPresentationWasFrozen = true;
+      // pause. Start a fresh time anchor on the next playable frame.
+      this.resetMotionClock();
     }
     this.activeCharacterGraphics = new Set<string>();
     this.activeCharacterBitmapContainers = new Set<string>();

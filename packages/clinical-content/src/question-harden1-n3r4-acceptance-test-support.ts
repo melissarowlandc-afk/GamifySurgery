@@ -1,3 +1,4 @@
+import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
 import {beforeN4AcceptanceRelease,beforeN4AcceptanceManifest,beforeN4AcceptanceTimings,beforeN4AcceptanceSource} from "./question-n4-acceptance-test-support";
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
@@ -48,16 +49,13 @@ export function beforeHarden1N3r4AcceptanceSource(path:string,current:string):st
  current=beforeN4AcceptanceSource(path,current);
  const row=migration.files.find(f=>f.path===path);if(!row)return current;
  const sha=(s:string)=>createHash("sha256").update(s).digest("hex");
- const releasePins=read("tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json") as {paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string}>};
- const release=releasePins.paths.find(p=>p.path===path);
- if(release){expect(release.mainBeforeSha256).toBe(row.beforeSha256);expect(release.mainAfterSha256).toBe(row.afterSha256);}
+ const release = historicalSourceScope("harden1-n3r4").pins.get(path);
  // Batch7 inverses produce the exact prior release binding. Require that
  // preimage both in the immutable migration and the authorized pin history.
  const batch7=read("tools/question-quality/fixtures/question-topic-acceptance-batch7-source-migration-20261112.json").files.find((r:{path:string})=>r.path===path);
- const historical=(releasePins as typeof releasePins & {authorizationHistory:Array<{milestone:string;priorPaths:typeof releasePins.paths}>}).authorizationHistory
-   .find(h=>h.milestone==="release-port36-port")?.priorPaths.find(r=>r.path===path);
- const expected=sha(current)===batch7?.beforeSha256&&historical?.requiredReleaseSha256===batch7.beforeSha256
-   ?batch7.beforeSha256:release?.requiredReleaseSha256??row.afterSha256;
+ const historical = historicalSourceScope("harden1-n3r4").priorRelease?.[path];
+ const expected=sha(current)===batch7?.beforeSha256&&historical===batch7.beforeSha256
+   ?batch7.beforeSha256:release?.sha256??row.afterSha256;
  expect(sha(current),path+" exact authorized acceptance/recorded release epoch postimage").toBe(expected);
  expect(sha(row.beforeText),path+" original source preimage").toBe(row.beforeSha256);
  expect(row.beforeSha256).toBe(before.files[path]??expansion.files.find(f=>f.path===path)?.beforeSha256);return row.beforeText;

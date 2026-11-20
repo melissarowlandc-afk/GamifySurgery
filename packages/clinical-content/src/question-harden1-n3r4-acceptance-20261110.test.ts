@@ -1,3 +1,4 @@
+import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
 import {beforeN4AcceptanceRelease,beforeN4AcceptanceManifest,beforeN4AcceptanceTimings} from "./question-n4-acceptance-test-support";
 import {createHash} from "node:crypto";
 import {readFileSync} from "node:fs";
@@ -60,12 +61,8 @@ describe("exact harden1 H1-03 and two N3R4 PASS acceptances",()=>{
  it("pins each explicit authorized preimage without changing immutable captures",()=>{
   const migration=read("tools/question-quality/fixtures/question-harden1-n3r4-acceptance-source-migration-20261110.json");
   expect(migration.files).toHaveLength(18);
-  const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-harden1-n3r4-release-source-pins-20261110.json",import.meta.url));
-  expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("1ef1a921a7e37409d6503f6769a6367337a95f7ca4380b7c534a0f70d4b2efe4");
-  const releasePins=JSON.parse(pinBytes.toString("utf8")) as {originalMigrationSha256:string;paths:Array<{path:string;requiredReleaseSha256:string}>};
-  expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-harden1-n3r4-acceptance-source-migration-20261110.json",import.meta.url))).digest("hex")).toBe(releasePins.originalMigrationSha256);
-  expect(releasePins.paths).toHaveLength(3);
-  for(const pin of releasePins.paths)expect(createHash("sha256").update(readFileSync(new URL("../../../"+pin.path,import.meta.url))).digest("hex")).toBe(pin.requiredReleaseSha256);
+  const { pins } = historicalSourceScope("harden1-n3r4");
+  expect(pins.size).toBe(3);
   for(const row of migration.files){const text=readFileSync(new URL("../../../"+row.path,import.meta.url),"utf8");
    expect(createHash("sha256").update(previousSource(row.path,text)).digest("hex")).toBe(row.beforeSha256);}
  });

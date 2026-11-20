@@ -1,3 +1,4 @@
+import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
 import {beforeProgramBatch7AcceptanceRelease,beforeProgramBatch7AcceptanceManifest,beforeProgramBatch7AcceptanceTimings} from "./question-program-batch7-acceptance-test-support";
 import {createHash} from "node:crypto";
 import {readFileSync, existsSync} from "node:fs";
@@ -212,26 +213,9 @@ describe("topic batch6 exact pediatric salvage acceptance", () => {
       if (input.requiredReleasePresent) expect(createHash("sha256").update(readFileSync(url)).digest("hex")).toBe(input.sha256);
     }
     const migration = read(root + "source-migration-20261112.json");
-    const pinBytes = readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch6-release-source-pins-20261112.json", import.meta.url));
-    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("04f3233f20219891959eca20999a024656b7ac90e9e85c83cac25b98046277fb");
-    const releasePins = JSON.parse(pinBytes.toString("utf8")) as {
-      capturedFixtureSha256: string; testSupportSha256: string; repairedTopicTestArchivePath: string; repairedTopicTestArchiveSha256: string;
-      paths: Array<{path: string; mainBeforeSha256: string; mainAfterSha256: string; requiredReleaseSha256: string | null}>;
-    };
-    expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-topic-acceptance-batch6-source-migration-20261112.json", import.meta.url))).digest("hex")).toBe(releasePins.capturedFixtureSha256);
-    expect(createHash("sha256").update(readFileSync(new URL("./question-program-batch6-acceptance-test-support.ts", import.meta.url))).digest("hex")).toBe(releasePins.testSupportSha256);
-    expect(releasePins.paths).toHaveLength(4);
-    expect(releasePins.paths.filter(pin => pin.requiredReleaseSha256 === null)).toHaveLength(2);
-    expect(createHash("sha256").update(readFileSync(new URL("../../../" + releasePins.repairedTopicTestArchivePath, import.meta.url))).digest("hex")).toBe(releasePins.repairedTopicTestArchiveSha256);
-    for (const pin of releasePins.paths) {
-      const row = migration.files.find((row: {path: string}) => row.path === pin.path);
-      expect(row).toBeDefined();
-      expect(pin.mainBeforeSha256).toBe(row.beforeSha256);
-      expect(pin.mainAfterSha256).toBe(row.afterSha256);
-      const url = new URL("../../../" + pin.path, import.meta.url);
-      if (pin.requiredReleaseSha256 === null) expect(existsSync(url)).toBe(false);
-      else expect(createHash("sha256").update(readFileSync(url)).digest("hex")).toBe(pin.requiredReleaseSha256);
-    }
+    const { pins } = historicalSourceScope("batch6");
+    expect(pins.size).toBe(4);
+    expect([...pins.values()].filter(pin => pin.requiredAbsent)).toHaveLength(2);
     for (const row of migration.files) {
       if (row.path.includes("/question-topic-")) expect(row.path).toMatch(/\.test\.ts$/);
       const sourceUrl = new URL("../../../" + row.path, import.meta.url);

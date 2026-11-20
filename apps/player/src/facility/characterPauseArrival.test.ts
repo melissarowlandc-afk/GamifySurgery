@@ -56,7 +56,12 @@ function harness(source = bridge()) {
   });
   scene.getFrontDeskV5ActorDisplayPosition = vi.fn(() => undefined);
   scene.drawPatientLocator = vi.fn(); scene.removeInactiveGraphics = vi.fn(); scene.removeInactiveCharacterBitmapContainers = vi.fn();
-  return { scene, draws, bridge: source };
+  let time = 0;
+  const frame = (elapsedMilliseconds: number, phaserDeltaMilliseconds = elapsedMilliseconds) => {
+    time += elapsedMilliseconds;
+    scene.update(time, phaserDeltaMilliseconds);
+  };
+  return { scene, draws, bridge: source, frame };
 }
 
 const latest = (draws: Draw[], key: string) => draws.filter((draw) => draw.key === key).at(-1)!;
@@ -85,8 +90,8 @@ describe("FacilityScene character pause and arrival presentation", () => {
   });
 
   it("keeps keyed snapshots and gait offsets through real reorder and insertion while paused", () => {
-    const { scene, draws, bridge: source } = harness();
-    scene.update(0, 100);
+    const { scene, draws, bridge: source, frame } = harness();
+    frame(0); frame(100);
     const keys = ["character:founder", "character:staff:staff-a", "character:staff:staff-b", "character:patient:patient-a", "character:patient:patient-b", "character:ambient:ambient-a", "character:ambient:ambient-b"];
     const before = Object.fromEntries(keys.map((key) => [key, state(latest(draws, key))]));
     const offsets = Object.fromEntries(keys.map((key) => [key, scene.characterGaitOffsets.get(key)]));
@@ -120,42 +125,42 @@ describe("FacilityScene character pause and arrival presentation", () => {
     source.viewModel.patients!.forEach((actor) => { actor.location = { x: 1, y: actor.instanceId === "patient-a" ? 4 : 5 }; actor.pathIndex = 0; actor.moving = true; });
     source.viewModel.ambientPedestrians!.forEach((actor) => { actor.location = actor.path[0]!; actor.pathIndex = 0; actor.moving = true; });
     source.viewModel.founder.location = { x: 1, y: 1 };
-    source.viewModel.paused = false; scene.update(0, 20_000);
+    source.viewModel.paused = false; frame(20_000);
     for (const key of [...keys, "character:staff:staff-c"]) expect(scene.characterGaitOffsets.get(key)).toBe(key === "character:staff:staff-c" ? insertedOffset : offsets[key]);
     for (const key of keys) expect(state(latest(draws, key))).toEqual(before[key]);
     expect(state(latest(draws, "character:staff:staff-c"))).toEqual(inserted);
   });
 
   it.each(["paused", "buildMode"] as const)("freezes exact motion through repeated %s cycles and resumes after discarding one stale delta", (flag) => {
-    const { scene, draws, bridge: source } = harness(); scene.update(0, 100);
+    const { scene, draws, bridge: source, frame } = harness(); frame(0); frame(100);
     const key = "character:staff:staff-a";
     for (let cycle = 0; cycle < 2; cycle += 1) {
       const before = state(latest(draws, key));
       source.viewModel[flag] = true; source.viewModel.staff[0]!.location = { x: 9, y: 7 };
-      scene.update(0, 500); scene.drawCharacters();
+      frame(500); scene.drawCharacters();
       expect(state(latest(draws, key))).toEqual(before);
       source.viewModel[flag] = false; source.viewModel.staff[0]!.location = { x: 1, y: 2 };
-      scene.update(0, 30_000); expect(state(latest(draws, key))).toEqual(before);
-      scene.update(0, 100); expect(latest(draws, key).centerX).toBeGreaterThan(before.centerX);
+      frame(30_000); expect(state(latest(draws, key))).toEqual(before);
+      frame(100); expect(latest(draws, key).centerX).toBeGreaterThan(before.centerX);
     }
   });
 
   it("starts grounded, hops no higher than seven pixels, and freezes exactly through pause and resume", () => {
-    const { scene, draws, bridge: source } = harness();
+    const { draws, bridge: source, frame } = harness();
     const key = "character:staff:staff-a";
-    scene.update(0, 0);
+    frame(0);
     expect(latest(draws, key)).toMatchObject({ visualLift: 0, scaleX: 1, scaleY: 1 });
-    scene.update(100, 100);
+    frame(100);
     const airborne = latest(draws, key);
     expect(airborne.direction).toBe("side");
     expect(airborne.visualLift).toBeGreaterThan(0);
     expect(airborne.visualLift).toBeLessThanOrEqual(7);
     const frozen = { visualLift: airborne.visualLift, scaleX: airborne.scaleX, scaleY: airborne.scaleY, centerX: airborne.centerX };
     source.viewModel.paused = true;
-    scene.update(200, 250);
+    frame(100, 250);
     expect(latest(draws, key)).toMatchObject(frozen);
     source.viewModel.paused = false;
-    scene.update(10_000, 9_500);
+    frame(9_800, 9_500);
     expect(latest(draws, key)).toMatchObject(frozen);
   });
 
@@ -200,27 +205,27 @@ describe("FacilityScene character pause and arrival presentation", () => {
   });
 
   it("does not reuse update delta in callbacks, discards callback pause delta once, then advances the route", () => {
-    const { scene, draws, bridge: source } = harness(); const key = "character:staff:staff-a";
-    scene.update(0, 100); const afterUpdate = state(latest(draws, key));
+    const { scene, draws, bridge: source, frame } = harness(); const key = "character:staff:staff-a";
+    frame(0); frame(100); const afterUpdate = state(latest(draws, key));
     scene.drawCharacters(); expect(state(latest(draws, key))).toEqual(afterUpdate);
     source.viewModel.paused = true; scene.drawCharacters(); source.viewModel.paused = false;
-    scene.update(0, 60_000); expect(state(latest(draws, key))).toEqual(afterUpdate);
-    scene.update(0, 100); expect(latest(draws, key).centerX).toBeGreaterThan(afterUpdate.centerX);
+    frame(60_000); expect(state(latest(draws, key))).toEqual(afterUpdate);
+    frame(100); expect(latest(draws, key).centerX).toBeGreaterThan(afterUpdate.centerX);
     expect(scene.characterPhase).toBeGreaterThan(0.25);
   });
 
   it("retains real route tails before founder, chair, and exam destination poses", () => {
-    const { scene, draws, bridge: source } = harness(); scene.update(0, 100);
+    const { draws, bridge: source, frame } = harness(); frame(0); frame(100);
     source.viewModel.founder = { ...source.viewModel.founder, location: { x: 5, y: 1 }, path: undefined, moving: false, seated: true, direction: "back" };
     source.viewModel.staff[0] = { ...source.viewModel.staff[0]!, location: { x: 5, y: 2 }, path: undefined, moving: false, direction: "back" };
     source.viewModel.patients![0] = { ...source.viewModel.patients![0]!, location: { x: 5, y: 4 }, path: undefined, moving: false, pose: "seated", direction: "back" };
     source.viewModel.patients![1] = { ...source.viewModel.patients![1]!, location: { x: 5, y: 5 }, path: undefined, moving: false, pose: "exam-table", direction: "back" };
-    scene.update(0, 100);
+    frame(100);
     expect(latest(draws, "character:founder").pose).toMatch(/^walk/);
     expect(latest(draws, "character:staff:staff-a").pose).toMatch(/^walk/);
     expect(latest(draws, "character:patient:patient-a").pose).toMatch(/^walk/);
     expect(latest(draws, "character:patient:patient-b").pose).toMatch(/^walk/);
-    scene.update(0, 2_000);
+    frame(2_000);
     expect(latest(draws, "character:founder")).toMatchObject({ pose: "seated", direction: "back" });
     expect(latest(draws, "character:staff:staff-a")).toMatchObject({ pose: "idle", direction: "front" });
     expect(latest(draws, "character:patient:patient-a")).toMatchObject({ pose: "seated", direction: "back" });
@@ -251,15 +256,15 @@ describe("FacilityScene character pause and arrival presentation", () => {
 
   it("draws a first paused snapshot, removes a genuinely absent key, and never resurrects a completed off-site actor", () => {
     const source = bridge(); source.viewModel.paused = true;
-    const { scene, draws } = harness(source); scene.drawCharacters();
+    const { scene, draws, frame } = harness(source); scene.drawCharacters();
     expect(latest(draws, "character:staff:staff-a")).toMatchObject({ centerX: 48, direction: "side" });
     source.viewModel.staff = source.viewModel.staff.filter((actor) => actor.instanceId !== "staff-a"); scene.drawCharacters();
     expect(scene.characterMotionSnapshots.has("character:staff:staff-a")).toBe(false);
     source.viewModel.staff.push({ instanceId: "staff-a", displayName: "Staff A", roleDisplayName: "Staff", homeRoomInstanceId: null, appearance: APPEARANCE, location: { x: 8, y: 2 }, path: route(2, 8, 9), pathIndex: 0, moving: true, direction: "side" });
     scene.drawCharacters(); expect(latest(draws, "character:staff:staff-a").centerX).toBe(272);
-    source.viewModel.paused = false; scene.update(0, 100);
+    source.viewModel.paused = false; frame(100);
     const patient = source.viewModel.patients![0]!; patient.location = undefined; patient.path = undefined; patient.moving = false; patient.status = "off-site";
-    scene.update(0, 3_000); scene.update(0, 16);
+    frame(3_000); frame(16);
     expect(scene.characterMotionSnapshots.has("character:patient:patient-a")).toBe(false);
     const count = draws.filter((draw) => draw.key === "character:patient:patient-a").length;
     source.viewModel.paused = true; scene.drawCharacters();

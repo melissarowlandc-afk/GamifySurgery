@@ -1,3 +1,4 @@
+import { historicalSourceScope } from "../../../tests/fixtures/protected-source-history";
 import {PROGRAM_BATCH4_ORDERS as orders} from "./question-program-batch4-accepted-data-20261111";
 import {QUESTION_PROGRAM_BATCH8_WITHDRAWN_ROWS,QUESTION_PROGRAM_BATCH8_RETAINED_TEST_ORDER_RECORDS} from "./question-program-batch8-accepted-20261112";
 import {describe, expect, it} from "vitest";
@@ -214,15 +215,8 @@ describe("topic batch4 complete reviewed acceptance", () => {
 
   it("binds each integration source to its exact intake preimage", () => {
     const migration = read("tools/question-quality/fixtures/question-topic-acceptance-batch4-source-migration-20261111.json");
-    const pinBytes=readFileSync(new URL("../../../tools/question-quality/fixtures/question-program-batch4-release-source-pins-20261111.json",import.meta.url));
-    expect(createHash("sha256").update(pinBytes).digest("hex")).toBe("abd2c23b6865e8b30d5d600f091fd7dbc924695c8bb1b3f88aebe8200600a374");
-    const releasePins=JSON.parse(pinBytes.toString("utf8")) as {capturedFixtureSha256:string;testSupportSha256:string;repairedTopicTestArchivePath?:string;repairedTopicTestArchiveSha256?:string;paths:Array<{path:string;mainBeforeSha256:string;mainAfterSha256:string;requiredReleaseSha256:string|null}>};
-    expect(createHash("sha256").update(readFileSync(new URL("../../../tools/question-quality/fixtures/question-topic-acceptance-batch4-source-migration-20261111.json",import.meta.url))).digest("hex")).toBe(releasePins.capturedFixtureSha256);
-    expect(createHash("sha256").update(readFileSync(new URL("./question-program-batch4-acceptance-test-support.ts",import.meta.url))).digest("hex")).toBe(releasePins.testSupportSha256);
-    expect(releasePins.paths).toHaveLength(2);
-    for(const pin of releasePins.paths){const row=migration.files.find((row:{path:string})=>row.path===pin.path);expect(row).toBeDefined();
-      expect(pin.mainBeforeSha256).toBe(row.beforeSha256);expect(pin.mainAfterSha256).toBe(row.afterSha256);
-      expect(createHash("sha256").update(readFileSync(new URL("../../../"+pin.path,import.meta.url))).digest("hex")).toBe(pin.requiredReleaseSha256);}
+    const { pins } = historicalSourceScope("batch4");
+    expect(pins.size).toBe(2);
     for (const row of migration.files) {
       expect(row.path).not.toMatch(/\/question-topic-/);
       const current = readFileSync(new URL("../../../" + row.path, import.meta.url), "utf8");
