@@ -8,23 +8,40 @@ on:
 
 permissions:
   contents: read
-  actions: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: github-pages
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    name: Build and deploy
-    if: github.ref == 'refs/heads/main'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  # G-46-01 (release 50, 2026-11-21): the single serial `npm test` step reached
+  # the 75-minute job limit. Every test still runs and still blocks the
+  # publish: the suites are split across parallel jobs and `deploy` needs all
+  # of them. The boundary scripts still run inside `build:pages`.
+  deterministic-tests:
+    name: Tests (${{ matrix.name }})
     runs-on: ubuntu-latest
-    timeout-minutes: 75
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: domain 1/2
+            command: npm test -w packages/game-domain -- --pool=forks --maxWorkers=2 --shard=1/2
+          - name: domain 2/2
+            command: npm test -w packages/game-domain -- --pool=forks --maxWorkers=2 --shard=2/2
+          - name: player 1/2
+            command: npm test -w apps/player -- --pool=forks --maxWorkers=2 --shard=1/2 '--exclude=**/questionProgramBatch3SaveCompatibility.test.ts' '--exclude=**/questionProgramBatch4SaveCompatibility.test.ts'
+          - name: player 2/2
+            command: npm test -w apps/player -- --pool=forks --maxWorkers=2 --shard=2/2 '--exclude=**/questionProgramBatch3SaveCompatibility.test.ts' '--exclude=**/questionProgramBatch4SaveCompatibility.test.ts'
+          - name: player batch 3 save compatibility
+            command: npm test -w apps/player -- --pool=forks --maxWorkers=1 src/questionProgramBatch3SaveCompatibility.test.ts
+          - name: player batch 4 save compatibility
+            command: npm test -w apps/player -- --pool=forks --maxWorkers=1 src/questionProgramBatch4SaveCompatibility.test.ts
+          - name: other workspaces
+            command: npm test -w apps/clinical-context-workbench -w packages/balance-config -w packages/clinical-authoring -w packages/clinical-content -w packages/clinical-research
+    env:
+      CI: 'true'
     steps:
       - name: Check out repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
@@ -39,7 +56,34 @@ jobs:
         run: npm ci
 
       - name: Run deterministic tests
-        run: npm test
+        run: ${{ matrix.command }}
+
+  deploy:
+    name: Build and deploy
+    if: github.ref == 'refs/heads/main'
+    needs: deterministic-tests
+    permissions:
+      contents: read
+      actions: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
 
       - name: Build and verify Pages artifact
         env:
