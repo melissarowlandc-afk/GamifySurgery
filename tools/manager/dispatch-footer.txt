@@ -1,0 +1,30 @@
+
+---
+GamifySurgery manager standard (Claude manager, 2026-11-17; see docs/process/management-method.md). This does not reduce scope or quality; every check you would run still runs.
+
+1. Policy. No Git (no stage/commit/push/merge/reset/checkout/cleanup), no network or live DB, no installs, no deploys, no browser storage, no agents. Private owner and tester data stays under .local-dev/; public tests use synthetic fixtures. AGENTS.md clinical-content and source rules apply in full. Never modify an original save or problem report. Work on copies in your lane's private folder.
+
+2. Lane ownership. Edit ONLY the files or modules your brief assigns. Two writers never touch the same files. If you need a change outside your lane, stop and report the exact file:line and proposed change. Preserve every unrelated edit in the tree.
+
+3. Start from the given base. Never rebuild a screen, flow, module or file from an older source, copy, backup, patch or memory. Start from the base the manager names: the current tree, exact hashes. When porting, apply content hunks against a verified preimage. Copy a whole file only when its preimage hash matches.
+
+4. Reproduce first, under real conditions. For a bug: reproduce the owner's symptom on a copy of real evidence (problem report, owner-save copy or matching synthetic save) through the REAL code path: real codecs, cache, journal, coordinator, engine worker logic, renderer logic. A harness-only pass doesn't count. If the harness disagrees with the real game, fix the harness first. You cannot run browsers, so write the exact browser reproduction steps (spec or script) for the manager to run.
+
+5. Category review. If a bug shows a whole category is broken, find the common cause and every affected consumer, and fix it at the layer that owns it. Do not patch one symptom.
+
+6. Regression test required. Every owner- or tester-reported bug you fix gets a test that reproduces the reported symptom (it fails before the fix and passes after), added to the standing set and listed in docs/qa/REQUEST_TRACKER.md. A fix without its test is not done. Before changing a screen or flow, run the existing regression tests for it.
+
+7. No quick patches. Do not weaken, skip, loosen or re-pin a check to get green. Do not hide failures as "known" or "pre-existing" without exact evidence that they fail identically on the untouched base. No alarm-dodging: report a value at a bound, a runaway, or a check that only passes because of the harness.
+
+8. Verbatim decisions. Implement the owner's quoted words (docs/qa/DECISIONS.md and your brief), not a paraphrase. If wording is ambiguous, finish the independent safe work, then end with DECISION NEEDED and your recommended option.
+
+9. Gameplay invariants. Unless your brief explicitly changes gameplay: the Level 5 CHECK and command SHA stay identical; FSRS cards and due dates are byte-identical; pacing (node tools/qa/content-pacing-check.mjs) runs ALONE and LAST against 26,281 +-10%. Never rebind evidence without reporting first.
+
+10. Validation and output. Run tests with CI=true and --pool=threads through npm.cmd. Use one runner per batch that prints a short summary. Send long output to files and read back only what you need. Detach runs longer than about 15 minutes and end with "WAITING: <completion file path>". A new or edited Playwright spec is not handed off until `node node_modules/@playwright/test/cli.js test <spec> --list` lists every intended test (a typecheck does not prove it loads); report the listed count.
+
+11. Handoff. Write a one-page HANDOFF in your lane's private folder or the ExecPlan, with links to evidence, exact commands and exact results. Your final message is the same concise capsule, ending with the exact next action, or "DECISION NEEDED:" plus a recommended option.
+
+12. No save or runtime bloat (owner, 2026-11-18, verbatim: "Make sure that with any changes we make to the game we aren't adding in inefficient bloat to saves/play"). Every change must not grow what is saved or how often it is saved, and must not add per-tick or per-frame work, unless the brief explicitly requires it. Store only durable facts (derive anything rebuildable on load); no history logs, duplicated data, per-actor timers that can be computed, or new persistence writes. Prefer bounded, cached, same-room/local work over whole-map scans on ticks. In the handoff, report the saved-state bytes and per-tick cost before/after on an owner-scale (Level 5) clinic; any increase is a finding the manager must accept explicitly.
+
+13. No test-fixture bloat (owner, 2026-11-19, verbatim: "But how do we keep the files smaller so they don't grow significantly with each update? You're making a lot of bloat"). Never add full before/after content captures, copied question banks or growing history ledgers as test fixtures. Protect frozen content with compact sha256 fingerprints (path or content-ID -> hash) in one shared manifest; earlier versions live in git history. When a change needs a pin update, update the single manifest entry rather than duplicating it across guards. Report repository bytes added by your change; any fixture growth over 100 KB is a finding the manager must accept explicitly.
+---

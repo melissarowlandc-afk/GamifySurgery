@@ -139,3 +139,121 @@ in `docs/handoffs/CURRENT_THREAD_HANDOFF.md`. If a safe push is blocked, report
 the blocker and leave an exact recovery action rather than implying that a
 backup exists.
 <!-- END BOUNDED_THREAD_LIFECYCLE -->
+
+<!-- BEGIN CLAUDE_MANAGER_DELEGATION -->
+## Manager and Codex worker delegation
+
+Since October 7, 2026, the Claude Code thread "GamifySurgery manager" is the
+single manager for GamifySurgery game architecture and development
+coordination. The former Codex "GS Manager" thread
+(`01a0c6e2-930a-7640-a66f-6e8fb1ae0b53`) is on hold: it does not create
+threads, dispatch work, or run automations. There is exactly one manager; no
+other thread may dispatch work to Codex workers for this repository.
+
+### Roles
+
+- The manager thread is the owner's one-stop shop for game work and the
+  oversight and structure thread. It owns architecture and product decisions,
+  planning, task breakdown, worker briefs, integration, review, acceptance,
+  GitHub checkpoint reminders, and the final report to the owner.
+- Delegate first: the manager hands every bounded implementation,
+  investigation, diagnosis, content, or validation milestone to a Codex worker
+  and keeps its own edits to coordination documents and tiny integration
+  corrections found in review. Narrow specialist work may go to an adjunct
+  thread when that clearly fits better; the manager still tracks it.
+- Owner approval is required only for big design decisions (new systems,
+  major gameplay or visual direction, architecture changes, or reversing a
+  prior owner decision). Ordinary implementation within approved direction
+  proceeds without asking. All clinical-content review rules above still
+  apply.
+- Codex workers carry out one bounded milestone each and own an explicit lane
+  of files or modules. Workers do not spawn agents, commit, push, deploy,
+  publish, install dependencies, or send external messages unless the brief
+  expressly authorizes it. They preserve unrelated work, including concurrent
+  Claude Code and owner edits.
+- Other Claude Code threads remain interactive owner threads; they follow the
+  manager's lane assignments when the owner routes work through the manager.
+
+### Model routing
+
+Always set the model and effort explicitly:
+
+- Default worker: GPT-6.2 Sol, `-m gpt-6.2-sol -c model_reasoning_effort=max` (owner, 2026-11-19).
+- Rote, tightly specified work (extraction, small specified edits, checks):
+  GPT-6 Luna, `-m gpt-6-luna -c model_reasoning_effort=medium`.
+- GPT-6.2 Astra (`gpt-6.2-astra`, `high`) only for a bounded review of the hardest
+  questions.
+- Never use `gpt-6-sol`, `gpt-6.1-sol` or `gpt-6-astra`. Use only the owner's existing subscription and owned
+  credits; never API credits or purchases.
+
+### Mechanics
+
+Since 2026-11-19 (owner), dispatch through the standalone Codex CLI on PATH (`codex`, npm package, 0.170.0;
+update with `codex update`). `tools/manager/dispatch.sh` uses `command -v codex` and falls back to the Codex
+app's bundled CLI (`/c/Program Files/WindowsApps/OpenAI.Codex_<version>_x64__2p2nqsd0c76g0/app/resources/codex.exe`,
+0.169.1 as of 2026-11-19) only if `codex` is missing. The old AppData `Codex/bin/<hash>/codex.exe` copy (0.167)
+is stale; do not use it.
+
+- Always add `-c 'windows.sandbox="unelevated"'` to `exec` and `exec resume`.
+  The configured elevated sandbox fails setup ("setup refresh had errors")
+  while the Codex app holds `node_repl.exe` open, so workers cannot run any
+  command. Never pass `--dangerously-bypass-approvals-and-sandbox`.
+- New worker: `codex exec -m gpt-6.2-sol -c model_reasoning_effort=max
+  -c 'windows.sandbox="unelevated"' -s workspace-write -C <repo>
+  -o <scratch>/result.md "<brief>" < /dev/null`, run in the background. The
+  session id is printed near the top of stderr.
+- Continue a worker that is not open in the Codex app, from the repo directory:
+  `codex exec resume <thread-id> -m gpt-6.2-sol -c
+  model_reasoning_effort=max -c 'windows.sandbox="unelevated"' -c
+  'sandbox_mode="workspace-write"' -o <scratch>/result.md "<message>"`, run in
+  the background (`resume` has no `-s` or `-C` flag).
+- If resume fails with an "active writer" error, the thread is open in the app:
+  record the baseline with `.claude/wait-codex-turn.sh <thread-id> --count`,
+  then `codex.exe queue --thread <thread-id> --message "<message>"`. A queued
+  message to a thread that is not open is never delivered.
+- In the unelevated sandbox, workers cannot spawn browsers (Playwright) or
+  Vitest's default child-process pool (`spawn EPERM`); they run tests with
+  `--pool=threads` and use `npm.cmd` from PowerShell. The manager reruns
+  browser checks and default-config tests in its own environment.
+- `.claude/wait-codex-turn.sh <thread-id> [--baseline N]` is read-only; it waits
+  for the thread's next finished turn in `~/.codex/sessions` and prints the
+  worker's final message.
+
+### Worker briefs and acceptance
+
+Each brief states the milestone, owned files or modules, requirements and
+non-goals, acceptance criteria, exact validation commands, the active ExecPlan
+or handoff path when present, the clinical-content and source rules above, and
+that the working tree is shared. Workers end with a handoff listing files
+changed, implementation or findings, exact validation output, and open risks or
+decisions.
+
+A queued message, a started process, or a worker's own summary is not proof of
+work. The manager accepts a milestone only after inspecting the actual diff and
+rerunning or reading the validation output. Exactly one code-writing worker
+runs at a time (owner, 2026-11-17); other workers are report-only.
+
+### Management method (adopted 2026-11-17)
+
+The owner said: "no 'quick patches' that are lazy and can damage the game, you
+need to actually run the game and make a diagnosis and then fix that." The
+binding method is docs/process/management-method.md. Owner rulings are
+logged verbatim in docs/qa/DECISIONS.md, and every owner/tester bug in
+docs/qa/REQUEST_TRACKER.md. Summary:
+
+- Dispatch every brief through tools/manager/dispatch.sh. It appends
+  tools/manager/dispatch-footer.txt (the standing rules) and records every
+  prompt and result under .local-dev/manager/.
+- One line of work: the release tree is the single main line (setup
+  milestone pending). One code writer at a time. Workers start from the
+  manager-named base, never an older copy.
+- Bugs: reproduce in the real game first (production build, phone and
+  desktop, a realistic or owner-save copy). Category review at the owning
+  layer. Tests are written first by a worker blind to the implementation;
+  the coder never changes them. Fix, then re-prove in the real game.
+- A fix is not done until its symptom-level regression test is in the
+  standing smoke, which runs, together with the full suites, rebind and
+  pacing, before every release, on a quiet machine. No reflexive reruns.
+- Every claim in a close note maps to evidence. The full suites must be
+  green; resolve or retire the long-standing failures.
+<!-- END CLAUDE_MANAGER_DELEGATION -->
