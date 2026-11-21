@@ -98,11 +98,9 @@ function harness() {
   };
   scene.drawPixelPerson = vi.fn((_graphics, _x, baseY, _index, _appearance, _color, _direction, _pose, _right, _scale, representation) =>
     ({ baseY, representation: representation ?? "procedural" }));
-  const draw = () => {
-    scene.activeFixtureBitmapImages.clear();
+  const draw = () => scene.paintScope(room.instanceId, () => {
     scene.drawApprovedRoomFixtures(room, scene.toPixels({ tileX: room.tileX, tileY: room.tileY, width: 6, height: 6 }));
-    scene.removeInactiveFixtureBitmapImages();
-  };
+  });
   return { scene, model, draw };
 }
 

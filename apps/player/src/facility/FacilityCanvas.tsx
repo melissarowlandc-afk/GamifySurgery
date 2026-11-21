@@ -33,6 +33,7 @@ import {
   type FacilityScreenRect,
 } from "./FacilityScene";
 import type {
+  FacilityCameraView,
   FacilityCameraChangeRequest,
   CollectLitterRequest,
   DescribeCharacterRequest,
@@ -58,6 +59,7 @@ export interface FacilityCanvasProps {
   mobileBuild?: MobileBuildMapState | null;
   onMobileSelection?: (selection: MobileMapSelection | null) => void;
   viewModel: FacilityViewModel;
+  camera?: FacilityCameraView;
   onPlaceRoom: PlaceRoomRequest;
   onPlaceDoor?: PlaceDoorRequest;
   onRemoveDoor?: RemoveDoorRequest;
@@ -105,6 +107,7 @@ export function FacilityCanvas({
   mobileBuild,
   onMobileSelection,
   viewModel,
+  camera,
   onPlaceRoom,
   onPlaceDoor,
   onRemoveDoor,
@@ -160,6 +163,7 @@ export function FacilityCanvas({
   bridgeRef.current.mobileBuild = mobileInput === true ? mobileBuild : null;
   bridgeRef.current.onMobileSelection = onMobileSelection;
   bridgeRef.current.viewModel = viewModel;
+  bridgeRef.current.camera = camera;
   bridgeRef.current.onPlaceRoom = onPlaceRoom;
   bridgeRef.current.onPlaceDoor = onPlaceDoor;
   bridgeRef.current.onRemoveDoor = onRemoveDoor;
@@ -302,7 +306,6 @@ export function FacilityCanvas({
     const stopRenderWatchdog = bindVisibleInterval(window, document, renderWatchdog.check, 1_000);
     const ownedCanvas = game.canvas;
     gameRef.current = game;
-    let lastCameraLayoutSignature = "";
     let desktopResizing = false;
     let desktopSplitterHeld = false;
     let cameraSettleTimer: number | null = null;
@@ -313,27 +316,19 @@ export function FacilityCanvas({
       // has run, using the current canvas size rather than a saved viewport.
       if (gameRef.current !== game || !scene.sys.isActive() ||
         host.clientWidth <= 0 || host.clientHeight <= 0) return;
-      const model = bridgeRef.current.viewModel;
-      if (!isValidFacilityCamera(model.camera)) return;
+      const bridge = bridgeRef.current, model = bridge.viewModel;
+      const requested = bridge.camera ?? model.camera;
+      if (!isValidFacilityCamera(requested)) return;
       if (bridgeRef.current.mobileInput !== true && (desktopResizing || desktopSplitterHeld)) return;
       // The scene has already normalized desktop pan against the frozen sizing
       // reference. Re-clamping against today's pane would undo the shade rule.
       const camera = bridgeRef.current.mobileInput === true
-        ? clampFacilityCamera(model.camera, model, game.scale, true)
+        ? clampFacilityCamera(requested, model, game.scale, true)
         : scene.getCameraPreference();
       if (!camera || bridgeRef.current.mobileInput !== true && !camera.desktopViewport) return;
-      const founderRoom = model.rooms.find((room) => room.isFounderRoom);
-      const signature = JSON.stringify([
-        model.campaignId, model.gridColumns, model.gridRows,
-        game.scale.width, game.scale.height,
-        founderRoom?.tileX, founderRoom?.width,
-        model.camera.zoom, model.camera.panX, model.camera.panY,
-        facilityCameraSignature(camera),
-      ]);
-      if (signature === lastCameraLayoutSignature) return;
-      lastCameraLayoutSignature = signature;
-      if (facilityCameraSignature(camera) !== facilityCameraSignature(model.camera)) {
-        bridgeRef.current.viewModel = { ...model, camera };
+      if (facilityCameraSignature(camera) !== facilityCameraSignature(requested)) {
+        if (bridge.camera) bridge.camera = camera;
+        else bridge.viewModel = { ...model, camera };
         scene.publishCameraChange(camera);
       }
     };

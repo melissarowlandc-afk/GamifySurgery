@@ -77,7 +77,7 @@ import {
   outsideReadEndsAtTick,
   getStaffRoleDefinition,
   getWorkloadSnapshot,
-  validateDoorPlacement,
+  prepareDoorPlacementPreview,
   type CardinalDirection,
   type EncounterState,
   type GameState,
@@ -415,7 +415,7 @@ function signedPercent(value: number): string {
   return `${sign}${Math.round(value)}% satisfaction`;
 }
 
-function buildEligibleDoorSlots(
+export function buildEligibleDoorSlots(
   state: GameState,
   preferredRoomId: string | null,
 ): FacilityBuildDoorSlotView[] {
@@ -423,6 +423,8 @@ function buildEligibleDoorSlots(
   const protectedRoomDefinitionIds = new Set(
     facility.protectedRoomDefinitionIds,
   );
+  const preview = prepareDoorPlacementPreview(state.rooms, state.doors, getRoomDefinition,
+    facility.gridWidth, facility.gridHeight, protectedRoomDefinitionIds);
   const physicalSegments = new Set<string>();
   const slots: FacilityBuildDoorSlotView[] = [];
   const sides: CardinalDirection[] = [
@@ -439,10 +441,12 @@ function buildEligibleDoorSlots(
       left.id.localeCompare(right.id),
   )) {
     const definition = getRoomDefinition(room.roomDefinitionId);
-    const footprint = getRoomInstanceFootprint(state, room.id);
-    if (!definition || !footprint || definition.kind === "hallway") {
+    const owner = preview.room(room.id);
+    const ownerDefinition = owner && getRoomDefinition(owner.roomDefinitionId);
+    if (!definition || !owner || !ownerDefinition || definition.kind === "hallway") {
       continue;
     }
+    const footprint = getRotatedFootprint(ownerDefinition, owner.orientation);
     const sideLengths: Record<CardinalDirection, number> = {
       north: footprint.width,
       east: footprint.height,
@@ -452,21 +456,9 @@ function buildEligibleDoorSlots(
 
     for (const side of sides) {
       for (let offset = 0; offset < sideLengths[side]; offset += 1) {
-        const validation = validateDoorPlacement(
-          {
-            id: `door.preview.${room.id}.${side}.${offset}`,
-            roomId: room.id,
-            side,
-            offset,
-            exterior: false,
-          },
-          state.rooms,
-          state.doors,
-          (definitionId) => getRoomDefinition(definitionId),
-          facility.gridWidth,
-          facility.gridHeight,
-          protectedRoomDefinitionIds,
-        );
+        const validation = preview.validate({
+          id: `door.preview.${room.id}.${side}.${offset}`, roomId: room.id, side, offset, exterior: false,
+        });
         if (!validation.valid) {
           continue;
         }
@@ -493,6 +485,29 @@ function buildEligibleDoorSlots(
   }
 
   return slots;
+}
+
+/** One retained Place result. Equivalent worker publications may replace the
+ * arrays without changing the geometry. Weak references avoid pinning them. */
+export function createBuildDoorSlotReader() {
+  let previous: {
+    campaignId: string; preferredRoomId: string | null; geometry: string;
+    rooms: WeakRef<GameState["rooms"]>; doors: WeakRef<GameState["doors"]>;
+    slots: FacilityBuildDoorSlotView[];
+  } | undefined;
+  return (state: GameState, preferredRoomId: string | null) => {
+    const matching = previous?.campaignId === state.campaignId && previous.preferredRoomId === preferredRoomId
+      ? previous : undefined;
+    if (matching?.rooms.deref() === state.rooms && matching.doors.deref() === state.doors) return matching.slots;
+    const geometry = JSON.stringify([
+      state.rooms.map(room => [room.id, room.roomDefinitionId, room.x, room.y, room.orientation]),
+      state.doors.map(door => [door.id, door.roomId, door.side, door.offset, door.exterior]),
+    ]);
+    const slots = matching?.geometry === geometry ? matching.slots : buildEligibleDoorSlots(state, preferredRoomId);
+    previous = { campaignId: state.campaignId, preferredRoomId, geometry, slots,
+      rooms: new WeakRef(state.rooms), doors: new WeakRef(state.doors) };
+    return slots;
+  };
 }
 
 function movementPresentation(
@@ -2066,9 +2081,6 @@ function derivePrototypePlayerView(
         PROTOTYPE_DOMAIN_CONTEXT.balanceRelease.facility
           .characterTravelTilesPerTick,
       buildMode,
-      buildDoorSlots: buildMode
-        ? buildEligibleDoorSlots(state, selectedRoomInstanceId)
-        : [],
       selectedRoomInstanceId,
       camera,
       gridColumns: facilityBalance.gridWidth,

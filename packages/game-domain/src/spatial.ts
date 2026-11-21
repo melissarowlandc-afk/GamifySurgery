@@ -142,6 +142,7 @@ function roomFixtureHiddenByDoor(
   doors: readonly DoorState[],
   rooms: readonly PlacedRoom[],
   getDefinition: (definitionId: string) => RoomDefinition | null,
+  hasPhysicalDoor?: (key: string) => boolean,
 ): boolean {
   const owner = definition.navigation?.dynamicBlockers?.find(
     (candidate) => candidate.fixtureId === fixtureId,
@@ -149,7 +150,7 @@ function roomFixtureHiddenByDoor(
   if (!owner) return false;
   // Geometry-only, bounded by the existing navigation cache. Never retain a
   // state/room object or scan all doors and rooms again for each fixture.
-  const layout = rooms.includes(room) && getDefinition(room.roomDefinitionId) === definition
+  const layout = !hasPhysicalDoor && rooms.includes(room) && getDefinition(room.roomDefinitionId) === definition
     ? getNavigationLayout(rooms, doors, getDefinition) : null;
   let hidden = layout?.hiddenFixtures.get(room.id);
   if (hidden?.has(fixtureId)) return hidden.get(fixtureId)!;
@@ -168,6 +169,7 @@ function roomFixtureHiddenByDoor(
         : side === "south" ? { x: 0, y: 1 }
           : { x: -1, y: 0 };
     const expected = physicalDoorKey(inside, { x: inside.x + step.x, y: inside.y + step.y });
+    if (hasPhysicalDoor) return hasPhysicalDoor(expected);
     if (layout) return layout.physicalDoors.has(expected);
     return doors.some((door) => {
       const placed = rooms.find((candidate) => candidate.id === door.roomId);
@@ -274,6 +276,7 @@ function getRoomBlockedTileKeys(
   rooms: readonly PlacedRoom[] = [room],
   getDefinition: (definitionId: string) => RoomDefinition | null = (definitionId) =>
     definitionId === definition.id ? definition : null,
+  hasPhysicalDoor?: (key: string) => boolean,
 ): Set<string> {
   const blocked = new Set(
     (definition.navigation?.blockedTiles ?? []).map((point) =>
@@ -284,7 +287,7 @@ function getRoomBlockedTileKeys(
   const hiddenByFixture = new Map<string, boolean>();
   for (const owner of dynamic) hiddenByFixture.set(
     owner.fixtureId,
-    roomFixtureHiddenByDoor(room, definition, owner.fixtureId, doors, rooms, getDefinition),
+    roomFixtureHiddenByDoor(room, definition, owner.fixtureId, doors, rooms, getDefinition, hasPhysicalDoor),
   );
   const ownersByTile = new Map<string, string[]>();
   for (const owner of dynamic) {
@@ -311,6 +314,7 @@ export function isRoomDoorThresholdProofNavigable(
   doors: readonly DoorState[],
   rooms: readonly PlacedRoom[],
   getDefinition: (definitionId: string) => RoomDefinition | null,
+  hasPhysicalDoor?: (key: string) => boolean,
 ): boolean {
   const cells = getDoorCellsForSpatial(door, room, definition);
   if (!cells) return false;
@@ -343,6 +347,7 @@ export function isRoomDoorThresholdProofNavigable(
     doors,
     rooms,
     getDefinition,
+    hasPhysicalDoor,
   ).has(pointKey(cells.inside));
   return !blocked || Boolean(
     definition.navigation?.doorThresholdExceptions?.some(matchesSlot),
@@ -1116,7 +1121,7 @@ function findDeterministicAdjacencyPath(
   return [];
 }
 
-function getDoorCellsForSpatial(
+export function getDoorCellsForSpatial(
   door: DoorState,
   room: PlacedRoom,
   definition: RoomDefinition,
@@ -1196,6 +1201,13 @@ function getNavigationLayout(rooms: readonly PlacedRoom[], doors: readonly DoorS
     }
     return { physicalDoors, hiddenFixtures: new Map(), endpointKeys, roomTiles, roomAt, roomsAt, careStations: new Map(), graphs: new Map(), blockedTiles: new Map(), routes: new Map() };
   });
+}
+
+/** One base layout read for an ordered batch of door previews. No graph or
+ * candidate layout is needed to query the occupants at either threshold. */
+export function prepareDoorThresholdOccupants(rooms: readonly PlacedRoom[], doors: readonly DoorState[], getDefinition: (id: string) => RoomDefinition | null) {
+  const { roomsAt } = getNavigationLayout(rooms, doors, getDefinition);
+  return (point: GridPoint): readonly number[] => roomsAt.get(pointKey(point)) ?? [];
 }
 /** Geometry index; return the current state's room, never a stale condition or
  * occupancy record retained from an earlier layout-equivalent state. */

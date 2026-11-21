@@ -100,14 +100,16 @@ describe.each([4, 5])("actual Level %i retained world", level => {
   });
 });
 
-it("separates camera echoes from static changes, defers actual edits during gestures, then rebuilds once", () => {
+it("separates camera echoes from door edits, defers the geometry change during a gesture, then rebuilds once", () => {
   const f = headlessFacilityScene(model()), before = f.stats.worldDraws;
   const original = getFacilityWorldSignature(f.bridge.viewModel, false);
   f.scene.applyCamera({ ...f.scene.cameraView, panX: 50 });
   f.bridge.viewModel = { ...f.bridge.viewModel, camera: { ...f.scene.cameraView }, facilityTick: f.bridge.viewModel.facilityTick + 1 };
   expect(getFacilityWorldSignature(f.bridge.viewModel, false)).toBe(original);
   f.scene.refreshLayout(); expect(f.stats.worldDraws).toBe(before);
-  f.bridge.viewModel = { ...f.bridge.viewModel, rooms: f.bridge.viewModel.rooms.map((r, i) => i ? r : { ...r, upgradeLevel: 3 }) };
+  const door = f.bridge.viewModel.doors!.find(door => !door.exterior)!;
+  expect(door).toBeDefined();
+  f.bridge.viewModel = { ...f.bridge.viewModel, doors: f.bridge.viewModel.doors!.filter(row => row !== door) };
   f.scene.refreshLayout(); expect(f.stats.worldDraws).toBe(before);
   f.scene.time.now += CAMERA_ZOOM_SETTLE_MS + 1; f.scene.refreshLayout();
   expect(f.stats.worldDraws).toBe(before + 1);

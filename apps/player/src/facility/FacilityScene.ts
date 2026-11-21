@@ -342,6 +342,7 @@ export interface FacilitySceneBridge {
   mobileBuild?: MobileBuildMapState | null;
   onMobileSelection?: (selection: MobileMapSelection | null) => void;
   viewModel: FacilityViewModel;
+  camera?: FacilityCameraView;
   onPlaceRoom: PlaceRoomRequest;
   onPlaceDoor?: PlaceDoorRequest;
   onRemoveDoor?: RemoveDoorRequest;
@@ -508,6 +509,74 @@ interface ApprovedSideChairRuntime {
   fixtureDepth: number;
 }
 
+const enum PaintObject {
+  Fixture = 1, RoomFixture = 2, WallDecor = 4, Environment = 8, FixtureImage = 16, LandscapeImage = 32,
+}
+const terrainPaint = Symbol("terrain");
+const landscapePaint = Symbol("landscape");
+const exteriorPaint = Symbol("exterior");
+const entrancePaint = Symbol("entrance");
+const invalidDoorPaint = Symbol("invalid doors");
+const environmentPaint = Symbol("environment");
+type PaintKeys = Map<string, number>;
+
+interface CommandSpan {
+  start: number;
+  length: number;
+  next?: CommandSpan;
+}
+
+interface RoomPaintSpan extends CommandSpan {
+  graphics: Phaser.GameObjects.Graphics;
+  index: number;
+  fixtureOrder: number;
+  selectionLength: number;
+}
+
+interface RoomStarSpan extends CommandSpan {
+  key: string;
+  bottom: number;
+}
+
+function shiftFollowingSpans(span: CommandSpan, shift: number): void {
+  if (!shift) return;
+  span.length += shift;
+  for (let following = span.next; following; following = following.next) following.start += shift;
+}
+
+function editableCommands(graphics: Phaser.GameObjects.Graphics | undefined): number[] | undefined {
+  const commands = graphics?.commandBuffer;
+  return Array.isArray(commands) ? commands : undefined;
+}
+
+function reverseCommands(commands: number[], first: number, end: number): void {
+  for (let last = end - 1; first < last; first++, last--) {
+    const value = commands[first]!;
+    commands[first] = commands[last]!;
+    commands[last] = value;
+  }
+}
+
+/** Replace one span with commands just appended by the normal painter.
+ * Rotate the retained suffix in place, keeping one live buffer. */
+function replaceCommandSpan(commands: number[], start: number, length: number, appendedAt: number): number {
+  const replacement = commands.length - appendedAt;
+  const shift = replacement - length;
+  if (shift <= 0 || start + length === appendedAt) {
+    commands.copyWithin(start, appendedAt);
+    if (shift < 0) commands.copyWithin(start + replacement, start + length, appendedAt);
+    commands.length = appendedAt + shift;
+    return shift;
+  }
+  commands.copyWithin(start, start + length);
+  commands.length -= length;
+  const middle = appendedAt - length;
+  reverseCommands(commands, start, middle);
+  reverseCommands(commands, middle, commands.length);
+  reverseCommands(commands, start, commands.length);
+  return shift;
+}
+
 function inferredPlacementDoorSide(
   placement: NonNullable<FacilityViewModel["placement"]>,
 ): CardinalDirection | null {
@@ -525,10 +594,17 @@ export class FacilityScene extends Phaser.Scene {
 
   /** Turf stays below room floors so exterior props may be naturally occluded. */
   private terrainGraphics?: Phaser.GameObjects.Graphics;
+  private worldFloorGraphics?: Phaser.GameObjects.Graphics;
+  /** The fallback Build grid paints above every room floor, below fixtures. */
   private worldGraphics?: Phaser.GameObjects.Graphics;
+  private readonly roomPaintBands: Phaser.GameObjects.Graphics[] = [];
+  private readonly roomPaintSpans = new Map<string, RoomPaintSpan>();
+  private groundShadowCommands = 0;
+  private authoredGridCommands = 0;
   /** Separate layers keep authored floor/wall bitmaps independent from domain rooms. */
   private architectureGraphics?: Phaser.GameObjects.Graphics;
   private landscapeGraphics?: Phaser.GameObjects.Graphics;
+  private exteriorGraphics?: Phaser.GameObjects.Graphics;
   private locatorGraphics?: Phaser.GameObjects.Graphics;
   private ghostGraphics?: Phaser.GameObjects.Graphics;
   /** Separate native command streams allow offscreen floor/wall culling. They
@@ -575,12 +651,8 @@ export class FacilityScene extends Phaser.Scene {
     string,
     Phaser.GameObjects.Container
   >();
-  private activeFixtureGraphics = new Set<string>();
-  private activeRoomFixtureGraphics = new Set<string>();
-  private activeWallDecorGraphics = new Set<string>();
-  private activeEnvironmentSprites = new Set<string>();
-  private activeFixtureBitmapImages = new Set<string>();
-  private activeLandscapingBitmapImages = new Set<string>();
+  private activePaintKeys?: PaintKeys;
+  private readonly paintKeys = new Map<string | symbol, PaintKeys>();
   private activeCharacterGraphics = new Set<string>();
   private activeCharacterBitmapContainers = new Set<string>();
   private fixtureStableOrder = 0;
@@ -603,6 +675,8 @@ export class FacilityScene extends Phaser.Scene {
   private litterHighlightText?: Phaser.GameObjects.Text;
   private roomTexts: Phaser.GameObjects.Text[] = [];
   private roomStarGraphics: Phaser.GameObjects.Graphics | undefined;
+  private roomStarSpans?: Map<string, RoomStarSpan>;
+  private lastStarSpan?: RoomStarSpan;
   private lastReportedSelectedRoomRect = "";
   private lastReportedAlertPins = "";
   /** Local-only receipt cursor; it never participates in simulation state. */
@@ -632,18 +706,24 @@ export class FacilityScene extends Phaser.Scene {
   private get worldLayout(): GridLayout { return this.renderedLayout ?? this.layout; }
   private cameraGestureUntil = 0;
   private crispZoomPending = false;
-  private staticWorldPending = false;
+  private staticWorldPending?: "forced" | "phone-fit";
   private lastProjectionRequest = "";
   private cameraPreferencePending = false;
   private lastPublishedCameraRequest = "";
   private signatureModel?: FacilityViewModel;
   private worldSignatures?: FacilityWorldSignatures;
+  private paintedWorld?: FacilityWorldSignatures;
   private doorPresentation?: DoorPresentationIndex;
+  private approvedSegmentStates?: Map<string, {
+    openDoorSegments: Set<ApprovedWallSegment>;
+    backedNorthSegments: Set<ApprovedWallSegment>;
+  }>;
   private frozenCharacterModel?: FacilityViewModel;
   private frozenCharacterLayout?: GridLayout;
   private founderActivityAnchor?: [string, string | undefined, number, number];
 
   private cameraNow(): number { return this.time?.now ?? performance.now(); }
+  private get requestedCamera(): FacilityCameraView | undefined { return this.bridge.camera ?? this.bridge.viewModel.camera; }
   public isCameraGestureActive(): boolean {
     return Boolean(this.dragStart?.dragged || this.mobileGestures?.activeCount || this.cameraNow() < this.cameraGestureUntil);
   }
@@ -670,7 +750,7 @@ export class FacilityScene extends Phaser.Scene {
     });
     this.renderedLayout = this.layout;
     this.renderedCampaignId = this.bridge.viewModel.campaignId;
-    this.crispZoomPending = false; this.staticWorldPending = false;
+    this.crispZoomPending = false;
     this.syncRetainedCamera();
   }
 
@@ -732,7 +812,7 @@ export class FacilityScene extends Phaser.Scene {
   private readonly hallwayPaintVisitedTiles = new Set<string>();
   private lastWidth = -1;
   private lastHeight = -1;
-  private lastModelSignature = "";
+  private paintedCompact = false;
   private environmentAtlasLoadRequested = false;
   private environmentAtlasReady = false;
   private landscapingAtlasReady = false;
@@ -791,28 +871,17 @@ export class FacilityScene extends Phaser.Scene {
     this.children.each(child => {
       (child as Phaser.GameObjects.GameObject & Partial<Phaser.GameObjects.Components.Visible>).setVisible?.(false);
     });
-    for (const graphics of [this.terrainGraphics, this.worldGraphics, this.architectureGraphics,
+    for (const graphics of [this.terrainGraphics, this.worldFloorGraphics, this.worldGraphics, this.architectureGraphics,
       this.landscapeGraphics, this.locatorGraphics, this.ghostGraphics]) graphics?.clear();
     this.worldGraphics!.setVisible(true);
     this.architectureGraphics!.setVisible(true);
-    this.activeFixtureGraphics = new Set();
-    this.activeRoomFixtureGraphics = new Set();
-    this.activeWallDecorGraphics = new Set();
-    this.activeEnvironmentSprites = new Set();
-    this.activeFixtureBitmapImages = new Set();
-    this.activeLandscapingBitmapImages = new Set();
     this.fixtureStableOrder = 0;
     this.layout = { originX: stage.originX, originY: stage.originY, tileSize: stage.tileSize,
       width: room.width * stage.tileSize, height: room.height * stage.tileSize,
       sidewalkTop: stage.height, sidewalkHeight: 0, setbackTop: stage.height, setbackHeight: 0, worldBottom: stage.height };
-    this.drawRoom(this.worldGraphics!, room, 0);
+    this.paintScope(room.instanceId, () => this.drawRoom(this.worldGraphics!, room, 0));
+    for (const scope of this.paintKeys.keys()) if (scope !== room.instanceId) this.clearPaintScope(scope);
     this.reconcileApprovedSideChairLayers();
-    this.removeInactiveGraphics(this.fixtureGraphics, this.activeFixtureGraphics);
-    this.removeInactiveGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics);
-    this.removeInactiveGraphics(this.wallDecorGraphics, this.activeWallDecorGraphics);
-    this.removeInactiveEnvironmentSprites();
-    this.removeInactiveFixtureBitmapImages();
-    this.removeInactiveLandscapingBitmapImages();
     // The game smooths large downscaled textures. Offline catalog captures
     // explicitly retain crisp pixels, including derivative chair/tint textures.
     for (const key of this.textures.getTextureKeys()) this.textures.get(key).setFilter(Phaser.Textures.FilterMode.NEAREST);
@@ -903,9 +972,10 @@ export class FacilityScene extends Phaser.Scene {
     this.terrainGraphics = this.add
       .graphics()
       .setDepth(FACILITY_DEPTH_WORLD - 10);
-    this.worldGraphics = this.add
+    this.worldFloorGraphics = this.add
       .graphics()
       .setDepth(FACILITY_DEPTH_WORLD);
+    this.worldGraphics = this.add.graphics().setDepth(FACILITY_DEPTH_WORLD + 1);
     this.architectureGraphics = this.add
       .graphics()
       .setDepth(FACILITY_DEPTH_WORLD + 30);
@@ -1556,10 +1626,9 @@ export class FacilityScene extends Phaser.Scene {
     }
     // Promoted native masks keep their exact source pixels; only their depth
     // follows the actual sitter, including same-baseline/low-zoom rounding.
-    for (const key of this.activeFixtureBitmapImages) {
-      const mask = this.fixtureBitmapImages.get(key);
-      const ids = mask?.getData("approved-front-support-ids") as readonly string[] | null;
-      if (!mask || !ids) continue;
+    for (const mask of this.fixtureBitmapImages.values()) {
+      const ids = mask.getData("approved-front-support-ids") as readonly string[] | null;
+      if (!ids) continue;
       const roomId = mask.getData("approved-front-room-id") as string;
       const depths = ids.flatMap((id) => actorDepths.get(`${roomId}:${id}`) ?? []);
       mask.setDepth(getApprovedSideChairForegroundDepth(depths) ?? mask.getData("approved-front-base-depth") as number);
@@ -1701,7 +1770,8 @@ export class FacilityScene extends Phaser.Scene {
 
   private refreshLayout(force = false): void {
     if (this.bridge.mobileInput === true && this.bridge.mobilePresentation?.hidden) return;
-    const campaignChanged = this.renderedLayout && this.renderedCampaignId !== this.bridge.viewModel.campaignId;
+    const model = this.bridge.viewModel;
+    const campaignChanged = this.renderedLayout && this.renderedCampaignId !== model.campaignId;
     if (campaignChanged) {
       this.resyncPresentation();
       this.dragStart = null;
@@ -1713,52 +1783,80 @@ export class FacilityScene extends Phaser.Scene {
     const height = Math.max(1, Math.floor(this.scale.height));
     // Projections are immutable between state changes; gestures need no repeat
     // room/door scan. Forced asset/edit redraws still refresh the signature.
-    if (force || this.signatureModel !== this.bridge.viewModel) {
+    if (force || this.signatureModel !== model) {
       this.refreshWorldSignatures(force);
     }
-    const signature = `${this.bridge.viewModel.campaignId ?? ""}:${this.worldSignatures!.world}`;
-    const request = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(this.bridge.viewModel.camera)}`;
-    const changed = force || width !== this.lastWidth || height !== this.lastHeight || signature !== this.lastModelSignature;
+    const next = this.worldSignatures!, previous = this.paintedWorld;
+    const roomGeometryChanged = next.rooms.geometry !== previous?.rooms.geometry || next.dimensions !== previous?.dimensions;
+    const request = `${model.campaignId ?? ""}:${facilityCameraSignature(this.requestedCamera)}`;
     const projected = request !== this.lastProjectionRequest;
-    if (!changed && !projected && !this.staticWorldPending && !this.crispZoomPending) return;
+    const resized = width !== this.lastWidth || height !== this.lastHeight;
+    if (!force && !campaignChanged && !resized && !projected && next === previous &&
+      !this.staticWorldPending && !this.crispZoomPending) return;
 
-    this.layout = this.calculateLayout(width, height);
-    this.lastProjectionRequest = request;
-    if (!campaignChanged && this.renderedLayout && this.layout.tileSize !== this.renderedLayout.tileSize && projected) {
-      this.cameraGestureUntil = this.cameraNow() + CAMERA_ZOOM_SETTLE_MS;
-      this.crispZoomPending = true;
+    if (campaignChanged || resized || projected || roomGeometryChanged || !this.renderedLayout) {
+      this.layout = this.calculateLayout(width, height);
+      this.lastWidth = width;
+      this.lastHeight = height;
+      this.lastProjectionRequest = request;
+      this.crispZoomPending = this.renderedLayout !== undefined && this.layout.tileSize !== this.renderedLayout.tileSize;
+      if (!campaignChanged && projected && this.crispZoomPending) this.cameraGestureUntil = this.cameraNow() + CAMERA_ZOOM_SETTLE_MS;
+      this.syncRetainedCamera();
     }
-    this.syncRetainedCamera();
+    if (force) this.staticWorldPending = "forced";
+    else if (resized && this.bridge.mobileInput === true) this.staticWorldPending ??= "phone-fit";
     if (this.renderedLayout && this.isCameraGestureActive()) {
-      this.staticWorldPending ||= changed;
       return;
     }
-    if (!changed && !this.staticWorldPending && !this.crispZoomPending) return;
-
-    this.lastWidth = width;
-    this.lastHeight = height;
-    this.lastModelSignature = signature;
-    this.rebaseWorld();
-
-    if (!this.bridge.viewModel.placement) {
-      this.placementGhost = null;
-    } else if (this.placementGhost) {
-      const evaluation = this.evaluatePlacement(
-        this.placementGhost.tileX,
-        this.placementGhost.tileY,
-      );
-      this.placementGhost = {
-        ...this.placementGhost,
-        ...evaluation,
-      };
+    // Phone controls can change the viewport origin at the same snapped tile
+    // size. Paint the settled fit so room art and contacts share its basis.
+    const phoneFitChanged = this.staticWorldPending === "phone-fit" &&
+      (this.layout.originX !== this.renderedLayout?.originX || this.layout.originY !== this.renderedLayout?.originY);
+    const staticRedraw = this.staticWorldPending === "forced" || phoneFitChanged;
+    this.staticWorldPending = undefined;
+    // Adapters that only implement the Graphics drawing API can render the
+    // scene, but cannot safely rewrite part of an existing command stream.
+    const redrawWithoutSpans = previous && next !== previous && !editableCommands(this.worldFloorGraphics) && (
+      next.grid !== previous.grid || next.doorTools !== previous.doorTools || next.selection !== previous.selection ||
+      next.rooms.wear !== previous.rooms.wear || next.rooms.tiers !== previous.rooms.tiers ||
+      next.endoscopy.key !== previous.endoscopy.key || next.imaging.key !== previous.imaging.key || next.emptyCooler !== previous.emptyCooler);
+    const full = staticRedraw || this.crispZoomPending || campaignChanged || roomGeometryChanged ||
+      next.doors.geometry !== previous?.doors.geometry || redrawWithoutSpans;
+    const placementChanged = next.placement !== previous?.placement;
+    if (full) {
+      this.rebaseWorld();
+      this.drawWorld();
+    } else if (previous && next !== previous) {
+      if (next.grid !== previous.grid) {
+        this.paintBuildGrid();
+        this.paintGroundDetails();
+        this.paintScope(entrancePaint, () => this.drawEntrancePlanters());
+      } else if (next.doorTools !== previous.doorTools) {
+        this.paintDoorHighlights();
+      }
+      this.refreshRoomPaint(previous, next);
+      if (next.selection !== previous.selection) this.refreshRoomSelection(previous.selection, next.selection);
+      if (next.environment !== previous.environment) this.paintEnvironment();
     }
+    this.paintedWorld = next;
 
-    this.drawWorld();
-    if (this.bridge.mobileInput === true && this.mobileArtFirstRoomAt === undefined &&
-      visiblePhoneRoomIds(this.bridge.viewModel.rooms, this.layout, this.scale).some(id => id !== "room.hallway" &&
+    if (full && this.bridge.mobileInput === true && this.mobileArtFirstRoomAt === undefined &&
+      visiblePhoneRoomIds(model.rooms, this.layout, this.scale).some(id => id !== "room.hallway" &&
         mobileRoomArtReady(id, asset => this.textures.exists(getPhaserTextureKey(asset))))) this.mobileArtFirstRoomAt = performance.now();
-    this.positionText();
-    this.drawPlacementGhost();
+    const compact = width < 520;
+    if (full || placementChanged || compact !== this.paintedCompact || next.build !== previous?.build ||
+      (next.build && (next.rooms.appearance !== previous?.rooms.appearance || next.rooms.tiers !== previous?.rooms.tiers))) {
+      this.positionText(Boolean(full));
+    }
+    this.paintedCompact = compact;
+    if (full || placementChanged) {
+      if (!model.placement) this.placementGhost = null;
+      else if (this.placementGhost) {
+        const { tileX, tileY } = this.placementGhost;
+        this.placementGhost = { ...this.placementGhost, ...this.evaluatePlacement(tileX, tileY) };
+      }
+      this.drawPlacementGhost();
+    }
   }
 
   private calculateLayout(width: number, height: number): GridLayout {
@@ -1793,7 +1891,7 @@ export class FacilityScene extends Phaser.Scene {
         ),
       ),
     );
-    const requestedCamera = this.bridge.viewModel.camera;
+    const requestedCamera = this.requestedCamera;
     const requestedCameraSignature = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(requestedCamera)}`;
     if (
       requestedCamera &&
@@ -1902,91 +2000,182 @@ export class FacilityScene extends Phaser.Scene {
 
   private drawWorld(): void {
     if (this.bridge.mobileInput === true && this.bridge.mobilePresentation?.hidden) return;
-    const graphics = this.worldGraphics;
-    if (!graphics) {
-      return;
-    }
+    if (!this.worldGraphics) return;
+    const graphics = this.worldFloorGraphics ??= this.add.graphics().setDepth(FACILITY_DEPTH_WORLD);
+    this.worldGraphics.setDepth(FACILITY_DEPTH_WORLD + 1);
     this.terrainGraphics?.clear();
-    this.architectureGraphics?.clear();
     this.landscapeGraphics?.clear();
-
-    const { originX, originY, tileSize, width, height } = this.worldLayout;
-    const model = this.bridge.viewModel;
-    const columns = positiveGridSize(model.gridColumns, 16);
-    const rows = positiveGridSize(model.gridRows, 10);
-
-    this.activeFixtureGraphics = new Set<string>();
-    this.activeRoomFixtureGraphics = new Set<string>();
-    this.activeWallDecorGraphics = new Set<string>();
-    this.activeEnvironmentSprites = new Set<string>();
-    this.activeFixtureBitmapImages = new Set<string>();
-    this.activeLandscapingBitmapImages = new Set<string>();
     this.fixtureStableOrder = 0;
 
     graphics.clear();
-    this.drawContinuousTurf(this.terrainGraphics ?? graphics);
-    this.drawBuildingGroundShadows(graphics);
-    if (model.buildMode || model.placement) {
-      graphics.lineStyle(2, PIXEL_PALETTE_NUMBER.ink, 1);
-      graphics.strokeRect(originX, originY, width, height);
-    }
+    this.paintScope(terrainPaint, () => {
+      this.drawContinuousTurf(this.terrainGraphics ?? graphics);
+      this.drawBuildingGroundShadows(graphics);
+      this.drawAuthoredEnvironmentSurface();
+    });
+    this.groundShadowCommands = editableCommands(graphics)?.length ?? 0;
+    if (this.terrainGraphics) retainGraphicsViewportBounds(this.terrainGraphics);
+    this.paintGroundDetails();
+    this.drawRoomPaint();
+    this.paintBuildGrid();
+    this.paintScope(invalidDoorPaint, () => this.drawInvalidDoorMarkers());
+    this.environmentFixtureOrder = this.fixtureStableOrder;
+    this.paintEnvironment();
+    // Exterior paving followed the grid/highlights at the same depth.
+    const exterior = this.exteriorGraphics ??= this.add.graphics().setDepth(FACILITY_DEPTH_WORLD + 30.000001);
+    exterior.clear();
+    this.paintScope(exteriorPaint, () => this.drawExterior(exterior));
+    retainGraphicsViewportBounds(exterior);
+    this.paintScope(entrancePaint, () => this.drawEntrancePlanters());
+    this.trimMobileAtlases();
+  }
 
-    this.drawAuthoredEnvironmentSurface();
-    this.drawClinicGroundDetails(this.landscapeGraphics ?? graphics);
-    [...model.rooms]
-      .sort(
-        (left, right) =>
-          left.tileY - right.tileY ||
-          left.tileX - right.tileX ||
-          left.instanceId.localeCompare(right.instanceId),
-      )
-      .forEach((room, index) => {
-        if (this.bridge.mobileInput !== true || phoneMemoryProfile().mode !== "reduced") {
-          this.drawRoom(graphics, room, index); return;
-        }
-        const active = new Set([room.instanceId]);
-        const floor = this.getSortableGraphics(this.phoneRoomFloors, active, room.instanceId)
-          .setDepth(FACILITY_DEPTH_WORLD + index * .000001);
-        this.drawRoom(floor, room, index);
-      });
-    const roomIds = this.bridge.mobileInput === true && phoneMemoryProfile().mode === "reduced"
-      ? new Set(model.rooms.map(room => room.instanceId)) : new Set<string>();
-    this.removeInactiveGraphics(this.phoneRoomFloors, roomIds);
-    if (model.buildMode || model.placement) {
-      this.drawBuildGridOverlay(
-        this.canRenderAuthoredEnvironment() || this.bridge.mobileInput === true && phoneMemoryProfile().mode === "reduced"
-          ? (this.architectureGraphics ?? graphics)
-          : graphics,
-        columns,
-        rows,
-      );
+  private drawRoomPaint(): void {
+    const { width, height, tileSize } = this.worldLayout;
+    const reducedPhone = this.bridge.mobileInput === true && phoneMemoryProfile().mode === "reduced";
+    const partitioned = this.bridge.mobileInput !== true && (width > this.scale.width ||
+      height + tileSize * SURGERY_CENTER_WALL_GEOMETRY.northEnvelopeTiles > this.scale.height);
+    const model = this.bridge.viewModel;
+    const { roomIndices } = this.getDoorPresentationIndex();
+    for (const id of this.roomPaintSpans.keys()) if (!roomIndices.has(id)) this.clearPaintScope(id);
+    this.roomPaintSpans.clear();
+    const rooms = [...model.rooms].sort((left, right) =>
+      left.tileY - right.tileY || left.tileX - right.tileX || left.instanceId.localeCompare(right.instanceId));
+    const phoneRooms = new Set<string>();
+    let bandCount = 0;
+    let bandRow = NaN, bandColumn = NaN;
+    let graphics: Phaser.GameObjects.Graphics | undefined;
+    let previous: RoomPaintSpan | undefined;
+    for (const [index, room] of rooms.entries()) {
+      const column = Math.floor(room.tileX / 8);
+      if (reducedPhone) {
+        graphics = this.getSortableGraphics(this.phoneRoomFloors, phoneRooms, room.instanceId)
+          .setDepth(FACILITY_DEPTH_WORLD + (index + 1) * .000001);
+      } else if (!graphics || partitioned && (room.tileY !== bandRow || column !== bandColumn)) {
+        if (graphics) retainGraphicsViewportBounds(graphics);
+        bandRow = room.tileY;
+        bandColumn = column;
+        graphics = this.roomPaintBands[bandCount] ??= this.add.graphics()
+          .setDepth(FACILITY_DEPTH_WORLD + (bandCount + 1) * .000001);
+        bandCount += 1;
+        graphics.clear();
+      }
+      const commands = editableCommands(graphics);
+      const span: RoomPaintSpan = { graphics, index, start: commands?.length ?? 0, length: 0,
+        fixtureOrder: this.fixtureStableOrder, selectionLength: 0 };
+      if (previous?.graphics === graphics) previous.next = span;
+      this.paintRoom(span, room);
+      span.length = (commands?.length ?? 0) - span.start;
+      this.roomPaintSpans.set(room.instanceId, span);
+      previous = span;
+      if (reducedPhone) retainGraphicsViewportBounds(graphics);
     }
-    this.drawBuildDoorHighlights(this.architectureGraphics ?? graphics);
-    this.drawInvalidDoorMarkers();
-    this.drawEnvironment();
-    this.drawExterior(this.architectureGraphics ?? graphics);
-    this.removeInactiveGraphics(
-      this.fixtureGraphics,
-      this.activeFixtureGraphics,
-    );
-    this.removeInactiveGraphics(
-      this.roomFixtureGraphics,
-      this.activeRoomFixtureGraphics,
-    );
-    this.removeInactiveGraphics(
-      this.wallDecorGraphics,
-      this.activeWallDecorGraphics,
-    );
-    this.removeInactiveEnvironmentSprites();
-    this.removeInactiveFixtureBitmapImages();
-    this.removeInactiveLandscapingBitmapImages();
-    // Canvas otherwise replays offscreen Graphics paths on every camera frame.
-    // Retain conservative bounds after edits, without baking phone textures.
-    for (const graphics of [this.terrainGraphics, this.worldGraphics, this.architectureGraphics, this.landscapeGraphics,
-      ...this.fixtureGraphics.values(), ...this.roomFixtureGraphics.values(), ...this.wallDecorGraphics.values(),
-      ...this.phoneRoomFloors.values()]) {
-      if (graphics) retainGraphicsViewportBounds(graphics);
+    if (graphics && !reducedPhone) retainGraphicsViewportBounds(graphics);
+    while (this.roomPaintBands.length > bandCount) this.roomPaintBands.pop()!.destroy();
+    this.removeInactiveGraphics(this.phoneRoomFloors, phoneRooms);
+  }
+
+  private paintRoom(span: RoomPaintSpan, room: FacilityRoomView): void {
+    const { graphics, index } = span;
+    this.paintScope(room.instanceId, () => this.drawRoom(graphics, room, index));
+    const commands = editableCommands(graphics), start = commands?.length ?? 0;
+    if (room.instanceId === this.bridge.viewModel.selectedRoomInstanceId) this.drawRoomSelection(graphics, room);
+    span.selectionLength = (commands?.length ?? 0) - start;
+  }
+
+  private paintGroundDetails(): void {
+    this.paintScope(landscapePaint, () => this.drawClinicGroundDetails());
+  }
+
+  private paintBuildGrid(): void {
+    const { buildMode, placement, gridColumns, gridRows } = this.bridge.viewModel;
+    const ground = this.worldFloorGraphics!, grid = this.worldGraphics!, architecture = this.architectureGraphics ?? grid;
+    const { originX, originY, width, height } = this.worldLayout;
+    const groundCommands = editableCommands(ground);
+    if (groundCommands) groundCommands.length = this.groundShadowCommands;
+    grid.clear();
+    if (architecture !== grid) architecture.clear();
+    if (buildMode || placement) {
+      ground.lineStyle(2, PIXEL_PALETTE_NUMBER.ink, 1);
+      ground.strokeRect(originX, originY, width, height);
+      this.drawBuildGridOverlay(this.canRenderAuthoredEnvironment() || this.phoneRoomFloors.size > 0 ? architecture : grid,
+        positiveGridSize(gridColumns, 16), positiveGridSize(gridRows, 10));
     }
+    this.authoredGridCommands = editableCommands(architecture)?.length ?? 0;
+    retainGraphicsViewportBounds(ground);
+    if (grid !== architecture) retainGraphicsViewportBounds(grid);
+    this.paintDoorHighlights();
+  }
+
+  private paintDoorHighlights(): void {
+    const graphics = this.architectureGraphics ?? this.worldGraphics!;
+    const commands = editableCommands(graphics);
+    if (commands) commands.length = this.authoredGridCommands;
+    this.drawBuildDoorHighlights(graphics);
+    retainGraphicsViewportBounds(graphics);
+  }
+
+  private environmentFixtureOrder = 0;
+
+  private paintEnvironment(): void {
+    const prior = this.fixtureStableOrder;
+    this.fixtureStableOrder = this.environmentFixtureOrder;
+    this.paintScope(environmentPaint, () => this.drawEnvironment());
+    this.fixtureStableOrder = prior;
+  }
+
+  private refreshRoomPaint(previous: FacilityWorldSignatures, next: FacilityWorldSignatures): void {
+    const wear = previous.rooms.wear !== next.rooms.wear;
+    const tiers = previous.rooms.tiers !== next.rooms.tiers;
+    const endoscopy = previous.endoscopy.key !== next.endoscopy.key;
+    const imaging = previous.imaging.key !== next.imaging.key;
+    const cooler = previous.emptyCooler !== next.emptyCooler;
+    if (!wear && !tiers && !endoscopy && !imaging && !cooler) return;
+    const priorOrder = this.fixtureStableOrder;
+    for (const [index, room] of next.rooms.rows.entries()) {
+      const previousRoom = previous.rooms.rows[index]!;
+      const surfaceChanged = (wear && getCleanlinessWearSeverity(room.cleanliness) !== getCleanlinessWearSeverity(previousRoom.cleanliness)) ||
+        (endoscopy && next.endoscopy.ids.includes(room.instanceId) !== previous.endoscopy.ids.includes(room.instanceId)) ||
+        (imaging && next.imaging.ids.includes(room.instanceId) !== previous.imaging.ids.includes(room.instanceId)) ||
+        (cooler && room.definitionId === "room.front_desk");
+      const tierArtChanged = tiers && (room.upgradeLevel ?? 1) !== (previousRoom.upgradeLevel ?? 1) &&
+        getRoomUpgradeDefinition(room.definitionId)?.appearanceChanges;
+      const span = surfaceChanged || tierArtChanged ? this.roomPaintSpans.get(room.instanceId) : undefined;
+      if (!span) continue;
+      this.fixtureStableOrder = span.fixtureOrder;
+      const approved = tierArtChanged && !surfaceChanged && !getRoomTouchup(room.definitionId)
+        ? getApprovedRoomPresentation(room.definitionId) : undefined;
+      if (approved) {
+        // The approved shell and its floor pattern are tier-independent here.
+        const rect = this.toPixels({ tileX: room.tileX, tileY: room.tileY, ...orientedSize(room) });
+        this.paintScope(room.instanceId, () => this.drawApprovedRoomLayers(room, rect, approved.shell));
+        continue;
+      }
+      const commands = span.graphics.commandBuffer, appendedAt = commands.length;
+      this.paintRoom(span, room);
+      this.finishRoomPatch(span, span.start, span.length, appendedAt);
+    }
+    this.fixtureStableOrder = priorOrder;
+    this.trimMobileAtlases();
+  }
+
+  private refreshRoomSelection(previous: string | null, next: string | null): void {
+    for (const id of [previous, next]) {
+      if (id === null) continue;
+      const span = this.roomPaintSpans.get(id);
+      const room = this.bridge.viewModel.rooms[this.getDoorPresentationIndex().roomIndices.get(id) ?? -1];
+      if (!span || !room) continue;
+      const { graphics, selectionLength } = span, appendedAt = graphics.commandBuffer.length;
+      if (id === next) this.drawRoomSelection(graphics, room);
+      span.selectionLength = graphics.commandBuffer.length - appendedAt;
+      this.finishRoomPatch(span, span.start + span.length - selectionLength, selectionLength, appendedAt);
+    }
+  }
+
+  private finishRoomPatch(span: RoomPaintSpan, start: number, length: number, appendedAt: number): void {
+    const shift = replaceCommandSpan(span.graphics.commandBuffer, start, length, appendedAt);
+    shiftFollowingSpans(span, shift);
+    retainGraphicsViewportBounds(span.graphics);
   }
 
   /** World-anchored turf; build cells never influence these stipples. */
@@ -2037,7 +2226,7 @@ export class FacilityScene extends Phaser.Scene {
 
   private getSortableGraphics(
     collection: Map<string, Phaser.GameObjects.Graphics>,
-    active: Set<string>,
+    active: PaintObject | Set<string>,
     key: string,
   ): Phaser.GameObjects.Graphics {
     let graphics = collection.get(key);
@@ -2047,7 +2236,8 @@ export class FacilityScene extends Phaser.Scene {
     }
     graphics.clear();
     graphics.setVisible(true);
-    active.add(key);
+    if (typeof active === "number") this.trackPaintObject(key, active);
+    else active.add(key);
     return graphics;
   }
 
@@ -2063,38 +2253,50 @@ export class FacilityScene extends Phaser.Scene {
     }
   }
 
-  private removeInactiveEnvironmentSprites(): void {
-    for (const [key, sprite] of this.environmentSprites) {
-      if (!this.activeEnvironmentSprites.has(key)) {
-        sprite.destroy();
-        this.environmentSprites.delete(key);
-      }
+  private trackPaintObject(key: string, kind: PaintObject): void {
+    const keys = this.activePaintKeys;
+    keys?.set(key, (keys.get(key) ?? 0) | kind);
+  }
+
+  private paintScope(owner: string | symbol, draw: () => void): void {
+    const keys: PaintKeys = new Map();
+    const parent = this.activePaintKeys;
+    this.activePaintKeys = keys;
+    try {
+      draw();
+    } finally {
+      this.activePaintKeys = parent;
+    }
+    this.clearPaintScope(owner, keys);
+    if (keys.size) this.paintKeys.set(owner, keys);
+    for (const [key, types] of keys) {
+      if (types & PaintObject.Fixture) retainGraphicsViewportBounds(this.fixtureGraphics.get(key)!);
+      if (types & PaintObject.RoomFixture) retainGraphicsViewportBounds(this.roomFixtureGraphics.get(key)!);
+      if (types & PaintObject.WallDecor) retainGraphicsViewportBounds(this.wallDecorGraphics.get(key)!);
     }
   }
 
-  private removeInactiveFixtureBitmapImages(): void {
-    for (const [key, image] of this.fixtureBitmapImages) {
-      if (!this.activeFixtureBitmapImages.has(key)) {
-        image.destroy();
-        this.fixtureBitmapImages.delete(key);
-      }
-    }
-    for (const [key, runtime] of this.approvedSideChairRuntimes) {
-      if (!this.fixtureBitmapImages.has(runtime.baseKey)) {
-        runtime.foregroundImage.destroy();
+  private clearPaintScope(owner: string | symbol, keep?: ReadonlyMap<string, number>): void {
+    const previous = this.paintKeys.get(owner);
+    if (!previous) return;
+    const drop = <T extends Phaser.GameObjects.GameObject>(objects: Map<string, T>, key: string) => {
+      objects.get(key)?.destroy();
+      objects.delete(key);
+    };
+    for (const [key, types] of previous) {
+      const removed = types & ~(keep?.get(key) ?? 0);
+      if (removed & PaintObject.Fixture) drop(this.fixtureGraphics, key);
+      if (removed & PaintObject.RoomFixture) drop(this.roomFixtureGraphics, key);
+      if (removed & PaintObject.WallDecor) drop(this.wallDecorGraphics, key);
+      if (removed & PaintObject.Environment) drop(this.environmentSprites, key);
+      if (removed & PaintObject.LandscapeImage) drop(this.landscapingBitmapImages, key);
+      if (removed & PaintObject.FixtureImage) {
+        drop(this.fixtureBitmapImages, key);
+        this.approvedSideChairRuntimes.get(key)?.foregroundImage.destroy();
         this.approvedSideChairRuntimes.delete(key);
       }
     }
-    this.trimMobileAtlases();
-  }
-
-  private removeInactiveLandscapingBitmapImages(): void {
-    for (const [key, image] of this.landscapingBitmapImages) {
-      if (!this.activeLandscapingBitmapImages.has(key)) {
-        image.destroy();
-        this.landscapingBitmapImages.delete(key);
-      }
-    }
+    this.paintKeys.delete(owner);
   }
 
   private canRenderAuthoredFixture(id: FixtureId, roomDefinitionId = ""): boolean {
@@ -2156,7 +2358,7 @@ export class FacilityScene extends Phaser.Scene {
       .setDepth(depth)
       .setAlpha(alpha)
       .setVisible(true);
-    this.activeFixtureBitmapImages.add(key);
+    this.trackPaintObject(key, PaintObject.FixtureImage);
     return true;
   }
 
@@ -2190,7 +2392,7 @@ export class FacilityScene extends Phaser.Scene {
       .setDepth(depth)
       .setAlpha(alpha)
       .setVisible(true);
-    this.activeFixtureBitmapImages.add(key);
+    this.trackPaintObject(key, PaintObject.FixtureImage);
     return true;
   }
 
@@ -2244,7 +2446,7 @@ export class FacilityScene extends Phaser.Scene {
       .setDepth(depth)
       .setAlpha(alpha)
       .setVisible(true);
-    this.activeFixtureBitmapImages.add(key);
+    this.trackPaintObject(key, PaintObject.FixtureImage);
     return true;
   }
 
@@ -2279,7 +2481,7 @@ export class FacilityScene extends Phaser.Scene {
       .setVisible(true);
     if (tint === undefined) image.clearTint();
     else image.setTint(tint);
-    this.activeFixtureBitmapImages.add(key);
+    this.trackPaintObject(key, PaintObject.FixtureImage);
     return true;
   }
 
@@ -2469,7 +2671,7 @@ export class FacilityScene extends Phaser.Scene {
   ): void {
     const south = this.exposedBoundaryRuns(room, "south");
     if (south.length === 0) return;
-    const graphics = this.getSortableGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics, `hallway-south:${room.instanceId}`);
+    const graphics = this.getSortableGraphics(this.roomFixtureGraphics, PaintObject.RoomFixture, `hallway-south:${room.instanceId}`);
     const scale = this.worldLayout.tileSize / shell.tilePixels;
     const px = (value: number) => value * scale;
     const low = px(shell.southHeightPixels);
@@ -2901,7 +3103,7 @@ export class FacilityScene extends Phaser.Scene {
       .setDepth(depth)
       .setAlpha(alpha)
       .setVisible(true);
-    this.activeLandscapingBitmapImages.add(key);
+    this.trackPaintObject(key, PaintObject.LandscapeImage);
     return true;
   }
 
@@ -2956,7 +3158,7 @@ export class FacilityScene extends Phaser.Scene {
     sprite.setTileScale(source.scaleX, source.scaleY);
     sprite.tilePositionX = source.positionX;
     sprite.tilePositionY = source.positionY;
-    this.activeEnvironmentSprites.add(key);
+    this.trackPaintObject(key, PaintObject.Environment);
   }
 
   /** Tiles an unscaled native Front Desk-v4-derived architecture component. */
@@ -2991,7 +3193,7 @@ export class FacilityScene extends Phaser.Scene {
       .setTileScale(source.scaleX, source.scaleY).setDepth(depth).setVisible(true);
     sprite.tilePositionX = 0;
     sprite.tilePositionY = 0;
-    this.activeEnvironmentSprites.add(key);
+    this.trackPaintObject(key, PaintObject.Environment);
   }
 
   private drawAuthoredEnvironmentSurface(): void {
@@ -3027,7 +3229,7 @@ export class FacilityScene extends Phaser.Scene {
     image.setTexture(textureKey).setPosition(x, y)
       .setOrigin(asset.anchor.x / asset.nativeWidth, asset.anchor.y / asset.nativeHeight)
       .setDisplaySize(width, width * asset.nativeHeight / asset.nativeWidth).setDepth(depth).setAlpha(alpha).setVisible(true);
-    this.activeLandscapingBitmapImages.add(key);
+    this.trackPaintObject(key, PaintObject.LandscapeImage);
     return true;
   }
 
@@ -3060,7 +3262,7 @@ export class FacilityScene extends Phaser.Scene {
     sprite.setTileScale(source.scaleX, source.scaleY);
     sprite.tilePositionX = source.positionX;
     sprite.tilePositionY = source.positionY;
-    this.activeEnvironmentSprites.add(key);
+    this.trackPaintObject(key, PaintObject.Environment);
     return true;
   }
 
@@ -3098,9 +3300,7 @@ export class FacilityScene extends Phaser.Scene {
     );
   }
 
-  private drawClinicGroundDetails(
-    graphics: Phaser.GameObjects.Graphics,
-  ): void {
+  private drawClinicGroundDetails(): void {
     const model = this.bridge.viewModel;
     const columns = positiveGridSize(model.gridColumns, 16);
     const rows = positiveGridSize(model.gridRows, 10);
@@ -3152,7 +3352,7 @@ export class FacilityScene extends Phaser.Scene {
       );
       if (!painted) {
         const fallback = this.getSortableGraphics(this.fixtureGraphics,
-          this.activeFixtureGraphics, `landscape-fallback:${candidate.key}`).setDepth(depth);
+          PaintObject.Fixture, `landscape-fallback:${candidate.key}`).setDepth(depth);
         this.drawFixture(
           fallback,
           isTree ? "shadeTree" : "bushCluster",
@@ -3178,7 +3378,7 @@ export class FacilityScene extends Phaser.Scene {
         (litter.location.y + 0.65) * this.worldLayout.tileSize;
       const litterGraphics = this.getSortableGraphics(
         this.fixtureGraphics,
-        this.activeFixtureGraphics,
+        PaintObject.Fixture,
         `environment:litter:${litter.instanceId}`,
       );
       // Litter is a tiny direct-click interaction. Keeping it in a dedicated
@@ -3272,7 +3472,7 @@ export class FacilityScene extends Phaser.Scene {
       x = left + width / 2;
       const coolerGraphics = this.getSortableGraphics(
         this.fixtureGraphics,
-        this.activeFixtureGraphics,
+        PaintObject.Fixture,
         "environment:water-cooler-interaction",
       );
       coolerGraphics.setDepth(getFacilitySceneDepth(top + height, "fixture", 63));
@@ -3352,7 +3552,7 @@ export class FacilityScene extends Phaser.Scene {
     const coolerCenterY = coolerContactY - renderedCooler.height / 2;
     const coolerGraphics = this.getSortableGraphics(
       this.fixtureGraphics,
-      this.activeFixtureGraphics,
+      PaintObject.Fixture,
       "environment:water-cooler",
     );
     coolerGraphics.setDepth(
@@ -3530,19 +3730,7 @@ export class FacilityScene extends Phaser.Scene {
     const approved = getApprovedRoomPresentation(room.definitionId);
     if (approved) {
       this.drawApprovedRoomSurface(graphics, room, rectangle, approved.shell);
-      const roomFixtures = this.getSortableGraphics(
-        this.roomFixtureGraphics,
-        this.activeRoomFixtureGraphics,
-        `room-fixtures:${room.instanceId}`,
-      );
-      roomFixtures.setDepth(FACILITY_DEPTH_WORLD + 20);
-      this.drawRoomFixtures(roomFixtures, room, rectangle, Math.max(5, Math.floor(this.worldLayout.tileSize * 0.14)));
-      this.drawApprovedSouthForeground(roomFixtures, room, rectangle, approved.shell);
-      if (room.instanceId === this.bridge.viewModel.selectedRoomInstanceId) {
-        const inset = Math.max(3, Math.floor(this.worldLayout.tileSize * 0.12));
-        graphics.lineStyle(2, 0xffffff, 1);
-        graphics.strokeRect(rectangle.x + inset, rectangle.y + inset, rectangle.width - inset * 2, rectangle.height - inset * 2);
-      }
+      this.drawApprovedRoomLayers(room, rectangle, approved.shell);
       return;
     }
     const shade = this.roomFloorColor(room, index);
@@ -3601,30 +3789,31 @@ export class FacilityScene extends Phaser.Scene {
 
     const roomFixtures = this.getSortableGraphics(
       this.roomFixtureGraphics,
-      this.activeRoomFixtureGraphics,
+      PaintObject.RoomFixture,
       `room-fixtures:${room.instanceId}`,
     );
     roomFixtures.setDepth(FACILITY_DEPTH_WORLD + 20);
     this.drawRoomFixtures(roomFixtures, room, rectangle, furnitureInset);
     this.drawExaminationV3Foreground(room, rectangle);
+  }
 
-    if (room.instanceId === this.bridge.viewModel.selectedRoomInstanceId) {
-      const inset = Math.max(3, Math.floor(this.worldLayout.tileSize * 0.12));
-      graphics.lineStyle(2, 0xffffff, 1);
-      graphics.strokeRect(
-        rectangle.x + inset,
-        rectangle.y + inset,
-        rectangle.width - inset * 2,
-        rectangle.height - inset * 2,
-      );
+  private drawRoomSelection(graphics: Phaser.GameObjects.Graphics, room: FacilityRoomView): void {
+    if (room.kind === "hallway" || room.definitionId === "room.hallway" || room.definitionId === "room.imaging_control") return;
+    const { x, y, width, height } = this.toPixels({ tileX: room.tileX, tileY: room.tileY, ...orientedSize(room) });
+    const inset = Math.max(3, Math.floor(this.worldLayout.tileSize * 0.12));
+    graphics.lineStyle(2, 0xffffff, 1);
+    graphics.strokeRect(x + inset, y + inset, width - inset * 2, height - inset * 2);
+    if (!getApprovedRoomPresentation(room.definitionId)) {
       graphics.lineStyle(1, 0x111111, 1);
-      graphics.strokeRect(
-        rectangle.x + inset + 2,
-        rectangle.y + inset + 2,
-        rectangle.width - inset * 2 - 4,
-        rectangle.height - inset * 2 - 4,
-      );
+      graphics.strokeRect(x + inset + 2, y + inset + 2, width - inset * 2 - 4, height - inset * 2 - 4);
     }
+  }
+
+  private drawApprovedRoomLayers(room: FacilityRoomView, rectangle: PixelRectangle, shell: ApprovedRoomShellPresentation): void {
+    const roomFixtures = this.getSortableGraphics(this.roomFixtureGraphics, PaintObject.RoomFixture, `room-fixtures:${room.instanceId}`);
+    roomFixtures.setDepth(FACILITY_DEPTH_WORLD + 20);
+    this.drawRoomFixtures(roomFixtures, room, rectangle, Math.max(5, Math.floor(this.worldLayout.tileSize * 0.14)));
+    this.drawApprovedSouthForeground(roomFixtures, room, rectangle, shell);
   }
 
   /** Draws approved shell colors and material while retaining live boundary topology. */
@@ -3675,8 +3864,13 @@ export class FacilityScene extends Phaser.Scene {
     openDoorSegments: Set<ApprovedWallSegment>;
     backedNorthSegments: Set<ApprovedWallSegment>;
   }> {
+    // An input/asset callback can arrive between scene updates.
+    const doorPresentation = this.getDoorPresentationIndex();
+    const states = this.approvedSegmentStates ??= new Map();
+    const cached = states.get(room.instanceId);
+    if (cached) return cached;
     const openDoorSegments = new Set<ApprovedWallSegment>();
-    for (const opening of this.getRoomDoorOpenings(room)) {
+    for (const opening of doorPresentation.openingsFor(room.instanceId)) {
       const index = opening.offset + 1;
       if (opening.side === "north") openDoorSegments.add(`N${index}`);
       else if (opening.side === "south") openDoorSegments.add(`S${index}`);
@@ -3689,7 +3883,9 @@ export class FacilityScene extends Phaser.Scene {
     for (const run of getBackedHorizontalBoundaryRuns(room, this.bridge.viewModel.rooms, "north")) {
       for (let index = run.offset + 1; index <= run.offset + run.length; index += 1) backedNorthSegments.add(`N${index}`);
     }
-    return { openDoorSegments, backedNorthSegments };
+    const state = { openDoorSegments, backedNorthSegments };
+    states.set(room.instanceId, state);
+    return state;
   }
 
   private getApprovedRoomVariant(room: FacilityRoomView): ApprovedRoomStateVariant | undefined {
@@ -4005,7 +4201,7 @@ export class FacilityScene extends Phaser.Scene {
       const entryLeft = rectangle.x + this.worldLayout.tileSize * 2;
       // The entrance threshold is floor, not wall: keep it under everyone
       // walking through the front door (above only the sidewalk edge line).
-      const threshold = this.getSortableGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics, `front-desk-threshold:${room.instanceId}`);
+      const threshold = this.getSortableGraphics(this.roomFixtureGraphics, PaintObject.RoomFixture, `front-desk-threshold:${room.instanceId}`);
       threshold.fillStyle(0xccb783, 1); threshold.fillRect(entryLeft + px(5), southY - px(2), this.worldLayout.tileSize - px(10), px(5));
       threshold.setDepth(FACILITY_DEPTH_WORLD + 31);
       for (const jambX of [entryLeft - px(12), entryLeft + this.worldLayout.tileSize]) {
@@ -4196,10 +4392,11 @@ export class FacilityScene extends Phaser.Scene {
   private refreshWorldSignatures(force = false): void {
     const model = this.bridge.viewModel;
     const before = this.worldSignatures;
-    const next = getFacilityWorldSignatures(model, false, force ? undefined : before);
+    const next = getFacilityWorldSignatures(model, force ? undefined : before);
     if (!this.doorPresentation || !before || this.signatureModel?.campaignId !== model.campaignId ||
         next.rooms.geometry !== before.rooms.geometry || next.doors.geometry !== before.doors.geometry) {
       this.doorPresentation = buildDoorPresentationIndex(model.rooms, model.doors ?? []);
+      this.approvedSegmentStates?.clear();
     }
     this.signatureModel = model;
     this.worldSignatures = next;
@@ -4338,7 +4535,7 @@ export class FacilityScene extends Phaser.Scene {
       const length = door.side === "north" || door.side === "south" ? room.width : room.height;
       const offset = Math.max(0, Math.min(length - 1, Number.isFinite(door.offset) ? Math.floor(door.offset) : 0));
       const { center } = this.getDoorGeometry(room, door.side, offset);
-      const graphics = this.getSortableGraphics(this.roomFixtureGraphics, this.activeRoomFixtureGraphics, `invalid-door:${door.instanceId}`);
+      const graphics = this.getSortableGraphics(this.roomFixtureGraphics, PaintObject.RoomFixture, `invalid-door:${door.instanceId}`);
       const size = Math.max(7, this.worldLayout.tileSize * 0.24);
       graphics.fillStyle(0xfaf1de, 1);
       graphics.fillRect(center.x - size, center.y - size, size * 2, size * 2);
@@ -5117,7 +5314,6 @@ export class FacilityScene extends Phaser.Scene {
 
     const founder = this.getFounderRoom();
     if (!founder) return;
-    const founderPixels = this.toPixels({ tileX: founder.tileX, tileY: founder.tileY, ...orientedSize(founder) });
     const entryInset = getFrontageEntryInset(founder.tileX, positiveGridSize(this.bridge.viewModel.gridRows, 10));
     // Above ground joints, far below sortable actors; outside the existing
     // threshold and interior mat. It has no vertical face or crossing shadow.
@@ -5129,7 +5325,13 @@ export class FacilityScene extends Phaser.Scene {
     // The Front Desk's south shell already omits its protected exterior door
     // tile. Do not paint a threshold, shadow, or jamb here: the room floor
     // must meet the sidewalk directly at the opening.
+  }
 
+  private drawEntrancePlanters(): void {
+    const founder = this.getFounderRoom();
+    if (!founder) return;
+    const { tileSize, sidewalkTop } = this.worldLayout;
+    const founderPixels = this.toPixels({ tileX: founder.tileX, tileY: founder.tileY, ...orientedSize(founder) });
     // The Front Desk owns its paired entrance-bed composition declaratively.
     // Their top edges touch the building within the rear sidewalk band. The
     // lower sidewalk remains a continuous public pedestrian lane.
@@ -5179,7 +5381,7 @@ export class FacilityScene extends Phaser.Scene {
     const wallDecorationGraphics = canonicalShell
       ? this.getSortableGraphics(
         this.wallDecorGraphics,
-        this.activeWallDecorGraphics,
+        PaintObject.WallDecor,
         `room-wall-decor:${room.instanceId}`,
       ).setDepth(FACILITY_DEPTH_WORLD + 21)
       : graphics;
@@ -5315,7 +5517,7 @@ export class FacilityScene extends Phaser.Scene {
         ? graphics
         : this.getSortableGraphics(
             this.fixtureGraphics,
-            this.activeFixtureGraphics,
+            PaintObject.Fixture,
             `room:${room.instanceId}:${fixtureOrder}:${id}`,
           );
       const fixtureDepth = getFacilitySceneDepth(
@@ -5941,7 +6143,7 @@ export class FacilityScene extends Phaser.Scene {
         image.setCrop(0, 0, cropWidth, cropHeight);
       }
       else if (image.isCropped) image.setCrop();
-      this.activeFixtureBitmapImages.add(key);
+      this.trackPaintObject(key, PaintObject.FixtureImage);
       if (lighting) {
         this.drawTouchupTintedTop(`${key}:tint`, textureKey, renderFrame, left, top, width, height,
           tintTopY(leftTiles + widthTiles / 2)!, lighting.color, recordDepth);
@@ -5996,7 +6198,7 @@ export class FacilityScene extends Phaser.Scene {
       if (!isApprovedProceduralDrawVisible(procedural, openDoorSegments, backedNorthSegments)) continue;
       const graphics = this.getSortableGraphics(
         this.fixtureGraphics,
-        this.activeFixtureGraphics,
+        PaintObject.Fixture,
         `approved-procedural:${room.instanceId}:${procedural.id}`,
       );
       const proofRect = getApprovedProceduralScreenRect(procedural, presentation.shell.tilePixels);
@@ -6120,7 +6322,7 @@ export class FacilityScene extends Phaser.Scene {
       .setCrop(0, 0, source.width, rows)
       .setDepth(depth + .5)
       .setVisible(true);
-    this.activeFixtureBitmapImages.add(key);
+    this.trackPaintObject(key, PaintObject.FixtureImage);
   }
 
   /** A multiplied copy of one frame, alpha-masked to the original silhouette. */
@@ -6197,7 +6399,7 @@ export class FacilityScene extends Phaser.Scene {
       .setDepth(depth)
       .setVisible(true)
       .setData("touchup-decor", key);
-    this.activeFixtureBitmapImages.add(key);
+    this.trackPaintObject(key, PaintObject.FixtureImage);
     return { textureKey, frame, left: centerX - width / 2, top, width, height, depth };
   }
 
@@ -6216,11 +6418,11 @@ export class FacilityScene extends Phaser.Scene {
   ): void {
     const scale = this.worldLayout.tileSize / TOUCHUP_TILE_PIXELS;
     const southEdge = rectangle.y + rectangle.height + shell.southHeightPixels * this.worldLayout.tileSize / shell.tilePixels;
-    const tint = this.getSortableGraphics(this.fixtureGraphics, this.activeFixtureGraphics, `touchup-light:${room.instanceId}`);
+    const tint = this.getSortableGraphics(this.fixtureGraphics, PaintObject.Fixture, `touchup-light:${room.instanceId}`);
     tint.setBlendMode(Phaser.BlendModes.MULTIPLY);
     this.drawTouchupPrimitives(tint, lighting.regions, rectangle.x, rectangle.y, scale);
     tint.setDepth(getFacilitySceneDepth(southEdge, "character", 63));
-    const glow = this.getSortableGraphics(this.fixtureGraphics, this.activeFixtureGraphics, `touchup-glow:${room.instanceId}`);
+    const glow = this.getSortableGraphics(this.fixtureGraphics, PaintObject.Fixture, `touchup-glow:${room.instanceId}`);
     glow.setBlendMode(Phaser.BlendModes.SCREEN);
     this.drawTouchupPrimitives(glow, lighting.glows, rectangle.x, rectangle.y, scale);
     glow.setDepth(getFacilitySceneDepth(southEdge, "character", 63) + .5);
@@ -8269,94 +8471,20 @@ export class FacilityScene extends Phaser.Scene {
     this.bridge.onAlertPinPositionsChange?.(positions);
   }
 
-  private positionText(): void {
+  private positionText(resetStarOrder: boolean): void {
     const { originX, originY, width, tileSize } = this.worldLayout;
     const model = this.bridge.viewModel;
     const compact = this.scale.width < 520;
-
-    this.roomTexts.forEach((text) => text.destroy());
-    this.roomTexts = [];
-    this.roomStarGraphics ??= this.add
-      .graphics()
-      .setDepth(FACILITY_DEPTH_UI);
-    const starGraphics = this.roomStarGraphics;
-    starGraphics.clear();
-    starGraphics.setVisible(Boolean(model.buildMode));
-    const fontSize = Math.max(8, Math.min(12, Math.floor(tileSize * 0.26)));
-    // Stars grow with zoom in whole pixels so they stay crisp.
-    const starPixel = Math.max(1, Math.min(3, Math.round(tileSize / 26)));
-    model.rooms
-      .filter(
-        (room) =>
-          room.kind !== "hallway" && room.definitionId !== "room.hallway",
-      )
-      .forEach((room) => {
-        const pixels = this.toPixels({
-          tileX: room.tileX,
-          tileY: room.tileY,
-          ...orientedSize(room),
-        });
-        const label = this.add
-          .text(
-            pixels.x + pixels.width / 2,
-            pixels.y + Math.max(5, Math.floor(tileSize * 0.16)),
-            room.buildLabel ?? room.displayName,
-            {
-              color: "#232720",
-              backgroundColor: "#e0ded0",
-              fontFamily: '"Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif',
-              fontSize: `${fontSize}px`,
-              fontStyle: "bold",
-              align: "center",
-              resolution: 2,
-              padding: {
-                x: 4,
-                y: 2,
-              },
-              wordWrap: {
-                width: Math.max(10, pixels.width - 16),
-                useAdvancedWrap: true,
-              },
-            },
-          )
-          .setOrigin(0.5, 0);
-        label.setDepth(FACILITY_DEPTH_UI);
-        // Room names remain available while renovating; ordinary play relies
-        // on the illustrated room itself instead of covering the rear wall
-        // with debug-like labels.
-        label.setVisible(Boolean(model.buildMode));
-        this.roomTexts.push(label);
-
-        let nextTop = label.y + label.displayHeight;
-        const maxLevel = room.upgradeMaxLevel ?? 1;
-        if (model.buildMode && maxLevel > 1) {
-          nextTop = this.drawBuildLabelStars(
-            starGraphics,
-            label.x,
-            nextTop,
-            Math.max(1, Math.min(maxLevel, room.upgradeLevel ?? 1)),
-            maxLevel,
-            Boolean(room.upgradeAffordable),
-            starPixel,
-          );
-        }
-        if (room.accessProblem) {
-          const problem = this.add
-            .text(label.x, nextTop + 2, "! NO ACCESS", {
-              color: "#f0eddd",
-              backgroundColor: "#9b3b25",
-              fontFamily: '"Courier New", "Lucida Console", Monaco, ui-monospace, monospace',
-              fontSize: `${Math.max(8, fontSize - 1)}px`,
-              fontStyle: "bold",
-              resolution: 2,
-              padding: { x: 3, y: 1 },
-            })
-            .setOrigin(0.5, 0)
-            .setDepth(FACILITY_DEPTH_UI)
-            .setVisible(Boolean(model.buildMode));
-          this.roomTexts.push(problem);
-        }
-      });
+    if (!model.buildMode) {
+      for (const label of this.roomTexts) label.destroy();
+      this.roomTexts.length = 0;
+      this.roomStarGraphics?.clear();
+      this.roomStarGraphics?.setVisible(false);
+      this.roomStarSpans?.clear();
+      this.lastStarSpan = undefined;
+    } else {
+      this.positionBuildRoomLabels(resetStarOrder);
+    }
 
     this.footerText
       ?.setFontSize(compact ? 10 : 12)
@@ -8370,6 +8498,91 @@ export class FacilityScene extends Phaser.Scene {
         originY + this.worldLayout.height + Math.max(7, Math.floor(tileSize * 0.18)),
       );
     if (this.bridge.mobileInput === true) this.footerText?.setVisible(false);
+  }
+
+  private positionBuildRoomLabels(resetStarOrder: boolean): void {
+    const { tileSize } = this.worldLayout;
+    const model = this.bridge.viewModel;
+    const existing = new Map(this.roomTexts.map(label => [label.name, label]));
+    this.roomTexts.length = 0;
+    const starGraphics = this.roomStarGraphics ??= this.add.graphics().setDepth(FACILITY_DEPTH_UI);
+    starGraphics.setVisible(true);
+    if (resetStarOrder || !editableCommands(starGraphics)) {
+      starGraphics.clear();
+      this.roomStarSpans?.clear();
+      this.lastStarSpan = undefined;
+    }
+    const fontSize = Math.max(8, Math.min(12, Math.floor(tileSize * 0.26)));
+    const starPixel = Math.max(1, Math.min(3, Math.round(tileSize / 26)));
+    for (const room of model.rooms) {
+      if (room.kind === "hallway" || room.definitionId === "room.hallway") continue;
+      const pixels = this.toPixels({ tileX: room.tileX, tileY: room.tileY, ...orientedSize(room) });
+      const x = pixels.x + pixels.width / 2;
+      const y = pixels.y + Math.max(5, Math.floor(tileSize * 0.16));
+      const wrap = Math.max(10, pixels.width - 16);
+      const text = room.buildLabel ?? room.displayName;
+      const key = `build-room:${room.instanceId}`;
+      let label = existing.get(key);
+      existing.delete(key);
+      if (!label) {
+        label = this.add.text(x, y, text, {
+          color: "#232720", backgroundColor: "#e0ded0",
+          fontFamily: '"Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif',
+          fontSize: `${fontSize}px`, fontStyle: "bold", align: "center", resolution: 2,
+          padding: { x: 4, y: 2 }, wordWrap: { width: wrap, useAdvancedWrap: true },
+        }).setOrigin(0.5, 0).setDepth(FACILITY_DEPTH_UI).setName(key).setData("wrap", wrap);
+      } else {
+        if (label.text !== text) label.setText(text);
+        if (label.x !== x || label.y !== y) label.setPosition(x, y);
+        if (label.style.fontSize !== `${fontSize}px` || label.getData("wrap") !== wrap) {
+          label.setStyle({ fontSize: `${fontSize}px`, wordWrap: { width: wrap, useAdvancedWrap: true } }).setData("wrap", wrap);
+        }
+      }
+      this.roomTexts.push(label);
+
+      const nextTop = this.paintRoomStars(starGraphics, room, label, starPixel);
+      if (!room.accessProblem) continue;
+      const warningKey = `build-access:${room.instanceId}`;
+      const warningFont = `${Math.max(8, fontSize - 1)}px`;
+      let warning = existing.get(warningKey);
+      existing.delete(warningKey);
+      if (!warning) {
+        warning = this.add.text(x, nextTop + 2, "! NO ACCESS", {
+          color: "#f0eddd", backgroundColor: "#9b3b25",
+          fontFamily: '"Courier New", "Lucida Console", Monaco, ui-monospace, monospace',
+          fontSize: warningFont, fontStyle: "bold", resolution: 2, padding: { x: 3, y: 1 },
+        }).setOrigin(0.5, 0).setDepth(FACILITY_DEPTH_UI).setName(warningKey);
+      } else {
+        if (warning.x !== x || warning.y !== nextTop + 2) warning.setPosition(x, nextTop + 2);
+        if (warning.style.fontSize !== warningFont) warning.setFontSize(warningFont);
+      }
+      this.roomTexts.push(warning);
+    }
+    for (const label of existing.values()) label.destroy();
+  }
+
+  private paintRoomStars(graphics: Phaser.GameObjects.Graphics, room: FacilityRoomView, label: Phaser.GameObjects.Text, pixel: number): number {
+    const maxLevel = room.upgradeMaxLevel ?? 1;
+    const level = Math.max(1, Math.min(maxLevel, room.upgradeLevel ?? 1));
+    const affordable = Boolean(room.upgradeAffordable) && level < maxLevel;
+    const top = label.y + label.displayHeight;
+    const key = `${label.x}:${top}:${pixel}:${level}:${maxLevel}:${affordable}`;
+    const commands = editableCommands(graphics);
+    if (!commands) return maxLevel > 1 ? this.drawBuildLabelStars(graphics, label.x, top, level, maxLevel, affordable, pixel) : top;
+    const appendedAt = commands.length;
+    const spans = this.roomStarSpans ??= new Map<string, RoomStarSpan>();
+    let span = spans.get(room.instanceId);
+    if (span?.key === key) return span.bottom;
+    if (!span) {
+      span = { key, bottom: top, start: appendedAt, length: 0 };
+      spans.set(room.instanceId, span);
+      if (this.lastStarSpan) this.lastStarSpan.next = span;
+      this.lastStarSpan = span;
+    }
+    span.key = key;
+    span.bottom = maxLevel > 1 ? this.drawBuildLabelStars(graphics, label.x, top, level, maxLevel, affordable, pixel) : top;
+    shiftFollowingSpans(span, replaceCommandSpan(commands, span.start, span.length, appendedAt));
+    return span.bottom;
   }
 
   private setInteractionHint(
@@ -9166,7 +9379,7 @@ export class FacilityScene extends Phaser.Scene {
     // A React echo of the previous input may arrive before Phaser's next
     // update. Consume that request before assigning this newer gesture so
     // calculateLayout cannot overwrite it with the previous input's camera.
-    this.lastRequestedCameraSignature = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(this.bridge.viewModel.camera)}`;
+    this.lastRequestedCameraSignature = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(this.requestedCamera)}`;
     this.cameraCampaignId = this.bridge.viewModel.campaignId;
     this.cameraView = camera;
     this.layout = this.calculateLayout(Math.max(1, Math.floor(this.scale.width)), Math.max(1, Math.floor(this.scale.height)));
@@ -9213,9 +9426,10 @@ export class FacilityScene extends Phaser.Scene {
   public getCameraPreference(): Readonly<FacilityCameraView> | null {
     // A settled-resize timer may run before the next Phaser frame. Never
     // publish the old projection over a new campaign or explicit camera input.
-    const requested = `${this.bridge.viewModel.campaignId ?? ""}:${facilityCameraSignature(this.bridge.viewModel.camera)}`;
+    const signature = facilityCameraSignature(this.requestedCamera);
+    const requested = `${this.bridge.viewModel.campaignId ?? ""}:${signature}`;
     const echoed = this.cameraCampaignId === this.bridge.viewModel.campaignId &&
-      facilityCameraSignature(this.bridge.viewModel.camera) === facilityCameraSignature(this.cameraView);
+      signature === facilityCameraSignature(this.cameraView);
     return requested === this.lastRequestedCameraSignature || echoed ? this.cameraView : null;
   }
 

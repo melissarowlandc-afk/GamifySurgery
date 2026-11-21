@@ -4,7 +4,7 @@ import type { SubmitQuestionReviewFlag } from "./session/questionReviewFlags";
 import { clinicFeedForTutorial } from "./session/tutorialTipsIntegration";
 import { TesterFeedbackMenu } from "./feedback/TesterFeedback";
 import { ActionFeedbackLayer } from "./ui/ActionFeedbackLayer";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { EmployeeDiscussionPanel } from "./ui/EmployeeDiscussionPanel";
 import { RoomActionMenu, type RoomMenuAnchor } from "./ui/RoomActionMenu";
 import { ClinicHeadline } from "./ui/ClinicHeadline";
@@ -102,6 +102,8 @@ interface AppShellProps {
   onAcknowledgeEmployeeDiscussion?: () => void;
   onFileEmployeeDiscussion?: () => void;
   facility: FacilityViewModel;
+  facilityCamera?: FacilityCameraView;
+  readBuildDoorSlots?: (preferredRoomId: string | null) => FacilityViewModel["buildDoorSlots"];
   progression: ProgressionView;
   roomOptions: RoomBuildOptionView[];
   ownedRooms?: OwnedRoomBuildView[];
@@ -231,6 +233,8 @@ export function AppShell({
   onAcknowledgeEmployeeDiscussion = () => {},
   onFileEmployeeDiscussion = () => {},
   facility,
+  facilityCamera,
+  readBuildDoorSlots,
   progression,
   roomOptions,
   ownedRooms = [],
@@ -379,7 +383,7 @@ export function AppShell({
   const dailyRoutineHighlightTipRef = useRef<string | null>(null);
   const activeCampaignId =
     campaigns.find((campaign) => campaign.active)?.campaignId ?? null;
-  const camera = facility.camera ?? { zoom: 1, panX: 0, panY: 0 };
+  const camera = facilityCamera ?? facility.camera ?? { zoom: 1, panX: 0, panY: 0 };
   useEffect(() => { setClinicActionFailures({}); setChartHighlightRequest(null); }, [activeCampaignId]);
   const developmentToolPreference = new URLSearchParams(
     window.location.search,
@@ -697,14 +701,26 @@ export function AppShell({
     }
   };
 
-  const clinicNeeds: NeedsYouItemView[] = [
+  const clinicNeeds = useMemo<NeedsYouItemView[]>(() => [
     ...systemNotices.filter((notice) => notice.targetType === "save").slice(-1).map((notice): NeedsYouItemView => ({
       id: notice.id, kind: "save", title: "Campaign save failed", why: notice.message,
       sortKey: notice.sortKey ?? 0, timeLabel: notice.timeLabel,
       action: { kind: "save_and_pause" }, actionLabel: "Retry save & pause", targetType: "save",
     })),
     ...needsYou,
-  ];
+  ], [systemNotices, needsYou]);
+  const facilityMap = useMemo(() => ({
+    ...facility,
+    buildDoorTool,
+    ...(readBuildDoorSlots ? { buildDoorSlots: buildMode && buildDoorTool === "place"
+      ? readBuildDoorSlots(facility.selectedRoomInstanceId ?? null) : undefined } : {}),
+    selectedPatientInstanceId: locatedPatientId,
+    alertPins: clinicNeeds.slice(0, 3).flatMap(item => item.pin ? [{ id: item.id, title: item.title,
+      actionLabel: item.actionLabel, target: item.pin }] : []),
+    ...(facility.waterCooler ? { waterCooler: { ...facility.waterCooler, highlighted: waterCoolerHighlightKey > 0 } } : {}),
+    ...(facility.litterItems ? { litterItems: facility.litterItems.map(litter => ({ ...litter,
+      highlighted: litter.instanceId === highlightedLitterId })) } : {}),
+  }), [facility, buildDoorTool, readBuildDoorSlots, buildMode, locatedPatientId, clinicNeeds, waterCoolerHighlightKey, highlightedLitterId]);
   const clinicFeed = clinicFeedForTutorial([...messages, ...systemNotices.filter((notice) => notice.targetType !== "save")], tutorialStep);
   const runClinicAction = async (id: string, action: ClinicAlertAction) => {
     if (action.kind === "save_and_pause" && cloudSave) { await cloudSave.onSaveAndClose(); return; }
@@ -875,32 +891,8 @@ export function AppShell({
                 data-tutorial-anchor="facility-surface"
               />
               <FacilityCanvas
-                viewModel={{
-                  ...facility,
-                  buildDoorTool,
-                  selectedPatientInstanceId: locatedPatientId,
-                  alertPins: clinicNeeds.slice(0, 3).flatMap((item) => item.pin ? [{ id: item.id, title: item.title, actionLabel: item.actionLabel, target: item.pin }] : []),
-                  ...(facility.waterCooler
-                    ? {
-                        waterCooler: {
-                          ...facility.waterCooler,
-                          highlighted: waterCoolerHighlightKey > 0,
-                        },
-                      }
-                    : {}),
-                  ...(facility.litterItems
-                    ? {
-                        litterItems: facility.litterItems.map(
-                          (litter) => ({
-                            ...litter,
-                            highlighted:
-                              litter.instanceId ===
-                              highlightedLitterId,
-                          }),
-                        ),
-                      }
-                    : {}),
-                }}
+                viewModel={facilityMap}
+                camera={facilityCamera}
                 onPlaceRoom={placeRoomAndArmDoors}
                 onSelectRoom={openRoomMenu}
                 onPlaceDoor={onPlaceDoor}

@@ -38,8 +38,11 @@ function harness(id: string, tier: NonNullable<FacilityRoomView["upgradeLevel"]>
   scene.drawTouchupSprite = () => undefined;
   scene.drawTouchupPrimitives = vi.fn();
   const draw = () => {
-    scene.activeFixtureBitmapImages.clear();
-    return scene.drawApprovedRoomFixtures(room, { x: 31, y: 83, width: width! * tileSize, height: height! * tileSize });
+    let painted = false;
+    scene.paintScope(room.instanceId, () => {
+      painted = scene.drawApprovedRoomFixtures(room, { x: 31, y: 83, width: width! * tileSize, height: height! * tileSize });
+    });
+    return painted;
   };
   const imageFor = (id: string): Image => [...scene.fixtureBitmapImages.values()].find((image: any) => image.getData("approved-draw-id") === id) as Image;
   return { scene, room, draw, imageFor, doors, backed };

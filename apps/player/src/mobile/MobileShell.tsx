@@ -478,7 +478,10 @@ export default function MobileShell(props: PrototypeShellProps) {
     <main className="mobile-content" aria-label="Clinic workspace">
       <div className="mobile-workspace" style={{ "--mobile-build-control-height": `${build.controlsHeight}px` } as CSSProperties}>
       <div className="mobile-map" data-phone-anchor="map" ref={hostRef} style={props.buildMode ? { bottom: build.controlsHeight } : undefined}>
-        <FacilityCanvas viewModel={phoneLocatedModel({ ...props.facility, buildDoorTool: doorTool }, mapFocus)} focus={mapFocus} style={{ height: "100%", border: 0 }}
+        <FacilityCanvas viewModel={phoneLocatedModel({ ...props.facility, buildDoorTool: doorTool,
+          ...(props.readBuildDoorSlots ? { buildDoorSlots: props.buildMode && doorTool === "place"
+            ? props.readBuildDoorSlots(props.facility.selectedRoomInstanceId ?? null) : undefined } : {}),
+        }, mapFocus)} focus={mapFocus} style={{ height: "100%", border: 0 }}
           mobileMapCovered={mobileMapIsCovered(navigation.tab, visiblePanel ? visiblePanel.kind ?? "full" : null, restartOpen || reviewOpen)}
           mobileFacilityLevel={props.campaigns.find(campaign => campaign.active)?.facilityLevel ?? 0} mobilePreviewRoomIds={previewRoomIds}
           mobileBuild={build.map} onPlaceRoom={props.onPlaceRoom} onSelectRoom={openRoom} onRequestRoomUpgrade={openRoom} onPlaceDoor={props.onPlaceDoor} onRemoveDoor={props.onRemoveDoor}

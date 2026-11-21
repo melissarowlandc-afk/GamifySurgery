@@ -1,8 +1,9 @@
 import { bindProblemDiagnostics, problemDiagnostics } from "./diagnostics/problemDiagnostics";
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { PROTOTYPE_DOMAIN_CONTEXT, serializeGameState } from "@gamify-surgery/game-domain";
 import { preloadPrototypeShell, PrototypeShell } from "./PrototypeShell";
 import { getTutorialClockMultiplier } from "./session/tutorialTiming";
+import { createBuildDoorSlotReader } from "./session/viewModels";
 import {
   appendLocalCampaign,
   archiveLocalCampaign,
@@ -74,6 +75,9 @@ export function ActivePrototypeGame({
   onRequestRestart,
 }: ActivePrototypeGameProps) {
   const session = usePrototypeSession(loadedProfile, cloudSession, openingCovered);
+  const buildDoorSlotReader = useMemo(createBuildDoorSlotReader, []);
+  const readBuildDoorSlots = useCallback((preferredRoomId: string | null) =>
+    buildDoorSlotReader(session.state, preferredRoomId), [buildDoorSlotReader, session.state]);
   const cloudAccount = useCloudAccount();
   const casualMode = useCasualMode();
   useEffect(() => {
@@ -91,13 +95,12 @@ export function ActivePrototypeGame({
         session.buildMode,
         session.selectedRoomInstanceId,
         session.placementOrientation,
-        session.facilityCamera,
+        undefined,
         session.questionReviewFlags,
         casualMode,
       ),
     [
       session.buildMode,
-      session.facilityCamera,
       session.placementOrientation,
       session.questionReviewFlags,
       session.selectedRoomDefinitionId,
@@ -107,6 +110,14 @@ export function ActivePrototypeGame({
       casualMode,
     ],
   );
+  const clockMultiplier = getTutorialClockMultiplier(session.state, session.tutorialsEnabled);
+  const facility = useMemo(() => ({
+    ...view.facility,
+    blueprintRemodel: session.remodelBlueprint.active,
+    remodelGhosts: session.remodelGhosts,
+    placement: view.facility.placement ? { ...view.facility.placement, movingRoomId: session.movingRoomInstanceId ?? undefined } : null,
+    realMillisecondsPerFacilityMinuteAt1x: view.facility.realMillisecondsPerFacilityMinuteAt1x / clockMultiplier,
+  }), [view.facility, session.remodelBlueprint.active, session.remodelGhosts, session.movingRoomInstanceId, clockMultiplier]);
 
   return (
     <>
@@ -167,13 +178,9 @@ export function ActivePrototypeGame({
       onAnswerEmployeeDiscussion={session.answerEmployeeDiscussion}
       onAcknowledgeEmployeeDiscussion={session.acknowledgeEmployeeDiscussion}
       onFileEmployeeDiscussion={session.fileEmployeeDiscussion}
-      facility={{
-        ...view.facility,
-        blueprintRemodel: session.remodelBlueprint.active, remodelGhosts: session.remodelGhosts,
-        placement: view.facility.placement ? { ...view.facility.placement, movingRoomId: session.movingRoomInstanceId ?? undefined } : null,
-        realMillisecondsPerFacilityMinuteAt1x: view.facility.realMillisecondsPerFacilityMinuteAt1x /
-          getTutorialClockMultiplier(session.state, session.tutorialsEnabled),
-      }}
+      facility={facility}
+      facilityCamera={session.facilityCamera}
+      readBuildDoorSlots={readBuildDoorSlots}
       progression={view.progression}
       roomOptions={view.roomOptions}
       ownedRooms={view.ownedRooms}

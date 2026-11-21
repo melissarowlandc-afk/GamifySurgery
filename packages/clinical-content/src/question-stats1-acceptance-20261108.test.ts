@@ -103,8 +103,10 @@ describe("stats1 exact manager acceptance and frozen identities",()=>{
   for (const [p, h] of Object.entries(before.files)) {
    if (pins.has(p)) continue;
    const url = new URL("../../../" + p, import.meta.url);
-   if (p === "apps/player/src/session/cloud/uploadRaces.test.ts" ||
+   if (p === "apps/player/src/session/cloud/operationalSessionView.ts" ||
+       p === "apps/player/src/session/cloud/uploadRaces.test.ts" ||
        p === "packages/game-domain/src/colleagueNames.ts" ||
+       p === "packages/game-domain/src/doors.ts" ||
        p === "packages/game-domain/src/executive-management.ts" ||
        p === "packages/game-domain/src/inspection-presentation.ts" ||
        p === "packages/game-domain/src/room-upkeep-outages.ts") {

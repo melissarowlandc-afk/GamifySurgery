@@ -31,18 +31,46 @@ export function measureGraphicsBounds(buffer: readonly number[]): GraphicsBounds
   return { left: left - margin, top: top - margin, right: right + margin, bottom: bottom + margin };
 }
 
-type Camera = { rotation?: number; worldView?: { x: number; y: number; width: number; height: number } };
+type Viewport = { x: number; y: number; width: number; height: number };
+type Camera = {
+  rotation?: number;
+  worldView?: Viewport;
+  x?: number; y?: number; width?: number; height?: number;
+  matrixCombined?: { a: number; b: number; c: number; d: number; e: number; f: number };
+  isObjectInversion?: boolean;
+  renderToTexture?: boolean;
+};
 type Graphics = {
   commandBuffer: number[]; x: number; y: number; rotation: number; scaleX: number; scaleY: number;
   scrollFactorX: number; scrollFactorY: number;
   clear: (...args: any[]) => any; renderCanvas?: (...args: any[]) => any;
 };
 export function graphicsOutsideCamera(bounds: GraphicsBounds | null, graphics: Omit<Graphics, "commandBuffer" | "clear" | "renderCanvas">, camera: Camera): boolean {
-  const view = camera.worldView;
-  if (!bounds || !view || camera.rotation || graphics.rotation || graphics.scaleX !== 1 || graphics.scaleY !== 1 ||
+  if (!bounds || camera.rotation || camera.isObjectInversion || camera.renderToTexture ||
+    graphics.rotation || graphics.scaleX !== 1 || graphics.scaleY !== 1 ||
     graphics.scrollFactorX !== 1 || graphics.scrollFactorY !== 1) return false;
-  return bounds.right + graphics.x < view.x || bounds.left + graphics.x > view.x + view.width ||
-    bounds.bottom + graphics.y < view.y || bounds.top + graphics.y > view.y + view.height;
+
+  // GetCalcMatrix uses matrixCombined at scroll factor 1. worldView is
+  // centered on the camera's midpoint even when its render origin isn't.
+  // Translate the viewport edges into the graphics' local coordinates.
+  const matrix = camera.matrixCombined;
+  if (matrix) {
+    const { a, b, c, d, e, f } = matrix;
+    const { x, y, width, height } = camera;
+    if (b !== 0 || c !== 0 || !(a > 0 && d > 0) ||
+      x === undefined || y === undefined || width === undefined || height === undefined ||
+      !(width > 0 && height > 0) || !Number.isFinite(a + d + e + f + x + y + width + height)) return false;
+    const left = (x - e) / a - graphics.x;
+    const top = (y - f) / d - graphics.y;
+    return bounds.right < left || bounds.left > left + width / a ||
+      bounds.bottom < top || bounds.top > top + height / d;
+  }
+
+  // Callers without a Phaser camera can provide an already resolved world clip.
+  const view = camera.worldView;
+  return Boolean(view && camera.width === undefined && (
+    bounds.right + graphics.x < view.x || bounds.left + graphics.x > view.x + view.width ||
+    bounds.bottom + graphics.y < view.y || bounds.top + graphics.y > view.y + view.height));
 }
 const entries = new WeakMap<Graphics, { bounds: GraphicsBounds | null }>();
 
@@ -57,9 +85,9 @@ export function retainGraphicsViewportBounds(graphics: Graphics): void {
     entry = { bounds: null }; entries.set(graphics, entry);
     const state = entry, clear = graphics.clear, render = graphics.renderCanvas;
     graphics.clear = function (...args) { state.bounds = null; return clear.apply(this, args); };
-    graphics.renderCanvas = function (renderer, source, camera, parentMatrix, ...rest) {
-      if (source === this && !parentMatrix && !rest[0] && graphicsOutsideCamera(state.bounds, this, camera)) return;
-      return render.call(this, renderer, source, camera, parentMatrix, ...rest);
+    graphics.renderCanvas = function (renderer, source, camera, parentMatrix, target, allowClip) {
+      if (source === this && !parentMatrix && !target && !allowClip && graphicsOutsideCamera(state.bounds, this, camera)) return;
+      return render.call(this, renderer, source, camera, parentMatrix, target, allowClip);
     };
   }
   entry.bounds = measureGraphicsBounds(graphics.commandBuffer);

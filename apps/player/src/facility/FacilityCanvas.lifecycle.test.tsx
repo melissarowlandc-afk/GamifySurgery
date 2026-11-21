@@ -75,7 +75,7 @@ it("leaves the desktop frame configuration and interaction lifecycle unchanged",
   await cleanupPhoneTests(); expect(game.destroy).toHaveBeenCalledWith(true); expect(game.loop.wake).not.toHaveBeenCalled();
 });
 
-it("resizes the desktop bitmap and live scene once per frame, publishing the camera only after resizing settles", async () => {
+it("resizes the desktop bitmap and camera at the retained tile size, publishing only after resizing settles", async () => {
   vi.useFakeTimers();
   let notify!: ResizeObserverCallback;
   vi.stubGlobal("ResizeObserver", class { constructor(callback: ResizeObserverCallback) { notify = callback; } observe() {} disconnect() {} });
@@ -112,7 +112,7 @@ it("resizes the desktop bitmap and live scene once per frame, publishing the cam
     await act(async () => { vi.advanceTimersByTime(DESKTOP_CAMERA_RESIZE_SETTLE_MS + 1); });
     expect(changed).not.toHaveBeenCalled();
   }
-  expect(scene.drawWorld).toHaveBeenCalledTimes(5);
+  expect(scene.drawWorld).not.toHaveBeenCalled();
   env.browser.dispatchEvent(new Event("pointerup"));
   await act(async () => { vi.advanceTimersByTime(DESKTOP_CAMERA_RESIZE_SETTLE_MS); });
   expect(changed).toHaveBeenCalledOnce();

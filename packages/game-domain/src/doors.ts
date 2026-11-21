@@ -6,9 +6,11 @@ import type {
   PlacedRoom,
 } from "./types";
 import {
+  getDoorCellsForSpatial,
   getOccupiedTiles,
   getRotatedFootprint,
   isRoomDoorThresholdProofNavigable,
+  prepareDoorThresholdOccupants,
 } from "./spatial";
 
 const CARDINAL_OFFSET: Record<CardinalDirection, GridPoint> = {
@@ -146,17 +148,65 @@ function doorForPhysicalThreshold(
   return null;
 }
 
-/** Every clinical room touching a physical opening must accept that threshold. */
-export function areDoorThresholdsProofNavigable(
-  door: DoorState,
+interface DoorPreviewGeometry {
+  byId: ReadonlyMap<string, PlacedRoom>;
+  occupants: ReturnType<typeof prepareDoorThresholdOccupants>;
+  hasDuplicate: (edge: string, id: string) => boolean;
+  hasProofDoor: (edge: string, id: string) => boolean;
+}
+
+/** Read a batch of hypothetical doors against the same ordered base geometry.
+ * The prospective edge overlays saved edges by ID for both sides' fixture proof. */
+export function prepareDoorPlacementPreview(
   rooms: readonly PlacedRoom[],
   doors: readonly DoorState[],
-  getDefinition: (definitionId: string) => RoomDefinition | null,
-): boolean {
-  const owner = rooms.find((room) => room.id === door.roomId);
-  const ownerDefinition = owner ? getDefinition(owner.roomDefinitionId) : null;
-  const cells = owner && ownerDefinition ? getDoorCells(door, owner, ownerDefinition) : null;
-  if (!cells) return false;
+  getDefinition: (id: string) => RoomDefinition | null,
+  gridWidth: number,
+  gridHeight: number,
+  protectedRoomDefinitionIds: ReadonlySet<string>,
+) {
+  const byId = new Map<string, PlacedRoom>();
+  for (const room of rooms) if (!byId.has(room.id)) byId.set(room.id, room);
+  // null marks edges with more than one distinct ID. Replacing one still
+  // leaves a saved door on that edge, even if a legacy layout has duplicates.
+  const edges = new Map<string, string | null>();
+  const legacyProofEdges = new Map<string, string | null>();
+  for (const door of doors) {
+    const room = byId.get(door.roomId);
+    const definition = room && getDefinition(room.roomDefinitionId);
+    const cells = room && definition && getDoorCellsForSpatial(door, room, definition);
+    if (!cells) continue;
+    // The authoritative duplicate check accepts integer offsets only. Layout
+    // fixture proof also observes physical edges from legacy saved offsets.
+    const map = Number.isSafeInteger(door.offset) ? edges : legacyProofEdges;
+    const key = physicalDoorKey(cells);
+    const prior = map.get(key);
+    map.set(key, prior === undefined || prior === door.id ? door.id : null);
+  }
+  const hasOtherDoor = (map: ReadonlyMap<string, string | null>, edge: string, id: string) => {
+    const saved = map.get(edge);
+    return saved !== undefined && saved !== id;
+  };
+  const geometry: DoorPreviewGeometry = {
+    byId,
+    occupants: prepareDoorThresholdOccupants(rooms, doors, getDefinition),
+    hasDuplicate: (edge, id) => hasOtherDoor(edges, edge, id),
+    hasProofDoor: (edge, id) => hasOtherDoor(edges, edge, id) || hasOtherDoor(legacyProofEdges, edge, id),
+  };
+  return {
+    room: (id: string) => byId.get(id),
+    validate: (door: DoorState) => validateDoorPlacement(
+      door, rooms, doors, getDefinition, gridWidth, gridHeight, protectedRoomDefinitionIds, geometry,
+    ),
+  };
+}
+
+function roomsTouchingDoor(cells: NonNullable<ReturnType<typeof getDoorCells>>, rooms: readonly PlacedRoom[],
+  getDefinition: (id: string) => RoomDefinition | null, preview?: DoorPreviewGeometry): readonly PlacedRoom[] {
+  if (preview) {
+    const indices = new Set([...preview.occupants(cells.inside), ...preview.occupants(cells.outside)]);
+    return [...indices].sort((a, b) => a - b).map(index => rooms[index]!);
+  }
   const touching = rooms.filter((room) => {
     const definition = getDefinition(room.roomDefinitionId);
     return Boolean(
@@ -166,6 +216,23 @@ export function areDoorThresholdsProofNavigable(
       ),
     );
   });
+  return touching;
+}
+
+/** Every clinical room touching a physical opening must accept that threshold. */
+export function areDoorThresholdsProofNavigable(
+  door: DoorState,
+  rooms: readonly PlacedRoom[],
+  doors: readonly DoorState[],
+  getDefinition: (definitionId: string) => RoomDefinition | null,
+  preview?: DoorPreviewGeometry,
+  hasPhysicalDoor?: (key: string) => boolean,
+): boolean {
+  const owner = preview ? preview.byId.get(door.roomId) : rooms.find((room) => room.id === door.roomId);
+  const ownerDefinition = owner ? getDefinition(owner.roomDefinitionId) : null;
+  const cells = owner && ownerDefinition ? getDoorCells(door, owner, ownerDefinition) : null;
+  if (!cells) return false;
+  const touching = roomsTouchingDoor(cells, rooms, getDefinition, preview);
   for (const room of touching) {
     const definition = getDefinition(room.roomDefinitionId);
     if (!definition || definition.kind === "hallway") continue;
@@ -179,6 +246,7 @@ export function areDoorThresholdsProofNavigable(
         doors,
         rooms,
         getDefinition,
+        hasPhysicalDoor,
       )
     ) return false;
   }
@@ -199,8 +267,9 @@ export function validateDoorPlacement(
   gridWidth: number,
   gridHeight: number,
   protectedRoomDefinitionIds: ReadonlySet<string>,
+  preview?: DoorPreviewGeometry,
 ): DoorPlacementValidation {
-  const room = rooms.find((candidate) => candidate.id === door.roomId);
+  const room = preview ? preview.byId.get(door.roomId) : rooms.find((candidate) => candidate.id === door.roomId);
   const definition = room
     ? getDefinition(room.roomDefinitionId)
     : null;
@@ -219,10 +288,12 @@ export function validateDoorPlacement(
       adjacentRoomId: null,
     };
   }
-  const effectiveDoors = [
+  const effectiveDoors = preview ? doors : [
     ...doors.filter((candidate) => candidate.id !== door.id),
     door,
   ];
+  const edge = physicalDoorKey(cells);
+  const hasPhysicalDoor = preview ? (key: string) => edge === key || preview.hasProofDoor(key, door.id) : undefined;
   if (
     !isRoomDoorThresholdProofNavigable(
       door,
@@ -231,6 +302,7 @@ export function validateDoorPlacement(
       effectiveDoors,
       rooms,
       getDefinition,
+      hasPhysicalDoor,
     )
   ) {
     return {
@@ -239,8 +311,7 @@ export function validateDoorPlacement(
       adjacentRoomId: null,
     };
   }
-  const duplicateKey = physicalDoorKey(cells);
-  const duplicatesExistingDoor = doors.some((candidate) => {
+  const duplicatesExistingDoor = preview ? preview.hasDuplicate(edge, door.id) : doors.some((candidate) => {
     if (candidate.id === door.id) {
       return false;
     }
@@ -256,7 +327,7 @@ export function validateDoorPlacement(
         : null;
     return (
       candidateCells !== null &&
-      physicalDoorKey(candidateCells) === duplicateKey
+      physicalDoorKey(candidateCells) === edge
     );
   });
   if (duplicatesExistingDoor) {
@@ -291,7 +362,8 @@ export function validateDoorPlacement(
       adjacentRoomId: null,
     };
   }
-  const adjacentRoom = getRoomContainingPoint(
+  const neighborIndex = preview?.occupants(cells.outside).find(index => rooms[index]!.id !== room.id);
+  const adjacentRoom = preview ? neighborIndex === undefined ? null : rooms[neighborIndex]! : getRoomContainingPoint(
     cells.outside,
     rooms,
     getDefinition,
@@ -304,7 +376,7 @@ export function validateDoorPlacement(
       adjacentRoomId: null,
     };
   }
-  if (!areDoorThresholdsProofNavigable(door, rooms, effectiveDoors, getDefinition)) {
+  if (!areDoorThresholdsProofNavigable(door, rooms, effectiveDoors, getDefinition, preview, hasPhysicalDoor)) {
     return {
       valid: false,
       reason: "That door position conflicts with fixed furniture in an adjacent room.",

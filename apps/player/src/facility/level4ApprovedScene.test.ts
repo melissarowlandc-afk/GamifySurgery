@@ -23,6 +23,7 @@ class DisplayObject {
   setCrop(...rect: number[]) { this.crop = rect; this.isCropped = rect.length > 0; return this; }
   getByName() { return { visible: true }; }
   clear() { return this; }
+  destroy() { this.visible = false; }
 }
 
 function harness(definitionId: string, tileSize: number, doors = new Set<string>(), backed = new Set<string>()) {
@@ -39,10 +40,9 @@ function harness(definitionId: string, tileSize: number, doors = new Set<string>
   scene.drawTouchupSprite = () => undefined;
   scene.drawTouchupPrimitives = vi.fn();
   scene.getSortableGraphics = () => new DisplayObject();
-  const draw = () => {
-    scene.activeFixtureBitmapImages.clear();
+  const draw = () => scene.paintScope(room.instanceId, () => {
     scene.drawApprovedRoomFixtures(room, { x: 31, y: 83, width: width * tileSize, height: height * tileSize });
-  };
+  });
   const imageFor = (id: string): DisplayObject => [...scene.fixtureBitmapImages.values()]
     .find((image: any) => image.getData("approved-draw-id") === id) as DisplayObject;
   return { scene, room, draw, imageFor, doors };
@@ -91,7 +91,7 @@ for (const data of APPROVED_LEVEL4_ROOM_DATA.values()) describe(`${data.roomDefi
       scene.setCharacterSupportPresentation(support.id, actor, position, 0);
       expect(actor.visible).toBe(false);
       for (const record of records.filter((record) => record.doorOwners.includes(support.doorOwners![0]!))) {
-        expect([...scene.activeFixtureBitmapImages].some((key: any) => scene.fixtureBitmapImages.get(key) === imageFor(record.id))).toBe(false);
+        expect(imageFor(record.id)).toBeUndefined();
       }
       doors.clear(); draw();
       expect(scene.getApprovedActorSupportDisplayPosition(nav.anchor, false, support.role, support.id, "level4.qa").hidden).toBe(false);
