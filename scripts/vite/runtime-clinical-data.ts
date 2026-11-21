@@ -60,7 +60,9 @@ export function runtimeClinicalIndex(graph: RuntimeClinicalGraph): { index: Runt
     if (!release?.cases) throw Error("Missing runtime clinical release");
     const full = encodeRuntimeClinicalGraph({ cases: release.cases });
     const deferred = new WeakMap<object, Map<string, number>>();
-    const caseKeys = new Set(["id", "version", "routineEligible", "tutorialEligible", "patientDisplayName", "prototypeDemographics", "approvedInstantiationProfiles", "selectedInstantiationProfileId", "pediatricProfile", "participant", "releasePointId", "earliestFacilityStage", "requiredCapabilityIds", "requiredClinicalSetting", "rewardTierId", "decisionNodes"]);
+    // Visitor presentation and consult eligibility read procedure metadata for
+    // candidates before a case is selected. These scans must stay on the index.
+    const caseKeys = new Set(["id", "version", "routineEligible", "tutorialEligible", "patientDisplayName", "prototypeDemographics", "approvedInstantiationProfiles", "selectedInstantiationProfileId", "pediatricProfile", "participant", "procedureContext", "releasePointId", "earliestFacilityStage", "requiredCapabilityIds", "requiredClinicalSetting", "rewardTierId", "decisionNodes"]);
     const nodeKeys = new Set(["id", "primaryConceptId", "questionVariantId", "answerChoices", "resultGateAfter"]);
     const profileKeys = new Set(["id", "prototypeDemographics", "pediatricProfile"]);
     const choiceKeys = new Set(["id", "label", "serviceRequest"]);
