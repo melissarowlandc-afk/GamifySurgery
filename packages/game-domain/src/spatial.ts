@@ -1,5 +1,5 @@
 import type { RoomDefinition } from "@gamify-surgery/balance-config";
-import { createFacilityNavigationCache } from "./facilityNavigation";
+import { createFacilityNavigationCache, facilityRouteGraphBuildObserver, NavigationByteCache } from "./facilityNavigation";
 export { withFacilityNavigationScope } from "./facilityNavigation";
 import type {
   CardinalDirection,
@@ -135,6 +135,16 @@ export interface RoomCareStation {
   facing: CardinalDirection;
 }
 
+function hasPlacedPhysicalDoor(key: string, doors: readonly DoorState[], rooms: readonly PlacedRoom[],
+  getDefinition: (id: string) => RoomDefinition | null): boolean {
+  return doors.some(door => {
+    const room = rooms.find(candidate => candidate.id === door.roomId);
+    const definition = room && getDefinition(room.roomDefinitionId);
+    const cells = room && definition && getDoorCellsForSpatial(door, room, definition);
+    return Boolean(cells && physicalDoorKey(cells.inside, cells.outside) === key);
+  });
+}
+
 function roomFixtureHiddenByDoor(
   room: PlacedRoom,
   definition: RoomDefinition,
@@ -148,9 +158,9 @@ function roomFixtureHiddenByDoor(
     (candidate) => candidate.fixtureId === fixtureId,
   );
   if (!owner) return false;
-  // Geometry-only, bounded by the existing navigation cache. Never retain a
-  // state/room object or scan all doors and rooms again for each fixture.
-  const layout = !hasPhysicalDoor && rooms.includes(room) && getDefinition(room.roomDefinitionId) === definition
+  // A room-only read can see only its own doors. It doesn't need to cache
+  // the fixture data or compile a facility layout for that partial geometry.
+  const layout = !hasPhysicalDoor && rooms.length > 1 && rooms.includes(room) && getDefinition(room.roomDefinitionId) === definition
     ? getNavigationLayout(rooms, doors, getDefinition) : null;
   let hidden = layout?.hiddenFixtures.get(room.id);
   if (hidden?.has(fixtureId)) return hidden.get(fixtureId)!;
@@ -171,14 +181,7 @@ function roomFixtureHiddenByDoor(
     const expected = physicalDoorKey(inside, { x: inside.x + step.x, y: inside.y + step.y });
     if (hasPhysicalDoor) return hasPhysicalDoor(expected);
     if (layout) return layout.physicalDoors.has(expected);
-    return doors.some((door) => {
-      const placed = rooms.find((candidate) => candidate.id === door.roomId);
-      const placedDefinition = placed ? getDefinition(placed.roomDefinitionId) : null;
-      const cells = placed && placedDefinition
-        ? getDoorCellsForSpatial(door, placed, placedDefinition)
-        : null;
-      return cells ? physicalDoorKey(cells.inside, cells.outside) === expected : false;
-    });
+    return hasPlacedPhysicalDoor(expected, doors, rooms, getDefinition);
   });
   if (layout) {
     if (!hidden) { hidden = new Map(); layout.hiddenFixtures.set(room.id, hidden); }
@@ -197,7 +200,7 @@ export function getRoomCareStations(
 ): RoomCareStation[] {
   // Door-owned fixtures are geometry, independent of staffing/operational state.
   // Alternate supplied room/definition objects retain the direct reader path.
-  if (rooms.includes(room) && getDefinition(room.roomDefinitionId) === definition) {
+  if (rooms.length > 1 && rooms.includes(room) && getDefinition(room.roomDefinitionId) === definition) {
     const layout = getNavigationLayout(rooms, doors, getDefinition);
     let stations = layout.careStations.get(room.id);
     if (!stations) { stations = computeRoomCareStations(room, definition, doors, rooms, getDefinition); layout.careStations.set(room.id, stations); }
@@ -341,17 +344,14 @@ export function isRoomDoorThresholdProofNavigable(
   };
   const allowed = definition.navigation?.allowedDoorSlots;
   if (allowed && !allowed.some(matchesSlot)) return false;
-  const blocked = getRoomBlockedTileKeys(
-    room,
-    definition,
-    doors,
-    rooms,
-    getDefinition,
-    hasPhysicalDoor,
-  ).has(pointKey(cells.inside));
-  return !blocked || Boolean(
-    definition.navigation?.doorThresholdExceptions?.some(matchesSlot),
-  );
+  const atThreshold = (local: GridPoint) => pointKey(roomLocalToGlobal(room, definition, local)) === pointKey(cells.inside);
+  const navigation = definition.navigation;
+  if (!navigation?.blockedTiles?.some(atThreshold) || navigation.doorThresholdExceptions?.some(matchesSlot)) return true;
+  // Door validation supplies a different hypothetical door list for each
+  // threshold. Resolve just the fixture(s) that can block this tile.
+  const owners = navigation.dynamicBlockers?.filter(owner => owner.tiles.some(atThreshold)) ?? [];
+  const lookup = hasPhysicalDoor ?? ((key: string) => hasPlacedPhysicalDoor(key, doors, rooms, getDefinition));
+  return owners.length > 0 && owners.every(owner => roomFixtureHiddenByDoor(room, definition, owner.fixtureId, doors, rooms, getDefinition, lookup));
 }
 
 function getRoomEndpointOnlyTileKeys(
@@ -821,306 +821,6 @@ export function findDeterministicPath(
   return [];
 }
 
-function tileAdjacencyForFacility(
-  rooms: readonly PlacedRoom[],
-  getDefinition: (definitionId: string) => RoomDefinition | null,
-  doors: readonly DoorState[] = [],
-  endpointOnlyTiles: ReadonlySet<string> = new Set(),
-): Map<string, Set<string>> {
-  const adjacency = new Map<string, Set<string>>();
-  const roomTiles = new Map<
-    string,
-    { room: PlacedRoom; definition: RoomDefinition }
-  >();
-  const hallways = new Set<string>();
-  const forcedOpenDoorTiles = new Set<string>();
-
-  for (const door of doors) {
-    const room = rooms.find((candidate) => candidate.id === door.roomId);
-    const definition = room
-      ? getDefinition(room.roomDefinitionId)
-      : null;
-    if (!room || !definition) {
-      continue;
-    }
-    const cells = getDoorCellsForSpatial(door, room, definition);
-    if (cells) {
-      forcedOpenDoorTiles.add(pointKey(cells.inside));
-      forcedOpenDoorTiles.add(pointKey(cells.outside));
-    }
-  }
-  for (const room of rooms) {
-    const definition = getDefinition(room.roomDefinitionId);
-    if (!definition) {
-      continue;
-    }
-    const blocked =
-      definition.kind === "hallway"
-        ? new Set<string>()
-        : getRoomBlockedTileKeys(room, definition, doors, rooms, getDefinition);
-    for (const tile of getOccupiedTiles(room, definition)) {
-      const key = pointKey(tile);
-      if (
-        blocked.has(key) &&
-        !forcedOpenDoorTiles.has(key) &&
-        !endpointOnlyTiles.has(key)
-      ) {
-        continue;
-      }
-      adjacency.set(key, adjacency.get(key) ?? new Set());
-      if (definition.kind === "hallway") {
-        hallways.add(key);
-      } else {
-        roomTiles.set(key, { room, definition });
-      }
-    }
-  }
-
-  // Every tile within the same room is traversable. Hallway tiles connect to
-  // one another. Legacy layouts without explicit doors retain their old
-  // inbound-threshold behavior until persistence migrates them.
-  for (const [key, owner] of roomTiles) {
-    const point = parsePointKey(key);
-    for (const step of CARDINAL_STEPS) {
-      const neighborKey = pointKey({
-        x: point.x + step.x,
-        y: point.y + step.y,
-      });
-      if (roomTiles.get(neighborKey)?.room.id === owner.room.id) {
-        connectNodes(adjacency, key, neighborKey);
-      }
-    }
-  }
-  for (const key of hallways) {
-    const point = parsePointKey(key);
-    for (const step of CARDINAL_STEPS) {
-      const neighborKey = pointKey({
-        x: point.x + step.x,
-        y: point.y + step.y,
-      });
-      if (hallways.has(neighborKey)) {
-        connectNodes(adjacency, key, neighborKey);
-      } else if (doors.length === 0 && roomTiles.has(neighborKey)) {
-        connectNodes(adjacency, key, neighborKey);
-      }
-    }
-  }
-
-  if (doors.length > 0) {
-    for (const door of doors) {
-      if (door.exterior) {
-        continue;
-      }
-      const room = rooms.find((candidate) => candidate.id === door.roomId);
-      const definition = room
-        ? getDefinition(room.roomDefinitionId)
-        : null;
-      if (!room || !definition || definition.kind === "hallway") {
-        continue;
-      }
-      const footprint = getRotatedFootprint(
-        definition,
-        room.orientation,
-      );
-      const wallLength =
-        door.side === "north" || door.side === "south"
-          ? footprint.width
-          : footprint.height;
-      if (door.offset < 0 || door.offset >= wallLength) {
-        continue;
-      }
-      const inside =
-        door.side === "north"
-          ? { x: room.x + door.offset, y: room.y }
-          : door.side === "south"
-            ? {
-                x: room.x + door.offset,
-                y: room.y + footprint.height - 1,
-              }
-            : door.side === "west"
-              ? { x: room.x, y: room.y + door.offset }
-              : {
-                  x: room.x + footprint.width - 1,
-                  y: room.y + door.offset,
-                };
-      const step =
-        door.side === "north"
-          ? { x: 0, y: -1 }
-          : door.side === "east"
-            ? { x: 1, y: 0 }
-            : door.side === "south"
-              ? { x: 0, y: 1 }
-              : { x: -1, y: 0 };
-      const outside = {
-        x: inside.x + step.x,
-        y: inside.y + step.y,
-      };
-      const insideKey = pointKey(inside);
-      const outsideKey = pointKey(outside);
-      if (adjacency.has(insideKey) && adjacency.has(outsideKey)) {
-        connectNodes(adjacency, insideKey, outsideKey);
-      }
-    }
-
-    // The paired corner armchairs leave a sub-tile diagonal aisle behind
-    // them. At a corner doorway, preserve that approach without allowing
-    // ordinary walking through either solid chair. This also keeps existing
-    // corner doors and legacy Recovery placement valid after seats are added.
-    for (const room of rooms) {
-      const definition = getDefinition(room.roomDefinitionId);
-      if (room.roomDefinitionId !== "room.periop_recovery" || !definition?.navigation?.companionSeats?.length) continue;
-      const footprint = getRotatedFootprint(definition, room.orientation);
-      for (const local of [
-        { x: 0, y: 0 }, { x: footprint.width - 1, y: 0 },
-        { x: 0, y: footprint.height - 1 }, { x: footprint.width - 1, y: footprint.height - 1 },
-      ]) {
-        const corner = { x: room.x + local.x, y: room.y + local.y };
-        const inside = {
-          x: corner.x + (local.x === 0 ? 1 : -1),
-          y: corner.y + (local.y === 0 ? 1 : -1),
-        };
-        const cornerKey = pointKey(corner);
-        const insideKey = pointKey(inside);
-        if (forcedOpenDoorTiles.has(cornerKey) && roomTiles.get(cornerKey)?.room.id === room.id &&
-          roomTiles.get(insideKey)?.room.id === room.id) connectNodes(adjacency, cornerKey, insideKey);
-      }
-    }
-
-    // Endpoint-only fixture contacts are legal destinations, but a coarse
-    // four-neighbor grid can leave their clear support area disconnected from
-    // an otherwise valid door approach.  The authored Waiting Room is the
-    // concrete case: its bench/side-chair support area and an east-0 door are
-    // separated by a one-cell diagonal around fixed furniture.  When a route
-    // explicitly starts or ends at one of those contacts, bridge only that
-    // endpoint component to the room's door component across a clear diagonal.
-    // This preserves every blocked fixture tile and does not make the bridge
-    // available to unrelated transit through the room.
-    for (const room of rooms) {
-      const definition = getDefinition(room.roomDefinitionId);
-      if (!definition || room.roomDefinitionId !== "room.waiting") continue;
-      const roomEndpointKeys = [...endpointOnlyTiles].filter(
-        (key) => roomTiles.get(key)?.room.id === room.id,
-      );
-      if (roomEndpointKeys.length === 0) continue;
-      const doorKeys = doors
-        .filter((door) => door.roomId === room.id && !door.exterior)
-        .flatMap((door) => {
-          const cells = getDoorCellsForSpatial(door, room, definition);
-          return cells && adjacency.has(pointKey(cells.inside))
-            ? [pointKey(cells.inside)]
-            : [];
-        });
-      if (doorKeys.length === 0) continue;
-
-      const componentFrom = (originKey: string): Set<string> => {
-        const component = new Set<string>();
-        const queue = [originKey];
-        while (queue.length > 0) {
-          const key = queue.shift()!;
-          if (component.has(key) || roomTiles.get(key)?.room.id !== room.id) continue;
-          component.add(key);
-          for (const neighbor of adjacency.get(key) ?? []) {
-            if (!component.has(neighbor) && roomTiles.get(neighbor)?.room.id === room.id) {
-              queue.push(neighbor);
-            }
-          }
-        }
-        return component;
-      };
-      const doorComponent = new Set(
-        doorKeys.flatMap((key) => [...componentFrom(key)]),
-      );
-      for (const endpointKey of roomEndpointKeys.sort()) {
-        const endpointComponent = componentFrom(endpointKey);
-        if ([...endpointComponent].some((key) => doorComponent.has(key))) continue;
-        const bridge = [...endpointComponent]
-          .flatMap((leftKey) => {
-            const left = parsePointKey(leftKey);
-            return [...doorComponent].flatMap((rightKey) => {
-              const right = parsePointKey(rightKey);
-              return Math.abs(left.x - right.x) === 1 &&
-                Math.abs(left.y - right.y) === 1
-                ? [{ leftKey, rightKey, left, right }]
-                : [];
-            });
-          })
-          .sort((left, right) =>
-            left.left.y - right.left.y ||
-            left.left.x - right.left.x ||
-            left.right.y - right.right.y ||
-            left.right.x - right.right.x,
-          )[0];
-        if (bridge) connectNodes(adjacency, bridge.leftKey, bridge.rightKey);
-      }
-    }
-  } else {
-    // Embedded-door compatibility for historical fixtures and old tests.
-    for (const room of rooms) {
-      const definition = getDefinition(room.roomDefinitionId);
-      if (!definition || definition.kind === "hallway") {
-        continue;
-      }
-      const door = getRoomDoorCell(room, definition);
-      const approach = getRoomDoorApproachCell(room, definition);
-      if (!door || !approach) {
-        continue;
-      }
-      const approachKey = pointKey(approach);
-      if (hallways.has(approachKey) || roomTiles.has(approachKey)) {
-        connectNodes(adjacency, pointKey(door), approachKey);
-      }
-    }
-  }
-
-  return adjacency;
-}
-
-// A graph's neighbors never change after construction. Preserve the original
-// cardinal-first, lexicographic non-cardinal order once, rather than per BFS visit.
-const orderedNeighbors = new WeakMap<ReadonlySet<string>, readonly string[]>();
-function stableNeighbors(key: string, neighbors: ReadonlySet<string>): readonly string[] {
-  let ordered = orderedNeighbors.get(neighbors);
-  if (!ordered) {
-    const current = parsePointKey(key);
-    const cardinal = CARDINAL_STEPS.map(step => pointKey({ x: current.x + step.x, y: current.y + step.y })).filter(next => neighbors.has(next));
-    ordered = [...cardinal, ...[...neighbors].sort().filter(next => {
-      const point = parsePointKey(next);
-      return Math.abs(point.x - current.x) + Math.abs(point.y - current.y) !== 1;
-    })];
-    orderedNeighbors.set(neighbors, ordered);
-  }
-  return ordered;
-}
-
-function findDeterministicAdjacencyPath(
-  start: GridPoint,
-  goal: GridPoint,
-  adjacency: ReadonlyMap<string, ReadonlySet<string>>,
-  blocked: ReadonlySet<string> = new Set(),
-  displacedNeighbors: ReadonlySet<string> | null = null,
-): GridPoint[] {
-  const startKey = pointKey(start), goalKey = pointKey(goal);
-  const has = (key: string) => key === startKey && displacedNeighbors !== null || !blocked.has(key) && adjacency.has(key);
-  if (!has(startKey) || !has(goalKey)) return [];
-  const queue = [startKey], parent = new Map<string, string | null>([[startKey, null]]);
-  for (let head = 0; head < queue.length; head += 1) {
-    const key = queue[head]!;
-    if (key === goalKey) {
-      const reversed: GridPoint[] = [];
-      let cursor: string | null = key;
-      while (cursor !== null) { reversed.push(parsePointKey(cursor)); cursor = parent.get(cursor) ?? null; }
-      return reversed.reverse();
-    }
-    const neighbors = key === startKey && displacedNeighbors ? displacedNeighbors : adjacency.get(key);
-    // The legacy origin is the only query-local edge overlay. No graph copy.
-    const extra = displacedNeighbors?.has(key);
-    const ordered = neighbors ? stableNeighbors(key, neighbors) : [];
-    const steps = extra ? stableNeighbors(key, new Set([...ordered, startKey])) : ordered;
-    for (const next of steps) if (!blocked.has(next) && !parent.has(next)) { parent.set(next, key); queue.push(next); }
-  }
-  return [];
-}
-
 export function getDoorCellsForSpatial(
   door: DoorState,
   room: PlacedRoom,
@@ -1165,127 +865,416 @@ export function getDoorCellsForSpatial(
   };
 }
 
+type RouteLink = { to: number; approach?: number; roomOwner?: number };
+type RouteSteps = ReadonlyMap<number, readonly number[]>;
+type NavigationTopology = {
+  hallway: Uint8Array;
+  owners: Uint32Array;
+  endpointOwners: Map<number, number>;
+  neighbors: Uint32Array;
+  links: Map<number, RouteLink[]>;
+  waitingDoors: Map<number, number[][]>;
+  legacy: boolean;
+  offsets: Uint32Array;
+  steps: Uint32Array;
+  // All searches are synchronous and never call the definition reader.
+  queue: Uint32Array;
+  parent: Uint32Array;
+};
+
 type NavigationLayout = {
+  id: number;
+  estimatedBytes: number;
   physicalDoors: Set<string>;
   hiddenFixtures: Map<string, Map<string, boolean>>;
-  endpointKeys: Set<string>;
   careStations: Map<string, RoomCareStation[]>;
-  roomTiles: Map<string, string[]>;
-  roomAt: Map<string, string>;
-  roomsAt: Map<string, number[]>;
-  graphs: Map<string, Map<string, Set<string>>>;
-  blockedTiles: Map<string, Set<string>>;
-  routes: Map<string, readonly GridPoint[]>;
+  ids: Map<string, number>;
+  keys: string[];
+  points: GridPoint[];
+  roomsAt: (number | number[] | undefined)[];
+  roomTiles: Map<string, number[]>;
+  topology?: NavigationTopology;
 };
-const navigationLayout = createFacilityNavigationCache<NavigationLayout>();
+
+// Global budgets across layouts. Cached routes hold tile IDs, never point
+// objects or a reference to an evicted layout. Each layout reserves space for
+// its lazy topology and fixture data when admitted.
+const navigationLayout = createFacilityNavigationCache<NavigationLayout>({
+  maxBytes: 2 * 1024 * 1024,
+  estimateBytes: layout => layout.estimatedBytes,
+});
+const routes = new NavigationByteCache<Uint32Array>(1536 * 1024);
+const endpointChanges = new NavigationByteCache<RouteSteps>(256 * 1024);
+const blockedMasks = new NavigationByteCache<{ id: number; tiles: Uint8Array }>(256 * 1024);
+let nextLayoutId = 0;
+let nextMaskId = 0;
+
 function getNavigationLayout(rooms: readonly PlacedRoom[], doors: readonly DoorState[], getDefinition: (id: string) => RoomDefinition | null): NavigationLayout {
   return navigationLayout(rooms, doors, getDefinition, () => {
-    const endpointKeys = new Set<string>(), roomTiles = new Map<string, string[]>(), roomAt = new Map<string, string>(), roomsAt = new Map<string, number[]>();
-    const byId = new Map<string, PlacedRoom>(), physicalDoors = new Set<string>();
-    for (const room of rooms) if (!byId.has(room.id)) byId.set(room.id, room);
+    const ids = new Map<string, number>(), keys = [""], points: GridPoint[] = [{ x: 0, y: 0 }];
+    const roomsAt: NavigationLayout["roomsAt"] = [], roomTiles = new Map<string, number[]>();
+    const physicalDoors = new Set<string>(), byId = new Map<string, PlacedRoom>();
+    const addTile = (point: GridPoint): number => {
+      const key = pointKey(point), prior = ids.get(key);
+      if (prior !== undefined) return prior;
+      const id = keys.length;
+      keys.push(key); points.push(parsePointKey(key)); ids.set(key, id);
+      return id;
+    };
+    let estimatedBytes = 1024 + rooms.length * 384 + doors.length * 576;
+    rooms.forEach((room, index) => {
+      if (!byId.has(room.id)) byId.set(room.id, room);
+      const definition = getDefinition(room.roomDefinitionId);
+      if (!definition) return;
+      const tiles = getOccupiedTiles(room, definition).map(addTile);
+      roomTiles.set(room.id, tiles);
+      for (const tile of tiles) {
+        const previous = roomsAt[tile];
+        if (Array.isArray(previous)) previous.push(index);
+        else roomsAt[tile] = previous === undefined ? index : [previous, index];
+      }
+      if (!doors.length) {
+        const legacyThreshold = getRoomDoorCell(room, definition);
+        if (legacyThreshold) addTile(legacyThreshold);
+      }
+      estimatedBytes += tiles.length * 16 + (definition.navigation?.dynamicBlockers?.length ?? 0) * 128 +
+        (definition.navigation?.careStations?.length ?? 0) * 256;
+    });
     for (const door of doors) {
       const room = byId.get(door.roomId), definition = room ? getDefinition(room.roomDefinitionId) : null;
       const cells = room && definition ? getDoorCellsForSpatial(door, room, definition) : null;
       if (cells) physicalDoors.add(physicalDoorKey(cells.inside, cells.outside));
     }
-    for (const room of rooms) {
-      const definition = getDefinition(room.roomDefinitionId);
-      if (!definition) continue;
-      const tiles = getOccupiedTiles(room, definition).map(pointKey);
-      roomTiles.set(room.id, tiles);
-      for (const tile of tiles) {
-        if (!roomAt.has(tile)) roomAt.set(tile, room.id);
-        const owners = roomsAt.get(tile) ?? []; owners.push(rooms.indexOf(room)); roomsAt.set(tile, owners);
-      }
-      for (const key of getRoomEndpointOnlyTileKeys(room, definition)) endpointKeys.add(key);
-    }
-    return { physicalDoors, hiddenFixtures: new Map(), endpointKeys, roomTiles, roomAt, roomsAt, careStations: new Map(), graphs: new Map(), blockedTiles: new Map(), routes: new Map() };
+    return { id: ++nextLayoutId, estimatedBytes: estimatedBytes + keys.length * 224, physicalDoors,
+      hiddenFixtures: new Map(), careStations: new Map(), ids, keys, points, roomsAt, roomTiles };
   });
 }
 
-/** One base layout read for an ordered batch of door previews. No graph or
- * candidate layout is needed to query the occupants at either threshold. */
-export function prepareDoorThresholdOccupants(rooms: readonly PlacedRoom[], doors: readonly DoorState[], getDefinition: (id: string) => RoomDefinition | null) {
-  const { roomsAt } = getNavigationLayout(rooms, doors, getDefinition);
-  return (point: GridPoint): readonly number[] => roomsAt.get(pointKey(point)) ?? [];
+function occupant(layout: NavigationLayout, tile: number): number | undefined {
+  const indices = layout.roomsAt[tile];
+  return Array.isArray(indices) ? indices[0] : indices;
 }
-/** Geometry index; return the current state's room, never a stale condition or
- * occupancy record retained from an earlier layout-equivalent state. */
+
+/** One base layout read for an ordered batch of door previews. */
+export function prepareDoorThresholdOccupants(rooms: readonly PlacedRoom[], doors: readonly DoorState[], getDefinition: (id: string) => RoomDefinition | null) {
+  const layout = getNavigationLayout(rooms, doors, getDefinition);
+  return (point: GridPoint): readonly number[] => {
+    const indices = layout.roomsAt[layout.ids.get(pointKey(point)) ?? 0];
+    return Array.isArray(indices) ? indices : indices === undefined ? [] : [indices];
+  };
+}
+
+/** Geometry index; return the current state's room, never a retained room record. */
 export function getFacilityRoomAtPoint(point: GridPoint, rooms: readonly PlacedRoom[], doors: readonly DoorState[], getDefinition: (id: string) => RoomDefinition | null, accepts: (room: PlacedRoom) => boolean): PlacedRoom | null {
-  const indices = getNavigationLayout(rooms, doors, getDefinition).roomsAt.get(pointKey(point)) ?? [];
+  const layout = getNavigationLayout(rooms, doors, getDefinition);
+  const indices = layout.roomsAt[layout.ids.get(pointKey(point)) ?? 0];
+  if (!Array.isArray(indices)) return indices === undefined || !accepts(rooms[indices]!) ? null : rooms[indices]!;
   for (const index of indices) if (accepts(rooms[index]!)) return rooms[index]!;
   return null;
 }
-function navigationGraph(layout: NavigationLayout, rooms: readonly PlacedRoom[], doors: readonly DoorState[], getDefinition: (id: string) => RoomDefinition | null, endpoints: Set<string>): Map<string, Set<string>> {
-  const key = JSON.stringify([...endpoints].sort());
-  let graph = layout.graphs.get(key);
-  if (!graph) {
-    graph = tileAdjacencyForFacility(rooms, getDefinition, doors, endpoints);
-    layout.graphs.set(key, graph);
-    if (layout.graphs.size > 32) layout.graphs.delete(layout.graphs.keys().next().value!);
+
+function walkOwner(graph: NavigationTopology, tile: number, opened?: ReadonlySet<number>): number {
+  return (opened?.has(tile) ? graph.endpointOwners.get(tile) : undefined) ?? graph.owners[tile]!;
+}
+
+function hasFloor(graph: NavigationTopology, tile: number, opened?: ReadonlySet<number>): boolean {
+  return Boolean(graph.hallway[tile] || walkOwner(graph, tile, opened));
+}
+
+function keyOrder(layout: NavigationLayout, a: number, b: number): number {
+  const left = layout.keys[a]!, right = layout.keys[b]!;
+  return left < right ? -1 : Number(left !== right);
+}
+
+function orderSteps(layout: NavigationLayout, graph: NavigationTopology, tile: number, choices: readonly number[]): number[] {
+  const cardinal: number[] = [], extra = new Set(choices);
+  for (let slot = tile * 4; slot < tile * 4 + 4; slot++) {
+    const next = graph.neighbors[slot]!;
+    if (extra.delete(next)) cardinal.push(next);
   }
+  return cardinal.concat([...extra].sort((a, b) => keyOrder(layout, a, b)));
+}
+
+function stepsFromFloor(layout: NavigationLayout, graph: NavigationTopology, tile: number, opened?: ReadonlySet<number>): number[] {
+  const steps: number[] = [];
+  const owner = walkOwner(graph, tile, opened), hall = graph.hallway[tile];
+  if (owner || hall) for (let slot = tile * 4; slot < tile * 4 + 4; slot++) {
+    const next = graph.neighbors[slot]!;
+    if (!next) continue;
+    const nextOwner = walkOwner(graph, next, opened), nextHall = graph.hallway[next];
+    if (owner && owner === nextOwner || hall && nextHall || graph.legacy && (hall && nextOwner || nextHall && owner)) steps.push(next);
+  }
+  const links = graph.links.get(tile);
+  if (!links) return steps;
+  for (const link of links) {
+    if (link.approach !== undefined && !hasFloor(graph, link.approach, opened)) continue;
+    if (link.roomOwner !== undefined && (owner !== link.roomOwner || walkOwner(graph, link.to, opened) !== owner)) continue;
+    steps.push(link.to);
+  }
+  return orderSteps(layout, graph, tile, steps);
+}
+
+function navigationTopology(layout: NavigationLayout, rooms: readonly PlacedRoom[], doors: readonly DoorState[],
+  getDefinition: (id: string) => RoomDefinition | null): NavigationTopology {
+  if (layout.topology) return layout.topology;
+  const size = layout.keys.length;
+  const graph: NavigationTopology = {
+    hallway: new Uint8Array(size), owners: new Uint32Array(size), endpointOwners: new Map(),
+    neighbors: new Uint32Array(size * 4), links: new Map(), waitingDoors: new Map(), legacy: doors.length === 0,
+    offsets: new Uint32Array(size + 1), steps: new Uint32Array(0),
+    queue: new Uint32Array(size), parent: new Uint32Array(size),
+  };
+  const tileId = (point: GridPoint) => layout.ids.get(pointKey(point)) ?? 0;
+  const byId = new Map<string, PlacedRoom>(), roomOwners = new Map<string, number>();
+  const forcedOpen = new Set<number>(), contacts = new Set<number>();
+  const doorEdges: { inside: number; outside: number; connects: boolean }[] = [];
+  for (const room of rooms) if (!byId.has(room.id)) {
+    byId.set(room.id, room); roomOwners.set(room.id, byId.size);
+  }
+  for (const door of doors) {
+    const room = byId.get(door.roomId), definition = room && getDefinition(room.roomDefinitionId);
+    const cells = room && definition && getDoorCellsForSpatial(door, room, definition);
+    if (!cells) continue;
+    const inside = tileId(cells.inside), outside = tileId(cells.outside);
+    forcedOpen.add(inside); forcedOpen.add(outside);
+    doorEdges.push({ inside, outside, connects: !door.exterior && definition.kind !== "hallway" });
+  }
+  const anyOwners = new Uint32Array(size);
+  const hasPhysicalDoor = (key: string) => layout.physicalDoors.has(key);
+  for (const room of rooms) {
+    const definition = getDefinition(room.roomDefinitionId);
+    if (!definition) continue;
+    for (const key of getRoomEndpointOnlyTileKeys(room, definition)) {
+      const id = layout.ids.get(key);
+      if (id !== undefined) contacts.add(id);
+    }
+    const hallway = definition.kind === "hallway";
+    const blocked = hallway ? null : getRoomBlockedTileKeys(room, definition, doors, rooms, getDefinition, hasPhysicalDoor);
+    for (const point of getOccupiedTiles(room, definition)) {
+      const tile = tileId(point);
+      if (hallway) graph.hallway[tile] = 1;
+      else {
+        const owner = roomOwners.get(room.id)!;
+        anyOwners[tile] = owner;
+        if (!blocked!.has(layout.keys[tile]!) || forcedOpen.has(tile)) graph.owners[tile] = owner;
+      }
+    }
+  }
+  for (const tile of contacts) graph.endpointOwners.set(tile, anyOwners[tile]!);
+  const link = (left: number, right: number, rule: Omit<RouteLink, "to"> = {}) => {
+    if (!left || !right) return;
+    for (const [from, to] of [[left, right], [right, left]]) {
+      const adjacent = graph.links.get(from!) ?? [];
+      adjacent.push({ to: to!, ...rule }); graph.links.set(from!, adjacent);
+    }
+  };
+  for (const { inside, outside, connects } of doorEdges) if (connects) link(inside, outside);
+  for (const room of rooms) {
+    const definition = getDefinition(room.roomDefinitionId);
+    if (!definition) continue;
+    const owner = roomOwners.get(room.id)!;
+    if (graph.legacy) {
+      const inside = getRoomDoorCell(room, definition), approach = getRoomDoorApproachCell(room, definition);
+      if (inside && approach) link(tileId(inside), tileId(approach), { approach: tileId(approach) });
+    } else if (room.roomDefinitionId === "room.periop_recovery" && definition.navigation?.companionSeats?.length) {
+      // Retain the approved diagonal aisle from a forced-open corner.
+      const { width, height } = getRotatedFootprint(definition, room.orientation);
+      for (const x of [0, width - 1]) for (const y of [0, height - 1]) {
+        const corner = tileId({ x: room.x + x, y: room.y + y });
+        if (forcedOpen.has(corner)) link(corner, tileId({ x: room.x + x + (x === 0 ? 1 : -1), y: room.y + y + (y === 0 ? 1 : -1) }), { roomOwner: owner });
+      }
+    } else if (room.roomDefinitionId === "room.waiting") {
+      const thresholds = doors.filter(door => !door.exterior && door.roomId === room.id).flatMap(door => {
+        const cells = getDoorCellsForSpatial(door, room, definition);
+        return cells ? [tileId(cells.inside)] : [];
+      });
+      if (thresholds.length) {
+        const groups = graph.waitingDoors.get(owner) ?? [];
+        groups.push(thresholds); graph.waitingDoors.set(owner, groups);
+      }
+    }
+  }
+  const allSteps: number[] = [];
+  for (let tile = 1; tile < size; tile++) {
+    const point = layout.points[tile]!;
+    CARDINAL_STEPS.forEach((step, slot) => { graph.neighbors[tile * 4 + slot] = tileId({ x: point.x + step.x, y: point.y + step.y }); });
+    graph.offsets[tile] = allSteps.length;
+    allSteps.push(...stepsFromFloor(layout, graph, tile));
+  }
+  graph.offsets[size] = allSteps.length;
+  graph.steps = Uint32Array.from(allSteps);
+  facilityRouteGraphBuildObserver?.("[]");
+  layout.topology = graph;
   return graph;
 }
-/** Opening-only preparation. All subsequently published graphs stay private. */
+
+function waitingComponent(graph: NavigationTopology, start: number, owner: number, opened: ReadonlySet<number>, changes: RouteSteps): Set<number> {
+  const component = new Set<number>();
+  if (walkOwner(graph, start, opened) !== owner) return component;
+  const queue = [start];
+  component.add(start);
+  for (const tile of queue) {
+    for (const next of changes.get(tile) ?? graph.steps.subarray(graph.offsets[tile], graph.offsets[tile + 1])) {
+      if (walkOwner(graph, next, opened) !== owner || component.has(next)) continue;
+      component.add(next); queue.push(next);
+    }
+  }
+  return component;
+}
+
+function addWaitingBridges(layout: NavigationLayout, graph: NavigationTopology, opened: ReadonlySet<number>, changes: Map<number, readonly number[]>): void {
+  const owners = new Set([...opened].map(tile => walkOwner(graph, tile, opened)));
+  const comparePoints = (a: number, b: number) => layout.points[a]!.y - layout.points[b]!.y || layout.points[a]!.x - layout.points[b]!.x;
+  for (const owner of owners) for (const thresholds of graph.waitingDoors.get(owner) ?? []) {
+    const doors = new Set<number>();
+    for (const door of thresholds) for (const tile of waitingComponent(graph, door, owner, opened, changes)) doors.add(tile);
+    for (const endpoint of opened) {
+      if (walkOwner(graph, endpoint, opened) !== owner) continue;
+      const component = [...waitingComponent(graph, endpoint, owner, opened, changes)];
+      if (component.some(tile => doors.has(tile))) continue;
+      // Pick the first diagonal in the original (left y/x, right y/x) order.
+      const orderedDoors = [...doors].sort(comparePoints);
+      for (const left of component.sort(comparePoints)) {
+        const point = layout.points[left]!;
+        const right = orderedDoors.find(tile => Math.abs(point.x - layout.points[tile]!.x) === 1 && Math.abs(point.y - layout.points[tile]!.y) === 1);
+        if (right === undefined) continue;
+        for (const [from, to] of [[left, right], [right, left]] as const) {
+          const current = changes.get(from) ?? graph.steps.subarray(graph.offsets[from], graph.offsets[from + 1]);
+          changes.set(from, orderSteps(layout, graph, from, [...current, to]));
+        }
+        break;
+      }
+    }
+  }
+}
+
+function endpointOverlay(layout: NavigationLayout, graph: NavigationTopology, start: number, goal: number): RouteSteps | undefined {
+  const tiles = [start, goal].filter(tile => {
+    const owner = graph.endpointOwners.get(tile);
+    return owner !== undefined && (owner !== graph.owners[tile] || graph.waitingDoors.has(owner));
+  });
+  if (tiles.length === 0) return undefined;
+  const opened = new Set(tiles.sort((a, b) => keyOrder(layout, a, b)));
+  const key = `${layout.id}:${[...opened].join(",")}`;
+  const cached = endpointChanges.get(key);
+  if (cached) return cached;
+  const affected = new Set<number>();
+  for (const tile of opened) if (graph.endpointOwners.get(tile) !== graph.owners[tile]) {
+    affected.add(tile);
+    for (let slot = tile * 4; slot < tile * 4 + 4; slot++) {
+      const next = graph.neighbors[slot]!;
+      if (next) affected.add(next);
+    }
+    for (const link of graph.links.get(tile) ?? []) affected.add(link.to);
+  }
+  const changes = new Map<number, readonly number[]>();
+  for (const tile of affected) changes.set(tile, stepsFromFloor(layout, graph, tile, opened));
+  addWaitingBridges(layout, graph, opened, changes);
+  // The start/goal may be newly opened but isolated. An empty entry can
+  // therefore still denote a legal endpoint, as opposed to an absent tile.
+  endpointChanges.set(key, changes, 64 + [...changes.values()].reduce((bytes, steps) => bytes + 128 + steps.length * 8, 0));
+  return changes;
+}
+
+/** Opening-only preparation. The compact topology stays private. */
 export function prepareFacilityPathfinding(rooms: readonly PlacedRoom[], doors: readonly DoorState[], getDefinition: (id: string) => RoomDefinition | null): void {
-  navigationGraph(getNavigationLayout(rooms, doors, getDefinition), rooms, doors, getDefinition, new Set());
+  navigationTopology(getNavigationLayout(rooms, doors, getDefinition), rooms, doors, getDefinition);
 }
 
 /** Connected floor, including occupied thresholds, for the Build exit check. */
 export function reachableFacilityRooms(start: GridPoint, rooms: readonly PlacedRoom[], doors: readonly DoorState[],
   getDefinition: (id: string) => RoomDefinition | null): Set<string> {
   const layout = getNavigationLayout(rooms, doors, getDefinition);
-  const graph = navigationGraph(layout, rooms, doors, getDefinition, new Set());
-  const origin = pointKey(start);
-  const visited = new Set([origin]), queue = [origin], reached = new Set<string>();
-  for (let index = 0; index < queue.length; index++) {
-    const key = queue[index]!;
-    const roomId = layout.roomAt.get(key);
+  const graph = navigationTopology(layout, rooms, doors, getDefinition);
+  const origin = layout.ids.get(pointKey(start));
+  const reached = new Set<string>();
+  if (origin === undefined) return reached;
+  const visited = new Set([origin]), queue = [origin];
+  for (const tile of queue) {
+    const index = occupant(layout, tile);
+    const roomId = index !== undefined ? rooms[index]?.id : undefined;
     if (roomId) reached.add(roomId);
-    for (const neighbor of graph.get(key) ?? []) {
-      if (visited.has(neighbor)) continue;
-      visited.add(neighbor);
-      queue.push(neighbor);
+    for (let i = graph.offsets[tile]!; i < graph.offsets[tile + 1]!; i++) {
+      const next = graph.steps[i]!;
+      if (!visited.has(next)) { visited.add(next); queue.push(next); }
     }
   }
   return reached;
 }
+
+function routeMask(layout: NavigationLayout, blockedIds: readonly string[]) {
+  if (blockedIds.length === 0) return undefined;
+  const key = `${layout.id}:${JSON.stringify(blockedIds)}`;
+  const cached = blockedMasks.get(key);
+  if (cached) return cached;
+  const tiles = new Uint8Array(layout.keys.length);
+  for (const id of blockedIds) for (const tile of layout.roomTiles.get(id) ?? []) tiles[tile] = 1;
+  const mask = { id: ++nextMaskId, tiles };
+  blockedMasks.set(key, mask, tiles.byteLength + 96);
+  return mask;
+}
+
+function findRoute(graph: NavigationTopology, start: number, goal: number, blocked: Uint8Array | undefined,
+  changes: RouteSteps | undefined, displaced: readonly number[] | undefined): Uint32Array {
+  const { parent, queue, offsets, steps } = graph;
+  parent.fill(0); parent[start] = start; queue[0] = start;
+  let tail = 1;
+  for (let head = 0; head < tail; head++) {
+    const tile = queue[head]!;
+    if (tile === goal) {
+      let size = 1;
+      for (let cursor = goal; cursor !== start; cursor = parent[cursor]!) size++;
+      const path = new Uint32Array(size);
+      for (let cursor = goal; size; cursor = parent[cursor]!) path[--size] = cursor;
+      return path;
+    }
+    const local = (tile === start ? displaced : undefined) ?? changes?.get(tile);
+    const neighbors = local ?? steps;
+    for (let i = local ? 0 : offsets[tile]!; i < (local?.length ?? offsets[tile + 1]!); i++) {
+      const next = neighbors[i]!;
+      if (parent[next] || blocked?.[next]) continue;
+      parent[next] = tile; queue[tail++] = next;
+    }
+  }
+  return EMPTY_ROUTE;
+}
+
+const EMPTY_ROUTE = new Uint32Array(0);
 
 export function findDeterministicFacilityPath(
   start: GridPoint,
   goal: GridPoint,
   rooms: readonly PlacedRoom[],
   doors: readonly DoorState[],
-  getDefinition: (definitionId: string) => RoomDefinition | null,
+  getDefinition: (id: string) => RoomDefinition | null,
   options: { blockedRoomInstanceIds?: ReadonlySet<string> } = {},
 ): GridPoint[] {
   const layout = getNavigationLayout(rooms, doors, getDefinition);
-  const startKey = pointKey(start), goalKey = pointKey(goal);
-  const containingStartRoomId = layout.roomAt.get(startKey);
-  const blockedIds = [...(options.blockedRoomInstanceIds ?? [])].filter(id => id !== containingStartRoomId).sort();
-  const blockedKey = JSON.stringify(blockedIds);
-  const routeKey = JSON.stringify([startKey, goalKey, blockedKey]);
-  const cached = layout.routes.get(routeKey);
-  if (cached) return cached.map(point => ({ ...point }));
-  const endpoints = new Set([startKey, goalKey].filter(key => layout.endpointKeys.has(key)));
-  const adjacency = navigationGraph(layout, rooms, doors, getDefinition, endpoints);
-  let blocked = layout.blockedTiles.get(blockedKey);
-  if (!blocked) {
-    blocked = new Set(blockedIds.flatMap(id => layout.roomTiles.get(id) ?? []));
-    layout.blockedTiles.set(blockedKey, blocked);
-    if (layout.blockedTiles.size > 256) layout.blockedTiles.delete(layout.blockedTiles.keys().next().value!);
-  }
-  let displacedNeighbors: Set<string> | null = null;
-  if ((!adjacency.has(startKey) || blocked.has(startKey)) && containingStartRoomId) {
+  const from = layout.ids.get(pointKey(start)), to = layout.ids.get(pointKey(goal));
+  if (from === undefined || to === undefined) return [];
+  const startIndex = occupant(layout, from);
+  const startRoomId = startIndex !== undefined ? rooms[startIndex]?.id : undefined;
+  const blockedIds = [...(options.blockedRoomInstanceIds ?? [])].filter(id => id !== startRoomId && layout.roomTiles.has(id)).sort();
+  const mask = routeMask(layout, blockedIds);
+  const routeKey = `${layout.id}:${from}:${to}:${mask?.id ?? 0}`;
+  const cached = routes.get(routeKey);
+  if (cached) return Array.from(cached, tile => ({ ...layout.points[tile]! }));
+
+  const graph = navigationTopology(layout, rooms, doors, getDefinition);
+  const changes = endpointOverlay(layout, graph, from, to);
+  const walkable = (tile: number) => !mask?.tiles[tile] && (hasFloor(graph, tile) ||
+    Boolean(graph.endpointOwners.get(tile) && (tile === from || tile === to)) ||
+    Boolean(changes?.get(tile)?.length ?? (graph.offsets[tile]! < graph.offsets[tile + 1]!)));
+  let displaced: number[] | undefined;
+  if (!walkable(from) && startRoomId) {
     // v6 origins on newly blocked fixtures may walk out, never teleport.
-    const occupied = new Set(layout.roomTiles.get(containingStartRoomId));
-    displacedNeighbors = new Set(CARDINAL_STEPS.map(step => pointKey({ x: start.x + step.x, y: start.y + step.y }))
-      .filter(key => occupied.has(key) && adjacency.has(key) && !blocked.has(key)));
+    const occupied = layout.roomTiles.get(startRoomId) ?? [];
+    displaced = [...graph.neighbors.subarray(from * 4, from * 4 + 4)].filter(tile => tile && occupied.includes(tile) && walkable(tile));
   }
-  const result = findDeterministicAdjacencyPath(start, goal, adjacency, blocked, displacedNeighbors);
-  layout.routes.set(routeKey, result);
-  if (layout.routes.size > 4096) layout.routes.delete(layout.routes.keys().next().value!);
-  return result.map(point => ({ ...point }));
+  const result = (displaced || walkable(from)) && (from === to && displaced || walkable(to))
+    ? findRoute(graph, from, to, mask?.tiles, changes, displaced) : EMPTY_ROUTE;
+  routes.set(routeKey, result, 64 + result.byteLength);
+  return Array.from(result, tile => ({ ...layout.points[tile]! }));
 }
 
 /**

@@ -2,7 +2,7 @@ import type { PlacedRoom } from "./types";
 import type { RoomDefinition } from "@gamify-surgery/balance-config";
 import { preferAvailableHomeStaff } from "./diagnosticCandidatePriority";
 import { DiagnosticCalendarIndex } from "./diagnosticCalendarIndex";
-import { facilityDefinitionReader } from "./facilityNavigation";
+import { facilityDefinitionReader, facilityNavigationKey } from "./facilityNavigation";
 import { hasSettledStateQueries, settledStateQuery, withSettledStateQueries } from "./settledStateQueries";
 import {
   DIAGNOSTIC_READING_WORKSTATIONS,
@@ -113,7 +113,7 @@ type Calendar = {
 };
 type DraftPhase = Pick<DiagnosticOrderPhase, "id" | "componentId" | "kind" | "mode" | "patientPresent" | "durationMinutes" | "dependsOn" | "requirement" | "readingUpgradeWork">;
 const copy = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
-const activeOperation = (operation: ServiceOperationState) => operation.status !== "completed" && operation.status !== "cancelled";
+const activeOperation = (operation: Pick<ServiceOperationState, "status">) => operation.status !== "completed" && operation.status !== "cancelled";
 
 function cloneCalendar(calendar: Calendar): Calendar {
   // Reservations append to private arrays; interval/forecast records are read
@@ -183,7 +183,7 @@ function reserve(calendar: Calendar, resource: DiagnosticResourceChoice, starts:
   }
   for (const id of [...resource.employeeIds, ...(resource.provider?.kind === "employee" ? [resource.provider.employeeId] : resource.provider?.kind === "founder" ? ["founder"] : [])]) {
     const intervals = calendar.actors.get(id) ?? [];
-    intervals.push({ starts, ends, destination: resource.staffAnchor });
+    intervals.push({ starts, ends, destination: { ...resource.staffAnchor } });
     calendar.actors.set(id, intervals);
   }
   if (calendar.readingProjection) {
@@ -801,7 +801,7 @@ function buildServiceCalendar(state: GameState, context: DomainContext): Calenda
     const ends = observedEnd ?? now + walking + workMinutes;
     if (ends > now) calendar.intervals.set(key, [{ starts: now, ends }]);
     const endpoint = actorPath.at(-1);
-    if (endpoint) calendar.actors.set(key === "founder" ? key : key.slice("employee:".length), [{ starts: now, ends, destination: endpoint }]);
+    if (endpoint) calendar.actors.set(key === "founder" ? key : key.slice("employee:".length), [{ starts: now, ends, destination: { ...endpoint } }]);
   };
   for (const employee of state.employees) {
     const training = getEmployeeTrainingAvailability(state, employee, context);
@@ -822,7 +822,7 @@ function buildServiceCalendar(state: GameState, context: DomainContext): Calenda
     const outsidePriorityEnd = getOutsideReadPriorityEnd(state, employee.id, context);
     if (outsidePriorityEnd !== null) {
       calendar.intervals.set(`employee:${employee.id}`, [{ starts: now, ends: outsidePriorityEnd }]);
-      calendar.actors.set(employee.id, [{ starts: now, ends: outsidePriorityEnd, destination: employee.location }]);
+      calendar.actors.set(employee.id, [{ starts: now, ends: outsidePriorityEnd, destination: { ...employee.location } }]);
     }
     const task = employee.facilityTask;
     if (!task || task.kind === "cover_periop" || task.targetId && trackedIds.has(task.targetId)) continue;
@@ -1012,13 +1012,108 @@ function buildServiceCalendar(state: GameState, context: DomainContext): Calenda
 }
 
 const serviceCalendarQuery = Symbol("diagnostic-service-calendar");
+type ServiceCalendarMemo = { tick: number; geometry: string; inputs: string; calendar: Calendar };
+// A single stateless forecast baseline across synchronous reads of the same
+// tick state. Weak ownership lets the last campaign snapshot be collected.
+let recentServiceCalendar = new WeakMap<GameState, ServiceCalendarMemo>();
+const MAX_SERVICE_CALENDAR_KEY_BYTES = 1024 * 1024;
+
+function calendarPlanInputs(plan: DiagnosticOrderPlan) {
+  const { phases, resultReady, visualResultReady, careComplete, ...accepted } = plan;
+  return [accepted, phases.map(({ forecast, ...phase }) => [phase,
+    phase.kind === "patient_departure" || phase.kind === "patient_return" ? [forecast.patientPath, forecast.tilesPerTick] : null]),
+  [resultReady, visualResultReady, careComplete].map(marker => marker && [marker.afterPhaseIds, marker.reachedAtTick])];
+}
+
+function serviceCalendarInputs(state: GameState, context: DomainContext): string {
+  const actors = new Set<string>();
+  const operations = state.serviceOperations.map(({ diagnosticTiming, displayName, appearance, path, ...operation }) => {
+    if (activeOperation(operation)) {
+      if (operation.actorKind === "encounter") actors.add(operation.actorId);
+      if (operation.diagnosticPhaseWork?.encounterId) actors.add(operation.diagnosticPhaseWork.encounterId);
+    }
+    // The service baseline uses path length for travel time. It examines
+    // individual waypoints only to release rooms still held during a transfer.
+    return [operation, path.length, operation.transitionHeldRoomInstanceIds?.length ? path : null,
+      diagnosticTiming && calendarPlanInputs(diagnosticTiming)];
+  });
+  const legacyRoutes = new Map<string, ServiceRouteDefinition | null>();
+  const encounters = Object.entries(state.encounters).flatMap(([id, encounter]) => {
+    const pending = encounter.pendingResult;
+    const live = pending && (pending.deliveredAtTick === null || pending.resourceQueue) ? [
+      pending.operationId, pending.deliveredAtTick === null, pending.localServiceOperation, pending.dueTick,
+      pending.resourceQueue, Boolean(pending.diagnosticTiming), pending.timingPhases, pending.resourceReservations,
+      pending.patientTravel?.destinationRoomInstanceId, pending.imagingTechnicianId, pending.phlebotomistId, pending.providerReservation,
+      encounter.steps[pending.originatingNodeIndex]?.status,
+    ] : null;
+    if (pending?.resourceQueue && !pending.diagnosticTiming) {
+      const { serviceId, routeId } = pending.resourceQueue;
+      const key = JSON.stringify([serviceId, routeId]);
+      if (!legacyRoutes.has(key)) {
+        const route = context.balanceRelease.services.find(service => service.id === serviceId)?.routes.find(candidate => candidate.id === routeId);
+        legacyRoutes.set(key, route ?? null);
+      }
+    }
+    // Home-work priority uses the live carriers, even if a different copy is
+    // authoritative for the ordered list of diagnostic plans below.
+    const claims = [pending?.diagnosticTiming, encounter.terminalTestOrder?.diagnosticTiming,
+      encounter.testOnlyContinuation?.diagnosticTiming, encounter.stagedResultOrder?.diagnosticTiming,
+      encounter.stagedResultOrder?.remainder.diagnosticTiming,
+      ...(encounter.stagedResultOrder?.components.map(component => component.diagnosticTiming) ?? [])]
+      .filter((plan): plan is DiagnosticOrderPlan => Boolean(plan)).map(calendarPlanInputs);
+    return actors.has(id) || live || claims.length ? [[id, encounter.patientLocation, encounter.assignedRoomInstanceId,
+      encounter.waiting.arrivedAtTick, live, claims]] : [];
+  });
+  const families = Object.values(state.pediatricFamilies ?? {}).filter(family =>
+    family.child.kind === "encounter" ? actors.has(family.child.id) : state.serviceOperations.some(operation =>
+      operation.id === family.child.id && activeOperation(operation)));
+  const parents = new Set(families.map(family => family.parentActorId));
+  const facility = context.balanceRelease.facility;
+  return JSON.stringify([
+    state.facilityLevel, facility.gridWidth, facility.gridHeight, facility.characterTravelTilesPerTick,
+    facility.protectedRoomDefinitionIds, facility.stageDefinitions.map(stage => stage.requiredStaffRoleIds),
+    [...legacyRoutes.values()],
+    state.rooms.map(room => room.maintenance && { status: room.maintenance.status, outOfServiceAtFacilityTick: room.maintenance.outOfServiceAtFacilityTick }),
+    state.employees.map(employee => [employee.id, employee.staffRoleDefinitionId, employee.homeRoomInstanceId,
+      employee.location, employee.path, employee.pathIndex, employee.readingStationId, employee.facilityTask,
+      employee.trainingLevel, employee.training, isEmployeeAwayForTraining(employee), employee.lastPeriopAttentionAssignedAtFacilityTick,
+      employee.staffRoleDefinitionId === "staff.radiologist" ? employee.lastMovedAtFacilityTick : null,
+      "resignationNotice" in employee ? employee.resignationNotice : null]),
+    state.environment.founderLocation, state.environment.founderActivity, state.outsideRadiologyReads,
+    // Reading continuity and projected training use staff occupancy from these
+    // branches. Unrelated shopping routes and filed discussion text are inert.
+    state.retailOperations.filter(trip => !["completed", "cancelled", "abandoned"].includes(trip.status) &&
+      (trip.servingEmployeeId || trip.actorKind === "employee")).map(trip => [trip.servingEmployeeId, trip.actorKind, trip.actorId]),
+    Object.values(state.employeeDiscussions ?? {}).filter(discussion => !["resolved", "cancelled"].includes(discussion.lifecycle))
+      .map(discussion => [discussion.employeeId, discussion.lifecycle]),
+    operations, encounters, families, state.retailExternalActors.filter(actor => parents.has(actor.id)).map(actor => [actor.id, actor.location]),
+    getDiagnosticOrderPlans(state).map(calendarPlanInputs),
+  ]);
+}
+
+function serviceCalendarFor(state: GameState, context: DomainContext): Calendar {
+  // Keep the existing settled scope for bespoke balance releases. The worker
+  // wraps the prototype context with session-only flags that timing never reads.
+  const build = () => settledStateQuery(state, context, serviceCalendarQuery, null, () => buildServiceCalendar(state, context));
+  if (context.balanceRelease !== PROTOTYPE_DOMAIN_CONTEXT.balanceRelease) return build();
+  const previous = recentServiceCalendar.get(state);
+  const geometry = facilityNavigationKey(state.rooms, state.doors, facilityDefinitionReader(context));
+  const inputs = serviceCalendarInputs(state, context);
+  if (previous?.tick === state.facilityTick && previous.geometry === geometry && previous.inputs === inputs) return previous.calendar;
+  const calendar = build();
+  recentServiceCalendar = new WeakMap();
+  if (2 * (geometry.length + inputs.length) <= MAX_SERVICE_CALENDAR_KEY_BYTES) {
+    recentServiceCalendar.set(state, { tick: state.facilityTick, geometry, inputs, calendar });
+  }
+  return calendar;
+}
+
 function buildCalendar(state: GameState, context: DomainContext, ignoredOrderId: string, encounterId: string): Calendar {
   // Service reservations no longer depend on which chart is being quoted:
   // encounter/discussion attendance is always released above. In particular,
   // the founder attending a chart must not rebuild this same baseline for
   // every other encounter in one settled projection.
-  const calendar = cloneCalendar(settledStateQuery(state, context, serviceCalendarQuery, null,
-    () => buildServiceCalendar(state, context)));
+  const calendar = cloneCalendar(serviceCalendarFor(state, context));
   for (const plan of getDiagnosticOrderPlans(state).filter((entry) => entry.orderId !== ignoredOrderId)) {
     forecastFrozenPlan(state, plan, context, calendar);
   }
