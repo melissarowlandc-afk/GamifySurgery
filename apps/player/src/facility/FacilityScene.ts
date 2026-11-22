@@ -431,6 +431,7 @@ const DEFAULT_VISIBLE_GRID_COLUMNS = 14;
 const DEFAULT_VISIBLE_GRID_ROWS = 6;
 const MINIMUM_CAMERA_ZOOM = 0.1;
 const MAXIMUM_CAMERA_ZOOM = 2.5;
+const DESKTOP_DRAG_THRESHOLD_SQUARED = 36;
 const NANOSECOND_IN_MILLISECONDS = 0.000_001;
 const FALLBACK_APPEARANCE: PixelAppearanceDescriptor = {
   version: "pixel-avatar.v1",
@@ -804,6 +805,7 @@ export class FacilityScene extends Phaser.Scene {
         panX: number;
         panY: number;
         dragged: boolean;
+        buildRoomId?: string;
       }
     | null = null;
   private hallwayPaintActive = false;
@@ -8755,7 +8757,11 @@ export class FacilityScene extends Phaser.Scene {
         if (!wasMultiple) {
           const ownsDrag = this.phoneBuildInput!.ownsDrag;
           const tap = this.phoneBuildInput!.up(pointer.id, pointer, this.time.now);
-          if (tap) this.selectMobileBuildTarget(pointer);
+          const doorToolActive = this.bridge.viewModel.buildDoorTool && this.bridge.mobileBuild;
+          // Room taps follow the gesture recognizer's full movement history.
+          if (tap && (doorToolActive || gestures[0]?.kind === "tap")) {
+            this.selectMobileBuildTarget(pointer);
+          }
           if (!ownsDrag) this.applyMobileGestures(gestures);
         }
         if (wasMultiple) this.applyMobileGestures(gestures);
@@ -8980,7 +8986,7 @@ export class FacilityScene extends Phaser.Scene {
       const deltaY = pointer.y - this.dragStart.pointerY;
       if (
         !this.dragStart.dragged &&
-        deltaX * deltaX + deltaY * deltaY < 36
+        deltaX * deltaX + deltaY * deltaY < DESKTOP_DRAG_THRESHOLD_SQUARED
       ) {
         return;
       }
@@ -9087,11 +9093,22 @@ export class FacilityScene extends Phaser.Scene {
     if (
       !gesture ||
       gesture.dragged ||
-      this.bridge.viewModel.buildMode ||
       this.bridge.viewModel.placement
     ) {
       return;
     }
+    const { buildMode, buildDoorTool } = this.bridge.viewModel;
+    if (gesture.buildRoomId) {
+      if (!buildMode || buildDoorTool || pointer.button !== 0) return;
+      const deltaX = pointer.x - gesture.pointerX;
+      const deltaY = pointer.y - gesture.pointerY;
+      if (deltaX * deltaX + deltaY * deltaY < DESKTOP_DRAG_THRESHOLD_SQUARED) {
+        this.bridge.onSelectRoom?.(gesture.buildRoomId);
+      }
+      return;
+    }
+    if (buildMode) return;
+
     const characterKey = this.pointerDownCharacterKey;
     this.pointerDownCharacterKey = null;
     if (characterKey) {
@@ -9198,18 +9215,13 @@ export class FacilityScene extends Phaser.Scene {
       return;
     }
 
-    const selectedRoom = this.roomAtPointer(pointer);
-    if (this.bridge.viewModel.buildMode && selectedRoom) {
-      this.bridge.onSelectRoom?.(selectedRoom.instanceId);
-      return;
-    }
-
+    const buildMode = this.bridge.viewModel.buildMode;
     this.pointerDownCharacterKey = null;
-    const characterKey = this.bridge.viewModel.buildMode ? null : this.characterAtPointer(pointer);
+    const characterKey = buildMode ? null : this.characterAtPointer(pointer);
     if (characterKey) {
       // Resolved on pointer-up so a drag that starts on a person still pans.
       this.pointerDownCharacterKey = characterKey;
-    } else if (!this.bridge.viewModel.buildMode) {
+    } else if (!buildMode) {
       const point = this.gridPointAtPointer(pointer);
       if (point) {
         const litter = (this.bridge.viewModel.litterItems ?? []).find(
@@ -9262,6 +9274,7 @@ export class FacilityScene extends Phaser.Scene {
       panX: this.cameraView.panX,
       panY: this.cameraView.panY,
       dragged: false,
+      buildRoomId: buildMode ? this.roomAtPointer(pointer)?.instanceId : undefined,
     };
   }
 
